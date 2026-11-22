@@ -1,0 +1,892 @@
+{
+ "shopping_basket_stack": {
+  "file_base": "prop_shopping_basket_stack",
+  "batch": "inretailfx",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 552
+  },
+  "footprint_w": 0.5,
+  "footprint_d": 0.482,
+  "height": 1.0,
+  "regions": [
+   "baked:shopping_basket_stack"
+  ],
+  "trim": {
+   "ti_plastic": {
+    "area_m2": 1.81,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 10296,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 241.9,
+  "col": 1,
+  "secs": 11.8
+ },
+ "lottery_atm_stand": {
+  "file_base": "prop_lottery_atm_stand",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 756
+  },
+  "footprint_w": 1.21,
+  "footprint_d": 0.603,
+  "height": 1.66,
+  "regions": [
+   "baked:lottery_atm_stand"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 5.63,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 2.46,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.0,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 5502,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 127.5,
+  "col": 2,
+  "secs": 17.8
+ },
+ "magazine_rack": {
+  "file_base": "prop_magazine_rack",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 326
+  },
+  "footprint_w": 1.0,
+  "footprint_d": 0.384,
+  "height": 1.43,
+  "regions": [
+   "baked:magazine_rack"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 6.13,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 1.13,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 5718,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 204.8,
+  "col": 1,
+  "secs": 13.9
+ },
+ "wetsuit_rack": {
+  "file_base": "prop_wetsuit_rack",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1060
+  },
+  "footprint_w": 1.58,
+  "footprint_d": 0.626,
+  "height": 1.831,
+  "regions": [
+   "baked:wetsuit_rack"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 0.67,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 4.77,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 1.16,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3420,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 828.5,
+  "col": 1,
+  "secs": 19.2
+ },
+ "helmet_wall": {
+  "file_base": "prop_helmet_wall",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 1044
+  },
+  "footprint_w": 1.248,
+  "footprint_d": 0.312,
+  "height": 1.508,
+  "regions": [
+   "baked:helmet_wall"
+  ],
+  "trim": {
+   "ti_laminate": {
+    "area_m2": 3.7,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 1.74,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.35,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 0.14,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.546,
+  "atlas_page": "props_i_*",
+  "high_tris": 4155,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 133.5,
+  "col": 1,
+  "secs": 14.1
+ },
+ "folded_stack_table": {
+  "file_base": "prop_folded_stack_table",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1100,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 720
+  },
+  "footprint_w": 1.5,
+  "footprint_d": 0.8,
+  "height": 1.005,
+  "regions": [
+   "baked:folded_stack_table"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 4.76,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 1.15,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 4.67,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 2248,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 596.8,
+  "col": 1,
+  "secs": 17.7
+ },
+ "bargain_bin": {
+  "file_base": "prop_bargain_bin",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1100,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 729
+  },
+  "footprint_w": 1.079,
+  "footprint_d": 0.645,
+  "height": 1.185,
+  "regions": [
+   "baked:bargain_bin"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 2.2,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.79,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 2.2,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 0.11,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 7838,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 187.2,
+  "col": 1,
+  "secs": 14.9
+ },
+ "flower_bucket_stand": {
+  "file_base": "prop_flower_bucket_stand",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1084
+  },
+  "footprint_w": 1.12,
+  "footprint_d": 0.77,
+  "height": 1.363,
+  "regions": [
+   "baked:flower_bucket_stand"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 7.93,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 1.08,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 7162,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 828.5,
+  "col": 1,
+  "secs": 17.8
+ },
+ "shopping_cart": {
+  "file_base": "prop_shopping_cart",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1100,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 754
+  },
+  "footprint_w": 0.984,
+  "footprint_d": 0.558,
+  "height": 1.11,
+  "regions": [
+   "baked:shopping_cart"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 2.12,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.29,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.34,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3473,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 664.1,
+  "col": 1,
+  "secs": 13.2
+ },
+ "candle_shelf": {
+  "file_base": "prop_candle_shelf",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1120
+  },
+  "footprint_w": 1.0,
+  "footprint_d": 0.301,
+  "height": 1.8,
+  "regions": [
+   "baked:candle_shelf"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 9.13,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 1.58,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.1,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3408,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 148.5,
+  "col": 1,
+  "secs": 15.8
+ },
+ "herb_jar_wall": {
+  "file_base": "prop_herb_jar_wall",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 1194
+  },
+  "footprint_w": 1.2,
+  "footprint_d": 0.25,
+  "height": 1.245,
+  "regions": [
+   "baked:herb_jar_wall"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 2.74,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 1.94,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 1.05,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.27,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.2,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.705,
+  "atlas_page": "props_i_*",
+  "high_tris": 4302,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 243.4,
+  "col": 1,
+  "secs": 13.6
+ },
+ "guitar_wall": {
+  "file_base": "prop_guitar_wall",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 1088
+  },
+  "footprint_w": 1.848,
+  "footprint_d": 0.177,
+  "height": 1.408,
+  "regions": [
+   "baked:guitar_wall"
+  ],
+  "trim": {
+   "ti_laminate": {
+    "area_m2": 5.16,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 1.43,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.33,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.06,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 1.93,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.596,
+  "atlas_page": "props_i_*",
+  "high_tris": 5482,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 311.8,
+  "col": 1,
+  "secs": 17.5
+ },
+ "tv_electronics_stack": {
+  "file_base": "prop_tv_electronics_stack",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1136
+  },
+  "footprint_w": 1.42,
+  "footprint_d": 0.642,
+  "height": 1.7,
+  "regions": [
+   "baked:tv_electronics_stack"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 1.83,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 10.56,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.13,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 0.54,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3225,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 48.8,
+  "col": 1,
+  "secs": 18.7
+ },
+ "phone_display_table": {
+  "file_base": "prop_phone_display_table",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 652
+  },
+  "footprint_w": 1.6,
+  "footprint_d": 0.8,
+  "height": 1.137,
+  "regions": [
+   "baked:phone_display_table"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 7.19,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 0.27,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.29,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.92,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1900,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 133.4,
+  "col": 1,
+  "secs": 19.3
+ },
+ "skateboard_deck_wall": {
+  "file_base": "prop_skateboard_deck_wall",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 916
+  },
+  "footprint_w": 1.748,
+  "footprint_d": 0.046,
+  "height": 1.788,
+  "regions": [
+   "baked:skateboard_deck_wall"
+  ],
+  "trim": {
+   "ti_laminate": {
+    "area_m2": 6.18,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 4.35,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.38,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 2.08,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.216,
+  "atlas_page": "props_i_*",
+  "high_tris": 3380,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 682.2,
+  "col": 1,
+  "secs": 17.3
+ },
+ "boot_display_wall": {
+  "file_base": "prop_boot_display_wall",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 912
+  },
+  "footprint_w": 1.44,
+  "footprint_d": 0.3,
+  "height": 1.2,
+  "regions": [
+   "baked:boot_display_wall"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 7.67,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.32,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 1.28,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.74,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.42,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.4,
+  "atlas_page": "props_i_*",
+  "high_tris": 7664,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 258.9,
+  "col": 1,
+  "secs": 16.4
+ },
+ "tshirt_wall": {
+  "file_base": "prop_tshirt_wall",
+  "batch": "inretailfx",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 797
+  },
+  "footprint_w": 1.5,
+  "footprint_d": 0.36,
+  "height": 2.12,
+  "regions": [
+   "baked:tshirt_wall"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 5.48,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 7.13,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 4.05,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.0,
+  "atlas_page": "props_i_*",
+  "high_tris": 6468,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 194.1,
+  "col": 1,
+  "secs": 17.2
+ },
+ "postcard_rack": {
+  "file_base": "prop_postcard_rack",
+  "batch": "inretailfx",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 360
+  },
+  "footprint_w": 0.457,
+  "footprint_d": 0.48,
+  "height": 1.55,
+  "regions": [
+   "baked:postcard_rack"
+  ],
+  "trim": {
+   "ti_plastic": {
+    "area_m2": 1.56,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.32,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 1.42,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 5638,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 247.5,
+  "col": 1,
+  "secs": 11.0
+ },
+ "display_plinth": {
+  "file_base": "prop_display_plinth",
+  "batch": "inretailfx",
+  "class": "small",
+  "budget": 400,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 206
+  },
+  "footprint_w": 0.45,
+  "footprint_d": 0.452,
+  "height": 1.482,
+  "regions": [
+   "baked:display_plinth"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 2.32,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 0.18,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 660,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 515.9,
+  "col": 1,
+  "secs": 10.8
+ },
+ "foot_measure_stool": {
+  "file_base": "prop_foot_measure_stool",
+  "batch": "inretailfx",
+  "class": "small",
+  "budget": 500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 284
+  },
+  "footprint_w": 0.465,
+  "footprint_d": 0.578,
+  "height": 0.366,
+  "regions": [
+   "baked:foot_measure_stool"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 0.15,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 1.17,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 0.39,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.08,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.06,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 654,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 828.5,
+  "col": 2,
+  "secs": 10.7
+ },
+ "security_mirror": {
+  "file_base": "prop_security_mirror",
+  "batch": "inretailfx",
+  "class": "small",
+  "budget": 400,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 290
+  },
+  "footprint_w": 0.488,
+  "footprint_d": 0.353,
+  "height": 0.461,
+  "regions": [
+   "baked:security_mirror"
+  ],
+  "trim": {
+   "ti_plastic": {
+    "area_m2": 0.29,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.18,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 2.029,
+  "atlas_page": "props_i_*",
+  "high_tris": 714,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 812.1,
+  "col": 1,
+  "secs": 7.7
+ }
+}

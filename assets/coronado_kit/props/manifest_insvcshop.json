@@ -1,0 +1,682 @@
+{
+ "garment_conveyor": {
+  "file_base": "prop_garment_conveyor",
+  "batch": "insvcshop",
+  "class": "large",
+  "budget": 1500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 772
+  },
+  "footprint_w": 2.254,
+  "footprint_d": 1.07,
+  "height": 1.96,
+  "regions": [
+   "baked:garment_conveyor"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 1.55,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 9.22,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.86,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.18,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.04,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 2590,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 828.5,
+  "col": 1,
+  "secs": 25.2
+ },
+ "barber_pole": {
+  "file_base": "prop_barber_pole",
+  "batch": "insvcshop",
+  "class": "small",
+  "budget": 500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 416
+  },
+  "footprint_w": 0.174,
+  "footprint_d": 0.193,
+  "height": 0.75,
+  "regions": [
+   "baked:barber_pole"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 0.2,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.27,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 1.45,
+  "atlas_page": "props_i_*",
+  "high_tris": 1768,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 828.5,
+  "col": 1,
+  "secs": 8.7
+ },
+ "change_machine": {
+  "file_base": "prop_change_machine",
+  "batch": "insvcshop",
+  "class": "medium",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 352
+  },
+  "footprint_w": 0.52,
+  "footprint_d": 0.525,
+  "height": 1.45,
+  "regions": [
+   "baked:change_machine"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 1.27,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 3.27,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.08,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 0.0,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 4034,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 173.8,
+  "col": 1,
+  "secs": 13.7
+ },
+ "laundry_cart": {
+  "file_base": "prop_laundry_cart",
+  "batch": "insvcshop",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 578
+  },
+  "footprint_w": 0.714,
+  "footprint_d": 0.495,
+  "height": 1.655,
+  "regions": [
+   "baked:laundry_cart"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 1.41,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 0.25,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.1,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 2696,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 511.0,
+  "col": 1,
+  "secs": 13.2
+ },
+ "dispensary_counter_partition": {
+  "file_base": "prop_dispensary_counter_partition",
+  "batch": "insvcshop",
+  "class": "medium",
+  "budget": 1000,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 868
+  },
+  "footprint_w": 1.64,
+  "footprint_d": 0.66,
+  "height": 1.75,
+  "regions": [
+   "baked:dispensary_counter_partition"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 9.98,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 2.95,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.97,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.1,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 2630,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 353.9,
+  "col": 1,
+  "secs": 22.1
+ },
+ "blood_pressure_kiosk": {
+  "file_base": "prop_blood_pressure_kiosk",
+  "batch": "insvcshop",
+  "class": "medium",
+  "budget": 800,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 424
+  },
+  "footprint_w": 0.74,
+  "footprint_d": 0.801,
+  "height": 1.46,
+  "regions": [
+   "baked:blood_pressure_kiosk"
+  ],
+  "trim": {
+   "ti_plastic": {
+    "area_m2": 2.15,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 6.17,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 7986,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 122.8,
+  "col": 1,
+  "secs": 15.1
+ },
+ "pedicure_chair": {
+  "file_base": "prop_pedicure_chair",
+  "batch": "insvcshop",
+  "class": "medium",
+  "budget": 1000,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 586
+  },
+  "footprint_w": 0.85,
+  "footprint_d": 1.728,
+  "height": 1.528,
+  "regions": [
+   "baked:pedicure_chair"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 5.58,
+    "px_per_m": 128.0
+   },
+   "ti_laminate": {
+    "area_m2": 0.15,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 0.6,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.12,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.05,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 3.55,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1197,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 621.4,
+  "col": 2,
+  "secs": 22.1
+ },
+ "bulletproof_teller_window": {
+  "file_base": "prop_bulletproof_teller_window",
+  "batch": "insvcshop",
+  "class": "medium",
+  "budget": 800,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 370
+  },
+  "footprint_w": 1.22,
+  "footprint_d": 0.623,
+  "height": 2.25,
+  "regions": [
+   "baked:bulletproof_teller_window"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 7.3,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 2.2,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 1.12,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 5382,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 316.7,
+  "col": 1,
+  "secs": 14.9
+ },
+ "wall_safe": {
+  "file_base": "prop_wall_safe",
+  "batch": "insvcshop",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 314
+  },
+  "footprint_w": 0.58,
+  "footprint_d": 0.125,
+  "height": 0.68,
+  "regions": [
+   "baked:wall_safe"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 2.1,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.03,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.9,
+  "atlas_page": "props_i_*",
+  "high_tris": 1197,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 382.3,
+  "col": 1,
+  "secs": 9.5
+ },
+ "security_grille_counter": {
+  "file_base": "prop_security_grille_counter",
+  "batch": "insvcshop",
+  "class": "medium",
+  "budget": 1000,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 540
+  },
+  "footprint_w": 1.5,
+  "footprint_d": 0.73,
+  "height": 2.1,
+  "regions": [
+   "baked:security_grille_counter"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 2.95,
+    "px_per_m": 128.0
+   },
+   "ti_laminate": {
+    "area_m2": 5.08,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.37,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 2.39,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1466,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 621.4,
+  "col": 1,
+  "secs": 16.8
+ },
+ "tattoo_bed_chair": {
+  "file_base": "prop_tattoo_bed_chair",
+  "batch": "insvcshop",
+  "class": "medium",
+  "budget": 1000,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 598
+  },
+  "footprint_w": 1.615,
+  "footprint_d": 1.26,
+  "height": 0.948,
+  "regions": [
+   "baked:tattoo_bed_chair"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 1.2,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.82,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 3.09,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.02,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1476,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 621.4,
+  "col": 2,
+  "secs": 19.1
+ },
+ "flash_art_wall": {
+  "file_base": "prop_flash_art_wall",
+  "batch": "insvcshop",
+  "class": "medium",
+  "budget": 800,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 465
+  },
+  "footprint_w": 1.4,
+  "footprint_d": 0.2,
+  "height": 1.2,
+  "regions": [
+   "baked:flash_art_wall"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 6.93,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 0.55,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.9,
+  "atlas_page": "props_i_*",
+  "high_tris": 1437,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 621.4,
+  "col": 1,
+  "secs": 13.6
+ },
+ "hood_dryer_chair": {
+  "file_base": "prop_hood_dryer_chair",
+  "batch": "insvcshop",
+  "class": "medium",
+  "budget": 1000,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 508
+  },
+  "footprint_w": 0.68,
+  "footprint_d": 0.96,
+  "height": 1.391,
+  "regions": [
+   "baked:hood_dryer_chair"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 0.68,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 2.15,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.14,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.45,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1332,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 688.5,
+  "col": 1,
+  "secs": 14.5
+ },
+ "po_box_wall": {
+  "file_base": "prop_po_box_wall",
+  "batch": "insvcshop",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 798
+  },
+  "footprint_w": 1.4,
+  "footprint_d": 0.107,
+  "height": 1.9,
+  "regions": [
+   "baked:po_box_wall"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 6.02,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 1.64,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.38,
+    "px_per_m": 128.0
+   }
+  },
+  "mount_height": 0.0,
+  "atlas_page": "props_i_*",
+  "high_tris": 5338,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 621.4,
+  "col": 1,
+  "secs": 16.2
+ },
+ "parcel_scale": {
+  "file_base": "prop_parcel_scale",
+  "batch": "insvcshop",
+  "class": "small",
+  "budget": 400,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 190
+  },
+  "footprint_w": 0.4,
+  "footprint_d": 0.402,
+  "height": 0.464,
+  "regions": [
+   "baked:parcel_scale"
+  ],
+  "trim": {
+   "ti_plastic": {
+    "area_m2": 0.5,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.31,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.19,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 438,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 260.1,
+  "col": 1,
+  "secs": 10.0
+ },
+ "copier_large_format_printer": {
+  "file_base": "prop_copier_large_format_printer",
+  "batch": "insvcshop",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 660
+  },
+  "footprint_w": 1.55,
+  "footprint_d": 0.67,
+  "height": 1.256,
+  "regions": [
+   "baked:copier_large_format_printer"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 3.93,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.02,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 2.57,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.72,
+    "px_per_m": 128.0
+   },
+   "ti_fabric": {
+    "area_m2": 0.72,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1496,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 425.6,
+  "col": 1,
+  "secs": 17.7
+ }
+}

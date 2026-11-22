@@ -31,12 +31,16 @@ class CityRooms : public Node3D {
 	// Now in pieces of COL_TRIS, one piece a frame over all rooms, and only within COL_M (nobody touches a wall from 75 m)
 	static constexpr int COL_TRIS = 400;
 	static constexpr float COL_M = 40.0f;
-	struct Leaf { uint64_t node = 0; Vector3 mid, out_dir; float sign = 1.0f, amount = 0.0f, dir = 1.0f; };
+	// hold: 0 = by proximity, 1 = held open, 2 = held shut (interact_door; let go when nobody is within HOLD_M)
+	struct Leaf { uint64_t node = 0; Vector3 mid, out_dir; float sign = 1.0f, amount = 0.0f, dir = 1.0f, hp = 60.0f; int hold = 0; bool broken = false; String bid; };
+	struct Win { uint64_t node = 0; String bid; float hp = 25.0f; bool broken = false, cracked = false; Vector2 uv = Vector2(0.5f, 0.55f); };
+	static constexpr float HOLD_M = 8.0f, DOOR_HP = 60.0f, WINDOW_HP = 25.0f, WINDOW_CRACK_HP = 15.0f;
 	struct Room {
 		String cell, scn, raw, col; uint64_t building = 0; Vector3 centre_local, centre_world;
 		int state = 0;           // 0 asleep, 1 loading, 2 awake
 		uint64_t node = 0;       // the room's root (awake)
 		std::vector<Leaf> leaves;
+		std::vector<Win> wins;           // the breakable windows (Window_* with pane / remnant / body: built-in interiors)
 		std::vector<uint64_t> lights;      // the room's lights (on only while it is among the nearest lit rooms)
 		bool lit = true;
 		PackedVector3Array col_faces;      // its collision, put in COL_TRIS at a time once the camera is within COL_M
@@ -60,10 +64,21 @@ class CityRooms : public Node3D {
 	static int room_kind(const String &p_scn);   // 0 shop, 1 home, 2 office
 	void door_sound(Node3D *p_leaf, const Vector3 &p_at, bool p_open, int p_kind);
 	void room_tone(const Vector3 &p_cam);
-	int tone_room = -1, door_sounds = 0;
+	int tone_room = -1, door_sounds = 0, shard_bursts = 0;
 	void set_lit(Room &rm, bool p_on);
 	void set_open(Room &rm, bool p_open);
-	void add_col(const Vector3 &p_cam);      // the next piece of the nearest room's collision      // the building's near model: cut open (room in) or closed (no room)
+	// the breakables' states this session, by stable id (meta "bid", else "<room scene>|<node>"): {"state": "broken"|..., "hp"}
+	// a room that wakes again shows them; the game's save takes them with get_breakables / set_breakables
+	Dictionary breakables;
+	static String bid_of(Node *p_n, const String &p_scn);
+	void leaf_broken(Node3D *p_leaf);
+	// a window as builtin_window.gd had it (its script is dropped in the game's rooms): cracked = the pane shader's crack
+	// star at uv; broken = pane hidden, remnant shown, body off, the "shards" CPUParticles3D burst at the hit (p_burst), and
+	// the sounds (glass_shatter_* / a tick for the crack) played from here
+	static Vector2 win_uv(Node3D *p_win, const Vector3 &p_at);
+	static void win_cracked(Node3D *p_win, const Vector2 &p_uv);
+	void win_broken(Node3D *p_win, const Vector2 &p_uv, bool p_burst);
+		void add_col(const Vector3 &p_cam);      // the next piece of the nearest room's collision      // the building's near model: cut open (room in) or closed (no room)
 protected:
 	static void _bind_methods();
 public:
@@ -71,6 +86,15 @@ public:
 	void _on_cell_in(const String &p_key) { arriving.push_back(p_key); }
 	void _on_cell_out(const String &p_key) { drop_cell(p_key); }
 	Dictionary get_state() const;
+	// the door / window hooks (22 Nov, INDOORS rollout: the C++ swing used to drop the leaves' GDScript, and with it these):
+	//   interact_door(at, radius)       the nearest leaf within radius: open (away from `at`) or shut, held so until nobody is near
+	//   damage_at(at, amount, radius)   the nearest door leaf or window within radius takes damage; at 0 hp it breaks (state
+	//                                   swap: leaf -> leaf_broken, collision off; window: its own script, else pane -> remnant)
+	//   returns the bid hit ("" none). Signals: door_toggled(bid, open), door_broken(bid, at), window_broken(bid, at)
+	bool interact_door(const Vector3 &p_at, float p_radius);
+	String damage_at(const Vector3 &p_at, float p_amount, float p_radius);
+	Dictionary get_breakables() const { return breakables.duplicate(true); }
+	void set_breakables(const Dictionary &p_d) { breakables = p_d.duplicate(true); }
 	// the rooms awake now: the room's name (its scene's, as interiors/room_people.json names it) and where it stands
 	void awake_rooms(std::vector<std::pair<String, Transform3D>> &r_out) const;
 	void _process(double p_delta) override;

@@ -2,8 +2,8 @@ extends SceneTree
 ## Everyone's shoulders forward (C++: Posture, the first modifier on every CityPed figure; Yasin, 20 Nov: "everyones
 ## shoulders are too far back, push all of them both player and npcs shoulders forward"), in a window:
 ##   godot --path . --rendering-method mobile --resolution 960x540 --fixed-fps 60 -s res://tests/people/test_posture.gd
-## The player standing, seen from the side: one picture as the clip has him (the turn off), one as now. Checks: the
-## player's figure has the posture, the shoulder joints come forward 2-6 cm, the crowd's near people have it too.
+## Checks: the player's posture is OFF (21 Nov 23:19: his idles and walks play as the mocap has them); the crowd's near
+## people have it (shoulders forward).
 var player: CharacterBody3D
 var crowd: Node3D
 var cam: Camera3D
@@ -35,9 +35,9 @@ func _physics_process(delta: float) -> bool:
 	var ps := _postures(player)
 	match step:
 		0:
-			_check(ps.size() == 1, "the player's figure has the posture (%d)" % ps.size())
-			if ps.is_empty(): step = 9; return false
-			(ps[0] as Node).set(&"angle", 0.0); step = 1
+			# (Yasin, 21 Nov 23:19: the player's mocap plays untouched: his figure's posture is off; the crowd keeps it)
+			_check(ps.size() == 1 and not bool((ps[0] as Node).get(&"active")), "the player's posture is off (his shoulders as the mocap has them)")
+			step = 3
 		1:
 			if t < 2.5: return false
 			root.get_texture().get_image().save_png("res://OUT/posture_before.png")

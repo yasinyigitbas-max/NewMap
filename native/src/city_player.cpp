@@ -276,7 +276,7 @@ void CityPlayer::cam_probe() {
 }
 
 void CityPlayer::_physics_process(double p_delta) {
-	//BISECT cam_probe();
+	cam_probe();
 	pm::Scope _pm(pm::PLAYER_PHYS);   // (the slow-frame marks, perf_marks.h)
 	if (!fig) return;
 	// in a car or on the bicycle (set_riding: no collision): he stays where he is. Gravity went on pulling him while his

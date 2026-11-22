@@ -1,0 +1,631 @@
+{
+ "condiment_station": {
+  "file_base": "prop_condiment_station",
+  "batch": "infoodsvc",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 720
+  },
+  "footprint_w": 1.02,
+  "footprint_d": 0.52,
+  "height": 1.282,
+  "regions": [
+   "baked:condiment_station"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 2.2,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 3.27,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 0.02,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.92,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.1,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1630,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 378.1,
+  "col": 1,
+  "secs": 24.9
+ },
+ "coffee_grinder_retail_shelf": {
+  "file_base": "prop_coffee_grinder_retail_shelf",
+  "batch": "infoodsvc",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 854
+  },
+  "footprint_w": 1.2,
+  "footprint_d": 0.42,
+  "height": 1.8,
+  "regions": [
+   "baked:coffee_grinder_retail_shelf"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 10.22,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 7.51,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.07,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.16,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3750,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 148.5,
+  "col": 1,
+  "secs": 17.6
+ },
+ "salsa_bar": {
+  "file_base": "prop_salsa_bar",
+  "batch": "infoodsvc",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 734
+  },
+  "footprint_w": 1.22,
+  "footprint_d": 0.64,
+  "height": 1.332,
+  "regions": [
+   "baked:salsa_bar"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 2.06,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 5.94,
+    "px_per_m": 128.0
+   },
+   "ti_laminate": {
+    "area_m2": 0.32,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.54,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3426,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 828.5,
+  "col": 1,
+  "secs": 18.6
+ },
+ "tray_return_condiment_station": {
+  "file_base": "prop_tray_return_condiment_station",
+  "batch": "infoodsvc",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 630
+  },
+  "footprint_w": 1.22,
+  "footprint_d": 0.628,
+  "height": 1.55,
+  "regions": [
+   "baked:tray_return_condiment_station"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 2.62,
+    "px_per_m": 128.0
+   },
+   "ti_laminate": {
+    "area_m2": 4.5,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 1.23,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 1.44,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.07,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 5999,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 209.6,
+  "col": 1,
+  "secs": 17.1
+ },
+ "host_stand": {
+  "file_base": "prop_host_stand",
+  "batch": "infoodsvc",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 166
+  },
+  "footprint_w": 0.66,
+  "footprint_d": 0.475,
+  "height": 1.42,
+  "regions": [
+   "baked:host_stand"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 0.72,
+    "px_per_m": 128.0
+   },
+   "ti_brass": {
+    "area_m2": 0.06,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 3.04,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.09,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.04,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 453,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 198.3,
+  "col": 1,
+  "secs": 12.0
+ },
+ "bread_basket_rack": {
+  "file_base": "prop_bread_basket_rack",
+  "batch": "infoodsvc",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 874
+  },
+  "footprint_w": 1.2,
+  "footprint_d": 0.5,
+  "height": 2.01,
+  "regions": [
+   "baked:bread_basket_rack"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 9.32,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 1.09,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 9300,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 188.1,
+  "col": 1,
+  "secs": 16.1
+ },
+ "high_chair": {
+  "file_base": "prop_high_chair",
+  "batch": "infoodsvc",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 428
+  },
+  "footprint_w": 0.557,
+  "footprint_d": 0.599,
+  "height": 1.022,
+  "regions": [
+   "baked:high_chair"
+  ],
+  "trim": {
+   "ti_wood": {
+    "area_m2": 1.35,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 0.02,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.0,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1522,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 953.1,
+  "col": 1,
+  "secs": 12.2
+ },
+ "cone_and_topping_station": {
+  "file_base": "prop_cone_and_topping_station",
+  "batch": "infoodsvc",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 638
+  },
+  "footprint_w": 1.22,
+  "footprint_d": 0.62,
+  "height": 1.332,
+  "regions": [
+   "baked:cone_and_topping_station"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 7.35,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.49,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.28,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 7812,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 828.5,
+  "col": 1,
+  "secs": 16.9
+ },
+ "donut_display_rack": {
+  "file_base": "prop_donut_display_rack",
+  "batch": "infoodsvc",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 994
+  },
+  "footprint_w": 1.22,
+  "footprint_d": 0.64,
+  "height": 1.59,
+  "regions": [
+   "baked:donut_display_rack"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 13.42,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 1.67,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 32158,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 315.5,
+  "col": 1,
+  "secs": 21.3
+ },
+ "coffee_station_roller_grill": {
+  "file_base": "prop_coffee_station_roller_grill",
+  "batch": "infoodsvc",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1150
+  },
+  "footprint_w": 1.42,
+  "footprint_d": 0.682,
+  "height": 1.62,
+  "regions": [
+   "baked:coffee_station_roller_grill"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 3.74,
+    "px_per_m": 128.0
+   },
+   "ti_laminate": {
+    "area_m2": 4.98,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 1.61,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 2.16,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.48,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 8130,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 261.7,
+  "col": 1,
+  "secs": 19.3
+ },
+ "ice_merchandiser": {
+  "file_base": "prop_ice_merchandiser",
+  "batch": "infoodsvc",
+  "class": "medium",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 262
+  },
+  "footprint_w": 1.32,
+  "footprint_d": 0.835,
+  "height": 1.44,
+  "regions": [
+   "baked:ice_merchandiser"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 13.1,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 0.11,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 1.56,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1858,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 251.7,
+  "col": 1,
+  "secs": 17.7
+ },
+ "pan_dulce_tray_rack": {
+  "file_base": "prop_pan_dulce_tray_rack",
+  "batch": "infoodsvc",
+  "class": "large",
+  "budget": 1500,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1132
+  },
+  "footprint_w": 0.92,
+  "footprint_d": 0.66,
+  "height": 1.922,
+  "regions": [
+   "baked:pan_dulce_tray_rack"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 7.39,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 2.74,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 6.21,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 9350,
+  "bake_slot_px": 80,
+  "bake_px_per_m": 273.0,
+  "col": 1,
+  "secs": 16.1
+ },
+ "deli_slicer_counter": {
+  "file_base": "prop_deli_slicer_counter",
+  "batch": "infoodsvc",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 700
+  },
+  "footprint_w": 1.2,
+  "footprint_d": 0.704,
+  "height": 1.285,
+  "regions": [
+   "baked:deli_slicer_counter"
+  ],
+  "trim": {
+   "ti_metal": {
+    "area_m2": 4.39,
+    "px_per_m": 128.0
+   },
+   "ti_paint": {
+    "area_m2": 1.63,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.55,
+    "px_per_m": 128.0
+   },
+   "ti_wood": {
+    "area_m2": 0.21,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1602,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 252.3,
+  "col": 1,
+  "secs": 16.4
+ },
+ "steam_table": {
+  "file_base": "prop_steam_table",
+  "batch": "infoodsvc",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 682
+  },
+  "footprint_w": 1.62,
+  "footprint_d": 0.93,
+  "height": 1.362,
+  "regions": [
+   "baked:steam_table"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 1.81,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 9.86,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   },
+   "ti_glass": {
+    "area_m2": 0.73,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 1916,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 828.5,
+  "col": 1,
+  "secs": 28.0
+ },
+ "fish_on_ice_display": {
+  "file_base": "prop_fish_on_ice_display",
+  "batch": "infoodsvc",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 1134
+  },
+  "footprint_w": 1.4,
+  "footprint_d": 0.827,
+  "height": 0.968,
+  "regions": [
+   "baked:fish_on_ice_display"
+  ],
+  "trim": {
+   "ti_paint": {
+    "area_m2": 8.49,
+    "px_per_m": 128.0
+   },
+   "ti_metal": {
+    "area_m2": 2.15,
+    "px_per_m": 128.0
+   },
+   "ti_plastic": {
+    "area_m2": 0.01,
+    "px_per_m": 128.0
+   }
+  },
+  "atlas_page": "props_i_*",
+  "high_tris": 3593,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 291.9,
+  "col": 1,
+  "secs": 19.2
+ }
+}

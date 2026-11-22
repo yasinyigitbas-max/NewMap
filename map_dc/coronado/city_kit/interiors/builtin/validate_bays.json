@@ -1,0 +1,789 @@
+{
+ "apartments/apt_beach_condo|0": {
+  "kinds": [
+   "clothes",
+   "rental"
+  ],
+  "problems": []
+ },
+ "apartments/apt_beach_condo|near": {
+  "all_bays_tris": 3568,
+  "ext_tris": 3452
+ },
+ "apartments/apt_garden_cream|0": {
+  "kinds": [
+   "lobby"
+  ],
+  "problems": []
+ },
+ "apartments/apt_garden_cream|near": {
+  "all_bays_tris": 3585,
+  "ext_tris": 3475
+ },
+ "apartments/apt_garden_mint|0": {
+  "kinds": [
+   "lobby"
+  ],
+  "problems": []
+ },
+ "apartments/apt_garden_mint|near": {
+  "all_bays_tris": 3599,
+  "ext_tris": 3489
+ },
+ "apartments/apt_spanish_revival|0": {
+  "kinds": [
+   "hotel",
+   "lobby"
+  ],
+  "problems": []
+ },
+ "apartments/apt_spanish_revival|near": {
+  "all_bays_tris": 3332,
+  "ext_tris": 3038
+ },
+ "apartments/apt_spanish_white|0": {
+  "kinds": [
+   "lobby"
+  ],
+  "problems": []
+ },
+ "apartments/apt_spanish_white|near": {
+  "all_bays_tris": 3462,
+  "ext_tris": 3306
+ },
+ "apartments/apt_stucco3_cream|0": {
+  "kinds": [
+   "bakery",
+   "corner_shop",
+   "taqueria",
+   "lobby"
+  ],
+  "problems": []
+ },
+ "apartments/apt_stucco3_cream|near": {
+  "all_bays_tris": 3318,
+  "ext_tris": 3088
+ },
+ "apartments/apt_stucco3_peach|0": {
+  "kinds": [
+   "grocery",
+   "lobby"
+  ],
+  "problems": []
+ },
+ "apartments/apt_stucco3_peach|near": {
+  "all_bays_tris": 3526,
+  "ext_tris": 3440
+ },
+ "civic/civ_church|0": {
+  "kinds": [
+   "chapel",
+   "church"
+  ],
+  "problems": []
+ },
+ "civic/civ_church|near": {
+  "all_bays_tris": 4950,
+  "ext_tris": 4722
+ },
+ "civic/civ_city_hall|0": {
+  "kinds": [
+   "office"
+  ],
+  "problems": []
+ },
+ "civic/civ_city_hall|near": {
+  "all_bays_tris": 4733,
+  "ext_tris": 4507
+ },
+ "civic/civ_community_center|0": {
+  "kinds": [
+   "community",
+   "hall",
+   "clinic"
+  ],
+  "problems": []
+ },
+ "civic/civ_community_center|near": {
+  "all_bays_tris": 3157,
+  "ext_tris": 2361
+ },
+ "civic/civ_harbor_office|0": {
+  "kinds": [
+   "broker",
+   "transit"
+  ],
+  "problems": []
+ },
+ "civic/civ_harbor_office|near": {
+  "all_bays_tris": 3205,
+  "ext_tris": 2685
+ },
+ "civic/civ_library|0": {
+  "kinds": [
+   "library"
+  ],
+  "problems": []
+ },
+ "civic/civ_library|near": {
+  "all_bays_tris": 3074,
+  "ext_tris": 2270
+ },
+ "civic/civ_museum|0": {
+  "kinds": [
+   "gallery"
+  ],
+  "problems": []
+ },
+ "civic/civ_museum|near": {
+  "all_bays_tris": 4850,
+  "ext_tris": 4692
+ },
+ "civic/civ_police|0": {
+  "kinds": [
+   "office"
+  ],
+  "problems": []
+ },
+ "civic/civ_police|near": {
+  "all_bays_tris": 4509,
+  "ext_tris": 3809
+ },
+ "civic/civ_post_office|0": {
+  "kinds": [
+   "post_office",
+   "transit"
+  ],
+  "problems": []
+ },
+ "civic/civ_post_office|near": {
+  "all_bays_tris": 2806,
+  "ext_tris": 2094
+ },
+ "civic/civ_rec_center|0": {
+  "kinds": [
+   "gym",
+   "rec_center"
+  ],
+  "problems": []
+ },
+ "civic/civ_rec_center|near": {
+  "all_bays_tris": 4276,
+  "ext_tris": 3576
+ },
+ "civic/civ_school_wing|0": {
+  "kinds": [
+   "lecture",
+   "classroom",
+   "library",
+   "lobby"
+  ],
+  "problems": []
+ },
+ "civic/civ_school_wing|near": {
+  "all_bays_tris": 2980,
+  "ext_tris": 2188
+ },
+ "ck/ck_brk3_corner2|0": {
+  "kinds": [
+   "discount",
+   "bar",
+   "liquor",
+   "corner_shop",
+   "books",
+   "pharmacy",
+   "freight_office"
+  ],
+  "problems": []
+ },
+ "ck/ck_brk3_corner2|near": {
+  "all_bays_tris": 3596,
+  "ext_tris": 3516
+ },
+ "ck/ck_brk3_row2_fe|0": {
+  "kinds": [
+   "dry_cleaner",
+   "records",
+   "shoes",
+   "corner_shop",
+   "law"
+  ],
+  "problems": []
+ },
+ "ck/ck_brk3_row2_fe|near": {
+  "all_bays_tris": 3494,
+  "ext_tris": 3378
+ },
+ "ck/ck_brk3_row2|0": {
+  "kinds": [
+   "laundromat",
+   "barber",
+   "bakery",
+   "cafe",
+   "florist",
+   "taproom",
+   "bail",
+   "architect",
+   "office",
+   "dentist"
+  ],
+  "problems": []
+ },
+ "ck/ck_brk3_row2|near": {
+  "all_bays_tris": 3404,
+  "ext_tris": 2998
+ },
+ "ck/ck_grt_row3|0": {
+  "kinds": [
+   "thrift",
+   "vintage",
+   "phones"
+  ],
+  "problems": []
+ },
+ "ck/ck_grt_row3|1": {
+  "kinds": [
+   "cleaners"
+  ],
+  "problems": []
+ },
+ "ck/ck_grt_row3|near": {
+  "all_bays_tris": 3160,
+  "ext_tris": 2808
+ },
+ "ck/ck_svc_bank_pharm|0": {
+  "kinds": [
+   "bank",
+   "sales_office"
+  ],
+  "problems": []
+ },
+ "ck/ck_svc_bank_pharm|near": {
+  "all_bays_tris": 2792,
+  "ext_tris": 2636
+ },
+ "ck/ck_svc_pawn_fast|0": {
+  "kinds": [
+   "takeout",
+   "workwear",
+   "office"
+  ],
+  "problems": []
+ },
+ "ck/ck_svc_pawn_fast|near": {
+  "all_bays_tris": 2428,
+  "ext_tris": 2318
+ },
+ "ck/ck_svc_trade_1d|0": {
+  "kinds": [
+   "bike",
+   "bodega",
+   "tattoo",
+   "pharmacy",
+   "trade_counter",
+   "salon"
+  ],
+  "problems": []
+ },
+ "ck/ck_svc_trade_1d|near": {
+  "all_bays_tris": 1712,
+  "ext_tris": 1460
+ },
+ "ck/ck_svc_trade|0": {
+  "kinds": [
+   "joinery",
+   "cash",
+   "uniform",
+   "tyre",
+   "tax"
+  ],
+  "problems": []
+ },
+ "ck/ck_svc_trade|1": {
+  "kinds": [
+   "parts",
+   "tax"
+  ],
+  "problems": []
+ },
+ "ck/ck_svc_trade|near": {
+  "all_bays_tris": 2180,
+  "ext_tris": 1562
+ },
+ "ck/mod_fastfood|0": {
+  "kinds": [
+   "fast_food"
+  ],
+  "problems": []
+ },
+ "ck/mod_fastfood|1": {
+  "kinds": [
+   "pawn",
+   "drive_thru"
+  ],
+  "problems": []
+ },
+ "ck/mod_fastfood|near": {
+  "all_bays_tris": 2598,
+  "ext_tris": 2438
+ },
+ "commercial/com_bakery|0": {
+  "kinds": [
+   "panaderia",
+   "corner_shop"
+  ],
+  "problems": []
+ },
+ "commercial/com_bakery|near": {
+  "all_bays_tris": 2290,
+  "ext_tris": 1880
+ },
+ "commercial/com_bank|0": {
+  "kinds": [
+   "bank"
+  ],
+  "problems": []
+ },
+ "commercial/com_bank|near": {
+  "all_bays_tris": 2430,
+  "ext_tris": 1724
+ },
+ "commercial/com_bar_crown|0": {
+  "kinds": [
+   "bar"
+  ],
+  "problems": []
+ },
+ "commercial/com_bar_crown|near": {
+  "all_bays_tris": 2276,
+  "ext_tris": 1936
+ },
+ "commercial/com_bistro|0": {
+  "kinds": [
+   "taqueria",
+   "restaurant",
+   "fish_counter"
+  ],
+  "problems": []
+ },
+ "commercial/com_bistro|near": {
+  "all_bays_tris": 1714,
+  "ext_tris": 1298
+ },
+ "commercial/com_boutique_row|0": {
+  "kinds": [
+   "dive"
+  ],
+  "problems": []
+ },
+ "commercial/com_boutique_row|1": {
+  "kinds": [
+   "cleaners",
+   "souvenir",
+   "tax"
+  ],
+  "problems": []
+ },
+ "commercial/com_boutique_row|2": {
+  "kinds": [
+   "donuts",
+   "dentist"
+  ],
+  "problems": []
+ },
+ "commercial/com_boutique_row|near": {
+  "all_bays_tris": 3022,
+  "ext_tris": 2072
+ },
+ "commercial/com_cafe_seaside|0": {
+  "kinds": [
+   "coffee",
+   "cafe"
+  ],
+  "problems": []
+ },
+ "commercial/com_cafe_seaside|near": {
+  "all_bays_tris": 1572,
+  "ext_tris": 1186
+ },
+ "commercial/com_gas_station|0": {
+  "kinds": [
+   "gas"
+  ],
+  "problems": []
+ },
+ "commercial/com_gas_station|near": {
+  "all_bays_tris": 2452,
+  "ext_tris": 2332
+ },
+ "commercial/com_kiosk|0": {
+  "kinds": [
+   "recycling",
+   "office"
+  ],
+  "problems": []
+ },
+ "commercial/com_kiosk|near": {
+  "all_bays_tris": 842,
+  "ext_tris": 576
+ },
+ "commercial/com_orange_arcade_block|0": {
+  "kinds": [
+   "diner"
+  ],
+  "problems": []
+ },
+ "commercial/com_orange_arcade_block|near": {
+  "all_bays_tris": 4007,
+  "ext_tris": 3735
+ },
+ "commercial/com_orange_corner|0": {
+  "kinds": [
+   "canteen",
+   "corner_shop",
+   "pizza"
+  ],
+  "problems": []
+ },
+ "commercial/com_orange_corner|1": {
+  "kinds": [
+   "florist",
+   "wine",
+   "office"
+  ],
+  "problems": []
+ },
+ "commercial/com_orange_corner|near": {
+  "all_bays_tris": 2584,
+  "ext_tris": 2366
+ },
+ "commercial/com_orange_row|0": {
+  "kinds": [
+   "auto_parts"
+  ],
+  "problems": []
+ },
+ "commercial/com_orange_row|1": {
+  "kinds": [
+   "barber",
+   "phone"
+  ],
+  "problems": []
+ },
+ "commercial/com_orange_row|near": {
+  "all_bays_tris": 3410,
+  "ext_tris": 2870
+ },
+ "commercial/com_realty|0": {
+  "kinds": [
+   "nails",
+   "botanica",
+   "rental",
+   "tax",
+   "office",
+   "bank",
+   "realty",
+   "sales_office"
+  ],
+  "problems": []
+ },
+ "commercial/com_realty|near": {
+  "all_bays_tris": 1554,
+  "ext_tris": 1168
+ },
+ "commercial/com_shallow_books|0": {
+  "kinds": [
+   "books",
+   "car_sales"
+  ],
+  "problems": []
+ },
+ "commercial/com_shallow_books|near": {
+  "all_bays_tris": 1303,
+  "ext_tris": 987
+ },
+ "commercial/com_shallow_surf|0": {
+  "kinds": [
+   "bait"
+  ],
+  "problems": []
+ },
+ "commercial/com_shallow_surf|near": {
+  "all_bays_tris": 1376,
+  "ext_tris": 1054
+ },
+ "commercial/com_spanish_arcade_block|0": {
+  "kinds": [
+   "clinic"
+  ],
+  "problems": []
+ },
+ "commercial/com_spanish_arcade_block|1": {
+  "kinds": [
+   "restaurant"
+  ],
+  "problems": []
+ },
+ "commercial/com_spanish_arcade_block|2": {
+  "kinds": [
+   "fast_food",
+   "physio",
+   "office"
+  ],
+  "problems": []
+ },
+ "commercial/com_spanish_arcade_block|near": {
+  "all_bays_tris": 4308,
+  "ext_tris": 3154
+ },
+ "commercial/com_strip_mall_l|0": {
+  "kinds": [
+   "restaurant"
+  ],
+  "problems": []
+ },
+ "commercial/com_strip_mall_l|near": {
+  "all_bays_tris": 4847,
+  "ext_tris": 4577
+ },
+ "commercial/com_surf_shop|0": {
+  "kinds": [
+   "bikes",
+   "ice_cream",
+   "rental"
+  ],
+  "problems": []
+ },
+ "commercial/com_surf_shop|near": {
+  "all_bays_tris": 1680,
+  "ext_tris": 1262
+ },
+ "extras/ext_hospital|0": {
+  "kinds": [
+   "er"
+  ],
+  "problems": []
+ },
+ "extras/ext_hospital|near": {
+  "all_bays_tris": 4731,
+  "ext_tris": 4625
+ },
+ "extras/ext_motel_crown|0": {
+  "kinds": [
+   "fast_food"
+  ],
+  "problems": []
+ },
+ "extras/ext_motel_crown|near": {
+  "all_bays_tris": 5169,
+  "ext_tris": 4903
+ },
+ "extras/motel_inn_court|0": {
+  "kinds": [
+   "motel_office",
+   "hotel"
+  ],
+  "problems": []
+ },
+ "extras/motel_inn_court|near": {
+  "all_bays_tris": 4594,
+  "ext_tris": 4290
+ },
+ "houses/craftsman_cedar|0": {
+  "kinds": [
+   "clothes"
+  ],
+  "problems": []
+ },
+ "houses/craftsman_cedar|near": {
+  "all_bays_tris": 2448,
+  "ext_tris": 2270
+ },
+ "houses/craftsman_sage|0": {
+  "kinds": [
+   "realty"
+  ],
+  "problems": []
+ },
+ "houses/craftsman_sage|near": {
+  "all_bays_tris": 2485,
+  "ext_tris": 2307
+ },
+ "houses/tudor_stucco|0": {
+  "kinds": [
+   "bar"
+  ],
+  "problems": []
+ },
+ "houses/tudor_stucco|near": {
+  "all_bays_tris": 2137,
+  "ext_tris": 1734
+ },
+ "industrial/ind_repair|0": {
+  "kinds": [
+   "tyres",
+   "parts_counter",
+   "boatworks",
+   "workshop",
+   "lube"
+  ],
+  "problems": []
+ },
+ "industrial/ind_repair|near": {
+  "all_bays_tris": 1513,
+  "ext_tris": 1231
+ },
+ "modular/examples/mod_brk_row|0": {
+  "kinds": [
+   "law",
+   "permits"
+  ],
+  "problems": []
+ },
+ "modular/examples/mod_brk_row|near": {
+  "all_bays_tris": 3400,
+  "ext_tris": 3174
+ },
+ "modular/examples/mod_svc_row|0": {
+  "kinds": [
+   "print"
+  ],
+  "problems": []
+ },
+ "modular/examples/mod_svc_row|1": {
+  "kinds": [
+   "books"
+  ],
+  "problems": []
+ },
+ "modular/examples/mod_svc_row|near": {
+  "all_bays_tris": 2066,
+  "ext_tris": 1776
+ },
+ "public/pub_chapel|0": {
+  "kinds": [
+   "church"
+  ],
+  "problems": []
+ },
+ "public/pub_chapel|near": {
+  "all_bays_tris": 1650,
+  "ext_tris": 1436
+ },
+ "public/pub_hospital|0": {
+  "kinds": [
+   "hospital_lobby"
+  ],
+  "problems": []
+ },
+ "public/pub_hospital|1": {
+  "kinds": [
+   "cafe"
+  ],
+  "problems": []
+ },
+ "public/pub_hospital|near": {
+  "all_bays_tris": 4118,
+  "ext_tris": 3626
+ },
+ "public/pub_skate_shed|0": {
+  "kinds": [
+   "skate"
+  ],
+  "problems": []
+ },
+ "public/pub_skate_shed|near": {
+  "all_bays_tris": 1051,
+  "ext_tris": 817
+ },
+ "public/pub_university|0": {
+  "kinds": [
+   "campus_hall"
+  ],
+  "problems": []
+ },
+ "public/pub_university|near": {
+  "all_bays_tris": 4482,
+  "ext_tris": 3660
+ },
+ "services/svc_carwash|0": {
+  "kinds": [
+   "wash_office"
+  ],
+  "problems": []
+ },
+ "services/svc_carwash|near": {
+  "all_bays_tris": 2252,
+  "ext_tris": 1952
+ },
+ "urban/twr_glass|0": {
+  "kinds": [
+   "lobby"
+  ],
+  "problems": []
+ },
+ "urban/twr_glass|near": {
+  "all_bays_tris": 5982,
+  "ext_tris": 5368
+ },
+ "urban/twr_office|0": {
+  "kinds": [
+   "barber",
+   "clinic"
+  ],
+  "problems": []
+ },
+ "urban/twr_office|near": {
+  "all_bays_tris": 4734,
+  "ext_tris": 4418
+ },
+ "urban/urb_brick_corner|0": {
+  "kinds": [
+   "diner",
+   "cafe",
+   "bank",
+   "office"
+  ],
+  "problems": []
+ },
+ "urban/urb_brick_corner|near": {
+  "all_bays_tris": 3662,
+  "ext_tris": 3244
+ },
+ "urban/urb_brick_row|0": {
+  "kinds": [
+   "shoes"
+  ],
+  "problems": []
+ },
+ "urban/urb_brick_row|1": {
+  "kinds": [
+   "laundry"
+  ],
+  "problems": []
+ },
+ "urban/urb_brick_row|near": {
+  "all_bays_tris": 3558,
+  "ext_tris": 2974
+ },
+ "urban/urb_courthouse|0": {
+  "kinds": [
+   "court"
+  ],
+  "problems": []
+ },
+ "urban/urb_courthouse|near": {
+  "all_bays_tris": 4028,
+  "ext_tris": 3278
+ },
+ "urban/urb_dept_store|0": {
+  "kinds": [
+   "clothes"
+  ],
+  "problems": []
+ },
+ "urban/urb_dept_store|near": {
+  "all_bays_tris": 4032,
+  "ext_tris": 3554
+ }
+}

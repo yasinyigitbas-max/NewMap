@@ -11,9 +11,10 @@ extends SceneTree
 ## Needs the runtime bake (runtime/lib) and tools/city/rooms/make_room_array.py + an import first.
 ##   xvfb-run -a godot --path . --render-thread safe --rendering-method mobile --rendering-driver vulkan -s res://tools/city/rooms/room_merge.gd [-- --only=name,name]
 ##   (--render-thread safe: the project runs a separate render thread since 20 Nov; this tool makes textures, which needs the old mode)
-const DIR := "res://map_dc/coronado/city_kit/interiors/rooms/"
-const OUT := "res://map_dc/coronado/city_kit/runtime/rooms/"
-const LIB := "res://map_dc/coronado/city_kit/runtime/lib/"
+var DIR := "res://map_dc/coronado/city_kit/interiors/rooms/"
+var OUT := "res://map_dc/coronado/city_kit/runtime/rooms/"
+var LIB := "res://map_dc/coronado/city_kit/runtime/lib/"
+var PREFIX := ""      # (22 Nov, INDOORS rollout) --dir= / --out= / --lib= / --prefix=bi_: the bake's built-in rooms, merged in place
 const TEXD := "res://map_dc/coronado/city_kit/runtime_tex/"
 var prop_pages: Array = []
 var room_layers: Array = []
@@ -25,6 +26,16 @@ func _run() -> void:
 	var only := PackedStringArray()
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--only="): only = a.trim_prefix("--only=").split(",", false)
+		if a.begins_with("--dir="): DIR = a.trim_prefix("--dir=").trim_suffix("/") + "/"
+		if a.begins_with("--out="): OUT = a.trim_prefix("--out=").trim_suffix("/") + "/"
+		if a.begins_with("--lib="): LIB = a.trim_prefix("--lib=").trim_suffix("/") + "/"
+		if a.begins_with("--prefix="): PREFIX = a.trim_prefix("--prefix=")
+	# (22 Nov) without the texture arrays it hit a script error and never quit, holding the box's Godot lock for 25 min:
+	# stop at once instead (and run it under `timeout`)
+	for need: String in [TEXD + "arrays.json", TEXD + "arr_room.json", TEXD + "arr_room.png", LIB + "mat_prop_merged_near.tres"]:
+		if not FileAccess.file_exists(need) and not ResourceLoader.exists(need):
+			push_error("room_merge: %s missing (tools/city/rooms/make_room_array.py + the runtime bake first)" % need)
+			print("MERGE_DONE rooms=0 (missing %s)" % need); quit(2); return
 	prop_pages = JSON.parse_string(FileAccess.get_file_as_string(TEXD + "arrays.json")).prop_albedo
 	room_layers = JSON.parse_string(FileAccess.get_file_as_string(TEXD + "arr_room.json")).layers
 	shell_mat = ShaderMaterial.new(); shell_mat.shader = load("res://tools/city/rooms/rt_room_shell.gdshader")
@@ -34,7 +45,7 @@ func _run() -> void:
 	var tot := [0, 0, 0]
 	var rows: Array = []
 	for f in DirAccess.get_files_at(DIR):
-		if not f.ends_with(".scn"): continue
+		if not f.ends_with(".scn") or not f.begins_with(PREFIX): continue
 		var nm := f.get_basename()
 		if not only.is_empty() and not only.has(nm): continue
 		var src: Node3D = (load(DIR + f) as PackedScene).instantiate()
@@ -44,6 +55,8 @@ func _run() -> void:
 		# (20 Nov, B14) no GDScript in the game's rooms: the door leaves' door_swing.gd is dropped (not in the phone build;
 		# C++ CityRooms swings them from the leaves' own metas mid / out_dir / open_sign)
 		for lf: Node in dst.find_children("DoorLeaf_*", "Node3D", true, false): lf.set_script(null)
+		# (22 Nov) the built-in windows' builtin_window.gd too: C++ CityRooms.damage_at breaks them (pane -> remnant)
+		for wn: Node in dst.find_children("Window_*", "Node3D", true, false): wn.set_script(null)
 		# (20 Nov, Yasin: "all shop signs are pink bands") the shop signs' texture (PortableCompressedTexture2D) came out of the
 		# merge empty: rebuilt from the room's own image, its compressed data kept (room_lib.gd's 18 Nov lesson)
 		var ss := src.find_child("Signs", true, false) as MeshInstance3D; var ds := dst.find_child("Signs", true, false) as MeshInstance3D

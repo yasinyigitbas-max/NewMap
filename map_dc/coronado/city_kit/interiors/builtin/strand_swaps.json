@@ -1,0 +1,7 @@
+{"m_gr_ad5ne": [
+  {"name": "route_75_diner", "old": "commercial/com_bistro", "kit": "ck/ck_brk3_res2", "shift": 0.0, "setback": 0.0, "note": "INDOORS Strand trim 22 Nov: Route 75 Diner dropped (NEW-18), same 12 x 14 footprint, brick residential"},
+  {"name": "taqueria_adela", "old": "commercial/com_shallow_surf", "kit": "houses/cape_grey", "shift": -0.25, "setback": 0.0, "note": "INDOORS Strand trim 22 Nov: Tacos El Puente dropped, 9 x 7 shop -> 9.5 x 7.5 cottage"}],
+ "m_gr_ad5nw": [
+  {"name": "dollar_plus_market", "old": "extras/ext_grocery_market", "kit": "industrial/ind_warehouse", "shift": 0.0, "setback": 0.0, "note": "INDOORS Strand trim 22 Nov: Dollar Plus Market dropped, 30 x 24 market -> 24 x 24 warehouse (gritty strip)"}],
+ "m_gr_ad3se": [
+  {"name": "crosswalk_coffee", "old": "commercial/com_kiosk", "kit": "garages/single_stucco_flat", "shift": 0.0, "setback": 0.0, "note": "INDOORS Strand trim 22 Nov: Crosswalk Coffee kiosk dropped, 4 x 6 kiosk -> 3.5 x 6 garage"}]}

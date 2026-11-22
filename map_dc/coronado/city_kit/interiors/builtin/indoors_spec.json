@@ -1,0 +1,6066 @@
+{
+ "generated": "22 Nov 2026",
+ "places": [
+  {
+   "id": "apt_b1_7th__corner_shops_7th__2",
+   "name": "Sunrise Donuts",
+   "kind": "donuts",
+   "dress": "donuts",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Apartment Band",
+   "piece": "n_apt_b1_7th",
+   "model": "commercial/com_boutique_row",
+   "w": 5.7,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 24,
+   "area": 80,
+   "size": "M",
+   "prop_tris_est": 10759,
+   "prop_tris_capped": 10759
+  },
+  {
+   "id": "apt_b1_7th__coffee_window__0",
+   "name": "The Coffee Window",
+   "kind": "coffee",
+   "dress": "coffee",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Apartment Band",
+   "piece": "n_apt_b1_7th",
+   "model": "commercial/com_cafe_seaside",
+   "w": 5.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 23,
+   "area": 76,
+   "size": "M",
+   "prop_tris_est": 9577,
+   "prop_tris_capped": 9577
+  },
+  {
+   "id": "apt_b2_7th__corner_market__0",
+   "name": "Adela Corner Market",
+   "kind": "discount",
+   "dress": "discount",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Apartment Band",
+   "piece": "n_apt_b2_7th",
+   "model": "ck/ck_brk3_corner2",
+   "w": 6.9,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 19,
+   "area": 97,
+   "size": "M",
+   "prop_tris_est": 11310,
+   "prop_tris_capped": 11310
+  },
+  {
+   "id": "apt_b1_be__taqueria__0",
+   "name": "Taqueria La Esquina",
+   "kind": "taqueria",
+   "dress": "taqueria",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Apartment Band",
+   "piece": "n_apt_b1_be",
+   "model": "commercial/com_bistro",
+   "w": 11.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 44,
+   "area": 160,
+   "size": "L",
+   "prop_tris_est": 15484,
+   "prop_tris_capped": 15484
+  },
+  {
+   "id": "apt_b1_7th__dry_cleaner__0",
+   "name": "Seventh Street Cleaners",
+   "kind": "dry_cleaner",
+   "dress": "dry_cleaner",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Apartment Band",
+   "piece": "n_apt_b1_7th",
+   "model": "ck/ck_brk3_row2_fe",
+   "w": 7.9,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 27,
+   "area": 111,
+   "size": "M",
+   "prop_tris_est": 12170,
+   "prop_tris_capped": 12170
+  },
+  {
+   "id": "apt_b1_7th__launderette__0",
+   "name": "Adela Wash & Fold",
+   "kind": "laundromat",
+   "dress": "laundromat",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Apartment Band",
+   "piece": "n_apt_b1_7th",
+   "model": "ck/ck_brk3_row2",
+   "w": 7.9,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 30,
+   "area": 111,
+   "size": "M",
+   "prop_tris_est": 12698,
+   "prop_tris_capped": 12698
+  },
+  {
+   "id": "apt_b1_bw__barber__0",
+   "name": "Eighth Street Barbers",
+   "kind": "barber",
+   "dress": "barber",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Apartment Band",
+   "piece": "n_apt_b1_bw",
+   "model": "ck/ck_brk3_row2",
+   "w": 7.9,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 27,
+   "area": 111,
+   "size": "M",
+   "prop_tris_est": 15563,
+   "prop_tris_capped": 15563
+  },
+  {
+   "id": "apt_b1_be__nail_salon__0",
+   "name": "Polished Nail Studio",
+   "kind": "nails",
+   "dress": "nails",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Apartment Band",
+   "piece": "n_apt_b1_be",
+   "model": "commercial/com_realty",
+   "w": 5.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 32,
+   "area": 76,
+   "size": "M",
+   "prop_tris_est": 8076,
+   "prop_tris_capped": 8076
+  },
+  {
+   "id": "apt_b2_be__bike_shop__0",
+   "name": "Hill Street Bikes",
+   "kind": "bikes",
+   "dress": "bikes",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Apartment Band",
+   "piece": "n_apt_b2_be",
+   "model": "commercial/com_surf_shop",
+   "w": 8.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 25,
+   "area": 118,
+   "size": "M",
+   "prop_tris_est": 15437,
+   "prop_tris_capped": 15437
+  },
+  {
+   "id": "cc_b1_west__cave_corner_flats__0",
+   "name": "C Avenue Bakery",
+   "kind": "bakery",
+   "dress": "bakery",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "n_cc_b1_west",
+   "model": "apartments/apt_stucco3_cream",
+   "w": 10.8,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 130,
+   "size": "M",
+   "prop_tris_est": 15743,
+   "prop_tris_capped": 15743
+  },
+  {
+   "id": "cc_b6__amber_s_bakery__0",
+   "name": "Amber Bread Co",
+   "kind": "bakery",
+   "dress": "bakery",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "n_cc_b6",
+   "model": "ck/ck_brk3_row2",
+   "w": 7.9,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 24,
+   "area": 111,
+   "size": "M",
+   "prop_tris_est": 13833,
+   "prop_tris_capped": 13833
+  },
+  {
+   "id": "cc_b2_n__sixth_e_corner_bar__0",
+   "name": "The Alley Cat",
+   "kind": "bar",
+   "dress": "bar",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "n_cc_b2_n",
+   "model": "ck/ck_brk3_corner2",
+   "w": 7.5,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 105,
+   "size": "M",
+   "prop_tris_est": 11356,
+   "prop_tris_capped": 11356
+  },
+  {
+   "id": "c_sw__mod_svc_row__1",
+   "name": "Breakwater Books",
+   "kind": "books",
+   "dress": "books",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "c_sw",
+   "model": "modular/examples/mod_svc_row",
+   "w": 5.6,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 17,
+   "area": 67,
+   "size": "S",
+   "prop_tris_est": 9254,
+   "prop_tris_capped": 9254
+  },
+  {
+   "id": "cc_b3_arm__alleyd3_print__0",
+   "name": "Copy Corner",
+   "kind": "print",
+   "dress": "print",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "n_cc_b3_arm",
+   "model": "modular/examples/mod_svc_row",
+   "w": 7.3,
+   "d": 11.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 82,
+   "size": "M",
+   "prop_tris_est": 12131,
+   "prop_tris_capped": 12131
+  },
+  {
+   "id": "cc_b2_7th__seventh_dept_store__0",
+   "name": "Harbor & Main",
+   "kind": "clothes",
+   "dress": "clothes",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "n_cc_b2_7th",
+   "model": "urban/urb_dept_store",
+   "w": 35.4,
+   "d": 24.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 850,
+   "size": "XL",
+   "prop_tris_est": 23886,
+   "prop_tris_capped": 23886
+  },
+  {
+   "id": "cc_b4_e__amber_n_tea__0",
+   "name": "Leaf & Kettle Tea",
+   "kind": "cafe",
+   "dress": "cafe",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "n_cc_b4_e",
+   "model": "ck/ck_brk3_row2",
+   "w": 7.9,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 26,
+   "area": 111,
+   "size": "M",
+   "prop_tris_est": 13246,
+   "prop_tris_capped": 13246
+  },
+  {
+   "id": "cc_b6__eighth_s_grocer_block__0",
+   "name": "Eighth St Grocer",
+   "kind": "grocery",
+   "dress": "grocery",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "n_cc_b6",
+   "model": "apartments/apt_stucco3_peach",
+   "w": 10.8,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 17,
+   "area": 130,
+   "size": "M",
+   "prop_tris_est": 15530,
+   "prop_tris_capped": 15530
+  },
+  {
+   "id": "cc_b3_main__eighth_records_fe__0",
+   "name": "Groove Records",
+   "kind": "store",
+   "dress": "records",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "n_cc_b3_main",
+   "model": "ck/ck_brk3_row2_fe",
+   "w": 7.9,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 111,
+   "size": "M",
+   "prop_tris_est": 10882,
+   "prop_tris_capped": 10882
+  },
+  {
+   "id": "cc_b4_e__l4n_joiner__0",
+   "name": "Hill Joinery",
+   "kind": "keys",
+   "dress": "joinery",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "n_cc_b4_e",
+   "model": "ck/ck_svc_trade",
+   "w": 11.4,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 22,
+   "area": 137,
+   "size": "M",
+   "prop_tris_est": 15300,
+   "prop_tris_capped": 15300
+  },
+  {
+   "id": "cc_b5_w__l5n_cabinetmaker__0",
+   "name": "Lane Cabinetmakers",
+   "kind": "keys",
+   "dress": "joinery",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "n_cc_b5_w",
+   "model": "ck/ck_svc_trade",
+   "w": 11.4,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 22,
+   "area": 137,
+   "size": "M",
+   "prop_tris_est": 15300,
+   "prop_tris_capped": 15300
+  },
+  {
+   "id": "c_nw__twr_office__0",
+   "name": "Coral Barbers",
+   "kind": "salon",
+   "dress": "barber",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "c_nw",
+   "model": "urban/twr_office",
+   "w": 23.4,
+   "d": 20.0,
+   "has_row": true,
+   "old_props": 23,
+   "area": 468,
+   "size": "XL",
+   "prop_tris_est": 24993,
+   "prop_tris_capped": 24993
+  },
+  {
+   "id": "cc_b2_am__amber_e_shoes_fe__0",
+   "name": "Step Lively Shoes",
+   "kind": "shoes",
+   "dress": "shoes",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "n_cc_b2_am",
+   "model": "ck/ck_brk3_row2_fe",
+   "w": 7.9,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 111,
+   "size": "M",
+   "prop_tris_est": 12518,
+   "prop_tris_capped": 12518
+  },
+  {
+   "id": "cc_b5_w__sixth_ne_brick_row__0",
+   "name": "Sole Sixth",
+   "kind": "shoes",
+   "dress": "shoes",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "n_cc_b5_w",
+   "model": "urban/urb_brick_row",
+   "w": 7.6,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 22,
+   "area": 106,
+   "size": "M",
+   "prop_tris_est": 12518,
+   "prop_tris_capped": 12518
+  },
+  {
+   "id": "cc_b3_am__amber_se_florist__0",
+   "name": "Bloom & Twig Flowers",
+   "kind": "souvenir",
+   "dress": "florist",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "n_cc_b3_am",
+   "model": "ck/ck_brk3_row2",
+   "w": 7.9,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 111,
+   "size": "M",
+   "prop_tris_est": 12692,
+   "prop_tris_capped": 12692
+  },
+  {
+   "id": "cc_b1_n__alleyc_bike_repair__0",
+   "name": "Spokes Bike Repair",
+   "kind": "bike",
+   "dress": "bike",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "City Centre",
+   "piece": "n_cc_b1_n",
+   "model": "ck/ck_svc_trade_1d",
+   "w": 11.4,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 137,
+   "size": "M",
+   "prop_tris_est": 17657,
+   "prop_tris_capped": 17657
+  },
+  {
+   "id": "v_nw__rec_center__0",
+   "name": "Sweat Circuit Crownado",
+   "kind": "sport",
+   "dress": "gym",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Civic + Parks",
+   "piece": "v_nw",
+   "model": "civic/civ_rec_center",
+   "w": 23.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 328,
+   "size": "XL",
+   "prop_tris_est": 22538,
+   "prop_tris_capped": 22538
+  },
+  {
+   "id": "m_ne__crown_fuel__0",
+   "name": "Shoal",
+   "kind": "gas",
+   "dress": "gas",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Commercial Strip",
+   "piece": "m_ne",
+   "model": "commercial/com_gas_station",
+   "w": 9.4,
+   "d": 9.0,
+   "has_row": true,
+   "old_props": 11,
+   "area": 85,
+   "size": "M",
+   "prop_tris_est": 9354,
+   "prop_tris_capped": 9354
+  },
+  {
+   "id": "m_ne__burger_barn__0",
+   "name": "McDowell's",
+   "kind": "fast_food",
+   "dress": "fast_food",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Commercial Strip",
+   "piece": "m_ne",
+   "model": "ck/mod_fastfood",
+   "w": 2.6,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 4,
+   "area": 31,
+   "size": "S",
+   "prop_tris_est": 6304,
+   "prop_tris_capped": 6304
+  },
+  {
+   "id": "m_sw__sea_breeze_motel__0",
+   "name": "Gus' Pizza",
+   "kind": "fast_food",
+   "dress": "fast_food",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Commercial Strip",
+   "piece": "m_sw",
+   "model": "extras/ext_motel_crown",
+   "w": 41.4,
+   "d": 8.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 339,
+   "size": "XL",
+   "prop_tris_est": 16650,
+   "prop_tris_capped": 16650
+  },
+  {
+   "id": "m_nw__crown_plaza__5",
+   "name": "Cove Kitchen",
+   "kind": "restaurant",
+   "dress": "restaurant",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Commercial Strip",
+   "piece": "m_nw",
+   "model": "commercial/com_strip_mall_l",
+   "w": 8.4,
+   "d": 20.0,
+   "has_row": true,
+   "old_props": 30,
+   "area": 168,
+   "size": "L",
+   "prop_tris_est": 16978,
+   "prop_tris_capped": 16978
+  },
+  {
+   "id": "m_se__thrift_store__1",
+   "name": "Bougainvillea Laundry",
+   "kind": "cleaners",
+   "dress": "cleaners",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Commercial Strip",
+   "piece": "m_se",
+   "model": "commercial/com_boutique_row",
+   "w": 5.9,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 20,
+   "area": 83,
+   "size": "M",
+   "prop_tris_est": 11068,
+   "prop_tris_capped": 11068
+  },
+  {
+   "id": "fe_b2_cafe_0",
+   "name": "Overlook Cafe",
+   "kind": "cafe",
+   "dress": "cafe",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "East Side",
+   "piece": "n_fe_b2",
+   "model": "commercial/com_cafe_seaside",
+   "w": 5.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 20,
+   "area": 76,
+   "size": "M",
+   "prop_tris_est": 10930,
+   "prop_tris_capped": 10930
+  },
+  {
+   "id": "fe_b1e_shops_2",
+   "name": "Corner Cuts Barbers",
+   "kind": "salon",
+   "dress": "barber",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "East Side",
+   "piece": "n_fe_b1e",
+   "model": "commercial/com_orange_row",
+   "w": 5.8,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 23,
+   "area": 81,
+   "size": "M",
+   "prop_tris_est": 12973,
+   "prop_tris_capped": 12973
+  },
+  {
+   "id": "ea_shore_scoops_0",
+   "name": "Bridge Point Scoops",
+   "kind": "ice_cream",
+   "dress": "ice_cream",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Far East",
+   "piece": "n_ea_shore",
+   "model": "commercial/com_surf_shop",
+   "w": 8.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 36,
+   "area": 118,
+   "size": "M",
+   "prop_tris_est": 10826,
+   "prop_tris_capped": 10826
+  },
+  {
+   "id": "eb_se_hire_0",
+   "name": "Bayshore Paddle Hire",
+   "kind": "sport",
+   "dress": "rental",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Far East",
+   "piece": "n_eb_se",
+   "model": "commercial/com_surf_shop",
+   "w": 8.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 23,
+   "area": 118,
+   "size": "M",
+   "prop_tris_est": 12680,
+   "prop_tris_capped": 12680
+  },
+  {
+   "id": "ec_dune_s_rentals_0",
+   "name": "South Beach Rentals",
+   "kind": "sport",
+   "dress": "rental",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Far East",
+   "piece": "n_ec_dune_s",
+   "model": "commercial/com_surf_shop",
+   "w": 8.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 22,
+   "area": 118,
+   "size": "M",
+   "prop_tris_est": 12680,
+   "prop_tris_capped": 12680
+  },
+  {
+   "id": "grt_v2_j4sw_corner_next_0",
+   "name": "Panaderia La Esquina",
+   "kind": "panaderia",
+   "dress": "panaderia",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_v2_j4sw",
+   "model": "commercial/com_bakery",
+   "w": 8.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 118,
+   "size": "M",
+   "prop_tris_est": 16315,
+   "prop_tris_capped": 16315
+  },
+  {
+   "id": "grt_v2_j4se_corner_block_0",
+   "name": "Fourth St Liquor",
+   "kind": "liquor",
+   "dress": "liquor",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_v2_j4se",
+   "model": "ck/ck_brk3_corner2",
+   "w": 11.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 160,
+   "size": "L",
+   "prop_tris_est": 19462,
+   "prop_tris_capped": 19462
+  },
+  {
+   "id": "grt_v2_g4nw_row3_0",
+   "name": "Second Hand Rose",
+   "kind": "thrift",
+   "dress": "thrift",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_v2_g4nw",
+   "model": "ck/ck_grt_row3",
+   "w": 10.3,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 124,
+   "size": "M",
+   "prop_tris_est": 16730,
+   "prop_tris_capped": 16730
+  },
+  {
+   "id": "grt_v3_g4sw_corner_shop_0",
+   "name": "G Ave Mini Mart",
+   "kind": "bodega",
+   "dress": "bodega",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_v3_g4sw",
+   "model": "ck/ck_svc_trade_1d",
+   "w": 11.4,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 137,
+   "size": "M",
+   "prop_tris_est": 16888,
+   "prop_tris_capped": 16888
+  },
+  {
+   "id": "grt_v3_g4se_shop_two_0",
+   "name": "Botanica San Miguel",
+   "kind": "botanica",
+   "dress": "botanica",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_v3_g4se",
+   "model": "commercial/com_realty",
+   "w": 5.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 76,
+   "size": "M",
+   "prop_tris_est": 10166,
+   "prop_tris_capped": 10166
+  },
+  {
+   "id": "g_sw__walkup_shops__0",
+   "name": "Harbor Market",
+   "kind": "corner_shop",
+   "dress": "corner_shop",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_sw",
+   "model": "ck/ck_brk3_row2_fe",
+   "w": 11.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 32,
+   "area": 160,
+   "size": "L",
+   "prop_tris_est": 18046,
+   "prop_tris_capped": 18046
+  },
+  {
+   "id": "g_sw__corner_liquor__0",
+   "name": "High Tide Bottles & Kitchen",
+   "kind": "corner_shop",
+   "dress": "corner_shop",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_sw",
+   "model": "ck/ck_brk3_corner2",
+   "w": 11.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 28,
+   "area": 160,
+   "size": "L",
+   "prop_tris_est": 18046,
+   "prop_tris_capped": 18046
+  },
+  {
+   "id": "grt_v2_g4nw_corner_block_0",
+   "name": "Rosie's Diner",
+   "kind": "diner",
+   "dress": "diner",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_v2_g4nw",
+   "model": "urban/urb_brick_corner",
+   "w": 17.4,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 278,
+   "size": "L",
+   "prop_tris_est": 18569,
+   "prop_tris_capped": 18569
+  },
+  {
+   "id": "grt_v2_j4se_row_b_1",
+   "name": "Taco Shack",
+   "kind": "takeout",
+   "dress": "takeout",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_v2_j4se",
+   "model": "ck/ck_svc_pawn_fast",
+   "w": 5.8,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 70,
+   "size": "M",
+   "prop_tris_est": 8676,
+   "prop_tris_capped": 8676
+  },
+  {
+   "id": "grt_v1_g4ne_trade_corner_0",
+   "name": "Payday Loans 4U",
+   "kind": "cash",
+   "dress": "cash",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_v1_g4ne",
+   "model": "ck/ck_svc_trade",
+   "w": 5.7,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 68,
+   "size": "S",
+   "prop_tris_est": 6870,
+   "prop_tris_capped": 6870
+  },
+  {
+   "id": "g_nw__pawn_laundry_row__0",
+   "name": "Crownado Vintage",
+   "kind": "jewelry",
+   "dress": "vintage",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_nw",
+   "model": "ck/ck_grt_row3",
+   "w": 10.3,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 27,
+   "area": 124,
+   "size": "M",
+   "prop_tris_est": 16234,
+   "prop_tris_capped": 16234
+  },
+  {
+   "id": "grt_v3_j5sw_corner_shop_1",
+   "name": "Textbook Pawn & Loan",
+   "kind": "pawn",
+   "dress": "pawn",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_v3_j5sw",
+   "model": "ck/mod_fastfood",
+   "w": 8.8,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 106,
+   "size": "M",
+   "prop_tris_est": 14122,
+   "prop_tris_capped": 14122
+  },
+  {
+   "id": "grt_v2_j4sw_row3_0",
+   "name": "Cell Fix & Unlock",
+   "kind": "phones",
+   "dress": "phones",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_v2_j4sw",
+   "model": "ck/ck_grt_row3",
+   "w": 10.3,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 124,
+   "size": "M",
+   "prop_tris_est": 15942,
+   "prop_tris_capped": 15942
+  },
+  {
+   "id": "g_nw__pawn_laundry_row__1",
+   "name": "Island Laundry",
+   "kind": "cleaners",
+   "dress": "cleaners",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_nw",
+   "model": "ck/ck_grt_row3",
+   "w": 7.1,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 16,
+   "area": 85,
+   "size": "M",
+   "prop_tris_est": 11068,
+   "prop_tris_capped": 11068
+  },
+  {
+   "id": "grt_v2_j5ne_brick_row_1",
+   "name": "Bubbles Coin Wash",
+   "kind": "laundry",
+   "dress": "laundry",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_v2_j5ne",
+   "model": "urban/urb_brick_row",
+   "w": 6.0,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 84,
+   "size": "M",
+   "prop_tris_est": 10542,
+   "prop_tris_capped": 10542
+  },
+  {
+   "id": "grt_v2_j5ne_corner_next_0",
+   "name": "Black Anchor Tattoo",
+   "kind": "tattoo",
+   "dress": "tattoo",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_v2_j5ne",
+   "model": "ck/ck_svc_trade_1d",
+   "w": 11.4,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 137,
+   "size": "M",
+   "prop_tris_est": 15348,
+   "prop_tris_capped": 15348
+  },
+  {
+   "id": "grt_v1_j4nw_trade_corner_1",
+   "name": "Junction Auto Glass",
+   "kind": "parts",
+   "dress": "parts",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_v1_j4nw",
+   "model": "ck/ck_svc_trade",
+   "w": 5.7,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 68,
+   "size": "S",
+   "prop_tris_est": 8442,
+   "prop_tris_capped": 8442
+  },
+  {
+   "id": "grt_v1_g4ne_tyre_shop_0",
+   "name": "Big Al's Tires",
+   "kind": "tyres",
+   "dress": "tyres",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Gritty Edge",
+   "piece": "g_v1_g4ne",
+   "model": "industrial/ind_repair",
+   "w": 6.5,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 104,
+   "size": "M",
+   "prop_tris_est": 11747,
+   "prop_tris_capped": 11747
+  },
+  {
+   "id": "r_s__tudor_stucco__0",
+   "name": "The Gull Tavern",
+   "kind": "bar",
+   "dress": "bar",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "High Street",
+   "piece": "r_s",
+   "model": "houses/tudor_stucco",
+   "w": 11.9,
+   "d": 10.2,
+   "has_row": true,
+   "old_props": 36,
+   "area": 121,
+   "size": "M",
+   "prop_tris_est": 12524,
+   "prop_tris_capped": 12524
+  },
+  {
+   "id": "hs_b4_amber_pub_0",
+   "name": "The Crown & Anchor",
+   "kind": "bar",
+   "dress": "bar",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "High Street",
+   "piece": "n_hs_b4_amber",
+   "model": "commercial/com_bar_crown",
+   "w": 8.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 39,
+   "area": 118,
+   "size": "M",
+   "prop_tris_est": 12112,
+   "prop_tris_capped": 12112
+  },
+  {
+   "id": "hs_b2_amber_corner_0",
+   "name": "Ninth Street Books",
+   "kind": "books",
+   "dress": "books",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "High Street",
+   "piece": "n_hs_b2_amber",
+   "model": "ck/ck_brk3_corner2",
+   "w": 11.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 38,
+   "area": 160,
+   "size": "L",
+   "prop_tris_est": 18814,
+   "prop_tris_capped": 18814
+  },
+  {
+   "id": "r_n__craftsman_cedar__0",
+   "name": "Harbor Threads",
+   "kind": "clothes",
+   "dress": "clothes",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "High Street",
+   "piece": "r_n",
+   "model": "houses/craftsman_cedar",
+   "w": 9.4,
+   "d": 11.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 105,
+   "size": "M",
+   "prop_tris_est": 14950,
+   "prop_tris_capped": 14950
+  },
+  {
+   "id": "hs_b3_amber_condo_0",
+   "name": "Swim & Sun",
+   "kind": "clothes",
+   "dress": "clothes",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "High Street",
+   "piece": "n_hs_b3_amber",
+   "model": "apartments/apt_beach_condo",
+   "w": 17.4,
+   "d": 11.0,
+   "has_row": true,
+   "old_props": 34,
+   "area": 191,
+   "size": "L",
+   "prop_tris_est": 23378,
+   "prop_tris_capped": 23378
+  },
+  {
+   "id": "b_nw__urb_brick_corner__0",
+   "name": "Trident Caf\u00e9",
+   "kind": "cafe",
+   "dress": "cafe",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "High Street",
+   "piece": "b_nw",
+   "model": "urban/urb_brick_corner",
+   "w": 17.4,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": 89,
+   "area": 278,
+   "size": "L",
+   "prop_tris_est": 20044,
+   "prop_tris_capped": 20044
+  },
+  {
+   "id": "b_se__com_cafe_seaside__0",
+   "name": "Ines' Coffee Bar",
+   "kind": "cafe",
+   "dress": "cafe",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "High Street",
+   "piece": "b_se",
+   "model": "commercial/com_cafe_seaside",
+   "w": 5.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 20,
+   "area": 76,
+   "size": "M",
+   "prop_tris_est": 10930,
+   "prop_tris_capped": 10930
+  },
+  {
+   "id": "hs_b1_amber_cafe_0",
+   "name": "Library Grounds Coffee",
+   "kind": "cafe",
+   "dress": "cafe",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "High Street",
+   "piece": "n_hs_b1_amber",
+   "model": "commercial/com_cafe_seaside",
+   "w": 5.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 17,
+   "area": 76,
+   "size": "M",
+   "prop_tris_est": 10930,
+   "prop_tris_capped": 10930
+  },
+  {
+   "id": "hs_b6_ninth_a1_0",
+   "name": "Hilltop Market",
+   "kind": "corner_shop",
+   "dress": "corner_shop",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "High Street",
+   "piece": "n_hs_b6_ninth",
+   "model": "apartments/apt_stucco3_cream",
+   "w": 18.4,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 41,
+   "area": 221,
+   "size": "L",
+   "prop_tris_est": 21108,
+   "prop_tris_capped": 21108
+  },
+  {
+   "id": "hs_b2_amber_stucco_0",
+   "name": "Rosa's Taqueria",
+   "kind": "fast_food",
+   "dress": "taqueria",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "High Street",
+   "piece": "n_hs_b2_amber",
+   "model": "apartments/apt_stucco3_cream",
+   "w": 18.4,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 52,
+   "area": 221,
+   "size": "L",
+   "prop_tris_est": 17732,
+   "prop_tris_capped": 17732
+  },
+  {
+   "id": "b_ne__com_orange_arcade_block__2",
+   "name": "Hank's Diner",
+   "kind": "restaurant",
+   "dress": "diner",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "High Street",
+   "piece": "b_ne",
+   "model": "commercial/com_orange_arcade_block",
+   "w": 6.5,
+   "d": 17.0,
+   "has_row": true,
+   "old_props": 46,
+   "area": 110,
+   "size": "M",
+   "prop_tris_est": 12613,
+   "prop_tris_capped": 12613
+  },
+  {
+   "id": "b_sw__com_bistro__0",
+   "name": "Little Frenchy",
+   "kind": "restaurant",
+   "dress": "restaurant",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "High Street",
+   "piece": "b_sw",
+   "model": "commercial/com_bistro",
+   "w": 11.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 61,
+   "area": 160,
+   "size": "L",
+   "prop_tris_est": 16222,
+   "prop_tris_capped": 16222
+  },
+  {
+   "id": "hs_b6_amber_corner_0",
+   "name": "Ninth Street Pharmacy",
+   "kind": "pharmacy",
+   "dress": "pharmacy",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "High Street",
+   "piece": "n_hs_b6_amber",
+   "model": "ck/ck_brk3_corner2",
+   "w": 11.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 35,
+   "area": 160,
+   "size": "L",
+   "prop_tris_est": 15132,
+   "prop_tris_capped": 15132
+  },
+  {
+   "id": "hs_b3_motel_condo_0",
+   "name": "Beach Rentals",
+   "kind": "sport",
+   "dress": "rental",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "High Street",
+   "piece": "n_hs_b3_motel",
+   "model": "apartments/apt_beach_condo",
+   "w": 17.4,
+   "d": 11.0,
+   "has_row": true,
+   "old_props": 25,
+   "area": 191,
+   "size": "L",
+   "prop_tris_est": 19574,
+   "prop_tris_capped": 19574
+  },
+  {
+   "id": "hs_b4_ocean_skate_0",
+   "name": "Ocean Park Skate",
+   "kind": "sport",
+   "dress": "skate",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "High Street",
+   "piece": "n_hs_b4_ocean",
+   "model": "public/pub_skate_shed",
+   "w": 11.4,
+   "d": 10.0,
+   "has_row": true,
+   "old_props": 19,
+   "area": 114,
+   "size": "M",
+   "prop_tris_est": 13784,
+   "prop_tris_capped": 13784
+  },
+  {
+   "id": "hp_main_hospital_1",
+   "name": "Atrium Cafe",
+   "kind": "cafe",
+   "dress": "cafe",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Hospital",
+   "piece": "n_hp_main",
+   "model": "public/pub_hospital",
+   "w": 17.7,
+   "d": 20.0,
+   "has_row": true,
+   "old_props": 116,
+   "area": 354,
+   "size": "XL",
+   "prop_tris_est": 20044,
+   "prop_tris_capped": 20044
+  },
+  {
+   "id": "hp_west_pharmacy_0",
+   "name": "Island Pharmacy",
+   "kind": "pharmacy",
+   "dress": "pharmacy",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Hospital",
+   "piece": "n_hp_west",
+   "model": "ck/ck_svc_trade_1d",
+   "w": 11.4,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 27,
+   "area": 137,
+   "size": "M",
+   "prop_tris_est": 13530,
+   "prop_tris_capped": 13530
+  },
+  {
+   "id": "ind_vc_w600_n1400_se__brewery_taproom__0",
+   "name": "Coronado Brewing Taproom",
+   "kind": "taproom",
+   "dress": "taproom",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Industrial",
+   "piece": "i_vc_w600_n1400_se",
+   "model": "ck/ck_brk3_row2",
+   "w": 7.9,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 34,
+   "area": 111,
+   "size": "M",
+   "prop_tris_est": 10226,
+   "prop_tris_capped": 10226
+  },
+  {
+   "id": "ind_vc_w600_n1400_ne__island_restaurant_supply__0",
+   "name": "Shift Linen & Uniforms",
+   "kind": "uniform",
+   "dress": "uniform",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Industrial",
+   "piece": "i_vc_w600_n1400_ne",
+   "model": "ck/ck_svc_trade",
+   "w": 5.7,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 28,
+   "area": 68,
+   "size": "S",
+   "prop_tris_est": 8938,
+   "prop_tris_capped": 8938
+  },
+  {
+   "id": "ind_vb_w800_n1600_se__workwear_store__1",
+   "name": "Harbor Workwear",
+   "kind": "workwear",
+   "dress": "workwear",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Industrial",
+   "piece": "i_vb_w800_n1600_se",
+   "model": "ck/ck_svc_pawn_fast",
+   "w": 11.4,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 24,
+   "area": 137,
+   "size": "M",
+   "prop_tris_est": 18732,
+   "prop_tris_capped": 18732
+  },
+  {
+   "id": "ind_vc_w600_n1400_ne__shift_canteen__0",
+   "name": "Shift Canteen",
+   "kind": "canteen",
+   "dress": "canteen",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Industrial",
+   "piece": "i_vc_w600_n1400_ne",
+   "model": "commercial/com_orange_corner",
+   "w": 11.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 50,
+   "area": 160,
+   "size": "L",
+   "prop_tris_est": 15086,
+   "prop_tris_capped": 15086
+  },
+  {
+   "id": "ind_vc_w600_n1600_sw__dockside_fish_market__0",
+   "name": "Dockside Fish Market",
+   "kind": "fish_counter",
+   "dress": "fish_counter",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Industrial",
+   "piece": "i_vc_w600_n1600_sw",
+   "model": "commercial/com_bistro",
+   "w": 11.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 54,
+   "area": 160,
+   "size": "L",
+   "prop_tris_est": 15764,
+   "prop_tris_capped": 15764
+  },
+  {
+   "id": "ind_va_w800_n1600_sw__reefer_repair__0",
+   "name": "Cold Line Reefer Service",
+   "kind": "parts_counter",
+   "dress": "parts_counter",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Industrial",
+   "piece": "i_va_w800_n1600_sw",
+   "model": "industrial/ind_repair",
+   "w": 6.1,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": 31,
+   "area": 98,
+   "size": "M",
+   "prop_tris_est": 11393,
+   "prop_tris_capped": 11393
+  },
+  {
+   "id": "ind_vb_w600_n1400_nw__truck_parts__0",
+   "name": "Bayline Truck Parts",
+   "kind": "trade_counter",
+   "dress": "trade_counter",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Industrial",
+   "piece": "i_vb_w600_n1400_nw",
+   "model": "ck/ck_svc_trade_1d",
+   "w": 11.4,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 29,
+   "area": 137,
+   "size": "M",
+   "prop_tris_est": 16768,
+   "prop_tris_capped": 16768
+  },
+  {
+   "id": "fn_west_deli_1",
+   "name": "Hilltop Flowers",
+   "kind": "store",
+   "dress": "florist",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "North End",
+   "piece": "n_fn_west",
+   "model": "commercial/com_orange_corner",
+   "w": 5.7,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 16,
+   "area": 80,
+   "size": "M",
+   "prop_tris_est": 10617,
+   "prop_tris_capped": 10617
+  },
+  {
+   "id": "fn_mid_icecream_0",
+   "name": "Bay Scoops",
+   "kind": "ice_cream",
+   "dress": "ice_cream",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "North End",
+   "piece": "n_fn_mid",
+   "model": "commercial/com_surf_shop",
+   "w": 8.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 35,
+   "area": 118,
+   "size": "M",
+   "prop_tris_est": 10826,
+   "prop_tris_capped": 10826
+  },
+  {
+   "id": "fn_east_boutiques_1",
+   "name": "Ferry Landing Gifts",
+   "kind": "souvenir",
+   "dress": "souvenir",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "North End",
+   "piece": "n_fn_east",
+   "model": "commercial/com_boutique_row",
+   "w": 5.9,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 22,
+   "area": 83,
+   "size": "M",
+   "prop_tris_est": 9982,
+   "prop_tris_capped": 9982
+  },
+  {
+   "id": "fw_slope_market_0",
+   "name": "Hilltop Market",
+   "kind": "corner_shop",
+   "dress": "corner_shop",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "North-West",
+   "piece": "n_fw_slope",
+   "model": "commercial/com_orange_corner",
+   "w": 5.7,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 20,
+   "area": 80,
+   "size": "M",
+   "prop_tris_est": 10126,
+   "prop_tris_capped": 10126
+  },
+  {
+   "id": "fw_crest_salon_0",
+   "name": "Crest Cuts",
+   "kind": "salon",
+   "dress": "salon",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "North-West",
+   "piece": "n_fw_crest",
+   "model": "ck/ck_svc_trade_1d",
+   "w": 11.4,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 37,
+   "area": 137,
+   "size": "M",
+   "prop_tris_est": 17517,
+   "prop_tris_capped": 17517
+  },
+  {
+   "id": "res_books",
+   "name": "Hillside Books",
+   "kind": "books",
+   "dress": "books",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Residential",
+   "piece": "r_q_m400_0_se",
+   "model": "commercial/com_shallow_books",
+   "w": 5.9,
+   "d": 6.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 35,
+   "size": "S",
+   "prop_tris_est": 5864,
+   "prop_tris_capped": 5864
+  },
+  {
+   "id": "res_market",
+   "name": "Hilltop Market",
+   "kind": "corner_shop",
+   "dress": "corner_shop",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Residential",
+   "piece": "r_q_m200_m1000_se",
+   "model": "commercial/com_bakery",
+   "w": 8.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": null,
+   "area": 118,
+   "size": "M",
+   "prop_tris_est": 13302,
+   "prop_tris_capped": 13302
+  },
+  {
+   "id": "un_ne__uni_library__0",
+   "name": "University Library",
+   "kind": "books",
+   "dress": "library",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "University",
+   "piece": "n_un_ne",
+   "model": "civic/civ_library",
+   "w": 23.4,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": 59,
+   "area": 374,
+   "size": "XL",
+   "prop_tris_est": 15853,
+   "prop_tris_capped": 15853
+  },
+  {
+   "id": "un_nw__uni_museum__0",
+   "name": "University Art Museum",
+   "kind": "gallery",
+   "dress": "gallery",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "University",
+   "piece": "n_un_nw",
+   "model": "civic/civ_museum",
+   "w": 23.4,
+   "d": 15.0,
+   "has_row": true,
+   "old_props": 50,
+   "area": 351,
+   "size": "XL",
+   "prop_tris_est": 12624,
+   "prop_tris_capped": 12624
+  },
+  {
+   "id": "un_se__uni_rec__0",
+   "name": "Rec Center",
+   "kind": "gym",
+   "dress": "gym",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "University",
+   "piece": "n_un_se",
+   "model": "civic/civ_rec_center",
+   "w": 23.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 41,
+   "area": 328,
+   "size": "XL",
+   "prop_tris_est": 22538,
+   "prop_tris_capped": 22538
+  },
+  {
+   "id": "wfa_b2w__cove_deli_and_wine__1",
+   "name": "Cove Wine & Cheese",
+   "kind": "wine",
+   "dress": "wine",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Waterfront",
+   "piece": "n_wf_b2w",
+   "model": "commercial/com_orange_corner",
+   "w": 5.7,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 21,
+   "area": 80,
+   "size": "M",
+   "prop_tris_est": 12586,
+   "prop_tris_capped": 12586
+  },
+  {
+   "id": "f_ne__apt_beach_condo__0",
+   "name": "Marta's Boutique",
+   "kind": "clothes",
+   "dress": "clothes",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Waterfront",
+   "piece": "f_ne",
+   "model": "apartments/apt_beach_condo",
+   "w": 17.4,
+   "d": 11.0,
+   "has_row": true,
+   "old_props": 33,
+   "area": 191,
+   "size": "L",
+   "prop_tris_est": 23378,
+   "prop_tris_capped": 23378
+  },
+  {
+   "id": "wfa_b1e__the_fish_house__1",
+   "name": "Pier Poke & Tacos",
+   "kind": "fast_food",
+   "dress": "fast_food",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Waterfront",
+   "piece": "n_wf_b1e",
+   "model": "commercial/com_spanish_arcade_block",
+   "w": 10.7,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": 46,
+   "area": 171,
+   "size": "L",
+   "prop_tris_est": 15154,
+   "prop_tris_capped": 15154
+  },
+  {
+   "id": "wfa_b1e__the_fish_house__0",
+   "name": "The Fish House",
+   "kind": "restaurant",
+   "dress": "restaurant",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Waterfront",
+   "piece": "n_wf_b1e",
+   "model": "commercial/com_spanish_arcade_block",
+   "w": 12.7,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": 58,
+   "area": 203,
+   "size": "L",
+   "prop_tris_est": 18702,
+   "prop_tris_capped": 18702
+  },
+  {
+   "id": "wfa_b1e__pier_bait_tackle__0",
+   "name": "Pier Bait & Tackle",
+   "kind": "bait",
+   "dress": "bait",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Waterfront",
+   "piece": "n_wf_b1e",
+   "model": "commercial/com_shallow_surf",
+   "w": 8.4,
+   "d": 7.0,
+   "has_row": true,
+   "old_props": 13,
+   "area": 59,
+   "size": "S",
+   "prop_tris_est": 7764,
+   "prop_tris_capped": 7764
+  },
+  {
+   "id": "wfa_b1m__dive_surf_row__0",
+   "name": "Deep Blue Dive",
+   "kind": "dive",
+   "dress": "dive",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Waterfront",
+   "piece": "n_wf_b1m",
+   "model": "commercial/com_boutique_row",
+   "w": 5.7,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 26,
+   "area": 80,
+   "size": "M",
+   "prop_tris_est": 10548,
+   "prop_tris_capped": 10548
+  },
+  {
+   "id": "wfa_b1w__bay_bike_hire__0",
+   "name": "Bay Bikes",
+   "kind": "rental",
+   "dress": "rental",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Waterfront",
+   "piece": "n_wf_b1w",
+   "model": "commercial/com_realty",
+   "w": 5.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 20,
+   "area": 76,
+   "size": "M",
+   "prop_tris_est": 8702,
+   "prop_tris_capped": 8702
+  },
+  {
+   "id": "wfa_b2e__harbour_boatworks__0",
+   "name": "Harbour Boatworks",
+   "kind": "boatworks",
+   "dress": "boatworks",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "Waterfront",
+   "piece": "n_wf_b2e",
+   "model": "industrial/ind_repair",
+   "w": 5.2,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": 25,
+   "area": 83,
+   "size": "M",
+   "prop_tris_est": 11246,
+   "prop_tris_capped": 11246
+  },
+  {
+   "id": "w_s2b__quad_pub__0",
+   "name": "The Quad Pub",
+   "kind": "bar",
+   "dress": "bar",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "West",
+   "piece": "n_w_s2b",
+   "model": "commercial/com_bar_crown",
+   "w": 8.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 45,
+   "area": 118,
+   "size": "M",
+   "prop_tris_est": 12112,
+   "prop_tris_capped": 12112
+  },
+  {
+   "id": "w_c3__senior_center__0",
+   "name": "Ridge Senior Center",
+   "kind": "venue",
+   "dress": "community",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "West",
+   "piece": "n_w_c3",
+   "model": "civic/civ_community_center",
+   "w": 23.4,
+   "d": 14.0,
+   "has_row": true,
+   "old_props": 51,
+   "area": 328,
+   "size": "XL",
+   "prop_tris_est": 15496,
+   "prop_tris_capped": 15496
+  },
+  {
+   "id": "w_c1__post_office__0",
+   "name": "Coronado Post Office",
+   "kind": "store",
+   "dress": "post_office",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "West",
+   "piece": "n_w_c1",
+   "model": "civic/civ_post_office",
+   "w": 21.4,
+   "d": 15.0,
+   "has_row": true,
+   "old_props": 43,
+   "area": 321,
+   "size": "XL",
+   "prop_tris_est": 16644,
+   "prop_tris_capped": 16644
+  },
+  {
+   "id": "w_i1__marine_engines__0",
+   "name": "Bay Marine Engines",
+   "kind": "workshop",
+   "dress": "workshop",
+   "group": "shop (kept, NEW-18 plan)",
+   "district": "West",
+   "piece": "n_w_i1",
+   "model": "industrial/ind_repair",
+   "w": 17.4,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": 33,
+   "area": 278,
+   "size": "L",
+   "prop_tris_est": 23665,
+   "prop_tris_capped": 23665
+  },
+  {
+   "id": "m_gr_ad5ne__crown_car_care_row__0",
+   "name": "Strand Auto Parts",
+   "kind": "auto_parts",
+   "dress": "auto_parts",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_ad5ne",
+   "model": "commercial/com_orange_row",
+   "w": 11.7,
+   "d": 13.0,
+   "has_row": true,
+   "old_props": 35,
+   "area": 152,
+   "size": "M",
+   "prop_tris_est": 20916,
+   "prop_tris_capped": 20916
+  },
+  {
+   "id": "m_gr_ad5nw__community_credit_union__0",
+   "name": "Coronado Community Credit Union",
+   "kind": "bank",
+   "dress": "bank",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_ad5nw",
+   "model": "commercial/com_bank",
+   "w": 13.4,
+   "d": 13.2,
+   "has_row": true,
+   "old_props": 27,
+   "area": 177,
+   "size": "L",
+   "prop_tris_est": 15392,
+   "prop_tris_capped": 15392
+  },
+  {
+   "id": "m_gr_e4s__bridge_motors_office__0",
+   "name": "Bridge Motors",
+   "kind": "car_sales",
+   "dress": "car_sales",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_e4s",
+   "model": "commercial/com_shallow_books",
+   "w": 5.9,
+   "d": 5.2,
+   "has_row": true,
+   "old_props": 8,
+   "area": 31,
+   "size": "S",
+   "prop_tris_est": 4857,
+   "prop_tris_capped": 4857
+  },
+  {
+   "id": "m_gr_ad3sw__harbor_medical_plaza__0",
+   "name": "Bayside Urgent Care",
+   "kind": "clinic",
+   "dress": "clinic",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_ad3sw",
+   "model": "commercial/com_spanish_arcade_block",
+   "w": 10.7,
+   "d": 13.0,
+   "has_row": true,
+   "old_props": 29,
+   "area": 139,
+   "size": "M",
+   "prop_tris_est": 7377,
+   "prop_tris_capped": 7377
+  },
+  {
+   "id": "m_gr_ad5nw__adela_plaza_row__2",
+   "name": "Adela Family Dental",
+   "kind": "dentist",
+   "dress": "dentist",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_ad5nw",
+   "model": "commercial/com_boutique_row",
+   "w": 5.7,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 16,
+   "area": 68,
+   "size": "S",
+   "prop_tris_est": 5312,
+   "prop_tris_capped": 5312
+  },
+  {
+   "id": "m_gr_ad5ne__chicken_drive__0",
+   "name": "Coop & Go Chicken",
+   "kind": "drive_thru",
+   "dress": "drive_thru",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_ad5ne",
+   "model": "ck/mod_fastfood",
+   "w": 11.4,
+   "d": 11.1,
+   "has_row": true,
+   "old_props": 37,
+   "area": 127,
+   "size": "M",
+   "prop_tris_est": 12286,
+   "prop_tris_capped": 12286
+  },
+  {
+   "id": "m_gr_ad3sw__visitors_corner__1",
+   "name": "Get Well Flowers",
+   "kind": "florist",
+   "dress": "florist",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_ad3sw",
+   "model": "commercial/com_orange_corner",
+   "w": 5.7,
+   "d": 13.0,
+   "has_row": true,
+   "old_props": 20,
+   "area": 74,
+   "size": "M",
+   "prop_tris_est": 9617,
+   "prop_tris_capped": 9617
+  },
+  {
+   "id": "m_gr_ad5ne__quick_lube__0",
+   "name": "Ten Minute Lube",
+   "kind": "lube",
+   "dress": "lube",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_ad5ne",
+   "model": "industrial/ind_repair",
+   "w": 7.4,
+   "d": 8.5,
+   "has_row": true,
+   "old_props": 19,
+   "area": 63,
+   "size": "S",
+   "prop_tris_est": 6176,
+   "prop_tris_capped": 6176
+  },
+  {
+   "id": "m_gr_ad3se__harbor_view_motel__0",
+   "name": "Harbor View Motel",
+   "kind": "motel_office",
+   "dress": "motel_office",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_ad3se",
+   "model": "extras/motel_inn_court",
+   "w": 7.7,
+   "d": 9.0,
+   "has_row": true,
+   "old_props": 14,
+   "area": 69,
+   "size": "S",
+   "prop_tris_est": 4774,
+   "prop_tris_capped": 4774
+  },
+  {
+   "id": "m_gr_ad5ne__crown_car_care_row__1",
+   "name": "Bridge Cell & Vape",
+   "kind": "phone",
+   "dress": "phone",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_ad5ne",
+   "model": "commercial/com_orange_row",
+   "w": 5.7,
+   "d": 13.0,
+   "has_row": true,
+   "old_props": 18,
+   "area": 74,
+   "size": "M",
+   "prop_tris_est": 9998,
+   "prop_tris_capped": 9998
+  },
+  {
+   "id": "m_gr_ad3sw__harbor_medical_plaza__1",
+   "name": "Strand Physical Therapy",
+   "kind": "physio",
+   "dress": "physio",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_ad3sw",
+   "model": "commercial/com_spanish_arcade_block",
+   "w": 12.7,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 27,
+   "area": 152,
+   "size": "M",
+   "prop_tris_est": 14309,
+   "prop_tris_capped": 14309
+  },
+  {
+   "id": "m_gr_ad5nw__adela_plaza_corner__0",
+   "name": "Slice of the Strand",
+   "kind": "pizza",
+   "dress": "pizza",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_ad5nw",
+   "model": "commercial/com_orange_corner",
+   "w": 5.7,
+   "d": 13.0,
+   "has_row": true,
+   "old_props": 22,
+   "area": 74,
+   "size": "M",
+   "prop_tris_est": 8227,
+   "prop_tris_capped": 8227
+  },
+  {
+   "id": "m_gr_ad5nw__recycling_booth__0",
+   "name": "Bottle & Can Recycling",
+   "kind": "recycling",
+   "dress": "recycling",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_ad5nw",
+   "model": "commercial/com_kiosk",
+   "w": 3.4,
+   "d": 5.2,
+   "has_row": true,
+   "old_props": 7,
+   "area": 18,
+   "size": "S",
+   "prop_tris_est": 2674,
+   "prop_tris_capped": 2674
+  },
+  {
+   "id": "m_gr_ad5ne__tax_office__0",
+   "name": "Island Tax & Insurance",
+   "kind": "tax",
+   "dress": "tax",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_ad5ne",
+   "model": "commercial/com_realty",
+   "w": 5.4,
+   "d": 10.0,
+   "has_row": true,
+   "old_props": 17,
+   "area": 54,
+   "size": "S",
+   "prop_tris_est": 5873,
+   "prop_tris_capped": 5873
+  },
+  {
+   "id": "m_gr_ad5ne__bridge_tire_pros__0",
+   "name": "Bridge Tire Pros",
+   "kind": "tyre",
+   "dress": "tyre",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_ad5ne",
+   "model": "ck/ck_svc_trade",
+   "w": 11.4,
+   "d": 10.0,
+   "has_row": true,
+   "old_props": 18,
+   "area": 114,
+   "size": "M",
+   "prop_tris_est": 13660,
+   "prop_tris_capped": 13660
+  },
+  {
+   "id": "m_gr_ad5ne__bayside_express_wash__0",
+   "name": "Bayside Express Wash",
+   "kind": "wash_office",
+   "dress": "wash_office",
+   "group": "Strand/Adela shop kept (one of a kind)",
+   "district": "Strand / Adela",
+   "piece": "m_gr_ad5ne",
+   "model": "services/svc_carwash",
+   "w": 5.4,
+   "d": 8.0,
+   "has_row": true,
+   "old_props": 17,
+   "area": 43,
+   "size": "S",
+   "prop_tris_est": 3610,
+   "prop_tris_capped": 3610
+  },
+  {
+   "id": "cc_b1_court__law_office_s__0",
+   "name": "Bayview Bail Bonds",
+   "kind": "bail",
+   "dress": "bail",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b1_court",
+   "model": "ck/ck_brk3_row2",
+   "w": 11.4,
+   "d": 13.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 150,
+   "size": "M",
+   "prop_tris_est": 10727,
+   "prop_tris_capped": 10727
+  },
+  {
+   "id": "cc_b1_am__amber_bank__0",
+   "name": "Amber Savings Bank",
+   "kind": "bank",
+   "dress": "bank",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b1_am",
+   "model": "urban/urb_brick_corner",
+   "w": 17.4,
+   "d": 15.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 264,
+   "size": "L",
+   "prop_tris_est": 16200,
+   "prop_tris_capped": 16200
+  },
+  {
+   "id": "cc_b5_w__amber6ne_corner__0",
+   "name": "Coastal Credit Union",
+   "kind": "bank",
+   "dress": "bank",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b5_w",
+   "model": "urban/urb_brick_corner",
+   "w": 17.4,
+   "d": 15.1,
+   "has_row": true,
+   "old_props": 33,
+   "area": 263,
+   "size": "L",
+   "prop_tris_est": 16200,
+   "prop_tris_capped": 16200
+  },
+  {
+   "id": "hs_b2_amber_bank_0",
+   "name": "Crownado Savings",
+   "kind": "bank",
+   "dress": "bank",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_hs_b2_amber",
+   "model": "commercial/com_bank",
+   "w": 13.4,
+   "d": 13.2,
+   "has_row": true,
+   "old_props": 42,
+   "area": 177,
+   "size": "L",
+   "prop_tris_est": 15392,
+   "prop_tris_capped": 15392
+  },
+  {
+   "id": "hs_b5_amber_post_0",
+   "name": "Coronado Post Office",
+   "kind": "bank",
+   "dress": "post_office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_hs_b5_amber",
+   "model": "civic/civ_post_office",
+   "w": 21.4,
+   "d": 14.2,
+   "has_row": true,
+   "old_props": 86,
+   "area": 304,
+   "size": "L",
+   "prop_tris_est": 16644,
+   "prop_tris_capped": 16644
+  },
+  {
+   "id": "hs_b6_amber_bankph_0",
+   "name": "Hill Savings",
+   "kind": "bank",
+   "dress": "bank",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_hs_b6_amber",
+   "model": "ck/ck_svc_bank_pharm",
+   "w": 11.4,
+   "d": 11.1,
+   "has_row": true,
+   "old_props": 32,
+   "area": 127,
+   "size": "M",
+   "prop_tris_est": 11974,
+   "prop_tris_capped": 11974
+  },
+  {
+   "id": "ind_va_w600_n1600_se__bay_boatworks_office__0",
+   "name": "Bay Boatworks",
+   "kind": "broker",
+   "dress": "broker",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "i_va_w600_n1600_se",
+   "model": "civic/civ_harbor_office",
+   "w": 15.4,
+   "d": 11.2,
+   "has_row": true,
+   "old_props": 22,
+   "area": 172,
+   "size": "L",
+   "prop_tris_est": 17823,
+   "prop_tris_capped": 17823
+  },
+  {
+   "id": "un_ne__uni_hall__0",
+   "name": "Coronado University - Founders Hall",
+   "kind": "campus_hall",
+   "dress": "campus_hall",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_un_ne",
+   "model": "public/pub_university",
+   "w": 31.4,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": 72,
+   "area": 502,
+   "size": "XL",
+   "prop_tris_est": 14438,
+   "prop_tris_capped": 14438
+  },
+  {
+   "id": "apt_b2_7th__church_7th__0",
+   "name": "Seventh Street Community Church",
+   "kind": "chapel",
+   "dress": "chapel",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_apt_b2_7th",
+   "model": "civic/civ_church",
+   "w": 13.4,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": 81,
+   "area": 214,
+   "size": "L",
+   "prop_tris_est": 11994,
+   "prop_tris_capped": 11994
+  },
+  {
+   "id": "cc_b1_west__downtown_church__0",
+   "name": "Sacred Heart Church",
+   "kind": "church",
+   "dress": "church",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b1_west",
+   "model": "civic/civ_church",
+   "w": 13.4,
+   "d": 25.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 338,
+   "size": "XL",
+   "prop_tris_est": 14534,
+   "prop_tris_capped": 14534
+  },
+  {
+   "id": "un_nw__uni_chapel__0",
+   "name": "University Chapel",
+   "kind": "church",
+   "dress": "church",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_un_nw",
+   "model": "public/pub_chapel",
+   "w": 9.4,
+   "d": 15.2,
+   "has_row": true,
+   "old_props": 24,
+   "area": 143,
+   "size": "M",
+   "prop_tris_est": 10544,
+   "prop_tris_capped": 10544
+  },
+  {
+   "id": "w_c1__church__0",
+   "name": "St. Andrew's",
+   "kind": "church",
+   "dress": "church",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_w_c1",
+   "model": "civic/civ_church",
+   "w": 13.4,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": 56,
+   "area": 214,
+   "size": "L",
+   "prop_tris_est": 14534,
+   "prop_tris_capped": 14534
+  },
+  {
+   "id": "w_w6__ridge_church__0",
+   "name": "Ridge Community Church",
+   "kind": "church",
+   "dress": "church",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_w_w6",
+   "model": "civic/civ_church",
+   "w": 13.4,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": 56,
+   "area": 214,
+   "size": "L",
+   "prop_tris_est": 14534,
+   "prop_tris_capped": 14534
+  },
+  {
+   "id": "hp_main_er_wing_1",
+   "name": "Emergency Department",
+   "kind": "clinic",
+   "dress": "er",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_hp_main",
+   "model": "extras/ext_hospital",
+   "w": 15.7,
+   "d": 15.2,
+   "has_row": true,
+   "old_props": 58,
+   "area": 239,
+   "size": "L",
+   "prop_tris_est": 9163,
+   "prop_tris_capped": 9163
+  },
+  {
+   "id": "hp_main_hospital_0",
+   "name": "Island Hospital Main Lobby",
+   "kind": "clinic",
+   "dress": "hospital_lobby",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_hp_main",
+   "model": "public/pub_hospital",
+   "w": 17.7,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": 73,
+   "area": 283,
+   "size": "L",
+   "prop_tris_est": 10278,
+   "prop_tris_capped": 10278
+  },
+  {
+   "id": "hp_west_tower_0",
+   "name": "Bay Medical Plaza Urgent Care",
+   "kind": "clinic",
+   "dress": "clinic",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_hp_west",
+   "model": "urban/twr_office",
+   "w": 23.4,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": 90,
+   "area": 374,
+   "size": "XL",
+   "prop_tris_est": 9659,
+   "prop_tris_capped": 9659
+  },
+  {
+   "id": "apt_b2_bw__community_room__0",
+   "name": "Glorietta Hill Community Room",
+   "kind": "community",
+   "dress": "community",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_apt_b2_bw",
+   "model": "civic/civ_community_center",
+   "w": 23.4,
+   "d": 12.0,
+   "has_row": true,
+   "old_props": 62,
+   "area": 281,
+   "size": "L",
+   "prop_tris_est": 15496,
+   "prop_tris_capped": 15496
+  },
+  {
+   "id": "cc_b1_court__courthouse__0",
+   "name": "Coronado County Courthouse",
+   "kind": "court",
+   "dress": "court",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b1_court",
+   "model": "urban/urb_courthouse",
+   "w": 27.4,
+   "d": 19.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 526,
+   "size": "XL",
+   "prop_tris_est": 18962,
+   "prop_tris_capped": 18962
+  },
+  {
+   "id": "ind_va_w800_n1600_sw__hfs_office__0",
+   "name": "Harbor Freight Station",
+   "kind": "freight_office",
+   "dress": "freight_office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "i_va_w800_n1600_sw",
+   "model": "ck/ck_brk3_corner2",
+   "w": 11.4,
+   "d": 13.1,
+   "has_row": true,
+   "old_props": 21,
+   "area": 149,
+   "size": "M",
+   "prop_tris_est": 17475,
+   "prop_tris_capped": 17475
+  },
+  {
+   "id": "fw_court_community_0",
+   "name": "Crown Hill Community Center",
+   "kind": "hall",
+   "dress": "hall",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_fw_court",
+   "model": "civic/civ_community_center",
+   "w": 23.4,
+   "d": 13.2,
+   "has_row": true,
+   "old_props": 117,
+   "area": 309,
+   "size": "L",
+   "prop_tris_est": 16664,
+   "prop_tris_capped": 16664
+  },
+  {
+   "id": "hp_west_wellness_0",
+   "name": "Bayview Wellness Center",
+   "kind": "hall",
+   "dress": "clinic",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_hp_west",
+   "model": "civic/civ_community_center",
+   "w": 23.4,
+   "d": 13.2,
+   "has_row": true,
+   "old_props": 117,
+   "area": 309,
+   "size": "L",
+   "prop_tris_est": 9659,
+   "prop_tris_capped": 9659
+  },
+  {
+   "id": "hs_b2_ninth_hall_0",
+   "name": "Christ Church Community Center",
+   "kind": "hall",
+   "dress": "hall",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_hs_b2_ninth",
+   "model": "civic/civ_community_center",
+   "w": 23.4,
+   "d": 13.2,
+   "has_row": true,
+   "old_props": 117,
+   "area": 309,
+   "size": "L",
+   "prop_tris_est": 16664,
+   "prop_tris_capped": 16664
+  },
+  {
+   "id": "hs_b6_ninth_rec_center_0",
+   "name": "Hill Rec Center",
+   "kind": "hall",
+   "dress": "rec_center",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_hs_b6_ninth",
+   "model": "civic/civ_rec_center",
+   "w": 23.4,
+   "d": 13.2,
+   "has_row": true,
+   "old_props": 117,
+   "area": 309,
+   "size": "L",
+   "prop_tris_est": 18483,
+   "prop_tris_capped": 18483
+  },
+  {
+   "id": "wfa_b1w__casa_del_mar_inn__0",
+   "name": "Casa del Mar Inn",
+   "kind": "hotel",
+   "dress": "hotel",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_wf_b1w",
+   "model": "apartments/apt_spanish_revival",
+   "w": 9.2,
+   "d": 9.2,
+   "has_row": true,
+   "old_props": 17,
+   "area": 85,
+   "size": "M",
+   "prop_tris_est": 6162,
+   "prop_tris_capped": 6162
+  },
+  {
+   "id": "wfa_b2w__bayview_inn__0",
+   "name": "Bayview Inn",
+   "kind": "hotel",
+   "dress": "hotel",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_wf_b2w",
+   "model": "extras/motel_inn_court",
+   "w": 6.7,
+   "d": 9.2,
+   "has_row": true,
+   "old_props": 21,
+   "area": 62,
+   "size": "S",
+   "prop_tris_est": 4929,
+   "prop_tris_capped": 4929
+  },
+  {
+   "id": "cc_b1_court__district_attorney__0",
+   "name": "District Attorney",
+   "kind": "law",
+   "dress": "law",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b1_court",
+   "model": "modular/examples/mod_brk_row",
+   "w": 6.0,
+   "d": 13.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 79,
+   "size": "M",
+   "prop_tris_est": 8311,
+   "prop_tris_capped": 8311
+  },
+  {
+   "id": "cc_b1_court__law_office_n__0",
+   "name": "Hale & Ortiz Attorneys",
+   "kind": "law",
+   "dress": "law",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b1_court",
+   "model": "ck/ck_brk3_row2_fe",
+   "w": 11.4,
+   "d": 13.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 150,
+   "size": "M",
+   "prop_tris_est": 12207,
+   "prop_tris_capped": 12207
+  },
+  {
+   "id": "cc_b2_7th__seventh_insurance__0",
+   "name": "Pacific Insurance",
+   "kind": "law",
+   "dress": "office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b2_7th",
+   "model": "urban/urb_brick_corner",
+   "w": 17.4,
+   "d": 15.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 264,
+   "size": "L",
+   "prop_tris_est": 17917,
+   "prop_tris_capped": 17917
+  },
+  {
+   "id": "cc_b2_s__alleyc2s_architects__0",
+   "name": "Alcala Architects",
+   "kind": "law",
+   "dress": "architect",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b2_s",
+   "model": "ck/ck_brk3_row2",
+   "w": 11.4,
+   "d": 13.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 150,
+   "size": "M",
+   "prop_tris_est": 9873,
+   "prop_tris_capped": 9873
+  },
+  {
+   "id": "un_ne__uni_lecture_west__0",
+   "name": "Lecture Halls West",
+   "kind": "lecture",
+   "dress": "lecture",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_un_ne",
+   "model": "civic/civ_school_wing",
+   "w": 29.4,
+   "d": 11.2,
+   "has_row": true,
+   "old_props": 62,
+   "area": 329,
+   "size": "XL",
+   "prop_tris_est": 11910,
+   "prop_tris_capped": 11910
+  },
+  {
+   "id": "un_ne__uni_science__0",
+   "name": "Science Building",
+   "kind": "lecture",
+   "dress": "lecture",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_un_ne",
+   "model": "civic/civ_school_wing",
+   "w": 29.4,
+   "d": 11.2,
+   "has_row": true,
+   "old_props": 62,
+   "area": 329,
+   "size": "XL",
+   "prop_tris_est": 11910,
+   "prop_tris_capped": 11910
+  },
+  {
+   "id": "un_nw__uni_arts__0",
+   "name": "Fine Arts",
+   "kind": "lecture",
+   "dress": "lecture",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_un_nw",
+   "model": "civic/civ_school_wing",
+   "w": 29.4,
+   "d": 11.2,
+   "has_row": true,
+   "old_props": 62,
+   "area": 329,
+   "size": "XL",
+   "prop_tris_est": 11910,
+   "prop_tris_capped": 11910
+  },
+  {
+   "id": "un_nw__uni_humanities__0",
+   "name": "Humanities",
+   "kind": "lecture",
+   "dress": "lecture",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_un_nw",
+   "model": "civic/civ_school_wing",
+   "w": 29.4,
+   "d": 11.2,
+   "has_row": true,
+   "old_props": 62,
+   "area": 329,
+   "size": "XL",
+   "prop_tris_est": 11910,
+   "prop_tris_capped": 11910
+  },
+  {
+   "id": "un_se__uni_kinesiology__0",
+   "name": "Kinesiology",
+   "kind": "lecture",
+   "dress": "lecture",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_un_se",
+   "model": "civic/civ_school_wing",
+   "w": 29.4,
+   "d": 11.2,
+   "has_row": true,
+   "old_props": 62,
+   "area": 329,
+   "size": "XL",
+   "prop_tris_est": 11910,
+   "prop_tris_capped": 11910
+  },
+  {
+   "id": "w_w4__school_a__0",
+   "name": "Ridgeview Elementary",
+   "kind": "lecture",
+   "dress": "classroom",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_w_w4",
+   "model": "civic/civ_school_wing",
+   "w": 29.4,
+   "d": 11.2,
+   "has_row": true,
+   "old_props": 62,
+   "area": 329,
+   "size": "XL",
+   "prop_tris_est": 13621,
+   "prop_tris_capped": 13621
+  },
+  {
+   "id": "w_w4__school_b__0",
+   "name": "Ridgeview Elementary - Library",
+   "kind": "lecture",
+   "dress": "library",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_w_w4",
+   "model": "civic/civ_school_wing",
+   "w": 29.4,
+   "d": 11.2,
+   "has_row": true,
+   "old_props": 62,
+   "area": 329,
+   "size": "XL",
+   "prop_tris_est": 15853,
+   "prop_tris_capped": 15853
+  },
+  {
+   "id": "hs_b1_amber_library_0",
+   "name": "Coronado Public Library",
+   "kind": "library",
+   "dress": "library",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_hs_b1_amber",
+   "model": "civic/civ_library",
+   "w": 23.4,
+   "d": 15.2,
+   "has_row": true,
+   "old_props": 141,
+   "area": 356,
+   "size": "XL",
+   "prop_tris_est": 15853,
+   "prop_tris_capped": 15853
+  },
+  {
+   "id": "cc_b1_am__amber6_tower__0",
+   "name": "Sixth & Amber Tower",
+   "kind": "lobby",
+   "dress": "lobby",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b1_am",
+   "model": "urban/twr_glass",
+   "w": 23.4,
+   "d": 23.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 543,
+   "size": "XL",
+   "prop_tris_est": 12625,
+   "prop_tris_capped": 12625
+  },
+  {
+   "id": "cc_b3_am__amber8_glass_tower__0",
+   "name": "Eighth & Amber Tower",
+   "kind": "lobby",
+   "dress": "lobby",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b3_am",
+   "model": "urban/twr_glass",
+   "w": 23.4,
+   "d": 23.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 543,
+   "size": "XL",
+   "prop_tris_est": 12625,
+   "prop_tris_capped": 12625
+  },
+  {
+   "id": "cc_b5_e__bave6_glass_tower__0",
+   "name": "B Avenue Tower",
+   "kind": "lobby",
+   "dress": "lobby",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b5_e",
+   "model": "urban/twr_glass",
+   "w": 23.4,
+   "d": 16.0,
+   "has_row": true,
+   "old_props": 50,
+   "area": 374,
+   "size": "XL",
+   "prop_tris_est": 12625,
+   "prop_tris_capped": 12625
+  },
+  {
+   "id": "un_sw__uni_dorm_1__0",
+   "name": "Torrey Hall",
+   "kind": "lobby",
+   "dress": "lobby",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_un_sw",
+   "model": "apartments/apt_garden_cream",
+   "w": 21.0,
+   "d": 8.2,
+   "has_row": true,
+   "old_props": 30,
+   "area": 172,
+   "size": "L",
+   "prop_tris_est": 11268,
+   "prop_tris_capped": 11268
+  },
+  {
+   "id": "un_sw__uni_dorm_2__0",
+   "name": "Jacaranda Hall",
+   "kind": "lobby",
+   "dress": "lobby",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_un_sw",
+   "model": "apartments/apt_garden_mint",
+   "w": 21.0,
+   "d": 8.2,
+   "has_row": true,
+   "old_props": 30,
+   "area": 172,
+   "size": "L",
+   "prop_tris_est": 11268,
+   "prop_tris_capped": 11268
+  },
+  {
+   "id": "un_sw__uni_dorm_3__0",
+   "name": "Coral Hall",
+   "kind": "lobby",
+   "dress": "lobby",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_un_sw",
+   "model": "apartments/apt_stucco3_peach",
+   "w": 18.4,
+   "d": 11.2,
+   "has_row": true,
+   "old_props": 52,
+   "area": 206,
+   "size": "L",
+   "prop_tris_est": 12625,
+   "prop_tris_capped": 12625
+  },
+  {
+   "id": "un_sw__uni_dorm_4__0",
+   "name": "Magnolia Hall",
+   "kind": "lobby",
+   "dress": "lobby",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_un_sw",
+   "model": "apartments/apt_stucco3_cream",
+   "w": 18.4,
+   "d": 11.2,
+   "has_row": true,
+   "old_props": 52,
+   "area": 206,
+   "size": "L",
+   "prop_tris_est": 12625,
+   "prop_tris_capped": 12625
+  },
+  {
+   "id": "un_sw__uni_dorm_5__0",
+   "name": "Palm Hall",
+   "kind": "lobby",
+   "dress": "lobby",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_un_sw",
+   "model": "apartments/apt_spanish_revival",
+   "w": 17.4,
+   "d": 9.2,
+   "has_row": true,
+   "old_props": 22,
+   "area": 160,
+   "size": "L",
+   "prop_tris_est": 10772,
+   "prop_tris_capped": 10772
+  },
+  {
+   "id": "un_sw__uni_dorm_6__0",
+   "name": "Ficus Hall",
+   "kind": "lobby",
+   "dress": "lobby",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_un_sw",
+   "model": "apartments/apt_spanish_white",
+   "w": 17.4,
+   "d": 9.2,
+   "has_row": true,
+   "old_props": 22,
+   "area": 160,
+   "size": "L",
+   "prop_tris_est": 10772,
+   "prop_tris_capped": 10772
+  },
+  {
+   "id": "w_c6__child_care__0",
+   "name": "Bright Start Child Care",
+   "kind": "lobby",
+   "dress": "lobby",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_w_c6",
+   "model": "civic/civ_school_wing",
+   "w": 29.4,
+   "d": 11.2,
+   "has_row": true,
+   "old_props": 56,
+   "area": 329,
+   "size": "XL",
+   "prop_tris_est": 12625,
+   "prop_tris_capped": 12625
+  },
+  {
+   "id": "b_nw__com_realty__0",
+   "name": "Kelp Travel",
+   "kind": "office",
+   "dress": "office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "b_nw",
+   "model": "commercial/com_realty",
+   "w": 5.4,
+   "d": 13.0,
+   "has_row": true,
+   "old_props": 22,
+   "area": 70,
+   "size": "M",
+   "prop_tris_est": 8509,
+   "prop_tris_capped": 8509
+  },
+  {
+   "id": "b_se__civ_post_office__0",
+   "name": "Crownado Post Office",
+   "kind": "office",
+   "dress": "post_office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "b_se",
+   "model": "civic/civ_post_office",
+   "w": 21.4,
+   "d": 14.2,
+   "has_row": true,
+   "old_props": 32,
+   "area": 304,
+   "size": "L",
+   "prop_tris_est": 16644,
+   "prop_tris_capped": 16644
+  },
+  {
+   "id": "c_sw__com_bank__0",
+   "name": "Shore Bank",
+   "kind": "office",
+   "dress": "bank",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "c_sw",
+   "model": "commercial/com_bank",
+   "w": 13.4,
+   "d": 13.2,
+   "has_row": true,
+   "old_props": 18,
+   "area": 177,
+   "size": "L",
+   "prop_tris_est": 15392,
+   "prop_tris_capped": 15392
+  },
+  {
+   "id": "cc_b1_court__legal_aid__0",
+   "name": "Island Legal Aid",
+   "kind": "office",
+   "dress": "office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b1_court",
+   "model": "ck/ck_brk3_row2",
+   "w": 11.4,
+   "d": 13.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 150,
+   "size": "M",
+   "prop_tris_est": 13596,
+   "prop_tris_capped": 13596
+  },
+  {
+   "id": "cc_b2_n__sixth_e_dentist__0",
+   "name": "Sixth Street Dental",
+   "kind": "office",
+   "dress": "dentist",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b2_n",
+   "model": "ck/ck_brk3_row2",
+   "w": 11.4,
+   "d": 13.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 150,
+   "size": "M",
+   "prop_tris_est": 9826,
+   "prop_tris_capped": 9826
+  },
+  {
+   "id": "cc_b3_arm__seventh_s_arcade__1",
+   "name": "Bay Travel",
+   "kind": "office",
+   "dress": "office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b3_arm",
+   "model": "commercial/com_spanish_arcade_block",
+   "w": 10.6,
+   "d": 15.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 161,
+   "size": "L",
+   "prop_tris_est": 15551,
+   "prop_tris_capped": 15551
+  },
+  {
+   "id": "cc_b3_main__eighth_optician__0",
+   "name": "Uphill Dental",
+   "kind": "office",
+   "dress": "dentist",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b3_main",
+   "model": "ck/ck_brk3_row2",
+   "w": 11.4,
+   "d": 13.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 150,
+   "size": "M",
+   "prop_tris_est": 9826,
+   "prop_tris_capped": 9826
+  },
+  {
+   "id": "cc_b5_w__sixth_ne_arcade__1",
+   "name": "Sunny Travel",
+   "kind": "office",
+   "dress": "office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_cc_b5_w",
+   "model": "commercial/com_spanish_arcade_block",
+   "w": 10.7,
+   "d": 15.0,
+   "has_row": true,
+   "old_props": 21,
+   "area": 160,
+   "size": "L",
+   "prop_tris_est": 15551,
+   "prop_tris_capped": 15551
+  },
+  {
+   "id": "i_ne__machine_shop__0",
+   "name": "Abe's Tax Office",
+   "kind": "office",
+   "dress": "tax",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "i_ne",
+   "model": "ck/ck_svc_trade",
+   "w": 5.7,
+   "d": 11.1,
+   "has_row": true,
+   "old_props": 22,
+   "area": 63,
+   "size": "S",
+   "prop_tris_est": 6253,
+   "prop_tris_capped": 6253
+  },
+  {
+   "id": "i_nw__drivers_cafe__1",
+   "name": "Ocean Travel",
+   "kind": "office",
+   "dress": "office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "i_nw",
+   "model": "commercial/com_orange_corner",
+   "w": 5.7,
+   "d": 13.0,
+   "has_row": true,
+   "old_props": 25,
+   "area": 74,
+   "size": "M",
+   "prop_tris_est": 8697,
+   "prop_tris_capped": 8697
+  },
+  {
+   "id": "i_se__auto_parts__1",
+   "name": "Vera's Tax Office",
+   "kind": "office",
+   "dress": "tax",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "i_se",
+   "model": "ck/ck_svc_trade",
+   "w": 5.7,
+   "d": 11.1,
+   "has_row": true,
+   "old_props": 21,
+   "area": 63,
+   "size": "S",
+   "prop_tris_est": 6253,
+   "prop_tris_capped": 6253
+  },
+  {
+   "id": "i_sw__locksmith__1",
+   "name": "Crown Insurance",
+   "kind": "office",
+   "dress": "office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "i_sw",
+   "model": "ck/ck_svc_pawn_fast",
+   "w": 5.8,
+   "d": 11.1,
+   "has_row": true,
+   "old_props": 23,
+   "area": 64,
+   "size": "S",
+   "prop_tris_est": 8509,
+   "prop_tris_capped": 8509
+  },
+  {
+   "id": "m_ne__bank_pharmacy__0",
+   "name": "Wagon Bank",
+   "kind": "office",
+   "dress": "bank",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "m_ne",
+   "model": "ck/ck_svc_bank_pharm",
+   "w": 11.4,
+   "d": 11.1,
+   "has_row": true,
+   "old_props": 28,
+   "area": 127,
+   "size": "M",
+   "prop_tris_est": 11974,
+   "prop_tris_capped": 11974
+  },
+  {
+   "id": "m_ne__insurance_office__0",
+   "name": "Anchor Credit Union",
+   "kind": "office",
+   "dress": "bank",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "m_ne",
+   "model": "commercial/com_realty",
+   "w": 5.4,
+   "d": 13.0,
+   "has_row": true,
+   "old_props": 22,
+   "area": 70,
+   "size": "M",
+   "prop_tris_est": 8648,
+   "prop_tris_capped": 8648
+  },
+  {
+   "id": "m_sw__check_cashing__0",
+   "name": "Palm Travel",
+   "kind": "office",
+   "dress": "office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "m_sw",
+   "model": "commercial/com_realty",
+   "w": 5.4,
+   "d": 13.0,
+   "has_row": true,
+   "old_props": 22,
+   "area": 70,
+   "size": "M",
+   "prop_tris_est": 8509,
+   "prop_tris_capped": 8509
+  },
+  {
+   "id": "r_s__craftsman_sage__0",
+   "name": "Saltwater Realty",
+   "kind": "office",
+   "dress": "realty",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "r_s",
+   "model": "houses/craftsman_sage",
+   "w": 9.4,
+   "d": 11.8,
+   "has_row": true,
+   "old_props": 17,
+   "area": 111,
+   "size": "M",
+   "prop_tris_est": 7144,
+   "prop_tris_capped": 7144
+  },
+  {
+   "id": "v_ne__city_hall__0",
+   "name": "City Hall Front Desk",
+   "kind": "office",
+   "dress": "office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "v_ne",
+   "model": "civic/civ_city_hall",
+   "w": 25.4,
+   "d": 14.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 361,
+   "size": "XL",
+   "prop_tris_est": 17917,
+   "prop_tris_capped": 17917
+  },
+  {
+   "id": "v_ne__library__0",
+   "name": "Crownado Public Library",
+   "kind": "office",
+   "dress": "library",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "v_ne",
+   "model": "civic/civ_library",
+   "w": 23.4,
+   "d": 15.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 356,
+   "size": "XL",
+   "prop_tris_est": 15853,
+   "prop_tris_capped": 15853
+  },
+  {
+   "id": "v_se__police__0",
+   "name": "Crownado Police Front Desk",
+   "kind": "office",
+   "dress": "office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "v_se",
+   "model": "civic/civ_police",
+   "w": 21.4,
+   "d": 13.2,
+   "has_row": true,
+   "old_props": null,
+   "area": 282,
+   "size": "L",
+   "prop_tris_est": 17917,
+   "prop_tris_capped": 17917
+  },
+  {
+   "id": "w_c5__realty__0",
+   "name": "Ridge Realty",
+   "kind": "office",
+   "dress": "realty",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_w_c5",
+   "model": "commercial/com_realty",
+   "w": 5.4,
+   "d": 13.0,
+   "has_row": true,
+   "old_props": 16,
+   "area": 70,
+   "size": "M",
+   "prop_tris_est": 5666,
+   "prop_tris_capped": 5666
+  },
+  {
+   "id": "w_s1__housing_office__0",
+   "name": "Student Housing Office",
+   "kind": "office",
+   "dress": "office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_w_s1",
+   "model": "commercial/com_realty",
+   "w": 5.4,
+   "d": 13.0,
+   "has_row": true,
+   "old_props": 16,
+   "area": 70,
+   "size": "M",
+   "prop_tris_est": 8509,
+   "prop_tris_capped": 8509
+  },
+  {
+   "id": "wfa_b2e__harbour_tours_kiosk__0",
+   "name": "Harbour Tours",
+   "kind": "office",
+   "dress": "office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_wf_b2e",
+   "model": "commercial/com_kiosk",
+   "w": 3.4,
+   "d": 5.2,
+   "has_row": true,
+   "old_props": 11,
+   "area": 18,
+   "size": "S",
+   "prop_tris_est": 6525,
+   "prop_tris_capped": 6525
+  },
+  {
+   "id": "wfa_b2w__shores_holiday_rentals__0",
+   "name": "Shores Holiday Rentals",
+   "kind": "office",
+   "dress": "realty",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_wf_b2w",
+   "model": "commercial/com_realty",
+   "w": 5.4,
+   "d": 13.0,
+   "has_row": true,
+   "old_props": 25,
+   "area": 70,
+   "size": "M",
+   "prop_tris_est": 5666,
+   "prop_tris_capped": 5666
+  },
+  {
+   "id": "ind_vb_w800_n1600_se__public_works_office__1",
+   "name": "Public Works Permits",
+   "kind": "permits",
+   "dress": "permits",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "i_vb_w800_n1600_se",
+   "model": "modular/examples/mod_brk_row",
+   "w": 6.0,
+   "d": 13.1,
+   "has_row": true,
+   "old_props": 23,
+   "area": 79,
+   "size": "M",
+   "prop_tris_est": 8658,
+   "prop_tris_capped": 8658
+  },
+  {
+   "id": "fn_east_realty_0",
+   "name": "North End Realty",
+   "kind": "realty",
+   "dress": "realty",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_fn_east",
+   "model": "commercial/com_realty",
+   "w": 5.4,
+   "d": 13.0,
+   "has_row": true,
+   "old_props": 18,
+   "area": 70,
+   "size": "M",
+   "prop_tris_est": 5666,
+   "prop_tris_capped": 5666
+  },
+  {
+   "id": "hs_b3_amber_realty_0",
+   "name": "Ocean Realty",
+   "kind": "realty",
+   "dress": "realty",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_hs_b3_amber",
+   "model": "commercial/com_realty",
+   "w": 5.4,
+   "d": 13.0,
+   "has_row": true,
+   "old_props": 20,
+   "area": 70,
+   "size": "M",
+   "prop_tris_est": 5666,
+   "prop_tris_capped": 5666
+  },
+  {
+   "id": "ind_vb_w600_n1400_sw__island_movers_office__0",
+   "name": "Island Movers",
+   "kind": "sales_office",
+   "dress": "sales_office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "i_vb_w600_n1400_sw",
+   "model": "ck/ck_svc_bank_pharm",
+   "w": 7.7,
+   "d": 11.1,
+   "has_row": true,
+   "old_props": 16,
+   "area": 85,
+   "size": "M",
+   "prop_tris_est": 7867,
+   "prop_tris_capped": 7867
+  },
+  {
+   "id": "ind_vc_w600_n1600_sw__pacific_seafood_sales__0",
+   "name": "Pacific Seafood Co.",
+   "kind": "sales_office",
+   "dress": "sales_office",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "i_vc_w600_n1600_sw",
+   "model": "commercial/com_realty",
+   "w": 5.4,
+   "d": 13.0,
+   "has_row": true,
+   "old_props": 18,
+   "area": 70,
+   "size": "M",
+   "prop_tris_est": 6985,
+   "prop_tris_capped": 6985
+  },
+  {
+   "id": "apt_b1_7th__corner_shops_7th__1",
+   "name": "Island Tax Service",
+   "kind": "tax",
+   "dress": "tax",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_apt_b1_7th",
+   "model": "commercial/com_boutique_row",
+   "w": 6.0,
+   "d": 10.0,
+   "has_row": true,
+   "old_props": 23,
+   "area": 60,
+   "size": "S",
+   "prop_tris_est": 6253,
+   "prop_tris_capped": 6253
+  },
+  {
+   "id": "fn_east_ferry_office_0",
+   "name": "Coronado Ferry Tickets",
+   "kind": "transit",
+   "dress": "transit",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_fn_east",
+   "model": "civic/civ_harbor_office",
+   "w": 15.4,
+   "d": 11.2,
+   "has_row": true,
+   "old_props": 36,
+   "area": 172,
+   "size": "L",
+   "prop_tris_est": 8846,
+   "prop_tris_capped": 8846
+  },
+  {
+   "id": "hp_transit_transit_hall_0",
+   "name": "Island Transit Center",
+   "kind": "transit",
+   "dress": "transit",
+   "group": "non-shop indoor place",
+   "district": "",
+   "piece": "n_hp_transit",
+   "model": "civic/civ_post_office",
+   "w": 21.4,
+   "d": 14.2,
+   "has_row": true,
+   "old_props": 67,
+   "area": 304,
+   "size": "L",
+   "prop_tris_est": 9622,
+   "prop_tris_capped": 9622
+  }
+ ],
+ "kinds": {
+  "architect": {
+   "places": 1,
+   "core": [
+    "office_desk",
+    "office_chair",
+    "filing_cabinet"
+   ],
+   "stock": [
+    "drafting_table",
+    "bookcase",
+    "storage_cabinet",
+    "display_plinth",
+    "conference_table"
+   ],
+   "decor": [
+    "frame_mcm_abstract",
+    "frame_print_large",
+    "sculpture_organic"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "conference_table",
+    "drafting_table"
+   ],
+   "note": "Alcala Architects: models on plinths, drafting tables.",
+   "prop_tris_max": 9873,
+   "over_cap": 0
+  },
+  "auto_parts": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "pegboard_wall",
+    "oil_can_shelf",
+    "gondola_aisle",
+    "tire_rack",
+    "wall_shelf"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [],
+   "note": "Same as parts; all props built.",
+   "prop_tris_max": 20916,
+   "over_cap": 0
+  },
+  "bail": {
+   "places": 1,
+   "core": [
+    "security_grille_counter",
+    "office_desk",
+    "office_chair"
+   ],
+   "stock": [
+    "filing_cabinet",
+    "waiting_bench",
+    "queue_ticket_dispenser"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "queue_ticket_dispenser"
+   ],
+   "note": "Grille counter; plain, no plants.",
+   "prop_tris_max": 10727,
+   "over_cap": 0
+  },
+  "bait": {
+   "places": 1,
+   "core": [
+    "checkout_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "drinks_fridge",
+    "chest_freezer",
+    "pegboard_wall",
+    "wall_shelf"
+   ],
+   "decor": [
+    "wall_plate_fish"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "bait_tank",
+    "rod_rack"
+   ],
+   "note": "",
+   "prop_tris_max": 7764,
+   "over_cap": 0
+  },
+  "bakery": {
+   "places": 2,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "pastry_case",
+    "bakery_shelf",
+    "menu_board"
+   ],
+   "stock": [
+    "bakery_shelf",
+    "display_table",
+    "cafe_table",
+    "cafe_chair"
+   ],
+   "decor": [
+    "frame_print_small",
+    "woven_basket",
+    "wall_plate_floral"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "bread_basket_rack"
+   ],
+   "note": "Bread on the back wall, cakes in the case.",
+   "prop_tris_max": 15743,
+   "over_cap": 0
+  },
+  "bank": {
+   "places": 8,
+   "core": [
+    "bulletproof_teller_window",
+    "shop_counter",
+    "office_desk",
+    "office_chair"
+   ],
+   "stock": [
+    "filing_cabinet",
+    "waiting_bench",
+    "brochure_rack",
+    "stanchion",
+    "atm_wall",
+    "vault_door"
+   ],
+   "decor": [
+    "frame_print_large",
+    "clock_wall_sunburst",
+    "potted_plant (1)"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "atm_wall",
+    "vault_door"
+   ],
+   "note": "Teller counter + queue stanchions + officer desks; ATM and vault door on the walls (page K).",
+   "prop_tris_max": 16200,
+   "over_cap": 0
+  },
+  "bar": {
+   "places": 4,
+   "core": [
+    "bar_counter",
+    "bar_stool",
+    "wine_backbar",
+    "beer_taps"
+   ],
+   "stock": [
+    "booth_bench",
+    "restaurant_table",
+    "dining_chair"
+   ],
+   "decor": [
+    "mirror_rect",
+    "frame_print_large",
+    "clock_mantel"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "dartboard",
+    "neon_wall_sign",
+    "pool_table"
+   ],
+   "note": "Mirror behind the bar; no plants.",
+   "prop_tris_max": 12524,
+   "over_cap": 0
+  },
+  "barber": {
+   "places": 3,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "barber_chair",
+    "mirror_station"
+   ],
+   "stock": [
+    "salon_product_shelf",
+    "wash_basin",
+    "waiting_bench"
+   ],
+   "decor": [
+    "frame_print_small",
+    "clock_wall_sunburst"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "barber_pole"
+   ],
+   "note": "",
+   "prop_tris_max": 24993,
+   "over_cap": 0
+  },
+  "bike": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "workbench"
+   ],
+   "stock": [
+    "bike_stand",
+    "pegboard_wall",
+    "wall_shelf"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "bike_repair_stand"
+   ],
+   "note": "",
+   "prop_tris_max": 17657,
+   "over_cap": 0
+  },
+  "bikes": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "workbench"
+   ],
+   "stock": [
+    "bike_stand",
+    "pegboard_wall",
+    "wall_shelf",
+    "clothes_rack"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "bike_repair_stand"
+   ],
+   "note": "No room recipe today (kind missing from room_gen).",
+   "prop_tris_max": 15437,
+   "over_cap": 0
+  },
+  "boatworks": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "workbench"
+   ],
+   "stock": [
+    "pegboard_wall",
+    "wall_shelf",
+    "workbench"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "boat_on_stands",
+    "tool_chest"
+   ],
+   "note": "",
+   "prop_tris_max": 11246,
+   "over_cap": 0
+  },
+  "bodega": {
+   "places": 1,
+   "core": [
+    "checkout_counter",
+    "cash_register",
+    "cigarette_cabinet"
+   ],
+   "stock": [
+    "grocery_shelf",
+    "gondola_aisle",
+    "drinks_fridge",
+    "chest_freezer",
+    "produce_stand"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "deli_slicer_counter",
+    "shopping_basket_stack"
+   ],
+   "note": "",
+   "prop_tris_max": 16888,
+   "over_cap": 0
+  },
+  "books": {
+   "places": 3,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "bookcase",
+    "display_table",
+    "card_spinner"
+   ],
+   "decor": [
+    "lounge_chair",
+    "floor_lamp",
+    "rug_living_jute",
+    "bookends",
+    "globe_desktop",
+    "potted_plant (1)"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "magazine_rack"
+   ],
+   "note": "Reading nook with a chair and lamp in the bigger rooms.",
+   "prop_tris_max": 18814,
+   "over_cap": 0
+  },
+  "botanica": {
+   "places": 1,
+   "core": [
+    "glass_display_case",
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "wall_shelf",
+    "bookcase",
+    "display_table"
+   ],
+   "decor": [
+    "candle_pillar",
+    "candle_pair_brass",
+    "figurine_bird",
+    "statue_bust",
+    "bowl_ceramic",
+    "hurricane_lamp"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "candle_shelf",
+    "herb_jar_wall"
+   ],
+   "note": "",
+   "prop_tris_max": 10166,
+   "over_cap": 0
+  },
+  "broker": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "office_desk",
+    "office_chair",
+    "filing_cabinet"
+   ],
+   "stock": [
+    "pegboard_wall",
+    "wall_shelf",
+    "waiting_bench",
+    "chart_table"
+   ],
+   "decor": [
+    "frame_ocean",
+    "wall_plate_fish"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "chart_table"
+   ],
+   "note": "Bay Boatworks harbour office: charts, brokerage desk.",
+   "prop_tris_max": 17823,
+   "over_cap": 0
+  },
+  "cafe": {
+   "places": 6,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "espresso_machine",
+    "pastry_case",
+    "menu_board"
+   ],
+   "stock": [
+    "cafe_table",
+    "cafe_chair",
+    "bakery_shelf",
+    "drinks_fridge",
+    "booth_bench"
+   ],
+   "decor": [
+    "frame_print_medium",
+    "frame_ocean",
+    "clock_wall_sunburst",
+    "potted_plant (1, by the window)"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "coffee_grinder_retail_shelf",
+    "condiment_station"
+   ],
+   "note": "Warm wood; one plant at most.",
+   "prop_tris_max": 20044,
+   "over_cap": 0
+  },
+  "campus_hall": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "brochure_rack"
+   ],
+   "stock": [
+    "waiting_bench",
+    "lounge_chair",
+    "bookcase",
+    "potted_plant"
+   ],
+   "decor": [
+    "statue_bust",
+    "frame_print_large"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "directory_board",
+    "noticeboard_wall"
+   ],
+   "note": "Founders Hall foyer.",
+   "prop_tris_max": 14438,
+   "over_cap": 0
+  },
+  "canteen": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "kitchen_line",
+    "soda_fountain",
+    "menu_board"
+   ],
+   "stock": [
+    "restaurant_table",
+    "cafe_chair",
+    "drinks_fridge",
+    "vending_snack",
+    "vending_soda",
+    "indoor_bin"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "steam_table"
+   ],
+   "note": "Industrial canteen: drop the potted plant from its recipe.",
+   "prop_tris_max": 15086,
+   "over_cap": 0
+  },
+  "car_sales": {
+   "places": 1,
+   "core": [
+    "office_desk",
+    "office_chair"
+   ],
+   "stock": [
+    "office_desk",
+    "office_chair",
+    "side_chair",
+    "brochure_rack",
+    "showroom_car"
+   ],
+   "decor": [
+    "frame_print_large",
+    "potted_plant (1)"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "showroom_car"
+   ],
+   "note": "Bridge Motors: desks + one display car (stand-in: display_plinth, or a game vehicle mesh if the vehicle LOD fits).",
+   "prop_tris_max": 4857,
+   "over_cap": 0
+  },
+  "cash": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "office_desk"
+   ],
+   "stock": [
+    "waiting_bench",
+    "brochure_rack",
+    "filing_cabinet"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "bulletproof_teller_window"
+   ],
+   "note": "Check cashing: plain, no plants.",
+   "prop_tris_max": 6870,
+   "over_cap": 0
+  },
+  "chapel": {
+   "places": 1,
+   "core": [
+    "altar_table",
+    "lectern"
+   ],
+   "stock": [
+    "church_pew",
+    "side_chair"
+   ],
+   "decor": [
+    "candle_pillar",
+    "vase_bud"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "altar_table",
+    "church_pew",
+    "lectern"
+   ],
+   "note": "Small: 4-6 pews.",
+   "prop_tris_max": 11994,
+   "over_cap": 0
+  },
+  "church": {
+   "places": 4,
+   "core": [
+    "altar_table",
+    "lectern"
+   ],
+   "stock": [
+    "church_pew"
+   ],
+   "decor": [
+    "candle_pillar",
+    "candle_pair_brass",
+    "vase_tall"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "altar_table",
+    "church_pew",
+    "lectern"
+   ],
+   "note": "Aisle down the middle, pews both sides facing the altar.",
+   "prop_tris_max": 14534,
+   "over_cap": 0
+  },
+  "classroom": {
+   "places": 1,
+   "core": [
+    "office_desk",
+    "office_chair",
+    "whiteboard_wall"
+   ],
+   "stock": [
+    "tablet_arm_chair",
+    "bookcase",
+    "storage_cabinet"
+   ],
+   "decor": [
+    "frame_print_small",
+    "globe_desktop",
+    "clock_wall_sunburst"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "noticeboard_wall",
+    "tablet_arm_chair",
+    "whiteboard_wall"
+   ],
+   "note": "Ridgeview Elementary: rows of small desks face the board.",
+   "prop_tris_max": 13621,
+   "over_cap": 0
+  },
+  "cleaners": {
+   "places": 2,
+   "core": [
+    "laundry_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "garment_rail",
+    "washer",
+    "dryer",
+    "waiting_bench"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "garment_conveyor"
+   ],
+   "note": "",
+   "prop_tris_max": 11068,
+   "over_cap": 0
+  },
+  "clinic": {
+   "places": 3,
+   "core": [
+    "reception_desk",
+    "office_chair"
+   ],
+   "stock": [
+    "waiting_bench",
+    "exam_bed",
+    "privacy_curtain_rail",
+    "storage_cabinet",
+    "water_cooler"
+   ],
+   "decor": [
+    "frame_print_medium",
+    "clock_wall_sunburst"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "exam_bed",
+    "privacy_curtain_rail",
+    "reception_desk",
+    "water_cooler"
+   ],
+   "note": "Clinical: waiting row facing reception, one exam bay.",
+   "prop_tris_max": 9659,
+   "over_cap": 0
+  },
+  "clothes": {
+   "places": 4,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "fitting_room"
+   ],
+   "stock": [
+    "clothes_rack",
+    "garment_rail",
+    "mannequin",
+    "display_table",
+    "wall_shelf",
+    "shoe_bench"
+   ],
+   "decor": [
+    "mirror_rect",
+    "rug_accent",
+    "frame_print_tall"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "folded_stack_table"
+   ],
+   "note": "Large ones: zone men/women with racks; mirror by the fitting room.",
+   "prop_tris_max": 23886,
+   "over_cap": 0
+  },
+  "coffee": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "espresso_machine",
+    "pastry_case",
+    "menu_board"
+   ],
+   "stock": [
+    "bar_stool",
+    "cafe_table",
+    "drinks_fridge"
+   ],
+   "decor": [
+    "frame_print_small",
+    "clock_wall_sunburst"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "condiment_station"
+   ],
+   "note": "Small walk-in: counter, a ledge with stools, one table.",
+   "prop_tris_max": 9577,
+   "over_cap": 0
+  },
+  "community": {
+   "places": 2,
+   "core": [
+    "shop_counter",
+    "brochure_rack"
+   ],
+   "stock": [
+    "dining_table",
+    "dining_chair",
+    "sofa_3seat",
+    "lounge_chair",
+    "coffee_table",
+    "tv_console",
+    "waiting_bench"
+   ],
+   "decor": [
+    "frame_print_large",
+    "clock_wall_sunburst",
+    "rug_living_mcm",
+    "vase_tall",
+    "potted_plant (1)"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "folding_table_chairs"
+   ],
+   "note": "Ridge Senior Center: a lounge, not a theatre.",
+   "prop_tris_max": 15496,
+   "over_cap": 0
+  },
+  "corner_shop": {
+   "places": 5,
+   "core": [
+    "checkout_counter",
+    "cash_register",
+    "cigarette_cabinet"
+   ],
+   "stock": [
+    "gondola_aisle",
+    "grocery_shelf",
+    "drinks_fridge",
+    "chest_freezer",
+    "produce_stand",
+    "brochure_rack"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "lottery_atm_stand",
+    "shopping_basket_stack"
+   ],
+   "note": "",
+   "prop_tris_max": 21108,
+   "over_cap": 0
+  },
+  "court": {
+   "places": 1,
+   "core": [
+    "judge_bench",
+    "shop_counter"
+   ],
+   "stock": [
+    "court_bench",
+    "witness_box",
+    "jury_box",
+    "office_desk",
+    "office_chair",
+    "filing_cabinet"
+   ],
+   "decor": [
+    "clock_wall_sunburst",
+    "frame_print_large"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "court_bench",
+    "judge_bench",
+    "jury_box",
+    "lectern",
+    "witness_box"
+   ],
+   "note": "Courtroom: bench at the back on a step, gallery benches face it.",
+   "prop_tris_max": 18962,
+   "over_cap": 0
+  },
+  "dentist": {
+   "places": 3,
+   "core": [
+    "reception_desk",
+    "office_chair"
+   ],
+   "stock": [
+    "waiting_bench",
+    "dental_chair",
+    "storage_cabinet"
+   ],
+   "decor": [
+    "frame_print_small",
+    "potted_plant (1)"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "dental_chair",
+    "reception_desk"
+   ],
+   "note": "",
+   "prop_tris_max": 9826,
+   "over_cap": 0
+  },
+  "diner": {
+   "places": 2,
+   "core": [
+    "bar_counter",
+    "bar_stool",
+    "cash_register",
+    "pastry_case",
+    "soda_fountain",
+    "espresso_machine"
+   ],
+   "stock": [
+    "booth_bench",
+    "restaurant_table",
+    "menu_board"
+   ],
+   "decor": [
+    "clock_wall_sunburst",
+    "frame_motel_floral"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "jukebox"
+   ],
+   "note": "Counter with stools + booths along the window.",
+   "prop_tris_max": 18569,
+   "over_cap": 0
+  },
+  "discount": {
+   "places": 1,
+   "core": [
+    "checkout_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "gondola_aisle",
+    "grocery_shelf",
+    "wall_shelf",
+    "display_table",
+    "drinks_fridge"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "bargain_bin",
+    "shopping_basket_stack"
+   ],
+   "note": "",
+   "prop_tris_max": 11310,
+   "over_cap": 0
+  },
+  "dive": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "garment_rail",
+    "surfboard_rack",
+    "wall_shelf"
+   ],
+   "decor": [
+    "frame_ocean",
+    "sculpture_coral"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "dive_tank_rack",
+    "wetsuit_rack"
+   ],
+   "note": "",
+   "prop_tris_max": 10548,
+   "over_cap": 0
+  },
+  "donuts": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "pastry_case",
+    "espresso_machine",
+    "menu_board"
+   ],
+   "stock": [
+    "booth_bench",
+    "drinks_fridge"
+   ],
+   "decor": [
+    "clock_wall_sunburst"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "donut_display_rack"
+   ],
+   "note": "Diner-pink, no decor clutter.",
+   "prop_tris_max": 10759,
+   "over_cap": 0
+  },
+  "drive_thru": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "kitchen_line",
+    "soda_fountain",
+    "menu_board",
+    "drive_thru_window"
+   ],
+   "stock": [
+    "booth_bench",
+    "restaurant_table",
+    "indoor_bin"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "drive_thru_window"
+   ],
+   "note": "",
+   "prop_tris_max": 12286,
+   "over_cap": 0
+  },
+  "dry_cleaner": {
+   "places": 1,
+   "core": [
+    "laundry_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "garment_rail",
+    "waiting_bench"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "garment_conveyor"
+   ],
+   "note": "",
+   "prop_tris_max": 12170,
+   "over_cap": 0
+  },
+  "er": {
+   "places": 1,
+   "core": [
+    "reception_desk",
+    "office_chair"
+   ],
+   "stock": [
+    "waiting_bench",
+    "exam_bed",
+    "privacy_curtain_rail",
+    "storage_cabinet"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "exam_bed",
+    "privacy_curtain_rail",
+    "reception_desk"
+   ],
+   "note": "Emergency department: triage desk + curtained bays.",
+   "prop_tris_max": 9163,
+   "over_cap": 0
+  },
+  "fast_food": {
+   "places": 3,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "kitchen_line",
+    "soda_fountain",
+    "menu_board"
+   ],
+   "stock": [
+    "booth_bench",
+    "restaurant_table",
+    "cafe_chair",
+    "indoor_bin"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "high_chair",
+    "tray_return_condiment_station"
+   ],
+   "note": "No house decor; branded and wipe-clean.",
+   "prop_tris_max": 16650,
+   "over_cap": 0
+  },
+  "fish_counter": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "chest_freezer",
+    "ice_chest"
+   ],
+   "stock": [
+    "drinks_fridge",
+    "grocery_shelf",
+    "menu_board"
+   ],
+   "decor": [
+    "wall_plate_fish"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "fish_on_ice_display"
+   ],
+   "note": "Drop the potted plant from its recipe; ice display is the key gap.",
+   "prop_tris_max": 15764,
+   "over_cap": 0
+  },
+  "florist": {
+   "places": 3,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "drinks_fridge"
+   ],
+   "stock": [
+    "potted_plant",
+    "display_table",
+    "wall_shelf",
+    "produce_stand"
+   ],
+   "decor": [
+    "vase_tall",
+    "vase_ginger",
+    "vase_bud",
+    "woven_basket"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "flower_bucket_stand"
+   ],
+   "note": "The one kind where many plants are right; drinks_fridge stands in for a flower cooler.",
+   "prop_tris_max": 12692,
+   "over_cap": 0
+  },
+  "freight_office": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "office_desk",
+    "office_chair",
+    "filing_cabinet"
+   ],
+   "stock": [
+    "pallet_racking",
+    "storage_cabinet",
+    "waiting_bench"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "parcel_scale"
+   ],
+   "note": "Counter + racking behind; parcel_scale is built.",
+   "prop_tris_max": 17475,
+   "over_cap": 0
+  },
+  "gallery": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "filing_cabinet"
+   ],
+   "stock": [
+    "gallery_frame",
+    "waiting_bench"
+   ],
+   "decor": [
+    "frame_print_large",
+    "frame_mcm_abstract",
+    "statue_bust",
+    "sculpture_organic",
+    "sculpture_coral",
+    "vase_tall"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "display_plinth"
+   ],
+   "note": "351 m\u00b2: sculptures on plinths, frames at 1.5 m.",
+   "prop_tris_max": 12624,
+   "over_cap": 0
+  },
+  "gas": {
+   "places": 1,
+   "core": [
+    "checkout_counter",
+    "cash_register",
+    "cigarette_cabinet"
+   ],
+   "stock": [
+    "gondola_aisle",
+    "drinks_fridge",
+    "grocery_shelf",
+    "vending_snack"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "coffee_station_roller_grill",
+    "ice_merchandiser",
+    "lottery_atm_stand"
+   ],
+   "note": "",
+   "prop_tris_max": 9354,
+   "over_cap": 0
+  },
+  "grocery": {
+   "places": 1,
+   "core": [
+    "checkout_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "gondola_aisle",
+    "grocery_shelf",
+    "drinks_fridge",
+    "chest_freezer",
+    "produce_stand"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "shopping_basket_stack",
+    "shopping_cart"
+   ],
+   "note": "Two checkouts.",
+   "prop_tris_max": 15530,
+   "over_cap": 0
+  },
+  "gym": {
+   "places": 2,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "weight_bench",
+    "mirror_station",
+    "bike_stand",
+    "drinks_fridge"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "dumbbell_rack",
+    "rowing_machine",
+    "treadmill"
+   ],
+   "note": "328 m\u00b2 with one bench type: cardio and dumbbells are needed.",
+   "prop_tris_max": 22538,
+   "over_cap": 0
+  },
+  "hall": {
+   "places": 2,
+   "core": [
+    "folding_table_chairs",
+    "shop_counter"
+   ],
+   "stock": [
+    "folding_table_chairs",
+    "waiting_bench",
+    "storage_cabinet"
+   ],
+   "decor": [
+    "frame_print_large",
+    "clock_wall_sunburst"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "noticeboard_wall",
+    "stage_platform"
+   ],
+   "note": "Community hall: folding tables, a stage at the far end.",
+   "prop_tris_max": 16664,
+   "over_cap": 0
+  },
+  "hospital_lobby": {
+   "places": 1,
+   "core": [
+    "reception_desk",
+    "office_chair"
+   ],
+   "stock": [
+    "waiting_bench",
+    "vending_snack",
+    "vending_soda",
+    "potted_plant",
+    "directory_board"
+   ],
+   "decor": [
+    "frame_print_large"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "directory_board",
+    "reception_desk"
+   ],
+   "note": "Island Hospital main lobby.",
+   "prop_tris_max": 10278,
+   "over_cap": 0
+  },
+  "hotel": {
+   "places": 2,
+   "core": [
+    "reception_desk",
+    "key_rack_wall"
+   ],
+   "stock": [
+    "lounge_chair",
+    "coffee_table",
+    "brochure_rack",
+    "luggage_cart",
+    "potted_plant"
+   ],
+   "decor": [
+    "frame_ocean",
+    "vase_tall",
+    "clock_wall_sunburst",
+    "rug_runner (entry only)"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "key_rack_wall",
+    "luggage_cart",
+    "reception_desk"
+   ],
+   "note": "Inn reception + small lounge.",
+   "prop_tris_max": 6162,
+   "over_cap": 0
+  },
+  "ice_cream": {
+   "places": 2,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "gelato_case",
+    "menu_board"
+   ],
+   "stock": [
+    "cafe_table",
+    "cafe_chair",
+    "drinks_fridge"
+   ],
+   "decor": [
+    "frame_ocean",
+    "wall_plate_fish"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "cone_and_topping_station"
+   ],
+   "note": "Beach-casual palette.",
+   "prop_tris_max": 10826,
+   "over_cap": 0
+  },
+  "joinery": {
+   "places": 2,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "workbench"
+   ],
+   "stock": [
+    "workbench",
+    "workbench_garage",
+    "pegboard_wall",
+    "storage_cabinet",
+    "wall_shelf",
+    "display_table"
+   ],
+   "decor": [
+    "frame_print_small"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "lumber_rack",
+    "table_saw"
+   ],
+   "note": "Hill Joinery / Lane Cabinetmakers are tagged keys; dress them as wood shops, show pieces on display_table, sideboard or credenza as finished work.",
+   "prop_tris_max": 15300,
+   "over_cap": 0
+  },
+  "laundromat": {
+   "places": 1,
+   "core": [
+    "laundry_counter"
+   ],
+   "stock": [
+    "washer",
+    "dryer",
+    "display_table",
+    "waiting_bench",
+    "vending_snack"
+   ],
+   "decor": [
+    "clock_wall_sunburst"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "change_machine",
+    "laundry_cart"
+   ],
+   "note": "",
+   "prop_tris_max": 12698,
+   "over_cap": 0
+  },
+  "laundry": {
+   "places": 1,
+   "core": [
+    "laundry_counter"
+   ],
+   "stock": [
+    "washer",
+    "dryer",
+    "garment_rail",
+    "waiting_bench"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "change_machine",
+    "laundry_cart"
+   ],
+   "note": "",
+   "prop_tris_max": 10542,
+   "over_cap": 0
+  },
+  "law": {
+   "places": 2,
+   "core": [
+    "office_desk",
+    "office_chair",
+    "filing_cabinet"
+   ],
+   "stock": [
+    "bookcase",
+    "waiting_bench",
+    "side_chair",
+    "storage_cabinet",
+    "conference_table"
+   ],
+   "decor": [
+    "frame_print_medium",
+    "globe_desktop",
+    "books_stack",
+    "clock_mantel"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "conference_table"
+   ],
+   "note": "Bookcases on every wall; client chairs face the desk.",
+   "prop_tris_max": 12207,
+   "over_cap": 0
+  },
+  "lecture": {
+   "places": 5,
+   "core": [
+    "lectern",
+    "office_desk"
+   ],
+   "stock": [
+    "lecture_seating_row",
+    "whiteboard_wall",
+    "projector_screen"
+   ],
+   "decor": [
+    "clock_wall_sunburst"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "lectern",
+    "lecture_seating_row",
+    "projector_screen",
+    "whiteboard_wall"
+   ],
+   "note": "Rows face the lectern/whiteboard wall.",
+   "prop_tris_max": 11910,
+   "over_cap": 0
+  },
+  "library": {
+   "places": 4,
+   "core": [
+    "office_desk",
+    "office_chair",
+    "filing_cabinet"
+   ],
+   "stock": [
+    "bookcase",
+    "dining_table",
+    "dining_chair",
+    "lounge_chair",
+    "floor_lamp",
+    "card_spinner",
+    "magazine_rack"
+   ],
+   "decor": [
+    "globe_desktop",
+    "bookends",
+    "books_stack",
+    "clock_wall_sunburst",
+    "rug_living_jute",
+    "potted_plant (1)"
+   ],
+   "missing": [],
+   "built_since_new21": [],
+   "note": "Rows of bookcase, reading tables, a lounge corner.",
+   "prop_tris_max": 15853,
+   "over_cap": 0
+  },
+  "liquor": {
+   "places": 1,
+   "core": [
+    "checkout_counter",
+    "cash_register",
+    "cigarette_cabinet"
+   ],
+   "stock": [
+    "wine_backbar",
+    "drinks_fridge",
+    "grocery_shelf",
+    "gondola_aisle"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "security_mirror"
+   ],
+   "note": "Bottles on wine_backbar walls.",
+   "prop_tris_max": 19462,
+   "over_cap": 0
+  },
+  "lobby": {
+   "places": 10,
+   "core": [
+    "shop_counter",
+    "brochure_rack"
+   ],
+   "stock": [
+    "waiting_bench",
+    "lounge_chair",
+    "coffee_table",
+    "potted_plant",
+    "indoor_bin"
+   ],
+   "decor": [
+    "frame_print_large",
+    "clock_wall_sunburst",
+    "vase_tall"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "directory_board",
+    "reception_desk",
+    "water_cooler"
+   ],
+   "note": "Tower lobby: reception counter facing the door, lounge group, directory by the lifts.",
+   "prop_tris_max": 12625,
+   "over_cap": 0
+  },
+  "lube": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "oil_can_shelf",
+    "waiting_bench",
+    "vending_soda",
+    "tool_chest"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [],
+   "note": "Waiting room + counter of a quick lube.",
+   "prop_tris_max": 6176,
+   "over_cap": 0
+  },
+  "motel_office": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "key_rack_wall"
+   ],
+   "stock": [
+    "brochure_rack",
+    "waiting_bench",
+    "vending_snack",
+    "ice_chest"
+   ],
+   "decor": [
+    "frame_motel_floral"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "key_rack_wall"
+   ],
+   "note": "Harbor View Motel office.",
+   "prop_tris_max": 4774,
+   "over_cap": 0
+  },
+  "nails": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "nail_table"
+   ],
+   "stock": [
+    "salon_product_shelf",
+    "waiting_bench",
+    "side_chair"
+   ],
+   "decor": [
+    "frame_print_small",
+    "vase_bud"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "pedicure_chair"
+   ],
+   "note": "",
+   "prop_tris_max": 8076,
+   "over_cap": 0
+  },
+  "office": {
+   "places": 12,
+   "core": [
+    "office_desk",
+    "office_chair",
+    "filing_cabinet"
+   ],
+   "stock": [
+    "office_desk",
+    "office_chair",
+    "filing_cabinet",
+    "bookcase",
+    "waiting_bench",
+    "storage_cabinet",
+    "cubicle_partition",
+    "water_cooler",
+    "conference_table"
+   ],
+   "decor": [
+    "frame_print_medium",
+    "clock_wall_sunburst",
+    "potted_plant (1)"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "conference_table",
+    "cubicle_partition",
+    "water_cooler"
+   ],
+   "note": "Desks in pairs facing each other or the window; one plant.",
+   "prop_tris_max": 17917,
+   "over_cap": 0
+  },
+  "panaderia": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "pastry_case",
+    "bakery_shelf"
+   ],
+   "stock": [
+    "bakery_shelf",
+    "display_table",
+    "drinks_fridge"
+   ],
+   "decor": [
+    "wall_plate_floral",
+    "woven_basket"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "pan_dulce_tray_rack"
+   ],
+   "note": "Self-serve rack is the signature; build it.",
+   "prop_tris_max": 16315,
+   "over_cap": 0
+  },
+  "parts": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "pegboard_wall",
+    "wall_shelf",
+    "gondola_aisle"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "oil_can_shelf",
+    "tire_rack"
+   ],
+   "note": "",
+   "prop_tris_max": 8442,
+   "over_cap": 0
+  },
+  "parts_counter": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "workbench"
+   ],
+   "stock": [
+    "pegboard_wall",
+    "pharmacy_shelf",
+    "wall_shelf",
+    "waiting_bench"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "tire_rack"
+   ],
+   "note": "",
+   "prop_tris_max": 11393,
+   "over_cap": 0
+  },
+  "pawn": {
+   "places": 1,
+   "core": [
+    "glass_display_case",
+    "cash_register"
+   ],
+   "stock": [
+    "pegboard_wall",
+    "wall_shelf",
+    "bike_stand",
+    "surfboard_rack",
+    "weight_bench"
+   ],
+   "decor": [
+    "statue_bust",
+    "globe_desktop",
+    "clock_mantel",
+    "figurine_horse"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "guitar_wall",
+    "security_grille_counter",
+    "tv_electronics_stack"
+   ],
+   "note": "House decor as stock for sale.",
+   "prop_tris_max": 14122,
+   "over_cap": 0
+  },
+  "permits": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "stanchion",
+    "queue_ticket_dispenser"
+   ],
+   "stock": [
+    "waiting_bench",
+    "office_desk",
+    "office_chair",
+    "filing_cabinet",
+    "directory_board"
+   ],
+   "decor": [
+    "clock_wall_sunburst"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "directory_board",
+    "queue_ticket_dispenser"
+   ],
+   "note": "Queue lane to the counter.",
+   "prop_tris_max": 8658,
+   "over_cap": 0
+  },
+  "pharmacy": {
+   "places": 2,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "pharmacy_shelf"
+   ],
+   "stock": [
+    "pharmacy_shelf",
+    "gondola_aisle",
+    "brochure_rack",
+    "waiting_bench",
+    "card_spinner"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "blood_pressure_kiosk",
+    "dispensary_counter_partition"
+   ],
+   "note": "Clinical: no plants, no decor.",
+   "prop_tris_max": 15132,
+   "over_cap": 0
+  },
+  "phone": {
+   "places": 1,
+   "core": [
+    "glass_display_case",
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "phone_display_table",
+    "pegboard_wall",
+    "wall_shelf",
+    "tv_electronics_stack"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [],
+   "note": "Cell & vape.",
+   "prop_tris_max": 9998,
+   "over_cap": 0
+  },
+  "phones": {
+   "places": 1,
+   "core": [
+    "glass_display_case",
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "pegboard_wall",
+    "wall_shelf",
+    "display_table"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "phone_display_table"
+   ],
+   "note": "",
+   "prop_tris_max": 15942,
+   "over_cap": 0
+  },
+  "physio": {
+   "places": 1,
+   "core": [
+    "reception_desk",
+    "office_chair"
+   ],
+   "stock": [
+    "physio_table",
+    "weight_bench",
+    "dumbbell_rack",
+    "waiting_bench"
+   ],
+   "decor": [
+    "frame_print_small"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "physio_table",
+    "reception_desk"
+   ],
+   "note": "",
+   "prop_tris_max": 14309,
+   "over_cap": 0
+  },
+  "pizza": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "pizza_oven",
+    "menu_board"
+   ],
+   "stock": [
+    "restaurant_table",
+    "cafe_chair",
+    "drinks_fridge",
+    "booth_bench"
+   ],
+   "decor": [
+    "frame_print_small"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "pizza_oven"
+   ],
+   "note": "",
+   "prop_tris_max": 8227,
+   "over_cap": 0
+  },
+  "post_office": {
+   "places": 3,
+   "core": [
+    "shop_counter",
+    "stanchion",
+    "brochure_rack"
+   ],
+   "stock": [
+    "waiting_bench",
+    "filing_cabinet",
+    "wall_shelf",
+    "card_spinner",
+    "indoor_bin"
+   ],
+   "decor": [
+    "clock_wall_sunburst",
+    "frame_print_medium"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "parcel_scale",
+    "po_box_wall"
+   ],
+   "note": "Story shop; queue lane with stanchions, PO boxes are the signature.",
+   "prop_tris_max": 16644,
+   "over_cap": 0
+  },
+  "print": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "workbench"
+   ],
+   "stock": [
+    "filing_cabinet",
+    "pegboard_wall",
+    "display_table"
+   ],
+   "decor": [
+    "frame_print_medium"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "copier_large_format_printer"
+   ],
+   "note": "The printer is the gap that makes it read.",
+   "prop_tris_max": 12131,
+   "over_cap": 0
+  },
+  "realty": {
+   "places": 5,
+   "core": [
+    "office_desk",
+    "office_chair",
+    "filing_cabinet"
+   ],
+   "stock": [
+    "side_chair",
+    "brochure_rack",
+    "model_house_display",
+    "listing_board_wall"
+   ],
+   "decor": [
+    "frame_print_large",
+    "vase_bud",
+    "potted_plant (1)"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "listing_board_wall",
+    "model_house_display"
+   ],
+   "note": "Window listing boards are the signature.",
+   "prop_tris_max": 7144,
+   "over_cap": 0
+  },
+  "rec_center": {
+   "places": 1,
+   "core": [
+    "shop_counter"
+   ],
+   "stock": [
+    "weight_bench",
+    "treadmill",
+    "rowing_machine",
+    "dumbbell_rack",
+    "waiting_bench"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "noticeboard_wall"
+   ],
+   "note": "Hill Rec Center; all gym props built.",
+   "prop_tris_max": 18483,
+   "over_cap": 0
+  },
+  "records": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "display_table",
+    "bookcase",
+    "poster_case",
+    "wall_shelf"
+   ],
+   "decor": [
+    "frame_print_large",
+    "floor_lamp",
+    "rug_accent"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "record_crate_bins"
+   ],
+   "note": "",
+   "prop_tris_max": 10882,
+   "over_cap": 0
+  },
+  "recycling": {
+   "places": 1,
+   "core": [
+    "security_grille_counter"
+   ],
+   "stock": [
+    "reverse_vending_machine",
+    "laundry_cart",
+    "pallet_racking"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "reverse_vending_machine"
+   ],
+   "note": "Booth: grille window, bins, carts.",
+   "prop_tris_max": 2674,
+   "over_cap": 0
+  },
+  "rental": {
+   "places": 4,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "bike_stand",
+    "surfboard_rack",
+    "wall_shelf"
+   ],
+   "decor": [
+    "frame_ocean"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "helmet_wall",
+    "wetsuit_rack"
+   ],
+   "note": "",
+   "prop_tris_max": 19574,
+   "over_cap": 0
+  },
+  "restaurant": {
+   "places": 3,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "wine_backbar",
+    "menu_board"
+   ],
+   "stock": [
+    "restaurant_table",
+    "dining_chair",
+    "booth_bench",
+    "sideboard"
+   ],
+   "decor": [
+    "frame_print_large",
+    "mirror_rect",
+    "vase_bud",
+    "candle_pair_brass",
+    "rug_runner (entry only)"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "host_stand"
+   ],
+   "note": "Tables set at 0.6 m per seat; one vase per table max.",
+   "prop_tris_max": 18702,
+   "over_cap": 0
+  },
+  "sales_office": {
+   "places": 2,
+   "core": [
+    "shop_counter",
+    "office_desk",
+    "office_chair",
+    "filing_cabinet"
+   ],
+   "stock": [
+    "waiting_bench",
+    "brochure_rack",
+    "storage_cabinet",
+    "conference_table"
+   ],
+   "decor": [
+    "frame_print_medium"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "conference_table"
+   ],
+   "note": "",
+   "prop_tris_max": 7867,
+   "over_cap": 0
+  },
+  "salon": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "wash_basin",
+    "salon_product_shelf"
+   ],
+   "stock": [
+    "mirror_station",
+    "barber_chair",
+    "waiting_bench",
+    "side_chair"
+   ],
+   "decor": [
+    "frame_print_tall",
+    "mirror_round",
+    "vase_bud",
+    "potted_plant (1)"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "hood_dryer_chair"
+   ],
+   "note": "",
+   "prop_tris_max": 17517,
+   "over_cap": 0
+  },
+  "shoes": {
+   "places": 2,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "shoe_wall",
+    "shoe_bench",
+    "display_table",
+    "wall_shelf"
+   ],
+   "decor": [
+    "mirror_rect",
+    "rug_accent"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "foot_measure_stool"
+   ],
+   "note": "",
+   "prop_tris_max": 12518,
+   "over_cap": 0
+  },
+  "skate": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "wall_shelf",
+    "clothes_rack",
+    "shoe_wall",
+    "surfboard_rack"
+   ],
+   "decor": [
+    "frame_print_tall"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "skateboard_deck_wall"
+   ],
+   "note": "",
+   "prop_tris_max": 13784,
+   "over_cap": 0
+  },
+  "souvenir": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "wall_shelf",
+    "card_spinner",
+    "display_table",
+    "surfboard_rack"
+   ],
+   "decor": [
+    "frame_ocean",
+    "wall_plate_fish",
+    "bowl_shell",
+    "sculpture_coral",
+    "figurine_bird"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "postcard_rack",
+    "tshirt_wall"
+   ],
+   "note": "Shell/ocean decor is stock here.",
+   "prop_tris_max": 9982,
+   "over_cap": 0
+  },
+  "takeout": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "kitchen_line",
+    "soda_fountain",
+    "menu_board"
+   ],
+   "stock": [
+    "drinks_fridge",
+    "waiting_bench",
+    "indoor_bin"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "tray_return_condiment_station"
+   ],
+   "note": "Tiny front: counter, menu, a bench to wait.",
+   "prop_tris_max": 8676,
+   "over_cap": 0
+  },
+  "taproom": {
+   "places": 1,
+   "core": [
+    "bar_counter",
+    "bar_stool",
+    "beer_taps",
+    "drinks_fridge"
+   ],
+   "stock": [
+    "booth_bench",
+    "restaurant_table",
+    "dining_chair"
+   ],
+   "decor": [
+    "frame_print_large"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "keg_stack",
+    "pool_table"
+   ],
+   "note": "Concrete + kegs; remove potted_plant from its extras.",
+   "prop_tris_max": 10226,
+   "over_cap": 0
+  },
+  "taqueria": {
+   "places": 2,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "kitchen_line",
+    "menu_board"
+   ],
+   "stock": [
+    "booth_bench",
+    "restaurant_table",
+    "drinks_fridge",
+    "indoor_bin"
+   ],
+   "decor": [
+    "wall_plate_floral",
+    "woven_basket"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "salsa_bar"
+   ],
+   "note": "Salsa bar is in the room recipe but has no prop.",
+   "prop_tris_max": 17732,
+   "over_cap": 0
+  },
+  "tattoo": {
+   "places": 1,
+   "core": [
+    "glass_display_case",
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "mirror_station",
+    "wall_shelf",
+    "filing_cabinet",
+    "waiting_bench"
+   ],
+   "decor": [
+    "frame_print_medium",
+    "sculpture_organic"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "flash_art_wall",
+    "tattoo_bed_chair"
+   ],
+   "note": "",
+   "prop_tris_max": 15348,
+   "over_cap": 0
+  },
+  "tax": {
+   "places": 4,
+   "core": [
+    "office_desk",
+    "office_chair",
+    "filing_cabinet"
+   ],
+   "stock": [
+    "waiting_bench",
+    "brochure_rack",
+    "side_chair",
+    "water_cooler"
+   ],
+   "decor": [
+    "frame_print_small",
+    "clock_wall_sunburst"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "water_cooler"
+   ],
+   "note": "Small office: 2 desks, waiting bench.",
+   "prop_tris_max": 6253,
+   "over_cap": 0
+  },
+  "thrift": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "garment_rail",
+    "clothes_rack",
+    "bookcase",
+    "shoe_wall",
+    "display_table",
+    "mannequin"
+   ],
+   "decor": [
+    "figurine_cat",
+    "vase_lava",
+    "frame_motel_floral",
+    "globe_desktop",
+    "books_stack"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "bargain_bin"
+   ],
+   "note": "The one place a jumble of house decor is right.",
+   "prop_tris_max": 16730,
+   "over_cap": 0
+  },
+  "trade_counter": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "pegboard_wall",
+    "grocery_shelf",
+    "wall_shelf",
+    "display_table"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "pallet_racking"
+   ],
+   "note": "Drop the potted plant from its extras.",
+   "prop_tris_max": 16768,
+   "over_cap": 0
+  },
+  "transit": {
+   "places": 2,
+   "core": [
+    "ticket_booth",
+    "stanchion"
+   ],
+   "stock": [
+    "waiting_bench",
+    "ticket_machine",
+    "vending_snack",
+    "vending_soda",
+    "indoor_bin",
+    "departure_board"
+   ],
+   "decor": [
+    "clock_wall_sunburst"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "departure_board",
+    "ticket_machine"
+   ],
+   "note": "Ferry / bus tickets: booth + queue + benches facing the board.",
+   "prop_tris_max": 9622,
+   "over_cap": 0
+  },
+  "tyre": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "tire_rack",
+    "wheel_balancer",
+    "waiting_bench",
+    "pegboard_wall"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [],
+   "note": "",
+   "prop_tris_max": 13660,
+   "over_cap": 0
+  },
+  "tyres": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "wall_shelf",
+    "pegboard_wall",
+    "workbench",
+    "waiting_bench"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "tire_rack",
+    "wheel_balancer"
+   ],
+   "note": "",
+   "prop_tris_max": 11747,
+   "over_cap": 0
+  },
+  "uniform": {
+   "places": 1,
+   "core": [
+    "laundry_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "garment_rail",
+    "washer",
+    "dryer",
+    "waiting_bench"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "garment_conveyor"
+   ],
+   "note": "Linen service; drop the potted plant from its extras.",
+   "prop_tris_max": 8938,
+   "over_cap": 0
+  },
+  "vintage": {
+   "places": 1,
+   "core": [
+    "glass_display_case",
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "glass_display_case",
+    "garment_rail",
+    "mannequin",
+    "wall_shelf"
+   ],
+   "decor": [
+    "mirror_round",
+    "frame_motel_floral",
+    "vase_lava",
+    "clock_mantel"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "wall_safe"
+   ],
+   "note": "Crownado Vintage: jewellery cases plus a rail of vintage clothes.",
+   "prop_tris_max": 16234,
+   "over_cap": 0
+  },
+  "wash_office": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register"
+   ],
+   "stock": [
+    "change_machine",
+    "waiting_bench",
+    "vending_snack",
+    "vending_soda"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [],
+   "note": "Car-wash pay office.",
+   "prop_tris_max": 3610,
+   "over_cap": 0
+  },
+  "wine": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "cash_register",
+    "wine_backbar"
+   ],
+   "stock": [
+    "wine_backbar",
+    "display_table",
+    "drinks_fridge"
+   ],
+   "decor": [
+    "decanter",
+    "candle_pair_brass",
+    "frame_print_medium"
+   ],
+   "missing": [],
+   "built_since_new21": [
+    "wine_barrel_display"
+   ],
+   "note": "Shop, not a bar: no stools.",
+   "prop_tris_max": 12586,
+   "over_cap": 0
+  },
+  "workshop": {
+   "places": 1,
+   "core": [
+    "shop_counter",
+    "workbench"
+   ],
+   "stock": [
+    "workbench",
+    "pegboard_wall",
+    "wall_shelf"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "engine_hoist",
+    "tool_chest"
+   ],
+   "note": "",
+   "prop_tris_max": 23665,
+   "over_cap": 0
+  },
+  "workwear": {
+   "places": 1,
+   "core": [
+    "checkout_counter",
+    "cash_register",
+    "fitting_room"
+   ],
+   "stock": [
+    "garment_rail",
+    "clothes_rack",
+    "shoe_wall",
+    "shoe_bench",
+    "mannequin",
+    "display_table"
+   ],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "boot_display_wall"
+   ],
+   "note": "Drop the potted plant from its extras.",
+   "prop_tris_max": 18732,
+   "over_cap": 0
+  }
+ },
+ "missing": {},
+ "strand_swap": [
+  {
+   "id": "m_gr_ad3se__crosswalk_coffee__0",
+   "name": "Crosswalk Coffee",
+   "kind": "coffee",
+   "model": "commercial/com_kiosk",
+   "piece": "m_gr_ad3se"
+  },
+  {
+   "id": "m_gr_ad3sw__visitors_corner__0",
+   "name": "Ward Coffee",
+   "kind": "coffee",
+   "model": "commercial/com_orange_corner",
+   "piece": "m_gr_ad3sw"
+  },
+  {
+   "id": "m_gr_ad5ne__route_75_diner__0",
+   "name": "Route 75 Diner",
+   "kind": "diner",
+   "model": "commercial/com_bistro",
+   "piece": "m_gr_ad5ne"
+  },
+  {
+   "id": "m_gr_ad5nw__dollar_plus_market__0",
+   "name": "Dollar Plus Market",
+   "kind": "discount",
+   "model": "extras/ext_grocery_market",
+   "piece": "m_gr_ad5nw"
+  },
+  {
+   "id": "m_gr_ad5nw__adela_plaza_corner__1",
+   "name": "Pressed Right Cleaners",
+   "kind": "dry_cleaner",
+   "model": "commercial/com_orange_corner",
+   "piece": "m_gr_ad5nw"
+  },
+  {
+   "id": "m_gr_ad3se__iron_tide_gym__0",
+   "name": "Iron Tide Gym 24/7",
+   "kind": "gym",
+   "model": "industrial/ind_warehouse",
+   "piece": "m_gr_ad3se"
+  },
+  {
+   "id": "m_gr_ad3se__harbor_view_motel_east__0",
+   "name": "Guest Laundry",
+   "kind": "laundromat",
+   "model": "extras/motel_inn_court",
+   "piece": "m_gr_ad3se"
+  },
+  {
+   "id": "m_gr_ad5nw__adela_plaza_row__0",
+   "name": "Suds & Spin Laundry",
+   "kind": "laundromat",
+   "model": "commercial/com_boutique_row",
+   "piece": "m_gr_ad5nw"
+  },
+  {
+   "id": "m_gr_ad5nw__adela_plaza_row__1",
+   "name": "Lucky Nails",
+   "kind": "nails",
+   "model": "commercial/com_boutique_row",
+   "piece": "m_gr_ad5nw"
+  },
+  {
+   "id": "m_gr_ad5ne__taqueria_adela__0",
+   "name": "Tacos El Puente",
+   "kind": "taqueria",
+   "model": "commercial/com_shallow_surf",
+   "piece": "m_gr_ad5ne"
+  }
+ ],
+ "unknown_kinds": [],
+ "undocumented_missing": []
+}

@@ -1,0 +1,289 @@
+{
+ "_doc": "Per-room repeat caps for built-in interiors (22 Nov 2026): realistic counts. layouts.py does not place a slot past its cap (open floor or a support type); validate_bays.gd (BuiltinLib.repeat_problems) reports any template whose slot type or prop goes past it. type: default per slot type; kind: per-kind overrides of type caps; prop: per prop, every kind.",
+ "type": {
+  "seat": 16,
+  "waiting": 6,
+  "table": 8,
+  "shelf": 12,
+  "back": 8,
+  "island": 8,
+  "big": 4,
+  "station": 6,
+  "desk": 8,
+  "staff": 8,
+  "visitor": 8,
+  "row": 30,
+  "counter": 3,
+  "till": 3,
+  "plant": 3,
+  "decor": 8,
+  "board": 3,
+  "queue": 6,
+  "top": 8,
+  "front": 2,
+  "booth": 8,
+  "safe": 2,
+  "bin": 3
+ },
+ "kind": {
+  "barber": {
+   "station": 6,
+   "waiting": 3,
+   "seat": 4,
+   "big": 3,
+   "shelf": 6
+  },
+  "salon": {
+   "station": 6,
+   "waiting": 3,
+   "seat": 4,
+   "big": 3,
+   "shelf": 6
+  },
+  "nails": {
+   "station": 6,
+   "waiting": 3,
+   "seat": 4,
+   "big": 3,
+   "shelf": 6
+  },
+  "tattoo": {
+   "station": 6,
+   "waiting": 3,
+   "seat": 4,
+   "big": 3,
+   "shelf": 6
+  },
+  "restaurant": {
+   "seat": 24,
+   "table": 10,
+   "booth": 10
+  },
+  "diner": {
+   "seat": 24,
+   "table": 10,
+   "booth": 10
+  },
+  "canteen": {
+   "seat": 24,
+   "table": 10,
+   "booth": 10
+  },
+  "bar": {
+   "seat": 24,
+   "table": 10,
+   "booth": 10
+  },
+  "taproom": {
+   "seat": 24,
+   "table": 10,
+   "booth": 10
+  },
+  "pizza": {
+   "seat": 24,
+   "table": 10,
+   "booth": 10
+  },
+  "taqueria": {
+   "seat": 24,
+   "table": 10,
+   "booth": 10
+  },
+  "cafe": {
+   "seat": 16,
+   "table": 8,
+   "booth": 6
+  },
+  "coffee": {
+   "seat": 16,
+   "table": 8,
+   "booth": 6
+  },
+  "bakery": {
+   "seat": 16,
+   "table": 8,
+   "booth": 6
+  },
+  "ice_cream": {
+   "seat": 16,
+   "table": 8,
+   "booth": 6
+  },
+  "fast_food": {
+   "seat": 16,
+   "table": 8,
+   "booth": 6
+  },
+  "donuts": {
+   "seat": 16,
+   "table": 8,
+   "booth": 6
+  },
+  "panaderia": {
+   "seat": 16,
+   "table": 8,
+   "booth": 6
+  },
+  "takeout": {
+   "seat": 16,
+   "table": 8,
+   "booth": 6
+  },
+  "drive_thru": {
+   "seat": 16,
+   "table": 8,
+   "booth": 6
+  },
+  "classroom": {
+   "row": 32
+  },
+  "lecture": {
+   "row": 60
+  },
+  "church": {
+   "row": 24
+  },
+  "chapel": {
+   "row": 12
+  },
+  "court": {
+   "row": 10
+  },
+  "venue": {
+   "row": 40,
+   "seat": 24,
+   "table": 10
+  },
+  "hall": {
+   "row": 40,
+   "seat": 24,
+   "table": 10
+  },
+  "community": {
+   "row": 40,
+   "seat": 24,
+   "table": 10
+  },
+  "lobby": {
+   "table": 3,
+   "seat": 10,
+   "waiting": 6
+  },
+  "hotel": {
+   "table": 3,
+   "seat": 10,
+   "waiting": 6
+  },
+  "hospital_lobby": {
+   "table": 3,
+   "seat": 10,
+   "waiting": 6
+  },
+  "motel_office": {
+   "table": 3,
+   "seat": 10,
+   "waiting": 6
+  },
+  "clinic": {
+   "waiting": 8,
+   "seat": 8
+  },
+  "dentist": {
+   "waiting": 8,
+   "seat": 8
+  },
+  "er": {
+   "waiting": 8,
+   "seat": 8
+  },
+  "physio": {
+   "waiting": 8,
+   "seat": 8
+  },
+  "permits": {
+   "waiting": 8,
+   "seat": 8
+  },
+  "post_office": {
+   "waiting": 8,
+   "seat": 8
+  },
+  "transit": {
+   "waiting": 8,
+   "seat": 8
+  },
+  "cash": {
+   "waiting": 8,
+   "seat": 8
+  },
+  "bank": {
+   "waiting": 8,
+   "seat": 8
+  },
+  "bail": {
+   "waiting": 8,
+   "seat": 8
+  },
+  "gym": {
+   "station": 12
+  },
+  "rec_center": {
+   "station": 12
+  },
+  "laundromat": {
+   "station": 12,
+   "big": 8
+  },
+  "laundry": {
+   "station": 12,
+   "big": 8
+  },
+  "cleaners": {
+   "station": 12,
+   "big": 8
+  },
+  "dry_cleaner": {
+   "station": 12,
+   "big": 8
+  },
+  "library": {
+   "shelf": 20,
+   "island": 12,
+   "seat": 12,
+   "table": 8
+  },
+  "campus_hall": {
+   "shelf": 20,
+   "island": 12,
+   "seat": 12,
+   "table": 8
+  }
+ },
+ "prop": {
+  "floor_lamp": 2,
+  "brochure_rack": 3,
+  "coffee_table": 3,
+  "atm_wall": 2,
+  "vault_door": 1,
+  "wall_safe": 1,
+  "change_machine": 2,
+  "water_cooler": 1,
+  "vending_snack": 2,
+  "vending_soda": 2,
+  "filing_cabinet": 6,
+  "storage_cabinet": 6,
+  "queue_ticket_dispenser": 1,
+  "directory_board": 1,
+  "departure_board": 2,
+  "ticket_machine": 3,
+  "mirror_station": 6,
+  "wash_basin": 3,
+  "potted_plant": 3,
+  "card_spinner": 2,
+  "cash_register": 3,
+  "copier_large_format_printer": 1,
+  "conference_table": 2,
+  "reception_desk": 1
+ },
+ "default": 12
+}

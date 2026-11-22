@@ -1,0 +1,145 @@
+{
+ "models": 63,
+ "bays": 75,
+ "bay_places": 194,
+ "skipped": {},
+ "shell_tris_avg": 329,
+ "shell_tris_max": 848,
+ "glass_tris_avg": 8,
+ "lights_avg": 3.2,
+ "lean": [
+  "apartments/apt_beach_condo",
+  "apartments/apt_garden_cream",
+  "apartments/apt_garden_mint",
+  "apartments/apt_spanish_white",
+  "apartments/apt_stucco3_peach",
+  "civic/civ_city_hall",
+  "civic/civ_museum",
+  "ck/ck_brk3_corner2",
+  "ck/ck_brk3_row2_fe",
+  "ck/ck_svc_bank_pharm",
+  "ck/ck_svc_pawn_fast",
+  "ck/mod_fastfood",
+  "commercial/com_gas_station",
+  "commercial/com_orange_corner",
+  "commercial/com_orange_row",
+  "extras/ext_hospital",
+  "extras/ext_motel_crown",
+  "houses/craftsman_cedar",
+  "houses/craftsman_sage",
+  "modular/examples/mod_brk_row",
+  "modular/examples/mod_svc_row"
+ ],
+ "lean2": [
+  "apartments/apt_beach_condo",
+  "apartments/apt_garden_cream",
+  "apartments/apt_garden_mint",
+  "apartments/apt_spanish_white",
+  "apartments/apt_stucco3_peach",
+  "civic/civ_city_hall",
+  "civic/civ_museum",
+  "ck/ck_brk3_corner2",
+  "ck/ck_brk3_row2_fe",
+  "ck/ck_grt_row3",
+  "ck/ck_svc_bank_pharm",
+  "ck/ck_svc_pawn_fast",
+  "ck/mod_fastfood",
+  "commercial/com_gas_station",
+  "commercial/com_orange_corner",
+  "extras/ext_hospital",
+  "extras/ext_motel_crown",
+  "houses/craftsman_cedar",
+  "houses/craftsman_sage",
+  "modular/examples/mod_brk_row",
+  "modular/examples/mod_svc_row"
+ ],
+ "front_only": [
+  "apartments/apt_beach_condo",
+  "apartments/apt_garden_cream",
+  "apartments/apt_garden_mint",
+  "apartments/apt_spanish_white",
+  "apartments/apt_stucco3_peach",
+  "civic/civ_museum",
+  "ck/ck_brk3_corner2",
+  "ck/ck_brk3_row2_fe",
+  "ck/ck_svc_bank_pharm",
+  "ck/mod_fastfood",
+  "commercial/com_orange_corner",
+  "extras/ext_hospital",
+  "extras/ext_motel_crown"
+ ],
+ "over": [
+  {
+   "model": "ck/ck_svc_bank_pharm",
+   "ext": 2636,
+   "with_interiors": 2792,
+   "budget": 2500,
+   "cls": "shop (1200 / 6 m, min 2500)",
+   "over_before": true
+  },
+  {
+   "model": "extras/ext_motel_crown",
+   "ext": 4903,
+   "with_interiors": 5169,
+   "budget": 5000,
+   "cls": "apartment",
+   "over_before": false
+  },
+  {
+   "model": "apartments/apt_garden_mint",
+   "ext": 3489,
+   "with_interiors": 3599,
+   "budget": 3500,
+   "cls": "apartment",
+   "over_before": false
+  },
+  {
+   "model": "ck/mod_fastfood",
+   "ext": 2438,
+   "with_interiors": 2598,
+   "budget": 2500,
+   "cls": "shop (1200 / 6 m, min 2500)",
+   "over_before": false
+  },
+  {
+   "model": "ck/ck_brk3_corner2",
+   "ext": 3516,
+   "with_interiors": 3596,
+   "budget": 3500,
+   "cls": "apartment block (3-storey row)",
+   "over_before": true
+  },
+  {
+   "model": "apartments/apt_garden_cream",
+   "ext": 3475,
+   "with_interiors": 3585,
+   "budget": 3500,
+   "cls": "apartment",
+   "over_before": false
+  },
+  {
+   "model": "commercial/com_orange_corner",
+   "ext": 2366,
+   "with_interiors": 2584,
+   "budget": 2500,
+   "cls": "shop (1200 / 6 m, min 2500)",
+   "over_before": false
+  },
+  {
+   "model": "apartments/apt_beach_condo",
+   "ext": 3452,
+   "with_interiors": 3568,
+   "budget": 3500,
+   "cls": "apartment",
+   "over_before": false
+  },
+  {
+   "model": "apartments/apt_stucco3_peach",
+   "ext": 3440,
+   "with_interiors": 3526,
+   "budget": 3500,
+   "cls": "apartment",
+   "over_before": false
+  }
+ ]
+}

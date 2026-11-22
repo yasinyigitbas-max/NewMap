@@ -41,6 +41,8 @@ void fragment() {
 	vec2 suv = (a.x >= a.z ? vec2(v_wp.z, v_wp.y) : vec2(v_wp.x, v_wp.y)) * vec2(1.0 / 1.6, 1.0 / 19.0);
 	float streak = smoothstep(0.35, 0.85, texture(grime_tex, suv).a) * wall * streaks;
 	float amount = clamp((cavity * 0.75 + foot * 0.85 + film + streak * 0.6) * wear, 0.0, 0.9);
+	// built-in interiors (22 Nov): faces with vertex alpha < 0.5 are indoors - no street grime, rain streaks or foot dirt
+	amount *= step(0.5, COLOR.a);
 	vec3 base = alb.rgb * COLOR.rgb;
 	vec3 col = mix(base, base * grime.rgb * 1.1, amount * 0.8);
 	ALBEDO = col;

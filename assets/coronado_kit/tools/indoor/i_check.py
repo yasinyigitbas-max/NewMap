@@ -7,7 +7,7 @@ tools/validate.py (buildings, four tiers) on these files.
 
 Checks: naming, near+col present, no mid/far required, one mesh / one primitive /
 one material / one node on near, triangulated, triangle cap, <=65k verts, normals and tangents on near (collision is position-only, no normals), UV0 present, UV1 absent, opaque, textures are page I only
-(props_i_*), near materials must have occlusionTexture pointing at the ORM, no texture >1024, origin at footprint centre, ground at y=0 with
+(props_i_*; carry props page J props_j_*; indoor-places props page K props_k_*), near materials must have occlusionTexture pointing at the ORM, no texture >1024, origin at footprint centre, ground at y=0 with
 nothing below -1.5 cm, collision named col with one box or one cylinder (a few
 merged boxes allowed up to 2 if documented), budget class cap.
 
@@ -19,7 +19,9 @@ import numpy as np, pygltflib
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 KIT=os.environ.get('IN_KIT', ROOT+'/kit')
 BUDGET={'tiny':300,'small':600,'medium':1200,'large':2500}
-I_TEX_OK=('props_i_color_clean.png','props_i_normal.png','props_i_orm.png','props_i_color_worn.png','props_i_color_dirty.png')
+I_TEX_OK=('props_i_color_clean.png','props_i_normal.png','props_i_orm.png','props_i_color_worn.png','props_i_color_dirty.png',
+          'props_j_color_clean.png','props_j_normal.png','props_j_orm.png',   # page J: carry props (props/indoor/carry)
+          'props_k_color_clean.png','props_k_normal.png','props_k_orm.png')   # page K: indoor-places props (props/indoor/places)
 
 def load(path):
     g=pygltflib.GLTF2().load(path); blob=g.binary_blob() or b''

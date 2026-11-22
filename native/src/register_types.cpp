@@ -10,6 +10,7 @@
 #include "city_shops.h"
 #include "city_phone.h"
 #include "hand_grip.h"
+#include "body_layer.h"
 #include "city_native.h"
 #include "city_ped.h"
 #include "city_traffic.h"
@@ -47,6 +48,7 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(CityPhone);
 	GDREGISTER_CLASS(HandGrip);
 	GDREGISTER_CLASS(Posture);       // everyone's shoulders forward
+	GDREGISTER_CLASS(BodyLayer);     // the player's carry (the arms from a carry take, the prop in his hands) and look-at
 	GDREGISTER_CLASS(FootPlant);     // the player's feet on the ground under them      // the player's hands on a ledge's edge while he climbs     // the player's bicycle: the rider's feet and hands to the pedals and grips
 	GDREGISTER_CLASS(CityBike);      // a bicycle the player rides (touch controls, the view wobbles, crashes throw him)
 	GDREGISTER_CLASS(CityCar);

@@ -254,12 +254,6 @@
    "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
   },
   {
-   "id": "m_sw__sea_breeze_motel__0",
-   "name": "Gus' Pizza",
-   "when": "21 Nov 2026",
-   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
-  },
-  {
    "id": "m_se__thrift_store__2",
    "name": "Coral Fitness",
    "when": "21 Nov 2026",
@@ -399,7 +393,7 @@
   },
   {
    "id": "c_nw__com_cafe_seaside__0",
-   "name": "Better Buzz Caf\u00e9",
+   "name": "Better Buzz Café",
    "when": "21 Nov 2026",
    "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
   },
@@ -519,7 +513,7 @@
   },
   {
    "id": "a_sw__corner_cafe__0",
-   "name": "Heave Ho Caf\u00e9",
+   "name": "Heave Ho Café",
    "when": "21 Nov 2026",
    "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
   },
@@ -674,12 +668,6 @@
    "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
   },
   {
-   "id": "r_n__craftsman_cedar__0",
-   "name": "Harbor Threads",
-   "when": "21 Nov 2026",
-   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
-  },
-  {
    "id": "r_n__hipranch_grey__0",
    "name": "Tern Pawn & Gold",
    "when": "21 Nov 2026",
@@ -768,6 +756,18 @@
    "name": "Little Sam's Beach Fun",
    "when": "21 Nov 2026",
    "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "m_nw__crown_plaza__8",
+   "name": "Lupe's Tacos",
+   "when": "22 Nov 2026",
+   "why": "shop trim to 100: removed shop (its room, people and row go; INDOORS rollout)"
+  },
+  {
+   "id": "b_ne__lmk_village_theatre__0",
+   "name": "Villager Theatre",
+   "when": "22 Nov 2026",
+   "why": "shop trim to 100: removed shop (its room, people and row go; INDOORS rollout)"
   }
  ],
  "built_not_listed": [
@@ -1037,33 +1037,6 @@
    "signs": []
   },
   {
-   "id": "m_nw__crown_plaza__8",
-   "piece": "m_nw",
-   "label": "crown_plaza",
-   "model": "commercial/com_strip_mall_l",
-   "cell": "cell_2_-7",
-   "pos": [
-    441.5,
-    4.15000009536743,
-    -1254.0
-   ],
-   "yaw": 0.0,
-   "door_index": 8,
-   "door_along": 32.2,
-   "door_w": 1.6,
-   "bay": [
-    31.12,
-    39.2
-   ],
-   "kind": "fast_food",
-   "name": "Lupe's Tacos",
-   "style": "sun",
-   "why": "a quick bite, open late (strip)",
-   "source": "new",
-   "built": "",
-   "signs": []
-  },
-  {
    "id": "m_ne__burger_barn__0",
    "piece": "m_ne",
    "label": "burger_barn",
@@ -1248,6 +1221,60 @@
      "w": 5.18
     }
    ]
+  },
+  {
+   "id": "m_sw__sea_breeze_motel__0",
+   "piece": "m_sw",
+   "label": "sea_breeze_motel",
+   "model": "extras/ext_motel_crown",
+   "cell": "cell_2_-6",
+   "pos": [
+    429.0,
+    4.15000009536743,
+    -1133.5
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 16.3,
+   "door_w": 1.4,
+   "bay": [
+    -20.7,
+    20.7
+   ],
+   "kind": "fast_food",
+   "name": "Gus' Pizza",
+   "style": "red",
+   "why": "a quick bite, open late (strip)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 18.0,
+     "w": 5.0
+    },
+    {
+     "facade": "right",
+     "along": 2.32,
+     "w": 0.95
+    },
+    {
+     "facade": "left",
+     "along": 2.32,
+     "w": 0.95
+    },
+    {
+     "facade": "right",
+     "along": 8.0,
+     "w": 0.25
+    },
+    {
+     "facade": "left",
+     "along": 8.0,
+     "w": 0.25
+    }
+   ],
+   "restored": "22 Nov 2026: kept shop of the NEW-18 plan (Yasin 22 Nov GO: rows for the 3 missing kept shops)"
   },
   {
    "id": "g_nw__pawn_laundry_row__0",
@@ -1728,74 +1755,6 @@
    ]
   },
   {
-   "id": "b_ne__lmk_village_theatre__0",
-   "piece": "b_ne",
-   "label": "lmk_village_theatre",
-   "model": "landmarks/lmk_village_theatre",
-   "cell": "cell_0_-1",
-   "pos": [
-    28.0,
-    4.15000009536743,
-    -41.7000007629395
-   ],
-   "yaw": -90.0000025044782,
-   "door_index": 0,
-   "door_along": -1.75,
-   "door_w": 1.4,
-   "bay": [
-    -7.7,
-    0.0
-   ],
-   "kind": "venue",
-   "name": "Villager Theatre",
-   "style": "black",
-   "why": "(sample) the landmark theatre is the town cinema (Villager Theatre); its lobby is the room, the auditorium stays behind the auditorium door",
-   "source": "sample",
-   "built": "",
-   "signs": [
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 8.7
-    },
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 8.7
-    },
-    {
-     "facade": "left",
-     "along": 13.8,
-     "w": 2.7
-    },
-    {
-     "facade": "left",
-     "along": 13.8,
-     "w": 2.7
-    },
-    {
-     "facade": "left",
-     "along": 12.85,
-     "w": 1.4
-    },
-    {
-     "facade": "front",
-     "along": -3.0,
-     "w": 0.6
-    },
-    {
-     "facade": "left",
-     "along": 7.0,
-     "w": 0.6
-    },
-    {
-     "facade": "left",
-     "along": 2.65,
-     "w": 2.6
-    }
-   ]
-  },
-  {
    "id": "b_nw__urb_brick_corner__0",
    "piece": "b_nw",
    "label": "urb_brick_corner",
@@ -1815,7 +1774,7 @@
     8.7
    ],
    "kind": "cafe",
-   "name": "Trident Caf\u00e9",
+   "name": "Trident Café",
    "style": "green",
    "why": "(sample) the corner cafe at the main junction: first coffee on the way to work, people watch the crossing",
    "source": "sample",
@@ -1827,6 +1786,65 @@
      "w": 2.48
     }
    ]
+  },
+  {
+   "id": "r_n__craftsman_cedar__0",
+   "piece": "r_n",
+   "label": "craftsman_cedar",
+   "model": "houses/craftsman_cedar",
+   "cell": "cell_0_-1",
+   "pos": [
+    61.5,
+    4.84278106689453,
+    -21.2000007629395
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -2.8,
+   "door_w": 1.0,
+   "bay": [
+    -4.7,
+    4.7
+   ],
+   "kind": "clothes",
+   "name": "Harbor Threads",
+   "style": "cream",
+   "why": "window frontage for clothes (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 8.12,
+     "w": 0.38
+    },
+    {
+     "facade": "left",
+     "along": 8.12,
+     "w": 0.38
+    },
+    {
+     "facade": "front",
+     "along": -4.75,
+     "w": 0.38
+    },
+    {
+     "facade": "right",
+     "along": 8.12,
+     "w": 0.38
+    },
+    {
+     "facade": "left",
+     "along": 8.12,
+     "w": 0.38
+    },
+    {
+     "facade": "front",
+     "along": -0.45,
+     "w": 0.38
+    }
+   ],
+   "restored": "22 Nov 2026: kept shop of the NEW-18 plan (Yasin 22 Nov GO: rows for the 3 missing kept shops)"
   },
   {
    "id": "r_s__tudor_stucco__0",

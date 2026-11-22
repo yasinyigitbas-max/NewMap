@@ -18,6 +18,7 @@ extends SceneTree
 ##   options: --tint (trial: a paint tint per building from its position)   --out=res://... (another runtime folder)
 const ColData := preload("res://tools/city/bake/col_data.gd")
 const PIECES := "res://map_dc/coronado/city_kit/pieces/"
+const BL := preload("res://tools/city/rooms/builtin/builtin_lib.gd")      ## built-in interiors (22 Nov pilot)
 const LAYOUT := "res://map_dc/coronado/city_kit/city_grid_layout.json"
 const SH := "res://map_dc/coronado/city_kit/shaders/rt/"
 const TEX := "res://map_dc/coronado/city_kit/runtime_tex/"      ## texture arrays (tools/city/bake/make_arrays.py)
@@ -91,6 +92,12 @@ var rooms_on := true          # --norooms: buildings stay closed (as before 20 N
 var rooms_idx := {}           # "piece|label" -> Array of room file names (interiors/rooms/<name>.scn)
 var room_meta_cache := {}     # room file name -> {"cut": [...], "centre": Vector3}
 var room_contracts := {}      # model -> contract (all interiors/room_contracts*.json)
+var builtin_idx := {}         # "piece|label" -> [{id, kind}] (assignment rows of buildings whose model carries its interior)
+var builtin_fail: Array = []  # validator problems: any fails the bake
+var builtin_dress := {}       # INDOORS place id -> furnishing kind (dress_as; interiors/builtin/indoors_spec.json)
+var builtin_name := {}        # place id -> its name (the shop sign's, for room_people)
+var builtin_rank := {}        # place id -> its rank among the places of its kind (sorted by id): the variation deal
+var builtin_valid := {}       # "model|bay|kinds" -> problems (validated once)
 var room_regs := {}           # atlas regions (assets/coronado_kit/textures/city_layout.json)
 var room_cut_cache := {}      # kit + cut signature -> the cut near mesh
 var gap_col := true          # --nogapcol: buildings get only their kit "col" shell (as before 20 Nov)
@@ -718,6 +725,10 @@ func _rooms_load() -> void:
 		for r: Variant in rows:
 			if not (r is Dictionary) or not (r as Dictionary).has("id") or not (r as Dictionary).has("piece"): continue
 			var id := String(r.id); var nm := ""
+			if String(r.get("kind", "")) != "":      # (built-in interiors: the row's shop kind, whatever room file exists)
+				var bk := "%s|%s" % [String(r.piece), String(r.get("label", ""))]
+				if not builtin_idx.has(bk): builtin_idx[bk] = []
+				(builtin_idx[bk] as Array).append({"id": id, "kind": String(r.kind), "door_along": float(r.get("door_along", 0.0))})
 			for cand: String in [String(r.get("built", "")), id, "g_" + id]:
 				if cand != "" and files.has(cand): nm = cand; break
 			if nm == "": continue
@@ -729,6 +740,17 @@ func _rooms_load() -> void:
 			var c: Variant = JSON.parse_string(FileAccess.get_file_as_string(ROOM_DIR + f))
 			if c is Dictionary: (room_contracts as Dictionary).merge((c as Dictionary).get("models", {}), false)
 	room_regs = JSON.parse_string(FileAccess.get_file_as_string("res://assets/coronado_kit/textures/city_layout.json")).regions
+	var sp: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://map_dc/coronado/city_kit/interiors/builtin/indoors_spec.json"))
+	if sp is Dictionary:
+		var by_kind := {}
+		for pl: Dictionary in (sp as Dictionary).get("places", []):
+			builtin_dress[String(pl.id)] = String(pl.dress)
+			builtin_name[String(pl.id)] = String(pl.get("name", ""))
+			if not by_kind.has(pl.dress): by_kind[pl.dress] = []
+			(by_kind[pl.dress] as Array).append(String(pl.id))
+		for k: String in by_kind:
+			var ids: Array = by_kind[k]; ids.sort()
+			for j in ids.size(): builtin_rank[ids[j]] = j
 	DirAccess.make_dir_recursive_absolute(out + "rooms")
 	stat["rooms_buildings"] = rooms_idx.size()
 
@@ -924,6 +946,102 @@ func _room_building(rec: Dictionary, piece: String) -> void:
 			var e: Array = rec.col[ci]
 			if e[0] is ConcavePolygonShape3D: e[0] = _room_cut_col(e[0], e[1], doors)
 	rec["rooms"] = list
+	stat["rooms_placed"] = int(stat.get("rooms_placed", 0)) + list.size()
+
+# ---------------------------------------------------------------- built-in interiors (22 Nov)
+## Yasin, 22 Nov: a kit model with bay scenes (tools/city/rooms/builtin/make_interiors.gd) carries its interiors:
+## _bay_building below. (The pilot's hand-placed <model>_interior.scn fill path is retired: no slot filling outside the
+## bay templates, validate_bays.gd is the check.) Other buildings: _room_building.
+func _builtin_building(rec: Dictionary, piece: String) -> void:
+	var model := String(rec.kit)
+	var rows: Array = builtin_idx.get("%s|%s" % [piece, String(rec.label)], [])
+	_bay_building(rec, piece, model, rows)
+
+## Rollout (22 Nov): a model with bay scenes (make_interiors.gd). Its INDOORS places (indoors_spec.json) find their bay
+## by the row's door; the near is the kit's closed near with only the used bays opened and their shells added (a bay
+## nobody uses here stays closed); the kit's concave shell stays, opened at the used doors, + the bays' wall boxes;
+## each place is filled from its bay's template for its kind: BL.pick (templates dealt round-robin among the places of
+## a kind sorted by id, then the mirror, then the decor shift; recorded in the room's metas).
+func _bay_building(rec: Dictionary, piece: String, model: String, rows: Array) -> void:
+	var places: Array = []; var used: Array = []
+	for r: Dictionary in rows:
+		var id := String(r.id)
+		if not builtin_dress.has(id): stat["builtin_rows_not_indoors"] = int(stat.get("builtin_rows_not_indoors", 0)) + 1; continue
+		var bi := BL.bay_for(model, float(r.door_along))
+		if bi < 0: builtin_fail.append("%s: place %s has no bay at door %.2f" % [rec.name, id, float(r.door_along)]); continue
+		places.append({"id": id, "kind": builtin_dress[id], "bay": bi})
+		if not used.has(bi): used.append(bi)
+	if places.is_empty(): return
+	used.sort()
+	for bi2: int in used:
+		var ks: Array = []
+		for p: Dictionary in places: if int(p.bay) == bi2 and not ks.has(p.kind): ks.append(p.kind)
+		ks.sort()
+		var vk := "%s|%d|%s" % [model, bi2, ",".join(ks)]
+		if not builtin_valid.has(vk): builtin_valid[vk] = BL.validate_bay(model, bi2, ks, room_contracts.get(model, {}))
+		if not (builtin_valid[vk] as Array).is_empty():
+			for pr: String in builtin_valid[vk]: push_error("BAKE builtin %s: %s" % [rec.name, pr])
+			builtin_fail.append_array((builtin_valid[vk] as Array).map(func(pr: String) -> String: return "%s: %s" % [rec.name, pr]))
+			return
+	for t: Dictionary in rec.tiers:
+		if String(t.name) == "near": t.mesh = BL.compose_near(model, used)
+	var doors: Array = []
+	for bi3: int in used:
+		var it: Node3D = (load(BL.bay_path(model, bi3)) as PackedScene).instantiate()
+		for o: Dictionary in it.get_meta(&"ops", []):
+			if bool(o.get("entry", false)) or ROOM_DOORS.any(func(pp: String) -> bool: return String(o.region).begins_with(pp)): doors.append(o)
+		it.free()
+	var lay := 1; var msk := 1
+	for ci in (rec.col as Array).size():
+		var e: Array = rec.col[ci]
+		if e[0] is ConcavePolygonShape3D:
+			lay = int(e[2]); msk = int(e[3])
+			if not doors.is_empty(): e[0] = _room_cut_col(e[0], e[1], doors)
+	for bi4: int in used:
+		for bx: Array in BL.bay_col_boxes(model, bi4): (rec.col as Array).append([bx[0], bx[1], lay, msk])
+	var list: Array = []
+	for p2: Dictionary in places:
+		var it2: Node3D = (load(BL.bay_path(model, int(p2.bay))) as PackedScene).instantiate()
+		var kn := it2.get_node_or_null(NodePath("Slots/" + String(p2.kind)))
+		var temps: Array = []; var mok := {}
+		if kn:
+			for tn: Node in kn.get_children(): temps.append(String(tn.name)); mok[String(tn.name)] = bool(tn.get_meta(&"mirror_ok", false))
+		it2.free()
+		var pk := BL.pick(int(builtin_rank.get(p2.id, 0)), temps, mok)
+		var nm := "bi_" + String(p2.id)
+		var room := BL.fill_bay(model, int(p2.bay), String(p2.kind), String(pk[0]), bool(pk[1]), int(pk[2]), nm, "%s|%s" % [piece, String(rec.label)])
+		if room == null: builtin_fail.append("%s: fill %s failed" % [rec.name, nm]); continue
+		room.set_meta(&"shop", {"kind": String(p2.kind), "name": String(builtin_name.get(p2.id, "")), "id": String(p2.id)})
+		_own(room, room)
+		var ps := PackedScene.new(); ps.pack(room)
+		var scn := out + "rooms/" + nm + ".scn"
+		ResourceSaver.save(ps, scn, ResourceSaver.FLAG_COMPRESS)
+		var faces := PackedVector3Array()
+		for mmi: Node in room.get_node(^"Props").get_children():
+			var mm := (mmi as MultiMeshInstance3D).multimesh
+			var ab := mm.mesh.get_aabb()
+			if ab.size.y < 0.25: continue
+			for i in mm.instance_count:
+				var xf := (mmi as Node3D).transform * mm.get_instance_transform(i)
+				var c := [ab.position, ab.position + Vector3(ab.size.x, 0, 0), ab.position + Vector3(ab.size.x, 0, ab.size.z), ab.position + Vector3(0, 0, ab.size.z)]
+				var tq := []
+				for q: Vector3 in c: tq.append(xf * q)
+				for q2: Vector3 in c: tq.append(xf * (q2 + Vector3(0, ab.size.y, 0)))
+				for quad: Array in [[0, 1, 2, 3], [4, 7, 6, 5], [0, 4, 5, 1], [1, 5, 6, 2], [2, 6, 7, 3], [3, 7, 4, 0]]:
+					faces.append(tq[quad[0]]); faces.append(tq[quad[1]]); faces.append(tq[quad[2]])
+					faces.append(tq[quad[0]]); faces.append(tq[quad[2]]); faces.append(tq[quad[3]])
+		var cd: Resource = ColData.new(); cd.kind = 0; cd.data = faces; cd.backface = true
+		ResourceSaver.save(cd, out + "rooms/" + nm + "_col.res", ResourceSaver.FLAG_COMPRESS)
+		BL.merge_props(room, (int(builtin_rank.get(p2.id, 0)) + absi(String(p2.kind).hash())) % BL.PALETTES.size())      # (1-3 draws of props; the palette dealt by rank within the kind, offset per kind; saved again, merged)
+		stat["builtin_prop_draws"] = int(stat.get("builtin_prop_draws", 0)) + int(room.get_meta(&"prop_draws", 0))
+		var ps2 := PackedScene.new(); ps2.pack(room)
+		ResourceSaver.save(ps2, scn, ResourceSaver.FLAG_COMPRESS)
+		var fl: Array = (room.get_meta(&"floors", [[0, 0, 0, 0]]) as Array)[0]
+		list.append({"scn": scn, "raw": "", "col": out + "rooms/" + nm + "_col.res", "centre": Vector3((float(fl[0]) + float(fl[2])) * 0.5, 1.5, (float(fl[1]) + float(fl[3])) * 0.5)})
+		stat["builtin_picks"] = int(stat.get("builtin_picks", 0)) + 1
+		room.free()
+	if not list.is_empty(): rec["rooms"] = list
+	stat["builtin_buildings"] = int(stat.get("builtin_buildings", 0)) + 1
 	stat["rooms_placed"] = int(stat.get("rooms_placed", 0)) + list.size()
 
 # ---------------------------------------------------------------- B9: breakable props
@@ -1126,7 +1244,8 @@ func _building(b: Node3D, piece: String, inst_name: String) -> void:
 	if gap_col and not rec.col.is_empty():      # B15: the parts the kit's col shell leaves out (stairs, columns, low walls)
 		var lay: int = int(rec.col[0][2]); var msk: int = int(rec.col[0][3])
 		for g: Array in _gap_hulls(String(rec.kit)): rec.col.append([g[0], g[1], lay, msk])
-	_room_building(rec, piece)      # B14: the rooms' openings cut, the rooms listed
+	if rooms_on and BL.has_builtin(String(rec.kit)): _builtin_building(rec, piece)      # (22 Nov: the model carries its interior)
+	else: _room_building(rec, piece)      # B14: the rooms' openings cut, the rooms listed
 	rec["pivot"] = pivot      # the far version's pivot: near and mid measure their distance to the same point (rt_tier)
 	if _cell_wanted(c): _cell(c).bld.append(rec)
 	else: stat.skipped_cell += 1
@@ -1784,6 +1903,8 @@ func _run() -> void:
 		holder.remove_child(inst); inst.free(); arr_cache.clear()
 		if before == -1: pass
 	print("BAKE routed %d pieces in %d ms: %s" % [k, Time.get_ticks_msec() - t0, str(stat)])
+	if not builtin_fail.is_empty():      # (a shop model whose interior, slots or door alignment are missing fails the build)
+		print("BAKE_FAIL built-in interiors: %d problems\n  %s" % [builtin_fail.size(), "\n  ".join(builtin_fail)]); quit(1); return
 	var routed: int = stat.merged + stat.instanced + stat.pass + stat.far + stat.far_dropped + stat.skipped_cell
 	print("BAKE check props in=%d routed=%d %s" % [stat.props_in, routed, "OK" if routed >= stat.props_in else "MISMATCH"])
 	if no_trees: print("BAKE trees out: %d trees and palms left out (%d trunk colliders), %d wells paved over, %d wells left open (odd shape or a bed)" % [int(stat.trees_out), int(stat.tree_cols_out), int(stat.wells_filled), int(stat.wells_left)])

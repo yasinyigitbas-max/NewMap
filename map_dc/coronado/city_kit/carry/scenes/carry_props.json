@@ -1,0 +1,548 @@
+{
+ "backpack_canvas": {
+  "budget": 600.0,
+  "col": [
+   -0.150000005960464,
+   0.0,
+   -0.109999999403954,
+   0.300000011920929,
+   0.419999986886978,
+   0.219999998807907
+  ],
+  "grips": {
+   "grip_l": [
+    0.0,
+    0.46399998664856,
+    -0.0299999993294477
+   ],
+   "grip_r": [
+    0.0,
+    0.46399998664856,
+    -0.0299999993294477
+   ]
+  },
+  "hold": "one_hand_hang",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/backpack_canvas.scn",
+  "tris": 352
+ },
+ "backpack_daypack": {
+  "budget": 600.0,
+  "col": [
+   -0.144999995827675,
+   0.0,
+   -0.109999999403954,
+   0.28999999165535,
+   0.430000007152557,
+   0.219999998807907
+  ],
+  "grips": {
+   "grip_l": [
+    0.0,
+    0.453999996185303,
+    -0.0199999995529652
+   ],
+   "grip_r": [
+    0.0,
+    0.453999996185303,
+    -0.0199999995529652
+   ]
+  },
+  "hold": "one_hand_hang",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/backpack_daypack.scn",
+  "tris": 350
+ },
+ "backpack_school": {
+  "budget": 600.0,
+  "col": [
+   -0.189999997615814,
+   0.0,
+   -0.125,
+   0.379999995231628,
+   0.46000000834465,
+   0.25
+  ],
+  "grips": {
+   "grip_l": [
+    0.0,
+    0.483999997377396,
+    -0.025000000372529
+   ],
+   "grip_r": [
+    0.0,
+    0.483999997377396,
+    -0.025000000372529
+   ]
+  },
+  "hold": "one_hand_hang",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/backpack_school.scn",
+  "tris": 562
+ },
+ "bag_paper_boutique": {
+  "budget": 300.0,
+  "col": [
+   -0.125,
+   0.0,
+   -0.0599999986588955,
+   0.25,
+   0.280000001192093,
+   0.119999997317791
+  ],
+  "grips": {
+   "grip_l": [
+    0.0,
+    0.365000009536743,
+    0.0
+   ],
+   "grip_r": [
+    0.0,
+    0.365000009536743,
+    0.0
+   ]
+  },
+  "hold": "one_hand_hang",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/bag_paper_boutique.scn",
+  "tris": 240
+ },
+ "bag_paper_grocery": {
+  "budget": 300.0,
+  "col": [
+   -0.185000002384186,
+   0.0,
+   -0.109999999403954,
+   0.370000004768372,
+   0.379999995231628,
+   0.219999998807907
+  ],
+  "grips": {
+   "grip_l": [
+    0.0,
+    0.469999998807907,
+    0.0
+   ],
+   "grip_r": [
+    0.0,
+    0.469999998807907,
+    0.0
+   ]
+  },
+  "hold": "one_hand_hang",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/bag_paper_grocery.scn",
+  "tris": 298
+ },
+ "bag_paper_kraft": {
+  "budget": 300.0,
+  "col": [
+   -0.165000006556511,
+   0.0,
+   -0.0900000035762787,
+   0.330000013113022,
+   0.400000005960464,
+   0.180000007152557
+  ],
+  "grips": {
+   "grip_l": [
+    0.0,
+    0.5,
+    0.0
+   ],
+   "grip_r": [
+    0.0,
+    0.5,
+    0.0
+   ]
+  },
+  "hold": "one_hand_hang",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/bag_paper_kraft.scn",
+  "tris": 240
+ },
+ "bag_plastic_corner": {
+  "budget": 300.0,
+  "col": [
+   -0.119999997317791,
+   0.0,
+   -0.0700000002980232,
+   0.239999994635582,
+   0.270000010728836,
+   0.140000000596046
+  ],
+  "grips": {
+   "grip_l": [
+    0.00600000005215406,
+    0.381999999284744,
+    0.0
+   ],
+   "grip_r": [
+    0.00600000005215406,
+    0.381999999284744,
+    0.0
+   ]
+  },
+  "hold": "one_hand_hang",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/bag_plastic_corner.scn",
+  "tris": 230
+ },
+ "bag_plastic_thankyou": {
+  "budget": 300.0,
+  "col": [
+   -0.150000005960464,
+   0.0,
+   -0.0900000035762787,
+   0.300000011920929,
+   0.330000013113022,
+   0.180000007152557
+  ],
+  "grips": {
+   "grip_l": [
+    0.00600000005215406,
+    0.469999998807907,
+    0.0
+   ],
+   "grip_r": [
+    0.00600000005215406,
+    0.469999998807907,
+    0.0
+   ]
+  },
+  "hold": "one_hand_hang",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/bag_plastic_thankyou.scn",
+  "tris": 256
+ },
+ "bag_tote_woven": {
+  "budget": 300.0,
+  "col": [
+   -0.189999997615814,
+   0.0,
+   -0.100000001490116,
+   0.379999995231628,
+   0.319999992847443,
+   0.200000002980232
+  ],
+  "grips": {
+   "grip_l": [
+    0.0,
+    0.444999992847443,
+    0.0
+   ],
+   "grip_r": [
+    0.0,
+    0.444999992847443,
+    0.0
+   ]
+  },
+  "hold": "one_hand_hang",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/bag_tote_woven.scn",
+  "tris": 224
+ },
+ "box_long": {
+  "budget": 300.0,
+  "col": [
+   -0.349999994039536,
+   0.0,
+   -0.109999999403954,
+   0.699999988079071,
+   0.180000007152557,
+   0.219999998807907
+  ],
+  "grips": {
+   "grip_l": [
+    -0.300000011920929,
+    0.0799999982118607,
+    0.0
+   ],
+   "grip_r": [
+    0.300000011920929,
+    0.0799999982118607,
+    0.0
+   ]
+  },
+  "hold": "two_hand_sides",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/box_long.scn",
+  "tris": 94
+ },
+ "box_moving": {
+  "budget": 300.0,
+  "col": [
+   -0.224999994039536,
+   0.0,
+   -0.174999997019768,
+   0.449999988079071,
+   0.349999994039536,
+   0.349999994039536
+  ],
+  "grips": {
+   "grip_l": [
+    -0.224999994039536,
+    0.252000004053116,
+    0.0
+   ],
+   "grip_r": [
+    0.224999994039536,
+    0.252000004053116,
+    0.0
+   ]
+  },
+  "hold": "two_hand_sides",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/box_moving.scn",
+  "tris": 108
+ },
+ "box_open": {
+  "budget": 300.0,
+  "col": [
+   -0.200000002980232,
+   0.0,
+   -0.150000005960464,
+   0.400000005960464,
+   0.280000001192093,
+   0.300000011920929
+  ],
+  "grips": {
+   "grip_l": [
+    -0.200000002980232,
+    0.119999997317791,
+    0.0
+   ],
+   "grip_r": [
+    0.200000002980232,
+    0.119999997317791,
+    0.0
+   ]
+  },
+  "hold": "two_hand_sides",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/box_open.scn",
+  "tris": 276
+ },
+ "box_produce": {
+  "budget": 300.0,
+  "col": [
+   -0.230000004172325,
+   0.0,
+   -0.150000005960464,
+   0.46000000834465,
+   0.200000002980232,
+   0.300000011920929
+  ],
+  "grips": {
+   "grip_l": [
+    -0.230000004172325,
+    0.156000003218651,
+    0.0
+   ],
+   "grip_r": [
+    0.230000004172325,
+    0.156000003218651,
+    0.0
+   ]
+  },
+  "hold": "two_hand_sides",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/box_produce.scn",
+  "tris": 284
+ },
+ "box_ship_small": {
+  "budget": 300.0,
+  "col": [
+   -0.150000005960464,
+   0.0,
+   -0.109999999403954,
+   0.300000011920929,
+   0.159999996423721,
+   0.219999998807907
+  ],
+  "grips": {
+   "grip_l": [
+    -0.150000005960464,
+    0.0700000002980232,
+    0.0
+   ],
+   "grip_r": [
+    0.150000005960464,
+    0.0700000002980232,
+    0.0
+   ]
+  },
+  "hold": "two_hand_sides",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/box_ship_small.scn",
+  "tris": 94
+ },
+ "box_stack": {
+  "budget": 600.0,
+  "col": [
+   -0.209999993443489,
+   0.0,
+   -0.159999996423721,
+   0.419999986886978,
+   0.419999986886978,
+   0.319999992847443
+  ],
+  "grips": {
+   "grip_l": [
+    -0.209999993443489,
+    0.100000001490116,
+    0.0
+   ],
+   "grip_r": [
+    0.209999993443489,
+    0.100000001490116,
+    0.0
+   ]
+  },
+  "hold": "two_hand_sides",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/box_stack.scn",
+  "tris": 186
+ },
+ "briefcase_aluminium": {
+  "budget": 600.0,
+  "col": [
+   -0.230000004172325,
+   0.0,
+   -0.0649999976158142,
+   0.46000000834465,
+   0.330000013113022,
+   0.129999995231628
+  ],
+  "grips": {
+   "grip_l": [
+    0.0,
+    0.370000004768372,
+    0.0
+   ],
+   "grip_r": [
+    0.0,
+    0.370000004768372,
+    0.0
+   ]
+  },
+  "hold": "one_hand_hang",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/briefcase_aluminium.scn",
+  "tris": 468
+ },
+ "briefcase_laptop": {
+  "budget": 600.0,
+  "col": [
+   -0.200000002980232,
+   0.0,
+   -0.0524999983608723,
+   0.400000005960464,
+   0.28999999165535,
+   0.104999996721745
+  ],
+  "grips": {
+   "grip_l": [
+    0.0,
+    0.361999988555908,
+    0.0
+   ],
+   "grip_r": [
+    0.0,
+    0.361999988555908,
+    0.0
+   ]
+  },
+  "hold": "one_hand_hang",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/briefcase_laptop.scn",
+  "tris": 402
+ },
+ "briefcase_leather": {
+  "budget": 600.0,
+  "col": [
+   -0.219999998807907,
+   0.0,
+   -0.0549999997019768,
+   0.439999997615814,
+   0.319999992847443,
+   0.109999999403954
+  ],
+  "grips": {
+   "grip_l": [
+    0.0,
+    0.360000014305115,
+    0.0
+   ],
+   "grip_r": [
+    0.0,
+    0.360000014305115,
+    0.0
+   ]
+  },
+  "hold": "one_hand_hang",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/briefcase_leather.scn",
+  "tris": 592
+ },
+ "crate_produce": {
+  "budget": 600.0,
+  "col": [
+   -0.25,
+   0.0,
+   -0.159999996423721,
+   0.5,
+   0.280000001192093,
+   0.319999992847443
+  ],
+  "grips": {
+   "grip_l": [
+    -0.25,
+    0.256999999284744,
+    0.0
+   ],
+   "grip_r": [
+    0.25,
+    0.256999999284744,
+    0.0
+   ]
+  },
+  "hold": "two_hand_sides",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/crate_produce.scn",
+  "tris": 522
+ },
+ "crate_rope": {
+  "budget": 600.0,
+  "col": [
+   -0.25,
+   0.0,
+   -0.150000005960464,
+   0.5,
+   0.25,
+   0.300000011920929
+  ],
+  "grips": {
+   "grip_l": [
+    -0.270000010728836,
+    0.115000002086163,
+    0.0
+   ],
+   "grip_r": [
+    0.270000010728836,
+    0.115000002086163,
+    0.0
+   ]
+  },
+  "hold": "two_hand_sides",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/crate_rope.scn",
+  "tris": 552
+ },
+ "crate_wine": {
+  "budget": 600.0,
+  "col": [
+   -0.170000001788139,
+   0.0,
+   -0.0900000035762787,
+   0.340000003576279,
+   0.180000007152557,
+   0.180000007152557
+  ],
+  "grips": {
+   "grip_l": [
+    -0.170000001788139,
+    0.0799999982118607,
+    0.0
+   ],
+   "grip_r": [
+    0.170000001788139,
+    0.0799999982118607,
+    0.0
+   ]
+  },
+  "hold": "two_hand_sides",
+  "scene": "res://map_dc/coronado/city_kit/carry/scenes/crate_wine.scn",
+  "tris": 244
+ }
+}

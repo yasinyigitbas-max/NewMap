@@ -24,10 +24,19 @@ func _initialize() -> void:
 	var n_rooms := 0
 	var n_left := 0
 	var why := {}
-	for f in DirAccess.get_files_at(ROOMS):
+	# (22 Nov, INDOORS rollout) --builtin=<dir>: also the bake's built-in rooms (<runtime>/rooms/bi_*.scn), named as the
+	# bake names them; the hand-made rooms of buildings that now carry their interior are left out (not placed any more)
+	var bdir := ""
+	for a in OS.get_cmdline_user_args(): if a.begins_with("--builtin="): bdir = a.trim_prefix("--builtin=").trim_suffix("/") + "/"
+	var files: Array = []
+	for f in DirAccess.get_files_at(ROOMS): files.append(ROOMS + f)
+	if bdir != "":
+		for f in DirAccess.get_files_at(bdir): if f.begins_with("bi_"): files.append(bdir + f)
+	for fp: String in files:
+		var f := fp.get_file()
 		if not f.ends_with(".scn"): continue
 		n_rooms += 1
-		var ps: PackedScene = load(ROOMS + f)
+		var ps: PackedScene = load(fp)
 		if ps == null: continue
 		var r: Node = ps.instantiate()
 		var res := _room(r)
@@ -49,6 +58,10 @@ func _on_floor(floors: Array, x: float, z: float) -> bool:
 
 func _instances(props: Node, key: String) -> Array:
 	var out := []
+	var xf: Dictionary = props.get_parent().get_meta(&"props_xf", {})      # (a built-in room with its props merged, 22 Nov)
+	for nm: String in xf:
+		if not nm.trim_prefix("prop_").contains(key): continue
+		for t: Transform3D in xf[nm]: out.append({"name": nm, "t": t})
 	for c in props.get_children():
 		if not (c is MultiMeshInstance3D) or c.multimesh == null: continue
 		if not String(c.name).trim_prefix("prop_").contains(key): continue

@@ -6,9 +6,93 @@
    "name": "Isla Bistro",
    "when": "21 Nov 2026",
    "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "un_quad_founders_0",
+   "name": "Founders Hall Admissions",
+   "when": "22 Nov 2026",
+   "why": "campus rows superseded by assignment_un.json (INDOORS rollout); the locked room scene stays"
+  },
+  {
+   "id": "un_quad_library_0",
+   "name": "University Library",
+   "when": "22 Nov 2026",
+   "why": "campus rows superseded by assignment_un.json (INDOORS rollout); the locked room scene stays"
+  },
+  {
+   "id": "un_quad_wing_nw_0",
+   "name": "Humanities Lecture Hall",
+   "when": "22 Nov 2026",
+   "why": "campus rows superseded by assignment_un.json (INDOORS rollout); the locked room scene stays"
+  },
+  {
+   "id": "un_quad_wing_sw_0",
+   "name": "Social Sciences Hall",
+   "when": "22 Nov 2026",
+   "why": "campus rows superseded by assignment_un.json (INDOORS rollout); the locked room scene stays"
+  },
+  {
+   "id": "un_quad_wing_ne_0",
+   "name": "Mathematics Lecture Hall",
+   "when": "22 Nov 2026",
+   "why": "campus rows superseded by assignment_un.json (INDOORS rollout); the locked room scene stays"
+  },
+  {
+   "id": "un_quad_wing_se_0",
+   "name": "Faculty Commons",
+   "when": "22 Nov 2026",
+   "why": "campus rows superseded by assignment_un.json (INDOORS rollout); the locked room scene stays"
+  },
+  {
+   "id": "un_north_rec_0",
+   "name": "Campus Rec Center",
+   "when": "22 Nov 2026",
+   "why": "campus rows superseded by assignment_un.json (INDOORS rollout); the locked room scene stays"
+  },
+  {
+   "id": "un_north_museum_0",
+   "name": "University Art Museum",
+   "when": "22 Nov 2026",
+   "why": "campus rows superseded by assignment_un.json (INDOORS rollout); the locked room scene stays"
+  },
+  {
+   "id": "un_west_science_0",
+   "name": "Science Tower",
+   "when": "22 Nov 2026",
+   "why": "campus rows superseded by assignment_un.json (INDOORS rollout); the locked room scene stays"
+  },
+  {
+   "id": "un_west_eng_labs_0",
+   "name": "Engineering Lecture Hall",
+   "when": "22 Nov 2026",
+   "why": "campus rows superseded by assignment_un.json (INDOORS rollout); the locked room scene stays"
+  },
+  {
+   "id": "un_west_lab_wing_0",
+   "name": "Science Reading Room",
+   "when": "22 Nov 2026",
+   "why": "campus rows superseded by assignment_un.json (INDOORS rollout); the locked room scene stays"
+  },
+  {
+   "id": "un_east_union_0",
+   "name": "Student Union Food Court",
+   "when": "22 Nov 2026",
+   "why": "campus rows superseded by assignment_un.json (INDOORS rollout); the locked room scene stays"
+  },
+  {
+   "id": "un_east_cafe_0",
+   "name": "Campus Cafe",
+   "when": "22 Nov 2026",
+   "why": "campus rows superseded by assignment_un.json (INDOORS rollout); the locked room scene stays"
+  },
+  {
+   "id": "un_east_bookstore_0",
+   "name": "University Bookstore",
+   "when": "22 Nov 2026",
+   "why": "campus rows superseded by assignment_un.json (INDOORS rollout); the locked room scene stays"
   }
  ],
- "count": 21,
+ "count": 7,
  "rooms": [
   {
    "id": "hp_main_hospital_0",
@@ -223,428 +307,6 @@
    "built": "",
    "why": "the care residences' day center (its COMMUNITY CENTER sign painted on): classes, meals, visitors; door on Adela for the bus riders",
    "signs": []
-  },
-  {
-   "id": "un_quad_founders_0",
-   "piece": "n_un_quad",
-   "label": "founders",
-   "model": "public/pub_university",
-   "pos": [
-    -600.0,
-    6.2885,
-    -681.3
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": 0.0,
-   "door_w": 1.8,
-   "bay": [
-    -15.7,
-    15.7
-   ],
-   "kind": "bank",
-   "name": "Founders Hall Admissions",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "the main hall's door on the Quad: admissions and student services counters, advisers' desks, waiting benches",
-   "signs": []
-  },
-  {
-   "id": "un_quad_library_0",
-   "piece": "n_un_quad",
-   "label": "library",
-   "model": "civic/civ_library",
-   "pos": [
-    -600.0,
-    6.0504,
-    -520.05
-   ],
-   "yaw": 180.0,
-   "door_index": 0,
-   "door_along": 0.0,
-   "door_w": 1.8,
-   "bay": [
-    -11.7,
-    11.7
-   ],
-   "kind": "library",
-   "name": "University Library",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "the Quad's south head: circulation desk, stacks and reading tables",
-   "signs": []
-  },
-  {
-   "id": "un_quad_wing_nw_0",
-   "piece": "n_un_quad",
-   "label": "wing_nw",
-   "model": "civic/civ_school_wing",
-   "pos": [
-    -677.95,
-    6.163,
-    -632.0
-   ],
-   "yaw": 90.0,
-   "door_index": 0,
-   "door_along": 0.0,
-   "door_w": 1.8,
-   "bay": [
-    -14.7,
-    14.7
-   ],
-   "kind": "lecture",
-   "name": "Humanities Lecture Hall",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "a lecture-hall wing on the Quad's west walk: rows of seats facing the lectern",
-   "signs": []
-  },
-  {
-   "id": "un_quad_wing_sw_0",
-   "piece": "n_un_quad",
-   "label": "wing_sw",
-   "model": "civic/civ_school_wing",
-   "pos": [
-    -677.95,
-    6.0323,
-    -572.0
-   ],
-   "yaw": 90.0,
-   "door_index": 0,
-   "door_along": 0.0,
-   "door_w": 1.8,
-   "bay": [
-    -14.7,
-    14.7
-   ],
-   "kind": "lecture",
-   "name": "Social Sciences Hall",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "the second west wing: another lecture room",
-   "signs": []
-  },
-  {
-   "id": "un_quad_wing_ne_0",
-   "piece": "n_un_quad",
-   "label": "wing_ne",
-   "model": "civic/civ_school_wing",
-   "pos": [
-    -522.05,
-    6.2209,
-    -632.0
-   ],
-   "yaw": -90.0,
-   "door_index": 0,
-   "door_along": 0.0,
-   "door_w": 1.8,
-   "bay": [
-    -14.7,
-    14.7
-   ],
-   "kind": "lecture",
-   "name": "Mathematics Lecture Hall",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "a lecture-hall wing on the Quad's east walk",
-   "signs": []
-  },
-  {
-   "id": "un_quad_wing_se_0",
-   "piece": "n_un_quad",
-   "label": "wing_se",
-   "model": "civic/civ_school_wing",
-   "pos": [
-    -522.05,
-    6.1439,
-    -572.0
-   ],
-   "yaw": -90.0,
-   "door_index": 0,
-   "door_along": 0.0,
-   "door_w": 1.8,
-   "bay": [
-    -14.7,
-    14.7
-   ],
-   "kind": "hall",
-   "name": "Faculty Commons",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "the east wing by the union: the faculty's commons (a desk, meeting tables, a kitchen behind)",
-   "signs": []
-  },
-  {
-   "id": "un_north_rec_0",
-   "piece": "n_un_north",
-   "label": "rec",
-   "model": "civic/civ_rec_center",
-   "pos": [
-    -720.0,
-    6.200699999999999,
-    -771.05
-   ],
-   "yaw": 180.0,
-   "door_index": 0,
-   "door_along": 0.0,
-   "door_w": 1.8,
-   "bay": [
-    -11.7,
-    11.7
-   ],
-   "kind": "sport",
-   "name": "Campus Rec Center",
-   "style": "teal",
-   "font": "Overpass",
-   "built": "",
-   "why": "the rec center's door on the north street: the equipment desk (bikes, boards, kit for the courts and the field)",
-   "signs": [
-    {
-     "facade": "right",
-     "along": 7.72,
-     "w": 1.45
-    },
-    {
-     "facade": "left",
-     "along": 7.72,
-     "w": 1.45
-    },
-    {
-     "facade": "right",
-     "along": 7.72,
-     "w": 1.45
-    },
-    {
-     "facade": "left",
-     "along": 7.72,
-     "w": 1.45
-    },
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 3.0
-    }
-   ]
-  },
-  {
-   "id": "un_north_museum_0",
-   "piece": "n_un_north",
-   "label": "museum",
-   "model": "public/pub_museum",
-   "pos": [
-    -670.0,
-    6.2882,
-    -712.6
-   ],
-   "yaw": 180.0,
-   "door_index": 0,
-   "door_along": 0.0,
-   "door_w": 2.0,
-   "bay": [
-    -13.7,
-    13.7
-   ],
-   "kind": "gallery",
-   "name": "University Art Museum",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "the art museum facing University Circle: the students' and the collection's work",
-   "signs": []
-  },
-  {
-   "id": "un_west_science_0",
-   "piece": "n_un_west",
-   "label": "science",
-   "model": "urban/twr_office",
-   "pos": [
-    -712.5,
-    6.075,
-    -602.0
-   ],
-   "yaw": 90.0,
-   "door_index": 0,
-   "door_along": 0.0,
-   "door_w": 1.8,
-   "bay": [
-    -11.7,
-    11.7
-   ],
-   "kind": "realty",
-   "name": "Science Tower",
-   "style": "navy",
-   "font": "Overpass",
-   "built": "",
-   "why": "the science tower's door on the Quad's west paseo: the departments' advisers (desks with a chair for the student)",
-   "signs": [
-    {
-     "facade": "right",
-     "along": 10.97,
-     "w": 1.95
-    },
-    {
-     "facade": "left",
-     "along": 10.97,
-     "w": 1.95
-    },
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 4.0
-    },
-    {
-     "facade": "right",
-     "along": 10.97,
-     "w": 1.95
-    },
-    {
-     "facade": "left",
-     "along": 10.97,
-     "w": 1.95
-    }
-   ]
-  },
-  {
-   "id": "un_west_eng_labs_0",
-   "piece": "n_un_west",
-   "label": "eng_labs",
-   "model": "civic/civ_school_wing",
-   "pos": [
-    -709.95,
-    6.1891,
-    -660.0
-   ],
-   "yaw": 90.0,
-   "door_index": 0,
-   "door_along": 0.0,
-   "door_w": 1.8,
-   "bay": [
-    -14.7,
-    14.7
-   ],
-   "kind": "lecture",
-   "name": "Engineering Lecture Hall",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "the engineering building's lecture room",
-   "signs": []
-  },
-  {
-   "id": "un_west_lab_wing_0",
-   "piece": "n_un_west",
-   "label": "lab_wing",
-   "model": "civic/civ_school_wing",
-   "pos": [
-    -709.95,
-    5.8956,
-    -545.0
-   ],
-   "yaw": 90.0,
-   "door_index": 0,
-   "door_along": 0.0,
-   "door_w": 1.8,
-   "bay": [
-    -14.7,
-    14.7
-   ],
-   "kind": "library",
-   "name": "Science Reading Room",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "the lab wing's ground floor: the sciences' reading room (journals, tables)",
-   "signs": []
-  },
-  {
-   "id": "un_east_union_0",
-   "piece": "n_un_east",
-   "label": "union",
-   "model": "civic/civ_community_center",
-   "pos": [
-    -489.05,
-    6.1552,
-    -602.0
-   ],
-   "yaw": -90.0,
-   "door_index": 0,
-   "door_along": 0.0,
-   "door_w": 1.8,
-   "bay": [
-    -11.7,
-    11.7
-   ],
-   "kind": "fast_food",
-   "name": "Student Union Food Court",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "the student union at the end of the Quad's east paseo: the food court",
-   "signs": []
-  },
-  {
-   "id": "un_east_cafe_0",
-   "piece": "n_un_east",
-   "label": "cafe",
-   "model": "commercial/com_cafe_seaside",
-   "pos": [
-    -491.83,
-    6.1967,
-    -645.0
-   ],
-   "yaw": -90.0,
-   "door_index": 0,
-   "door_along": -1.76,
-   "door_w": 1.6,
-   "bay": [
-    -2.7,
-    2.7
-   ],
-   "kind": "cafe",
-   "name": "Campus Cafe",
-   "style": "green",
-   "font": "Overpass",
-   "built": "",
-   "why": "coffee on Union Plaza (its CROWN CAFE sign painted on)",
-   "signs": []
-  },
-  {
-   "id": "un_east_bookstore_0",
-   "piece": "n_un_east",
-   "label": "bookstore",
-   "model": "ck/ck_svc_trade_1d",
-   "pos": [
-    -494.0,
-    6.1126000000000005,
-    -560.0
-   ],
-   "yaw": -90.0,
-   "door_index": 0,
-   "door_along": -3.0,
-   "door_w": 1.8,
-   "bay": [
-    -5.7,
-    5.7
-   ],
-   "kind": "books",
-   "name": "University Bookstore",
-   "style": "navy",
-   "font": "Overpass",
-   "built": "",
-   "why": "textbooks and university wear on Union Plaza",
-   "signs": [
-    {
-     "facade": "front",
-     "along": -3.0,
-     "w": 5.2
-    }
-   ]
   }
  ]
 }

@@ -50,10 +50,17 @@ public:
 	RID skip;              // the player's own body (not ground)
 	Vector3 fwd;           // world: the way he faces (the knees forward)
 	float hips_drop = 0.0f, foot_off[2] = { 0, 0 };
-	Vector3 foot_w[2], pelvis_w, slide_w[2];   // (traces) the feet and hips as drawn this frame, world
+	// the node standing on the clip's floor (the figure), when the skeleton is not at its feet (the player's: its origin is
+	// at the hips, so the ground fit took every foot as 0.8 m off and did nothing; Yasin 22 Nov, slopes); null: the
+	// skeleton's origin. (It holds the skeleton: it outlives this modifier.)
+	Node3D *floor_node = nullptr;
+	float d_s[2] = { 0, 0 }, drop_s = 0.0f, tilt_w[2] = { 0, 0 };   // (tilt_w: how far a foot's sole is turned onto the slope under it, eased)
+	Vector3 gn[2] = { Vector3(0, 1, 0), Vector3(0, 1, 0) }, sole_w[2][2];   // (the ground's normal under each foot; (traces) its heel and ball as drawn, world)   // (the fit eased: a foot's height change and the hips' drop, over 0.06 / 0.08 s; on a slope they jumped as a foot came down or lifted: the hips 0.2-0.3 m a frame)
+	Vector3 foot_w[2], toe_w[2], pelvis_w, slide_w[2];   // (traces) the feet and hips as drawn this frame, world
 	// FOOT LOCK (Yasin, 20 Nov: "i want them pixel perfect"; a planted foot slid on the ground with the clip): a foot the clip
 	// puts down is pinned where it landed until it lifts; on lifting, the rest of the pin's offset fades in 0.1 s
 	bool locked[2] = { false, false };
+	bool lock_on = true;   // (off for the player's pwalk clips: they plant their own feet, and the pin's catch-up popped them: Yasin, 21 Nov "why are those jerks")
 	Vector3 lock_w[2], rel_off[2], prev_fw[2], prev_root;
 	float toe_y0[2] = { 0, 0 };   // the ball of the foot's height over the floor as it was pinned (it is held while it stays down)
 	float rel_t[2] = { 0, 0 };   // since the pin let go
@@ -65,12 +72,12 @@ public:
 	// ever planted there). The step casts each foot's ray where the clip will have it by the next drawn frame (its last place
 	// plus its own speed); the modifier takes the answer when it was cast within 30 cm of the foot's place now.
 	Vector3 clip_fw[2], clip_v[2];   // the clip's foot as last drawn, world, and how fast it moves
-	Vector3 probe_at[2]; float probe_y[2] = { 0, 0 }; bool probe_hit[2] = { false, false }, probe_ok[2] = { false, false };
+	Vector3 probe_at[2], probe_n[2] = { Vector3(0, 1, 0), Vector3(0, 1, 0) }; float probe_y[2] = { 0, 0 }; bool probe_hit[2] = { false, false }, probe_ok[2] = { false, false };
 	int probes = 0;   // (the tests) rays cast in the physics step
 	void _ready() override;
 	void _physics_process(double p_delta) override;
 	void _process_modification_with_delta(double p_delta) override;
-	void reset() { locked[0] = locked[1] = false; rel_off[0] = rel_off[1] = Vector3(); have_prev = false; }   // (another person in the same figure)
+	void reset() { locked[0] = locked[1] = false; rel_off[0] = rel_off[1] = Vector3(); have_prev = false; d_s[0] = d_s[1] = drop_s = 0.0f; tilt_w[0] = tilt_w[1] = 0.0f; }   // (another person in the same figure)
 };
 
 // Posture: everyone's shoulders forward (Yasin, 20 Nov: "everyones shoulders are too far back, push all of them both player

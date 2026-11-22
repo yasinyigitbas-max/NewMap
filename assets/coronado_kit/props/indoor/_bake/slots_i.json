@@ -496,6 +496,622 @@
     96,
     96
    ]
+  ],
+  "pool_table": [
+   [
+    736,
+    544,
+    64,
+    64
+   ]
+  ],
+  "dartboard": [
+   [
+    640,
+    736,
+    96,
+    96
+   ]
+  ],
+  "neon_wall_sign": [
+   [
+    640,
+    576,
+    64,
+    64
+   ]
+  ],
+  "keg_stack": [
+   [
+    896,
+    576,
+    64,
+    64
+   ]
+  ],
+  "jukebox": [
+   [
+    480,
+    608,
+    64,
+    64
+   ]
+  ],
+  "wine_barrel_display": [
+   [
+    640,
+    640,
+    64,
+    64
+   ]
+  ],
+  "record_crate_bins": [
+   [
+    832,
+    736,
+    96,
+    96
+   ]
+  ],
+  "concession_popcorn_machine": [
+   [
+    736,
+    736,
+    96,
+    96
+   ]
+  ],
+  "folding_table_chairs": [
+   [
+    0,
+    672,
+    64,
+    64
+   ]
+  ],
+  "shopping_basket_stack": [
+   [
+    944,
+    640,
+    64,
+    64
+   ]
+  ],
+  "lottery_atm_stand": [
+   [
+    928,
+    736,
+    96,
+    96
+   ]
+  ],
+  "magazine_rack": [
+   [
+    816,
+    832,
+    80,
+    80
+   ]
+  ],
+  "wetsuit_rack": [
+   [
+    64,
+    752,
+    64,
+    64
+   ]
+  ],
+  "helmet_wall": [
+   [
+    128,
+    752,
+    80,
+    80
+   ]
+  ],
+  "folded_stack_table": [
+   [
+    208,
+    768,
+    64,
+    64
+   ]
+  ],
+  "bargain_bin": [
+   [
+    272,
+    768,
+    64,
+    64
+   ]
+  ],
+  "flower_bucket_stand": [
+   [
+    336,
+    768,
+    64,
+    64
+   ]
+  ],
+  "shopping_cart": [
+   [
+    400,
+    768,
+    64,
+    64
+   ]
+  ],
+  "security_mirror": [
+   [
+    464,
+    768,
+    64,
+    64
+   ]
+  ],
+  "candle_shelf": [
+   [
+    528,
+    800,
+    80,
+    80
+   ]
+  ],
+  "herb_jar_wall": [
+   [
+    0,
+    800,
+    64,
+    64
+   ]
+  ],
+  "guitar_wall": [
+   [
+    64,
+    816,
+    64,
+    64
+   ]
+  ],
+  "tv_electronics_stack": [
+   [
+    128,
+    832,
+    80,
+    80
+   ]
+  ],
+  "phone_display_table": [
+   [
+    208,
+    832,
+    80,
+    80
+   ]
+  ],
+  "skateboard_deck_wall": [
+   [
+    288,
+    832,
+    64,
+    64
+   ]
+  ],
+  "boot_display_wall": [
+   [
+    352,
+    832,
+    64,
+    64
+   ]
+  ],
+  "tshirt_wall": [
+   [
+    416,
+    832,
+    80,
+    80
+   ]
+  ],
+  "postcard_rack": [
+   [
+    608,
+    832,
+    64,
+    64
+   ]
+  ],
+  "display_plinth": [
+   [
+    688,
+    832,
+    64,
+    64
+   ]
+  ],
+  "foot_measure_stool": [
+   [
+    752,
+    832,
+    64,
+    64
+   ]
+  ],
+  "condiment_station": [
+   [
+    0,
+    736,
+    64,
+    64
+   ]
+  ],
+  "coffee_grinder_retail_shelf": [
+   [
+    896,
+    832,
+    64,
+    64
+   ]
+  ],
+  "salsa_bar": [
+   [
+    960,
+    832,
+    64,
+    64
+   ]
+  ],
+  "tray_return_condiment_station": [
+   [
+    0,
+    880,
+    80,
+    80
+   ]
+  ],
+  "host_stand": [
+   [
+    496,
+    880,
+    64,
+    64
+   ]
+  ],
+  "bread_basket_rack": [
+   [
+    288,
+    896,
+    80,
+    80
+   ]
+  ],
+  "high_chair": [
+   [
+    560,
+    896,
+    64,
+    64
+   ]
+  ],
+  "cone_and_topping_station": [
+   [
+    624,
+    896,
+    64,
+    64
+   ]
+  ],
+  "donut_display_rack": [
+   [
+    688,
+    896,
+    80,
+    80
+   ]
+  ],
+  "coffee_station_roller_grill": [
+   [
+    896,
+    896,
+    80,
+    80
+   ]
+  ],
+  "ice_merchandiser": [
+   [
+    80,
+    912,
+    80,
+    80
+   ]
+  ],
+  "pan_dulce_tray_rack": [
+   [
+    160,
+    912,
+    80,
+    80
+   ]
+  ],
+  "deli_slicer_counter": [
+   [
+    368,
+    912,
+    64,
+    64
+   ]
+  ],
+  "steam_table": [
+   [
+    432,
+    912,
+    64,
+    64
+   ]
+  ],
+  "fish_on_ice_display": [
+   [
+    768,
+    912,
+    64,
+    64
+   ]
+  ],
+  "garment_conveyor": [
+   [
+    832,
+    912,
+    64,
+    64
+   ]
+  ],
+  "barber_pole": [
+   [
+    496,
+    944,
+    64,
+    64
+   ]
+  ],
+  "change_machine": [
+   [
+    0,
+    960,
+    64,
+    64
+   ]
+  ],
+  "laundry_cart": [
+   [
+    560,
+    960,
+    64,
+    64
+   ]
+  ],
+  "dispensary_counter_partition": [
+   [
+    624,
+    960,
+    64,
+    64
+   ]
+  ],
+  "blood_pressure_kiosk": [
+   [
+    304,
+    384,
+    48,
+    48
+   ]
+  ],
+  "pedicure_chair": [
+   [
+    400,
+    448,
+    48,
+    48
+   ]
+  ],
+  "bulletproof_teller_window": [
+   [
+    592,
+    512,
+    48,
+    48
+   ]
+  ],
+  "wall_safe": [
+   [
+    592,
+    560,
+    48,
+    48
+   ]
+  ],
+  "security_grille_counter": [
+   [
+    976,
+    896,
+    48,
+    48
+   ]
+  ],
+  "tattoo_bed_chair": [
+   [
+    240,
+    912,
+    48,
+    48
+   ]
+  ],
+  "flash_art_wall": [
+   [
+    976,
+    944,
+    48,
+    48
+   ]
+  ],
+  "hood_dryer_chair": [
+   [
+    240,
+    960,
+    48,
+    48
+   ]
+  ],
+  "po_box_wall": [
+   [
+    288,
+    976,
+    48,
+    48
+   ]
+  ],
+  "parcel_scale": [
+   [
+    336,
+    976,
+    48,
+    48
+   ]
+  ],
+  "copier_large_format_printer": [
+   [
+    384,
+    976,
+    48,
+    48
+   ]
+  ],
+  "boat_on_stands": [
+   [
+    432,
+    976,
+    48,
+    48
+   ]
+  ],
+  "engine_hoist": [
+   [
+    688,
+    976,
+    48,
+    48
+   ]
+  ],
+  "oil_can_shelf": [
+   [
+    736,
+    976,
+    48,
+    48
+   ]
+  ],
+  "pallet_racking": [
+   [
+    784,
+    976,
+    48,
+    48
+   ]
+  ],
+  "tire_rack": [
+   [
+    832,
+    976,
+    48,
+    48
+   ]
+  ],
+  "tool_chest": [
+   [
+    880,
+    976,
+    48,
+    48
+   ]
+  ],
+  "wheel_balancer": [
+   [
+    928,
+    976,
+    48,
+    48
+   ]
+  ],
+  "lumber_rack": [
+   [
+    448,
+    384,
+    32,
+    32
+   ]
+  ],
+  "table_saw": [
+   [
+    480,
+    384,
+    32,
+    32
+   ]
+  ],
+  "dumbbell_rack": [
+   [
+    896,
+    512,
+    32,
+    32
+   ]
+  ],
+  "rowing_machine": [
+   [
+    64,
+    544,
+    32,
+    32
+   ]
+  ],
+  "treadmill": [
+   [
+    368,
+    544,
+    32,
+    32
+   ]
+  ],
+  "bike_repair_stand": [
+   [
+    896,
+    544,
+    32,
+    32
+   ]
+  ],
+  "dive_tank_rack": [
+   [
+    64,
+    576,
+    32,
+    32
+   ]
+  ],
+  "rod_rack": [
+   [
+    368,
+    576,
+    32,
+    32
+   ]
+  ],
+  "bait_tank": [
+   [
+    704,
+    576,
+    32,
+    32
+   ]
   ]
  }
 }

@@ -44,6 +44,8 @@ func _process(dt: float) -> bool:
 				for b: Node in cn.get_node(^"Buildings").get_children():
 					if not b.has_meta(&"rooms"): continue
 					var d := (b as Node3D).global_position.distance_to(Vector3(-12, 0, -606))
+					# (22 Nov) a building with a built-in interior (bi_* room: breakable windows) is taken first
+					if not String(((b.get_meta(&"rooms") as Array)[0] as Dictionary).scn).get_file().begins_with("bi_"): d += 400.0
 					if d < best: best = d; bld = b
 			_check(_rooms() != null, "CityStream made its Rooms child")
 			_check(bld != null, "a building with rooms near the start (%s, %.0f m)" % [str(bld.name) if bld else "none", best])
@@ -82,7 +84,7 @@ func _process(dt: float) -> bool:
 			var a: Vector3 = door.mid + door.out * 3.0 + Vector3(0, 0.3, 0); var b: Vector3 = door.mid - door.out * 2.0 + Vector3(0, 0.3, 0)
 			var q := PhysicsRayQueryParameters3D.create(a, b)
 			var hit2 := space.intersect_ray(q)
-			var by_shell := not hit2.is_empty() and (hit2.collider as Node).name != &"room_col" and not (hit2.collider as Node).is_ancestor_of(rn2)
+			var by_shell := not hit2.is_empty() and (hit2.collider as Node).name != &"room_col" and not rn2.is_ancestor_of(hit2.collider as Node)      # (a closed leaf's own body is the room's)
 			_check(not by_shell, "the building's own shell does not block the entrance (%s)" % (str(hit2.collider.get_parent().name if hit2.has("collider") and hit2.collider else "clear")))
 			# B33: a window is no way in: a ray from 2 m out through a window opening's middle meets the room's wall
 			var win: Array = []
@@ -120,6 +122,41 @@ func _process(dt: float) -> bool:
 			if t < 1.5: return false
 			var ang2 := absf((door.leaf as Node3D).rotation_degrees.y)
 			_check(ang2 < 2.0, "it shuts behind (%.1f deg)" % ang2)
+			# the hooks (22 Nov): interact_door shuts it and holds it shut with the camera at the door
+			cam.global_position = door.mid + door.out * 1.0 + Vector3(0, 0.5, 0)
+			_check(bool(_rooms().call(&"interact_door", door.mid, 2.0)) or true, "interact_door finds the door")
+			step = 6; t = 0.0
+		6:      # (the first interact on a shut door opens it: held open; the second holds it shut)
+			if t < 1.2: return false
+			_check(absf((door.leaf as Node3D).rotation_degrees.y) > 45.0, "interact_door: held open (%.0f deg)" % absf((door.leaf as Node3D).rotation_degrees.y))
+			_check(bool(_rooms().call(&"interact_door", door.mid, 2.0)), "interact_door again")
+			step = 7; t = 0.0
+		7:
+			if t < 1.2: return false
+			_check(absf((door.leaf as Node3D).rotation_degrees.y) < 2.0, "interact_door: held shut with the camera at the door (%.1f deg)" % absf((door.leaf as Node3D).rotation_degrees.y))
+			var bid := String(_rooms().call(&"damage_at", door.mid, 30.0, 1.5))
+			_check(bid != "", "damage_at hits the door (%s)" % bid)
+			_check(not (_rooms().call(&"get_breakables") as Dictionary).has(bid) or String(((_rooms().call(&"get_breakables") as Dictionary)[bid] as Dictionary).state) != "broken", "30 hp: not broken yet")
+			var bid2 := String(_rooms().call(&"damage_at", door.mid, 100.0, 1.5))
+			var bs: Dictionary = _rooms().call(&"get_breakables")
+			_check(bid2 == bid and bs.has(bid) and String((bs[bid] as Dictionary).state) == "broken", "100 more: the door breaks (%s)" % str(bs.get(bid, {})))
+			var lm := (door.leaf as Node3D).get_node_or_null(^"leaf") as Node3D
+			_check(lm == null or not lm.visible, "the broken door's leaf mesh is swapped out")
+			# a breakable window (built-in rooms): cracked, then broken with the shard burst and its sound
+			var wins := bld.get_node(^"room").find_children("Window_*", "Node3D", true, false)
+			if wins.is_empty(): print("ROOMS (no breakable window in this room)")
+			else:
+				var w := wins[0] as Node3D; var sz: Vector2 = w.get_meta(&"size", Vector2(1, 1))
+				var wc := w.global_transform * Vector3(sz.x * 0.5, sz.y * 0.5, 0.0)
+				var wb := String(_rooms().call(&"damage_at", wc, 12.0, 1.0))
+				var ws: Dictionary = (_rooms().call(&"get_breakables") as Dictionary).get(wb, {})
+				_check(wb != "" and String(ws.get("state", "")) == "cracked", "a window cracks at 12 hp of damage (%s %s)" % [wb, str(ws)])
+				_rooms().call(&"damage_at", wc, 20.0, 1.0)
+				var pane := w.get_node_or_null(^"pane") as Node3D; var rem := w.get_node_or_null(^"remnant") as Node3D
+				var sh := w.get_node_or_null(^"shards") as CPUParticles3D
+				_check(pane != null and not pane.visible and rem != null and rem.visible, "then breaks: pane swapped for its remnant")
+				_check(sh != null and sh.emitting, "the shard burst plays")
+				_check(int((_rooms().call(&"get_state") as Dictionary).get("shard_bursts", 0)) >= 1, "a shatter sound / burst counted")
 			cam.global_position += Vector3(0, 220, 0)      # far away: it sleeps
 			step = 5; t = 0.0
 		5:
