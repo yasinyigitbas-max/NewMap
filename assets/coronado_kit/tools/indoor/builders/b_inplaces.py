@@ -74,10 +74,10 @@ def ext_y(b, prof, y0, y1, key, caps=(True,True), skip=()):
         out+=b.faces(pts,[tuple(range(n))],key,[[(p.x,p.z) for p in pts]],smooth=False)
     return out
 
-def fq(b, pts, key, want, a, c):
+def fq(b, pts, key, want, a, c, smooth=False):
     """one quad, wound so its normal points along want; metre uvs a x c"""
     q=_orient([V(p) for p in pts],want)
-    return b.faces(q,[(0,1,2,3)],key,[[(0,0),(a,0),(a,c),(0,c)]])
+    return b.faces(q,[(0,1,2,3)],key,[[(0,0),(a,0),(a,c),(0,c)]],smooth=smooth)
 
 def box(b, c, size, key, skip=()):
     """plain box with the grain along its longest horizontal axis (c = bottom centre)"""
@@ -107,8 +107,8 @@ def pew_end_profile(hi):
     if (V(out[0])-V(out[-1])).length<1e-4: out.pop()
     return out
 
-def church_pew(b, hi=False):
-    W=PEW_W; xe=W/2-END_T; s=2 if hi else 1
+def church_pew(b, hi=False, W=PEW_W):
+    W=W; xe=W/2-END_T; s=2 if hi else 1
     # --- bench ends (mirror-shared bake; the outer face carries the carved panel)
     b.cur_sym=pg.MIRROR
     prof=pew_end_profile(hi)
@@ -164,6 +164,7 @@ def church_pew(b, hi=False):
            (0.30,'bk_red',0.150,0.225,0.03),(0.48,'bk_black',0.140,0.215,0.0),(0.66,'bk_red',0.150,0.225,0.0),
            (1.02,'bk_red',0.150,0.225,-0.05),(1.20,'bk_navy',0.130,0.200,0.0)]
     for (x,k,w_,h_,lean) in books:
+        x=x*W/3.0
         y=0.262; z=zr+0.016
         # book leaning back against the back panel: a box tilted about X
         import mathutils
@@ -952,6 +953,711 @@ def showroom_car(b, hi=False):
             box(b,(xw,sg*0.70,0.36),(0.80,0.02,0.32),'carblk',skip=('bottom',))
     b.cbox((0,0,0),(4.5,1.80,1.36))
 
+def church_pew_short(b, hi=False): church_pew(b, hi, 1.80)   # 1.8 m: two per side in a church block
+# ================================================================== POLISH (22 Nov, pass 2/3): priority props rebuilt
+def _lerp(a,b_,t): return a+(b_-a)*t
+# ------------------------------------------------------------------ showroom_car: unbranded mid-size coupe, nose +X
+def _car_st(x):
+    ax=abs(x)
+    # plan half width (body), tapering at the ends
+    e=max(0.0,(ax-1.80)/0.48); wr=0.89*(1-0.42*e*e)
+    # roof / deck height along X
+    if x<-1.18: zr=_lerp(0.95,0.90,min(1,(-1.18-x)/1.1)) - 0.10*max(0,(-2.0-x)/0.28)
+    elif x<-0.50: zr=_lerp(0.95,1.33,(x+1.18)/0.68)
+    elif x<0.30: zr=1.33+0.02*math.sin((x+0.5)/0.8*math.pi)
+    elif x<1.10: zr=_lerp(1.33,0.93,(x-0.30)/0.80)
+    else: zr=_lerp(0.93,0.80,(x-1.10)/1.18) - 0.06*max(0,(x-2.05)/0.23)
+    cab=-1.18<x<1.10
+    wrf=0.60 if cab else 0.74*(1-0.5*e*e)
+    # body bottom: wheel arches (r 0.37 about the axle at z 0.33)
+    zb=0.24
+    for xw in (-1.38,1.38):
+        dx=x-xw
+        if abs(dx)<0.37: zb=max(zb,0.33+math.sqrt(0.37**2-dx*dx)-0.02)
+    if ax>2.05: zb=max(zb,0.24+0.5*(ax-2.05))
+    zbl=min(0.90,zr-0.03) if cab else zr-0.03
+    zsh=min(zbl-0.09,zr-0.11)
+    return dict(x=x,zb=zb,wr=wr,zbl=zbl,zsh=zsh,zr=zr,wrf=wrf,cab=cab)
+def _car_prof(s):
+    zb,wr,zbl,zsh,zr,wrf=s['zb'],s['wr'],s['zbl'],s['zsh'],s['zr'],s['wrf']
+    p2=min(zb+0.07,zsh-0.05); p3=max(p2+0.03,_lerp(p2,zsh,0.55))
+    return [(0.0,zb),(wr-0.07,zb),(wr-0.01,p2),(wr+0.005,p3),(wr+0.012,zsh),(wr-0.035,zbl),(wrf+0.05,zr-(0.045 if s['cab'] else 0.012)),(wrf*0.55,zr-0.004),(0.0,zr)]
+def showroom_car(b, hi=False):
+    XS=[-2.28,-2.24,-2.16,-2.04,-1.88]+[-1.38+d for d in (-0.37,-0.30,-0.20,-0.07,0.07,0.20,0.30,0.37)]+[-0.88,-0.62,-0.30,0.0,0.30,0.55,0.80]+[1.38+d for d in (-0.37,-0.30,-0.20,-0.07,0.07,0.20,0.30,0.37)]+[1.80,1.96,2.08,2.18,2.25,2.29]
+    S=[_car_st(x) for x in XS]; P=[_car_prof(s) for s in S]
+    nb=len(P[0])-1
+    def key(i,j):
+        s0,s1=S[i],S[i+1]; xm=(s0['x']+s1['x'])/2
+        if j==0: return 'carblk'
+        if j==1: return 'carblk' if (abs(xm)>2.0 or abs(abs(xm)-1.38)<0.40) else 'car'
+        if j==5 and s0['cab'] and s1['cab']:
+            if -0.22<xm<-0.10: return 'cglass'             # B pillar (blacked, reads as one glasshouse)
+            return 'cglass'
+        if j in (6,7) and s0['cab'] and s1['cab'] and (xm>0.32 or xm<-0.52): return 'cglass'   # windscreen / rear screen
+        if j==2 and abs(xm)>2.02: return 'carblk'           # bumper valance
+        return 'car'
+    for sg in (-1,1):
+        for i in range(len(S)-1):
+            A=P[i]; Bp=P[i+1]; xa=S[i]['x']; xb=S[i+1]['x']
+            LA=[0.0]; LB=[0.0]
+            for j in range(nb): LA.append(LA[-1]+math.hypot(A[j+1][0]-A[j][0],A[j+1][1]-A[j][1])); LB.append(LB[-1]+math.hypot(Bp[j+1][0]-Bp[j][0],Bp[j+1][1]-Bp[j][1]))
+            for j in range(nb):
+                q=[V((xa,sg*A[j][0],A[j][1])),V((xb,sg*Bp[j][0],Bp[j][1])),V((xb,sg*Bp[j+1][0],Bp[j+1][1])),V((xa,sg*A[j+1][0],A[j+1][1]))]
+                if (q[0]-q[3]).length<1e-4 and (q[1]-q[2]).length<1e-4: continue
+                cen=sum(q,V())/4; want=V((0,cen.y,cen.z-0.60)).normalized()
+                uv=[(xa,LA[j]),(xb,LB[j]),(xb,LB[j+1]),(xa,LA[j+1])]     # continuous metre uvs: x along, arc length round
+                n_=V((0,0,0))
+                for t in range(4): n_+=q[t].cross(q[(t+1)%4])
+                if n_.dot(want)<0: q=q[::-1]; uv=uv[::-1]
+                b.faces(q,[(0,1,2,3)],key(i,j),[uv],smooth=(j>0))
+    for s,pr,want in ((S[0],P[0],(-1,0,0)),(S[-1],P[-1],(1,0,0))):
+        x=s['x']; pts=[V((x,-y,z)) for y,z in pr[::-1]]+[V((x,y,z)) for y,z in pr[1:-1]]
+        q=_orient(pts,want); b.faces(q,[tuple(range(len(q)))],'carblk' if want[0]>0 else 'car',[[(p.y,p.z) for p in q]])
+    # door shut lines + sill, near geometry (3 mm proud, carblk)
+    def at(x):
+        for i in range(len(S)-1):
+            if S[i]['x']<=x<=S[i+1]['x']:
+                t=(x-S[i]['x'])/(S[i+1]['x']-S[i]['x']); return [(_lerp(a[0],c[0],t),_lerp(a[1],c[1],t)) for a,c in zip(P[i],P[i+1])]
+    for xs in (0.86,-0.16,-1.02):
+        pr=at(xs)
+        for sg in (-1,1):
+            for j in (2,3,4):
+                a,c=pr[j],pr[j+1]
+                q=[V((xs-0.004,sg*(a[0]+0.003),a[1])),V((xs+0.004,sg*(a[0]+0.003),a[1])),V((xs+0.004,sg*(c[0]+0.003),c[1])),V((xs-0.004,sg*(c[0]+0.003),c[1]))]
+                fq(b,q,'carblk',(0,sg,0),0.008,0.1)
+    for sg in (-1,1):
+        # door handles, mirrors, side repeater
+        for xh in (0.55,-0.40):
+            pr=at(xh); y=pr[4][0]+0.012; z=pr[4][1]-0.04
+            box(b,(xh,sg*y,z),(0.13,0.02,0.022),'chrome',skip=('left','right') if False else ())
+        pr=at(0.95); y=pr[5][0]
+        box(b,(0.95,sg*(y+0.06),pr[5][1]+0.01),(0.10,0.10,0.025),'carblk')
+        box(b,(0.93,sg*(y+0.13),pr[5][1]+0.0),(0.14,0.06,0.09),'car')
+        # head / tail lamps hugging the body corners
+        box(b,(2.275,sg*0.36,0.64),(0.04,0.22,0.07),'headlamp',skip=('back',))
+        box(b,(-2.275,sg*0.33,0.66),(0.03,0.30,0.08),'taillamp',skip=('front',))
+        box(b,(2.26,sg*0.55,0.36),(0.03,0.14,0.05),'headlamp')   # fog lamp
+        box(b,(-2.265,sg*0.56,0.40),(0.03,0.10,0.03),'taillamp')  # reflector
+        # sill strip
+        pr0=at(-0.95); pr1=at(0.95)
+        fq(b,[V((-0.95,sg*(pr0[2][0]+0.004),pr0[2][1]-0.02)),V((0.95,sg*(pr1[2][0]+0.004),pr1[2][1]-0.02)),V((0.95,sg*(pr1[2][0]+0.004),pr1[2][1]+0.01)),V((-0.95,sg*(pr0[2][0]+0.004),pr0[2][1]+0.01))],'chrome',(0,sg,0),1.9,0.03)
+    # grille (unbranded): dark mesh panel + chrome surround on the nose, plates
+    box(b,(2.29,0,0.465),(0.02,0.60,0.15),'carblk',skip=('back',)); box(b,(2.296,0,0.615),(0.012,0.62,0.012),'chrome',skip=('back',))
+    box(b,(-2.275,0,0.695),(0.02,0.36,0.02),'taillamp',skip=('front',))
+    box(b,(2.30,0,0.37),(0.012,0.32,0.085),'label',skip=('back',)); box(b,(-2.29,0,0.45),(0.012,0.32,0.09),'label',skip=('front',))
+    txt(b,hi,'DEMO',0.05,(2.3065,0,0.4125),'paint_navy',(0,1,0),(0,0,1)); txt(b,hi,'DEMO',0.05,(-2.2965,0,0.495),'paint_navy',(0,-1,0),(0,0,1))
+    box(b,(-2.255,0,0.30),(0.04,1.40,0.08),'carblk')      # rear diffuser
+    # wheels: tyre (tread + rounded shoulder), recessed dark dish, 5 spokes, rim lip, brake disc
+    n=20
+    for xw in (-1.38,1.38):
+        for sg in (-1,1):
+            yo=sg*0.905; yi=sg*0.70; zc=0.33
+            def ring(r,y,nn=n): return [V((xw+r*math.cos(2*math.pi*k/nn),y,zc+r*math.sin(2*math.pi*k/nn))) for k in range(nn)]
+            T1=ring(0.33,yo-sg*0.03); T2=ring(0.33,yi); S1=ring(0.305,yo); R0=ring(0.235,yo+sg*0.004); R1=ring(0.215,yo-sg*0.02)
+            for k in range(n):
+                k2=(k+1)%n; mid=V((xw,(yo+yi)/2,zc))
+                fq(b,[T1[k],T2[k],T2[k2],T1[k2]],'tyre',(T1[k]+T1[k2])/2-mid,0.15,0.20,smooth=True)
+                fq(b,[S1[k],T1[k],T1[k2],S1[k2]],'tyre',V((0,sg,0))+((S1[k]+S1[k2])/2-V((xw,yo,zc)))*1.5,0.15,0.04)
+                fq(b,[R0[k],S1[k],S1[k2],R0[k2]],'tyre',V((0,sg,0)),0.15,0.07)
+                fq(b,[R1[k],R0[k],R0[k2],R1[k2]],'rim',V((0,sg,0))-((R0[k]+R0[k2])/2-V((xw,yo,zc)))*2,0.1,0.03)
+            q=_orient(R1,(0,sg,0)); b.faces(q,[tuple(range(n))],'carblk',[[(p.x,p.z) for p in q]])
+            for s5 in range(5):
+                a=2*math.pi*s5/5+0.3; ca,sa=math.cos(a),math.sin(a); pa,pb=-sa,ca
+                p0=(xw+0.05*ca,zc+0.05*sa); p1=(xw+0.215*ca,zc+0.215*sa)
+                pr=[(p0[0]+pa*0.028,p0[1]+pb*0.028),(p1[0]+pa*0.022,p1[1]+pb*0.022),(p1[0]-pa*0.022,p1[1]-pb*0.022),(p0[0]-pa*0.028,p0[1]-pb*0.028)]
+                y0,y1=(yo-0.022,yo-0.006) if sg>0 else (yo+0.006,yo+0.022)
+                ext_y(b,pr,y0,y1,'rim',caps=(sg<0,sg>0))
+            hub=circ((xw,zc),0.055,8); y0,y1=(yo-0.02,yo-0.002) if sg>0 else (yo+0.002,yo+0.02)
+            ext_y(b,hub,y0,y1,'rim',caps=(sg<0,sg>0))
+            box(b,(xw-0.20,sg*0.80,0.33),(0.08,0.06,0.10),'paint_red' if False else 'taillamp')   # brake caliper
+            box(b,(xw,sg*0.70,0.36),(0.78,0.02,0.34),'carblk',skip=('bottom',))
+    b.cbox((0,0,0),(4.56,1.82,1.36))
+
+# ------------------------------------------------------------------ stage_platform
+def stage_platform(b, hi=False):
+    W,D,H=6.0,2.60,0.60; yf=-1.10
+    box(b,(0,0.20,0),(W,D,H-0.03),'stage',skip=('bottom','top','front'))
+    box(b,(0,0.20,H-0.03),(W,D,0.03),'stage',skip=('bottom',))                                  # deck
+    # deck seams (the 1.2 x 2.4 m risers): thin dark strips across the deck
+    for x in (-1.8,-0.6,0.6,1.8): box(b,(x,0.20,H),(0.006,D,0.001),'paint_black',skip=('bottom','left','right','front','back'))
+    box(b,(0,0.20,H),(W,0.006,0.001),'paint_black',skip=('bottom','left','right','front','back'))
+    # black box-pleat skirt: one zig-zag strip
+    n=36; pts=[V((-W/2+W*i/n,yf-0.02-(0.025 if i%2 else 0.0),0)) for i in range(n+1)]
+    for i in range(n):
+        a,c=pts[i],pts[i+1]
+        fq(b,[V((a.x,a.y,0.0)),V((c.x,c.y,0.0)),V((c.x,c.y,H-0.05)),V((a.x,a.y,H-0.05))],'skirt',(0,-1,0),W/n,H-0.05)
+    box(b,(0,yf-0.035,H-0.06),(W+0.02,0.05,0.04),'skirt_dk',skip=('back','bottom'))           # skirt clip band
+    box(b,(0,yf-0.02,H-0.02),(W+0.02,0.06,0.025),'paint_white',skip=('back','bottom'))         # nosing / edge line
+    for sx in (-2.45,2.45):
+        for k,(y,h) in enumerate(((-1.46,0.20),(-1.30,0.40))):
+            box(b,(sx,y,0),(1.0,0.16,h),'stage',skip=('bottom','back') if k else ('bottom',))
+            box(b,(sx,y-0.08,h-0.012),(1.0,0.04,0.012),'paint_yellow',skip=('bottom','back'))  # safety nosing
+        for xo in (sx-0.52,sx+0.52):                                                           # stringers
+            ext_x(b,[(-1.55,0.0),(-1.13,0.0),(-1.13,0.60),(-1.38,0.40),(-1.55,0.20)],xo-0.02,xo+0.02,'stage_dk')
+        # handrail on the outer side
+        xo=sx+(0.50 if sx>0 else -0.50)
+        rod(b,(xo,-1.50,0.20),(xo,-1.50,1.10),0.02,4,'paint_black'); rod(b,(xo,-1.18,0.60),(xo,-1.18,1.45),0.02,4,'paint_black')
+        rod(b,(xo,-1.50,1.10),(xo,-1.18,1.45),0.022,6,'paint_black',caps=True)
+    # two wedge floor monitors + a mic stand at the front edge
+    for x in (-0.9,0.9):
+        ext_x(b,[(-0.98,H),(-0.62,H),(-0.62,H+0.30),(-0.72,H+0.32)],x-0.22,x+0.22,'carblk' if False else 'plastic_black')
+        box(b,(x,-0.98+0.0,H+0.02),(0.36,0.004,0.20),'keypad',skip=('back',)) if False else None
+    cyl(b,(0,-0.80,H),0.13,0.015,8,'plastic_black'); rod(b,(0,-0.80,H+0.015),(0,-0.80,H+1.45),0.010,6,'chrome')
+    rod(b,(0,-0.80,H+1.45),(0,-0.98,H+1.52),0.008,6,'plastic_black'); b.tube((0,-0.98,H+1.52),(0,-1.07,H+1.55),0.016,0.022,6,'plastic_black',cap0=False,cap1=True)
+    maker_plate(b,(1.6,yf-0.066,0.05),hi,0.10,0.03)
+    b.cbox((0,0.20,0),(W,D,H)); b.cbox((0,-1.30,0),(W,0.40,0.30))
+
+# ------------------------------------------------------------------ cubicle_partition (free-standing 1.6 x 1.3 panel)
+def cubicle_partition(b, hi=False):
+    W,H,T=1.60,1.30,0.06
+    box(b,(0,0,0.10),(W-0.08,T,H-0.14),'panelfab',skip=('bottom','top','left','right'))
+    cap=[(-T/2-0.004,0.0),(T/2+0.004,0.0),(T/2+0.004,0.015)]+[(0.034*math.cos(math.radians(t)),0.015+0.022*math.sin(math.radians(t))) for t in (30,60,90,120,150)]+[(-T/2-0.004,0.015)]
+    ext_x(b,[(y,z+H-0.04) for y,z in cap],-W/2,W/2,'alum')                                           # rounded top cap
+    for x in (-W/2+0.02,W/2-0.02):
+        ext_z(b,rrect(x-0.02,-T/2-0.004,x+0.02,T/2+0.004,0.012,2),0.03,H-0.04,'alum',caps=(False,False))  # posts
+        ext_x(b,[(-0.26,0.0),(0.26,0.0),(0.24,0.03),(-0.24,0.03)],x-0.025,x+0.025,'alum')                 # stabiliser feet
+        cyl(b,(x,-0.23,0.0),0.018,0.012,6,'rubber'); cyl(b,(x,0.23,0.0),0.018,0.012,6,'rubber')
+    box(b,(0,0,0.03),(W-0.08,T+0.006,0.08),'plastic_black',skip=('bottom','left','right'))            # power raceway
+    for x in (-0.35,0.35):
+        box(b,(x,-T/2-0.006,0.045),(0.07,0.004,0.05),'plastic',skip=('back',))                          # duplex outlets
+        if hi:
+            for dz in (0.055,0.075): box(b,(x,-T/2-0.0085,0.045+dz-0.045),(0.012,0.002,0.006),'paint_black',skip=('back',))
+    # tack board papers + pushpins, a three-tier paper tray hung on the panel, a coat hook on the back
+    box(b,(-0.30,-T/2-0.0015,0.80),(0.21,0.002,0.28),'label',skip=('back',)); txt(b,hi,'Q3 TARGETS',0.026,(-0.30,-T/2-0.003,1.02),'paint_navy')
+    if hi:
+        for k in range(6): ext_y(b,[(-0.38,0.86+0.025*k),(-0.22-0.02*(k%3),0.86+0.025*k),(-0.22-0.02*(k%3),0.865+0.025*k),(-0.38,0.865+0.025*k)],-T/2-0.0035,-T/2-0.003,'paint_black')
+    box(b,(-0.02,-T/2-0.0015,0.92),(0.13,0.002,0.10),'flyer_y',skip=('back',)); txt(b,hi,'TEAM',0.02,(-0.02,-T/2-0.003,0.985),'paint_black')
+    box(b,(0.18,-T/2-0.0015,0.86),(0.12,0.002,0.15),'badge',skip=('back',))
+    box(b,(0.32,-T/2-0.0015,0.94),(0.10,0.002,0.10),'flyer_g',skip=('back',))
+    for (x,z) in ((-0.30,1.07),(-0.02,1.01),(0.18,1.0),(0.32,1.03)): box(b,(x,-T/2-0.008,z),(0.010,0.006,0.010),'tag_r',skip=('back',))
+    for k in range(3):
+        z=0.52+0.075*k
+        ext_x(b,[(-T/2-0.30,z),(-T/2,z),(-T/2,z+0.05),(-T/2-0.012,z+0.05),(-T/2-0.012,z+0.008),(-T/2-0.30,z+0.008)],0.12,0.50,'alum_dk')
+        box(b,(0.31,-T/2-0.16,z+0.008),(0.32,0.25,0.012),'label',skip=('bottom',)) if k!=1 else None
+    box(b,(0.12,-T/2-0.006,0.50),(0.012,0.012,0.25),'alum_dk',skip=('back',)); box(b,(0.50,-T/2-0.006,0.50),(0.012,0.012,0.25),'alum_dk',skip=('back',))
+    rod(b,(-0.55,T/2,1.12),(-0.55,T/2+0.05,1.10),0.006,6,'chrome'); rod(b,(-0.55,T/2+0.05,1.10),(-0.55,T/2+0.06,1.14),0.006,6,'chrome',caps=True)
+    box(b,(-0.55,T/2+0.0015,0.70),(0.20,0.002,0.26),'label',skip=('front',))
+    bevel_plate(b,hi,0.70,-T/2-0.002,1.10,0.10,0.04,'plate','4B-12','paint_black',0.022)
+    b.cbox((0,0,0),(W,0.06,H))
+
+# ------------------------------------------------------------------ projector_screen (wall, manual pull-down, budget 220)
+def projector_screen(b, hi=False):
+    W=2.40; zc=1.70
+    case=[(0.05,zc-0.045),(0.0,zc-0.06),(-0.04,zc-0.045),(-0.05,zc),(-0.04,zc+0.045),(0.0,zc+0.06),(0.05,zc+0.045)]
+    ext_x(b,[(y-0.01,z) for y,z in case],-W/2-0.03,W/2+0.03,'paint_white',caps=(False,False),skip=(6,))
+    for x in (-W/2-0.03,W/2+0.03):
+        ext_x(b,[(y-0.012,z) for y,z in [(-0.07,zc-0.07),(0.045,zc-0.07),(0.045,zc+0.07),(-0.07,zc+0.07)]],x-0.012 if x<0 else x,x if x<0 else x+0.012,'plastic_black',skip=(1,))
+    # fabric: one baked quad (the black masking borders live on the bake)
+    fq(b,[V((-W/2+0.03,-0.02,0.21)),V((W/2-0.03,-0.02,0.21)),V((W/2-0.03,-0.02,zc-0.06)),V((-W/2+0.03,-0.02,zc-0.06))],'scrn_face',(0,-1,0),W-0.06,zc-0.27)
+    if hi:
+        for z,h in ((zc-0.18,0.12),(0.21,0.06)): box(b,(0,-0.0215,z),(W-0.06,0.002,h),'paint_black',skip=('back',))
+        for x in (-W/2+0.06,W/2-0.06): box(b,(x,-0.0215,0.27),(0.06,0.002,zc-0.45),'paint_black',skip=('back',))
+    bar=[(-0.035,0.16),(-0.005,0.15),(0.0,0.17),(-0.005,0.215),(-0.035,0.205)]
+    ext_x(b,bar,-W/2+0.01,W/2-0.01,'alum')                                                     # weighted bottom bar
+    b.tube((0,-0.03,0.15),(0,-0.04,0.08),0.006,0.006,4,'plastic_black',cap0=False,cap1=False)   # pull loop / cord
+    ext_x(b,[(-0.052,0.03),(-0.028,0.03),(-0.028,0.09),(-0.052,0.09)],-0.025,0.025,'plastic_black')
+    for x in (-0.9,0.9): box(b,(x,0.025,zc-0.04),(0.06,0.02,0.10),'alum',skip=('back',))       # wall brackets
+    bevel_plate(b,hi,0.95,-0.071,zc-0.018,0.12,0.03,'plate','SCREEN 100"','paint_black',0.016)
+    b.cbox((0,0,0.15),(W,0.10,1.65))
+
+# ------------------------------------------------------------------ drive_thru_window (wall, inside face -Y)
+def drive_thru_window(b, hi=False):
+    W,H=1.20,1.17; z0=0.03   # sill = counter top (the bake places the prop at the window's height)
+    fr=[(0.0,0.0),(0.20,0.0),(0.20,0.06),(0.04,0.06),(0.04,0.04),(0.0,0.04)]
+    for z,flip in ((z0,False),(z0+H-0.06,True)):
+        ext_x(b,[(y-0.05,z+(0.06-zz if flip else zz)) for y,zz in fr],-W/2,W/2,'alum')
+    for sg in (-1,1):
+        x=sg*(W/2-0.03)
+        box(b,(x,0.05,z0+0.06),(0.06,0.20,H-0.12),'alum',skip=('bottom','top'))
+    box(b,(-0.27,0.09,z0+0.06),(0.54,0.012,H-0.12),'glass',skip=('bottom','top'))            # fixed pane
+    box(b,(0.28,0.05,z0+0.06),(0.56,0.012,H-0.12),'glass',skip=('bottom','top'))              # sliding pane (half open)
+    for x in (0.0,0.55): box(b,(x,0.05,z0+0.06),(0.035,0.035,H-0.12),'alum_dk',skip=('bottom','top'))
+    box(b,(0.03,0.03,z0+0.45),(0.02,0.03,0.20),'plastic_black')                              # pull handle
+    box(b,(0.28,0.042,z0+H-0.30),(0.18,0.004,0.08),'label',skip=('back',)); txt(b,hi,'PULL',0.045,(0.28,0.0395,z0+H-0.26),'ceramic')
+    # inside: stainless pass-through counter on two brackets, cash drawer, POS, headset hook, order display
+    ext_x(b,[(-0.25,0.0),(0.05,0.0),(0.05,z0),(-0.235,z0),(-0.25,z0-0.012)],-W/2-0.03,W/2+0.03,'steel')
+    box(b,(-0.34,-0.10,z0),(0.38,0.26,0.10),'plastic_black',skip=('bottom',))                  # cash drawer
+    box(b,(-0.34,-0.232,z0+0.02),(0.06,0.004,0.02),'chrome',skip=('back',))
+    box(b,(0.32,-0.12,z0),(0.18,0.12,0.03),'plastic_black',skip=('bottom',))
+    ext_x(b,[(-0.17,z0+0.03),(-0.13,z0+0.03),(-0.10,z0+0.27),(-0.14,z0+0.27)],0.20,0.44,'plastic_black')   # POS screen, tilted
+    fq(b,[V((0.215,-0.172,z0+0.05)),V((0.425,-0.172,z0+0.05)),V((0.425,-0.142,z0+0.255)),V((0.215,-0.142,z0+0.255))],'screen',(0,-1,0.15),0.21,0.2)
+    txt(b,hi,'#214  $12.85',0.022,(0.32,-0.162,z0+0.17),'paint_white',(1,0,0),(0,0.146,0.989))
+    # order-ready display on the window head, inside
+    box(b,(-0.30,-0.02,z0+H+0.0),(0.36,0.06,0.10),'plastic_black'); box(b,(-0.30,-0.0505,z0+H+0.015),(0.32,0.002,0.07),'keypad',skip=('back',))
+    txt(b,hi,'ORDER 214',0.035,(-0.30,-0.052,z0+H+0.05),'badge')
+    box(b,(0.48,0.01,z0+0.70),(0.04,0.05,0.04),'plastic_black'); rod(b,(0.48,-0.015,z0+0.72),(0.48,-0.06,z0+0.68),0.005,4,'chrome')
+    box(b,(0.48,-0.065,z0+0.60),(0.10,0.02,0.08),'plastic_black')                              # headset on the hook
+    b.cbox((0,0.05,0),(W,0.20,z0+H)); b.cbox((0,-0.10,0),(W,0.30,z0+0.10))
+
+# ------------------------------------------------------------------ departure_board (ceiling-hung, face -Y)
+def departure_board(b, hi=False):
+    W,H=2.0,0.62; D=0.10
+    ext_x(b,[(-D/2+0.015,0),(D/2,0),(D/2,H),(-D/2+0.015,H),(-D/2,H-0.015),(-D/2,0.015)],-W/2,W/2,'paint_black')
+    box(b,(0,-D/2-0.001,0.035),(W-0.06,0.003,H-0.14),'keypad',skip=('back',))                 # split-flap field (baked)
+    box(b,(0,-D/2-0.001,H-0.095),(W-0.06,0.003,0.07),'screen',skip=('back',))                 # header bar
+    txt(b,hi,'DEPARTURES',0.042,(-0.62,-D/2-0.003,H-0.06),'paint_white')
+    txt(b,hi,'DESTINATION',0.026,(-0.30,-D/2-0.003,H-0.06),'paint_white'); txt(b,hi,'TIME',0.026,(0.34,-D/2-0.003,H-0.06),'paint_white')
+    txt(b,hi,'BAY',0.026,(0.58,-D/2-0.003,H-0.06),'paint_white'); txt(b,hi,'STATUS',0.026,(0.82,-D/2-0.003,H-0.06),'paint_white')
+    rows=[('901','IMPERIAL BEACH','10:15','1','ON TIME'),('904','ORANGE AVE','10:22','2','BOARDING'),('F','BROADWAY PIER','10:30','D','ON TIME'),
+          ('901','SAN DIEGO','10:41','1','DELAYED'),('93','NORTH ISLAND','10:55','3','ON TIME')]
+    if hi:
+        for k in range(len(rows)):
+            z=H-0.17-0.083*k
+            for (x0,x1) in ((-0.95,-0.70),(-0.66,0.18),(0.24,0.46),(0.50,0.66),(0.70,0.96)):     # flap tiles
+                n=max(1,int((x1-x0)/0.045))
+                for i in range(n):
+                    a=x0+(x1-x0)*i/n
+                    box(b,(a+(x1-x0)/n/2,-D/2-0.0025,z-0.006),((x1-x0)/n-0.006,0.002,0.064),'plastic_black',skip=('back',))
+                box(b,((x0+x1)/2,-D/2-0.0047,z+0.025),(x1-x0,0.001,0.002),'paint_black',skip=('back',))
+    for k,(rt,a,t,bay,st) in enumerate(rows):
+        z=H-0.145-0.083*k; y=-D/2-0.0048
+        txt(b,hi,rt,0.040,(-0.825,y,z),'brass'); txt(b,hi,a,0.040,(-0.24,y,z),'brass'); txt(b,hi,t,0.040,(0.35,y,z),'brass'); txt(b,hi,bay,0.040,(0.58,y,z),'brass')
+        txt(b,hi,st,0.032,(0.83,y,z),'leaf' if st!='DELAYED' else 'ceramic')
+    # clock module on the right end, ceiling hangers with plates, cable
+    _disc_y(b,(0,H+0.17),0.14,-0.035,0.035,14,'paint_black',caps=(True,True))
+    _disc_y(b,(0,H+0.17),0.12,-0.039,-0.035,14,'label',caps=(True,False))
+    if hi:
+        box(b,(0,-0.041,H+0.17),(0.008,0.002,0.09),'paint_black',skip=('back',)); box(b,(0.03,-0.042,H+0.165),(0.065,0.002,0.008),'paint_black',skip=('back',))
+        for k in range(12): a=2*math.pi*k/12; box(b,(0.105*math.cos(a),-0.040,H+0.17+0.105*math.sin(a)-0.006),(0.006,0.002,0.012),'paint_black',skip=('back',))
+    for x in (-0.8,0.8):
+        rod(b,(x,0,H),(x,0,H+0.40),0.008,6,'chrome'); cyl(b,(x,0,H+0.40),0.04,0.02,8,'chrome',top=True)
+        box(b,(x,0,H),(0.06,0.04,0.02),'paint_black',skip=('bottom',))
+    box(b,(0,0,H),(0.04,0.03,0.04),'paint_black',skip=('bottom',))                          # clock stem
+    b.cbox((0,0,0),(W,0.10,H))
+
+# ------------------------------------------------------------------ key_rack_wall (hotel / motel key board)
+def key_rack_wall(b, hi=False):
+    W,H=0.80,0.60
+    box(b,(0,0.01,0),(W-0.04,0.02,H-0.04),'wal',skip=('back',))
+    for z,h in ((0.0,0.04),(H-0.06,0.06)): box(b,(0,0.0,z),(W,0.04,h),'wal_dk',skip=('back',))
+    for x in (-W/2+0.02,W/2-0.02): box(b,(x,0.0,0.04),(0.04,0.04,H-0.10),'wal_dk',skip=('back','bottom','top'))
+    ext_x(b,[(-0.03,H),(0.02,H),(0.02,H+0.025),(-0.035,H+0.03),(-0.035,H+0.012)],-W/2-0.02,W/2+0.02,'wal_dk')   # crown
+    box(b,(0,-0.002,0.0),(W+0.02,0.06,0.025),'wal_dk',skip=('back',))                          # ledge
+    box(b,(0,-0.012,H-0.13),(0.30,0.006,0.07),'plate',skip=('back',)); txt(b,hi,'ROOM KEYS',0.04,(0,-0.0155,H-0.095),'paint_black')
+    for r,z in enumerate((0.27,0.06)):
+        box(b,(0,-0.004,z+0.155),(W-0.10,0.006,0.012),'brass',skip=('back',))                  # hook rail
+        for i in range(8):
+            x=-0.33+i*0.094
+            fq(b,[V((x-0.003,-0.007,z+0.165)),V((x+0.003,-0.007,z+0.165)),V((x+0.003,-0.034,z+0.172)),V((x-0.003,-0.034,z+0.172))],'brass',(0,0,1),0.006,0.03)
+            fq(b,[V((x-0.003,-0.007,z+0.158)),V((x+0.003,-0.007,z+0.158)),V((x+0.003,-0.034,z+0.165)),V((x-0.003,-0.034,z+0.165))],'brass',(0,0,-1),0.006,0.03)
+            txt(b,hi,str(101+r*8+i),0.02,(x,-0.0105,z+0.19),'brass')
+            if (i*3+r)%5!=2:
+                kk='tag_r' if (i+r)%3==0 else 'tag_g' if (i+r)%3==1 else 'tag_b'
+                tg=_orient([V((x-0.016,-0.030,z)),V((x+0.016,-0.030,z)),V((x+0.016,-0.030,z+0.06)),V((x,-0.030,z+0.078)),V((x-0.016,-0.030,z+0.06))],(0,-1,0))
+                b.faces(tg,[(0,1,2,3,4)],kk,[[(p_.x,p_.z) for p_ in tg]])
+                fq(b,[V((x-0.005,-0.031,z+0.075)),V((x+0.005,-0.031,z+0.075)),V((x+0.005,-0.031,z+0.15)),V((x-0.005,-0.031,z+0.15))],'brass',(0,-1,0),0.01,0.075)
+                if hi: txt(b,hi,str(101+r*8+i),0.012,(x,-0.0345,z+0.035),'paint_white')
+    b.cbox((0,0,0),(W,0.06,H))
+
+# ------------------------------------------------------------------ model_house_display (low table-top model, ~0.56 m)
+def model_house_display(b, hi=False):
+    box(b,(0,0,0),(0.80,0.80,0.04),'paint_black',skip=('bottom',))                            # plinth toe
+    box(b,(0,0,0.04),(0.76,0.76,0.24),'paint_white',skip=('bottom','top'))
+    box(b,(0,0,0.28),(0.80,0.80,0.025),'oak')                                                 # oak tray
+    box(b,(0,0,0.305),(0.74,0.74,0.008),'lawn',skip=('bottom',))
+    zg=0.313
+    box(b,(0.10,-0.22,zg),(0.14,0.30,0.002),'paint_cream',skip=('bottom',))                  # driveway
+    box(b,(-0.10,-0.31,zg),(0.05,0.12,0.002),'paint_cream',skip=('bottom',))                  # path
+    box(b,(-0.20,-0.20,zg),(0.20,0.13,0.003),'pool',skip=('bottom',))
+    for (x,y,w,d) in ((-0.20,-0.27,0.24,0.012),(-0.20,-0.13,0.24,0.012),(-0.32,-0.20,0.012,0.15),(-0.08,-0.20,0.012,0.15)): box(b,(x,y,zg),(w,d,0.006),'paint_white',skip=('bottom',))
+    # two-storey house + garage wing, hip roofs, chimney, porch
+    box(b,(-0.02,0.12,zg),(0.40,0.24,0.15),'house',skip=('bottom',))
+    box(b,(0.26,0.08,zg),(0.18,0.20,0.09),'house',skip=('bottom',))
+    def hip(x0,x1,y0,y1,z,h,ov=0.015):
+        x0-=ov; x1+=ov; y0-=ov; y1+=ov; r=min(x1-x0,y1-y0)/2
+        P=[V((x0,y0,z)),V((x1,y0,z)),V((x1,y1,z)),V((x0,y1,z))]; R=[V((x0+r,(y0+y1)/2,z+h)),V((x1-r,(y0+y1)/2,z+h))]
+        fq(b,[P[0],P[1],R[1],R[0]],'roof',(0,-1,1),x1-x0,0.1); fq(b,[P[2],P[3],R[0],R[1]],'roof',(0,1,1),x1-x0,0.1)
+        b.faces(_orient([P[1],P[2],R[1]],(1,0,1)),[(0,1,2)],'roof',[[(0,0),(0.1,0),(0.05,0.1)]])
+        b.faces(_orient([P[3],P[0],R[0]],(-1,0,1)),[(0,1,2)],'roof',[[(0,0),(0.1,0),(0.05,0.1)]])
+        b.faces(_orient([P[0],P[1],P[2],P[3]],(0,0,-1)),[(0,1,2,3)],'paint_white',[[(0,0),(0.1,0),(0.1,0.1),(0,0.1)]])
+    hip(-0.22,0.18,0.0,0.24,zg+0.15,0.08); hip(0.17,0.35,-0.02,0.18,zg+0.09,0.05)
+    box(b,(-0.16,0.20,zg+0.15),(0.04,0.04,0.11),'stone')
+    # windows (baked dark glass), door, garage door, porch posts
+    for x in (-0.15,-0.05,0.08):
+        for z in (zg+0.03,zg+0.095): box(b,(x,-0.0015,z),(0.045,0.003,0.04),'screen',skip=('back',))
+    box(b,(0.0,-0.0015,zg),(0.04,0.003,0.07),'walnut',skip=('back',)) if False else None
+    box(b,(0.26,-0.0215,zg),(0.12,0.003,0.07),'paint_grey',skip=('back',))
+    box(b,(-0.02,-0.03,zg+0.075),(0.14,0.06,0.006),'house')
+    for x in (-0.08,0.04): box(b,(x,-0.055,zg),(0.008,0.008,0.075),'paint_white',skip=('bottom','top'))
+    # palms + shrubs + a little car
+    for (x,y,h) in ((-0.30,0.25,0.20),(0.31,-0.29,0.17),(-0.33,-0.05,0.14)):
+        rod(b,(x,y,zg),(x+0.012,y,zg+h),0.006,4,'walnut')
+        for k in range(6): pg.B.quad(b,[V((x+0.012,y,zg+h)),V((x+0.08*math.cos(k*1.047),y+0.08*math.sin(k*1.047),zg+h-0.045)),V((x+0.09*math.cos(k*1.047+0.25),y+0.09*math.sin(k*1.047+0.25),zg+h-0.03))],'lawn_dk')
+    for (x,y) in ((0.18,0.25),(-0.30,0.12),(0.33,0.22)): b.lathe([(0.0,zg),(0.03,zg+0.01),(0.03,zg+0.03),(0.0,zg+0.045)],6,'lawn_dk',c=(x,y,0),cap_top=False)
+    box(b,(0.10,-0.25,zg+0.002),(0.05,0.10,0.025),'tag_b'); box(b,(0.10,-0.245,zg+0.027),(0.044,0.05,0.015),'cglass')
+    # brass lot plate + price card on a little stand
+    box(b,(0,-0.402,0.285),(0.26,0.004,0.02),'plate',skip=('back',)); txt(b,hi,'THE PALMS  lot 12',0.014,(0,-0.4045,0.295),'paint_black')
+    ext_x(b,[(-0.38,zg),(-0.34,zg),(-0.33,zg+0.10),(-0.335,zg+0.10)],0.20,0.34,'label'); txt(b,hi,'FROM $1.89M',0.018,(0.27,-0.365,zg+0.055),'paint_navy',(1,0,0),(0,0.1,0.995))
+    b.cbox((0,0,0),(0.80,0.80,0.56))
+
+# ------------------------------------------------------------------ dental_chair (feet -Y, head + unit +Y)
+def dental_chair(b, hi=False):
+    ext_z(b,rrect(-0.30,-0.15,0.30,0.55,0.14,3),0.0,0.04,'paint_white',caps=(False,True))           # base plate
+    ext_z(b,rrect(-0.15,0.02,0.15,0.30,0.06,2),0.04,0.36,'paint_white',caps=(False,True))           # lift column
+    for k in range(4): ext_z(b,rrect(-0.155,0.015,0.155,0.305,0.06,2),0.08+0.06*k,0.09+0.06*k,'paint_grey',caps=(False,False))
+    box(b,(0,0.05,0.36),(0.48,0.84,0.06),'paint_grey')                                              # seat frame
+    # upholstered shell: seat + back + leg rest, piped edge
+    up=[(-0.92,0.38),(-0.88,0.46),(-0.80,0.50),(-0.42,0.57),(-0.10,0.58),(0.06,0.59),(0.16,0.64),(0.36,0.86),(0.52,1.02),(0.62,1.10),(0.70,1.15)]
+    lo=[(0.72,1.10),(0.64,1.04),(0.54,0.96),(0.38,0.80),(0.18,0.56),(0.08,0.46),(-0.10,0.44),(-0.42,0.43),(-0.78,0.37),(-0.90,0.31)]
+    ext_x(b,up+lo,-0.26,0.26,'vinyl')
+    ext_x(b,[(y,z+0.012) for y,z in up[1:8]]+[(y-0.0,z-0.0) for y,z in up[1:8][::-1]],-0.20,0.20,'vinyl_dk',caps=(True,True)) if False else None
+    for sg in (-1,1): ext_x(b,[(y,z) for y,z in up],sg*0.262-0.006,sg*0.262+0.006,'vinyl_dk',caps=(True,True)) if False else None
+    # piping lines across the cushion breaks (seat / back / leg)
+    for (y,z) in ((0.10,0.59),(-0.42,0.575)): box(b,(0,y,z-0.01),(0.52,0.02,0.02),'vinyl_dk')
+    # headrest on its slide
+    box(b,(0,0.73,1.08),(0.10,0.06,0.10),'paint_grey')
+    ext_x(b,[(0.66,1.12),(0.86,1.18),(0.90,1.23),(0.86,1.27),(0.66,1.22)],-0.14,0.14,'vinyl')
+    # arm rests
+    for sg in (-1,1):
+        box(b,(sg*0.31,-0.02,0.64),(0.08,0.44,0.05),'vinyl'); ext_x(b,[(0.14,0.46),(0.19,0.46),(0.19,0.64),(0.14,0.64)],sg*0.31-0.015,sg*0.31+0.015,'paint_white')
+    # foot control on a cable
+    ext_z(b,rrect(0.30,-0.55,0.52,-0.35,0.06,2),0.0,0.05,'paint_grey',caps=(False,True)); box(b,(0.41,-0.45,0.05),(0.12,0.10,0.01),'rubber',skip=('bottom',))
+    b.sweep([(0.30,-0.45,0.02),(0.15,-0.30,0.01),(0.12,0.0,0.02)],0.006,4,'plastic_black',cap0=False,cap1=False)
+    # cuspidor post + bowl + water spout (patient's left)
+    ext_z(b,rrect(-0.65,0.32,-0.48,0.49,0.04,2),0.0,0.86,'paint_white',caps=(False,True))
+    b.lathe([(0.03,0.86),(0.12,0.88),(0.13,0.92),(0.11,0.925),(0.08,0.90),(0.03,0.89)],12,'ceramic_w',c=(-0.57,0.36,0),cap_top=False)
+    rod(b,(-0.53,0.44,0.86),(-0.53,0.44,1.0),0.008,6,'chrome'); rod(b,(-0.53,0.44,1.0),(-0.53,0.36,0.98),0.007,6,'chrome',caps=True)
+    cyl(b,(-0.62,0.42,0.86),0.03,0.07,8,'cglass',top=True)                                             # cup
+    # delivery unit: arm, tray, 4 handpieces in holders with hoses
+    rod(b,(0.36,0.30,0.42),(0.40,0.20,0.86),0.025,8,'paint_white'); b.sweep([(0.40,0.20,0.86),(0.46,0.0,0.90),(0.52,-0.18,0.90)],0.02,8,'paint_white',cap0=False,cap1=True)
+    ext_z(b,rrect(0.32,-0.46,0.72,-0.16,0.05,2),0.88,0.92,'paint_white',caps=(True,True))
+    box(b,(0.52,-0.32,0.92),(0.30,0.18,0.008),'steel',skip=('bottom',))
+    for k in range(4):
+        x=0.38+0.08*k
+        box(b,(x,-0.47,0.86),(0.04,0.03,0.06),'paint_grey')
+        rod(b,(x,-0.48,0.92),(x+0.01,-0.50,1.04),0.008,6,'chrome',caps=True)
+        b.sweep([(x,-0.47,0.86),(x+0.02,-0.52,0.72),(x+0.04,-0.40,0.66)],0.005,4,'plastic_black',cap0=False,cap1=False)
+    for k in range(3): rod(b,(0.42+0.07*k,-0.28,0.93),(0.42+0.07*k,-0.38,0.935),0.004,4,'chrome')
+    # operating light: post, swing arm, curved head
+    rod(b,(0.0,0.62,0.04),(0.0,0.62,1.95),0.035,8,'paint_white'); rod(b,(0.0,0.62,1.93),(0.0,0.10,1.93),0.025,8,'paint_white',caps=True)
+    rod(b,(0.0,0.10,1.93),(0.0,0.06,1.86),0.02,6,'paint_white')
+    ext_x(b,[(-0.08,1.80),(0.08,1.80),(0.10,1.84),(0.06,1.88),(-0.06,1.88),(-0.10,1.84)],-0.18,0.18,'paint_white')
+    box(b,(0,0.0,1.795),(0.30,0.14,0.006),'mirror',skip=('top',))
+    for sg in (-1,1): rod(b,(sg*0.19,-0.02,1.84),(sg*0.24,-0.06,1.83),0.01,6,'paint_grey',caps=True)
+    # monitor on the light post
+    rod(b,(0.0,0.62,1.45),(0.30,0.50,1.45),0.015,6,'paint_white'); box(b,(0.34,0.45,1.32),(0.34,0.03,0.24),'plastic_black')
+    fq(b,[V((0.18,0.433,1.34)),V((0.50,0.433,1.34)),V((0.50,0.433,1.54)),V((0.18,0.433,1.54))],'screen',(0,-1,0),0.32,0.2)
+    maker_plate(b,(0,-0.124,0.22),hi,0.10,0.03)
+    b.cbox((0,0.0,0),(0.66,1.80,0.80)); b.cbox((0,0.62,0),(0.12,0.12,1.95))
+
+# ------------------------------------------------------------------ pizza_oven (Neapolitan dome on a stand, mouth -Y)
+def pizza_oven(b, hi=False):
+    box(b,(0,0,0.06),(1.60,1.40,0.89),'steel',skip=('bottom','front'))
+    box(b,(0,0,0),(1.56,1.36,0.06),'rubber',skip=('bottom',))                                    # plinth
+    # front panel as a frame round the open wood store
+    box(b,(0,-0.69,0.55),(1.60,0.02,0.40),'steel',skip=('back',)); box(b,(0,-0.69,0.06),(1.60,0.02,0.06),'steel',skip=('back',))
+    for sg in (-1,1): box(b,(sg*0.695,-0.69,0.12),(0.21,0.02,0.43),'steel',skip=('back','top','bottom'))
+    for x in (-0.79,0.79): box(b,(x,-0.705,0.06),(0.03,0.012,0.89),'steel_dk',skip=('back',))     # corner trims
+    box(b,(0,-0.705,0.55),(1.20,0.012,0.025),'steel_dk',skip=('back',)); box(b,(0,-0.705,0.095),(1.20,0.012,0.025),'steel_dk',skip=('back',))
+    fq(b,[V((-0.59,-0.40,0.12)),V((0.59,-0.40,0.12)),V((0.59,-0.40,0.55)),V((-0.59,-0.40,0.55))],'paint_black',(0,-1,0),1.18,0.43)   # store back
+    fq(b,[V((-0.59,-0.68,0.12)),V((0.59,-0.68,0.12)),V((0.59,-0.40,0.12)),V((-0.59,-0.40,0.12))],'steel_dk',(0,0,1),1.18,0.28)     # store floor
+    for sg in (-1,1): fq(b,[V((sg*0.59,-0.68,0.12)),V((sg*0.59,-0.40,0.12)),V((sg*0.59,-0.40,0.55)),V((sg*0.59,-0.68,0.55))],'steel_dk',(-sg,0,0),0.28,0.43)
+    for r_ in range(3):
+        for i in range(5-r_):
+            x=-0.48+0.24*i+0.12*r_; z=0.175+0.10*r_
+            _disc_y(b,(x,z),0.05,-0.66,-0.41,6,'walnut',caps=(True,False))
+            if hi: _disc_y(b,(x,z),0.035,-0.663,-0.66,6,'oak',caps=(True,False))
+    box(b,(0,0,0.95),(1.66,1.46,0.06),'stone')                                                   # hearth slab
+    box(b,(0,-0.745,0.95),(1.66,0.02,0.06),'stone_dk',skip=('back',))
+    n=16 if hi else 14
+    prof=[(0.76,1.01),(0.76,1.12),(0.72,1.30),(0.62,1.46),(0.46,1.58),(0.25,1.66),(0.0,1.68)]
+    b.lathe(prof,n,'dome',c=(0,0.05,0),cap_top=False)
+    b.lathe([(0.775,1.01),(0.775,1.07),(0.76,1.07)],n,'dome_dk',c=(0,0.05,0),cap_top=False)      # base band
+    # brick arch facade around the mouth, keystone, ember mouth, landing
+    ar=[(-0.32,1.01),(0.32,1.01),(0.32,1.20)]+[(0.32*math.cos(math.radians(t)),1.20+0.16*math.sin(math.radians(t))) for t in range(20,161,20)]+[(-0.32,1.20)]
+    ext_y(b,ar,-0.80,-0.58,'brick')
+    box(b,(0,-0.81,1.30),(0.08,0.03,0.09),'stone')
+    ar2=[(-0.22,1.03),(0.22,1.03),(0.22,1.17)]+[(0.22*math.cos(math.radians(t)),1.17+0.11*math.sin(math.radians(t))) for t in range(30,151,30)]+[(-0.22,1.17)]
+    ext_y(b,ar2,-0.805,-0.80,'paint_black',caps=(True,False))
+    box(b,(0,-0.806,1.03),(0.36,0.004,0.045),'ember',skip=('back','bottom'))               # glowing bed of embers
+    if hi:
+        for k in range(8): ext_y(b,[(-0.16+0.04*k,1.035),(-0.14+0.04*k,1.035),(-0.145+0.04*k,1.06),(-0.155+0.04*k,1.06)],-0.81,-0.8085,'badge')
+        for z in (1.07,1.12,1.17):                                                               # mortar courses
+            for sg in (-1,1): fq(b,[V((sg*0.225,-0.8005,z)),V((sg*0.32,-0.8005,z)),V((sg*0.32,-0.8005,z+0.006)),V((sg*0.225,-0.8005,z+0.006))],'stone',(0,-1,0),0.1,0.006)
+        for t in range(10,171,20):                                                               # arch voussoirs
+            ca,sa=math.cos(math.radians(t)),math.sin(math.radians(t))
+            a=V((0.225*ca,-0.8005,1.17+0.115*sa)); c=V((0.32*ca,-0.8005,1.20+0.16*sa)); nn=V((-sa,0,ca))*0.003
+            fq(b,[a-nn,c-nn,c+nn,a+nn],'stone',(0,-1,0),0.1,0.006)
+    box(b,(0,-0.80,1.00),(0.70,0.10,0.03),'stone')
+    # flue with a cap and a damper band, thermometer, plate, peel + brush leaning on the stand
+    rod(b,(0,0.30,1.60),(0,0.30,2.04),0.10,10,'steel_dk'); b.tube((0,0.30,2.04),(0,0.30,2.12),0.16,0.05,10,'steel_dk',cap0=True,cap1=True)
+    cyl(b,(0,0.30,1.78),0.11,0.04,10,'steel')
+    cyl(b,(0.36,-0.70,1.30),0.04,0.01,10,'chrome') if False else None
+    _disc_y(b,(0.40,1.30),0.05,-0.71,-0.68,10,'chrome',caps=(True,False)); _disc_y(b,(0.40,1.30),0.04,-0.712,-0.71,10,'label',caps=(True,False))
+    box(b,(0,-0.702,0.70),(0.44,0.006,0.13),'plate',skip=('back',)); txt(b,hi,'FORNO NAPOLI',0.045,(0,-0.706,0.765),'paint_black')
+    for (x,tool) in ((0.70,'peel'),(0.62,'brush')):
+        rod(b,(x,-0.74,0.06),(x-0.04,-0.74,1.40),0.012,6,'oak',caps=True)
+        if tool=='peel': ext_y(b,rrect(x-0.17,0.06,x+0.15,0.36,0.10,2),-0.755,-0.745,'chrome')
+        else: box(b,(x-0.04,-0.75,1.40),(0.16,0.04,0.05),'brass')
+    b.cbox((0,0,0),(1.66,1.46,1.60))
+
+# ================================================================== POLISH detail passes (wrappers: base geometry + added detail)
+def _wrap(base, extra):
+    def f(b, hi=False):
+        base(b, hi); extra(b, hi)
+    f.__name__=base.__name__; return f
+def _glass_tumbler(b,x,y,z,r=0.03,h=0.10): b.lathe([(0.0,z),(r*0.85,z),(r,z+h),(r*0.9,z+h)],8,'cglass',c=(x,y,0),cap_top=False)
+def _pitcher(b,x,y,z):
+    b.lathe([(0.0,z),(0.05,z),(0.06,z+0.06),(0.05,z+0.16),(0.055,z+0.20),(0.045,z+0.20)],8,'cglass',c=(x,y,0),cap_top=False)
+    b.sweep([(x+0.05,y,z+0.16),(x+0.09,y,z+0.14),(x+0.09,y,z+0.07),(x+0.055,y,z+0.05)],0.007,4,'cglass',cap0=False,cap1=False)
+def _candle(b,x,y,z,h=0.18):
+    b.lathe([(0.05,z),(0.055,z+0.02),(0.018,z+0.04),(0.014,z+0.16),(0.035,z+0.18),(0.035,z+0.19),(0.0,z+0.19)],8,'brass',c=(x,y,0),cap_top=False)
+    cyl(b,(x,y,z+0.19),0.018,h,8,'linen',top=True); b.tube((x,y,z+0.19+h),(x,y,z+0.19+h+0.035),0.008,0.0,4,'ember',cap0=False,cap1=False)
+def _book_open(b,x,y,z,w,d,tilt_deg=0.0,key='bk_red'):
+    t=math.radians(tilt_deg); up=V((0,-math.sin(t),math.cos(t))); fw=V((0,math.cos(t),math.sin(t)))
+    o=V((x,y,z)); 
+    for sg in (-1,1):
+        a=o+V((0,0,0)); c=o+V((sg*w/2,0,0))
+        q=[a+fw*(-d/2)+up*0.012,c+fw*(-d/2)+up*0.006,c+fw*(d/2)+up*0.006,a+fw*(d/2)+up*0.012]
+        fq(b,q,'bk_page',up,w/2,d)
+    q=[o+V((-w/2-0.005,0,0))+fw*(-d/2-0.005),o+V((w/2+0.005,0,0))+fw*(-d/2-0.005),o+V((w/2+0.005,0,0))+fw*(d/2+0.005),o+V((-w/2-0.005,0,0))+fw*(d/2+0.005)]
+    fq(b,q,key,up,w,d)
+def _plant_small(b,x,y,z,h=0.30):
+    b.lathe([(0.0,z),(0.06,z),(0.075,z+0.11),(0.08,z+0.12),(0.0,z+0.12)],8,'ceramic_w',c=(x,y,0),cap_top=False)
+    for k in range(7):
+        a=k*0.9; L=h*(0.6+0.4*((k*37)%10)/10)
+        pg.B.quad(b,[V((x,y,z+0.11)),V((x+0.10*math.cos(a)-0.02*math.sin(a),y+0.10*math.sin(a)+0.02*math.cos(a),z+0.11+L*0.7)),V((x+0.12*math.cos(a),y+0.12*math.sin(a),z+0.11+L))],'lawn_dk')
+
+# court_bench: solid back board, stretcher, glides, plates both faces of the ends
+def _x_court_bench(b,hi):
+    box(b,(0,0.252,0.47),(2.90,0.014,0.36),'wal_dk',skip=('left','right','bottom'))
+    box(b,(0,0.20,0.07),(2.90,0.04,0.05),'wal_dk',skip=('left','right'))
+    for x in (-1.47,1.47):
+        for y in (-0.25,0.25): box(b,(x,y,-0.004),(0.05,0.06,0.006),'rubber',skip=('bottom',)) if False else None
+    for x in (-0.75,0.75): ext_x(b,[(-0.20,0.0),(-0.14,0.0),(-0.12,0.04),(0.08,0.04),(0.10,0.0),(0.15,0.0),(0.14,0.39),(-0.20,0.40)],x-0.018,x+0.018,'wal_dk')
+court_bench=_wrap(court_bench,_x_court_bench)
+
+# lectern: brass cross, open book on the desk, reading lamp, water glass
+def _x_lectern(b,hi):
+    box(b,(0,-0.226,0.63),(0.035,0.008,0.20),'brass',skip=('back',)); box(b,(0,-0.226,0.745),(0.13,0.008,0.035),'brass',skip=('back',))
+    a=V((0,-0.235,1.12)); c=V((0,0.245,1.005)); m=(a+c)/2; d=(c-a).normalized(); n=V((0,-d.z,d.y)) if d.z<0 else V((0,d.z,-d.y))
+    ang=math.degrees(math.atan2(-(c.z-a.z),(c.y-a.y)))
+    _book_open(b,0,m.y-0.02,m.z+0.012,0.34,0.24,-ang,'bk_black')
+    rod(b,(-0.22,0.20,1.0),(-0.20,0.12,1.16),0.006,6,'brass'); b.tube((-0.20,0.12,1.16),(-0.12,0.06,1.12),0.025,0.035,8,'tag_g',cap0=True,cap1=False)
+    cyl(b,(-0.22,0.20,0.99),0.035,0.012,8,'brass')
+    _glass_tumbler(b,0.14,0.20,0.645)
+lectern=_wrap(lectern,_x_lectern)
+
+# altar_table: candlesticks, cross, missal on a stand, chalice
+def _x_altar_table(b,hi):
+    zt=0.986
+    for x in (-0.78,0.78): _candle(b,x,0.12,zt,0.20)
+    box(b,(0,0.26,zt),(0.18,0.10,0.04),'brass'); box(b,(0,0.26,zt+0.04),(0.03,0.025,0.42),'brass'); box(b,(0,0.26,zt+0.32),(0.20,0.025,0.03),'brass')
+    ext_x(b,[(-0.12,zt+0.10),(-0.12,zt),(0.08,zt)],-0.14,0.14,'brass')
+    _book_open(b,0,-0.02,zt+0.055,0.30,0.21,-27,'bk_red')
+    b.lathe([(0.04,zt),(0.04,zt+0.01),(0.008,zt+0.03),(0.008,zt+0.09),(0.045,zt+0.12),(0.05,zt+0.17),(0.045,zt+0.17)],8,'brass',c=(0.42,0.05,0),cap_top=False)
+altar_table=_wrap(altar_table,_x_altar_table)
+
+# judge_bench: flags, banker's lamp, microphone, water
+def _x_judge_bench(b,hi):
+    for (x,k) in ((-1.45,'flag_r'),(1.45,'tag_b')):
+        cyl(b,(x,0.40,0.30),0.16,0.05,10,'brass'); rod(b,(x,0.40,0.35),(x,0.40,2.45),0.016,6,'brass')
+        b.lathe([(0.0,2.45),(0.03,2.47),(0.0,2.56)],6,'brass',c=(x,0.40,0),cap_top=False)
+        b.tube((x+0.02,0.40,2.38),(x+0.03,0.40,1.55),0.10,0.035,8,k,cap0=True,cap1=False)
+        rod(b,(x+0.02,0.40,2.38),(x+0.09,0.40,2.30),0.005,4,'brass') if False else None
+    cyl(b,(1.35,-0.05,1.035),0.07,0.02,8,'brass'); rod(b,(1.35,-0.05,1.055),(1.35,-0.05,1.32),0.008,6,'brass')
+    ext_x(b,[(-0.12,1.30),(0.02,1.30),(0.02,1.34)]+[(-0.05+0.07*math.cos(math.radians(t)),1.30+0.07*math.sin(math.radians(t))) for t in (60,90,120)]+[(-0.12,1.34)],1.17,1.53,'tag_g')
+    cyl(b,(0.0,-0.30,1.035),0.045,0.012,8,'plastic_black'); rod(b,(0,-0.30,1.047),(0.0,-0.40,1.26),0.006,6,'plastic_black'); cyl(b,(0,-0.41,1.26),0.013,0.05,6,'plastic_black')
+    _pitcher(b,-1.20,-0.05,1.035); _glass_tumbler(b,-1.05,-0.15,1.035)
+judge_bench=_wrap(judge_bench,_x_judge_bench)
+
+# witness_box: chair inside, bible + water on the ledge, swing-gate handle
+def _x_witness_box(b,hi):
+    _pitcher(b,0.52,-0.57,1.065); _glass_tumbler(b,0.40,-0.57,1.065)
+    box(b,(-0.67,-0.30,1.065),(0.14,0.21,0.035),'bk_black',skip=('bottom',)); box(b,(-0.67,-0.301,1.071),(0.141,0.20,0.024),'bk_page',skip=('bottom','top','left'))
+    box(b,(0.705,0.25,0.55),(0.02,0.03,0.12),'brass')                 # gate latch
+    for sg in (-1,1): box(b,(sg*0.67,0.44,0.20),(0.10,0.04,0.85),'wal_dk',skip=('bottom',))   # gate posts
+witness_box=_wrap(witness_box,_x_witness_box)
+
+# jury_box: water pitchers, plate
+def _x_jury_box(b,hi):
+    for x in (-1.2,1.2): _pitcher(b,x,-0.72,0.96); _glass_tumbler(b,x+0.14,-0.70,0.96)
+    bevel_plate(b,hi,0,-0.81,0.80,0.36,0.05,'plate','JURY','paint_black',0.032)
+jury_box=_wrap(jury_box,_x_jury_box)
+
+# conference_table: speakerphone, notepads + pens, carafes and glasses
+def _x_conference_table(b,hi):
+    z=0.765
+    ext_z(b,[(0.0,0.14),(-0.13,-0.08),(0.13,-0.08)],z,z+0.03,'plastic_black',caps=(False,True))
+    for a in (90,210,330): cyl(b,(0.10*math.cos(math.radians(a)),0.10*math.sin(math.radians(a))-0.02,z),0.025,0.012,6,'plastic_black')
+    box(b,(0,-0.003,z+0.03),(0.06,0.03,0.002),'screen',skip=('bottom',))
+    for (x,y,r) in ((-0.95,-0.32,0.1),(-0.30,-0.34,-0.05),(0.45,-0.33,0.05),(0.95,0.32,0.08),(-0.55,0.33,-0.1)):
+        box(b,(x,y,z),(0.21,0.29,0.012),'label',skip=('bottom',))
+        rod(b,(x+0.13,y-0.10,z+0.006),(x+0.15,y+0.08,z+0.006),0.004,4,'tag_b',caps=True)
+    for x in (-0.6,0.6): _pitcher(b,x,0.02,z); _glass_tumbler(b,x+0.15,0.10,z,0.03,0.09); _glass_tumbler(b,x-0.15,-0.08,z,0.03,0.09)
+conference_table=_wrap(conference_table,_x_conference_table)
+
+# chart_table: parallel rule + dividers on the glass, swing-arm magnifier lamp
+def _x_chart_table(b,hi):
+    z=0.952
+    box(b,(-0.25,0.05,z),(0.46,0.06,0.006),'plastic',skip=('bottom',)); box(b,(-0.25,0.13,z),(0.46,0.06,0.006),'plastic',skip=('bottom',))
+    for x in (-0.38,-0.12): box(b,(x,0.09,z+0.006),(0.012,0.10,0.004),'brass',skip=('bottom',))
+    rod(b,(0.30,-0.15,z+0.004),(0.42,0.02,z+0.004),0.003,4,'brass'); rod(b,(0.30,-0.15,z+0.004),(0.47,-0.12,z+0.004),0.003,4,'brass')
+    box(b,(0.72,0.42,z-0.06),(0.06,0.08,0.10),'paint_black'); rod(b,(0.72,0.42,z+0.04),(0.68,0.36,z+0.42),0.008,6,'paint_black'); rod(b,(0.68,0.36,z+0.42),(0.40,0.20,z+0.34),0.008,6,'paint_black')
+    b.tube((0.40,0.20,z+0.34),(0.40,0.20,z+0.30),0.09,0.09,12,'paint_black',cap0=True,cap1=False); _disc_y if False else None
+chart_table=_wrap(chart_table,_x_chart_table)
+
+# drafting_table: pencil cup, pencils and a tape roll on the ledge, foot rail
+def _x_drafting_table(b,hi):
+    cyl(b,(-0.55,-0.46,0.69),0.03,0.09,8,'tag_b',top=False)
+    for k in range(3): rod(b,(-0.56+0.01*k,-0.46,0.72),(-0.57+0.02*k,-0.47+0.005*k,0.83),0.003,4,'paint_yellow',caps=True)
+    b.lathe([(0.02,0.69),(0.035,0.69),(0.035,0.71),(0.02,0.71)],8,'plastic',c=(-0.40,-0.46,0),cap_top=False)
+drafting_table=_wrap(drafting_table,_x_drafting_table)
+
+# reception_desk: vertical walnut fins on the front, LED strip under the ledge, orchid, card stand, pen cup
+def _x_reception_desk(b,hi):
+    for i in range(14):
+        x=-1.42+0.17*i
+        if x>0.85: break
+        box(b,(x,-0.69,0.08),(0.035,0.024,0.32),'wal_dk',skip=('back',))
+    box(b,(-0.17,-0.745,1.012),(2.68,0.006,0.008),'label',skip=('top',))
+    _plant_small(b,1.42,-0.50,1.055,0.30)
+    ext_x(b,[(-0.70,1.055),(-0.66,1.055),(-0.67,1.12)],-0.10,0.0,'chrome'); box(b,(-0.05,-0.675,1.06),(0.09,0.004,0.055),'label') if False else None
+    cyl(b,(-0.30,-0.15,0.77),0.035,0.10,8,'plastic_black',top=False)
+    for k in range(2): rod(b,(-0.30,-0.15,0.80),(-0.30+0.02*k,-0.14,0.90),0.004,4,'tag_b' if k else 'paint_black',caps=True)
+reception_desk=_wrap(reception_desk,_x_reception_desk)
+
+# exam_bed: pull-out step, pillow, chrome pulls
+def _x_exam_bed(b,hi):
+    box(b,(-0.30,-0.36,0.0),(0.50,0.12,0.19),'paint_white',skip=('bottom','back'))
+    box(b,(-0.30,-0.36,0.19),(0.50,0.12,0.012),'rubber',skip=('bottom',))
+    ext_x(b,[(-0.22,0.0),(0.22,0.0),(0.24,0.04),(0.20,0.08),(-0.20,0.08),(-0.24,0.04)],0.62,0.86,'linen') if False else None
+    for x in (-0.55,-0.10,0.35): box(b,(x,-0.30,0.50),(0.12,0.012,0.015),'chrome',skip=('back',))
+exam_bed=_wrap(exam_bed,_x_exam_bed)
+
+# physio_table: bolster roll, folded towel, foot control bar
+def _x_physio_table(b,hi):
+    z=0.67
+    rod(b,(-0.80,-0.25,z+0.08),(-0.80,0.25,z+0.08),0.08,10,'vinyl',caps=True)
+    box(b,(0.10,0.0,z),(0.40,0.30,0.04),'linen',skip=('bottom',)); box(b,(0.10,-0.12,z+0.04),(0.40,0.06,0.004),'linen_dk',skip=('bottom',))
+physio_table=_wrap(physio_table,_x_physio_table)
+
+# privacy_curtain_rail: runner gliders on the tracks, ceiling plates
+def _x_privacy_curtain_rail(b,hi):
+    zt=2.26
+    for k in range(5): box(b,(-1.15+0.30*k,-1.2,zt-0.035),(0.02,0.03,0.035),'plastic',skip=('top',))
+    for k in range(6): box(b,(-1.2,1.10-0.40*k,zt-0.035),(0.03,0.02,0.035),'plastic',skip=('top',))
+    for p in ((1.2,-1.2),(-1.2,1.2),(-1.2,-1.2)): box(b,(p[0],p[1],2.29),(0.08,0.08,0.01),'chrome',skip=('top',))
+privacy_curtain_rail=_wrap(privacy_curtain_rail,_x_privacy_curtain_rail)
+
+# water_cooler: cup dispenser on the side
+def _x_water_cooler(b,hi):
+    rod(b,(0.175,0.0,0.78),(0.175,0.0,1.05),0.035,6,'cglass',caps=False); cyl(b,(0.175,0.0,0.76),0.04,0.02,6,'plastic',top=True,bot=True)
+water_cooler=_wrap(water_cooler,_x_water_cooler)
+
+# lecture_seating_row: row plates on the aisle standards, floor beam
+def _x_lecture_seating_row(b,hi):
+    for sg in (-1,1):
+        x=sg*1.893
+        ext_x(b,[(-0.05,0.62),(0.05,0.62),(0.05,0.70),(-0.05,0.70)],x-0.004 if sg<0 else x,x if sg<0 else x+0.004,'plate')
+        if hi: txt(b,hi,'ROW F',0.03,(x+sg*0.0045,0.0,0.66),'paint_black',(0,-sg,0),(0,0,1))
+    box(b,(0,0.05,0.0),(3.70,0.12,0.04),'steel_dk',skip=('bottom','left','right'))
+lecture_seating_row=_wrap(lecture_seating_row,_x_lecture_seating_row)
+
+# tablet_arm_chair: wire book basket under the seat, glides
+def _x_tablet_arm_chair(b,hi):
+    z=0.22
+    for (a,c) in (((-0.20,-0.15),(0.20,-0.15)),((0.20,-0.15),(0.20,0.15)),((0.20,0.15),(-0.20,0.15)),((-0.20,0.15),(-0.20,-0.15))):
+        rod(b,(a[0],a[1],z),(c[0],c[1],z),0.004,4,'chrome'); rod(b,(a[0],a[1],z+0.08),(c[0],c[1],z+0.08),0.004,4,'chrome')
+    for x in (-0.10,0.0,0.10): rod(b,(x,-0.15,z),(x,0.15,z),0.003,4,'chrome')
+    box(b,(0.05,0.0,z+0.004),(0.22,0.28,0.03),'bk_navy')
+tablet_arm_chair=_wrap(tablet_arm_chair,_x_tablet_arm_chair)
+
+# whiteboard_wall: three markers and an eraser on the tray
+def _x_whiteboard_wall(b,hi):
+    for (x,z,w,h) in ((0.95,0.62,0.21,0.28),(0.70,0.18,0.21,0.28)):
+        fq(b,[V((x-w/2,-0.0015,z)),V((x+w/2,-0.0015,z)),V((x+w/2,-0.0015,z+h)),V((x-w/2,-0.0015,z+h))],'label',(0,-1,0),w,h)
+        box(b,(x,-0.008,z+h-0.03),(0.025,0.006,0.025),'tag_r',skip=('back','bottom'))
+    for (x,z) in ((0.20,1.0),(-0.95,0.30)): box(b,(x,-0.008,z),(0.025,0.006,0.025),'tag_b',skip=('back','bottom'))
+whiteboard_wall=_wrap(whiteboard_wall,_x_whiteboard_wall)
+
+# noticeboard_wall: business cards, brass corner caps
+def _x_noticeboard_wall(b,hi):
+    for (x,z) in ((0.50,0.38),(0.52,0.30),(-0.52,0.70)): box(b,(x,-0.012,z),(0.09,0.002,0.05),'label',skip=('back',))
+    for (x,z) in ((-0.58,0.0),(0.58,0.0),(-0.58,0.86),(0.58,0.86)): box(b,(x,-0.027,z),(0.05,0.004,0.04),'brass',skip=('back',))
+noticeboard_wall=_wrap(noticeboard_wall,_x_noticeboard_wall)
+
+# directory_board: stand-off pins, YOU ARE HERE strip
+def _x_directory_board(b,hi):
+    for (x,z) in ((-0.44,0.06),(0.44,0.06),(-0.44,1.52),(0.44,1.52)): _disc_y(b,(x,z),0.016,-0.026,-0.005,8,'chrome',caps=(True,False))
+    box(b,(0,-0.002,0.06),(0.60,0.004,0.06),'screen',skip=('back',)); txt(b,hi,'YOU ARE HERE: GROUND FLOOR',0.026,(0,-0.0045,0.09),'paint_white')
+directory_board=_wrap(directory_board,_x_directory_board)
+
+# listing_board_wall: SOLD riders on two cards, brochure pocket, stand-offs
+def _x_listing_board_wall(b,hi):
+    for (cx,cz) in ((-0.21,0.55),(0.63,0.10)):
+        fq(b,[V((cx-0.19,-0.006,cz+0.30)),V((cx-0.05,-0.006,cz+0.40)),V((cx-0.02,-0.006,cz+0.37)),V((cx-0.16,-0.006,cz+0.27))],'atm_hdr',(0,-1,0),0.2,0.04)
+        txt(b,hi,'SOLD',0.03,(cx-0.10,-0.0065,cz+0.335),'paint_white',(0.8,0,0.6),(-0.6,0,0.8))
+    ext_x(b,[(-0.06,0.0),(0.0,0.0),(0.0,0.16),(-0.006,0.16),(-0.06,0.10)],-0.25,0.25,'cglass')
+    for k in range(3): box(b,(-0.15+0.15*k,-0.03,0.01),(0.11,0.012,0.17),'label',skip=('bottom',))
+listing_board_wall=_wrap(listing_board_wall,_x_listing_board_wall)
+
+# atm_wall: camera dome, lit card slot, receipt slot, braille plate, surround light strips
+def _x_atm_wall(b,hi):
+    b.lathe([(0.04,1.48),(0.035,1.465),(0.02,1.455),(0.0,1.45)],8,'plastic_black',c=(0,-0.03,0),cap_top=False) if False else None
+    _disc_y(b,(0.0,1.495),0.025,-0.105,-0.085,8,'plastic_black',caps=(True,False))
+    box(b,(0.18,-0.116,0.97),(0.10,0.006,0.025),'leaf',skip=('back',))
+    box(b,(-0.05,-0.116,0.86),(0.08,0.006,0.012),'plastic_black',skip=('back',))
+    box(b,(-0.22,-0.116,0.94),(0.07,0.004,0.05),'plate',skip=('back',))
+    for x in (-0.395,0.395): box(b,(x,0.134,0.10),(0.012,0.012,1.35),'label',skip=('back',))
+atm_wall=_wrap(atm_wall,_x_atm_wall)
+
+# ticket_machine: canopy, side route map, plinth, coin cup
+def _x_ticket_machine(b,hi):
+    ext_x(b,[(-0.31,1.74),(0.25,1.74),(0.25,1.82),(-0.25,1.82),(-0.31,1.79)],-0.42,0.42,'tm_body')
+    box(b,(0.402,0.0,0.75),(0.004,0.38,0.62),'label',skip=('left',))
+    if hi:
+        txt(b,hi,'ROUTE MAP',0.035,(0.405,0.0,1.30),'paint_navy',(0,1,0),(0,0,1))
+        for k,(y0,z0,y1,z1) in enumerate(((-0.15,0.85,0.15,1.20),(-0.15,1.05,0.15,0.90),(-0.05,0.80,-0.05,1.25))):
+            b.sweep([(0.405,y0,z0),(0.405,(y0+y1)/2+0.04,(z0+z1)/2),(0.405,y1,z1)],0.004,4,('tag_r','tag_b','tag_g')[k],cap0=False,cap1=False)
+    box(b,(0,0,0),(0.82,0.53,0.05),'rubber',skip=('bottom',))
+    box(b,(0.20,-0.262,0.55),(0.12,0.012,0.08),'steel_dk',skip=('back',))
+ticket_machine=_wrap(ticket_machine,_x_ticket_machine)
+
+# reverse_vending_machine: lit header strip, side graphic, bin door handles
+def _x_reverse_vending_machine(b,hi):
+    box(b,(0,-0.42,1.86),(0.98,0.01,0.04),'label',skip=('back',))
+    box(b,(0.503,0.0,0.55),(0.004,0.60,0.80),'flyer_g',skip=('left',))
+    txt(b,hi,'RECYCLE  5c',0.05,(0.506,0.0,1.05),'paint_white',(0,1,0),(0,0,1)); txt(b,hi,'per bottle / can',0.03,(0.506,0.0,0.98),'paint_white',(0,1,0),(0,0,1))
+    for x in (-0.30,0.30): box(b,(x,-0.425,0.40),(0.12,0.02,0.02),'chrome')
+reverse_vending_machine=_wrap(reverse_vending_machine,_x_reverse_vending_machine)
+
+# queue_ticket_dispenser: round base, pole collar
+def _x_queue_ticket_dispenser(b,hi):
+    ext_z(b,circ((0,0),0.15,10),0.0,0.02,'paint_black',caps=(False,True)); cyl(b,(0,0,0.02),0.03,0.04,8,'chrome')
+queue_ticket_dispenser=_wrap(queue_ticket_dispenser,_x_queue_ticket_dispenser)
+
+# vault_door: frame bolt heads, threshold plate, time-lock window
+def _x_vault_door(b,hi):
+    for k in range(10):
+        z=0.25+0.19*k
+        for x in (-0.93,0.93): _disc_y(b,(x,z),0.018,-0.005,0.0,6,'chrome',caps=(True,False))
+    box(b,(0,-0.175,0.0),(1.70,0.15,0.015),'steel_dk',skip=('bottom',))
+    box(b,(0.36,-0.136,1.10+0.32),(0.20,0.006,0.10),'cglass',skip=('back',))
+vault_door=_wrap(vault_door,_x_vault_door)
+
+# luggage_cart: rubber bumper band instead of rod rails; garment bag + hangers on the top rail
+def luggage_cart(b, hi=False):
+    box(b,(0,0,0.12),(1.06,0.58,0.05),'paint_black',skip=())
+    box(b,(0,0,0.17),(1.04,0.56,0.012),'cush',skip=('bottom',))
+    for x in (-0.47,0.47):
+        for y in (-0.23,0.23):
+            cyl(b,(x,y,0.0),0.05,0.04,6,'rubber'); box(b,(x,y,0.04),(0.04,0.06,0.08),'chrome',skip=('top',))
+    ext_z(b,rrect(-0.545,-0.305,0.545,0.305,0.04,1),0.125,0.165,'rubber',caps=(False,False))
+    for x in (-0.50,0.50):
+        rod(b,(x,-0.24,0.17),(x,-0.24,1.55),0.016,6,'brass'); rod(b,(x,0.24,0.17),(x,0.24,1.55),0.016,6,'brass')
+        pts=[(x,-0.24*math.cos(math.radians(t)),1.55+0.22*math.sin(math.radians(t))) for t in range(0,181,30)]
+        b.sweep(pts,0.016,6,'brass',cap0=False,cap1=False)
+    rod(b,(-0.50,0,1.77),(0.50,0,1.77),0.018,6,'brass',caps=True)
+    box(b,(-0.18,0.0,0.182),(0.62,0.40,0.24),'case'); box(b,(-0.18,0.0,0.422),(0.18,0.03,0.03),'plastic_black')
+    rod(b,(0.18,-0.18,0.32),(0.18,0.18,0.32),0.13,8,'duffel',caps=True)
+    # garment bag on a hanger
+    fq(b,[V((0.20,0.0,1.77)),V((0.12,0.0,1.70)),V((0.28,0.0,1.70)),V((0.20,0.0,1.77))],'chrome',(0,-1,0),0.1,0.1) if False else None
+    ext_x(b,[(-0.05,0.70),(0.05,0.70),(0.06,1.66),(0.0,1.71),(-0.06,1.66)],0.06,0.34,'case_g')
+    rod(b,(0.20,0.0,1.71),(0.20,0.0,1.77),0.004,4,'chrome')
+    maker_plate(b,(-0.30,-0.203,0.28),hi,0.10,0.03)
+    b.cbox((0,0,0),(1.10,0.60,1.80))
+
 # ================================================================== keys, tints, PROPS
 NEWK={'wal':('ti_wood',(0.50,0.32,0.20)),'wal_dk':('ti_wood',(0.36,0.22,0.14)),'linen':('ti_fabric',(1.0,0.98,0.94)),
  'leather':('ti_fabric',(0.26,0.11,0.075)),'stage':('ti_wood',(0.17,0.16,0.15)),'skirt':('ti_fabric',(0.09,0.09,0.10)),
@@ -965,9 +1671,13 @@ NEWK={'wal':('ti_wood',(0.50,0.32,0.20)),'wal_dk':('ti_wood',(0.36,0.22,0.14)),'
  'lawn':('ti_fabric',(0.30,0.52,0.22)),'pool':('ti_paint',(0.30,0.70,0.85)),'house':('ti_paint',(1.0,0.97,0.90)),
  'roof':('ti_paint',(0.70,0.30,0.18)),'stone':('ti_paint',(0.55,0.53,0.50)),'dome':('ti_fabric',(0.62,0.24,0.13)),
  'ember':('ti_paint',(1.0,0.45,0.08)),'steel_dk':('ti_metal',(0.35,0.35,0.37)),'vault':('ti_metal',(0.70,0.72,0.74)),
- 'vault_dk':('ti_metal',(0.48,0.49,0.51)),'car':('ti_paint',(0.55,0.05,0.06)),'carblk':('ti_plastic',(0.08,0.08,0.09)),
+ 'vault_dk':('ti_metal',(0.48,0.49,0.51)),'car':('ti_metal',(0.62,0.06,0.07)),'carblk':('ti_plastic',(0.08,0.08,0.09)),
  'headlamp':('ti_glass',(1.0,1.0,1.0)),'taillamp':('ti_glass',(0.75,0.06,0.05)),'tyre':('ti_plastic',(0.07,0.07,0.07)),
- 'rim':('ti_metal',(0.85,0.86,0.88))}
+ 'rim':('ti_metal',(0.85,0.86,0.88)),
+ 'cglass':('ti_metal',(0.11,0.14,0.18)),'skirt_dk':('ti_fabric',(0.05,0.05,0.06)),'stage_dk':('ti_wood',(0.12,0.11,0.10)),
+ 'alum_dk':('ti_metal',(0.45,0.46,0.48)),'lawn_dk':('ti_fabric',(0.18,0.38,0.14)),'vinyl_dk':('ti_plastic',(0.08,0.28,0.30)),
+ 'stone_dk':('ti_paint',(0.40,0.38,0.36)),'dome_dk':('ti_fabric',(0.42,0.16,0.09)),'case_g':('ti_fabric',(0.10,0.14,0.22)),
+ 'flag_r':('ti_fabric',(0.70,0.08,0.08)),'linen_dk':('ti_fabric',(0.85,0.82,0.78))}
 for k,(t,c) in NEWK.items(): TR[k]=(t,(0.875,0.875)); TINT[k]=c
 WOODK={'pw','wal'}     # wood keys on baked (focal) faces too: vertex tint on every face of the key, not trim_tint
 TINT['pw']=PW
@@ -980,6 +1690,7 @@ def _p(name,fn,cls,budget=None,**kw):
 WALL=dict(mount='wall',cage=0.04,ray=0.10)
 PROPS=[
     _p('church_pew',church_pew,'medium',1200,focal=[((-1.51,-0.33,-0.01),(-1.495,0.33,0.97))],hero=True,dens=240,max_side=192,cage=0.04,ray=0.10),
+    _p('church_pew_short',church_pew_short,'medium',800,focal=[((-0.91,-0.33,-0.01),(-0.895,0.33,0.97))],hero=True,dens=240,max_side=128,cage=0.04,ray=0.10),
     _p('court_bench',court_bench,'medium',900,focal=[((-1.51,-0.30,-0.01),(-1.495,0.30,0.95))],max_side=128,cage=0.04,ray=0.10),
     _p('lectern',lectern,'small',450,focal=[((-0.27,-0.216,0.07),(0.27,-0.204,1.0))],hero=True,dens=200,cage=0.04,ray=0.10),
     _p('altar_table',altar_table,'medium',800,focal=[((-0.94,-0.345,0.10),(0.94,-0.335,0.92))],hero=True,dens=150,max_side=192,cage=0.04,ray=0.10),
@@ -990,7 +1701,7 @@ PROPS=[
     _p('chart_table',chart_table,'medium',800,max_side=192,hero=True,dens=140),
     _p('drafting_table',drafting_table,'medium',800,max_side=160,hero=True,dens=160),
     _p('reception_desk',reception_desk,'large',1500,max_side=128),
-    _p('stage_platform',stage_platform,'medium',600,max_side=64),
+    _p('stage_platform',stage_platform,'medium',600,max_side=96),
     _p('dental_chair',dental_chair,'large',1500,max_side=96),
     _p('exam_bed',exam_bed,'medium',700,max_side=64),
     _p('physio_table',physio_table,'medium',700,max_side=64),
@@ -999,22 +1710,22 @@ PROPS=[
     _p('lecture_seating_row',lecture_seating_row,'large',1500,max_side=64),
     _p('tablet_arm_chair',tablet_arm_chair,'small',500,max_side=64),
     _p('whiteboard_wall',whiteboard_wall,'tiny',250,max_side=192,hero=True,dens=110,**WALL),
-    _p('projector_screen',projector_screen,'tiny',220,max_side=64,**WALL),
+    _p('projector_screen',projector_screen,'tiny',220,max_side=128,dens=60,**WALL),
     _p('noticeboard_wall',noticeboard_wall,'tiny',250,max_side=160,hero=True,dens=200,**WALL),
     _p('directory_board',directory_board,'tiny',250,max_side=160,hero=True,dens=150,**WALL),
     _p('departure_board',departure_board,'small',350,max_side=160,hero=True,dens=170,**WALL),
     _p('listing_board_wall',listing_board_wall,'small',400,max_side=192,hero=True,dens=150,**WALL),
     _p('key_rack_wall',key_rack_wall,'tiny',250,focal=[((-0.41,-0.012,0.0),(0.41,-0.008,0.61))],max_side=128,hero=True,dens=220,**WALL),
-    _p('cubicle_partition',cubicle_partition,'medium',600,max_side=96,hero=True,dens=300),
+    _p('cubicle_partition',cubicle_partition,'medium',600,max_side=128,hero=True,dens=300),
     _p('atm_wall',atm_wall,'small',500,max_side=128,hero=True,dens=300,**WALL),
     _p('ticket_machine',ticket_machine,'medium',700,max_side=128,hero=True,dens=220,cage=0.04,ray=0.10),
     _p('reverse_vending_machine',reverse_vending_machine,'medium',800,max_side=128,hero=True,dens=200,cage=0.04,ray=0.10),
     _p('queue_ticket_dispenser',queue_ticket_dispenser,'tiny',200,max_side=64,hero=True,dens=400),
-    _p('drive_thru_window',drive_thru_window,'small',400,max_side=64,**WALL),
+    _p('drive_thru_window',drive_thru_window,'small',400,max_side=96,dens=200,**WALL),
     _p('vault_door',vault_door,'large',1500,max_side=64,**WALL),
     _p('luggage_cart',luggage_cart,'small',500,max_side=64),
     _p('model_house_display',model_house_display,'small',500,max_side=96,hero=True,dens=300),
-    _p('pizza_oven',pizza_oven,'medium',1000,max_side=96,cage=0.04,ray=0.10),
-    _p('showroom_car',showroom_car,'large',2500,max_side=96),
+    _p('pizza_oven',pizza_oven,'medium',1000,max_side=128,dens=160,cage=0.04,ray=0.10),
+    _p('showroom_car',showroom_car,'large',2500,max_side=128),
 ]
 INDOOR_LOOK=True   # run.py: chamfer edge highlight + per-part colour variation in COLOR_0

@@ -1,5 +1,5 @@
 {
- "note": "Build-time props_atlas regions for page K (indoor places, b_inplaces.py): the 108 page-I trim/swatch regions re-pointed at page 'k' (rows 0-255 are a copy of the page-I base) plus bake-colour aliases plate<-brass, atm_hdr<-ceramic, tm_hdr<-ceramic, flyer_g<-leaf, flyer_y<-paint_cream, flyer_b<-screen. Merge into a scratch kit's props_atlas.json (never the repo one) before rebuilding; see build.sh.",
+ "note": "Build-time props_atlas regions for page K (indoor places, b_inplaces.py): the 108 page-I trim/swatch regions re-pointed at page 'k' (rows 0-255 are a copy of the page-I base) plus bake-colour aliases plate<-brass, atm_hdr<-ceramic, tm_hdr<-ceramic, flyer_g<-leaf, flyer_y<-paint_cream, flyer_b<-screen, scrn_face<-label, brick<-ceramic. Merge into a scratch kit's props_atlas.json (never the repo one) before rebuilding; see build.sh.",
  "regions": {
   "ti_wood.clean": {
    "px": [
@@ -2646,6 +2646,132 @@
     0.7421875,
     0.125,
     0.7734375,
+    0.15625
+   ],
+   "m": [
+    0.25,
+    0.25
+   ],
+   "trim": false,
+   "page": "k",
+   "tile_px": 32
+  },
+  "scrn_face.clean": {
+   "px": [
+    800,
+    128,
+    32,
+    32
+   ],
+   "uv": [
+    0.78125,
+    0.125,
+    0.8125,
+    0.15625
+   ],
+   "m": [
+    0.25,
+    0.25
+   ],
+   "trim": false,
+   "page": "k",
+   "tile_px": 32
+  },
+  "scrn_face.worn": {
+   "px": [
+    800,
+    128,
+    32,
+    32
+   ],
+   "uv": [
+    0.78125,
+    0.125,
+    0.8125,
+    0.15625
+   ],
+   "m": [
+    0.25,
+    0.25
+   ],
+   "trim": false,
+   "page": "k",
+   "tile_px": 32
+  },
+  "scrn_face.dirty": {
+   "px": [
+    800,
+    128,
+    32,
+    32
+   ],
+   "uv": [
+    0.78125,
+    0.125,
+    0.8125,
+    0.15625
+   ],
+   "m": [
+    0.25,
+    0.25
+   ],
+   "trim": false,
+   "page": "k",
+   "tile_px": 32
+  },
+  "brick.clean": {
+   "px": [
+    600,
+    128,
+    32,
+    32
+   ],
+   "uv": [
+    0.5859375,
+    0.125,
+    0.6171875,
+    0.15625
+   ],
+   "m": [
+    0.25,
+    0.25
+   ],
+   "trim": false,
+   "page": "k",
+   "tile_px": 32
+  },
+  "brick.worn": {
+   "px": [
+    600,
+    128,
+    32,
+    32
+   ],
+   "uv": [
+    0.5859375,
+    0.125,
+    0.6171875,
+    0.15625
+   ],
+   "m": [
+    0.25,
+    0.25
+   ],
+   "trim": false,
+   "page": "k",
+   "tile_px": 32
+  },
+  "brick.dirty": {
+   "px": [
+    600,
+    128,
+    32,
+    32
+   ],
+   "uv": [
+    0.5859375,
+    0.125,
+    0.6171875,
     0.15625
    ],
    "m": [
