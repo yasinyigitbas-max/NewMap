@@ -37,6 +37,7 @@ the rules. Re-read both after a context compression.
   controller: the player's input today, an NPC brain later. Nothing player-only (camera, keys, touch) inside it.
   Keep the per-frame cost low enough for many NPCs later (LOD: full IK and warping near the camera, cheaper far).
 
+- 24 Nov: "definitely standing and walking jumps, not running jump" (the bad jump was the standing / walking one: now Jump_a standing, Jumping_c leap walking; the running leap Running_Jump_a stays). "if we are running they are fine, but if we walk off the edge we should look like climbing down" (walking off 0.5-2 m: mx/Climbing_Down; under 0.5 m: stepped down; running: the leap off and its landing).
 ## The techniques (studied 22 Nov; GDC / SIGGRAPH: Gears of War 4 inertialization and warping, Horizon Zero Dawn
 ## traversal, RDR2 locomotion, UE5 motion warping)
 1. **Inertialization, not crossfades.** On a switch the new clip plays at full weight at once. Store per bone the

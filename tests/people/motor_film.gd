@@ -16,7 +16,7 @@ const SEGS := [
 	["idle", 22.0], ["walk_stop", 8.0], ["run_stop", 8.0], ["walk_to_run_to_walk", 10.0], ["turns_on_the_spot", 9.0],
 	["walk_turn_back", 8.0], ["run_turn_back", 8.0], ["jump_standing", 5.0], ["jump_walking", 6.0], ["jump_running", 6.0], ["crouch", 10.0],
 	["vault_walking", 6.0], ["vault_running", 6.0], ["climb_1m", 6.0], ["climb_1m_running", 6.0], ["climb_1_4m", 8.0], ["climb_1_75m", 8.0], ["climb_2m", 11.0], ["climb_1_8m_running", 7.0],
-	["drop_off_1m", 7.0], ["drop_off_3_5m", 8.0], ["drop_off_8m", 11.0], ["run_off_2m", 7.0],
+	["step_off_0_35m", 6.0], ["walk_off_1m", 8.0], ["walk_off_1_8m", 8.0], ["drop_off_3_5m", 8.0], ["drop_off_8m", 11.0], ["run_off_2m", 7.0],
 	["cover_tall", 16.0], ["cover_low", 16.0],
 	["carry_box", 12.0], ["carry_briefcase", 9.0], ["carry_shopping_bag", 7.0],
 	["ramp_15deg_walk", 10.0], ["ramp_15deg_run", 7.0], ["ramp_25deg_walk", 11.0], ["stairs_walk", 10.0], ["stairs_run", 7.0], ["kerbs", 9.0],
@@ -26,7 +26,9 @@ var wall := Color(0.78, 0.70, 0.60)
 func _lane(i: int) -> float: return i * 10.0
 func _start_y(i: int) -> float:
 	match SEGS[i][0]:
-		"drop_off_1m": return 1.0
+		"step_off_0_35m": return 0.35
+		"walk_off_1m": return 1.0
+		"walk_off_1_8m": return 1.8
 		"drop_off_3_5m": return 3.5
 		"drop_off_8m": return 8.0
 		"run_off_2m": return 2.0
@@ -40,7 +42,7 @@ func _build(i: int) -> void:
 		"climb_1_4m": _box(Vector3(3, 1.4, 2.0), Vector3(x, 0.7, 4.0), null, Vector3.ONE, wall)
 		"climb_1_75m": _box(Vector3(3, 1.75, 2.0), Vector3(x, 0.875, 4.0), null, Vector3.ONE, wall)
 		"climb_2m": _box(Vector3(3, 2.0, 2.0), Vector3(x, 1.0, 4.0), null, Vector3.ONE, wall)
-		"drop_off_1m", "drop_off_3_5m", "drop_off_8m", "run_off_2m":   # (a ledge he starts on, the ground below)
+		"step_off_0_35m", "walk_off_1m", "walk_off_1_8m", "drop_off_3_5m", "drop_off_8m", "run_off_2m":   # (a ledge he starts on, the ground below)
 			var hh := _start_y(i)
 			_box(Vector3(4, hh, 5.0), Vector3(x, hh * 0.5, -1.5), null, Vector3.ONE, wall)
 		"climb_1_8m_running": _box(Vector3(3, 1.8, 2.0), Vector3(x, 0.9, 7.0), null, Vector3.ONE, wall)
