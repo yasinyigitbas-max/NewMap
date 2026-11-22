@@ -1834,8 +1834,8 @@
    "old_props": 27,
    "area": 177,
    "size": "L",
-   "prop_tris_est": 15492,
-   "prop_tris_capped": 15492
+   "prop_tris_est": 15392,
+   "prop_tris_capped": 15392
   },
   {
    "id": "m_gr_e4s__bridge_motors_office__0",
@@ -1870,8 +1870,8 @@
    "old_props": 29,
    "area": 139,
    "size": "M",
-   "prop_tris_est": 11341,
-   "prop_tris_capped": 11341
+   "prop_tris_est": 7377,
+   "prop_tris_capped": 7377
   },
   {
    "id": "m_gr_ad5nw__adela_plaza_row__2",
@@ -1888,8 +1888,8 @@
    "old_props": 16,
    "area": 68,
    "size": "S",
-   "prop_tris_est": 9712,
-   "prop_tris_capped": 9712
+   "prop_tris_est": 5312,
+   "prop_tris_capped": 5312
   },
   {
    "id": "m_gr_ad5ne__chicken_drive__0",
@@ -1906,8 +1906,8 @@
    "old_props": 37,
    "area": 127,
    "size": "M",
-   "prop_tris_est": 12160,
-   "prop_tris_capped": 12160
+   "prop_tris_est": 12286,
+   "prop_tris_capped": 12286
   },
   {
    "id": "m_gr_ad3sw__visitors_corner__1",
@@ -1960,8 +1960,8 @@
    "old_props": 14,
    "area": 69,
    "size": "S",
-   "prop_tris_est": 4952,
-   "prop_tris_capped": 4952
+   "prop_tris_est": 4774,
+   "prop_tris_capped": 4774
   },
   {
    "id": "m_gr_ad5ne__crown_car_care_row__1",
@@ -1996,8 +1996,8 @@
    "old_props": 27,
    "area": 152,
    "size": "M",
-   "prop_tris_est": 17863,
-   "prop_tris_capped": 17863
+   "prop_tris_est": 14309,
+   "prop_tris_capped": 14309
   },
   {
    "id": "m_gr_ad5nw__adela_plaza_corner__0",
@@ -2014,8 +2014,8 @@
    "old_props": 22,
    "area": 74,
    "size": "M",
-   "prop_tris_est": 8832,
-   "prop_tris_capped": 8832
+   "prop_tris_est": 8227,
+   "prop_tris_capped": 8227
   },
   {
    "id": "m_gr_ad5nw__recycling_booth__0",
@@ -2032,8 +2032,8 @@
    "old_props": 7,
    "area": 18,
    "size": "S",
-   "prop_tris_est": 3278,
-   "prop_tris_capped": 3278
+   "prop_tris_est": 2674,
+   "prop_tris_capped": 2674
   },
   {
    "id": "m_gr_ad5ne__tax_office__0",
@@ -2050,8 +2050,8 @@
    "old_props": 17,
    "area": 54,
    "size": "S",
-   "prop_tris_est": 5973,
-   "prop_tris_capped": 5973
+   "prop_tris_est": 5873,
+   "prop_tris_capped": 5873
   },
   {
    "id": "m_gr_ad5ne__bridge_tire_pros__0",
@@ -2104,8 +2104,8 @@
    "old_props": null,
    "area": 150,
    "size": "M",
-   "prop_tris_est": 13907,
-   "prop_tris_capped": 13907
+   "prop_tris_est": 10727,
+   "prop_tris_capped": 10727
   },
   {
    "id": "cc_b1_am__amber_bank__0",
@@ -2122,8 +2122,8 @@
    "old_props": null,
    "area": 264,
    "size": "L",
-   "prop_tris_est": 16356,
-   "prop_tris_capped": 16356
+   "prop_tris_est": 16200,
+   "prop_tris_capped": 16200
   },
   {
    "id": "cc_b5_w__amber6ne_corner__0",
@@ -2140,8 +2140,8 @@
    "old_props": 33,
    "area": 263,
    "size": "L",
-   "prop_tris_est": 16356,
-   "prop_tris_capped": 16356
+   "prop_tris_est": 16200,
+   "prop_tris_capped": 16200
   },
   {
    "id": "hs_b2_amber_bank_0",
@@ -2158,8 +2158,8 @@
    "old_props": 42,
    "area": 177,
    "size": "L",
-   "prop_tris_est": 15492,
-   "prop_tris_capped": 15492
+   "prop_tris_est": 15392,
+   "prop_tris_capped": 15392
   },
   {
    "id": "hs_b5_amber_post_0",
@@ -2194,8 +2194,8 @@
    "old_props": 32,
    "area": 127,
    "size": "M",
-   "prop_tris_est": 11778,
-   "prop_tris_capped": 11778
+   "prop_tris_est": 11974,
+   "prop_tris_capped": 11974
   },
   {
    "id": "ind_va_w600_n1600_se__bay_boatworks_office__0",
@@ -2212,8 +2212,8 @@
    "old_props": 22,
    "area": 172,
    "size": "L",
-   "prop_tris_est": 19807,
-   "prop_tris_capped": 19807
+   "prop_tris_est": 17823,
+   "prop_tris_capped": 17823
   },
   {
    "id": "un_ne__uni_hall__0",
@@ -2248,8 +2248,8 @@
    "old_props": 81,
    "area": 214,
    "size": "L",
-   "prop_tris_est": 20494,
-   "prop_tris_capped": 20494
+   "prop_tris_est": 11994,
+   "prop_tris_capped": 11994
   },
   {
    "id": "cc_b1_west__downtown_church__0",
@@ -2266,8 +2266,8 @@
    "old_props": null,
    "area": 338,
    "size": "XL",
-   "prop_tris_est": 30594,
-   "prop_tris_capped": 25000
+   "prop_tris_est": 14534,
+   "prop_tris_capped": 14534
   },
   {
    "id": "un_nw__uni_chapel__0",
@@ -2284,8 +2284,8 @@
    "old_props": 24,
    "area": 143,
    "size": "M",
-   "prop_tris_est": 22194,
-   "prop_tris_capped": 22194
+   "prop_tris_est": 10544,
+   "prop_tris_capped": 10544
   },
   {
    "id": "w_c1__church__0",
@@ -2302,8 +2302,8 @@
    "old_props": 56,
    "area": 214,
    "size": "L",
-   "prop_tris_est": 30594,
-   "prop_tris_capped": 25000
+   "prop_tris_est": 14534,
+   "prop_tris_capped": 14534
   },
   {
    "id": "w_w6__ridge_church__0",
@@ -2320,8 +2320,8 @@
    "old_props": 56,
    "area": 214,
    "size": "L",
-   "prop_tris_est": 30594,
-   "prop_tris_capped": 25000
+   "prop_tris_est": 14534,
+   "prop_tris_capped": 14534
   },
   {
    "id": "hp_main_er_wing_1",
@@ -2338,8 +2338,8 @@
    "old_props": 58,
    "area": 239,
    "size": "L",
-   "prop_tris_est": 14445,
-   "prop_tris_capped": 14445
+   "prop_tris_est": 9163,
+   "prop_tris_capped": 9163
   },
   {
    "id": "hp_main_hospital_0",
@@ -2356,8 +2356,8 @@
    "old_props": 73,
    "area": 283,
    "size": "L",
-   "prop_tris_est": 12164,
-   "prop_tris_capped": 12164
+   "prop_tris_est": 10278,
+   "prop_tris_capped": 10278
   },
   {
    "id": "hp_west_tower_0",
@@ -2374,8 +2374,8 @@
    "old_props": 90,
    "area": 374,
    "size": "XL",
-   "prop_tris_est": 14543,
-   "prop_tris_capped": 14543
+   "prop_tris_est": 9659,
+   "prop_tris_capped": 9659
   },
   {
    "id": "apt_b2_bw__community_room__0",
@@ -2410,8 +2410,8 @@
    "old_props": null,
    "area": 526,
    "size": "XL",
-   "prop_tris_est": 27674,
-   "prop_tris_capped": 25000
+   "prop_tris_est": 18962,
+   "prop_tris_capped": 18962
   },
   {
    "id": "ind_va_w800_n1600_sw__hfs_office__0",
@@ -2464,8 +2464,8 @@
    "old_props": 117,
    "area": 309,
    "size": "L",
-   "prop_tris_est": 14543,
-   "prop_tris_capped": 14543
+   "prop_tris_est": 9659,
+   "prop_tris_capped": 9659
   },
   {
    "id": "hs_b2_ninth_hall_0",
@@ -2518,8 +2518,8 @@
    "old_props": 17,
    "area": 85,
    "size": "M",
-   "prop_tris_est": 7558,
-   "prop_tris_capped": 7558
+   "prop_tris_est": 6162,
+   "prop_tris_capped": 6162
   },
   {
    "id": "wfa_b2w__bayview_inn__0",
@@ -2536,8 +2536,8 @@
    "old_props": 21,
    "area": 62,
    "size": "S",
-   "prop_tris_est": 6323,
-   "prop_tris_capped": 6323
+   "prop_tris_est": 4929,
+   "prop_tris_capped": 4929
   },
   {
    "id": "cc_b1_court__district_attorney__0",
@@ -2554,8 +2554,8 @@
    "old_props": null,
    "area": 79,
    "size": "M",
-   "prop_tris_est": 8793,
-   "prop_tris_capped": 8793
+   "prop_tris_est": 8311,
+   "prop_tris_capped": 8311
   },
   {
    "id": "cc_b1_court__law_office_n__0",
@@ -2572,8 +2572,8 @@
    "old_props": null,
    "area": 150,
    "size": "M",
-   "prop_tris_est": 13237,
-   "prop_tris_capped": 13237
+   "prop_tris_est": 12207,
+   "prop_tris_capped": 12207
   },
   {
    "id": "cc_b2_7th__seventh_insurance__0",
@@ -2590,8 +2590,8 @@
    "old_props": null,
    "area": 264,
    "size": "L",
-   "prop_tris_est": 21082,
-   "prop_tris_capped": 21082
+   "prop_tris_est": 17917,
+   "prop_tris_capped": 17917
   },
   {
    "id": "cc_b2_s__alleyc2s_architects__0",
@@ -2608,8 +2608,8 @@
    "old_props": null,
    "area": 150,
    "size": "M",
-   "prop_tris_est": 14193,
-   "prop_tris_capped": 14193
+   "prop_tris_est": 9873,
+   "prop_tris_capped": 9873
   },
   {
    "id": "un_ne__uni_lecture_west__0",
@@ -2626,8 +2626,8 @@
    "old_props": 62,
    "area": 329,
    "size": "XL",
-   "prop_tris_est": 17868,
-   "prop_tris_capped": 17868
+   "prop_tris_est": 11910,
+   "prop_tris_capped": 11910
   },
   {
    "id": "un_ne__uni_science__0",
@@ -2644,8 +2644,8 @@
    "old_props": 62,
    "area": 329,
    "size": "XL",
-   "prop_tris_est": 17868,
-   "prop_tris_capped": 17868
+   "prop_tris_est": 11910,
+   "prop_tris_capped": 11910
   },
   {
    "id": "un_nw__uni_arts__0",
@@ -2662,8 +2662,8 @@
    "old_props": 62,
    "area": 329,
    "size": "XL",
-   "prop_tris_est": 17868,
-   "prop_tris_capped": 17868
+   "prop_tris_est": 11910,
+   "prop_tris_capped": 11910
   },
   {
    "id": "un_nw__uni_humanities__0",
@@ -2680,8 +2680,8 @@
    "old_props": 62,
    "area": 329,
    "size": "XL",
-   "prop_tris_est": 17868,
-   "prop_tris_capped": 17868
+   "prop_tris_est": 11910,
+   "prop_tris_capped": 11910
   },
   {
    "id": "un_se__uni_kinesiology__0",
@@ -2698,8 +2698,8 @@
    "old_props": 62,
    "area": 329,
    "size": "XL",
-   "prop_tris_est": 17868,
-   "prop_tris_capped": 17868
+   "prop_tris_est": 11910,
+   "prop_tris_capped": 11910
   },
   {
    "id": "w_w4__school_a__0",
@@ -2716,8 +2716,8 @@
    "old_props": 62,
    "area": 329,
    "size": "XL",
-   "prop_tris_est": 16211,
-   "prop_tris_capped": 16211
+   "prop_tris_est": 13621,
+   "prop_tris_capped": 13621
   },
   {
    "id": "w_w4__school_b__0",
@@ -2950,8 +2950,8 @@
    "old_props": 22,
    "area": 70,
    "size": "M",
-   "prop_tris_est": 10074,
-   "prop_tris_capped": 10074
+   "prop_tris_est": 8509,
+   "prop_tris_capped": 8509
   },
   {
    "id": "b_se__civ_post_office__0",
@@ -2986,8 +2986,8 @@
    "old_props": 18,
    "area": 177,
    "size": "L",
-   "prop_tris_est": 15492,
-   "prop_tris_capped": 15492
+   "prop_tris_est": 15392,
+   "prop_tris_capped": 15392
   },
   {
    "id": "cc_b1_court__legal_aid__0",
@@ -3004,8 +3004,8 @@
    "old_props": null,
    "area": 150,
    "size": "M",
-   "prop_tris_est": 16761,
-   "prop_tris_capped": 16761
+   "prop_tris_est": 13596,
+   "prop_tris_capped": 13596
   },
   {
    "id": "cc_b2_n__sixth_e_dentist__0",
@@ -3022,8 +3022,8 @@
    "old_props": null,
    "area": 150,
    "size": "M",
-   "prop_tris_est": 17412,
-   "prop_tris_capped": 17412
+   "prop_tris_est": 9826,
+   "prop_tris_capped": 9826
   },
   {
    "id": "cc_b3_arm__seventh_s_arcade__1",
@@ -3040,8 +3040,8 @@
    "old_props": null,
    "area": 161,
    "size": "L",
-   "prop_tris_est": 18716,
-   "prop_tris_capped": 18716
+   "prop_tris_est": 15551,
+   "prop_tris_capped": 15551
   },
   {
    "id": "cc_b3_main__eighth_optician__0",
@@ -3058,8 +3058,8 @@
    "old_props": null,
    "area": 150,
    "size": "M",
-   "prop_tris_est": 17412,
-   "prop_tris_capped": 17412
+   "prop_tris_est": 9826,
+   "prop_tris_capped": 9826
   },
   {
    "id": "cc_b5_w__sixth_ne_arcade__1",
@@ -3076,8 +3076,8 @@
    "old_props": 21,
    "area": 160,
    "size": "L",
-   "prop_tris_est": 18716,
-   "prop_tris_capped": 18716
+   "prop_tris_est": 15551,
+   "prop_tris_capped": 15551
   },
   {
    "id": "i_ne__machine_shop__0",
@@ -3094,8 +3094,8 @@
    "old_props": 22,
    "area": 63,
    "size": "S",
-   "prop_tris_est": 6469,
-   "prop_tris_capped": 6469
+   "prop_tris_est": 6253,
+   "prop_tris_capped": 6253
   },
   {
    "id": "i_nw__drivers_cafe__1",
@@ -3112,8 +3112,8 @@
    "old_props": 25,
    "area": 74,
    "size": "M",
-   "prop_tris_est": 10846,
-   "prop_tris_capped": 10846
+   "prop_tris_est": 8697,
+   "prop_tris_capped": 8697
   },
   {
    "id": "i_se__auto_parts__1",
@@ -3130,8 +3130,8 @@
    "old_props": 21,
    "area": 63,
    "size": "S",
-   "prop_tris_est": 6469,
-   "prop_tris_capped": 6469
+   "prop_tris_est": 6253,
+   "prop_tris_capped": 6253
   },
   {
    "id": "i_sw__locksmith__1",
@@ -3148,8 +3148,8 @@
    "old_props": 23,
    "area": 64,
    "size": "S",
-   "prop_tris_est": 10074,
-   "prop_tris_capped": 10074
+   "prop_tris_est": 8509,
+   "prop_tris_capped": 8509
   },
   {
    "id": "m_ne__bank_pharmacy__0",
@@ -3166,8 +3166,8 @@
    "old_props": 28,
    "area": 127,
    "size": "M",
-   "prop_tris_est": 11778,
-   "prop_tris_capped": 11778
+   "prop_tris_est": 11974,
+   "prop_tris_capped": 11974
   },
   {
    "id": "m_ne__insurance_office__0",
@@ -3184,8 +3184,8 @@
    "old_props": 22,
    "area": 70,
    "size": "M",
-   "prop_tris_est": 8540,
-   "prop_tris_capped": 8540
+   "prop_tris_est": 8648,
+   "prop_tris_capped": 8648
   },
   {
    "id": "m_sw__check_cashing__0",
@@ -3202,8 +3202,8 @@
    "old_props": 22,
    "area": 70,
    "size": "M",
-   "prop_tris_est": 10074,
-   "prop_tris_capped": 10074
+   "prop_tris_est": 8509,
+   "prop_tris_capped": 8509
   },
   {
    "id": "r_s__craftsman_sage__0",
@@ -3220,8 +3220,8 @@
    "old_props": 17,
    "area": 111,
    "size": "M",
-   "prop_tris_est": 7738,
-   "prop_tris_capped": 7738
+   "prop_tris_est": 7144,
+   "prop_tris_capped": 7144
   },
   {
    "id": "v_ne__city_hall__0",
@@ -3238,8 +3238,8 @@
    "old_props": null,
    "area": 361,
    "size": "XL",
-   "prop_tris_est": 21082,
-   "prop_tris_capped": 21082
+   "prop_tris_est": 17917,
+   "prop_tris_capped": 17917
   },
   {
    "id": "v_ne__library__0",
@@ -3274,8 +3274,8 @@
    "old_props": null,
    "area": 282,
    "size": "L",
-   "prop_tris_est": 21082,
-   "prop_tris_capped": 21082
+   "prop_tris_est": 17917,
+   "prop_tris_capped": 17917
   },
   {
    "id": "w_c5__realty__0",
@@ -3292,8 +3292,8 @@
    "old_props": 16,
    "area": 70,
    "size": "M",
-   "prop_tris_est": 6180,
-   "prop_tris_capped": 6180
+   "prop_tris_est": 5666,
+   "prop_tris_capped": 5666
   },
   {
    "id": "w_s1__housing_office__0",
@@ -3310,8 +3310,8 @@
    "old_props": 16,
    "area": 70,
    "size": "M",
-   "prop_tris_est": 10074,
-   "prop_tris_capped": 10074
+   "prop_tris_est": 8509,
+   "prop_tris_capped": 8509
   },
   {
    "id": "wfa_b2e__harbour_tours_kiosk__0",
@@ -3346,8 +3346,8 @@
    "old_props": 25,
    "area": 70,
    "size": "M",
-   "prop_tris_est": 6180,
-   "prop_tris_capped": 6180
+   "prop_tris_est": 5666,
+   "prop_tris_capped": 5666
   },
   {
    "id": "ind_vb_w800_n1600_se__public_works_office__1",
@@ -3364,8 +3364,8 @@
    "old_props": 23,
    "area": 79,
    "size": "M",
-   "prop_tris_est": 9354,
-   "prop_tris_capped": 9354
+   "prop_tris_est": 8658,
+   "prop_tris_capped": 8658
   },
   {
    "id": "fn_east_realty_0",
@@ -3382,8 +3382,8 @@
    "old_props": 18,
    "area": 70,
    "size": "M",
-   "prop_tris_est": 6180,
-   "prop_tris_capped": 6180
+   "prop_tris_est": 5666,
+   "prop_tris_capped": 5666
   },
   {
    "id": "hs_b3_amber_realty_0",
@@ -3400,8 +3400,8 @@
    "old_props": 20,
    "area": 70,
    "size": "M",
-   "prop_tris_est": 6180,
-   "prop_tris_capped": 6180
+   "prop_tris_est": 5666,
+   "prop_tris_capped": 5666
   },
   {
    "id": "ind_vb_w600_n1400_sw__island_movers_office__0",
@@ -3418,8 +3418,8 @@
    "old_props": 16,
    "area": 85,
    "size": "M",
-   "prop_tris_est": 8415,
-   "prop_tris_capped": 8415
+   "prop_tris_est": 7867,
+   "prop_tris_capped": 7867
   },
   {
    "id": "ind_vc_w600_n1600_sw__pacific_seafood_sales__0",
@@ -3436,8 +3436,8 @@
    "old_props": 18,
    "area": 70,
    "size": "M",
-   "prop_tris_est": 7491,
-   "prop_tris_capped": 7491
+   "prop_tris_est": 6985,
+   "prop_tris_capped": 6985
   },
   {
    "id": "apt_b1_7th__corner_shops_7th__1",
@@ -3454,8 +3454,8 @@
    "old_props": 23,
    "area": 60,
    "size": "S",
-   "prop_tris_est": 6469,
-   "prop_tris_capped": 6469
+   "prop_tris_est": 6253,
+   "prop_tris_capped": 6253
   },
   {
    "id": "fn_east_ferry_office_0",
@@ -3472,8 +3472,8 @@
    "old_props": 36,
    "area": 172,
    "size": "L",
-   "prop_tris_est": 10854,
-   "prop_tris_capped": 10854
+   "prop_tris_est": 8846,
+   "prop_tris_capped": 8846
   },
   {
    "id": "hp_transit_transit_hall_0",
@@ -3490,8 +3490,8 @@
    "old_props": 67,
    "area": 304,
    "size": "L",
-   "prop_tris_est": 12124,
-   "prop_tris_capped": 12124
+   "prop_tris_est": 9622,
+   "prop_tris_capped": 9622
   }
  ],
  "kinds": {
@@ -3503,23 +3503,24 @@
     "filing_cabinet"
    ],
    "stock": [
-    "display_table",
+    "drafting_table",
     "bookcase",
     "storage_cabinet",
-    "display_plinth"
+    "display_plinth",
+    "conference_table"
    ],
    "decor": [
     "frame_mcm_abstract",
     "frame_print_large",
     "sculpture_organic"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "conference_table",
     "drafting_table"
    ],
-   "built_since_new21": [],
    "note": "Alcala Architects: models on plinths, drafting tables.",
-   "prop_tris_max": 14193,
+   "prop_tris_max": 9873,
    "over_cap": 0
   },
   "auto_parts": {
@@ -3551,15 +3552,16 @@
    ],
    "stock": [
     "filing_cabinet",
-    "waiting_bench"
-   ],
-   "decor": [],
-   "missing": [
+    "waiting_bench",
     "queue_ticket_dispenser"
    ],
-   "built_since_new21": [],
+   "decor": [],
+   "missing": [],
+   "built_since_new21": [
+    "queue_ticket_dispenser"
+   ],
    "note": "Grille counter; plain, no plants.",
-   "prop_tris_max": 13907,
+   "prop_tris_max": 10727,
    "over_cap": 0
   },
   "bait": {
@@ -3627,20 +3629,21 @@
     "waiting_bench",
     "brochure_rack",
     "stanchion",
-    "wall_safe"
+    "atm_wall",
+    "vault_door"
    ],
    "decor": [
     "frame_print_large",
     "clock_wall_sunburst",
     "potted_plant (1)"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "atm_wall",
     "vault_door"
    ],
-   "built_since_new21": [],
    "note": "Pilot set (com_bank). Teller line + queue stanchions + 2 officer desks.",
-   "prop_tris_max": 16356,
+   "prop_tris_max": 16200,
    "over_cap": 0
   },
   "bar": {
@@ -3851,18 +3854,19 @@
    "stock": [
     "pegboard_wall",
     "wall_shelf",
-    "waiting_bench"
+    "waiting_bench",
+    "chart_table"
    ],
    "decor": [
     "frame_ocean",
     "wall_plate_fish"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "chart_table"
    ],
-   "built_since_new21": [],
    "note": "Bay Boatworks harbour office: charts, brokerage desk.",
-   "prop_tris_max": 19807,
+   "prop_tris_max": 17823,
    "over_cap": 0
   },
   "cafe": {
@@ -3912,11 +3916,11 @@
     "statue_bust",
     "frame_print_large"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "directory_board",
     "noticeboard_wall"
    ],
-   "built_since_new21": [],
    "note": "Founders Hall foyer.",
    "prop_tris_max": 14438,
    "over_cap": 0
@@ -3964,10 +3968,10 @@
     "frame_print_large",
     "potted_plant (1)"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "showroom_car"
    ],
-   "built_since_new21": [],
    "note": "Bridge Motors: desks + one display car (stand-in: display_plinth, or a game vehicle mesh if the vehicle LOD fits).",
    "prop_tris_max": 4857,
    "over_cap": 0
@@ -4007,14 +4011,14 @@
     "candle_pillar",
     "vase_bud"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "altar_table",
     "church_pew",
     "lectern"
    ],
-   "built_since_new21": [],
    "note": "Small: 4-6 pews.",
-   "prop_tris_max": 20494,
+   "prop_tris_max": 11994,
    "over_cap": 0
   },
   "church": {
@@ -4031,15 +4035,15 @@
     "candle_pair_brass",
     "vase_tall"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "altar_table",
     "church_pew",
     "lectern"
    ],
-   "built_since_new21": [],
    "note": "Aisle down the middle, pews both sides facing the altar.",
-   "prop_tris_max": 30594,
-   "over_cap": 3
+   "prop_tris_max": 14534,
+   "over_cap": 0
   },
   "classroom": {
    "places": 1,
@@ -4058,14 +4062,14 @@
     "globe_desktop",
     "clock_wall_sunburst"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "noticeboard_wall",
     "tablet_arm_chair",
     "whiteboard_wall"
    ],
-   "built_since_new21": [],
    "note": "Ridgeview Elementary: rows of small desks face the board.",
-   "prop_tris_max": 16211,
+   "prop_tris_max": 13621,
    "over_cap": 0
   },
   "cleaners": {
@@ -4106,15 +4110,15 @@
     "frame_print_medium",
     "clock_wall_sunburst"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "exam_bed",
     "privacy_curtain_rail",
     "reception_desk",
     "water_cooler"
    ],
-   "built_since_new21": [],
    "note": "Clinical: waiting row facing reception, one exam bay.",
-   "prop_tris_max": 14543,
+   "prop_tris_max": 9659,
    "over_cap": 0
   },
   "clothes": {
@@ -4244,17 +4248,17 @@
     "clock_wall_sunburst",
     "frame_print_large"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "court_bench",
     "judge_bench",
     "jury_box",
     "lectern",
     "witness_box"
    ],
-   "built_since_new21": [],
    "note": "Courtroom: bench at the back on a step, gallery benches face it.",
-   "prop_tris_max": 27674,
-   "over_cap": 1
+   "prop_tris_max": 18962,
+   "over_cap": 0
   },
   "dentist": {
    "places": 3,
@@ -4271,13 +4275,13 @@
     "frame_print_small",
     "potted_plant (1)"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "dental_chair",
     "reception_desk"
    ],
-   "built_since_new21": [],
    "note": "",
-   "prop_tris_max": 17412,
+   "prop_tris_max": 9826,
    "over_cap": 0
   },
   "diner": {
@@ -4385,7 +4389,8 @@
     "cash_register",
     "kitchen_line",
     "soda_fountain",
-    "menu_board"
+    "menu_board",
+    "drive_thru_window"
    ],
    "stock": [
     "booth_bench",
@@ -4393,12 +4398,12 @@
     "indoor_bin"
    ],
    "decor": [],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "drive_thru_window"
    ],
-   "built_since_new21": [],
    "note": "",
-   "prop_tris_max": 12160,
+   "prop_tris_max": 12286,
    "over_cap": 0
   },
   "dry_cleaner": {
@@ -4433,14 +4438,14 @@
     "storage_cabinet"
    ],
    "decor": [],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "exam_bed",
     "privacy_curtain_rail",
     "reception_desk"
    ],
-   "built_since_new21": [],
    "note": "Emergency department: triage desk + curtained bays.",
-   "prop_tris_max": 14445,
+   "prop_tris_max": 9163,
    "over_cap": 0
   },
   "fast_food": {
@@ -4652,11 +4657,11 @@
     "frame_print_large",
     "clock_wall_sunburst"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "noticeboard_wall",
     "stage_platform"
    ],
-   "built_since_new21": [],
    "note": "Community hall: folding tables, a stage at the far end.",
    "prop_tris_max": 16664,
    "over_cap": 0
@@ -4677,13 +4682,13 @@
    "decor": [
     "frame_print_large"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "directory_board",
     "reception_desk"
    ],
-   "built_since_new21": [],
    "note": "Island Hospital main lobby.",
-   "prop_tris_max": 12164,
+   "prop_tris_max": 10278,
    "over_cap": 0
   },
   "hotel": {
@@ -4705,14 +4710,14 @@
     "clock_wall_sunburst",
     "rug_runner (entry only)"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "key_rack_wall",
     "luggage_cart",
     "reception_desk"
    ],
-   "built_since_new21": [],
    "note": "Inn reception + small lounge.",
-   "prop_tris_max": 7558,
+   "prop_tris_max": 6162,
    "over_cap": 0
   },
   "ice_cream": {
@@ -4823,7 +4828,8 @@
     "bookcase",
     "waiting_bench",
     "side_chair",
-    "storage_cabinet"
+    "storage_cabinet",
+    "conference_table"
    ],
    "decor": [
     "frame_print_medium",
@@ -4831,12 +4837,12 @@
     "books_stack",
     "clock_mantel"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "conference_table"
    ],
-   "built_since_new21": [],
    "note": "Bookcases on every wall; client chairs face the desk.",
-   "prop_tris_max": 13237,
+   "prop_tris_max": 12207,
    "over_cap": 0
   },
   "lecture": {
@@ -4853,15 +4859,15 @@
    "decor": [
     "clock_wall_sunburst"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "lectern",
     "lecture_seating_row",
     "projector_screen",
     "whiteboard_wall"
    ],
-   "built_since_new21": [],
    "note": "Rows face the lectern/whiteboard wall.",
-   "prop_tris_max": 17868,
+   "prop_tris_max": 11910,
    "over_cap": 0
   },
   "library": {
@@ -4934,12 +4940,12 @@
     "clock_wall_sunburst",
     "vase_tall"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "directory_board",
     "reception_desk",
     "water_cooler"
    ],
-   "built_since_new21": [],
    "note": "Tower lobby: reception counter facing the door, lounge group, directory by the lifts.",
    "prop_tris_max": 12625,
    "over_cap": 0
@@ -4978,12 +4984,12 @@
    "decor": [
     "frame_motel_floral"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "key_rack_wall"
    ],
-   "built_since_new21": [],
    "note": "Harbor View Motel office.",
-   "prop_tris_max": 4952,
+   "prop_tris_max": 4774,
    "over_cap": 0
   },
   "nails": {
@@ -5023,21 +5029,24 @@
     "filing_cabinet",
     "bookcase",
     "waiting_bench",
-    "storage_cabinet"
+    "storage_cabinet",
+    "cubicle_partition",
+    "water_cooler",
+    "conference_table"
    ],
    "decor": [
     "frame_print_medium",
     "clock_wall_sunburst",
     "potted_plant (1)"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "conference_table",
     "cubicle_partition",
     "water_cooler"
    ],
-   "built_since_new21": [],
    "note": "Desks in pairs facing each other or the window; one plant.",
-   "prop_tris_max": 21082,
+   "prop_tris_max": 17917,
    "over_cap": 0
   },
   "panaderia": {
@@ -5142,24 +5151,25 @@
    "core": [
     "shop_counter",
     "stanchion",
-    "brochure_rack"
+    "queue_ticket_dispenser"
    ],
    "stock": [
     "waiting_bench",
     "office_desk",
     "office_chair",
-    "filing_cabinet"
+    "filing_cabinet",
+    "directory_board"
    ],
    "decor": [
     "clock_wall_sunburst"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "directory_board",
     "queue_ticket_dispenser"
    ],
-   "built_since_new21": [],
    "note": "Queue lane to the counter.",
-   "prop_tris_max": 9354,
+   "prop_tris_max": 8658,
    "over_cap": 0
   },
   "pharmacy": {
@@ -5242,13 +5252,13 @@
    "decor": [
     "frame_print_small"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "physio_table",
     "reception_desk"
    ],
-   "built_since_new21": [],
    "note": "",
-   "prop_tris_max": 17863,
+   "prop_tris_max": 14309,
    "over_cap": 0
   },
   "pizza": {
@@ -5268,12 +5278,12 @@
    "decor": [
     "frame_print_small"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "pizza_oven"
    ],
-   "built_since_new21": [],
    "note": "",
-   "prop_tris_max": 8832,
+   "prop_tris_max": 8227,
    "over_cap": 0
   },
   "post_office": {
@@ -5336,20 +5346,21 @@
    "stock": [
     "side_chair",
     "brochure_rack",
-    "display_plinth"
+    "model_house_display",
+    "listing_board_wall"
    ],
    "decor": [
     "frame_print_large",
     "vase_bud",
     "potted_plant (1)"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "listing_board_wall",
     "model_house_display"
    ],
-   "built_since_new21": [],
    "note": "Window listing boards are the signature.",
-   "prop_tris_max": 7738,
+   "prop_tris_max": 7144,
    "over_cap": 0
   },
   "rec_center": {
@@ -5365,10 +5376,10 @@
     "waiting_bench"
    ],
    "decor": [],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "noticeboard_wall"
    ],
-   "built_since_new21": [],
    "note": "Hill Rec Center; all gym props built.",
    "prop_tris_max": 18483,
    "over_cap": 0
@@ -5409,12 +5420,12 @@
     "pallet_racking"
    ],
    "decor": [],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "reverse_vending_machine"
    ],
-   "built_since_new21": [],
    "note": "Booth: grille window, bins, carts.",
-   "prop_tris_max": 3278,
+   "prop_tris_max": 2674,
    "over_cap": 0
   },
   "rental": {
@@ -5480,17 +5491,18 @@
    "stock": [
     "waiting_bench",
     "brochure_rack",
-    "storage_cabinet"
+    "storage_cabinet",
+    "conference_table"
    ],
    "decor": [
     "frame_print_medium"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "conference_table"
    ],
-   "built_since_new21": [],
    "note": "",
-   "prop_tris_max": 8415,
+   "prop_tris_max": 7867,
    "over_cap": 0
   },
   "salon": {
@@ -5706,18 +5718,19 @@
    "stock": [
     "waiting_bench",
     "brochure_rack",
-    "side_chair"
+    "side_chair",
+    "water_cooler"
    ],
    "decor": [
     "frame_print_small",
     "clock_wall_sunburst"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "water_cooler"
    ],
-   "built_since_new21": [],
    "note": "Small office: 2 desks, waiting bench.",
-   "prop_tris_max": 6469,
+   "prop_tris_max": 6253,
    "over_cap": 0
   },
   "thrift": {
@@ -5778,21 +5791,22 @@
    ],
    "stock": [
     "waiting_bench",
-    "brochure_rack",
+    "ticket_machine",
     "vending_snack",
     "vending_soda",
-    "indoor_bin"
+    "indoor_bin",
+    "departure_board"
    ],
    "decor": [
     "clock_wall_sunburst"
    ],
-   "missing": [
+   "missing": [],
+   "built_since_new21": [
     "departure_board",
     "ticket_machine"
    ],
-   "built_since_new21": [],
    "note": "Ferry / bus tickets: booth + queue + benches facing the board.",
-   "prop_tris_max": 12124,
+   "prop_tris_max": 9622,
    "over_cap": 0
   },
   "tyre": {
@@ -5974,406 +5988,7 @@
    "over_cap": 0
   }
  },
- "missing": {
-  "altar_table": {
-   "class": "medium",
-   "near_tris": 800,
-   "size_m": "2.0 x 0.8 x 1.0",
-   "stand_in": "display_table",
-   "kinds": "church, chapel",
-   "used_by": [
-    "chapel",
-    "church"
-   ]
-  },
-  "atm_wall": {
-   "class": "small",
-   "near_tris": 500,
-   "size_m": "0.8 x 0.4 x 1.7 (wall)",
-   "stand_in": "lottery_atm_stand",
-   "kinds": "bank",
-   "used_by": [
-    "bank"
-   ]
-  },
-  "chart_table": {
-   "class": "medium",
-   "near_tris": 800,
-   "size_m": "1.6 x 1.0 x 0.95",
-   "stand_in": "display_table",
-   "kinds": "broker",
-   "used_by": [
-    "broker"
-   ]
-  },
-  "church_pew": {
-   "class": "large",
-   "near_tris": 1200,
-   "size_m": "3.0 x 0.6 x 0.95",
-   "stand_in": "waiting_bench x2 in line",
-   "kinds": "church, chapel",
-   "used_by": [
-    "chapel",
-    "church"
-   ]
-  },
-  "conference_table": {
-   "class": "large",
-   "near_tris": 1200,
-   "size_m": "3.0 x 1.2 x 0.75",
-   "stand_in": "dining_table",
-   "kinds": "office, architect, law, sales_office",
-   "used_by": [
-    "architect",
-    "law",
-    "office",
-    "sales_office"
-   ]
-  },
-  "court_bench": {
-   "class": "medium",
-   "near_tris": 900,
-   "size_m": "3.0 x 0.6 x 0.95 (gallery)",
-   "stand_in": "waiting_bench",
-   "kinds": "court",
-   "used_by": [
-    "court"
-   ]
-  },
-  "cubicle_partition": {
-   "class": "medium",
-   "near_tris": 600,
-   "size_m": "1.6 x 0.06 x 1.3",
-   "stand_in": "none (desks in pairs)",
-   "kinds": "office",
-   "used_by": [
-    "office"
-   ]
-  },
-  "dental_chair": {
-   "class": "large",
-   "near_tris": 1500,
-   "size_m": "1.9 x 0.8 x 1.2 + lamp arm",
-   "stand_in": "barber_chair",
-   "kinds": "dentist",
-   "used_by": [
-    "dentist"
-   ]
-  },
-  "departure_board": {
-   "class": "small",
-   "near_tris": 350,
-   "size_m": "2.0 x 0.1 x 0.6 (hung)",
-   "stand_in": "menu_board",
-   "kinds": "transit",
-   "used_by": [
-    "transit"
-   ]
-  },
-  "directory_board": {
-   "class": "tiny",
-   "near_tris": 250,
-   "size_m": "1.0 x 0.05 x 1.6 (wall)",
-   "stand_in": "poster_case",
-   "kinds": "lobby, permits, campus_hall, hospital_lobby",
-   "used_by": [
-    "campus_hall",
-    "hospital_lobby",
-    "lobby",
-    "permits"
-   ]
-  },
-  "drafting_table": {
-   "class": "medium",
-   "near_tris": 800,
-   "size_m": "1.4 x 0.9 x 1.0 (tilted top)",
-   "stand_in": "display_table",
-   "kinds": "architect",
-   "used_by": [
-    "architect"
-   ]
-  },
-  "drive_thru_window": {
-   "class": "small",
-   "near_tris": 400,
-   "size_m": "1.2 x 0.4 x 1.2 (wall)",
-   "stand_in": "none",
-   "kinds": "drive_thru",
-   "used_by": [
-    "drive_thru"
-   ]
-  },
-  "exam_bed": {
-   "class": "medium",
-   "near_tris": 700,
-   "size_m": "1.9 x 0.7 x 0.75",
-   "stand_in": "tattoo_bed_chair",
-   "kinds": "clinic, er",
-   "used_by": [
-    "clinic",
-    "er"
-   ]
-  },
-  "judge_bench": {
-   "class": "large",
-   "near_tris": 1800,
-   "size_m": "3.6 x 1.0 x 1.2 (on a 0.3 m step)",
-   "stand_in": "shop_counter x3",
-   "kinds": "court",
-   "used_by": [
-    "court"
-   ]
-  },
-  "jury_box": {
-   "class": "large",
-   "near_tris": 1500,
-   "size_m": "4.0 x 1.6 x 1.0 (2 rows)",
-   "stand_in": "waiting_bench x2",
-   "kinds": "court",
-   "used_by": [
-    "court"
-   ]
-  },
-  "key_rack_wall": {
-   "class": "tiny",
-   "near_tris": 250,
-   "size_m": "0.8 x 0.06 x 0.6 (wall)",
-   "stand_in": "pegboard_wall",
-   "kinds": "hotel, motel_office",
-   "used_by": [
-    "hotel",
-    "motel_office"
-   ]
-  },
-  "lectern": {
-   "class": "small",
-   "near_tris": 450,
-   "size_m": "0.6 x 0.5 x 1.2",
-   "stand_in": "display_plinth",
-   "kinds": "church, chapel, lecture, court",
-   "used_by": [
-    "chapel",
-    "church",
-    "court",
-    "lecture"
-   ]
-  },
-  "lecture_seating_row": {
-   "class": "large",
-   "near_tris": 1500,
-   "size_m": "4.0 x 0.8 x 0.9 (fixed tablet-arm row)",
-   "stand_in": "theatre_seat row",
-   "kinds": "lecture",
-   "used_by": [
-    "lecture"
-   ]
-  },
-  "listing_board_wall": {
-   "class": "small",
-   "near_tris": 400,
-   "size_m": "1.8 x 0.05 x 1.2 (wall/window)",
-   "stand_in": "poster_case",
-   "kinds": "realty",
-   "used_by": [
-    "realty"
-   ]
-  },
-  "luggage_cart": {
-   "class": "small",
-   "near_tris": 500,
-   "size_m": "1.1 x 0.6 x 1.8",
-   "stand_in": "laundry_cart",
-   "kinds": "hotel",
-   "used_by": [
-    "hotel"
-   ]
-  },
-  "model_house_display": {
-   "class": "small",
-   "near_tris": 500,
-   "size_m": "0.8 x 0.8 x 0.5",
-   "stand_in": "display_plinth",
-   "kinds": "realty",
-   "used_by": [
-    "realty"
-   ]
-  },
-  "noticeboard_wall": {
-   "class": "tiny",
-   "near_tris": 250,
-   "size_m": "1.2 x 0.04 x 0.9 (wall)",
-   "stand_in": "poster_case",
-   "kinds": "classroom, campus_hall, hall, rec_center",
-   "used_by": [
-    "campus_hall",
-    "classroom",
-    "hall",
-    "rec_center"
-   ]
-  },
-  "physio_table": {
-   "class": "medium",
-   "near_tris": 700,
-   "size_m": "1.9 x 0.7 x 0.7",
-   "stand_in": "tattoo_bed_chair",
-   "kinds": "physio",
-   "used_by": [
-    "physio"
-   ]
-  },
-  "pizza_oven": {
-   "class": "medium",
-   "near_tris": 1000,
-   "size_m": "1.6 x 1.4 x 1.8 (dome or deck)",
-   "stand_in": "kitchen_line",
-   "kinds": "pizza",
-   "used_by": [
-    "pizza"
-   ]
-  },
-  "privacy_curtain_rail": {
-   "class": "small",
-   "near_tris": 400,
-   "size_m": "2.4 x 2.4 x 2.3 (L rail + curtain)",
-   "stand_in": "none",
-   "kinds": "clinic, er",
-   "used_by": [
-    "clinic",
-    "er"
-   ]
-  },
-  "projector_screen": {
-   "class": "tiny",
-   "near_tris": 220,
-   "size_m": "2.4 x 0.1 x 1.8 (wall)",
-   "stand_in": "poster_case",
-   "kinds": "lecture",
-   "used_by": [
-    "lecture"
-   ]
-  },
-  "queue_ticket_dispenser": {
-   "class": "tiny",
-   "near_tris": 200,
-   "size_m": "0.3 x 0.3 x 1.4",
-   "stand_in": "brochure_rack",
-   "kinds": "permits, bail",
-   "used_by": [
-    "bail",
-    "permits"
-   ]
-  },
-  "reception_desk": {
-   "class": "large",
-   "near_tris": 1500,
-   "size_m": "3.0 x 1.4 x 1.1 (L-shaped)",
-   "stand_in": "shop_counter x2",
-   "kinds": "lobby, clinic, hospital_lobby, er, dentist, physio, hotel",
-   "used_by": [
-    "clinic",
-    "dentist",
-    "er",
-    "hospital_lobby",
-    "hotel",
-    "lobby",
-    "physio"
-   ]
-  },
-  "reverse_vending_machine": {
-   "class": "medium",
-   "near_tris": 800,
-   "size_m": "1.0 x 0.8 x 1.9",
-   "stand_in": "vending_soda",
-   "kinds": "recycling",
-   "used_by": [
-    "recycling"
-   ]
-  },
-  "showroom_car": {
-   "class": "large",
-   "near_tris": 2500,
-   "size_m": "4.5 x 1.8 x 1.4 (near tier only)",
-   "stand_in": "display_plinth",
-   "kinds": "car_sales",
-   "used_by": [
-    "car_sales"
-   ]
-  },
-  "stage_platform": {
-   "class": "medium",
-   "near_tris": 600,
-   "size_m": "6.0 x 3.0 x 0.6 (steps)",
-   "stand_in": "none (empty end)",
-   "kinds": "hall",
-   "used_by": [
-    "hall"
-   ]
-  },
-  "tablet_arm_chair": {
-   "class": "small",
-   "near_tris": 500,
-   "size_m": "0.6 x 0.7 x 0.85",
-   "stand_in": "side_chair",
-   "kinds": "classroom",
-   "used_by": [
-    "classroom"
-   ]
-  },
-  "ticket_machine": {
-   "class": "medium",
-   "near_tris": 700,
-   "size_m": "0.8 x 0.5 x 1.8",
-   "stand_in": "lottery_atm_stand",
-   "kinds": "transit",
-   "used_by": [
-    "transit"
-   ]
-  },
-  "vault_door": {
-   "class": "large",
-   "near_tris": 1500,
-   "size_m": "2.0 x 0.4 x 2.2 (wall)",
-   "stand_in": "wall_safe",
-   "kinds": "bank",
-   "used_by": [
-    "bank"
-   ]
-  },
-  "water_cooler": {
-   "class": "small",
-   "near_tris": 350,
-   "size_m": "0.35 x 0.35 x 1.3",
-   "stand_in": "drinks_fridge (half the time) / none",
-   "kinds": "office, lobby, tax, clinic",
-   "used_by": [
-    "clinic",
-    "lobby",
-    "office",
-    "tax"
-   ]
-  },
-  "whiteboard_wall": {
-   "class": "tiny",
-   "near_tris": 250,
-   "size_m": "2.4 x 0.05 x 1.2 (wall)",
-   "stand_in": "poster_case",
-   "kinds": "lecture, classroom",
-   "used_by": [
-    "classroom",
-    "lecture"
-   ]
-  },
-  "witness_box": {
-   "class": "medium",
-   "near_tris": 900,
-   "size_m": "1.4 x 1.2 x 1.1",
-   "stand_in": "shop_counter + side_chair",
-   "kinds": "court",
-   "used_by": [
-    "court"
-   ]
-  }
- },
+ "missing": {},
  "strand_swap": [
   {
    "id": "m_gr_ad3se__crosswalk_coffee__0",

@@ -1362,10 +1362,10 @@
      "i": 1
     }
    ],
+   "lean": false,
    "near_budget": 5000,
    "budget_class": "civic",
-   "ext_tris": 3626,
-   "lean": false
+   "ext_tris": 3626
   },
   "commercial/com_orange_corner": {
    "box_min": [
@@ -1452,10 +1452,10 @@
      "i": 0
     }
    ],
+   "lean": false,
    "near_budget": 2500,
    "budget_class": "shop (1200 / 6 m, min 2500)",
-   "ext_tris": 987,
-   "lean": false
+   "ext_tris": 987
   },
   "civic/civ_library": {
    "box_min": [
@@ -1518,12 +1518,12 @@
      "i": 0
     }
    ],
-   "near_budget": 5000,
-   "budget_class": "civic",
-   "ext_tris": 4692,
    "lean": true,
    "lean2": true,
-   "front_only": true
+   "front_only": true,
+   "near_budget": 5000,
+   "budget_class": "civic",
+   "ext_tris": 4692
   },
   "commercial/com_spanish_arcade_block": {
    "box_min": [
@@ -1615,10 +1615,10 @@
      "i": 0
     }
    ],
+   "lean": false,
    "near_budget": 2500,
    "budget_class": "shop (1200 / 6 m, min 2500)",
-   "ext_tris": 1054,
-   "lean": false
+   "ext_tris": 1054
   },
   "civic/civ_community_center": {
    "box_min": [
@@ -1722,7 +1722,11 @@
      ],
      "i": 0
     }
-   ]
+   ],
+   "near_budget": 3600,
+   "budget_class": "shop (1200 / 6 m, min 2500)",
+   "ext_tris": 1724,
+   "lean": false
   },
   "extras/motel_inn_court": {
    "box_min": [
@@ -1787,10 +1791,10 @@
      "i": 0
     }
    ],
+   "lean": false,
    "near_budget": 2500,
    "budget_class": "shop (1200 / 6 m, min 2500)",
-   "ext_tris": 576,
-   "lean": false
+   "ext_tris": 576
   },
   "services/svc_carwash": {
    "box_min": [
@@ -1819,10 +1823,10 @@
      "i": 0
     }
    ],
+   "lean": false,
    "near_budget": 6000,
    "budget_class": "shop (1200 / 6 m, min 2500)",
-   "ext_tris": 1952,
-   "lean": false
+   "ext_tris": 1952
   },
   "ck/ck_svc_bank_pharm": {
    "box_min": [
@@ -1922,10 +1926,10 @@
      "i": 0
     }
    ],
+   "lean": false,
    "near_budget": 5000,
    "budget_class": "civic",
-   "ext_tris": 3660,
-   "lean": false
+   "ext_tris": 3660
   },
   "civic/civ_church": {
    "box_min": [
@@ -1990,10 +1994,10 @@
      "i": 0
     }
    ],
+   "lean": false,
    "near_budget": 5000,
    "budget_class": "civic",
-   "ext_tris": 1436,
-   "lean": false
+   "ext_tris": 1436
   },
   "extras/ext_hospital": {
    "box_min": [
@@ -2022,12 +2026,12 @@
      "i": 0
     }
    ],
-   "near_budget": 5000,
-   "budget_class": "civic",
-   "ext_tris": 4625,
    "lean": true,
    "lean2": true,
-   "front_only": true
+   "front_only": true,
+   "near_budget": 5000,
+   "budget_class": "civic",
+   "ext_tris": 4625
   },
   "urban/urb_courthouse": {
    "box_min": [
@@ -2056,10 +2060,10 @@
      "i": 0
     }
    ],
+   "lean": false,
    "near_budget": 5000,
    "budget_class": "civic",
-   "ext_tris": 3278,
-   "lean": false
+   "ext_tris": 3278
   },
   "apartments/apt_spanish_revival": {
    "box_min": [
@@ -2233,12 +2237,12 @@
      "i": 0
     }
    ],
-   "near_budget": 3500,
-   "budget_class": "apartment",
-   "ext_tris": 3475,
    "lean": true,
    "lean2": true,
-   "front_only": true
+   "front_only": true,
+   "near_budget": 3500,
+   "budget_class": "apartment",
+   "ext_tris": 3475
   },
   "apartments/apt_garden_mint": {
    "box_min": [
@@ -2267,12 +2271,12 @@
      "i": 0
     }
    ],
-   "near_budget": 3500,
-   "budget_class": "apartment",
-   "ext_tris": 3489,
    "lean": true,
    "lean2": true,
-   "front_only": true
+   "front_only": true,
+   "near_budget": 3500,
+   "budget_class": "apartment",
+   "ext_tris": 3489
   },
   "apartments/apt_spanish_white": {
    "box_min": [
