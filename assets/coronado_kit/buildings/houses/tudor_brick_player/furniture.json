@@ -643,6 +643,15 @@
           "z": -0.4,
           "yaw": 10,
           "note": "a last moving box against the east wall, clear of the door swing"
+        },
+        {
+          "id": "prop_frame_print_medium",
+          "cond": "clean",
+          "x": -4.5,
+          "y": 1.35,
+          "z": 0.14,
+          "yaw": 180,
+          "note": "centred over the desk on the south wall"
         }
       ]
     },
