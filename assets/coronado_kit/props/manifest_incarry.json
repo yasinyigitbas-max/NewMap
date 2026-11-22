@@ -1,0 +1,50 @@
+{
+ "bag_paper_kraft": {
+  "file_base": "prop_bag_paper_kraft",
+  "batch": "incarry",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 240
+  },
+  "footprint_w": 0.32,
+  "footprint_d": 0.172,
+  "height": 0.508,
+  "regions": [
+   "baked:bag_paper_kraft"
+  ],
+  "trim": {
+   "kraft_paper": {
+    "area_m2": 0.45,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "high_tris": 25248,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 347.7,
+  "col": 1,
+  "secs": 10.0,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_r": [
+     0.0,
+     0.5,
+     -0.0
+    ],
+    "grip_l": [
+     0.0,
+     0.5,
+     -0.0
+    ]
+   },
+   "hold": "one_hand_hang",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ }
+}

@@ -659,7 +659,7 @@ BAKE_DIR=K+'/props/_bake'; os.makedirs(BAKE_DIR+'/tiles',exist_ok=True)
 SLOTS_P=BAKE_DIR+'/slots.json'
 PAGE=''        # '' = props page A (2048, shared regions); 'b' = props page B (1024, baked tiles only: phase-D industrial props)
 MID_ON_PAGE=False   # mid/far tiers sample the near bake on the same page (uv_from_near)
-PAGE_SIZE={'':2048,'b':int(os.environ.get('PAGE_B_SIZE','1024')),'c':512,'w':1024,'i':1024}
+PAGE_SIZE={'':2048,'b':int(os.environ.get('PAGE_B_SIZE','1024')),'c':512,'w':1024,'i':1024,'j':1024}
 def _slots_p(): return SLOTS_P if not PAGE else BAKE_DIR+f'/slots_{PAGE}.json'
 def _jdump(S_):
     P_=_slots_p(); t=P_+'.tmp'; json.dump(S_,open(t,'w'),indent=1); os.replace(t,P_)
@@ -689,6 +689,7 @@ def _grid(S_, skip=None):
         elif y<by and not PAGE: occ[y//G:min(by,y+h+G-1)//G+0,x//G:(x+w+G-1)//G]=True
     if PAGE=='w': occ[:384//G,:]=True   # page W rows 0-383 reserved for waterfront trim tiles (incl. future ones)
     if PAGE=='i': occ[:256//G,:]=True   # page I rows 0-255 reserved for indoor trim tiles
+    if PAGE=='j': occ[:256//G,:]=True   # page J (carry props) rows 0-255 reserved for its material tiles
     for nm,rs in S_['slots'].items():
         if nm==skip: continue
         for x,y,w,h in rs: occ[(y-y0)//G:(y-y0+h+G-1)//G,(x-x0)//G:(x-x0+w+G-1)//G]=True
