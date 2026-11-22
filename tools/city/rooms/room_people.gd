@@ -24,10 +24,19 @@ func _initialize() -> void:
 	var n_rooms := 0
 	var n_left := 0
 	var why := {}
-	for f in DirAccess.get_files_at(ROOMS):
+	# (22 Nov, INDOORS rollout) --builtin=<dir>: also the bake's built-in rooms (<runtime>/rooms/bi_*.scn), named as the
+	# bake names them; the hand-made rooms of buildings that now carry their interior are left out (not placed any more)
+	var bdir := ""
+	for a in OS.get_cmdline_user_args(): if a.begins_with("--builtin="): bdir = a.trim_prefix("--builtin=").trim_suffix("/") + "/"
+	var files: Array = []
+	for f in DirAccess.get_files_at(ROOMS): files.append(ROOMS + f)
+	if bdir != "":
+		for f in DirAccess.get_files_at(bdir): if f.begins_with("bi_"): files.append(bdir + f)
+	for fp: String in files:
+		var f := fp.get_file()
 		if not f.ends_with(".scn"): continue
 		n_rooms += 1
-		var ps: PackedScene = load(ROOMS + f)
+		var ps: PackedScene = load(fp)
 		if ps == null: continue
 		var r: Node = ps.instantiate()
 		var res := _room(r)
