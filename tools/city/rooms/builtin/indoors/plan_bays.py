@@ -1,3 +1,8 @@
+import os as _os
+def _w(p):      # (hard links into other trees: delete, then write)
+    if _os.path.exists(p): _os.remove(p)
+    return open(p, 'w')
+
 """Built-in interiors rollout: which bays of which kit models carry an interior, and which kinds each must furnish.
 Reads interiors/builtin/indoors_spec.json (the INDOORS places), the assignment rows (piece, bay [s0, s1], door_along)
 and room_contracts.json. Writes interiors/builtin/bays.json: {model: {"bays": [{s0, s1, door_along, door_w, kinds,
@@ -36,6 +41,6 @@ for p in spec['places']:
 for M in out.values():
     M['bays'].sort(key=lambda b: b['door_along'])
     for i, b in enumerate(M['bays']): b['i'] = i
-json.dump(dict(models=out, skipped=skipped, no_row=noroww), open(R + 'builtin/bays.json', 'w'), indent=1)
+json.dump(dict(models=out, skipped=skipped, no_row=noroww), _w(R + 'builtin/bays.json'), indent=1)
 nb = sum(len(M['bays']) for M in out.values())
 print('models', len(out), 'bays', nb, 'places', sum(len(b['places']) for M in out.values() for b in M['bays']), 'skipped', {k: len(v) for k, v in skipped.items()}, 'no row', noroww)

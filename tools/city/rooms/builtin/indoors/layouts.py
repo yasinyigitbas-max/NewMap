@@ -1,3 +1,8 @@
+import os as _os
+def _w(p):      # (hard links into other trees: delete, then write)
+    if _os.path.exists(p): _os.remove(p)
+    return open(p, 'w')
+
 """Slot layouts for every built-in bay x kind (22 Nov 2026 rollout). Per bay (bays.json) and each kind it furnishes,
 2-3 templates that differ in logic (A: counter / front at the back wall; B: counter along a side wall or desks at the
 back; C: a third arrangement where the room is big enough), each a full slot table in the bay frame (model frame):
@@ -433,7 +438,7 @@ for m, M in sorted(B.items()):
                 temps[t] = dict(slots=r.slots, tris=r.tri, mirror_ok=mok)
             if not temps: fails.append('%s bay %d %s (%s, %.1f x %.1f m): no template fits' % (m, b['i'], k, arch, X1 - X0, ZF - ZB))
             OUT.setdefault(m, {}).setdefault(str(b['i']), {})[k] = temps
-json.dump(dict(rect_note='bay frame = model frame; X0..X1 = bay s0..s1, ZB..ZF = floor box z', layouts=OUT), open(R + 'builtin/layouts.json', 'w'), indent=0)
+json.dump(dict(rect_note='bay frame = model frame; X0..X1 = bay s0..s1, ZB..ZF = floor box z', layouts=OUT), _w(R + 'builtin/layouts.json'), indent=0)
 nt = sum(len(t) for mm in OUT.values() for bb in mm.values() for t in bb.values())
 ns = sum(len(x['slots']) for mm in OUT.values() for bb in mm.values() for t in bb.values() for x in t.values())
 print('bay-kinds', sum(len(bb) for mm in OUT.values() for bb in mm.values()), 'templates', nt, 'slots', ns)

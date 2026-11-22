@@ -1,3 +1,9 @@
+import os as _os
+def _w(p):      # (hard links into other trees: delete, then write)
+    if _os.path.exists(p): _os.remove(p)
+    return open(p, 'w')
+
+import os
 import csv, json, glob, os, collections, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 REPO = '/workspace/NewMap'; P = REPO + '/assets/coronado_kit/props/'
@@ -77,8 +83,10 @@ undocumented = sorted(x for x in missing_by if x not in MISSING)
 if undocumented: print('UNDOCUMENTED MISSING PROPS', undocumented); sys.exit(1)
 out = dict(generated='22 Nov 2026', places=places, kinds=kinds, missing={x: dict(zip(['class', 'near_tris', 'size_m', 'stand_in', 'kinds'], MISSING.get(x, ('?', 0, '?', '?', '')))) | {'used_by': sorted(missing_by[x])} for x in sorted(missing_by)},
     strand_swap=STRAND_SWAP, unknown_kinds=sorted(unknown), undocumented_missing=undocumented)
-json.dump(out, open(REPO + '/map_dc/coronado/city_kit/interiors/builtin/indoors_spec.json', 'w'), indent=1)
-import spec_md; open(REPO + '/docs/INDOORS.md', 'w').write(spec_md.md(out, inv))
+json.dump(out, _w(REPO + '/map_dc/coronado/city_kit/interiors/builtin/indoors_spec.json'), indent=1)
+import spec_md
+if os.path.exists(REPO + '/docs/INDOORS.md'): os.remove(REPO + '/docs/INDOORS.md')      # (hard links into other trees: never written through)
+_w(REPO + '/docs/INDOORS.md').write(spec_md.md(out, inv))
 grp = collections.Counter(p['group'] for p in places)
 print(len(places), dict(grp), 'kinds', len(kinds), 'unknown', unknown, 'undocumented', undocumented)
 print('no row', [p['id'] for p in places if not p['has_row']])

@@ -141,10 +141,10 @@
    ],
    "lean": true,
    "lean2": true,
+   "front_only": true,
    "near_budget": 3500,
    "budget_class": "apartment block (3-storey row)",
-   "ext_tris": 3516,
-   "front_only": true
+   "ext_tris": 3516
   },
   "commercial/com_bistro": {
    "box_min": [
@@ -219,10 +219,10 @@
    ],
    "lean": true,
    "lean2": true,
+   "front_only": true,
    "near_budget": 3500,
    "budget_class": "apartment block (3-storey row)",
-   "ext_tris": 3378,
-   "front_only": true
+   "ext_tris": 3378
   },
   "ck/ck_brk3_row2": {
    "box_min": [
@@ -443,10 +443,10 @@
     }
    ],
    "lean": true,
+   "lean2": true,
    "near_budget": 2500,
    "budget_class": "shop (1200 / 6 m, min 2500)",
-   "ext_tris": 1776,
-   "lean2": true
+   "ext_tris": 1776
   },
   "urban/urb_dept_store": {
    "box_min": [
@@ -511,10 +511,10 @@
    ],
    "lean": true,
    "lean2": true,
+   "front_only": true,
    "near_budget": 3500,
    "budget_class": "apartment",
-   "ext_tris": 3440,
-   "front_only": true
+   "ext_tris": 3440
   },
   "ck/ck_svc_trade": {
    "box_min": [
@@ -805,10 +805,10 @@
    ],
    "lean": true,
    "lean2": true,
+   "front_only": true,
    "near_budget": 2500,
    "budget_class": "shop (1200 / 6 m, min 2500)",
-   "ext_tris": 2438,
-   "front_only": true
+   "ext_tris": 2438
   },
   "extras/ext_motel_crown": {
    "box_min": [
@@ -837,12 +837,12 @@
      "i": 0
     }
    ],
-   "near_budget": 5000,
-   "budget_class": "apartment",
-   "ext_tris": 4903,
    "lean": true,
    "lean2": true,
-   "front_only": true
+   "front_only": true,
+   "near_budget": 5000,
+   "budget_class": "apartment",
+   "ext_tris": 4903
   },
   "commercial/com_strip_mall_l": {
    "box_min": [
@@ -1215,11 +1215,11 @@
      "i": 0
     }
    ],
+   "lean": true,
+   "lean2": true,
    "near_budget": 2500,
    "budget_class": "large house",
-   "ext_tris": 2270,
-   "lean": true,
-   "lean2": true
+   "ext_tris": 2270
   },
   "apartments/apt_beach_condo": {
    "box_min": [
@@ -1253,10 +1253,10 @@
    ],
    "lean": true,
    "lean2": true,
+   "front_only": true,
    "near_budget": 3500,
    "budget_class": "apartment",
-   "ext_tris": 3452,
-   "front_only": true
+   "ext_tris": 3452
   },
   "commercial/com_orange_arcade_block": {
    "box_min": [
@@ -1373,10 +1373,10 @@
    ],
    "lean": true,
    "lean2": true,
+   "front_only": true,
    "near_budget": 2500,
    "budget_class": "shop (1200 / 6 m, min 2500)",
-   "ext_tris": 2366,
-   "front_only": true
+   "ext_tris": 2366
   },
   "civic/civ_library": {
    "box_min": [
@@ -1645,10 +1645,10 @@
    ],
    "lean": true,
    "lean2": true,
+   "front_only": true,
    "near_budget": 2500,
    "budget_class": "shop (1200 / 6 m, min 2500)",
-   "ext_tris": 2636,
-   "front_only": true
+   "ext_tris": 2636
   },
   "civic/civ_harbor_office": {
    "box_min": [
@@ -1894,10 +1894,10 @@
    ],
    "lean": true,
    "lean2": true,
+   "front_only": true,
    "near_budget": 3500,
    "budget_class": "apartment",
-   "ext_tris": 3306,
-   "front_only": true
+   "ext_tris": 3306
   },
   "houses/craftsman_sage": {
    "box_min": [

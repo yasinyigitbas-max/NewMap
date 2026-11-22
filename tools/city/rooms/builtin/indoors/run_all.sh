@@ -20,3 +20,4 @@ python3 tools/city/rooms/builtin/indoors/make_sets.py
 python3 tools/city/rooms/builtin/indoors/layouts.py
 $G -s res://tools/city/rooms/builtin/make_interiors.gd
 $G -s res://tools/city/rooms/builtin/validate_bays.gd
+python3 tools/city/rooms/builtin/indoors/budget.py
