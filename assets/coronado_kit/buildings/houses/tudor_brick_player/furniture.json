@@ -1141,6 +1141,33 @@
           "z": -0.2,
           "yaw": 10,
           "note": "south of the door, against the studio wall, out of the swing"
+        },
+        {
+          "id": "prop_toiletry_set",
+          "cond": "clean",
+          "x": 5.54,
+          "y": 4.47,
+          "z": 1.95,
+          "yaw": 0,
+          "note": "everyday bottles on the north end of the vanity"
+        },
+        {
+          "id": "prop_potted_plant",
+          "cond": "clean",
+          "x": 5.4,
+          "y": 3.5,
+          "z": 0.5,
+          "yaw": 0,
+          "note": "a plant by the east window, south of the vanity"
+        },
+        {
+          "id": "prop_towel_hand",
+          "cond": "clean",
+          "x": 5.76,
+          "y": 4.7,
+          "z": 2.25,
+          "yaw": -90,
+          "note": "a second towel north of the vanity, within reach of the tub"
         }
       ]
     },
