@@ -118,6 +118,11 @@ TRAPS (each cost a run):
 - The converter's yaw curve and the pose can both carry the same turn: judge at the curve's largest turn, not its end.
 - Clips at 30 Hz played with linear interpolation kink at every key in fast turns: the motor sets cubic.
 - Never trust the capsule's height for drawing: ray the ground (place()).
+- MID-STEP THE SKELETON HOLDS THE CLIP'S RAW POSE (Godot re-applies the animation before the modifiers each frame): a
+  bone read in Motor::step is not what was drawn. Anything that must follow the drawn body (a carried thing, hands on
+  it) is placed inside a modifier (MoLimbs) in the same pass.
+- A spring that follows a moving target lags it (speed x 2 / omega): smooth an offset in the body's own frame.
+- 23 Nov (Yasin): no double climbs; knees never backwards; nothing into the body; jumps and landings as festive's.
 - The figure is a CHILD of the body: anything that moves the body after the motor placed the figure (the old kerb lift)
   drags the drawn figure with it for that frame - put it back (Motor::replace).
 - The Rocketbox figures have NO toe bone (Bip01_*_Toe0 missing): mo_clip estimates the ball 13 cm ahead of the ankle.
@@ -131,7 +136,7 @@ TRAPS (each cost a run):
 - The old CityPlayer code still runs around the motor (step_or_climb's kerb lift, try_climb): skip what does not
   belong (in cover the wall reads as a kerb's face).
 - Tests: test_motor_base.gd (19 phases), test_motor_trav.gd (12 lanes), test_motor_slopes.gd (ramps, stairs, kerbs),
-  test_motor_cover.gd (crouch, tall / low cover), test_motor_carry.gd (box, briefcase), test_step_up.gd (old + new);
+  test_motor_cover.gd (crouch, tall / low cover), test_motor_carry.gd (box, briefcase), test_motor_air.gd (jumps, falls), test_step_up.gd (old + new);
   run all six after any change to mo_*. `--old-moves` = old code.
 - THE GAME'S CONTROLS (Yasin, 23 Nov): no buttons. Touch: double tap on the LEFT half = crouch toggle, on the RIGHT half
   = jump (CityPlayer line ~117; C / Space on a PC). Cover starts by itself when crouched and pushing into a wall; climbs

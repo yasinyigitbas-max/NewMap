@@ -76,7 +76,7 @@ Array Motor::dump(const String &p_clip) const {
 float Motor::rnd() { rng ^= rng << 13; rng ^= rng >> 17; rng ^= rng << 5; return (rng & 0xffffff) / 16777216.0f; }
 
 const char *Motor::state_name() const {
-	static const char *N[] = { "off", "idle", "start", "move", "stop", "turn", "pivot", "trav", "crouch", "stance", "cover_in", "cover", "cover_out", "carry" };
+	static const char *N[] = { "off", "idle", "start", "move", "stop", "turn", "pivot", "trav", "crouch", "stance", "cover_in", "cover", "cover_out", "carry", "jump", "air", "land", "runjump" };
 	return N[st];
 }
 
@@ -139,6 +139,7 @@ bool Motor::attach(CityPed *p_fig) {
 	c_hang = load("ptrav/Stand_To_Freehang"); c_braced = load("ptrav/Braced_Hang_To_Crouch"); c_mid_run = load("ptrav/Sprint_To_Wall_Climb");
 	load_cover();
 	load_carry();
+	load_air();
 	if (n_loops == 0 || n_idles == 0) { fig = nullptr; return false; }
 	if (!inert) {   // first on the skeleton: it sees the clip's own pose, the IK after it sees the handed-over one
 		inert = memnew(MoInertial);
@@ -575,8 +576,17 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		host = nullptr;
 		return;
 	}
-	// ROOT CLIPS (mo_motor_cover.cpp): a stance change, into or out of cover - the clip has the body
-	if (st == STANCE || st == COVER_IN || st == COVER_OUT) {
+	// JUMPS AND FALLS (mo_motor_air.cpp)
+	if (st == JUMP) {   // the take-off: then the flight
+		advance(p_dt);
+		if (t >= cur->d->len - 0.02) air_start(Vector3(air_v.x, jump_v, air_v.z), true);
+		else place(p_host, p_dt);
+		host = nullptr;
+		return;
+	}
+	if (st == AIR) { air_step(p_dt, p_in); host = nullptr; return; }
+	// ROOT CLIPS (mo_motor_cover.cpp): a stance change, into or out of cover, a landing, a running leap - the clip has the body
+	if (st == STANCE || st == COVER_IN || st == COVER_OUT || st == LAND || st == RUNJUMP) {
 		const bool done = root_step(p_dt);
 		if (limbs && cur) {
 			const Frame fr = cur->d->lerp(t);
@@ -585,6 +595,24 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		}
 		ground_feet(p_host);
 		if (done) {
+			if (st == LAND) {
+				if (rp.c == &ai_flat && ai_getup.ok()) { root_start(ai_getup, 0.0, 0.3f, yaw, nullptr, false); host = nullptr; return; }   // (down flat: up again)
+				if (want) { speed = std::max(speed, 0.8f); to_loop(pick_loop(want_speed, loop_i), blend_loop); }
+				else to_idle(0.35f);
+				place(p_host);
+				host = nullptr;
+				return;
+			}
+			if (st == RUNJUMP) {
+				const Vector3 b = p_host.position();
+				const float gb = ground_below(b, 60.0f);
+				if (gb < -1e8f || (float)b.y - gb > 0.5f) { air_start(fwd_of_yaw() * 3.5f, false); host = nullptr; return; }   // (over a drop: falling on)
+				if (want) { speed = std::max(speed, 2.5f); to_loop(pick_loop(want_speed, loop_i), blend_loop); }
+				else { speed = 2.5f; to_stop(); }
+				place(p_host);
+				host = nullptr;
+				return;
+			}
 			if (st == STANCE) { if (stance_to == 1) to_crouch(0.3f); else to_idle(0.3f); }
 			else if (st == COVER_IN) {
 				const Clip &ci = cv_idle[cv_tall ? 1 : 0];
@@ -604,6 +632,15 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		if (st == MOVE || st == START || st == PIVOT) { const Clip &L = carry == 1 ? ca_walk : (carry == 3 ? sb_walk : bg_walk); into_loop = true; play(L, best_entry(*cur->d, t, *L.d, 0.0, L.d->len, &last_entry_cost), 0.35f); }
 		else to_carry_idle(0.35f);
 		st = CARRY;
+	}
+	// A JUMP (the right double tap), OFF AN EDGE (the ground gone from under him, 0.5 m or more down)
+	if (air_ready() && (st == IDLE || st == START || st == MOVE || st == STOP || st == TURN || st == PIVOT)) {
+		if (p_in.jump) { jump_start(dir, want_speed); host = nullptr; return; }
+		if (!p_host.on_floor()) {
+			const Vector3 b = p_host.position();
+			const float gb = ground_below(b, 60.0f);
+			if (gb < -1e8f || (float)b.y - gb > 0.5f) { air_start(Vector3(last_vel.x, 0.0f, last_vel.z), false); host = nullptr; return; }
+		}
 	}
 	// INTO COVER (Yasin, 23 Nov: "once we get near a wall or low obstacles while crouching, cover automatically
 	// initiates"): crouched, pushing into a wall within 0.75 m of him, from 0.6 m high. Asked for (an NPC's mind): the

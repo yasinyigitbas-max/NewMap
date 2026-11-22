@@ -311,3 +311,25 @@ crouching, cover automatically initiates, same for climbs when we are on foot")
 - Carrying is reached from code only (set_carry) until the pick-up of real objects is built.
 - test_motor_cover.gd plays it so (crouch, walk into the wall, sneak, let the crouch go): RESULT FAIL (1) - going into
   the low cover from the crouch slides a planted foot 4.2 cm (3 allowed); the rest passes. OPEN.
+
+## 12. Yasin's notes on the first film (23 Nov) and what was done
+"remove all the double climbs, much better carry is needed, both box and hands go into the body, neither should be able
+o do that. better edge jump down, use soft or hard landing like festive work. knees shouldnt be able to bend backwards.
+in place jumps are terrible, use other animations, it looks like climbing an imvisible wall." ("double climbs i meant")
+- NO DOUBLE CLIMBS: walls 1.15-1.75 m Braced_Hang_To_Crouch, then up by Crouched_To_Standing; 1.75-2.1 m
+  Stand_To_Freehang then Climbing_Single from the hang (two moves chained on one edge, the hands pinned in both);
+  run at from 1.6 m Sprint_To_Wall_Climb. The old 2.5-3.6 m double climb is off with the new system (3 m walls are not
+  climbed). test_motor_trav PASS (hands 0.1-1.8 cm, no sky, no pop).
+- KNEES: the leg IK bends the knee the way he faces, always (the clip's own knee direction, near straight, is noise:
+  it bent legs 12-21 cm backwards on stairs and a run up 22 degrees). test_motor_slopes checks it: none.
+- CARRY: the box's back face 2 cm off the belly (14 cm in front of the hips' middle), the palms on its sides toward its
+  back, the elbows out and down; the thing and the hands placed by MoLimbs on the hips AS DRAWN, in the same pass
+  (TRAP: mid-step the skeleton holds the clip's raw pose - Godot re-applies the clip before the modifiers each frame -
+  at a hand-over its hips jumped 30 cm). test_motor_carry checks the belly and the torso: PASS.
+- JUMPS AND FALLS (mo_motor_air.cpp): standing / walking, Jumping_Up then a real flight (4.3 m/s up, gravity, a little
+  steering) in the air pose Falling_Idle; running, Running_Jump_a (its own leap, falling on if it ends over a drop); off
+  an edge of 0.5 m or more, the same flight. LANDINGS by the height fallen (festive's thresholds): under 3 m
+  Falling_To_Landing, from 3 m Hard_Landing_b, from 5 m 10 % / from 7 m always Falling_Flat_Impact then Getting_Up;
+  started so the clip's own touch of the feet comes as the body reaches the ground. test_motor_air PASS (touch 0.1-4.9
+  cm). Jumps no longer grab a ledge in the air (climbs start on foot).
+- STILL THE OLD CODE: obstacles 0.24-0.55 m (a 45 cm box: mx/Ascending_Stairs; a 40 cm fence: mx/Vault_Over_Box_to_Cover).

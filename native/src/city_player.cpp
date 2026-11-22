@@ -369,12 +369,13 @@ void CityPlayer::_physics_process(double p_delta) {
 		in.dir = mv.length() > 0.05f ? (fwd * mv.y + right * mv.x).normalized() * ml : Vector3();
 		in.speed = run ? run_speed : walk_speed;
 		in.crouch = crouch; in.cover = cover_req; cover_req = false; in.carry = carry_kind;
+		in.jump = jump_want; jump_want = false;   // (the new system's jumps: the right double tap / Space)
 		motor->step(dt, in, host);
 		if (motor->st == mo::Motor::COVER_OUT) crouch = false;   // (out of cover he stands: the crouch is let go)
 		carry_draw();
 		yaw = motor->yaw; speed = motor->speed; move_speed = speed;
 		// (not in cover: touching the cover's wall read as a kerb's face, and the kerb step moved him 4 cm a frame along it)
-		if (!motor->in_trav() && !motor->in_cover() && in.dir.length() > 0.3f) {
+		if (!motor->in_trav() && !motor->in_cover() && !motor->in_air() && in.dir.length() > 0.3f) {
 			step_or_climb(in.dir * in.speed, p_delta);
 			// (the figure hangs under the body: a kerb's lift after the motor placed it carried it up 4-8 cm for a frame)
 			if (motor->active() && !motor->in_trav()) motor->replace(host);
@@ -931,10 +932,10 @@ void CityPlayer::carry_draw() {
 }
 
 bool CityPlayer::motor_can() const {
-	if (motor && motor->in_trav()) return fig && fig->get_mode() == CityPed::MODE_ANIM;   // (a vault / climb runs to its end)
+	if (motor && (motor->in_trav() || motor->in_air())) return fig && fig->get_mode() == CityPed::MODE_ANIM;   // (a vault / climb, a jump, a fall run to their end)
 	return fig && fig->get_mode() == CityPed::MODE_ANIM && climb == 0 && settle_t >= 0.45f && !swimming && !combat && uncombat_t >= 0.9
-			&& act_left <= 0.0 && gest_t <= 0.0f && !airborne && land_t <= 0.0f && !jump_want && phone_kind == 0   // (the crouch is the new system's own now)
-			&& !auto_on && !frozen && !talk_on && hit_t > 0.45 && !hold_on && (is_on_floor() || (motor && motor->active() && ground_near(0.5f)));
+			&& act_left <= 0.0 && gest_t <= 0.0f && !airborne && land_t <= 0.0f && phone_kind == 0   // (the crouch, the jumps are the new system's own now)
+			&& !auto_on && !frozen && !talk_on && hit_t > 0.45 && !hold_on && (is_on_floor() || (motor && motor->active() && (ground_near(0.5f) || motor->air_ready_pub())));   // (off an edge: the new system's own fall)
 }
 
 // (the new system keeps him over a crest run fast or a kerb's lift, where the body leaves the floor for a few frames:
@@ -955,7 +956,7 @@ Dictionary CityPlayer::get_motor_state() const {
 	if (!motor) return d;
 	d["state"] = String(motor->state_name()); d["clip"] = motor->clip_name(); d["t"] = motor->clip_time(); d["speed"] = motor->speed; d["yaw"] = motor->yaw;
 	d["starts"] = motor->n_starts; d["stops"] = motor->n_stops; d["turns"] = motor->n_turns; d["pivots"] = motor->n_pivots; d["gaits"] = motor->n_gait;
-	d["fidgets"] = motor->n_fidgets; d["switches"] = motor->n_switch; d["entry_cost"] = motor->last_entry_cost; d["i_switches"] = motor->inert_switches(); d["i_jump"] = motor->inert_jump(); d["i_live"] = motor->inert_live(); d["down_l"] = motor->foot_down(0); d["down_r"] = motor->foot_down(1); d["pull_l"] = motor->foot_pull(0); d["pull_r"] = motor->foot_pull(1); d["locks"] = motor->foot_locks(); d["steps"] = motor->foot_steps(); d["drop"] = motor->hips_drop(); d["draw_y"] = motor->floor_y(); d["follow"] = motor->last_follow; d["pin_fix"] = motor->n_pin_fix; d["covers"] = motor->n_covers; d["sneaks"] = motor->n_sneaks; d["cover_gap"] = motor->cover_gap(); d["crouched"] = motor->crouched(); d["carry"] = motor->carrying(); d["carry_w"] = motor->carry_weight(); d["carry_xf"] = motor->carry_xf; d["hand_t"] = Array::make(motor->carry_hand_target(0), motor->carry_hand_target(1)); d["sneak_off"] = motor->sneak_off; d["dbg_v"] = motor->dbg_v; d["dbg_t"] = motor->dbg_t; d["follow_v"] = motor->follow_v; d["step_l"] = motor->foot_stepping(0); d["step_r"] = motor->foot_stepping(1); d["aligned"] = motor->n_aligned; d["align"] = motor->last_align; d["align_yaw"] = motor->last_align_yaw; d["hips_aligned"] = motor->n_hips_aligned; d["vaults"] = motor->n_vaults; d["climbs"] = motor->n_climbs; d["trav"] = motor->last_trav; d["hand_miss"] = motor->trav_hand_miss; d["hand_dy"] = motor->trav_hand_dy; d["hips_over"] = motor->trav_hips_over; d["warp"] = motor->trav_warp; d["top"] = motor->trav_top; d["win"] = motor->trav_win(); d["wmax"] = motor->trav_wmax; d["hands"] = motor->trav_hands();
+	d["fidgets"] = motor->n_fidgets; d["switches"] = motor->n_switch; d["entry_cost"] = motor->last_entry_cost; d["i_switches"] = motor->inert_switches(); d["i_jump"] = motor->inert_jump(); d["i_live"] = motor->inert_live(); d["down_l"] = motor->foot_down(0); d["down_r"] = motor->foot_down(1); d["pull_l"] = motor->foot_pull(0); d["pull_r"] = motor->foot_pull(1); d["locks"] = motor->foot_locks(); d["steps"] = motor->foot_steps(); d["drop"] = motor->hips_drop(); d["draw_y"] = motor->floor_y(); d["follow"] = motor->last_follow; d["pin_fix"] = motor->n_pin_fix; d["covers"] = motor->n_covers; d["fallen"] = motor->land_fallen; d["jumps"] = motor->n_jumps; d["sneaks"] = motor->n_sneaks; d["cover_gap"] = motor->cover_gap(); d["crouched"] = motor->crouched(); d["carry"] = motor->carrying(); d["carry_w"] = motor->carry_weight(); d["carry_xf"] = motor->carry_xf; d["hand_t"] = Array::make(motor->carry_hand_target(0), motor->carry_hand_target(1)); d["sneak_off"] = motor->sneak_off; d["dbg_v"] = motor->dbg_v; d["dbg_t"] = motor->dbg_t; d["follow_v"] = motor->follow_v; d["step_l"] = motor->foot_stepping(0); d["step_r"] = motor->foot_stepping(1); d["aligned"] = motor->n_aligned; d["align"] = motor->last_align; d["align_yaw"] = motor->last_align_yaw; d["hips_aligned"] = motor->n_hips_aligned; d["vaults"] = motor->n_vaults; d["climbs"] = motor->n_climbs; d["trav"] = motor->last_trav; d["hand_miss"] = motor->trav_hand_miss; d["hand_dy"] = motor->trav_hand_dy; d["hips_over"] = motor->trav_hips_over; d["warp"] = motor->trav_warp; d["top"] = motor->trav_top; d["win"] = motor->trav_win(); d["wmax"] = motor->trav_wmax; d["hands"] = motor->trav_hands();
 	return d;
 }
 

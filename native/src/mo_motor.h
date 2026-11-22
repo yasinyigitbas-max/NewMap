@@ -40,6 +40,7 @@ struct Intent {
 	float speed = 0.0f;   // m/s wanted at full stick
 	bool crouch = false;  // crouched (held as a state by the controller)
 	bool cover = false;   // into cover at the nearest wall / out of it (a request: an NPC's mind; the player's cover is automatic)
+	bool jump = false;    // a jump (a request, this frame)
 	int carry = 0;        // carrying: 0 nothing, 1 a box (both hands), 2 a briefcase, 3 a shopping bag (right hand)
 };
 
@@ -76,7 +77,7 @@ struct Clip {
 
 class Motor {
 public:
-	enum State { OFF = 0, IDLE, START, MOVE, STOP, TURN, PIVOT, TRAV, CROUCH, STANCE, COVER_IN, COVER, COVER_OUT, CARRY };
+	enum State { OFF = 0, IDLE, START, MOVE, STOP, TURN, PIVOT, TRAV, CROUCH, STANCE, COVER_IN, COVER, COVER_OUT, CARRY, JUMP, AIR, LAND, RUNJUMP };
 
 	bool attach(CityPed *p_fig);   // loads the libraries, puts MoInertial first on the skeleton; false: no clips
 	bool ready() const { return fig != nullptr && n_loops > 0; }
@@ -86,6 +87,8 @@ public:
 	bool active() const { return st != OFF; }
 	void step(float p_dt, const Intent &p_in, Host &p_host);
 	bool in_trav() const { return st == TRAV; }
+	bool air_ready_pub() const { return air_ready(); }
+	bool in_air() const { return st == JUMP || st == AIR || st == LAND || st == RUNJUMP; }
 	bool in_cover() const { return st == COVER_IN || st == COVER || st == COVER_OUT; }
 	bool crouched() const { return st == CROUCH || (st == STANCE && stance_to == 1) || (in_cover() && !cv_tall); }
 
@@ -191,6 +194,22 @@ private:
 			bool p_chain = false, const Clip *p_then = nullptr, int p_after = 0);
 	void trav_step(float p_dt);
 	Vector3 trav_anchor(double p_t) const;
+
+	// ---- JUMPS, FALLS, LANDINGS (mo_motor_air.cpp; step 7)
+	Clip ai_up, ai_loop, ai_run, ai_soft, ai_hard, ai_flat, ai_getup;
+	double tc_soft = 0.0, tc_hard = 0.0, tc_flat = 0.0;   // each landing's first touch of the feet (clip time)
+	Vector3 air_v; float air_top = 0.0f, air_t = 0.0f, jump_v = 4.3f;
+	void load_air();
+	bool air_ready() const;
+	float ground_below(const Vector3 &p_at, float p_down) const;
+	void jump_start(const Vector3 &p_dir, float p_want_speed);
+	void air_start(const Vector3 &p_vel, bool p_from_jump);
+	void air_step(float p_dt, const Intent &p_in);
+	Vector3 fwd_of_yaw() const;
+public:
+	int n_jumps = 0, n_falls = 0, n_landings = 0, n_soft = 0, n_hard = 0, n_flat = 0;   // (tests)
+	float land_fallen = 0.0f;                                                          // (tests) the last landing's height fallen
+private:
 
 	// ---- CARRYING (mo_motor_carry.cpp; step 6): a box in both hands (walk, jog, its own held idle), a briefcase or a
 	// shopping bag in the right hand; the box's hands pinned to its sides, the box where the clip's hands hold it

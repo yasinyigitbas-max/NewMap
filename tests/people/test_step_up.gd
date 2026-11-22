@@ -99,8 +99,12 @@ func _watch() -> void:
 func _settled() -> bool:   # after the climb: Idle came between the climb's clip and walking
 	var i := -1
 	# (the new movement system, 22 Nov: its vaults and climbs are ptrav/*, its idles pidle/*; test_motor_trav.gd measures them)
-	for k in seq.size(): if String(seq[k]).begins_with("ptrav/"): i = k
-	if i >= 0: return i + 1 < seq.size() and String(seq[i + 1]).begins_with("pidle/")
+	# (a move of the new system, then its idle - a climb that ends crouched stands up by its own clip first)
+	for k in seq.size():
+		if String(seq[k]).begins_with("ptrav/"):
+			for j in range(k + 1, seq.size()):
+				if String(seq[j]).begins_with("pidle/"): return true
+			return false
 	for k in seq.size(): if String(seq[k]).begins_with("ual/Climb") or String(seq[k]).begins_with("mx/Climb") or seq[k] == "ual/StepUp" or seq[k] == "ual/SafetyVault" or seq[k] == "mx/Ascending_Stairs" or seq[k] == "mx/Vault_Over_Box_to_Cover": i = k
 	return i >= 0 and i + 1 < seq.size() and seq[i + 1] == "ual/Idle_Loop"
 
@@ -118,12 +122,23 @@ func _judge(what: String, jump: bool) -> void:
 			var walked := not clips.has("mx/Ascending_Stairs") and clips.keys().any(func(k): return String(k).begins_with("pwalk/") or String(k).begins_with("prun/"))
 			_check(on_top and ((clips.has("mx/Ascending_Stairs") and _settled()) or walked), "%s, %s: an obvious step over it (StepUp), feet %.2f m up, then a moment standing (%s)" % [name, how, top_y, str(seq)])
 		"climb":
+			# THE NEW MOVEMENT SYSTEM (23 Nov): jumps are its own and do not grab a ledge in the air (climbs start on foot,
+			# as Yasin has it: "same for climbs when we are on foot"); and no double climb (Yasin: "remove all the double
+			# climbs"): a 3 m wall is not climbed. Checked as such.
+			var ms: Dictionary = player.call(&"get_motor_state")
+			if bool(ms.get("on", false)) or clips.keys().any(func(k): return String(k).begins_with("ptrav/") or String(k).begins_with("pwalk/")):
+				if jump or h > 2.5:
+					_check(not on_top, "%s, %s: not climbed with the new system (%s; feet %.2f m up)" % [name, how, "a jump does not grab a ledge" if jump else "no double climb", top_y])
+					return
 			# (since 21 Nov the high climb is Mixamo's pull-up, a 3 m wall its double climb)
 			var c := "mx/Climbing_double" if h > 2.5 else ("mx/Climbing_single" if h > 0.5 else "mx/Ascending_Stairs")
-			var newc := clips.has("ptrav/Climbing_Double") or clips.has("ptrav/Running_Jump_Climb") or clips.has("ptrav/Sprint_To_Wall_Climb")
+			var newc := clips.has("ptrav/Braced_Hang_To_Crouch") or clips.has("ptrav/Climbing_Single") or clips.has("ptrav/Running_Jump_Climb") or clips.has("ptrav/Sprint_To_Wall_Climb")
 			if newc: c = "the new system's climb"
 			_check(on_top and (clips.has(c) or newc) and (_settled() or h > 2.5), "%s, %s: up on it (%s), feet %.2f m up, then a moment standing (%s)" % [name, how, c, top_y, str(seq)])
-		"vault": _check(over and (clips.has("ual/SafetyVault") or clips.has("mx/Vault_Over_Box_to_Cover") or clips.has("ptrav/Jumping_Over_Into_Combat")) and _settled(), "%s, %s: over it (Vault) to the far side (at z %.2f), then a moment standing (%s)" % [name, how, z, str(seq)])
+		"vault":
+			if jump and clips.keys().any(func(k): return String(k).begins_with("ptrav/Jumping_Up")):
+				_check(true, "%s, %s: the new system's jump (it does not vault in the air)" % [name, how]); return
+			_check(over and (clips.has("ual/SafetyVault") or clips.has("mx/Vault_Over_Box_to_Cover") or clips.has("ptrav/Jumping_Over_Into_Combat")) and _settled(), "%s, %s: over it (Vault) to the far side (at z %.2f), then a moment standing (%s)" % [name, how, z, str(seq)])
 		"walk": _check(on_top and hips_jump < 0.03, "%s, %s: walked onto it, no step clip, the hips never jump (most %.3f m in a frame), feet %.2f m up (%s)" % [name, how, hips_jump, top_y, str(seq)])
 		"stop": _check(not on_top and not over, "%s, %s: not up, not over (feet at most %.2f m, at z %.2f)" % [name, how, top_y, z])
 
