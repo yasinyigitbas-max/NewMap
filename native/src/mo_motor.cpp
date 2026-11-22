@@ -135,7 +135,8 @@ bool Motor::attach(CityPed *p_fig) {
 	// (the running vault: Vault_Over_Box_To_Cover has no clean hand plant - its hands drift 25 cm "planted", 22 Nov -
 	// so a run vaults with the walking take too, entered later in it, until a better take comes)
 	v_walk = load("ptrav/Jumping_Over_Into_Combat"); v_run = v_walk;
-	c_low = load("ptrav/Running_Jump_Climb"); c_mid = load("ptrav/Climbing_Double"); c_mid_run = load("ptrav/Sprint_To_Wall_Climb");
+	c_low = load("ptrav/Running_Jump_Climb"); c_mid = load("ptrav/Climbing_Single");   // (Yasin, 23 Nov: "remove all the double climbs")
+	c_hang = load("ptrav/Stand_To_Freehang"); c_braced = load("ptrav/Braced_Hang_To_Crouch"); c_mid_run = load("ptrav/Sprint_To_Wall_Climb");
 	load_cover();
 	load_carry();
 	if (n_loops == 0 || n_idles == 0) { fig = nullptr; return false; }
@@ -488,6 +489,7 @@ Vector3 Motor::step_clear(Host &p_host, const Vector3 &p_ankle, const Vector3 &p
 // only up (over a stair's edge; down, it stays where the clip swings it)
 void Motor::ground_feet(Host &p_host) {
 	if (!limbs || !cur) return;
+	limbs->fwd_w = Vector3(std::sin(yaw), 0.0f, std::cos(yaw));
 	limbs->ground_y = draw_y;
 	limbs->fit_on = st != TRAV && st != OFF;
 	if (!limbs->fit_on) return;

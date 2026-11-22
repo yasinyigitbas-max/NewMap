@@ -180,11 +180,14 @@ private:
 		bool hand_set[2] = { false, false }; Vector3 hand_w[2];
 		Vector3 c_contact;                       // the primary hand at contact (figure frame)
 		float clip_clear = 0.0f;                 // the clip's own hips over its top, at most (m)
+		const Clip *then = nullptr;              // a second move on the same edge, from where this one ends (the hang, then the climb)
+		int after = 0;                           // 1: it ends crouched on the top - stood up by Crouched_To_Standing
 	};
 	Trav tr;
-	Clip v_walk, v_run, c_low, c_mid, c_mid_run;
+	Clip v_walk, v_run, c_low, c_mid, c_mid_run, c_hang, c_braced;
 	bool trav_probe(const Vector3 &p_dir, float p_speed);
-	bool trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_n, float p_top_y, float p_land_y, bool p_vault);
+	bool trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_n, float p_top_y, float p_land_y, bool p_vault,
+			bool p_chain = false, const Clip *p_then = nullptr, int p_after = 0);
 	void trav_step(float p_dt);
 	Vector3 trav_anchor(double p_t) const;
 

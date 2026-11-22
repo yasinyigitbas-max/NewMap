@@ -13,7 +13,8 @@ extends SceneTree
 ## What it cannot see: the knees, the lean, the look on a slope - Yasin plays it.
 var player: CharacterBody3D
 var sk: Skeleton3D
-var b_pel := -1; var b_ft := [-1, -1]; var b_toe := [-1, -1]
+var b_pel := -1; var b_ft := [-1, -1]; var b_toe := [-1, -1]; var b_th := [-1, -1]; var b_ca := [-1, -1]
+var knee_back := 0.0; var snap_knee := [0.0, 0.0]
 var fails := 0
 var trace := false
 const LEN := 6.0   # a ramp's run
@@ -79,6 +80,7 @@ func _next() -> void:
 	var L = LANES[lane]
 	player.global_position = Vector3(lane * 6.0, 0.02, -1.0); player.velocity = Vector3.ZERO
 	player.call(&"set_move", Vector2.ZERO, false)
+	knee_back = 0.0
 	t = 0.0; s_float = 0.0; s_sink = 0.0; s_slide = 0.0; s_pop = 0.0; s_drop = 0.0; s_off = 0; s_trav = 0; top_seen = -9.0
 	plant = [null, null]; have = 0
 	match L[0]:
@@ -92,7 +94,7 @@ func _process(delta: float) -> bool:
 	if sk == null:
 		var s := player.find_children("*", "Skeleton3D", true, false)
 		if s.is_empty(): return false
-		sk = s[0]; b_pel = sk.find_bone("Bip01_Pelvis"); b_ft = [sk.find_bone("Bip01_L_Foot"), sk.find_bone("Bip01_R_Foot")]; b_toe = [sk.find_bone("Bip01_L_Toe0"), sk.find_bone("Bip01_R_Toe0")]
+		sk = s[0]; b_pel = sk.find_bone("Bip01_Pelvis"); b_ft = [sk.find_bone("Bip01_L_Foot"), sk.find_bone("Bip01_R_Foot")]; b_toe = [sk.find_bone("Bip01_L_Toe0"), sk.find_bone("Bip01_R_Toe0")]; b_th = [sk.find_bone("Bip01_L_Thigh"), sk.find_bone("Bip01_R_Thigh")]; b_ca = [sk.find_bone("Bip01_L_Calf"), sk.find_bone("Bip01_R_Calf")]
 		sk.skeleton_updated.connect(_on_pose)
 		_next(); return false
 	if lane >= LANES.size(): return true
@@ -119,6 +121,14 @@ func _on_pose() -> void:
 		var yw: float = float(player.call(&"get_motor_state").get("yaw", 0.0))
 		snap_toe[s] = snap_ft[s] + Vector3(sin(yw), 0, cos(yw)) * 0.13 if b_toe[s] < 0 else sk.global_transform * sk.get_bone_global_pose(b_toe[s]).origin
 	snap_ms = player.call(&"get_motor_state")
+	# (a knee behind the line hip-ankle, against the way he faces: bent backwards)
+	var yw: float = float(snap_ms.get("yaw", 0.0)); var fw := Vector3(sin(yw), 0, cos(yw))
+	for s in 2:
+		var hp: Vector3 = sk.global_transform * sk.get_bone_global_pose(b_th[s]).origin
+		var kn: Vector3 = sk.global_transform * sk.get_bone_global_pose(b_ca[s]).origin
+		var an: Vector3 = snap_ft[s]
+		var u := (an - hp).normalized(); var off := (kn - hp) - u * (kn - hp).dot(u)
+		snap_knee[s] = off.dot(fw)
 	snap_ok = true
 
 func _sample() -> void:
@@ -129,6 +139,9 @@ func _sample() -> void:
 		s_off += 1
 		if trace: print("TRACEOFF lane %d t %.3f floor %s y %.3f ground %.3f v %s clip %s" % [lane, t, str(player.is_on_floor()), player.global_position.y, _ground(player.global_position), str(player.velocity), str(player.call(&"get_clip"))])
 	if st == "trav": s_trav += 1
+	if st != "off" and -minf(snap_knee[0], snap_knee[1]) > knee_back:
+		knee_back = -minf(snap_knee[0], snap_knee[1])
+		if trace and knee_back > 0.02: print("TRACEK lane %d t %.2f %s %s knees %.3f %.3f pull %.3f %.3f drop %.3f down %s %s" % [lane, t, st, ms.get("clip", ""), snap_knee[0], snap_knee[1], float(ms.get("pull_l", 0)), float(ms.get("pull_r", 0)), float(ms.get("drop", 0)), str(ms.get("down_l")), str(ms.get("down_r"))])
 	s_drop = maxf(s_drop, float(ms.get("drop", 0.0)))
 	var flat: bool = LANES[lane][0] == "flat"
 	for s in 2:
@@ -175,6 +188,7 @@ func _judge() -> void:
 	_check(s_float < lim and s_sink < lim, "%s: planted feet on the ground (float %.1f, sink %.1f < %d cm)" % [name, s_float * 100, s_sink * 100, int(lim * 100)])
 	_check(s_slide < 0.03, "%s: planted feet do not slide (%.1f < 3 cm)" % [name, s_slide * 100])
 	_check(s_pop < 0.03, "%s: no hip pop (%.1f < 3 cm)" % [name, s_pop * 100])
+	_check(knee_back < 0.02, "%s: the knees never bend backwards (%.1f cm behind the line hip-ankle at most)" % [name, knee_back * 100])
 
 func _finish() -> void:
 	print("RESULT %s" % ("PASS" if fails == 0 else "FAIL (%d)" % fails))

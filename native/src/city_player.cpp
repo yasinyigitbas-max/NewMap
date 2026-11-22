@@ -877,7 +877,7 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 	const bool step = !airborne && rise > 0.05f && rise <= 0.24f;   // (every kerb over 5 cm: Mixamo's step up, 21 Nov)   // (a kerb, up to 16 cm, is walked onto: no clip; Yasin: "kerbs shouldnt require step up animation")
 	const bool low = !airborne && rise > 0.24f && rise <= 0.5f;
 	const bool high = rise > 0.5f && rise <= 2.5f;   // (no jump needed: walking into it he climbs it)
-	const bool dbl = !airborne && rise > 2.5f && rise <= 3.6f;   // (a double climb: Mixamo's, 21 Nov)
+	const bool dbl = !airborne && rise > 2.5f && rise <= 3.6f && !(motor && motor->active());   // (a double climb: Mixamo's, 21 Nov; not with the new system - Yasin, 23 Nov: "remove all the double climbs")
 	if (!step && !low && !high && !dbl) return false;
 	// (his place up there: far enough in from the edge that his whole body stands on the top, 45 cm past where its top was found)
 	const Vector3 dest = Vector3(p.x, top.y + 0.002f, p.z) + p_dir * (to_face + 0.45f);   // (on the top itself: no snap down after)

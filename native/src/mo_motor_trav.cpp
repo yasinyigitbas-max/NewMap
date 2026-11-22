@@ -87,11 +87,17 @@ bool Motor::trav_probe(const Vector3 &p_dir, float p_speed) {
 	// up onto it: room to stand on the top
 	const Vector3 on = Vector3(face.x, top.y + 0.03f, face.z) - fn * 0.45f;
 	if (!host->room_at(on)) return false;
-	const Clip &c = h <= 1.15f ? c_low : (running && h >= 1.6f && c_mid_run.ok() ? c_mid_run : c_mid);
-	return trav_start(c, face, fn, (float)top.y, (float)top.y, false);
+	// (Yasin, 23 Nov: "remove all the double climbs"): up to 1.15 m the running jump climb; to 1.75 m a pull-up from a
+	// braced hang to a crouch on the top, then up; higher the jump up to a hang and the climb from it; run at from 1.6 m,
+	// the sprint up the wall
+	if (h <= 1.15f) return trav_start(c_low, face, fn, (float)top.y, (float)top.y, false);
+	if (running && h >= 1.6f && c_mid_run.ok()) return trav_start(c_mid_run, face, fn, (float)top.y, (float)top.y, false);
+	if (h <= 1.75f && c_braced.ok() && cr_out.ok()) return trav_start(c_braced, face, fn, (float)top.y, (float)top.y, false, false, nullptr, 1);
+	if (c_hang.ok() && c_mid.ok()) return trav_start(c_hang, face, fn, (float)top.y, (float)top.y, false, false, &c_mid, 0);
+	return false;
 }
 
-bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_n, float p_top_y, float p_land_y, bool p_vault) {
+bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_n, float p_top_y, float p_land_y, bool p_vault, bool p_chain, const Clip *p_then, int p_after) {
 	if (!p_c.ok()) return false;
 	const ClipData &D = *p_c.d;
 	const int n = (int)D.f.size();
@@ -100,7 +106,7 @@ bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_
 	int kc = -1, hc = 0; float best = 1e9f;
 	for (int k = 0; k < n; k++) {
 		const Frame &F = D.f[k];
-		if (F.hips_v.length() < 0.3f) continue;
+		if (F.hips_v.length() < (p_chain ? 0.0f : 0.3f)) continue;
 		for (int s = 0; s < 2; s++) {
 			if (F.hand[s].y < F.hips.y - 0.35f) continue;
 			const float sp = (float)F.hand_v[s].length();
@@ -141,7 +147,8 @@ bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_
 	const Vector3 edge = Vector3(p_face.x, p_top_y, p_face.z);
 	const float dist = (float)level(edge - p).dot(fwd);   // his feet (the body) to the edge
 	double t0 = 0.0; float best_e = 1e9f;
-	for (int k = 0; k <= std::max(0, kc - (int)(0.35 * FPS)); k++) {
+	if (p_chain) best_e = 0.0f;   // (the second move on an edge: from its start, where the first left him)
+	else for (int k = 0; k <= std::max(0, kc - (int)(0.35 * FPS)); k++) {
 		const float clip_dist = (float)(C.z - D.f[k].hips.z);
 		const float e = std::fabs(clip_dist - dist);
 		if (e < best_e) { best_e = e; t0 = k / FPS; }
@@ -152,6 +159,11 @@ bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_
 	tr.c_contact = C;
 	tr.anchor0 = p - R.xform(Vector3(F0.hips.x, 0.0f, F0.hips.z));   // (the clip's hips over his body now)
 	tr.anchor0.y = p.y;                                                 // (the clip's floor on his ground)
+	if (p_chain) {   // (its hips where the drawn hips are: the hang held)
+		const Vector3 dh = fig->bone_world("Bip01_Pelvis");
+		tr.anchor0 = dh - R.xform(F0.hips);
+	}
+	tr.then = p_then; tr.after = p_after;
 	// the warp: the contact hand onto the edge (its own sideways place kept), its height onto the top
 	const Vector3 c_world = tr.anchor0 + R.xform(C);
 	Vector3 target = c_world;
@@ -239,7 +251,20 @@ void Motor::trav_step(float p_dt) {
 	fig->set_global_transform(Transform3D(Basis(UP, tr.yaw), A));
 	// THE END: standing on the top / beyond, the locomotion takes him (the hand-over smooths the hips)
 	if (t >= tr.t_end - 1e-3) {
+		if (tr.then) {   // (the second move on the same edge, from here)
+			const Clip *nx = tr.then;
+			const Vector3 edge = tr.edge_p, en = tr.edge_n; const float top = tr.top_y;
+			if (trav_start(*nx, edge, en, top, top, false, true, nullptr, 0)) return;
+		}
 		if (limbs) { limbs->hand_w[0] = limbs->hand_w[1] = 0.0f; }
+		if (tr.after == 1) {   // (crouched on the top: up by the crouch's own clip)
+			Vector3 g, gn;
+			if (host->ray(body + Vector3(0, 0.6f, 0), body - Vector3(0, 0.8f, 0), g, gn)) host->teleport(Vector3(body.x, g.y + 0.01f, body.z));
+			yaw = tr.yaw;
+			draw_y = (float)host->position().y; draw_ok = true;
+			to_stance(0);
+			return;
+		}
 		Vector3 g, gn;
 		if (host->ray(body + Vector3(0, 0.6f, 0), body - Vector3(0, 0.8f, 0), g, gn)) host->teleport(Vector3(body.x, g.y + 0.01f, body.z));
 		yaw = tr.yaw;

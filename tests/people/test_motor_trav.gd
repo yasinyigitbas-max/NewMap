@@ -71,7 +71,7 @@ func _process(delta: float) -> bool:
 	if st == "trav": started = true
 	if started and st != "trav" and done_t < 0.0:
 		done_t = t; player.call(&"set_move", Vector2.ZERO, false)
-	if (done_t > 0.0 and t > done_t + 1.2) or t > 9.0:
+	if (done_t > 0.0 and t > done_t + 1.2) or t > 14.0:
 		_judge(ms)
 		_next()
 	return false
