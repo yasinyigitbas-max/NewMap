@@ -13,7 +13,7 @@ var cam_side := Vector3(3.6, 1.25, -0.5)
 var look := Vector3()
 # [name, length s]: each on its own lane (x = index * 10), built by _build
 const SEGS := [
-	["idle", 22.0], ["walk_stop", 8.0], ["run_stop", 8.0], ["walk_to_run_to_walk", 10.0], ["turns_on_the_spot", 9.0],
+	["idle", 14.0], ["walk_stop", 8.0], ["run_stop", 8.0], ["walk_to_run_to_walk", 10.0], ["turns_on_the_spot", 9.0],
 	["walk_turn_back", 8.0], ["run_turn_back", 8.0], ["jump_standing", 5.0], ["jump_walking", 6.0], ["jump_running", 6.0], ["crouch", 10.0],
 	["vault_walking", 6.0], ["vault_running", 6.0], ["climb_1m", 6.0], ["climb_1m_running", 6.0], ["climb_1_4m", 8.0], ["climb_1_75m", 8.0], ["climb_2m", 11.0], ["climb_1_8m_running", 7.0],
 	["step_off_0_35m", 6.0], ["walk_off_1m", 8.0], ["walk_off_1_8m", 8.0], ["drop_off_3_5m", 8.0], ["drop_off_8m", 11.0], ["run_off_2m", 7.0],

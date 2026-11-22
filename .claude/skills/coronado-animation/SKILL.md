@@ -38,6 +38,33 @@ the rules. Re-read both after a context compression.
   Keep the per-frame cost low enough for many NPCs later (LOD: full IK and warping near the camera, cheaper far).
 
 - 24 Nov: "definitely standing and walking jumps, not running jump" (the bad jump was the standing / walking one: now Jump_a standing, Jumping_c leap walking; the running leap Running_Jump_a stays). "if we are running they are fine, but if we walk off the edge we should look like climbing down" (walking off 0.5-2 m: mx/Climbing_Down; under 0.5 m: stepped down; running: the leap off and its landing).
+- 24 Nov: "jump standing is okay, use that for jump walking too, revert the running jump to previous one, walk off is
+  terrible, use this climb down animation for 1 meter, for 1.8m use this jump off anim" (his FBX: mx/Ledge_Climb_Down,
+  mx/Ledge_Drop - tools/people/make_mixamo_extra.gd adds a sent clip to the mx library). "climb 2m is sinking into the
+  shape" (Stand_To_Freehang hangs from a bar - its body swings 20-25 cm past its hands, into a wall; now Climbing_Single).
+  "when you move left in the cover, his legs turn backwards" (the knee pole now follows the drawn hips when a clip faces
+  away from him - the low cover's left sneak faces 157 deg off).
+- 24 Nov, THE MOVEMENT SETS: "we were using a rotation of animation sets ... we need at least 2 more combination sets like
+  this, with different animations that go well together, im not talking about injured or drunk sets" -> see below.
+
+## The movement sets (24 Nov)
+- Set 1 = the approved clips. Sets 2 and 3: `native/src/mo_sets_table.inc` maps a set-1 clip name to the set's own; any
+  clip with no row stays set 1's. `Motor::set_style(n)` (CityPlayer.motor_set_style; applied when he next stands),
+  `--mo-style=N` for tests / films. Tests ask `motor_clip_for(set1_name)` for the name a set plays.
+- Set 2 "athletic": Mixamo's newer Standing / Unarmed pack (one actor). Set 3 "casual": the classic male library.
+- Sources: Yasin's Drive library (library `yl`, tools/people/make_ylib.gd) is MOSTLY THE SAME TAKES festive used for set 1
+  (checked bone by bone: tools/people/compare_clips.gd with hands, compare_rot.gd --group). New clips come from Mixamo
+  directly: tools/people/mixamo_dl.py (his login token is a network secret the proxy adds; Mixamo answers 429 after ~60 in
+  a row - paced), fitted by tools/people/make_msets.gd into library `ms`.
+- TRAPS: download LOOPS WITH THEIR TRAVEL (not In Place): in place, a run's pace read from its feet came out 0.3-0.8 m/s
+  (yl/Slow_Run, taken In Place, surges 0.6-3.4 m/s a stride). Name a clip by the retarget's rules (anim_retarget.cpp
+  mx_loops / locomotion): "run/walk/idle/sprint" = a loop, "jump/start/stop/turn/to_run" = travel taken out - a running
+  leap must be named Leap..., a landing Landing..., a dash Dash.... prun/start_a's hips jump 8 cm back at 0.55 s: a start
+  hands over before any jump of its own hips. Hand-overs between a set's own clip and a shared one take longer.
+- Shared on purpose (no other takes exist, or theirs failed a check): walk starts / stops, run stops, run starts and
+  pivots, climbs, vaults, cover, carry, set 2's crouch (its crouch into low cover slid the feet 6-10 cm), set 2's soft
+  landing (lands 40 cm off). Open: the run stop and run pivot into a set's own run / idle still jump the hips 1.3-2.9 m/s
+  (limit 1.2).
 ## The techniques (studied 22 Nov; GDC / SIGGRAPH: Gears of War 4 inertialization and warping, Horizon Zero Dawn
 ## traversal, RDR2 locomotion, UE5 motion warping)
 1. **Inertialization, not crossfades.** On a switch the new clip plays at full weight at once. Store per bone the
