@@ -1089,7 +1089,7 @@ func _bay_building(rec: Dictionary, piece: String, model: String, rows: Array) -
 					faces.append(tq[quad[0]]); faces.append(tq[quad[2]]); faces.append(tq[quad[3]])
 		var cd: Resource = ColData.new(); cd.kind = 0; cd.data = faces; cd.backface = true
 		ResourceSaver.save(cd, out + "rooms/" + nm + "_col.res", ResourceSaver.FLAG_COMPRESS)
-		BL.merge_props(room)      # (1-3 draws of props; the scene saved again, merged)
+		BL.merge_props(room, (int(builtin_rank.get(p2.id, 0)) + absi(String(p2.kind).hash())) % BL.PALETTES.size())      # (1-3 draws of props; the palette dealt by rank within the kind, offset per kind; saved again, merged)
 		stat["builtin_prop_draws"] = int(stat.get("builtin_prop_draws", 0)) + int(room.get_meta(&"prop_draws", 0))
 		var ps2 := PackedScene.new(); ps2.pack(room)
 		ResourceSaver.save(ps2, scn, ResourceSaver.FLAG_COMPRESS)

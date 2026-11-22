@@ -676,7 +676,13 @@ static func bay_col_boxes(model: String, i: int) -> Array:
 ## room's Props (one MultiMesh per prop type: 8-20 draws) baked into ONE mesh per material (the kit props share their
 ## 2048 pages: rooms come out at 1-3 draws, page I nearly always, H often, W rarely). Same visibility range, no shadows.
 ## The prop transforms stay on the room as meta "props_xf" {prop: [Transform3D]} (room_people.gd reads them).
-static func merge_props(room: Node3D) -> void:
+## Colour palettes (variation): the props' shader (prop_wear_fix) tints the albedo by the vertex colour's hue, so a room's
+## furniture (seats, tables, benches, shelves, racks, desks: not tills, machines or appliances) takes one of PALETTES,
+## dealt by the place's rank among its kind (neighbours of a kind get different ones); -1 = none.
+const PALETTES := [Color(1.0, 1.0, 1.0), Color(1.0, 0.86, 0.72), Color(0.80, 0.90, 1.0), Color(0.84, 1.0, 0.84), Color(1.0, 0.80, 0.78), Color(0.95, 0.92, 0.80)]
+const TINTED := ["chair", "seat", "bench", "booth", "sofa", "stool", "table", "shelf", "rack", "desk", "pew", "bookcase", "cabinet", "display", "counter"]
+const UNTINTED := ["register", "till", "machine", "fridge", "freezer", "oven", "espresso", "atm", "screen", "monitor", "computer"]
+static func merge_props(room: Node3D, palette := -1) -> void:
 	var pn := room.get_node_or_null(^"Props")
 	if pn == null: return
 	var groups := {}      # material -> [arrays parts]
@@ -698,7 +704,11 @@ static func merge_props(room: Node3D) -> void:
 			mats[key] = mat
 			if not groups.has(key): groups[key] = []
 			var a: Array = mm.mesh.surface_get_arrays(si)
-			for t: Transform3D in ts: (groups[key] as Array).append([a, t])
+			var nml := String(mmi.name).to_lower()
+			var tint := Color.WHITE
+			if palette > 0 and TINTED.any(func(w: String) -> bool: return nml.contains(w)) and not UNTINTED.any(func(w: String) -> bool: return nml.contains(w)):
+				tint = PALETTES[palette % PALETTES.size()]
+			for t: Transform3D in ts: (groups[key] as Array).append([a, t, tint])
 	for c2: Node in pn.get_children(): pn.remove_child(c2); c2.free()
 	var gi := 0
 	for key: String in groups:
@@ -710,7 +720,8 @@ static func merge_props(room: Node3D) -> void:
 			var a: Array = part[0]
 			if a[Mesh.ARRAY_TANGENT] == null: has_t = false
 			if a[Mesh.ARRAY_TEX_UV2] == null: has_uv2 = false
-			if a[Mesh.ARRAY_COLOR] == null: has_c = false
+			if a[Mesh.ARRAY_COLOR] == null and part[2] == Color.WHITE: has_c = false
+		for part1: Array in groups[key]: if part1[2] != Color.WHITE: has_c = true
 		for part2: Array in groups[key]:
 			var a2: Array = part2[0]; var t2: Transform3D = part2[1]
 			var bs := t2.basis
@@ -728,7 +739,14 @@ static func merge_props(room: Node3D) -> void:
 					var tv := (bs * Vector3(tg[k2 * 4], tg[k2 * 4 + 1], tg[k2 * 4 + 2])).normalized()
 					T.append(tv.x); T.append(tv.y); T.append(tv.z); T.append(tg[k2 * 4 + 3] * (1.0 if bs.determinant() > 0.0 else -1.0))
 			if has_uv2: UV2.append_array(a2[Mesh.ARRAY_TEX_UV2])
-			if has_c: C.append_array(a2[Mesh.ARRAY_COLOR])
+			if has_c:
+				var cc: PackedColorArray = a2[Mesh.ARRAY_COLOR] if a2[Mesh.ARRAY_COLOR] != null else PackedColorArray()
+				if cc.size() != v.size():
+					cc = PackedColorArray(); cc.resize(v.size()); cc.fill(Color.WHITE)
+				var tn: Color = part2[2]
+				if tn == Color.WHITE: C.append_array(cc)
+				else:
+					for col: Color in cc: C.append(Color(col.r * tn.r, col.g * tn.g, col.b * tn.b, col.a))
 			var idx: PackedInt32Array = a2[Mesh.ARRAY_INDEX] if a2[Mesh.ARRAY_INDEX] != null else PackedInt32Array(range(v.size()))
 			if bs.determinant() < 0.0:      # (a mirrored instance: the winding turns)
 				for k3 in range(0, idx.size(), 3): I.append(base + idx[k3]); I.append(base + idx[k3 + 2]); I.append(base + idx[k3 + 1])
@@ -746,5 +764,5 @@ static func merge_props(room: Node3D) -> void:
 		mi.visibility_range_end = vis_end; mi.visibility_range_end_margin = 1.0
 		mi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED
 		pn.add_child(mi); mi.owner = room
-	room.set_meta(&"props_xf", xf); room.set_meta(&"prop_draws", gi)
+	room.set_meta(&"props_xf", xf); room.set_meta(&"prop_draws", gi); room.set_meta(&"palette", palette)
 
