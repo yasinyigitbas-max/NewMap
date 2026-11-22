@@ -339,3 +339,30 @@ in place jumps are terrible, use other animations, it looks like climbing an imv
 Branch `claude/anim-checkpoint-23nov` = commit 23e2a8da, the state he approved. NEVER push to it; polish goes on
 `claude/cool-galileo-6y68se`. To go back: `git checkout claude/anim-checkpoint-23nov` (or reset the work branch to it).
 (A tag was refused by the session's proxy: the checkpoint is a branch.)
+
+## 13. Next (planned 24 Nov night, Yasin: "lets plan it first")
+Now (tonight, in this order): (a) the open polish - idle 1's leg moving at the loop's start, the ledge drop's hand on the
+corner, stairs float, low cover's entry slide, the climbs' knees in the wall; (b) SITTING: walk to a seat, turn, sit
+(Stand_To_Sit) onto the seat's own height, sitting idle (Sitting_Idle / _1) with its gestures, phone use sitting, up
+(Sit_To_Stand); a seat is a spot + facing the motor is given, like a wall for cover; (c) THE PHONE: a phone prop on the
+drawn hand (as the carry box); phone open = texting (Texting_While_Standing; walking: the walk with the upper body
+layered from Texting_And_Walking_one_hand / Walking_While_Texting); a call = Start_Talking_On_A_Cell_Phone ->
+Talking_On_A_Cell_Phone standing, Talking_Phone_Pacing / layered talk walking; no running on a call. Inputs to the motor:
+phone (0 off, 1 open, 2 call), sit (a seat) - the game's phone UI and seats set them, NPCs later the same way.
+The whole list of what a city's people do, with the clips already in Yasin's library (yl/...) - to plan after:
+1. Doors: Opening_Door_Inwards, Open_Door_Outwards, Opening_slide_door, Opening_locked (hand on the handle - contact IK).
+2. Cars: Entering_Car, Exiting_Car (fitted to each car's door and seat), driving idle (from the game's car).
+3. Objects: pick up / put down (Pick Up Item - to download), Closing_A_Lid, Opening_A_Filing_Cabinet, Using_A_Filing_Cabinet,
+   Drinking_Fountain, Entering_Code (ATM, door codes), Typing / Sit_To_Type at desks, Bartending, Cards / Counting at counters.
+4. Ladders and stairs: Start_Climbing_Ladder, Climbing_ladder_slow / _fast, Climbing_To_Top_ladder, Climbing_Down_ladder;
+   Ascending / Descending_Stairs, Running_Up_Stairs (stairs now walked by the feet fitting - these as an option).
+5. People together: Talking (5 takes), Talking_At_Watercooler, Standing_Greeting, Waving (4), Shaking_Hands (2),
+   Pointing (4), Agreeing / No / Acknowledging, Having A Meeting, Telling A Secret, Arguing, Yelling, Salute, Quick_Formal_Bow.
+6. Moods and idles for the crowd: Smoking, Texting, Bored, Cheering, Clapping, Praying, Kneeling, Dancing (several),
+   Laying / Sleeping idles, Leaning on a wall (to download), sitting on the ground (to download).
+7. Bumps and falls: Shove_Reaction (3), Stumble_Backwards, Tripping (4), Jogging_Stumble, Falling_Down_on_ass,
+   Falling_From_Losing_Balance, Hit_By_Car, Fall_Flat, Getting_Up / Standing_Up, Knocked_Out.
+8. Fights (later): Punching, Combo_Punch, Hit_Reaction, Head_Hit, Taking_Punch, Restrain, Hostage idles.
+9. Swimming / water: Falling_Into_Pool (2), swim loops (to download).
+10. Carrying people: Being_Carried (pick up, walking, out down), Carrying Turn; Administering / Receiving_Cpr.
+Injured and drunk sets (Yasin: later): Injured_* and Drunk_* clips are in the library.
