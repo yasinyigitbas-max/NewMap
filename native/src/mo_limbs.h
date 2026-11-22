@@ -43,7 +43,7 @@ public:
 	// it (a hand-over from another stance: the feet kept the old one, the legs bent off the clip's for as long as he
 	// stood) lifts and steps there: an arc step_h high over step_s, one foot at a time, then pinned again
 	bool may_step = false;
-	float step_pull = 0.06f, step_after = 0.15f, step_s = 0.3f, step_h = 0.06f;
+	float step_pull = 0.04f, step_after = 0.15f, step_s = 0.3f, step_h = 0.06f;
 	float step_t[2] = { -1.0f, -1.0f }, held[2] = { 0.0f, 0.0f };
 	Vector3 step_from[2];
 	int steps = 0;   // (the tests)
@@ -52,6 +52,7 @@ public:
 	Vector3 hand_target[2]; float hand_w[2] = { 0.0f, 0.0f };
 	// (the tests) how far each foot was moved from the clip's place this frame, m; locks taken
 	float pull[2] = { 0, 0 };
+	Vector3 pull_v[2];   // pinned place less the clip's place (world): the body follows its planted feet by it (the motor)
 	int locks = 0;
 	void _process_modification_with_delta(double p_delta) override;
 	// a two-bone reach in skeleton space: a -> b -> c, c to the target, b toward the pole; c keeps its global turn

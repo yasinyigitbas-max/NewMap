@@ -125,8 +125,11 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 	}
 	// is the turn in the pose or in the yaw curve? (the pose's own facing change against the curve's)
 	{
-		const float yend = d->in_place ? curve(a, "yaw", d->len) : 0.0f;
-		const float fturn = wrap(d->f[n - 1].face - d->f[0].face);
+		// (at the curve's largest turn, not its end: a walk stop's sway goes -0.22 rad and back, in the curve AND the pose;
+		// judged at the end, near nothing, it was played twice and the planted foot was pulled 20 cm)
+		float yend = 0.0f; int kmax = n - 1;
+		if (d->in_place) for (int k = 0; k < n; k++) { const float y = curve(a, "yaw", k / FPS); if (std::fabs(y) > std::fabs(yend)) { yend = y; kmax = k; } }
+		const float fturn = wrap(d->f[kmax].face - d->f[0].face);
 		d->yaw_turns = !(std::fabs(yend) > 0.2f && std::fabs(fturn) > 0.5f * std::fabs(yend) && fturn * yend > 0.0f);
 		if (d->in_place && a->has_meta("yaw")) { d->yaw_c.resize(n); for (int k = 0; k < n; k++) d->yaw_c[k] = d->yaw_turns ? curve(a, "yaw", k / FPS) : 0.0f; }
 	}
@@ -164,6 +167,20 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 			if (!d->in_place && Vector2(F.foot_v[s].x, F.foot_v[s].z).length() > 0.25f) d->f[k].down[s] = false;
 		}
 	}
+	// a contact shorter than 0.1 s is a blip (a swinging foot through its low point, a loop's seam): not down (pinned for
+	// one frame, the walk's swinging foot was let go 13 cm off)
+	auto despeckle = [&]() {
+		for (int s = 0; s < 2; s++) {
+			for (int k = 0; k < n;) {
+				if (!d->f[k].down[s]) { k++; continue; }
+				int e = k; while (e < n && d->f[e].down[s]) e++;
+				const bool edge = !d->loop && (k == 0 || e == n);   // (a clip that starts or ends planted)
+				if (e - k < 3 && !edge) for (int j = k; j < e; j++) d->f[j].down[s] = false;
+				k = e;
+			}
+		}
+	};
+	despeckle();
 	// the travel from the planted feet (in-place clips)
 	if (d->in_place) {
 		// PER INTERVAL [k, k+1] (a root track): the body moves by exactly what the planted foot moves back against the
@@ -201,6 +218,7 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 			}
 
 		}
+		despeckle();
 		// SMOOTHED: the HIPS' path in the world (the body's travel plus the hips' own move in the figure, per interval),
 		// 1-2-3-2-1 over five intervals (a loop wraps); the body takes up the 30 Hz keys' noise in the hips, the foot lock
 		// the little left at the feet. (The body's travel smoothed by itself: exact per interval, the hips' speed stepped

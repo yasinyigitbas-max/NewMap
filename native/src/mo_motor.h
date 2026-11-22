@@ -95,6 +95,8 @@ public:
 	// (the tests)
 	int n_starts = 0, n_stops = 0, n_turns = 0, n_pivots = 0, n_gait = 0, n_fidgets = 0, n_switch = 0;
 	float last_entry_cost = 0.0f;
+	bool into_loop = false;
+	float follow_rate = 3.0f, follow_max = 0.5f, follow_sum = 0.0f;   // the body drawn toward its planted feet (per second; (tests) the total, m)
 	int n_hips_aligned = 0; float last_align_yaw = 0.0f; int n_aligned = 0; float last_align = 0.0f;   // (tests) contact alignments made, the last one's size (m)
 	int inert_switches() const;
 	float inert_jump() const;

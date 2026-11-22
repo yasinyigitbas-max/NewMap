@@ -98,6 +98,9 @@ func _watch() -> void:
 
 func _settled() -> bool:   # after the climb: Idle came between the climb's clip and walking
 	var i := -1
+	# (the new movement system, 22 Nov: its vaults and climbs are ptrav/*, its idles pidle/*; test_motor_trav.gd measures them)
+	for k in seq.size(): if String(seq[k]).begins_with("ptrav/"): i = k
+	if i >= 0: return i + 1 < seq.size() and String(seq[i + 1]).begins_with("pidle/")
 	for k in seq.size(): if String(seq[k]).begins_with("ual/Climb") or String(seq[k]).begins_with("mx/Climb") or seq[k] == "ual/StepUp" or seq[k] == "ual/SafetyVault" or seq[k] == "mx/Ascending_Stairs" or seq[k] == "mx/Vault_Over_Box_to_Cover": i = k
 	return i >= 0 and i + 1 < seq.size() and seq[i + 1] == "ual/Idle_Loop"
 
@@ -113,8 +116,10 @@ func _judge(what: String, jump: bool) -> void:
 		"climb":
 			# (since 21 Nov the high climb is Mixamo's pull-up, a 3 m wall its double climb)
 			var c := "mx/Climbing_double" if h > 2.5 else ("mx/Climbing_single" if h > 0.5 else "mx/Ascending_Stairs")
-			_check(on_top and clips.has(c) and (_settled() or h > 2.5), "%s, %s: up on it (%s), feet %.2f m up, then a moment standing (%s)" % [name, how, c, top_y, str(seq)])
-		"vault": _check(over and (clips.has("ual/SafetyVault") or clips.has("mx/Vault_Over_Box_to_Cover")) and _settled(), "%s, %s: over it (Vault) to the far side (at z %.2f), then a moment standing (%s)" % [name, how, z, str(seq)])
+			var newc := clips.has("ptrav/Climbing_Double") or clips.has("ptrav/Running_Jump_Climb") or clips.has("ptrav/Sprint_To_Wall_Climb")
+			if newc: c = "the new system's climb"
+			_check(on_top and (clips.has(c) or newc) and (_settled() or h > 2.5), "%s, %s: up on it (%s), feet %.2f m up, then a moment standing (%s)" % [name, how, c, top_y, str(seq)])
+		"vault": _check(over and (clips.has("ual/SafetyVault") or clips.has("mx/Vault_Over_Box_to_Cover") or clips.has("ptrav/Jumping_Over_Into_Combat")) and _settled(), "%s, %s: over it (Vault) to the far side (at z %.2f), then a moment standing (%s)" % [name, how, z, str(seq)])
 		"walk": _check(on_top and hips_jump < 0.03, "%s, %s: walked onto it, no step clip, the hips never jump (most %.3f m in a frame), feet %.2f m up (%s)" % [name, how, hips_jump, top_y, str(seq)])
 		"stop": _check(not on_top and not over, "%s, %s: not up, not over (feet at most %.2f m, at z %.2f)" % [name, how, top_y, z])
 

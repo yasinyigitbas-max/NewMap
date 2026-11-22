@@ -59,7 +59,7 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 	const float dt = (float)p_delta;
 	const Transform3D G = sk->get_global_transform(), Gi = G.affine_inverse();
 	for (int s = 0; s < 2; s++) {
-		pull[s] = 0.0f;
+		pull[s] = 0.0f; pull_v[s] = Vector3();
 		if (b_th[s] < 0 || b_ca[s] < 0 || b_ft[s] < 0) continue;
 		const Vector3 anim_w = G.xform(sk->get_bone_global_pose(b_ft[s]).origin);
 		if (!lock_on) { locked[s] = false; rel_t[s] = 9.0f; step_t[s] = -1.0f; held[s] = 0.0f; continue; }
@@ -102,6 +102,7 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 			want_w = anim_w + rel_off[s] * f;
 		} else continue;
 		pull[s] = (float)(want_w - anim_w).length();
+		if (locked[s]) pull_v[s] = want_w - anim_w;
 		if (pull[s] < 1e-4f) continue;
 		// the knee toward where the clip has it (its own bend), a little forward of the line hip-foot
 		const Vector3 hip = sk->get_bone_global_pose(b_th[s]).origin, knee = sk->get_bone_global_pose(b_ca[s]).origin;

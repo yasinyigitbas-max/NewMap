@@ -181,3 +181,38 @@ clip's own travel (walks 35 cm), the clip's own travel for turning clips (pivots
 clip (stops 12 cm), a soft foot lock easing at 0.8 m/s (walks 18 cm), pinning at the clip's own foot instead of the drawn
 one (standing 18 cm, runs 26-35 cm).
 Still failing the 1.2 m/s hip speed check: run stop 1.62, walk -> run 1.56, run pivot 1.96, a second run stop 1.63.
+
+### Step 2, third pass and step 3 finished (22 Nov): every base phase and every traversal lane passes
+`test_motor_base.gd` RESULT PASS (19 phases), `test_motor_trav.gd` RESULT PASS (12 lanes), `test_step_up.gd` PASS.
+What changed, and why (each measured before / after):
+- THE TEST WAS WRONG FIRST: it read the clip's contact flags one frame AHEAD of the pose it measured (the first pose
+  of a frame comes from the motor's seek, after the motor stepped on). A foot swinging in at 7 m/s showed as 12 cm of
+  "slide". Every earlier slide number in this file is partly that. The test now pairs each pose with its own state,
+  and reports PULL: how far the foot lock holds a planted foot off where the clip has it once a hand-over is over (a
+  leg bent off its own pose), re-plant steps and hand-overs left out.
+- The figure stands on the ground under the body (a ray), not on the capsule's height (it bobbed 4 mm every other
+  frame and sank 3 cm after a vault's snap: the vaults' landing "pop").
+- BODY TRAVEL (mo_clip root_v): per 1/30 s interval, from the foot that is really planted (when the two disagree by
+  0.35 m/s, the one nearer the clip's pace; the other is then not down); a foot sliding along the floor in a clip that
+  carries itself is not down; contacts shorter than 0.1 s are blips. What is smoothed is the HIPS' path in the world
+  (1-2-3-2-1 over five intervals, in the clip's start frame so a turning clip is right): the body takes up the 30 Hz
+  keys' noise, the foot lock the little left. (Smoothing the travel alone smeared a run stop's plant: a 1.6 m/s stall.)
+- The yaw-curve check (is the turn in the pose or the curve) is made at the curve's largest turn, not at its end: the
+  walk stops sway -0.22 rad and back in both, and turned twice.
+- At every hand-over: the new clip turned so its hips face as the drawn ones (not into a loop: there the facing is the
+  way he travels), and placed so its planted foot is on the pinned one, or (none) its hips on the drawn hips. Left to
+  the inertial offset, the hips' turn and place swung the whole figure (and a foot pinned meanwhile).
+- THE BODY FOLLOWS ITS PLANTED FEET: a pinned foot the clip no longer has there draws the body toward it (3 per second,
+  at most 0.5 m/s) instead of bending the leg (a walk stop held a leg 25 cm off for 0.6 s).
+- RE-PLANT STEPS (MoLimbs): standing (idle, stop), a planted foot held 4 cm or more off the clip's stance for 0.15 s
+  lifts and steps there (an arc 6 cm high, 0.3 s, one foot at a time). Before: after a hand-over the feet kept the old
+  stance for as long as he stood (legs 10-17 cm off).
+- Coming to a stand, the idle (of three) and the moment of it whose stance is most like the feet now.
+- Pivots wait (at most a step, 0.35 s) for the stride that fits a pivot's opening; a full reversal takes either side.
+- The motor's clips play with CUBIC interpolation between their 30 Hz keys (straight lines kinked a fast turn at every
+  key: the run pivot's hips changed speed 1.3 m/s in a frame).
+- The trav body (capsule) never goes over the top (it followed the tucked feet 73 cm over a 1.6 m wall).
+| phase | slide | hips speed jump | pull after hand-overs |
+|---|---|---|---|
+| all 19 | 0.0-2.0 cm | 0.12-1.14 m/s | 3-6 cm in walks, runs, turns; 12-20 cm early in the stops (the swing leg's blend still decaying when it lands; the body follows it out within 0.3 s) |
+OPEN: the stops' landing pull (a better stop entry: match the swing foot's landing spot, not just the pose).

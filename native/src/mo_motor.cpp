@@ -81,6 +81,13 @@ Clip Motor::load(const char *p_name) {
 	if (!anim || !anim->has_animation(p_name)) return c;
 	c.name = StringName(p_name);
 	c.a = anim->get_animation(c.name);
+	// (cubic between the 30 Hz keys: played in straight lines, a fast turn kinked at every key - the run pivot's hips
+	// changed speed 1.3 m/s in a frame between them)
+	for (int i = 0; i < c.a->get_track_count(); i++) {
+		const Animation::TrackType ty = c.a->track_get_type(i);
+		if ((ty == Animation::TYPE_POSITION_3D || ty == Animation::TYPE_ROTATION_3D) && c.a->track_get_interpolation_type(i) != Animation::INTERPOLATION_CUBIC)
+			c.a->track_set_interpolation_type(i, Animation::INTERPOLATION_CUBIC);
+	}
 	c.d = clip_data(c.a, fig->skeleton(), fig->skel_frame());
 	c.ground_v = c.meta("ground_v", 0.0f);
 	c.yaw_end = c.d->yaw(c.d->len);
@@ -192,7 +199,8 @@ void Motor::align_hips(const Clip &p_c, double p_t0) {
 }
 
 void Motor::play(const Clip &p_c, double p_t0, float p_blend) {
-	align_facing(p_c, p_t0);
+	if (!into_loop) align_facing(p_c, p_t0);   // (into a loop the facing is the way he travels: turned to the hips mid-turn at a pivot's end, the run's travel swung 1.5 m/s sideways)
+	into_loop = false;
 	if (!align_contacts(p_c, p_t0)) align_hips(p_c, p_t0);
 	anim->play(p_c.name, 0.0);
 	t = std::min(std::max(p_t0, 0.0), p_c.d->len);
@@ -255,9 +263,21 @@ void Motor::end() {
 void Motor::to_idle(float p_blend) {
 	int k = n_idles > 1 ? (int)(rnd() * n_idles) % n_idles : 0;
 	if (k == last_idle && n_idles > 1) k = (k + 1) % n_idles;
+	double e = 0.0;
+	if (cur && st != IDLE) {
+		// coming to a stand (a stop, a turn, a landing): the idle and the moment of it whose stance is most like the feet
+		// now (a random one stood 28 cm off: the feet re-planted with a big shuffle)
+		float best = 1e30f;
+		for (int i = 0; i < n_idles; i++) {
+			float c = 0.0f;
+			const double ei = best_entry(*cur->d, t, *idles[i].d, 0.0, std::min(idles[i].d->len, 3.0), &c);
+			if (i == last_idle) c += 0.01f;   // (a little against the same one twice)
+			if (c < best) { best = c; k = i; e = ei; }
+		}
+		last_entry_cost = best;
+	} else if (cur) e = best_entry(*cur->d, t, *idles[k].d, 0.0, std::min(idles[k].d->len, 3.0), &last_entry_cost);
 	last_idle = k;
 	const Clip &c = idles[k];
-	const double e = cur ? best_entry(*cur->d, t, *c.d, 0.0, std::min(c.d->len, 3.0), &last_entry_cost) : 0.0;
 	rate = 1.0f; turn_k = 1.0f;
 	play(c, e, p_blend);
 	st = IDLE; idle_t = 0.0f; fidget_in = 8.0f + 10.0f * rnd();
@@ -269,6 +289,7 @@ void Motor::to_loop(int p_i, float p_blend) {
 	if (st == MOVE && p_i != loop_i) n_gait++;
 	loop_i = p_i; turn_k = 1.0f; loop_t = 0.0f;
 	rate = clampf(std::max(speed, 0.3f) / L.ground_v, 0.55f, 1.5f);
+	into_loop = true;
 	play(L, e, p_blend);
 	st = MOVE;
 }
@@ -540,6 +561,18 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		limbs->may_step = st == IDLE || st == STOP;   // (standing: a foot held off the clip's stance re-plants)
 		limbs->down[0] = fr.down[0]; limbs->down[1] = fr.down[1];
 		limbs->ground_y = ground_at(p_host, p_host.position());
+	}
+	// THE BODY FOLLOWS ITS PLANTED FEET: a foot pinned where the clip no longer has it (pinned during a hand-over, the
+	// leg's offset then decayed away from it; or the clip's stance and its travel disagree) draws the body toward it,
+	// 3 per second, at most 0.5 m/s, rather than bend the leg off the clip's pose (a walk stop held a leg 25 cm off for 0.6 s)
+	if (limbs) {
+		Vector3 sum; int m = 0;
+		for (int s = 0; s < 2; s++) if (limbs->locked[s] && !limbs->stepping(s)) { sum += Vector3(limbs->pull_v[s].x, 0.0f, limbs->pull_v[s].z); m++; }
+		if (m) {
+			Vector3 by = sum / (float)m * std::min(1.0f, follow_rate * p_dt);
+			if (by.length() > follow_max * p_dt) by = by.normalized() * follow_max * p_dt;   // (at most this fast: the hips' speed jumped 1.3 m/s at 5 per second unlimited)
+			if (by.length() > 1e-4f && p_host.shift(by)) follow_sum += (float)by.length();
+		}
 	}
 	// the body: level motion as above, and down onto the ground
 	Vector3 v = vel;

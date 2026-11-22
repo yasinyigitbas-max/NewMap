@@ -88,7 +88,9 @@ say what a check cannot see; commit and push after every step (session branch on
 Yasin's PC (Windows / Android) - a cloud session builds a Linux copy for headless tests.
 
 ## The new system (step 2 built 22 Nov; docs/ANIMATION_PLAN.md section 8)
-Files: native/src/mo_clip, mo_inertial (MoInertial), mo_limbs (MoLimbs), mo_motor (mo::Motor); CityPlayer hands the
+Files: native/src/mo_clip, mo_inertial (MoInertial), mo_limbs (MoLimbs: foot lock, re-plant steps, hands), mo_motor
+(mo::Motor; align_facing / align_contacts / align_hips at every play(), the body follows its planted feet),
+mo_motor_trav (vault / climb); tools/people/dump_mo_clip.gd prints a clip as mo_clip measures it; CityPlayer hands the
 body to the motor on the ground (`motor_can`), the old code keeps the rest; `--old-moves` turns it off. Test:
 tests/people/test_motor_base.gd (`-- --only=new|old --trace --no-inertial --no-footlock`).
 Build and run here: `bash native/build_linux.sh` (godot-cpp in /root/native_tools/godot-cpp, scons platform=linux
@@ -105,3 +107,10 @@ TRAPS (each cost a run):
 - Foot contacts for a clip: by height near the local lowest + small vertical speed. Not by level speed (that needs the
   travel, which is what the contacts are used to find).
 - A test's own contact guess (height + speed) counts a slowly dragged toe as a slide: use the clip's contacts.
+- ...and read them for the SAME frame as the pose: the motor steps (and seeks) before the frame's last pose is drawn;
+  read at the next frame's first pose they are a frame ahead (a 7 m/s swing foot = 12 cm false slide).
+- Slide alone is blind with a foot lock on (the lock holds it): also measure PULL (lock vs clip foot) once a hand-over
+  is over. During a hand-over the pull is the lock doing its job.
+- The converter's yaw curve and the pose can both carry the same turn: judge at the curve's largest turn, not its end.
+- Clips at 30 Hz played with linear interpolation kink at every key in fast turns: the motor sets cubic.
+- Never trust the capsule's height for drawing: ray the ground (place()).

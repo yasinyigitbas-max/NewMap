@@ -204,6 +204,9 @@ void Motor::trav_step(float p_dt) {
 	// the body follows the clip's hips; its feet on the clip's floor under them
 	Vector3 body = A + R.xform(Vector3(f.hips.x, 0.0f, f.hips.z));
 	body.y = A.y + std::max(0.0f, std::min((float)f.foot[0].y, (float)f.foot[1].y) - 0.10f);
+	// (never over the top: in the mantle both feet tuck up and the body followed the lower one 73 cm over a 1.6 m wall -
+	// the drawn figure is the clip's, the body is only for collision)
+	body.y = std::min((float)body.y, tr.top_y + 0.02f);
 	host->teleport(body);
 	speed = 0.0f;
 	// THE HANDS: pinned on the top in their windows (eased 0.1 s in and out), where the clip's hand meets the edge
