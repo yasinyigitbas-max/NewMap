@@ -1129,6 +1129,15 @@
           "z": -2.2,
           "yaw": 0,
           "note": "on the bookcase, a personal object"
+        },
+        {
+          "id": "prop_frame_print_medium",
+          "cond": "clean",
+          "x": 3.9,
+          "y": 4.75,
+          "z": -0.55,
+          "yaw": 180,
+          "note": "centred over the desk on the bath partition"
         }
       ]
     }
