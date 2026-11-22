@@ -168,17 +168,28 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 			const double tk = k / FPS;
 			const Vector3 trav(curve(a, "vx", tk), 0.0f, curve(a, "vz", tk));
 			const float om = (d->yaw(std::min(tk + 1.0 / FPS, d->len)) - d->yaw(std::max(tk - 1.0 / FPS, 0.0))) / (float)(2.0 / FPS);
-			Vector3 sum; int m = 0;
+			Vector3 sum; int m = 0; Vector3 by[2]; bool dn[2] = { false, false };
 			for (int s = 0; s < 2; s++) {
 				if (!F.down[s]) continue;
 				const Vector3 rel = F.foot_v[s] - trav;            // the foot against the figure
 				const Vector3 fp(F.foot[s].x, 0.0f, F.foot[s].z);
 				const Vector3 spin(om * (float)fp.z, 0.0f, -om * (float)fp.x);   // (the frame's turn under the foot)
-				sum += -(rel + spin); m++;
+				by[s] = -(rel + spin); by[s].y = 0.0f; dn[s] = true;
+				sum += by[s]; m++;
 			}
 			// (both down: their average. Taking the lower foot alone was tried, 22 Nov: the walks' planted feet then slid
 			// 35 cm; the 180-degree pivots stay open, docs/ANIMATION_PLAN.md)
 			rv[k] = m ? Vector3(sum.x / m, 0.0f, sum.z / m) : trav;
+			// ... unless they disagree: one of them is not planted (a heel still landing, sliding on; a toe pushing off).
+			// The one whose travel is nearer the clip's own pace is (pwalk/stop_b at 0.2 s: the landing right foot still
+			// slid forward 0.3 m/s while the left carried the body at 0.97; the average, 0.39, dragged the pinned foot 25 cm)
+			if (m == 2 && (by[0] - by[1]).length() > 0.35f) {
+				const int keep = (by[0] - trav).length() < (by[1] - trav).length() ? 0 : 1;
+				rv[k] = by[keep];
+				// and the other is not down: it moves over the ground (pwalk/start_b at 1.7 s: the right foot, 4 cm off
+				// its floor, still swung in at 2 m/s; pinned there, the lock pulled it 30 cm)
+				if ((by[1 - keep] - rv[k]).length() > 0.4f) d->f[k].down[1 - keep] = false;
+			}
 
 		}
 		d->root_v.resize(n);
