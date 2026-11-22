@@ -1167,6 +1167,7 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_crouch", "on"), &CityPlayer::set_crouch);
 	ClassDB::bind_method(D_METHOD("request_cover"), &CityPlayer::request_cover);
 	ClassDB::bind_method(D_METHOD("set_carry", "kind"), &CityPlayer::set_carry);
+	ClassDB::bind_method(D_METHOD("motor_keep_loops", "names"), &CityPlayer::motor_keep_loops);
 	ClassDB::bind_method(D_METHOD("get_crouch"), &CityPlayer::get_crouch);
 	ClassDB::bind_method(D_METHOD("jump"), &CityPlayer::jump);
 	ClassDB::bind_method(D_METHOD("get_view"), &CityPlayer::get_view);

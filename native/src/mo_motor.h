@@ -19,6 +19,7 @@
 
 #include <godot_cpp/classes/animation_player.hpp>
 #include <godot_cpp/variant/array.hpp>
+#include <godot_cpp/variant/packed_string_array.hpp>
 #include <godot_cpp/variant/string.hpp>
 #include <godot_cpp/variant/string_name.hpp>
 #include <godot_cpp/variant/vector3.hpp>
@@ -122,7 +123,8 @@ public:
 	float hips_drop() const;
 	float floor_y() const { return draw_y; }   // (tests) the figure's floor as drawn
 	bool foot_stepping(int s) const;
-	Array dump(const String &p_clip) const;   // (tests / tools) a clip's measured frames: t, feet, down, hips, root_v, yaw
+	Array dump(const String &p_clip) const;
+	void keep_loops(const PackedStringArray &p_names);   // (tuning) only these loops, by name ("pwalk/walk_mx3", "prun/fast_b" ...)   // (tests / tools) a clip's measured frames: t, feet, down, hips, root_v, yaw
 
 private:
 	CityPed *fig = nullptr;

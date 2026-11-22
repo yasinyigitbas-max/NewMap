@@ -73,6 +73,24 @@ Array Motor::dump(const String &p_clip) const {
 	return out;
 }
 
+void Motor::keep_loops(const PackedStringArray &p_names) {
+	if (p_names.is_empty()) return;
+	// (load any named that is not in the set yet, then keep only the named, by pace)
+	Clip keep[12]; int n = 0;
+	for (int i = 0; i < p_names.size() && n < 12; i++) {
+		const String nm = p_names[i];
+		int found = -1;
+		for (int k = 0; k < n_loops; k++) if (String(loops[k].name) == nm) found = k;
+		Clip c = found >= 0 ? loops[found] : load(nm.utf8().get_data());
+		if (c.ok() && c.ground_v <= 0.2f && !c.d->root_v.empty()) { Vector3 sv; for (const Vector3 &v : c.d->root_v) sv += v; c.ground_v = (float)sv.length() / c.d->root_v.size(); }
+		if (c.ok()) keep[n++] = c;
+	}
+	if (!n) return;
+	std::sort(keep, keep + n, [](const Clip &a, const Clip &b) { return a.ground_v < b.ground_v; });
+	for (int k = 0; k < n; k++) loops[k] = keep[k];
+	n_loops = n; loop_i = std::min(loop_i, n_loops - 1);
+}
+
 float Motor::rnd() { rng ^= rng << 13; rng ^= rng >> 17; rng ^= rng << 5; return (rng & 0xffffff) / 16777216.0f; }
 
 const char *Motor::state_name() const {
