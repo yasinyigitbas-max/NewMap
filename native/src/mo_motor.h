@@ -89,7 +89,7 @@ public:
 	int style = 0, style_want = 0;
 	// STAMINA (Yasin, 24 Nov: "it will happen after running for 30 second or jumping 5 times back to back"): out of it,
 	// the idle is set 2's ("idle 2 is after stamina runs out"); back after a rest
-	bool tired = false, idle_tired = false;
+	bool tired = false, idle_tired = false, stand_to_stand = false;
 	float run_t = 0.0f, rest_t = 0.0f, since_land = 99.0f;
 	int jump_chain = 0, n_tired_spells = 0;
 	void stamina_step(float p_dt);   // loads the libraries, puts MoInertial first on the skeleton; false: no clips

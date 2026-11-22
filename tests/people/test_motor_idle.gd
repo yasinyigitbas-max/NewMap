@@ -6,7 +6,7 @@ extends SceneTree
 ##   godot --headless --path . --fixed-fps 60 -s res://tests/people/test_motor_idle.gd
 var player: CharacterBody3D
 var t := 0.0; var fails := 0
-var seq := []; var seg_t := 0.0; var last := ""
+var seq := []; var seg_t := 0.0; var last := ""; var idle_steps := 0; var steps_prev := -1
 func _initialize() -> void:
 	var b := StaticBody3D.new(); var cs := CollisionShape3D.new(); var sh := BoxShape3D.new(); sh.size = Vector3(40, 2, 40); cs.shape = sh; b.add_child(cs)
 	b.position = Vector3(0, -1, 0); root.add_child(b)
@@ -16,7 +16,12 @@ func _check(ok: bool, what: String) -> void:
 	print("IDLE    %s: %s" % ["ok  " if ok else "FAIL", what])
 func _process(delta: float) -> bool:
 	t += delta
-	var c := String((player.call(&"get_motor_state") as Dictionary).get("clip", ""))
+	var ms: Dictionary = player.call(&"get_motor_state")
+	var c := String(ms.get("clip", ""))
+	# (Yasin, 24 Nov: "in idle 1 loop ... his leg moves for half a second as if he is about to walk ... make his legs stable")
+	var stp := int(ms.get("steps", 0))
+	if steps_prev >= 0 and stp != steps_prev and c.begins_with("pidle/base") and t > 1.0: idle_steps += 1
+	steps_prev = stp
 	if c != last:
 		if last != "": seq.append([last, seg_t])
 		last = c; seg_t = 0.0
@@ -37,5 +42,6 @@ func _process(delta: float) -> bool:
 				prev = e[0]
 		_check(ok_gap, "about two idle loops between gestures")
 		_check(ok_rep, "never the same gesture twice running")
+		_check(idle_steps == 0, "the legs still in the idle: no foot moved to a new spot (%d)" % idle_steps)
 		print("RESULT %s" % ("PASS" if fails == 0 else "FAIL (%d)" % fails)); quit(1 if fails else 0)
 	return false

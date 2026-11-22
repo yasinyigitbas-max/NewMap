@@ -356,6 +356,7 @@ void Motor::to_idle(float p_blend) {
 	last_idle = k;
 	const Clip &c = idles[k];
 	rate = 1.0f; turn_k = 1.0f;
+	if (stand_to_stand) no_align = true;   // (from a gesture: the feet stay planted)
 	play(c, e, p_blend);
 	st = IDLE; idle_t = 0.0f; fidget_in = 8.0f + 10.0f * rnd();
 }
@@ -801,12 +802,13 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 			// standing: now and then a fidget (stretch, look round), then the idle again
 			bool fid = false;
 			for (int k = 0; k < n_fidgets_c; k++) if (cur == &fidgets[k]) fid = true;
-			if (fid && t >= cur->d->len - 0.02) { to_idle(0.45f); }
+			if (fid && t >= cur->d->len - 0.02) { stand_to_stand = true; to_idle(0.45f); stand_to_stand = false; }
 			else if (!fid && (tired && n_tired > 0) != idle_tired) { to_idle(0.6f); }   // (out of breath / rested: the other idle)
 			else if (!fid && !idle_tired && idle_t >= 2.0f * (float)cur->d->len && n_fidgets_c > 0) {   // (two loops of the idle, then a gesture)
 				int k = (int)(rnd() * n_fidgets_c) % n_fidgets_c; if (k == last_fidget) k = (k + 1) % n_fidgets_c;
 				last_fidget = k; rate = 1.0f;
 				const double e = best_entry(*cur->d, t, *fidgets[k].d, 0.0, std::min(1.0, fidgets[k].d->len), &last_entry_cost);
+				no_align = true;   // (standing into standing: the feet stay where they stand - re-aligned, both jumped 5 cm and one re-planted with a step "as if about to walk", Yasin 24 Nov)
 				play(fidgets[k], e, 0.45f); n_fidgets++; idle_t = 0.0f; fidget_in = 9.0f + 12.0f * rnd();
 			}
 			break;
@@ -925,6 +927,9 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	if (limbs && cur) {
 		const Frame fr = cur->d->lerp(t);
 		limbs->lock_on = st != OFF;
+		// (standing in the idle and its gestures: a foot is moved only when 12 cm off the clip's stance, not 4 - the idle's
+		// and gestures' stances differ by 4-7 cm and every idle began with a step "as if about to walk", Yasin 24 Nov)
+		limbs->step_pull = st == IDLE ? 0.12f : 0.04f; limbs->step_now = st == IDLE ? 0.25f : 0.12f;
 		limbs->may_step = st == IDLE || st == STOP || (st == CROUCH && cur == &cr_idle) || (st == COVER && cv_dir == 0) || (st == CARRY && (cur == &ca_idle || cur == &bg_idle));   // (standing: a foot held off the clip's stance re-plants)
 		limbs->down[0] = fr.down[0]; limbs->down[1] = fr.down[1];
 	}
