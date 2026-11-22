@@ -23,6 +23,7 @@ var FY := 0.02
 var ROW := 1.0
 var FLOOR_ROW := 0.5
 var LEAN2 := false      ## still over: one ceiling quad, no skirting, no casings, frame bars on the street side only
+var LEAN3 := false   # bays.json front_only: the side facades' windows stay closed (their doors still open); budget trim
 var LEAN := false      ## over the model's near budget: 1.5 m floor strips, one plaster row, no cornice, frames without mullion / transom
 const PLASTER := Color(0.95, 0.92, 0.86)
 const STONE := Color(1.0, 0.86, 0.70)
@@ -172,7 +173,7 @@ func _run() -> void:
 		if pfx == "" or not contracts.has(model): push_error("no kit dir / contract for " + model); continue
 		var c: Dictionary = contracts[model]
 		var f0: Dictionary = c.floors[0]
-		LEAN = bool(bays[model].get("lean", false)); LEAN2 = bool(bays[model].get("lean2", false))
+		LEAN = bool(bays[model].get("lean", false)); LEAN2 = bool(bays[model].get("lean2", false)); LEAN3 = bool(bays[model].get("front_only", false))
 		ROW = 8.0 if LEAN else 1.0; FLOOR_ROW = 3.0 if LEAN2 else 1.5 if LEAN else 0.5
 		for b: Dictionary in bays[model].bays:
 			V = []; N = []; UVs = []; C = []; tris_int = 0
@@ -187,6 +188,7 @@ func _run() -> void:
 				elif fa == "left": inb = X0 <= float(f0.box_min[0]) + 0.35 and al > ZB and al < ZF
 				elif fa == "right": inb = X1 >= float(f0.box_max[0]) - 0.35 and al > ZB and al < ZF
 				elif fa == "back" and al > X0 and al < X1: back_extra.append(o)
+				if inb and LEAN3 and fa != "front" and not _is(o, DOORS): inb = false
 				if inb:
 					ops.append(o); maxy = maxf(maxy, float(o.y1))
 			for o2: Dictionary in c.openings:      # the back's staff doors (residential) and small windows stay closed
@@ -217,7 +219,7 @@ func _run() -> void:
 			var path := "%s_bay%d.scn" % [pfx, int(b.i)]
 			DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
 			var err := ResourceSaver.save(ps, path, ResourceSaver.FLAG_COMPRESS)
-			stats["%s|%d" % [model, int(b.i)]] = {"lean": LEAN, "shell_tris": tris_int, "ops": ops.size(), "glass_tris": it.get_meta(&"glass_tris"), "rect": [X0, ZB, X1, ZF], "ceiling": CY, "lights": LIGHTS.size(), "err": err}
+			stats["%s|%d" % [model, int(b.i)]] = {"lean": LEAN, "lean2": LEAN2, "front_only": LEAN3, "shell_tris": tris_int, "ops": ops.size(), "glass_tris": it.get_meta(&"glass_tris"), "rect": [X0, ZB, X1, ZF], "ceiling": CY, "lights": LIGHTS.size(), "err": err}
 			if err == OK: n_ok += 1
 			it.free()
 	var f := FileAccess.open(IB + "make_interiors_stats.json", FileAccess.WRITE); f.store_string(JSON.stringify(stats, " ")); f.close()

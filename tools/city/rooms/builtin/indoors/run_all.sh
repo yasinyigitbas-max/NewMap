@@ -7,7 +7,7 @@ B=map_dc/coronado/city_kit/interiors/builtin
 G="flock -w 1800 /tmp/godot.lock.citygame nice timeout 1500 /workspace/tools/godot472/Godot_v4.7.2-stable_linux.x86_64 --headless --path ."
 python3 - <<'P' > /tmp/indoors_flags.json
 import json; b=json.load(open('map_dc/coronado/city_kit/interiors/builtin/bays.json'))
-print(json.dumps({m:{k:v[k] for k in ('lean','lean2') if k in v} for m,v in b['models'].items()}))
+print(json.dumps({m:{k:v[k] for k in ('lean','lean2','front_only') if k in v} for m,v in b['models'].items()}))
 P
 python3 tools/city/rooms/builtin/indoors/make_spec.py
 python3 tools/city/rooms/builtin/indoors/plan_bays.py

@@ -7,7 +7,7 @@
   "problems": []
  },
  "apartments/apt_beach_condo|near": {
-  "all_bays_tris": 3616,
+  "all_bays_tris": 3568,
   "ext_tris": 3452
  },
  "apartments/apt_spanish_revival|0": {
@@ -28,7 +28,7 @@
   "problems": []
  },
  "apartments/apt_spanish_white|near": {
-  "all_bays_tris": 3510,
+  "all_bays_tris": 3462,
   "ext_tris": 3306
  },
  "apartments/apt_stucco3_cream|0": {
@@ -167,7 +167,7 @@
   "problems": []
  },
  "ck/ck_brk3_corner2|near": {
-  "all_bays_tris": 3620,
+  "all_bays_tris": 3596,
   "ext_tris": 3516
  },
  "ck/ck_brk3_row2_fe|0": {
@@ -181,7 +181,7 @@
   "problems": []
  },
  "ck/ck_brk3_row2_fe|near": {
-  "all_bays_tris": 3518,
+  "all_bays_tris": 3494,
   "ext_tris": 3378
  },
  "ck/ck_brk3_row2|0": {
@@ -229,7 +229,7 @@
   "problems": []
  },
  "ck/ck_svc_bank_pharm|near": {
-  "all_bays_tris": 2840,
+  "all_bays_tris": 2792,
   "ext_tris": 2636
  },
  "ck/ck_svc_pawn_fast|0": {
@@ -294,7 +294,7 @@
   "problems": []
  },
  "ck/mod_fastfood|near": {
-  "all_bays_tris": 2646,
+  "all_bays_tris": 2598,
   "ext_tris": 2438
  },
  "commercial/com_bakery|0": {
@@ -406,7 +406,7 @@
   "problems": []
  },
  "commercial/com_orange_corner|near": {
-  "all_bays_tris": 2660,
+  "all_bays_tris": 2584,
   "ext_tris": 2366
  },
  "commercial/com_orange_row|0": {
@@ -489,6 +489,16 @@
   "all_bays_tris": 1680,
   "ext_tris": 1262
  },
+ "extras/ext_motel_crown|0": {
+  "kinds": [
+   "fast_food"
+  ],
+  "problems": []
+ },
+ "extras/ext_motel_crown|near": {
+  "all_bays_tris": 5169,
+  "ext_tris": 4903
+ },
  "extras/motel_inn_court|0": {
   "kinds": [
    "motel_office",
@@ -499,6 +509,16 @@
  "extras/motel_inn_court|near": {
   "all_bays_tris": 4594,
   "ext_tris": 4290
+ },
+ "houses/craftsman_cedar|0": {
+  "kinds": [
+   "clothes"
+  ],
+  "problems": []
+ },
+ "houses/craftsman_cedar|near": {
+  "all_bays_tris": 2448,
+  "ext_tris": 2270
  },
  "houses/craftsman_sage|0": {
   "kinds": [
@@ -547,12 +567,18 @@
  },
  "modular/examples/mod_svc_row|0": {
   "kinds": [
+   "print"
+  ],
+  "problems": []
+ },
+ "modular/examples/mod_svc_row|1": {
+  "kinds": [
    "books"
   ],
   "problems": []
  },
  "modular/examples/mod_svc_row|near": {
-  "all_bays_tris": 2094,
+  "all_bays_tris": 2066,
   "ext_tris": 1776
  },
  "public/pub_skate_shed|0": {

@@ -254,12 +254,6 @@
    "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
   },
   {
-   "id": "m_sw__sea_breeze_motel__0",
-   "name": "Gus' Pizza",
-   "when": "21 Nov 2026",
-   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
-  },
-  {
    "id": "m_se__thrift_store__2",
    "name": "Coral Fitness",
    "when": "21 Nov 2026",
@@ -674,12 +668,6 @@
    "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
   },
   {
-   "id": "r_n__craftsman_cedar__0",
-   "name": "Harbor Threads",
-   "when": "21 Nov 2026",
-   "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
-  },
-  {
    "id": "r_n__hipranch_grey__0",
    "name": "Tern Pawn & Gold",
    "when": "21 Nov 2026",
@@ -785,7 +773,7 @@
  "built_not_listed": [
   "wf_harbor_office"
  ],
- "count": 31,
+ "count": 33,
  "kinds": {
   "bar": 1,
   "office": 14,
@@ -1233,6 +1221,60 @@
      "w": 5.18
     }
    ]
+  },
+  {
+   "id": "m_sw__sea_breeze_motel__0",
+   "piece": "m_sw",
+   "label": "sea_breeze_motel",
+   "model": "extras/ext_motel_crown",
+   "cell": "cell_2_-6",
+   "pos": [
+    429.0,
+    4.15000009536743,
+    -1133.5
+   ],
+   "yaw": -179.999991348578,
+   "door_index": 0,
+   "door_along": 16.3,
+   "door_w": 1.4,
+   "bay": [
+    -20.7,
+    20.7
+   ],
+   "kind": "fast_food",
+   "name": "Gus' Pizza",
+   "style": "red",
+   "why": "a quick bite, open late (strip)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "front",
+     "along": 18.0,
+     "w": 5.0
+    },
+    {
+     "facade": "right",
+     "along": 2.32,
+     "w": 0.95
+    },
+    {
+     "facade": "left",
+     "along": 2.32,
+     "w": 0.95
+    },
+    {
+     "facade": "right",
+     "along": 8.0,
+     "w": 0.25
+    },
+    {
+     "facade": "left",
+     "along": 8.0,
+     "w": 0.25
+    }
+   ],
+   "restored": "22 Nov 2026: kept shop of the NEW-18 plan (Yasin 22 Nov GO: rows for the 3 missing kept shops)"
   },
   {
    "id": "g_nw__pawn_laundry_row__0",
@@ -1744,6 +1786,65 @@
      "w": 2.48
     }
    ]
+  },
+  {
+   "id": "r_n__craftsman_cedar__0",
+   "piece": "r_n",
+   "label": "craftsman_cedar",
+   "model": "houses/craftsman_cedar",
+   "cell": "cell_0_-1",
+   "pos": [
+    61.5,
+    4.84278106689453,
+    -21.2000007629395
+   ],
+   "yaw": 0.0,
+   "door_index": 0,
+   "door_along": -2.8,
+   "door_w": 1.0,
+   "bay": [
+    -4.7,
+    4.7
+   ],
+   "kind": "clothes",
+   "name": "Harbor Threads",
+   "style": "cream",
+   "why": "window frontage for clothes (high_street)",
+   "source": "new",
+   "built": "",
+   "signs": [
+    {
+     "facade": "right",
+     "along": 8.12,
+     "w": 0.38
+    },
+    {
+     "facade": "left",
+     "along": 8.12,
+     "w": 0.38
+    },
+    {
+     "facade": "front",
+     "along": -4.75,
+     "w": 0.38
+    },
+    {
+     "facade": "right",
+     "along": 8.12,
+     "w": 0.38
+    },
+    {
+     "facade": "left",
+     "along": 8.12,
+     "w": 0.38
+    },
+    {
+     "facade": "front",
+     "along": -0.45,
+     "w": 0.38
+    }
+   ],
+   "restored": "22 Nov 2026: kept shop of the NEW-18 plan (Yasin 22 Nov GO: rows for the 3 missing kept shops)"
   },
   {
    "id": "r_s__tudor_stucco__0",

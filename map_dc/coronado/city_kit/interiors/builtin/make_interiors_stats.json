@@ -2,23 +2,27 @@
  "apartments/apt_beach_condo|0": {
   "ceiling": 3.6,
   "err": 0,
-  "glass_tris": 10,
+  "front_only": true,
+  "glass_tris": 2,
   "lean": true,
+  "lean2": true,
   "lights": 4,
-  "ops": 5,
+  "ops": 1,
   "rect": [
    -8.7,
    -5.2,
    8.7,
    5.05
   ],
-  "shell_tris": 174
+  "shell_tris": 118
  },
  "apartments/apt_spanish_revival|0": {
   "ceiling": 3.2,
   "err": 0,
+  "front_only": false,
   "glass_tris": 4,
   "lean": false,
+  "lean2": false,
   "lights": 2,
   "ops": 3,
   "rect": [
@@ -32,23 +36,27 @@
  "apartments/apt_spanish_white|0": {
   "ceiling": 3.2,
   "err": 0,
-  "glass_tris": 12,
+  "front_only": true,
+  "glass_tris": 4,
   "lean": true,
+  "lean2": true,
   "lights": 4,
-  "ops": 7,
+  "ops": 3,
   "rect": [
    -8.7,
    -4.7,
    8.7,
    4.55
   ],
-  "shell_tris": 218
+  "shell_tris": 162
  },
  "apartments/apt_stucco3_cream|0": {
   "ceiling": 3.6,
   "err": 0,
+  "front_only": false,
   "glass_tris": 2,
   "lean": false,
+  "lean2": false,
   "lights": 3,
   "ops": 1,
   "rect": [
@@ -62,8 +70,10 @@
  "apartments/apt_stucco3_peach|0": {
   "ceiling": 3.6,
   "err": 0,
+  "front_only": true,
   "glass_tris": 2,
   "lean": true,
+  "lean2": true,
   "lights": 3,
   "ops": 1,
   "rect": [
@@ -77,8 +87,10 @@
  "civic/civ_church|0": {
   "ceiling": 4.6,
   "err": 0,
+  "front_only": false,
   "glass_tris": 2,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 1,
   "rect": [
@@ -92,8 +104,10 @@
  "civic/civ_city_hall|0": {
   "ceiling": 3.88,
   "err": 0,
+  "front_only": false,
   "glass_tris": 20,
   "lean": true,
+  "lean2": true,
   "lights": 4,
   "ops": 11,
   "rect": [
@@ -107,8 +121,10 @@
  "civic/civ_community_center|0": {
   "ceiling": 4.6,
   "err": 0,
+  "front_only": false,
   "glass_tris": 24,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 13,
   "rect": [
@@ -122,8 +138,10 @@
  "civic/civ_harbor_office|0": {
   "ceiling": 3.88,
   "err": 0,
+  "front_only": false,
   "glass_tris": 12,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 7,
   "rect": [
@@ -137,8 +155,10 @@
  "civic/civ_library|0": {
   "ceiling": 4.6,
   "err": 0,
+  "front_only": false,
   "glass_tris": 24,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 13,
   "rect": [
@@ -152,8 +172,10 @@
  "civic/civ_police|0": {
   "ceiling": 3.88,
   "err": 0,
+  "front_only": false,
   "glass_tris": 20,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 11,
   "rect": [
@@ -167,8 +189,10 @@
  "civic/civ_post_office|0": {
   "ceiling": 4.6,
   "err": 0,
+  "front_only": false,
   "glass_tris": 20,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 11,
   "rect": [
@@ -182,8 +206,10 @@
  "civic/civ_rec_center|0": {
   "ceiling": 3.88,
   "err": 0,
+  "front_only": false,
   "glass_tris": 20,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 11,
   "rect": [
@@ -197,8 +223,10 @@
  "civic/civ_school_wing|0": {
   "ceiling": 4.6,
   "err": 0,
+  "front_only": false,
   "glass_tris": 24,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 13,
   "rect": [
@@ -212,38 +240,44 @@
  "ck/ck_brk3_corner2|0": {
   "ceiling": 3.3,
   "err": 0,
-  "glass_tris": 6,
+  "front_only": true,
+  "glass_tris": 2,
   "lean": true,
+  "lean2": true,
   "lights": 3,
-  "ops": 4,
+  "ops": 2,
   "rect": [
    -1.1,
    -6.7,
    5.7,
    6.55
   ],
-  "shell_tris": 112
+  "shell_tris": 84
  },
  "ck/ck_brk3_row2_fe|0": {
   "ceiling": 3.3,
   "err": 0,
-  "glass_tris": 8,
+  "front_only": true,
+  "glass_tris": 4,
   "lean": true,
+  "lean2": true,
   "lights": 3,
-  "ops": 5,
+  "ops": 3,
   "rect": [
    -5.7,
    -6.7,
    2.1,
    6.55
   ],
-  "shell_tris": 150
+  "shell_tris": 122
  },
  "ck/ck_brk3_row2|0": {
   "ceiling": 3.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 8,
   "lean": false,
+  "lean2": false,
   "lights": 3,
   "ops": 5,
   "rect": [
@@ -257,8 +291,10 @@
  "ck/ck_grt_row3|0": {
   "ceiling": 4.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 6,
   "lean": false,
+  "lean2": true,
   "lights": 3,
   "ops": 4,
   "rect": [
@@ -272,8 +308,10 @@
  "ck/ck_grt_row3|1": {
   "ceiling": 4.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 6,
   "lean": false,
+  "lean2": true,
   "lights": 2,
   "ops": 4,
   "rect": [
@@ -287,23 +325,27 @@
  "ck/ck_svc_bank_pharm|0": {
   "ceiling": 4.3,
   "err": 0,
-  "glass_tris": 14,
+  "front_only": true,
+  "glass_tris": 6,
   "lean": true,
+  "lean2": true,
   "lights": 4,
-  "ops": 8,
+  "ops": 4,
   "rect": [
    -5.7,
    -5.7,
    5.7,
    5.55
   ],
-  "shell_tris": 220
+  "shell_tris": 164
  },
  "ck/ck_svc_pawn_fast|0": {
   "ceiling": 4.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 6,
   "lean": true,
+  "lean2": true,
   "lights": 2,
   "ops": 4,
   "rect": [
@@ -317,8 +359,10 @@
  "ck/ck_svc_trade_1d|0": {
   "ceiling": 3.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 4,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 3,
   "rect": [
@@ -332,8 +376,10 @@
  "ck/ck_svc_trade|0": {
   "ceiling": 3.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 10,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 6,
   "rect": [
@@ -347,8 +393,10 @@
  "ck/ck_svc_trade|1": {
   "ceiling": 3.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 4,
   "lean": false,
+  "lean2": false,
   "lights": 2,
   "ops": 3,
   "rect": [
@@ -362,38 +410,44 @@
  "ck/mod_fastfood|0": {
   "ceiling": 4.3,
   "err": 0,
-  "glass_tris": 6,
+  "front_only": true,
+  "glass_tris": 2,
   "lean": true,
+  "lean2": true,
   "lights": 1,
-  "ops": 3,
+  "ops": 1,
   "rect": [
    -5.7,
    -5.7,
    -3.16,
    5.55
   ],
-  "shell_tris": 76
+  "shell_tris": 48
  },
  "ck/mod_fastfood|1": {
   "ceiling": 4.3,
   "err": 0,
-  "glass_tris": 8,
+  "front_only": true,
+  "glass_tris": 4,
   "lean": true,
+  "lean2": true,
   "lights": 3,
-  "ops": 5,
+  "ops": 3,
   "rect": [
    -2.96,
    -5.7,
    5.7,
    5.55
   ],
-  "shell_tris": 148
+  "shell_tris": 120
  },
  "commercial/com_bakery|0": {
   "ceiling": 3.88,
   "err": 0,
+  "front_only": false,
   "glass_tris": 10,
   "lean": false,
+  "lean2": false,
   "lights": 3,
   "ops": 6,
   "rect": [
@@ -407,8 +461,10 @@
  "commercial/com_bar_crown|0": {
   "ceiling": 3.88,
   "err": 0,
+  "front_only": false,
   "glass_tris": 6,
   "lean": false,
+  "lean2": false,
   "lights": 3,
   "ops": 4,
   "rect": [
@@ -422,8 +478,10 @@
  "commercial/com_bistro|0": {
   "ceiling": 4.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 10,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 6,
   "rect": [
@@ -437,8 +495,10 @@
  "commercial/com_boutique_row|0": {
   "ceiling": 4.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 6,
   "lean": false,
+  "lean2": false,
   "lights": 2,
   "ops": 4,
   "rect": [
@@ -452,8 +512,10 @@
  "commercial/com_boutique_row|1": {
   "ceiling": 4.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 2,
   "lean": false,
+  "lean2": false,
   "lights": 2,
   "ops": 2,
   "rect": [
@@ -467,8 +529,10 @@
  "commercial/com_boutique_row|2": {
   "ceiling": 4.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 6,
   "lean": false,
+  "lean2": false,
   "lights": 2,
   "ops": 4,
   "rect": [
@@ -482,8 +546,10 @@
  "commercial/com_cafe_seaside|0": {
   "ceiling": 4.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 8,
   "lean": false,
+  "lean2": false,
   "lights": 2,
   "ops": 5,
   "rect": [
@@ -497,8 +563,10 @@
  "commercial/com_gas_station|0": {
   "ceiling": 4.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 10,
   "lean": true,
+  "lean2": true,
   "lights": 2,
   "ops": 6,
   "rect": [
@@ -512,8 +580,10 @@
  "commercial/com_orange_arcade_block|0": {
   "ceiling": 3.88,
   "err": 0,
+  "front_only": false,
   "glass_tris": 2,
   "lean": false,
+  "lean2": false,
   "lights": 3,
   "ops": 2,
   "rect": [
@@ -527,38 +597,44 @@
  "commercial/com_orange_corner|0": {
   "ceiling": 3.88,
   "err": 0,
-  "glass_tris": 14,
+  "front_only": true,
+  "glass_tris": 6,
   "lean": true,
+  "lean2": true,
   "lights": 4,
-  "ops": 8,
+  "ops": 4,
   "rect": [
    -5.7,
    -6.7,
    5.7,
    6.55
   ],
-  "shell_tris": 200
+  "shell_tris": 144
  },
  "commercial/com_orange_corner|1": {
   "ceiling": 3.88,
   "err": 0,
-  "glass_tris": 6,
+  "front_only": true,
+  "glass_tris": 2,
   "lean": true,
+  "lean2": true,
   "lights": 2,
-  "ops": 4,
+  "ops": 2,
   "rect": [
    0.1,
    -6.7,
    5.7,
    6.55
   ],
-  "shell_tris": 114
+  "shell_tris": 86
  },
  "commercial/com_orange_row|0": {
   "ceiling": 3.88,
   "err": 0,
+  "front_only": false,
   "glass_tris": 10,
   "lean": true,
+  "lean2": false,
   "lights": 4,
   "ops": 6,
   "rect": [
@@ -572,8 +648,10 @@
  "commercial/com_orange_row|1": {
   "ceiling": 3.88,
   "err": 0,
+  "front_only": false,
   "glass_tris": 6,
   "lean": true,
+  "lean2": false,
   "lights": 2,
   "ops": 4,
   "rect": [
@@ -587,8 +665,10 @@
  "commercial/com_realty|0": {
   "ceiling": 4.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 8,
   "lean": false,
+  "lean2": false,
   "lights": 2,
   "ops": 5,
   "rect": [
@@ -602,8 +682,10 @@
  "commercial/com_spanish_arcade_block|0": {
   "ceiling": 3.88,
   "err": 0,
+  "front_only": false,
   "glass_tris": 8,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 5,
   "rect": [
@@ -617,8 +699,10 @@
  "commercial/com_spanish_arcade_block|1": {
   "ceiling": 3.88,
   "err": 0,
+  "front_only": false,
   "glass_tris": 8,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 5,
   "rect": [
@@ -632,8 +716,10 @@
  "commercial/com_spanish_arcade_block|2": {
   "ceiling": 3.88,
   "err": 0,
+  "front_only": false,
   "glass_tris": 6,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 4,
   "rect": [
@@ -647,8 +733,10 @@
  "commercial/com_strip_mall_l|0": {
   "ceiling": 4.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 2,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 2,
   "rect": [
@@ -662,8 +750,10 @@
  "commercial/com_surf_shop|0": {
   "ceiling": 4.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 10,
   "lean": false,
+  "lean2": false,
   "lights": 3,
   "ops": 6,
   "rect": [
@@ -674,11 +764,30 @@
   ],
   "shell_tris": 434
  },
+ "extras/ext_motel_crown|0": {
+  "ceiling": 3.38,
+  "err": 0,
+  "front_only": true,
+  "glass_tris": 2,
+  "lean": true,
+  "lean2": true,
+  "lights": 4,
+  "ops": 2,
+  "rect": [
+   -20.7,
+   -4.2,
+   20.7,
+   4.05
+  ],
+  "shell_tris": 272
+ },
  "extras/motel_inn_court|0": {
   "ceiling": 3.38,
   "err": 0,
+  "front_only": false,
   "glass_tris": 4,
   "lean": false,
+  "lean2": false,
   "lights": 2,
   "ops": 3,
   "rect": [
@@ -689,11 +798,30 @@
   ],
   "shell_tris": 312
  },
+ "houses/craftsman_cedar|0": {
+  "ceiling": 4.8,
+  "err": 0,
+  "front_only": false,
+  "glass_tris": 16,
+  "lean": true,
+  "lean2": true,
+  "lights": 3,
+  "ops": 9,
+  "rect": [
+   -4.7,
+   -5.7,
+   4.7,
+   5.55
+  ],
+  "shell_tris": 194
+ },
  "houses/craftsman_sage|0": {
   "ceiling": 4.8,
   "err": 0,
+  "front_only": false,
   "glass_tris": 16,
   "lean": true,
+  "lean2": true,
   "lights": 3,
   "ops": 9,
   "rect": [
@@ -707,8 +835,10 @@
  "houses/tudor_stucco|0": {
   "ceiling": 4.8,
   "err": 0,
+  "front_only": false,
   "glass_tris": 8,
   "lean": false,
+  "lean2": false,
   "lights": 3,
   "ops": 5,
   "rect": [
@@ -722,8 +852,10 @@
  "industrial/ind_repair|0": {
   "ceiling": 4.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 4,
   "lean": false,
+  "lean2": false,
   "lights": 3,
   "ops": 3,
   "rect": [
@@ -737,8 +869,10 @@
  "modular/examples/mod_brk_row|0": {
   "ceiling": 3.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 18,
   "lean": true,
+  "lean2": true,
   "lights": 4,
   "ops": 10,
   "rect": [
@@ -752,8 +886,27 @@
  "modular/examples/mod_svc_row|0": {
   "ceiling": 3.3,
   "err": 0,
+  "front_only": false,
+  "glass_tris": 14,
+  "lean": true,
+  "lean2": true,
+  "lights": 4,
+  "ops": 8,
+  "rect": [
+   -5.7,
+   -5.7,
+   5.7,
+   5.55
+  ],
+  "shell_tris": 196
+ },
+ "modular/examples/mod_svc_row|1": {
+  "ceiling": 3.3,
+  "err": 0,
+  "front_only": false,
   "glass_tris": 6,
-  "lean": false,
+  "lean": true,
+  "lean2": true,
   "lights": 2,
   "ops": 4,
   "rect": [
@@ -762,13 +915,15 @@
    5.7,
    5.55
   ],
-  "shell_tris": 326
+  "shell_tris": 110
  },
  "public/pub_skate_shed|0": {
   "ceiling": 4.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 4,
   "lean": false,
+  "lean2": false,
   "lights": 3,
   "ops": 2,
   "rect": [
@@ -782,8 +937,10 @@
  "urban/twr_glass|0": {
   "ceiling": 4.6,
   "err": 0,
+  "front_only": false,
   "glass_tris": 14,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 8,
   "rect": [
@@ -797,8 +954,10 @@
  "urban/twr_office|0": {
   "ceiling": 3.6,
   "err": 0,
+  "front_only": false,
   "glass_tris": 4,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 3,
   "rect": [
@@ -812,8 +971,10 @@
  "urban/urb_brick_corner|0": {
   "ceiling": 3.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 10,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 6,
   "rect": [
@@ -827,8 +988,10 @@
  "urban/urb_brick_row|0": {
   "ceiling": 3.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 6,
   "lean": false,
+  "lean2": false,
   "lights": 3,
   "ops": 4,
   "rect": [
@@ -842,8 +1005,10 @@
  "urban/urb_brick_row|1": {
   "ceiling": 3.3,
   "err": 0,
+  "front_only": false,
   "glass_tris": 2,
   "lean": false,
+  "lean2": false,
   "lights": 2,
   "ops": 2,
   "rect": [
@@ -857,8 +1022,10 @@
  "urban/urb_dept_store|0": {
   "ceiling": 3.5,
   "err": 0,
+  "front_only": false,
   "glass_tris": 10,
   "lean": false,
+  "lean2": false,
   "lights": 4,
   "ops": 6,
   "rect": [

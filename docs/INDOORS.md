@@ -300,7 +300,7 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 | 123 | cc_b2_7th__seventh_dept_store__0 | Harbor & Main | clothes | shop (kept, NEW-18 plan) | n_cc_b2_7th | urban/urb_dept_store | 35.4 x 24.0 | XL | yes |
 | 124 | f_ne__apt_beach_condo__0 | Marta's Boutique | clothes | shop (kept, NEW-18 plan) | f_ne | apartments/apt_beach_condo | 17.4 x 11.0 | L | yes |
 | 125 | hs_b3_amber_condo_0 | Swim & Sun | clothes | shop (kept, NEW-18 plan) | n_hs_b3_amber | apartments/apt_beach_condo | 17.4 x 11.0 | L | yes |
-| 126 | r_n__craftsman_cedar__0 | Harbor Threads | clothes | shop (kept, NEW-18 plan) | r_n | houses/craftsman_cedar | 9.4 x 11.2 | M | ADD |
+| 126 | r_n__craftsman_cedar__0 | Harbor Threads | clothes | shop (kept, NEW-18 plan) | r_n | houses/craftsman_cedar | 9.4 x 11.2 | M | yes |
 | 127 | apt_b1_7th__coffee_window__0 | The Coffee Window | coffee | shop (kept, NEW-18 plan) | n_apt_b1_7th | commercial/com_cafe_seaside | 5.4 x 14.0 | M | yes |
 | 128 | w_c3__senior_center__0 | Ridge Senior Center | venue -> community | shop (kept, NEW-18 plan) | n_w_c3 | civic/civ_community_center | 23.4 x 14.0 | XL | yes |
 | 129 | fw_slope_market_0 | Hilltop Market | corner_shop | shop (kept, NEW-18 plan) | n_fw_slope | commercial/com_orange_corner | 5.7 x 14.0 | M | yes |
@@ -315,7 +315,7 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 | 138 | apt_b1_7th__corner_shops_7th__2 | Sunrise Donuts | donuts | shop (kept, NEW-18 plan) | n_apt_b1_7th | commercial/com_boutique_row | 5.7 x 14.0 | M | yes |
 | 139 | apt_b1_7th__dry_cleaner__0 | Seventh Street Cleaners | dry_cleaner | shop (kept, NEW-18 plan) | n_apt_b1_7th | ck/ck_brk3_row2_fe | 7.9 x 14.0 | M | yes |
 | 140 | m_ne__burger_barn__0 | McDowell's | fast_food | shop (kept, NEW-18 plan) | m_ne | ck/mod_fastfood | 2.6 x 12.0 | S | yes |
-| 141 | m_sw__sea_breeze_motel__0 | Gus' Pizza | fast_food | shop (kept, NEW-18 plan) | m_sw | extras/ext_motel_crown | 41.4 x 8.2 | XL | ADD |
+| 141 | m_sw__sea_breeze_motel__0 | Gus' Pizza | fast_food | shop (kept, NEW-18 plan) | m_sw | extras/ext_motel_crown | 41.4 x 8.2 | XL | yes |
 | 142 | wfa_b1e__the_fish_house__1 | Pier Poke & Tacos | fast_food | shop (kept, NEW-18 plan) | n_wf_b1e | commercial/com_spanish_arcade_block | 10.7 x 16.0 | L | yes |
 | 143 | ind_vc_w600_n1600_sw__dockside_fish_market__0 | Dockside Fish Market | fish_counter | shop (kept, NEW-18 plan) | i_vc_w600_n1600_sw | commercial/com_bistro | 11.4 x 14.0 | L | yes |
 | 144 | cc_b3_am__amber_se_florist__0 | Bloom & Twig Flowers | souvenir -> florist | shop (kept, NEW-18 plan) | n_cc_b3_am | ck/ck_brk3_row2 | 7.9 x 14.0 | M | yes |
@@ -342,7 +342,7 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 | 165 | hs_b6_amber_corner_0 | Ninth Street Pharmacy | pharmacy | shop (kept, NEW-18 plan) | n_hs_b6_amber | ck/ck_brk3_corner2 | 11.4 x 14.0 | L | yes |
 | 166 | grt_v2_j4sw_row3_0 | Cell Fix & Unlock | phones | shop (kept, NEW-18 plan) | g_v2_j4sw | ck/ck_grt_row3 | 10.3 x 12.0 | M | yes |
 | 167 | w_c1__post_office__0 | Coronado Post Office | store -> post_office | shop (kept, NEW-18 plan) | n_w_c1 | civic/civ_post_office | 21.4 x 15.0 | XL | yes |
-| 168 | cc_b3_arm__alleyd3_print__0 | Copy Corner | print | shop (kept, NEW-18 plan) | n_cc_b3_arm | modular/examples/mod_svc_row | 7.3 x 11.2 | M | ADD |
+| 168 | cc_b3_arm__alleyd3_print__0 | Copy Corner | print | shop (kept, NEW-18 plan) | n_cc_b3_arm | modular/examples/mod_svc_row | 7.3 x 11.2 | M | yes |
 | 169 | cc_b3_main__eighth_records_fe__0 | Groove Records | store -> records | shop (kept, NEW-18 plan) | n_cc_b3_main | ck/ck_brk3_row2_fe | 7.9 x 14.0 | M | yes |
 | 170 | eb_se_hire_0 | Bayshore Paddle Hire | sport -> rental | shop (kept, NEW-18 plan) | n_eb_se | commercial/com_surf_shop | 8.4 x 14.0 | M | yes |
 | 171 | ec_dune_s_rentals_0 | South Beach Rentals | sport -> rental | shop (kept, NEW-18 plan) | n_ec_dune_s | commercial/com_surf_shop | 8.4 x 14.0 | M | yes |
