@@ -671,3 +671,80 @@ static func bay_col_boxes(model: String, i: int) -> Array:
 			if cs is CollisionShape3D: out.append([(cs as CollisionShape3D).shape, (cs as CollisionShape3D).transform])
 	it.free()
 	return out
+
+## Props merged for the phone (22 Nov, INDOORS rollout: "merge props to 1-2 draws per room"): every prop instance of the
+## room's Props (one MultiMesh per prop type: 8-20 draws) baked into ONE mesh per material (the kit props share their
+## 2048 pages: rooms come out at 1-3 draws, page I nearly always, H often, W rarely). Same visibility range, no shadows.
+## The prop transforms stay on the room as meta "props_xf" {prop: [Transform3D]} (room_people.gd reads them).
+static func merge_props(room: Node3D) -> void:
+	var pn := room.get_node_or_null(^"Props")
+	if pn == null: return
+	var groups := {}      # material -> [arrays parts]
+	var mats := {}
+	var xf := {}
+	var vis_end := PROP_END
+	for c: Node in pn.get_children():
+		if not (c is MultiMeshInstance3D): continue
+		var mmi := c as MultiMeshInstance3D
+		var mm := mmi.multimesh
+		if mm == null or mm.mesh == null: continue
+		vis_end = mmi.visibility_range_end
+		var ts: Array = []
+		for q in mm.instance_count: ts.append(mmi.transform * mm.get_instance_transform(q))
+		xf[String(mmi.name)] = ts
+		for si in mm.mesh.get_surface_count():
+			var mat: Material = mmi.material_override if mmi.material_override else mm.mesh.surface_get_material(si)
+			var key := str(mat.get_instance_id()) if mat else "none"
+			mats[key] = mat
+			if not groups.has(key): groups[key] = []
+			var a: Array = mm.mesh.surface_get_arrays(si)
+			for t: Transform3D in ts: (groups[key] as Array).append([a, t])
+	for c2: Node in pn.get_children(): pn.remove_child(c2); c2.free()
+	var gi := 0
+	for key: String in groups:
+		var st := SurfaceTool.new()
+		var V := PackedVector3Array(); var N := PackedVector3Array(); var T := PackedFloat32Array(); var UV := PackedVector2Array()
+		var UV2 := PackedVector2Array(); var C := PackedColorArray(); var I := PackedInt32Array()
+		var has_t := true; var has_uv2 := true; var has_c := true
+		for part: Array in groups[key]:
+			var a: Array = part[0]
+			if a[Mesh.ARRAY_TANGENT] == null: has_t = false
+			if a[Mesh.ARRAY_TEX_UV2] == null: has_uv2 = false
+			if a[Mesh.ARRAY_COLOR] == null: has_c = false
+		for part2: Array in groups[key]:
+			var a2: Array = part2[0]; var t2: Transform3D = part2[1]
+			var bs := t2.basis
+			var nb := bs.inverse().transposed()
+			var v: PackedVector3Array = a2[Mesh.ARRAY_VERTEX]; var base := V.size()
+			var nn: PackedVector3Array = a2[Mesh.ARRAY_NORMAL] if a2[Mesh.ARRAY_NORMAL] != null else PackedVector3Array()
+			var uv: PackedVector2Array = a2[Mesh.ARRAY_TEX_UV] if a2[Mesh.ARRAY_TEX_UV] != null else PackedVector2Array()
+			for k in v.size():
+				V.append(t2 * v[k])
+				N.append((nb * nn[k]).normalized() if k < nn.size() else Vector3.UP)
+				UV.append(uv[k] if k < uv.size() else Vector2.ZERO)
+			if has_t:
+				var tg: PackedFloat32Array = a2[Mesh.ARRAY_TANGENT]
+				for k2 in v.size():
+					var tv := (bs * Vector3(tg[k2 * 4], tg[k2 * 4 + 1], tg[k2 * 4 + 2])).normalized()
+					T.append(tv.x); T.append(tv.y); T.append(tv.z); T.append(tg[k2 * 4 + 3] * (1.0 if bs.determinant() > 0.0 else -1.0))
+			if has_uv2: UV2.append_array(a2[Mesh.ARRAY_TEX_UV2])
+			if has_c: C.append_array(a2[Mesh.ARRAY_COLOR])
+			var idx: PackedInt32Array = a2[Mesh.ARRAY_INDEX] if a2[Mesh.ARRAY_INDEX] != null else PackedInt32Array(range(v.size()))
+			if bs.determinant() < 0.0:      # (a mirrored instance: the winding turns)
+				for k3 in range(0, idx.size(), 3): I.append(base + idx[k3]); I.append(base + idx[k3 + 2]); I.append(base + idx[k3 + 1])
+			else:
+				for k4 in idx: I.append(base + k4)
+		var arr := []; arr.resize(Mesh.ARRAY_MAX)
+		arr[Mesh.ARRAY_VERTEX] = V; arr[Mesh.ARRAY_NORMAL] = N; arr[Mesh.ARRAY_TEX_UV] = UV; arr[Mesh.ARRAY_INDEX] = I
+		if has_t: arr[Mesh.ARRAY_TANGENT] = T
+		if has_uv2: arr[Mesh.ARRAY_TEX_UV2] = UV2
+		if has_c: arr[Mesh.ARRAY_COLOR] = C
+		var am := ArrayMesh.new(); am.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+		if mats[key]: am.surface_set_material(0, mats[key])
+		var mi := MeshInstance3D.new(); mi.name = "merged_%d" % gi; mi.mesh = am; gi += 1
+		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		mi.visibility_range_end = vis_end; mi.visibility_range_end_margin = 1.0
+		mi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED
+		pn.add_child(mi); mi.owner = room
+	room.set_meta(&"props_xf", xf); room.set_meta(&"prop_draws", gi)
+

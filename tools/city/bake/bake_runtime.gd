@@ -95,6 +95,7 @@ var room_contracts := {}      # model -> contract (all interiors/room_contracts*
 var builtin_idx := {}         # "piece|label" -> [{id, kind}] (assignment rows of buildings whose model carries its interior)
 var builtin_fail: Array = []  # validator problems: any fails the bake
 var builtin_dress := {}       # INDOORS place id -> furnishing kind (dress_as; interiors/builtin/indoors_spec.json)
+var builtin_name := {}        # place id -> its name (the shop sign's, for room_people)
 var builtin_rank := {}        # place id -> its rank among the places of its kind (sorted by id): the variation deal
 var builtin_valid := {}       # "model|bay|kinds" -> problems (validated once)
 var room_regs := {}           # atlas regions (assets/coronado_kit/textures/city_layout.json)
@@ -744,6 +745,7 @@ func _rooms_load() -> void:
 		var by_kind := {}
 		for pl: Dictionary in (sp as Dictionary).get("places", []):
 			builtin_dress[String(pl.id)] = String(pl.dress)
+			builtin_name[String(pl.id)] = String(pl.get("name", ""))
 			if not by_kind.has(pl.dress): by_kind[pl.dress] = []
 			(by_kind[pl.dress] as Array).append(String(pl.id))
 		for k: String in by_kind:
@@ -979,6 +981,7 @@ func _builtin_building(rec: Dictionary, piece: String) -> void:
 		var nm := "bi_" + String(r.id)
 		var room := BL.fill(model, String(r.kind), nm, "%s|%s" % [piece, String(rec.label)])
 		if room == null: builtin_fail.append("%s: fill %s failed" % [rec.name, nm]); continue
+		room.set_meta(&"shop", {"kind": String(r.kind), "name": String(builtin_name.get(r.id, "")), "id": String(r.id)})
 		_own(room, room)
 		var ps := PackedScene.new(); ps.pack(room)
 		var scn := out + "rooms/" + nm + ".scn"
@@ -1000,6 +1003,10 @@ func _builtin_building(rec: Dictionary, piece: String) -> void:
 					faces.append(tq[quad[0]]); faces.append(tq[quad[2]]); faces.append(tq[quad[3]])
 		var cd: Resource = ColData.new(); cd.kind = 0; cd.data = faces; cd.backface = true
 		ResourceSaver.save(cd, out + "rooms/" + nm + "_col.res", ResourceSaver.FLAG_COMPRESS)
+		BL.merge_props(room)      # (1-3 draws of props; the scene saved again, merged)
+		stat["builtin_prop_draws"] = int(stat.get("builtin_prop_draws", 0)) + int(room.get_meta(&"prop_draws", 0))
+		var ps2 := PackedScene.new(); ps2.pack(room)
+		ResourceSaver.save(ps2, scn, ResourceSaver.FLAG_COMPRESS)
 		var fl: Array = (room.get_meta(&"floors", [[0, 0, 0, 0]]) as Array)[0]
 		list.append({"scn": scn, "raw": "", "col": out + "rooms/" + nm + "_col.res", "centre": Vector3((float(fl[0]) + float(fl[2])) * 0.5, 1.5, (float(fl[1]) + float(fl[3])) * 0.5)})
 		room.free()
@@ -1061,6 +1068,7 @@ func _bay_building(rec: Dictionary, piece: String, model: String, rows: Array) -
 		var nm := "bi_" + String(p2.id)
 		var room := BL.fill_bay(model, int(p2.bay), String(p2.kind), String(pk[0]), bool(pk[1]), int(pk[2]), nm, "%s|%s" % [piece, String(rec.label)])
 		if room == null: builtin_fail.append("%s: fill %s failed" % [rec.name, nm]); continue
+		room.set_meta(&"shop", {"kind": String(p2.kind), "name": String(builtin_name.get(p2.id, "")), "id": String(p2.id)})
 		_own(room, room)
 		var ps := PackedScene.new(); ps.pack(room)
 		var scn := out + "rooms/" + nm + ".scn"
@@ -1081,6 +1089,10 @@ func _bay_building(rec: Dictionary, piece: String, model: String, rows: Array) -
 					faces.append(tq[quad[0]]); faces.append(tq[quad[2]]); faces.append(tq[quad[3]])
 		var cd: Resource = ColData.new(); cd.kind = 0; cd.data = faces; cd.backface = true
 		ResourceSaver.save(cd, out + "rooms/" + nm + "_col.res", ResourceSaver.FLAG_COMPRESS)
+		BL.merge_props(room)      # (1-3 draws of props; the scene saved again, merged)
+		stat["builtin_prop_draws"] = int(stat.get("builtin_prop_draws", 0)) + int(room.get_meta(&"prop_draws", 0))
+		var ps2 := PackedScene.new(); ps2.pack(room)
+		ResourceSaver.save(ps2, scn, ResourceSaver.FLAG_COMPRESS)
 		var fl: Array = (room.get_meta(&"floors", [[0, 0, 0, 0]]) as Array)[0]
 		list.append({"scn": scn, "raw": "", "col": out + "rooms/" + nm + "_col.res", "centre": Vector3((float(fl[0]) + float(fl[2])) * 0.5, 1.5, (float(fl[1]) + float(fl[3])) * 0.5)})
 		stat["builtin_picks"] = int(stat.get("builtin_picks", 0)) + 1

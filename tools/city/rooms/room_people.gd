@@ -58,6 +58,10 @@ func _on_floor(floors: Array, x: float, z: float) -> bool:
 
 func _instances(props: Node, key: String) -> Array:
 	var out := []
+	var xf: Dictionary = props.get_parent().get_meta(&"props_xf", {})      # (a built-in room with its props merged, 22 Nov)
+	for nm: String in xf:
+		if not nm.trim_prefix("prop_").contains(key): continue
+		for t: Transform3D in xf[nm]: out.append({"name": nm, "t": t})
 	for c in props.get_children():
 		if not (c is MultiMeshInstance3D) or c.multimesh == null: continue
 		if not String(c.name).trim_prefix("prop_").contains(key): continue
