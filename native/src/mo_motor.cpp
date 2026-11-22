@@ -632,6 +632,18 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 				host = nullptr;
 				return;
 			}
+			if (st == RUNJUMP && rp.c == &ai_walk) {   // (the leap's end is in the air: on in the flight, its pace)
+				const Frame a = rp.c->d->lerp(rp.c->d->len - 0.1), z = rp.c->d->lerp(rp.c->d->len);
+				const Vector3 v = Basis(Vector3(0, 1, 0), rp.yaw).xform((z.hips - a.hips) / 0.1);
+				air_start(Vector3(v.x, std::max(0.0f, (float)v.y), v.z), true);
+				host = nullptr; return;
+			}
+			if (st == RUNJUMP && rp.c == &ai_stand) {
+				if (want) { speed = std::max(speed, 0.8f); to_loop(pick_loop(want_speed, loop_i), blend_loop); }
+				else to_idle(0.3f);
+				place(p_host);
+				host = nullptr; return;
+			}
 			if (st == RUNJUMP) {
 				const Vector3 b = p_host.position();
 				const float gb = ground_below(b, 60.0f);

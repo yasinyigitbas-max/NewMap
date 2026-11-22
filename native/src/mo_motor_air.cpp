@@ -35,10 +35,11 @@ double first_touch(const Clip &c) {
 
 void Motor::load_air() {
 	ai_up = load("ptrav/Jumping_Up"); ai_loop = load("ptrav/Falling_Idle"); ai_run = load("ptrav/Running_Jump_a");
+	ai_stand = load("ptrav/Jump_a"); ai_walk = load("ptrav/Jumping_c");   // (Yasin, 24 Nov: the standing and walking jumps were the bad ones - festive's own jumps instead)
 	ai_soft = load("ptrav/Falling_To_Landing"); ai_hard = load("ptrav/Hard_Landing_b");
 	ai_flat = load("ptrav/Falling_Flat_Impact"); ai_getup = load("ptrav/Getting_Up");
 	tc_soft = first_touch(ai_soft); tc_hard = first_touch(ai_hard); tc_flat = first_touch(ai_flat);
-	load_descent(dn_hop, "ptrav/Jumping_Down_a"); load_descent(dn_jump, "ptrav/Jumping_Down_c"); load_descent(dn_climb, "mx/Climbing_Down");
+	load_descent(dn_hop, "ptrav/Jumping_Down_b"); load_descent(dn_jump, "ptrav/Jumping_Down_b");   // (Jumping_Down_a is only a 0.4 m hop in place; _c ends turned 58 deg) load_descent(dn_climb, "mx/Climbing_Down");
 }
 
 // a descent clip measured: how high its ledge is over its floor (its feet at the start against at the end), when its
@@ -71,6 +72,7 @@ bool Motor::descend_probe(const Vector3 &p_fwd) {
 	}
 	if (drop < 0.3f || drop > 2.0f) return false;   // (no drop; or higher: the fall and its landing)
 	Descent *d = drop <= 0.65f ? &dn_hop : (drop <= 1.2f ? &dn_jump : &dn_climb);
+	if (!d->c.ok() && d == &dn_climb) load_descent(dn_climb, "mx/Climbing_Down");   // (the "mx" library can come after the motor)
 	if (!d->c.ok()) return false;
 	if (limbs) { limbs->lock_on = false; limbs->unlock_all(); }
 	rate = 1.0f;
@@ -107,7 +109,26 @@ void Motor::jump_start(const Vector3 &p_dir, float p_want_speed) {
 		st = RUNJUMP; n_jumps++;
 		return;
 	}
-	// standing or walking: the take-off, then the flight
+	// standing: a whole jump in place (its own dip, push, flight and landing); walking: a leap off one foot, then on in
+	// the flight to a soft landing (Yasin, 24 Nov: "definitely standing and walking jumps, not running jump")
+	if (speed < 0.3f && ai_stand.ok() && !(p_dir.length() > 0.1f)) {
+		rate = 1.0f;
+		root_start(ai_stand, 0.0, 0.15f, yaw, nullptr, false);
+		rp.c = &ai_stand;
+		st = RUNJUMP; n_jumps++;
+		return;
+	}
+	if (ai_walk.ok()) {
+		if (p_dir.length() > 0.1f && speed < 0.3f) yaw = std::atan2((float)p_dir.x, (float)p_dir.z);
+		rate = 1.0f;
+		double t0 = 0.0; float c = 0.0f;
+		if (cur && speed >= 0.3f) t0 = best_entry(*cur->d, t, *ai_walk.d, 0.0, 0.25, &c);
+		root_start(ai_walk, t0, 0.15f, yaw, nullptr, false);
+		rp.c = &ai_walk;
+		st = RUNJUMP; n_jumps++;
+		return;
+	}
+	// (else: the take-off, then the flight)
 	air_v = lvl(fwd_of_yaw()) * std::min(speed, 1.6f);
 	if (p_dir.length() > 0.1f && speed < 0.3f) air_v = lvl(p_dir).normalized() * std::min(p_want_speed, 1.2f);   // (from a stand, a hop the way pushed)
 	rate = 1.0f;

@@ -198,7 +198,7 @@ private:
 	Vector3 trav_anchor(double p_t) const;
 
 	// ---- JUMPS, FALLS, LANDINGS (mo_motor_air.cpp; step 7)
-	Clip ai_up, ai_loop, ai_run, ai_soft, ai_hard, ai_flat, ai_getup;
+	Clip ai_up, ai_loop, ai_run, ai_stand, ai_walk, ai_soft, ai_hard, ai_flat, ai_getup;
 	double tc_soft = 0.0, tc_hard = 0.0, tc_flat = 0.0;   // each landing's first touch of the feet (clip time)
 	Vector3 air_v; float air_top = 0.0f, air_t = 0.0f, jump_v = 4.3f;
 	void load_air();
