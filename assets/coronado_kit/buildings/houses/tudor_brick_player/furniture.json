@@ -241,6 +241,15 @@
           "z": 2.15,
           "yaw": 90,
           "note": "on the west gable wall, which has no window; a print so the plaster is not a blank field"
+        },
+        {
+          "id": "prop_frame_print_large",
+          "cond": "clean",
+          "x": -3.35,
+          "y": 1.4,
+          "z": 3.88,
+          "yaw": 180,
+          "note": "centred over the sofa on the south wall"
         }
       ]
     },
