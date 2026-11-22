@@ -100,7 +100,10 @@ const char *Motor::state_name() const {
 
 Clip Motor::load(const char *p_name) {
 	Clip c;
-	if (!anim || !anim->has_animation(p_name)) return c;
+	if (!anim) return c;
+	const char *alt = style_clip(style, p_name);
+	if (alt && anim->has_animation(alt)) p_name = alt;
+	if (!anim->has_animation(p_name)) return c;
 	c.name = StringName(p_name);
 	c.a = anim->get_animation(c.name);
 	// (cubic between the 30 Hz keys: played in straight lines, a fast turn kinked at every key - the run pivot's hips
@@ -116,14 +119,10 @@ Clip Motor::load(const char *p_name) {
 	return c;
 }
 
-bool Motor::attach(CityPed *p_fig) {
-	fig = p_fig;
-	anim = fig ? fig->anim_player() : nullptr;
-	Skeleton3D *sk = fig ? fig->skeleton() : nullptr;
-	if (!anim || !sk) { fig = nullptr; return false; }
-	// festive's clip libraries (Yasin, 22 Nov: "take only clips from festive work")
-	fig->add_library("pwalk", "player_walk"); fig->add_library("prun", "player_run"); fig->add_library("pidle", "player_idle");
-	fig->add_library("ptrav", "player_trav"); fig->add_library("pact", "player_act");
+// THE MOVEMENT SETS (Yasin, 24 Nov: "we need at least 2 more combination sets like this, with different animations that
+// go well together"): every clip the motor plays is asked for by its set-1 name; mo_sets.cpp gives the set's own clip
+// for it, or none (then set 1's). A set is changed only standing (applied in the idle), all clips loaded again.
+void Motor::load_clips() {
 	n_idles = 0;   // (the idles that face ahead: the -38 degree ones would turn the body in place)
 	for (const char *n : { "pidle/base_idle", "pidle/base_loco", "pidle/base_standing" }) { Clip c = load(n); if (c.ok()) idles[n_idles++] = c; }
 	if (n_idles > 0 && idles[0].d->ground_y > 0.03f && idles[0].d->ground_y < 0.2f) ankle_rest = idles[0].d->ground_y;   // (the standing ankle over the floor)
@@ -158,6 +157,22 @@ bool Motor::attach(CityPed *p_fig) {
 	load_cover();
 	load_carry();
 	load_air();
+}
+
+void Motor::set_style(int p_style) {
+	style_want = std::max(0, std::min(p_style, style_count() - 1));
+	if (fig && (st == OFF || st == IDLE) && style_want != style) { style = style_want; load_clips(); to_idle(0.3f); }
+}
+
+bool Motor::attach(CityPed *p_fig) {
+	fig = p_fig;
+	anim = fig ? fig->anim_player() : nullptr;
+	Skeleton3D *sk = fig ? fig->skeleton() : nullptr;
+	if (!anim || !sk) { fig = nullptr; return false; }
+	// festive's clip libraries (Yasin, 22 Nov: "take only clips from festive work")
+	fig->add_library("pwalk", "player_walk"); fig->add_library("prun", "player_run"); fig->add_library("pidle", "player_idle");
+	fig->add_library("ptrav", "player_trav"); fig->add_library("pact", "player_act");
+	load_clips();
 	if (n_loops == 0 || n_idles == 0) { fig = nullptr; return false; }
 	if (!inert) {   // first on the skeleton: it sees the clip's own pose, the IK after it sees the handed-over one
 		inert = memnew(MoInertial);
@@ -576,6 +591,7 @@ void Motor::ground_feet(Host &p_host) {
 }
 
 void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
+	if (style_want != style && fig && st == IDLE) { style = style_want; load_clips(); to_idle(0.3f); }   // (a new movement set: taken while he stands)
 	if (st == OFF || !cur) return;
 	host = &p_host;
 	// (the feet's pull as DRAWN last frame, read before this step seeks the clip: a pass made mid-step, with the clip

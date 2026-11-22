@@ -89,6 +89,10 @@ void CityPed::make() {
 		// "i want every action in the game animated. literally every action")
 		Ref<AnimationLibrary> mx = rl->load(dir + String("clips_mx_") + g + String(".res"));
 		if (mx.is_valid()) anim->add_animation_library(StringName("mx"), mx);
+		// Yasin's own library from his Drive (tools/people/make_ylib.gd): "yl/Running_3", "yl/LP_Standard_Run" ... (24 Nov:
+		// the clips for the other movement sets)
+		Ref<AnimationLibrary> yl = rl->load(dir + String("clips_yl_") + g + String(".res"));
+		if (yl.is_valid()) anim->add_animation_library(StringName("yl"), yl);
 		if (lib->has_animation("get_up")) { Ref<Animation> a = lib->get_animation("get_up"); getup_len = a->get_length(); }
 		if (anim->has_animation(clip)) { anim->play(clip); if (clip_at >= 0.0) { anim->seek(clip_at, true); anim->pause(); } }
 	}

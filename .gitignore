@@ -29,3 +29,5 @@ __pycache__/
 characters/mixamo/*.fbx
 characters/mixamo2/*.fbx
 characters/mixamo2/*.import
+characters/ylib/*.fbx
+characters/ylib/*.import

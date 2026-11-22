@@ -19,6 +19,8 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
 
 using namespace godot;
 using namespace godot::mo;
@@ -93,7 +95,9 @@ bool Motor::trav_probe(const Vector3 &p_dir, float p_speed) {
 	if (h <= 1.15f) return trav_start(c_low, face, fn, (float)top.y, (float)top.y, false);
 	if (running && h >= 1.6f && c_mid_run.ok()) return trav_start(c_mid_run, face, fn, (float)top.y, (float)top.y, false);
 	if (h <= 1.75f && c_braced.ok() && cr_out.ok()) return trav_start(c_braced, face, fn, (float)top.y, (float)top.y, false, false, nullptr, 1);
-	if (c_hang.ok() && c_mid.ok()) return trav_start(c_hang, face, fn, (float)top.y, (float)top.y, false, false, &c_mid, 0);
+	// (Yasin, 24 Nov, the 2 m climb "sinking into the shape": Stand_To_Freehang was taken hanging from a bar - its body
+	// swings 18-25 cm past its hands, into a wall; Climbing_Single is a wall's climb, its body behind its hands throughout)
+	if (c_mid.ok()) return trav_start(c_mid, face, fn, (float)top.y, (float)top.y, false);
 	return false;
 }
 
@@ -153,12 +157,16 @@ bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_
 		const float e = std::fabs(clip_dist - dist);
 		if (e < best_e) { best_e = e; t0 = k / FPS; }
 	}
-	if (best_e > 0.45f) { tr = was; return false; }   // (too far yet, or too close to fit it: walking on, the old moves)
+	if (best_e > (&p_c == &c_mid && !p_chain ? 0.1f : 0.45f)) { tr = was; return false; }   // (Climbing_Single from the ground: begun only once he is where its own steps up start, its warp small)   // (too far yet, or too close to fit it: walking on, the old moves)
 	const Frame &F0 = D.f[(int)std::lround(t0 * FPS)];
 	tr.c = &p_c; tr.t0 = t0; tr.tc = tc; tr.yaw = yaw_m; tr.edge_p = edge; tr.edge_n = p_n; tr.top_y = p_top_y; tr.start_y = (float)p.y; tr.vault = p_vault;
 	tr.c_contact = C;
 	tr.anchor0 = p - R.xform(Vector3(F0.hips.x, 0.0f, F0.hips.z));   // (the clip's hips over his body now)
 	tr.anchor0.y = p.y;                                                 // (the clip's floor on his ground)
+	{   // (a clip begun with its feet up - Climbing_Single starts on footholds 21 cm up - its feet on his ground)
+		const float lo = std::min((float)F0.foot[0].y, (float)F0.foot[1].y) - 0.10f;
+		if (!p_chain && lo > 0.03f) tr.anchor0.y -= lo;
+	}
 	if (p_chain) {   // (its hips where the drawn hips are: the hang held)
 		const Vector3 dh = fig->bone_world("Bip01_Pelvis");
 		tr.anchor0 = dh - R.xform(F0.hips);

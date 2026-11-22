@@ -80,7 +80,13 @@ class Motor {
 public:
 	enum State { OFF = 0, IDLE, START, MOVE, STOP, TURN, PIVOT, TRAV, CROUCH, STANCE, COVER_IN, COVER, COVER_OUT, CARRY, JUMP, AIR, LAND, RUNJUMP, DESCEND };
 
-	bool attach(CityPed *p_fig);   // loads the libraries, puts MoInertial first on the skeleton; false: no clips
+	bool attach(CityPed *p_fig);
+	// the movement set (0, 1, 2: different clips that go together; mo_sets.cpp) - changed when he next stands
+	void set_style(int p_style);
+	int get_style() const { return style; }
+	static int style_count();
+	static const char *style_clip(int p_style, const char *p_set1);
+	int style = 0, style_want = 0;   // loads the libraries, puts MoInertial first on the skeleton; false: no clips
 	bool ready() const { return fig != nullptr && n_loops > 0; }
 	// take the figure over (from whatever played it) / give it back; p_speed, p_yaw: the body's now
 	void begin(float p_yaw, float p_speed);
@@ -150,7 +156,8 @@ private:
 	uint32_t rng = 0x2545f491u;
 	float rnd();
 
-	Clip load(const char *p_name);
+	Clip load(const char *p_name);   // (by its set-1 name: the set's own clip for it, mo_sets.cpp)
+	void load_clips();
 	void play(const Clip &p_c, double p_t0, float p_blend);
 	int pick_loop(float p_speed, int p_keep) const;
 	void to_idle(float p_blend);

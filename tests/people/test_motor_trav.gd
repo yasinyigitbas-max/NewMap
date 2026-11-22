@@ -51,7 +51,7 @@ func _next() -> void:
 	lane += 1
 	if lane >= LANES.size(): _finish(); return
 	player.global_position = Vector3(lane * 6.0, 0.02, 0.0); player.velocity = Vector3.ZERO
-	t = 0.0; started = false; done_t = -1.0; have = 0; pop = 0.0; seen_states = {}; hand_miss = 0.0; hand_dy = 0.0; snap_ok = false
+	t = 0.0; started = false; done_t = -1.0; have = 0; pop = 0.0; seen_states = {}; hand_miss = 0.0; hand_dy = 0.0; snap_ok = false; into = 0.0; into_at = ""
 	player.call(&"set_move", Vector2.ZERO, false)
 
 func _process(delta: float) -> bool:
@@ -79,6 +79,7 @@ func _process(delta: float) -> bool:
 # the skeleton can be posed more than once a frame (a seek, then its own update with the modifiers): the frame's sample
 # is its LAST pose, taken when the next frame's first one comes
 var pose_frame := -1
+var into := 0.0; var into_at := ""; var body_bones := []
 var snap_pel := Vector3(); var snap_hand := [Vector3(), Vector3()]; var snap_ok := false
 func _on_pose() -> void:
 	var f := Engine.get_process_frames()
@@ -86,6 +87,18 @@ func _on_pose() -> void:
 	pose_frame = f
 	snap_pel = sk.global_transform * sk.get_bone_global_pose(b_pel).origin
 	for s in 2: snap_hand[s] = sk.global_transform * sk.get_bone_global_pose(b_hand[s]).origin
+	# THE BODY INTO THE WALL (Yasin, 24 Nov, the 2 m climb: "sinking into the shape"): the drawn pelvis, spine, head,
+	# knees, feet in front of the face while under its top (a climb; 5 cm of the body's own thickness allowed)
+	if body_bones.is_empty():
+		for b in ["Bip01_Pelvis", "Bip01_Spine1", "Bip01_Neck", "Bip01_Head", "Bip01_L_Calf", "Bip01_R_Calf", "Bip01_L_Foot", "Bip01_R_Foot"]: body_bones.append(sk.find_bone(b))
+	if lane >= 0 and lane < LANES.size() and LANES[lane][3] == "climb":
+		var h: float = LANES[lane][0]
+		for bi in body_bones:
+			if bi < 0: continue
+			var w: Vector3 = sk.global_transform * sk.get_bone_global_pose(bi).origin
+			if w.y < h - 0.12 and absf(w.x - lane * 6.0) < 1.5:
+				var dz: float = w.z - Z0
+				if dz > into: into = dz; into_at = "%s t %.2f clip %s" % [sk.get_bone_name(bi), t, str(player.call(&"get_motor_state").get("clip", ""))]
 	snap_ok = true
 	if trace and lane == 0 and t > 4.8 and t < 5.15:
 		var inn = sk.get_children().filter(func(c): return c.get_class() == "MoInertial")
@@ -132,6 +145,7 @@ func _judge(ms: Dictionary) -> void:
 	_check(sky < 0.10, "%s: no sky (hips at most 10 cm over the clip's own: %.1f cm)" % [name, sky * 100.0])
 	_check(hm < 0.05 and hdy < 0.03, "%s: hands on the edge (%.1f cm off, %.1f cm in height)" % [name, hm * 100.0, hdy * 100.0])
 	_check(end_ok, "%s: ends %s (at %s)" % [name, "beyond it on the ground" if L[3] == "vault" else "standing on the top", str(p.snapped(Vector3(0.01, 0.01, 0.01)))])
+	if L[3] == "climb": _check(into < 0.05, "%s: the body never into the wall (%.1f cm in at most, %s)" % [name, into * 100.0, into_at])
 	_check(pop < 0.03, "%s: no pop (the hips' rise changed %.1f cm a frame at most, at %s)" % [name, pop * 100.0, pop_at])
 
 func _finish() -> void:
