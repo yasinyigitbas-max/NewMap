@@ -16,7 +16,7 @@ var trace := false
 var lane := -1; var t := 0.0; var t_prev := 0.0
 # [name, ledge height (0: flat), run, what to do]
 const LANES := [["jump standing", 0.0, false, "jump"], ["jump walking", 0.0, false, "walkjump"], ["jump running", 0.0, true, "walkjump"],
-	["step off 0.5 m", 0.5, false, "off"], ["off a 1 m ledge", 1.0, false, "off"], ["off a 1.8 m ledge", 1.8, false, "off"], ["off a 3.5 m ledge", 3.5, false, "off"], ["off an 8 m ledge", 8.0, false, "off"], ["run off a 2 m ledge", 2.0, true, "off"]]
+	["step off 0.6 m", 0.6, false, "off"], ["step off 0.35 m", 0.35, false, "step"], ["off a 1 m ledge", 1.0, false, "off"], ["off a 1.8 m ledge", 1.8, false, "off"], ["off a 3.5 m ledge", 3.5, false, "off"], ["off an 8 m ledge", 8.0, false, "off"], ["run off a 2 m ledge", 2.0, true, "off"]]
 var states := {}; var clips := {}
 var pel_lo := 9.0; var pel_hi := -9.0; var off_frames := 0; var touch_miss := -1.0; var in_land := false
 var land_y := 0.0
@@ -55,7 +55,7 @@ func _act() -> void:
 			if _at(0.6): player.call(&"set_move", Vector2(0, 1), L[2])
 			if _at(2.2): player.call(&"jump")
 			if _at(3.6): player.call(&"set_move", Vector2.ZERO, false)
-		"off":
+		"off", "step":
 			if _at(0.6): player.call(&"set_move", Vector2(0, 1), L[2])
 			if _at(7.0): player.call(&"set_move", Vector2.ZERO, false)
 	if _at(14.0): _judge()
@@ -120,8 +120,12 @@ func _judge() -> void:
 		else: _check(clips.has("ptrav/Jumping_c"), "%s: the walking leap (Jumping_c)" % name)
 	else:
 		var h: float = L[1]
+		if L[3] == "step":   # under 0.5 m: walked down, no jump
+			_check(not states.has("descend") and not states.has("air") and not states.has("runjump"), "%s: stepped down, no jump (%s)" % [name, str(states.keys())])
+			_check(absf(p.y - land_y) < 0.1, "%s: on the ground below (at %.2f)" % [name, p.y])
+			_next(); return
 		if not L[2] and h <= 2.0:   # walking off a ledge up to 2 m: down it, not off it (Yasin, 23 Nov: "step down or slower jump down or climb down when not running")
-			var dw := "ptrav/Jumping_Down_b" if h <= 1.2 else "mx/Climbing_Down"
+			var dw := "mx/Climbing_Down"
 			_check(states.has("descend") and clips.has(dw) and not states.has("air"), "%s: down it with %s, no fall" % [name, dw])
 			_check(foot_lo > land_y + 0.105 - 0.05, "%s: the feet never under the ground (lowest %.2f over it)" % [name, foot_lo - land_y - 0.105])
 			_check(absf(p.y - land_y) < 0.1 and String(ms.get("state", "")) in ["idle", "stop", "move"], "%s: standing again on the ground (at %.2f, %s)" % [name, p.y, ms.get("state", "")])

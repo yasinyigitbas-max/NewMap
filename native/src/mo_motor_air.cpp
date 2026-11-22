@@ -68,10 +68,10 @@ bool Motor::descend_probe(const Vector3 &p_fwd) {
 		const Vector3 q = p + p_fwd * a;
 		const float g = ground_below(Vector3(q.x, here, q.z), 3.0f);
 		if (g < -1e8f) { drop = 9.0f; break; }
-		if (here - g >= 0.3f) { drop = here - g; ground = g; break; }
+		if (here - g >= 0.5f) { drop = here - g; ground = g; break; }   // (under 0.5 m: stepped down, the feet fitted)
 	}
-	if (drop < 0.3f || drop > 2.0f) return false;   // (no drop; or higher: the fall and its landing)
-	Descent *d = drop <= 0.65f ? &dn_hop : (drop <= 1.2f ? &dn_jump : &dn_climb);
+	if (drop < 0.5f || drop > 2.0f) return false;   // (no drop; or higher: the fall and its landing)
+	Descent *d = &dn_climb;   // (walking off an edge: climbed down - Yasin, 24 Nov: "if we walk off the edge we should look like climbing down"; running: the leap off it and its landing)
 	if (!d->c.ok() && d == &dn_climb) load_descent(dn_climb, "mx/Climbing_Down");   // (the "mx" library can come after the motor)
 	if (!d->c.ok()) return false;
 	if (limbs) { limbs->lock_on = false; limbs->unlock_all(); }
