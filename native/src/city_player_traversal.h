@@ -33,6 +33,7 @@ struct TravState {
 	StringName q_clip[3]; double q_t0[3] = {}, q_end[3] = {}; float q_fig_y[3] = {}; bool q_has_y[3] = {}; int nq = 0, q_then = THEN_IDLE;
 	// IN THE AIR
 	float air_t = 0.0f, floor_y = 0.0f, off_t = 0.0f; StringName air_clip; Vector3 air_v; bool air_long = false;
+	StringName air_take; double air_take_t0 = 0.0, air_take_end = 0.0; bool air_in_take = false; float air_take_blend = 0.0f; bool air_take_hold = false;   // (off an edge: the take's own leap, the fall only after it)
 	// COVER: the wall's point and its normal (out toward him), high (standing) or low (crouched) cover
 	Vector3 wall_p, wall_n; bool high = false;
 	int cov_dir = 0; float cov_move_t = 0.0f, cov_edge_t = 0.0f, cov_away_t = 0.0f, cov_peek_cd = 0.0f; StringName cov_clip; bool cov_flip = false;

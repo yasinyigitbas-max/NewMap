@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <vector>
 
+#include <godot_cpp/classes/animation.hpp>
 #include <godot_cpp/classes/audio_stream.hpp>
 #include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/character_body3d.hpp>
@@ -20,6 +21,7 @@
 #include <godot_cpp/variant/vector3.hpp>
 
 #include "city_player_traversal.h"
+#include "city_player_moves.h"
 
 namespace godot {
 
@@ -156,7 +158,7 @@ private:
 	void trav_start(const StringName &p_clip, double p_t0, double p_end, float p_yaw, int p_then);
 	void trav_clip(float p_dt, const Vector3 &p_want);
 	void trav_done();
-	void trav_air(const Vector3 &p_v, float p_from_y);
+	void trav_air(const Vector3 &p_v, float p_from_y, const StringName &p_take = StringName(), double p_take_t = -1.0);
 	void trav_air_step(float p_dt);
 	void trav_land(float p_drop);
 	bool trav_jump(const Vector3 &p_want);
@@ -166,6 +168,25 @@ private:
 	bool trav_edge(float p_dt);
 public:
 	Dictionary get_trav() const;
+	// THE OUTDOOR MOVES (Yasin, 22 Nov: carrying, benches, bumps and stumbles, the sidestep, the look-at, pick up / put
+	// down, the lean on a wall; city_player_moves.cpp)
+	MoveState mvs;
+	bool moves_physics(float p_dt, const Vector2 &p_mv, const Vector3 &p_want, const Vector3 &p_fwd, const Vector3 &p_right);
+	void moves_layer(float p_dt);
+	void moves_start_fit(const StringName &p_clip, float p_yaw, const Vector3 &p_hips_at, double p_hips_t, int p_then, bool p_ground = false);
+	void moves_steer(const Vector3 &p_to, const Vector3 &p_fwd, const Vector3 &p_right);
+	void moves_end_steer();
+	bool moves_interact(const Vector3 &p_fwd, const Vector3 &p_right);
+	Vector3 moves_hands_target(class Node3D *p_pk) const;
+	void carry_take(class Node3D *p_n, const String &p_name);
+	Ref<class Animation> fig_anim(const StringName &p_clip) const;
+	void set_carry(const String &p_name);
+	String get_carry() const;
+	void interact_move();
+	void set_look(const Vector3 &p_at, bool p_on);
+	void set_trip_chance(double p_c);
+	void bump(const Vector3 &p_from_dir);
+	Dictionary get_moves() const;
 	void set_trav_mess(double p_chance);
 	void set_facing(double p_yaw);   // (tests, the walk test's ledges) he and the view face that way
 private:

@@ -157,7 +157,7 @@ void CityPlayer::trav_clip(float p_dt, const Vector3 &p_want) {
 	if (s.air_at >= 0.0 && t >= s.air_at) {   // off the ledge / up in the air: gravity has him
 		Vector3 v = vel;
 		if (s.air_vy > 0.0f) v = Vector3(s.vel_out.x, s.air_vy, s.vel_out.z);
-		trav_air(v, s.from_y);
+		trav_air(v, s.from_y, s.clip, t);   // (on in the same take: its flight, then the fall only if it is a long one)
 		return;
 	}
 	if (s.cancel_at >= 0.0 && t >= s.cancel_at && p_want.length() > 0.3f) { s.then = TravState::THEN_WALK; s.nq = 0; trav_done(); return; }
@@ -190,7 +190,10 @@ void CityPlayer::trav_done() {
 	if (hit) p.y = g;
 	set_global_position(p);
 	s.mode = TravState::NONE;
-	if (!hit && s.then != TravState::THEN_COVER) { trav_air(Vector3(s.vel_out.x, 0, s.vel_out.z), (float)body.y); return; }
+	if (!hit && s.then != TravState::THEN_COVER) {   // (a take that ended over nothing: a jump down's on in its own flight; else the step off)
+		const bool jump_take = String(s.clip).begins_with("ptrav/Jump");
+		trav_air(Vector3(s.vel_out.x, 0, s.vel_out.z), (float)body.y, jump_take ? s.clip : StringName(), jump_take ? s.t_end : -1.0); return;
+	}
 	float ny = y;
 	if (s.then == TravState::THEN_IDLE) ny = y + wrapf(face_e - (-0.68f));         // (the standing idles' hips face -39 degrees)
 	else if (s.then == TravState::THEN_CROUCH) ny = y + wrapf(face_e - 0.087f);    // (the crouching idle's: +5)
@@ -224,7 +227,7 @@ static Vector3 air_fig(const CityPed *f, const StringName &c, double t, const Ve
 }
 
 // IN THE AIR: falling (or flying from a jump) under gravity; the clip by the fall ahead
-void CityPlayer::trav_air(const Vector3 &p_v, float p_from_y) {
+void CityPlayer::trav_air(const Vector3 &p_v, float p_from_y, const StringName &p_take, double p_take_t) {
 	TravState &s = trv;
 	s.mode = TravState::AIR; s.air_v = p_v; s.from_y = p_from_y; s.air_t = 0.0f; s.token++;
 	s.prev_body = get_global_position();
@@ -234,6 +237,27 @@ void CityPlayer::trav_air(const Vector3 &p_v, float p_from_y) {
 	s.air_long = drop > 7.0f;
 	static const StringName F_AIR(TN("Falling_Air")), F_IDLE(TN("Falling_Idle"));
 	s.air_clip = s.air_long ? F_IDLE : F_AIR;
+	// (Yasin, 22 Nov 05:50: "jumping off an edge plays the free fall": off an edge he leaps or steps off with the take's own
+	// push-off and flight; the fall's clip only once the take's flight is spent and he is still dropping, a long drop)
+	StringName take = p_take; double t0 = p_take_t;
+	if (take == StringName()) {   // (walked or run off it: the step off / the running leap)
+		static const StringName STEP(TN("Jumping_Down_b")), RUNJ(TN("Running_Jump_a"));
+		const bool run_off = Vector3(p_v.x, 0, p_v.z).length() > 2.2f;
+		take = run_off ? RUNJ : STEP;
+		t0 = run_off ? fig->clip_meta(take, "air_at", 0.3) : fig->clip_meta(take, "leave_at", 0.5);
+	}
+	s.air_in_take = fig->clip_len(take) > 0.0;
+	if (s.air_in_take) {
+		const double land = fig->clip_meta(take, "land_at", -1.0);
+		s.air_take = take; s.air_take_t0 = std::max(t0, 0.0);
+		s.air_take_end = land > s.air_take_t0 + 0.1 ? land - 0.08 : std::min(s.air_take_t0 + 0.4, fig->clip_len(take));
+		s.air_take_hold = drop <= 2.6f;   // (a short drop: no fall clip at all, the take's last pose in the air held till his feet meet the ground)
+		s.air_take_blend = 0.0f;   // (the same take on from the jump: held on at once, no restart)
+		if (fig->current_clip() != take) { fig->set_next_blend(0.2); fig->set_next_seek(s.air_take_t0); s.air_take_blend = 0.25f; }
+		trav_hand(trav_hips_now(), air_fig(fig, take, s.air_take_t0, get_global_position(), yaw), yaw, 0.3);   // (the drawn hips eased over from where they were)
+		s.last_move = String(take).replace("ptrav/", "") + String(" (off the edge)");
+		return;
+	}
 	fig->set_next_blend(0.3);
 	trav_hand(trav_hips_now(), air_fig(fig, s.air_clip, 0.0, get_global_position(), yaw), yaw, 0.3);
 	s.last_move = String(s.air_clip).replace("ptrav/", "");
@@ -251,8 +275,24 @@ void CityPlayer::trav_air_step(float p_dt) {
 	speed = 0.0f;
 	const Vector3 p = get_global_position();
 	s.prev_body = p;
-	if (is_on_floor() && v.y <= 0.0f) { trav_land(s.from_y - (float)p.y); return; }
-	if (p.y < s.from_y - 300.0f) { s.mode = TravState::NONE; return; }   // (nothing under him at all)
+	if (is_on_floor() && v.y <= 0.0f) { s.air_in_take = false; trav_land(s.from_y - (float)p.y); return; }
+	if (p.y < s.from_y - 300.0f) { s.mode = TravState::NONE; s.air_in_take = false; return; }   // (nothing under him at all)
+	if (s.air_in_take) {
+		const double t = std::min(s.air_take_t0 + s.air_t, s.air_take_hold ? s.air_take_end : 1e9);
+		if (t < s.air_take_end || s.air_take_hold) {
+			// (the take's flight: its first frames blended in from what he did, then held frame by frame, never looped)
+			const Vector3 fa = air_fig(fig, s.air_take, t, p, yaw);
+			fig->drive(Transform3D(Basis(UP, yaw + trav_yo(s, p_dt)), fa + trav_fo(p_dt)), s.air_take, 1.0, s.air_t < s.air_take_blend ? -2.0 : t);
+			fig_drawn_at = fa;
+			if (plant) { plant->set_active(false); plant->set_influence(0.0f); }
+			return;
+		}
+		// (still dropping when its flight is spent: a long drop, into the fall)
+		s.air_in_take = false;
+		fig->set_next_blend(0.3);
+		trav_hand(trav_hips_now(), air_fig(fig, s.air_clip, 0.0, p, yaw), yaw, 0.3);
+		s.last_move = String(s.air_clip).replace("ptrav/", "");
+	}
 	const Vector3 fa = air_fig(fig, s.air_clip, fig->current_clip() == s.air_clip ? fig->clip_pos() : 0.0, p, yaw);
 	fig->drive(Transform3D(Basis(UP, yaw + trav_yo(s, p_dt)), fa + trav_fo(p_dt)), s.air_clip, 1.0, -1.0);
 	fig_drawn_at = fa;
@@ -813,6 +853,7 @@ bool CityPlayer::trav_physics(float p_dt, const Vector2 &p_mv, const Vector3 &p_
 	const Vector3 want = (p_fwd * p_mv.y + p_right * p_mv.x) * top;
 	const float wl = want.length();
 	if (s.mode != TravState::NONE && (get_global_position() - s.prev_body).length() > 1.5f) { s.mode = TravState::NONE; s.fo_t = 0.0f; set_velocity(Vector3()); }   // (put somewhere else: the move is off)
+	if (moves_physics(p_dt, p_mv, want, p_fwd, p_right)) return true;   // (a seat, a pick-up, a bump, a stumble, the sidestep: city_player_moves.cpp)
 	if (s.mode == TravState::CLIP) { trav_clip(p_dt, want); return true; }
 	if (s.mode == TravState::AIR) { trav_air_step(p_dt); return true; }
 	if (s.mode == TravState::COVER) { trav_cover(p_dt, want); return true; }
@@ -854,7 +895,7 @@ bool CityPlayer::trav_physics(float p_dt, const Vector2 &p_mv, const Vector3 &p_
 			s.vel_out = fwd_of(yaw_of(want)) * (pr_tier >= 2 ? fast_speed : run_speed); s.plant_on = true; s.n_sprint_out++;
 			return true;
 		}
-		if (wl > 0.3f && trav_cover_enter(want)) return true;
+		if (wl > 0.3f && !(mvs.prop && mvs.two) && mvs.act == MoveState::NONE && trav_cover_enter(want)) return true;
 		// sideways (the stick across the view): he keeps facing the view and sneaks to the side
 		if (wl > 0.3f && std::fabs(p_mv.x) > 0.45f && std::fabs(p_mv.x) > std::fabs(p_mv.y) * 1.2f) {
 			s.strafe = true; s.strafe_yaw = yaw_of(p_fwd);
@@ -863,9 +904,9 @@ bool CityPlayer::trav_physics(float p_dt, const Vector2 &p_mv, const Vector3 &p_
 	}
 	if (jw && floor) {
 		if (crouch) { crouch = false; s.crouch_was = false; }
-		else if (trav_jump(want)) return true;
+		else if (!(mvs.prop && mvs.two) && mvs.act == MoveState::NONE && trav_jump(want)) return true;   // (a box in his arms: no jumps, vaults or climbs)
 	}
-	if (!crouch && floor && wl > 0.3f && speed > 0.3f && trav_obstacle(want, p_dt, false)) return true;
+	if (!crouch && floor && wl > 0.3f && speed > 0.3f && !(mvs.prop && mvs.two) && mvs.act == MoveState::NONE && trav_obstacle(want, p_dt, false)) return true;   // (not on his way to a seat or a pick-up: the bench is no wall to vault)
 	if (!crouch && floor && wl < 0.05f && speed < 0.05f && step_mode == 0) { if (trav_edge(p_dt)) return true; }
 	else { s.edge_t = 0.0f; s.edge_probe_t = 0.0f; }
 	return false;

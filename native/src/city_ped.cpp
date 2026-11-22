@@ -98,6 +98,9 @@ void CityPed::make() {
 		// jumps, landings, falls, the crouch, cover, vaults and climbs: "ptrav/Jump_a" ... (tools/people/make_player_traversal.gd)
 		Ref<AnimationLibrary> ptrav = rl->load(dir + String("clips_player_trav_") + g + String(".res"));
 		if (ptrav.is_valid()) anim->add_animation_library(StringName("ptrav"), ptrav);
+		// carrying, benches, bumps and stumbles, the sidestep, the put down: "pact/Walking_Carry" ... (tools/people/make_player_actions.gd)
+		Ref<AnimationLibrary> pact = rl->load(dir + String("clips_player_act_") + g + String(".res"));
+		if (pact.is_valid()) anim->add_animation_library(StringName("pact"), pact);
 		if (lib->has_animation("get_up")) { Ref<Animation> a = lib->get_animation("get_up"); getup_len = a->get_length(); }
 		if (anim->has_animation(clip)) { anim->play(clip); if (clip_at >= 0.0) { anim->seek(clip_at, true); anim->pause(); } }
 	}

@@ -373,7 +373,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		space_was = space; c_was = ck;
 		cam_yaw += ((in->is_key_pressed(KEY_LEFT) ? 1.0f : 0.0f) - (in->is_key_pressed(KEY_RIGHT) ? 1.0f : 0.0f) - (std::fabs(in->get_joy_axis(0, JOY_AXIS_RIGHT_X)) > 0.2 ? (float)in->get_joy_axis(0, JOY_AXIS_RIGHT_X) : 0.0f)) * 2.2f * dt;
 		const bool e = in->is_key_pressed(KEY_E) || in->is_joy_button_pressed(0, JOY_BUTTON_X);
-		if (e && !e_was) emit_signal("interact");
+		if (e && !e_was) { emit_signal("interact"); mvs.e_want = true; }   // (and the moves: a seat, a pick-up, a wall to lean on)
 		e_was = e;
 	}
 	if (frozen || act_left > 0.0) mv = Vector2();
@@ -834,7 +834,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	move_and_slide();
 	// STEP UP (Yasin: "make the small heights like 20 cm walkable over"): walking into something no higher than 24 cm (a
 	// kerb, a step) he is lifted onto it: free to rise 24 cm, free 30 cm ahead up there, and something to stand on there
-	if (!swimming && !frozen && !combat && !crouch && Vector3(want.x, 0, want.z).length() > 0.3f && try_climb(Vector3(want.x, 0, want.z).normalized())) {}
+	if (!swimming && !frozen && !combat && !crouch && mvs.act == MoveState::NONE && Vector3(want.x, 0, want.z).length() > 0.3f && try_climb(Vector3(want.x, 0, want.z).normalized())) {}
 	else if (!swimming && !airborne && !frozen && is_on_wall() && Vector3(want.x, 0, want.z).length() > 0.3f) {
 		const Vector3 dir = Vector3(want.x, 0, want.z).normalized();
 		Transform3D t2 = get_global_transform();
@@ -1264,6 +1264,7 @@ String CityPlayer::get_clip() const { return fig ? String(fig->current_clip()) :
 
 void CityPlayer::_process(double p_delta) {
 	pm::Scope _pm(pm::PLAYER);   // (the slow-frame marks, perf_marks.h)
+	moves_layer((float)std::min(p_delta, 0.1));   // (the carry, the look-at: city_player_moves.cpp)
 	if (!cam) return;
 	const float dt = (float)std::min(p_delta, 0.1);
 	const Vector3 head = get_global_position() + Vector3(0, 1.55f, 0);
@@ -1340,6 +1341,13 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_move_tier", "direction", "tier"), &CityPlayer::set_move_tier);
 	ClassDB::bind_method(D_METHOD("get_tier"), &CityPlayer::get_tier);
 	ClassDB::bind_method(D_METHOD("get_trav"), &CityPlayer::get_trav);
+	ClassDB::bind_method(D_METHOD("set_carry", "name"), &CityPlayer::set_carry);
+	ClassDB::bind_method(D_METHOD("get_carry"), &CityPlayer::get_carry);
+	ClassDB::bind_method(D_METHOD("interact_move"), &CityPlayer::interact_move);
+	ClassDB::bind_method(D_METHOD("set_look", "at", "on"), &CityPlayer::set_look);
+	ClassDB::bind_method(D_METHOD("set_trip_chance", "chance"), &CityPlayer::set_trip_chance);
+	ClassDB::bind_method(D_METHOD("bump", "push_dir"), &CityPlayer::bump);
+	ClassDB::bind_method(D_METHOD("get_moves"), &CityPlayer::get_moves);
 	ClassDB::bind_method(D_METHOD("set_trav_mess", "chance"), &CityPlayer::set_trav_mess);
 	ClassDB::bind_method(D_METHOD("set_facing", "yaw"), &CityPlayer::set_facing);
 	ClassDB::bind_method(D_METHOD("get_run_speed"), &CityPlayer::get_run_speed);

@@ -24,6 +24,7 @@ extends "res://tools/people/make_player_walks.gd"
 ##   lat         (a sideways loop) +1 it goes to his left, -1 to his right (as drawn)
 ##   lo0 / lo_end the lower foot's height in the figure at the start / end (m; standing: about 0.10)   hand0   the higher
 ##               hand's height at the first frame (a take that starts hanging: where the edge is)   key_at   elev's highest
+##   hands_low_at / hands_low_x y z  when both hands are lowest, and where (between them; the figure's frame, m)
 ##   root        true: one-shot with its root motion in the hips   turning: its turn is taken out (meta yaw turns the body)
 const SRC := "res://tools/people/player_trav_sources/clips_mxtrav_%s.res"
 ## [clip, source take, mirrored]
@@ -94,6 +95,11 @@ func _put_back(a: Animation) -> void:
 	a.set_meta("vz_put_back", true)
 
 func _initialize() -> void:
+	_build(TAKES, SRC, "clips_player_trav_%s.res", "PLAYER_TRAV")
+	quit(0)
+
+## (also make_player_actions.gd: the same fit for another set of takes)
+func _build(takes: Array, src_path: String, out_path: String, tag: String) -> void:
 	for gender in ["male", "female"]:
 		var scene: Node = (load(DIR + "hero_%s.scn" % gender) as PackedScene).instantiate()
 		sk = scene.find_children("*", "Skeleton3D", true, false)[0]
@@ -111,10 +117,10 @@ func _initialize() -> void:
 			mirror_of[b] = sk.find_bone(other) if sk.find_bone(other) >= 0 else b
 		var lat := (rest_g[sk.find_bone("Bip01_L_Thigh")].origin - rest_g[sk.find_bone("Bip01_R_Thigh")].origin).normalized()
 		M = Basis(Vector3(1 - 2 * lat.x * lat.x, -2 * lat.x * lat.y, -2 * lat.x * lat.z), Vector3(-2 * lat.y * lat.x, 1 - 2 * lat.y * lat.y, -2 * lat.y * lat.z), Vector3(-2 * lat.z * lat.x, -2 * lat.z * lat.y, 1 - 2 * lat.z * lat.z))
-		var src: AnimationLibrary = load(SRC % gender)
+		var src: AnimationLibrary = load(src_path % gender)
 		var out := AnimationLibrary.new()
 		var lf := sk.find_bone("Bip01_L_Foot"); var rf := sk.find_bone("Bip01_R_Foot"); var lt := sk.find_bone("Bip01_L_Thigh"); var rt := sk.find_bone("Bip01_R_Thigh"); var lh := sk.find_bone("Bip01_L_Hand"); var rh := sk.find_bone("Bip01_R_Hand")
-		for T in TAKES:
+		for T in takes:
 			var a := _copy(src.get_animation(T[1]))
 			var loop := a.loop_mode != Animation.LOOP_NONE
 			var turning := String(T[1]).to_lower().contains("turn") and a.has_meta("yaw") and absf((a.get_meta("yaw") as PackedFloat32Array)[-1]) > 0.35
@@ -125,10 +131,13 @@ func _initialize() -> void:
 			# the feet, the hips' facing, frame by frame
 			var n := int(round(a.length * FPS)) + 1
 			var lo := PackedFloat32Array(); var face := PackedFloat32Array(); var hand0 := 0.0
+			var hl_y := 1e9; var hl_at := 0.0; var hl_p := Vector3()   # (the hands' lowest, both: the put down's moment)
 			for f in n:
 				var g := _globals(_locals(a, minf(f / FPS, a.length)))
 				if f == 0: hand0 = maxf((skel_x * g[lh].origin).y, (skel_x * g[rh].origin).y)
 				lo.append(minf((skel_x * g[lf].origin).y, (skel_x * g[rf].origin).y))
+				var hm: Vector3 = (skel_x * g[lh].origin + skel_x * g[rh].origin) * 0.5
+				if hm.y < hl_y: hl_y = hm.y; hl_at = f / FPS; hl_p = hm
 				var th: Vector3 = skel_x * g[lt].origin - skel_x * g[rt].origin
 				var fw := -Vector3.UP.cross(th)
 				face.append(atan2(fw.x, fw.z))
@@ -138,6 +147,7 @@ func _initialize() -> void:
 			a.set_meta("elev", elev)
 			var e0 := elev[0]; var e1 := elev[n - 1]
 			a.set_meta("elev0", e0); a.set_meta("rise", e1 - e0)
+			a.set_meta("hands_low_at", hl_at); a.set_meta("hands_low_x", hl_p.x); a.set_meta("hands_low_y", hl_p.y); a.set_meta("hands_low_z", hl_p.z)   # (the figure's frame, m)
 			a.set_meta("lo0", lo[0]); a.set_meta("lo_end", lo[n - 1]); a.set_meta("hand0", hand0)
 			var apex := 0
 			for f in n: if elev[f] > elev[apex]: apex = f
@@ -167,8 +177,7 @@ func _initialize() -> void:
 				var lx := tr.x * (-1.0 if absf(face[0]) > PI * 0.5 else 1.0)
 				a.set_meta("lat", 0 if absf(tr.x) < 0.3 else (1 if lx > 0.0 else -1))
 			out.add_animation(T[0], a)
-			print("PLAYER_TRAV %s %-28s <- %-34s %.2fs %s elev0 %.2f rise %+.2f air %.2f apex %.2f land %.2f leave %.2f impact %.2f top %.2f face %.0f->%.0f%s%s%s" % [gender, T[0], a.get_meta("source"), a.length, "loop" if loop else "once", e0, e1 - e0, air, ap, land, leave, impact, top, rad_to_deg(face[0]), rad_to_deg(face[n - 1]), " flip" if a.get_meta("flip") else "", " lat %d" % int(a.get_meta("lat")) if loop else "", " turning" if turning else (" root+travel" if a.has_meta("vz_put_back") else "")])
+			print(tag + " %s %-28s <- %-34s %.2fs %s elev0 %.2f rise %+.2f air %.2f apex %.2f land %.2f leave %.2f impact %.2f top %.2f face %.0f->%.0f%s%s%s" % [gender, T[0], a.get_meta("source"), a.length, "loop" if loop else "once", e0, e1 - e0, air, ap, land, leave, impact, top, rad_to_deg(face[0]), rad_to_deg(face[n - 1]), " flip" if a.get_meta("flip") else "", " lat %d" % int(a.get_meta("lat")) if loop else "", " turning" if turning else (" root+travel" if a.has_meta("vz_put_back") else "")])
 		scene.free()
-		var err := ResourceSaver.save(out, DIR + "clips_player_trav_%s.res" % gender, ResourceSaver.FLAG_COMPRESS)
-		print("PLAYER_TRAV saved %s %s (%d clips)" % [gender, "ok" if err == OK else "ERROR %d" % err, out.get_animation_list().size()])
-	quit(0)
+		var err := ResourceSaver.save(out, DIR + out_path % gender, ResourceSaver.FLAG_COMPRESS)
+		print(tag + " saved %s %s (%d clips)" % [gender, "ok" if err == OK else "ERROR %d" % err, out.get_animation_list().size()])
