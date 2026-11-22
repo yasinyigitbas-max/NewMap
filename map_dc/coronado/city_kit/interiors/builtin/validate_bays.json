@@ -338,8 +338,15 @@
   "all_bays_tris": 2290,
   "ext_tris": 1880
  },
- "commercial/com_bank": {
+ "commercial/com_bank|0": {
+  "kinds": [
+   "bank"
+  ],
   "problems": []
+ },
+ "commercial/com_bank|near": {
+  "all_bays_tris": 2430,
+  "ext_tris": 1724
  },
  "commercial/com_bar_crown|0": {
   "kinds": [

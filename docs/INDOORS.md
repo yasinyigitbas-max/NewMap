@@ -25,56 +25,19 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 
 | prop | class | near tris max | size (w x d x h m) | stand-in now | used by kinds |
 |---|---|---|---|---|---|
-| altar_table | medium | 800 | 2.0 x 0.8 x 1.0 | display_table | chapel, church |
-| atm_wall | small | 500 | 0.8 x 0.4 x 1.7 (wall) | lottery_atm_stand | bank |
-| chart_table | medium | 800 | 1.6 x 1.0 x 0.95 | display_table | broker |
-| church_pew | large | 1200 | 3.0 x 0.6 x 0.95 | waiting_bench x2 in line | chapel, church |
-| conference_table | large | 1200 | 3.0 x 1.2 x 0.75 | dining_table | architect, law, office, sales_office |
-| court_bench | medium | 900 | 3.0 x 0.6 x 0.95 (gallery) | waiting_bench | court |
-| cubicle_partition | medium | 600 | 1.6 x 0.06 x 1.3 | none (desks in pairs) | office |
-| dental_chair | large | 1500 | 1.9 x 0.8 x 1.2 + lamp arm | barber_chair | dentist |
-| departure_board | small | 350 | 2.0 x 0.1 x 0.6 (hung) | menu_board | transit |
-| directory_board | tiny | 250 | 1.0 x 0.05 x 1.6 (wall) | poster_case | campus_hall, hospital_lobby, lobby, permits |
-| drafting_table | medium | 800 | 1.4 x 0.9 x 1.0 (tilted top) | display_table | architect |
-| drive_thru_window | small | 400 | 1.2 x 0.4 x 1.2 (wall) | none | drive_thru |
-| exam_bed | medium | 700 | 1.9 x 0.7 x 0.75 | tattoo_bed_chair | clinic, er |
-| judge_bench | large | 1800 | 3.6 x 1.0 x 1.2 (on a 0.3 m step) | shop_counter x3 | court |
-| jury_box | large | 1500 | 4.0 x 1.6 x 1.0 (2 rows) | waiting_bench x2 | court |
-| key_rack_wall | tiny | 250 | 0.8 x 0.06 x 0.6 (wall) | pegboard_wall | hotel, motel_office |
-| lectern | small | 450 | 0.6 x 0.5 x 1.2 | display_plinth | chapel, church, court, lecture |
-| lecture_seating_row | large | 1500 | 4.0 x 0.8 x 0.9 (fixed tablet-arm row) | theatre_seat row | lecture |
-| listing_board_wall | small | 400 | 1.8 x 0.05 x 1.2 (wall/window) | poster_case | realty |
-| luggage_cart | small | 500 | 1.1 x 0.6 x 1.8 | laundry_cart | hotel |
-| model_house_display | small | 500 | 0.8 x 0.8 x 0.5 | display_plinth | realty |
-| noticeboard_wall | tiny | 250 | 1.2 x 0.04 x 0.9 (wall) | poster_case | campus_hall, classroom, hall, rec_center |
-| physio_table | medium | 700 | 1.9 x 0.7 x 0.7 | tattoo_bed_chair | physio |
-| pizza_oven | medium | 1000 | 1.6 x 1.4 x 1.8 (dome or deck) | kitchen_line | pizza |
-| privacy_curtain_rail | small | 400 | 2.4 x 2.4 x 2.3 (L rail + curtain) | none | clinic, er |
-| projector_screen | tiny | 220 | 2.4 x 0.1 x 1.8 (wall) | poster_case | lecture |
-| queue_ticket_dispenser | tiny | 200 | 0.3 x 0.3 x 1.4 | brochure_rack | bail, permits |
-| reception_desk | large | 1500 | 3.0 x 1.4 x 1.1 (L-shaped) | shop_counter x2 | clinic, dentist, er, hospital_lobby, hotel, lobby, physio |
-| reverse_vending_machine | medium | 800 | 1.0 x 0.8 x 1.9 | vending_soda | recycling |
-| showroom_car | large | 2500 | 4.5 x 1.8 x 1.4 (near tier only) | display_plinth | car_sales |
-| stage_platform | medium | 600 | 6.0 x 3.0 x 0.6 (steps) | none (empty end) | hall |
-| tablet_arm_chair | small | 500 | 0.6 x 0.7 x 0.85 | side_chair | classroom |
-| ticket_machine | medium | 700 | 0.8 x 0.5 x 1.8 | lottery_atm_stand | transit |
-| vault_door | large | 1500 | 2.0 x 0.4 x 2.2 (wall) | wall_safe | bank |
-| water_cooler | small | 350 | 0.35 x 0.35 x 1.3 | drinks_fridge (half the time) / none | clinic, lobby, office, tax |
-| whiteboard_wall | tiny | 250 | 2.4 x 0.05 x 1.2 (wall) | poster_case | classroom, lecture |
-| witness_box | medium | 900 | 1.4 x 1.2 x 1.1 | shop_counter + side_chair | court |
 
-37 missing props, 29270 near tris if all built. Every prop the NEW-21 shop lists flagged as missing is now built (infoodsvc, inretailfx, insvcshop, intrade, inleisure, ingymx batches).
+0 missing props, 0 near tris if all built. Every prop the NEW-21 shop lists flagged as missing is now built (infoodsvc, inretailfx, insvcshop, intrade, inleisure, ingymx batches).
 
 ## Kinds (101 furnishing profiles, by dress_as)
 
 | kind | places | core | stock / display | decor | missing | max prop tris est. | note |
 |---|---|---|---|---|---|---|---|
-| architect | 1 | office_desk, office_chair, filing_cabinet | display_table, bookcase, storage_cabinet, display_plinth | frame_mcm_abstract, frame_print_large, sculpture_organic | conference_table, drafting_table | 14193 | Alcala Architects: models on plinths, drafting tables. |
+| architect | 1 | office_desk, office_chair, filing_cabinet | drafting_table, bookcase, storage_cabinet, display_plinth, conference_table | frame_mcm_abstract, frame_print_large, sculpture_organic | - | 9873 | Alcala Architects: models on plinths, drafting tables. |
 | auto_parts | 1 | shop_counter, cash_register | pegboard_wall, oil_can_shelf, gondola_aisle, tire_rack, wall_shelf |  | - | 20916 | Same as parts; all props built. |
-| bail | 1 | security_grille_counter, office_desk, office_chair | filing_cabinet, waiting_bench |  | queue_ticket_dispenser | 13907 | Grille counter; plain, no plants. |
+| bail | 1 | security_grille_counter, office_desk, office_chair | filing_cabinet, waiting_bench, queue_ticket_dispenser |  | - | 10727 | Grille counter; plain, no plants. |
 | bait | 1 | checkout_counter, cash_register | drinks_fridge, chest_freezer, pegboard_wall, wall_shelf | wall_plate_fish | - | 7764 |  |
 | bakery | 2 | shop_counter, cash_register, pastry_case, bakery_shelf, menu_board | bakery_shelf, display_table, cafe_table, cafe_chair | frame_print_small, woven_basket, wall_plate_floral | - | 15743 | Bread on the back wall, cakes in the case. |
-| bank | 8 | shop_counter, bulletproof_teller_window, office_desk, office_chair | filing_cabinet, waiting_bench, brochure_rack, stanchion, wall_safe | frame_print_large, clock_wall_sunburst, potted_plant (1) | atm_wall, vault_door | 16356 | Pilot set (com_bank). Teller line + queue stanchions + 2 officer desks. |
+| bank | 8 | bulletproof_teller_window, shop_counter, office_desk, office_chair | filing_cabinet, waiting_bench, brochure_rack, stanchion, atm_wall, vault_door | frame_print_large, clock_wall_sunburst, potted_plant (1) | - | 16200 | Teller counter + queue stanchions + officer desks; ATM and vault door on the walls (page K). |
 | bar | 4 | bar_counter, bar_stool, wine_backbar, beer_taps | booth_bench, restaurant_table, dining_chair | mirror_rect, frame_print_large, clock_mantel | - | 12524 | Mirror behind the bar; no plants. |
 | barber | 3 | shop_counter, cash_register, barber_chair, mirror_station | salon_product_shelf, wash_basin, waiting_bench | frame_print_small, clock_wall_sunburst | - | 24993 |  |
 | bike | 1 | shop_counter, cash_register, workbench | bike_stand, pegboard_wall, wall_shelf |  | - | 17657 |  |
@@ -83,30 +46,30 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 | bodega | 1 | checkout_counter, cash_register, cigarette_cabinet | grocery_shelf, gondola_aisle, drinks_fridge, chest_freezer, produce_stand |  | - | 16888 |  |
 | books | 3 | shop_counter, cash_register | bookcase, display_table, card_spinner | lounge_chair, floor_lamp, rug_living_jute, bookends, globe_desktop, potted_plant (1) | - | 18814 | Reading nook with a chair and lamp in the bigger rooms. |
 | botanica | 1 | glass_display_case, shop_counter, cash_register | wall_shelf, bookcase, display_table | candle_pillar, candle_pair_brass, figurine_bird, statue_bust, bowl_ceramic, hurricane_lamp | - | 10166 |  |
-| broker | 1 | shop_counter, office_desk, office_chair, filing_cabinet | pegboard_wall, wall_shelf, waiting_bench | frame_ocean, wall_plate_fish | chart_table | 19807 | Bay Boatworks harbour office: charts, brokerage desk. |
+| broker | 1 | shop_counter, office_desk, office_chair, filing_cabinet | pegboard_wall, wall_shelf, waiting_bench, chart_table | frame_ocean, wall_plate_fish | - | 17823 | Bay Boatworks harbour office: charts, brokerage desk. |
 | cafe | 6 | shop_counter, cash_register, espresso_machine, pastry_case, menu_board | cafe_table, cafe_chair, bakery_shelf, drinks_fridge, booth_bench | frame_print_medium, frame_ocean, clock_wall_sunburst, potted_plant (1, by the window) | - | 20044 | Warm wood; one plant at most. |
-| campus_hall | 1 | shop_counter, brochure_rack | waiting_bench, lounge_chair, bookcase, potted_plant | statue_bust, frame_print_large | directory_board, noticeboard_wall | 14438 | Founders Hall foyer. |
+| campus_hall | 1 | shop_counter, brochure_rack | waiting_bench, lounge_chair, bookcase, potted_plant | statue_bust, frame_print_large | - | 14438 | Founders Hall foyer. |
 | canteen | 1 | shop_counter, cash_register, kitchen_line, soda_fountain, menu_board | restaurant_table, cafe_chair, drinks_fridge, vending_snack, vending_soda, indoor_bin |  | - | 15086 | Industrial canteen: drop the potted plant from its recipe. |
-| car_sales | 1 | office_desk, office_chair | office_desk, office_chair, side_chair, brochure_rack, showroom_car | frame_print_large, potted_plant (1) | showroom_car | 4857 | Bridge Motors: desks + one display car (stand-in: display_plinth, or a game vehicle mesh if the vehicle LOD fits). |
+| car_sales | 1 | office_desk, office_chair | office_desk, office_chair, side_chair, brochure_rack, showroom_car | frame_print_large, potted_plant (1) | - | 4857 | Bridge Motors: desks + one display car (stand-in: display_plinth, or a game vehicle mesh if the vehicle LOD fits). |
 | cash | 1 | shop_counter, cash_register, office_desk | waiting_bench, brochure_rack, filing_cabinet |  | - | 6870 | Check cashing: plain, no plants. |
-| chapel | 1 | altar_table, lectern | church_pew, side_chair | candle_pillar, vase_bud | altar_table, church_pew, lectern | 20494 | Small: 4-6 pews. |
-| church | 4 | altar_table, lectern | church_pew | candle_pillar, candle_pair_brass, vase_tall | altar_table, church_pew, lectern | 30594 (trimmed to 25k in 3) | Aisle down the middle, pews both sides facing the altar. |
-| classroom | 1 | office_desk, office_chair, whiteboard_wall | tablet_arm_chair, bookcase, storage_cabinet | frame_print_small, globe_desktop, clock_wall_sunburst | noticeboard_wall, tablet_arm_chair, whiteboard_wall | 16211 | Ridgeview Elementary: rows of small desks face the board. |
+| chapel | 1 | altar_table, lectern | church_pew, side_chair | candle_pillar, vase_bud | - | 11994 | Small: 4-6 pews. |
+| church | 4 | altar_table, lectern | church_pew | candle_pillar, candle_pair_brass, vase_tall | - | 14534 | Aisle down the middle, pews both sides facing the altar. |
+| classroom | 1 | office_desk, office_chair, whiteboard_wall | tablet_arm_chair, bookcase, storage_cabinet | frame_print_small, globe_desktop, clock_wall_sunburst | - | 13621 | Ridgeview Elementary: rows of small desks face the board. |
 | cleaners | 2 | laundry_counter, cash_register | garment_rail, washer, dryer, waiting_bench |  | - | 11068 |  |
-| clinic | 3 | reception_desk, office_chair | waiting_bench, exam_bed, privacy_curtain_rail, storage_cabinet, water_cooler | frame_print_medium, clock_wall_sunburst | exam_bed, privacy_curtain_rail, reception_desk, water_cooler | 14543 | Clinical: waiting row facing reception, one exam bay. |
+| clinic | 3 | reception_desk, office_chair | waiting_bench, exam_bed, privacy_curtain_rail, storage_cabinet, water_cooler | frame_print_medium, clock_wall_sunburst | - | 9659 | Clinical: waiting row facing reception, one exam bay. |
 | clothes | 4 | shop_counter, cash_register, fitting_room | clothes_rack, garment_rail, mannequin, display_table, wall_shelf, shoe_bench | mirror_rect, rug_accent, frame_print_tall | - | 23886 | Large ones: zone men/women with racks; mirror by the fitting room. |
 | coffee | 1 | shop_counter, cash_register, espresso_machine, pastry_case, menu_board | bar_stool, cafe_table, drinks_fridge | frame_print_small, clock_wall_sunburst | - | 9577 | Small walk-in: counter, a ledge with stools, one table. |
 | community | 2 | shop_counter, brochure_rack | dining_table, dining_chair, sofa_3seat, lounge_chair, coffee_table, tv_console, waiting_bench | frame_print_large, clock_wall_sunburst, rug_living_mcm, vase_tall, potted_plant (1) | - | 15496 | Ridge Senior Center: a lounge, not a theatre. |
 | corner_shop | 5 | checkout_counter, cash_register, cigarette_cabinet | gondola_aisle, grocery_shelf, drinks_fridge, chest_freezer, produce_stand, brochure_rack |  | - | 21108 |  |
-| court | 1 | judge_bench, shop_counter | court_bench, witness_box, jury_box, office_desk, office_chair, filing_cabinet | clock_wall_sunburst, frame_print_large | court_bench, judge_bench, jury_box, lectern, witness_box | 27674 (trimmed to 25k in 1) | Courtroom: bench at the back on a step, gallery benches face it. |
-| dentist | 3 | reception_desk, office_chair | waiting_bench, dental_chair, storage_cabinet | frame_print_small, potted_plant (1) | dental_chair, reception_desk | 17412 |  |
+| court | 1 | judge_bench, shop_counter | court_bench, witness_box, jury_box, office_desk, office_chair, filing_cabinet | clock_wall_sunburst, frame_print_large | - | 18962 | Courtroom: bench at the back on a step, gallery benches face it. |
+| dentist | 3 | reception_desk, office_chair | waiting_bench, dental_chair, storage_cabinet | frame_print_small, potted_plant (1) | - | 9826 |  |
 | diner | 2 | bar_counter, bar_stool, cash_register, pastry_case, soda_fountain, espresso_machine | booth_bench, restaurant_table, menu_board | clock_wall_sunburst, frame_motel_floral | - | 18569 | Counter with stools + booths along the window. |
 | discount | 1 | checkout_counter, cash_register | gondola_aisle, grocery_shelf, wall_shelf, display_table, drinks_fridge |  | - | 11310 |  |
 | dive | 1 | shop_counter, cash_register | garment_rail, surfboard_rack, wall_shelf | frame_ocean, sculpture_coral | - | 10548 |  |
 | donuts | 1 | shop_counter, cash_register, pastry_case, espresso_machine, menu_board | booth_bench, drinks_fridge | clock_wall_sunburst | - | 10759 | Diner-pink, no decor clutter. |
-| drive_thru | 1 | shop_counter, cash_register, kitchen_line, soda_fountain, menu_board | booth_bench, restaurant_table, indoor_bin |  | drive_thru_window | 12160 |  |
+| drive_thru | 1 | shop_counter, cash_register, kitchen_line, soda_fountain, menu_board, drive_thru_window | booth_bench, restaurant_table, indoor_bin |  | - | 12286 |  |
 | dry_cleaner | 1 | laundry_counter, cash_register | garment_rail, waiting_bench |  | - | 12170 |  |
-| er | 1 | reception_desk, office_chair | waiting_bench, exam_bed, privacy_curtain_rail, storage_cabinet |  | exam_bed, privacy_curtain_rail, reception_desk | 14445 | Emergency department: triage desk + curtained bays. |
+| er | 1 | reception_desk, office_chair | waiting_bench, exam_bed, privacy_curtain_rail, storage_cabinet |  | - | 9163 | Emergency department: triage desk + curtained bays. |
 | fast_food | 3 | shop_counter, cash_register, kitchen_line, soda_fountain, menu_board | booth_bench, restaurant_table, cafe_chair, indoor_bin |  | - | 16650 | No house decor; branded and wipe-clean. |
 | fish_counter | 1 | shop_counter, cash_register, chest_freezer, ice_chest | drinks_fridge, grocery_shelf, menu_board | wall_plate_fish | - | 15764 | Drop the potted plant from its recipe; ice display is the key gap. |
 | florist | 3 | shop_counter, cash_register, drinks_fridge | potted_plant, display_table, wall_shelf, produce_stand | vase_tall, vase_ginger, vase_bud, woven_basket | - | 12692 | The one kind where many plants are right; drinks_fridge stands in for a flower cooler. |
@@ -115,41 +78,41 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 | gas | 1 | checkout_counter, cash_register, cigarette_cabinet | gondola_aisle, drinks_fridge, grocery_shelf, vending_snack |  | - | 9354 |  |
 | grocery | 1 | checkout_counter, cash_register | gondola_aisle, grocery_shelf, drinks_fridge, chest_freezer, produce_stand |  | - | 15530 | Two checkouts. |
 | gym | 2 | shop_counter, cash_register | weight_bench, mirror_station, bike_stand, drinks_fridge |  | - | 22538 | 328 m² with one bench type: cardio and dumbbells are needed. |
-| hall | 2 | folding_table_chairs, shop_counter | folding_table_chairs, waiting_bench, storage_cabinet | frame_print_large, clock_wall_sunburst | noticeboard_wall, stage_platform | 16664 | Community hall: folding tables, a stage at the far end. |
-| hospital_lobby | 1 | reception_desk, office_chair | waiting_bench, vending_snack, vending_soda, potted_plant, directory_board | frame_print_large | directory_board, reception_desk | 12164 | Island Hospital main lobby. |
-| hotel | 2 | reception_desk, key_rack_wall | lounge_chair, coffee_table, brochure_rack, luggage_cart, potted_plant | frame_ocean, vase_tall, clock_wall_sunburst, rug_runner (entry only) | key_rack_wall, luggage_cart, reception_desk | 7558 | Inn reception + small lounge. |
+| hall | 2 | folding_table_chairs, shop_counter | folding_table_chairs, waiting_bench, storage_cabinet | frame_print_large, clock_wall_sunburst | - | 16664 | Community hall: folding tables, a stage at the far end. |
+| hospital_lobby | 1 | reception_desk, office_chair | waiting_bench, vending_snack, vending_soda, potted_plant, directory_board | frame_print_large | - | 10278 | Island Hospital main lobby. |
+| hotel | 2 | reception_desk, key_rack_wall | lounge_chair, coffee_table, brochure_rack, luggage_cart, potted_plant | frame_ocean, vase_tall, clock_wall_sunburst, rug_runner (entry only) | - | 6162 | Inn reception + small lounge. |
 | ice_cream | 2 | shop_counter, cash_register, gelato_case, menu_board | cafe_table, cafe_chair, drinks_fridge | frame_ocean, wall_plate_fish | - | 10826 | Beach-casual palette. |
 | joinery | 2 | shop_counter, cash_register, workbench | workbench, workbench_garage, pegboard_wall, storage_cabinet, wall_shelf, display_table | frame_print_small | - | 15300 | Hill Joinery / Lane Cabinetmakers are tagged keys; dress them as wood shops, show pieces on display_table, sideboard or credenza as finished work. |
 | laundromat | 1 | laundry_counter | washer, dryer, display_table, waiting_bench, vending_snack | clock_wall_sunburst | - | 12698 |  |
 | laundry | 1 | laundry_counter | washer, dryer, garment_rail, waiting_bench |  | - | 10542 |  |
-| law | 2 | office_desk, office_chair, filing_cabinet | bookcase, waiting_bench, side_chair, storage_cabinet | frame_print_medium, globe_desktop, books_stack, clock_mantel | conference_table | 13237 | Bookcases on every wall; client chairs face the desk. |
-| lecture | 5 | lectern, office_desk | lecture_seating_row, whiteboard_wall, projector_screen | clock_wall_sunburst | lectern, lecture_seating_row, projector_screen, whiteboard_wall | 17868 | Rows face the lectern/whiteboard wall. |
+| law | 2 | office_desk, office_chair, filing_cabinet | bookcase, waiting_bench, side_chair, storage_cabinet, conference_table | frame_print_medium, globe_desktop, books_stack, clock_mantel | - | 12207 | Bookcases on every wall; client chairs face the desk. |
+| lecture | 5 | lectern, office_desk | lecture_seating_row, whiteboard_wall, projector_screen | clock_wall_sunburst | - | 11910 | Rows face the lectern/whiteboard wall. |
 | library | 4 | office_desk, office_chair, filing_cabinet | bookcase, dining_table, dining_chair, lounge_chair, floor_lamp, card_spinner, magazine_rack | globe_desktop, bookends, books_stack, clock_wall_sunburst, rug_living_jute, potted_plant (1) | - | 15853 | Rows of bookcase, reading tables, a lounge corner. |
 | liquor | 1 | checkout_counter, cash_register, cigarette_cabinet | wine_backbar, drinks_fridge, grocery_shelf, gondola_aisle |  | - | 19462 | Bottles on wine_backbar walls. |
-| lobby | 10 | shop_counter, brochure_rack | waiting_bench, lounge_chair, coffee_table, potted_plant, indoor_bin | frame_print_large, clock_wall_sunburst, vase_tall | directory_board, reception_desk, water_cooler | 12625 | Tower lobby: reception counter facing the door, lounge group, directory by the lifts. |
+| lobby | 10 | shop_counter, brochure_rack | waiting_bench, lounge_chair, coffee_table, potted_plant, indoor_bin | frame_print_large, clock_wall_sunburst, vase_tall | - | 12625 | Tower lobby: reception counter facing the door, lounge group, directory by the lifts. |
 | lube | 1 | shop_counter, cash_register | oil_can_shelf, waiting_bench, vending_soda, tool_chest |  | - | 6176 | Waiting room + counter of a quick lube. |
-| motel_office | 1 | shop_counter, key_rack_wall | brochure_rack, waiting_bench, vending_snack, ice_chest | frame_motel_floral | key_rack_wall | 4952 | Harbor View Motel office. |
+| motel_office | 1 | shop_counter, key_rack_wall | brochure_rack, waiting_bench, vending_snack, ice_chest | frame_motel_floral | - | 4774 | Harbor View Motel office. |
 | nails | 1 | shop_counter, cash_register, nail_table | salon_product_shelf, waiting_bench, side_chair | frame_print_small, vase_bud | - | 8076 |  |
-| office | 12 | office_desk, office_chair, filing_cabinet | office_desk, office_chair, filing_cabinet, bookcase, waiting_bench, storage_cabinet | frame_print_medium, clock_wall_sunburst, potted_plant (1) | conference_table, cubicle_partition, water_cooler | 21082 | Desks in pairs facing each other or the window; one plant. |
+| office | 12 | office_desk, office_chair, filing_cabinet | office_desk, office_chair, filing_cabinet, bookcase, waiting_bench, storage_cabinet, cubicle_partition, water_cooler, conference_table | frame_print_medium, clock_wall_sunburst, potted_plant (1) | - | 17917 | Desks in pairs facing each other or the window; one plant. |
 | panaderia | 1 | shop_counter, cash_register, pastry_case, bakery_shelf | bakery_shelf, display_table, drinks_fridge | wall_plate_floral, woven_basket | - | 16315 | Self-serve rack is the signature; build it. |
 | parts | 1 | shop_counter, cash_register | pegboard_wall, wall_shelf, gondola_aisle |  | - | 8442 |  |
 | parts_counter | 1 | shop_counter, cash_register, workbench | pegboard_wall, pharmacy_shelf, wall_shelf, waiting_bench |  | - | 11393 |  |
 | pawn | 1 | glass_display_case, cash_register | pegboard_wall, wall_shelf, bike_stand, surfboard_rack, weight_bench | statue_bust, globe_desktop, clock_mantel, figurine_horse | - | 14122 | House decor as stock for sale. |
-| permits | 1 | shop_counter, stanchion, brochure_rack | waiting_bench, office_desk, office_chair, filing_cabinet | clock_wall_sunburst | directory_board, queue_ticket_dispenser | 9354 | Queue lane to the counter. |
+| permits | 1 | shop_counter, stanchion, queue_ticket_dispenser | waiting_bench, office_desk, office_chair, filing_cabinet, directory_board | clock_wall_sunburst | - | 8658 | Queue lane to the counter. |
 | pharmacy | 2 | shop_counter, cash_register, pharmacy_shelf | pharmacy_shelf, gondola_aisle, brochure_rack, waiting_bench, card_spinner |  | - | 15132 | Clinical: no plants, no decor. |
 | phone | 1 | glass_display_case, shop_counter, cash_register | phone_display_table, pegboard_wall, wall_shelf, tv_electronics_stack |  | - | 9998 | Cell & vape. |
 | phones | 1 | glass_display_case, shop_counter, cash_register | pegboard_wall, wall_shelf, display_table |  | - | 15942 |  |
-| physio | 1 | reception_desk, office_chair | physio_table, weight_bench, dumbbell_rack, waiting_bench | frame_print_small | physio_table, reception_desk | 17863 |  |
-| pizza | 1 | shop_counter, cash_register, pizza_oven, menu_board | restaurant_table, cafe_chair, drinks_fridge, booth_bench | frame_print_small | pizza_oven | 8832 |  |
+| physio | 1 | reception_desk, office_chair | physio_table, weight_bench, dumbbell_rack, waiting_bench | frame_print_small | - | 14309 |  |
+| pizza | 1 | shop_counter, cash_register, pizza_oven, menu_board | restaurant_table, cafe_chair, drinks_fridge, booth_bench | frame_print_small | - | 8227 |  |
 | post_office | 3 | shop_counter, stanchion, brochure_rack | waiting_bench, filing_cabinet, wall_shelf, card_spinner, indoor_bin | clock_wall_sunburst, frame_print_medium | - | 16644 | Story shop; queue lane with stanchions, PO boxes are the signature. |
 | print | 1 | shop_counter, cash_register, workbench | filing_cabinet, pegboard_wall, display_table | frame_print_medium | - | 12131 | The printer is the gap that makes it read. |
-| realty | 5 | office_desk, office_chair, filing_cabinet | side_chair, brochure_rack, display_plinth | frame_print_large, vase_bud, potted_plant (1) | listing_board_wall, model_house_display | 7738 | Window listing boards are the signature. |
-| rec_center | 1 | shop_counter | weight_bench, treadmill, rowing_machine, dumbbell_rack, waiting_bench |  | noticeboard_wall | 18483 | Hill Rec Center; all gym props built. |
+| realty | 5 | office_desk, office_chair, filing_cabinet | side_chair, brochure_rack, model_house_display, listing_board_wall | frame_print_large, vase_bud, potted_plant (1) | - | 7144 | Window listing boards are the signature. |
+| rec_center | 1 | shop_counter | weight_bench, treadmill, rowing_machine, dumbbell_rack, waiting_bench |  | - | 18483 | Hill Rec Center; all gym props built. |
 | records | 1 | shop_counter, cash_register | display_table, bookcase, poster_case, wall_shelf | frame_print_large, floor_lamp, rug_accent | - | 10882 |  |
-| recycling | 1 | security_grille_counter | reverse_vending_machine, laundry_cart, pallet_racking |  | reverse_vending_machine | 3278 | Booth: grille window, bins, carts. |
+| recycling | 1 | security_grille_counter | reverse_vending_machine, laundry_cart, pallet_racking |  | - | 2674 | Booth: grille window, bins, carts. |
 | rental | 4 | shop_counter, cash_register | bike_stand, surfboard_rack, wall_shelf | frame_ocean | - | 19574 |  |
 | restaurant | 3 | shop_counter, cash_register, wine_backbar, menu_board | restaurant_table, dining_chair, booth_bench, sideboard | frame_print_large, mirror_rect, vase_bud, candle_pair_brass, rug_runner (entry only) | - | 18702 | Tables set at 0.6 m per seat; one vase per table max. |
-| sales_office | 2 | shop_counter, office_desk, office_chair, filing_cabinet | waiting_bench, brochure_rack, storage_cabinet | frame_print_medium | conference_table | 8415 |  |
+| sales_office | 2 | shop_counter, office_desk, office_chair, filing_cabinet | waiting_bench, brochure_rack, storage_cabinet, conference_table | frame_print_medium | - | 7867 |  |
 | salon | 1 | shop_counter, cash_register, wash_basin, salon_product_shelf | mirror_station, barber_chair, waiting_bench, side_chair | frame_print_tall, mirror_round, vase_bud, potted_plant (1) | - | 17517 |  |
 | shoes | 2 | shop_counter, cash_register | shoe_wall, shoe_bench, display_table, wall_shelf | mirror_rect, rug_accent | - | 12518 |  |
 | skate | 1 | shop_counter, cash_register | wall_shelf, clothes_rack, shoe_wall, surfboard_rack | frame_print_tall | - | 13784 |  |
@@ -158,10 +121,10 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 | taproom | 1 | bar_counter, bar_stool, beer_taps, drinks_fridge | booth_bench, restaurant_table, dining_chair | frame_print_large | - | 10226 | Concrete + kegs; remove potted_plant from its extras. |
 | taqueria | 2 | shop_counter, cash_register, kitchen_line, menu_board | booth_bench, restaurant_table, drinks_fridge, indoor_bin | wall_plate_floral, woven_basket | - | 17732 | Salsa bar is in the room recipe but has no prop. |
 | tattoo | 1 | glass_display_case, shop_counter, cash_register | mirror_station, wall_shelf, filing_cabinet, waiting_bench | frame_print_medium, sculpture_organic | - | 15348 |  |
-| tax | 4 | office_desk, office_chair, filing_cabinet | waiting_bench, brochure_rack, side_chair | frame_print_small, clock_wall_sunburst | water_cooler | 6469 | Small office: 2 desks, waiting bench. |
+| tax | 4 | office_desk, office_chair, filing_cabinet | waiting_bench, brochure_rack, side_chair, water_cooler | frame_print_small, clock_wall_sunburst | - | 6253 | Small office: 2 desks, waiting bench. |
 | thrift | 1 | shop_counter, cash_register | garment_rail, clothes_rack, bookcase, shoe_wall, display_table, mannequin | figurine_cat, vase_lava, frame_motel_floral, globe_desktop, books_stack | - | 16730 | The one place a jumble of house decor is right. |
 | trade_counter | 1 | shop_counter, cash_register | pegboard_wall, grocery_shelf, wall_shelf, display_table |  | - | 16768 | Drop the potted plant from its extras. |
-| transit | 2 | ticket_booth, stanchion | waiting_bench, brochure_rack, vending_snack, vending_soda, indoor_bin | clock_wall_sunburst | departure_board, ticket_machine | 12124 | Ferry / bus tickets: booth + queue + benches facing the board. |
+| transit | 2 | ticket_booth, stanchion | waiting_bench, ticket_machine, vending_snack, vending_soda, indoor_bin, departure_board | clock_wall_sunburst | - | 9622 | Ferry / bus tickets: booth + queue + benches facing the board. |
 | tyre | 1 | shop_counter, cash_register | tire_rack, wheel_balancer, waiting_bench, pegboard_wall |  | - | 13660 |  |
 | tyres | 1 | shop_counter, cash_register | wall_shelf, pegboard_wall, workbench, waiting_bench |  | - | 11747 |  |
 | uniform | 1 | laundry_counter, cash_register | garment_rail, washer, dryer, waiting_bench |  | - | 8938 | Linen service; drop the potted plant from its extras. |
@@ -378,33 +341,23 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 
 ## Rollout status (built-in interiors; regenerated by run_all.sh)
 
-- 179 places built in on 51 models / 62 bays (bay scenes <model>_bay<i>.scn beside each kit near; com_bank keeps the pilot path). The bake opens only the bays a building uses.
-- Per place cost: shell 326 tris avg (max 830) inside the one near mesh/material; glass 1 draw (8 tris avg); props 1-3 draws (merged per atlas page, <= 25k tris, to 30 m); <= 4 lights (3.2 avg), no shadows; collision: the kit shell opened at the used doors + 3 thin wall boxes + the doors and window bodies.
-- Budget trims: lean on 17 models, lean2 on 17, front_only (side windows stay closed) on 9.
-- Still over the near budget with every bay open (7 models; trimming further means trimming the exteriors):
+- 194 places built in on 63 models / 75 bays (bay scenes <model>_bay<i>.scn beside each kit near; com_bank too: the pilot hand-placed path is retired). The bake opens only the bays a building uses.
+- Per place cost: shell 329 tris avg (max 848) inside the one near mesh/material; glass 1 draw (8 tris avg); props 1-3 draws (merged per atlas page, <= 25k tris, to 30 m); <= 4 lights (3.2 avg), no shadows; collision: the kit shell opened at the used doors + 3 thin wall boxes + the doors and window bodies.
+- Budget trims: lean on 21 models, lean2 on 21, front_only (side windows stay closed) on 13.
+- Still over the near budget with every bay open (9 models; trimming further means trimming the exteriors). Accepted by Yasin (22 Nov 04:37): no further trim. apt_garden_mint / apt_garden_cream joined the list on 7d1f52e2, when the Torrey / Jacaranda Hall dorm lobbies were built in (an apt door as their entrance): their exteriors alone are 3489 / 3475 of 3500 and they already run lean + lean2 + front_only, so their ~110-tri lobby shells go over; not a regression:
 
 | model | exterior tris | with interiors | budget | class |
 |---|---|---|---|---|
 | ck/ck_svc_bank_pharm | 2636 (over already) | 2792 | 2500 | shop (1200 / 6 m, min 2500) |
 | extras/ext_motel_crown | 4903 | 5169 | 5000 | apartment |
+| apartments/apt_garden_mint | 3489 | 3599 | 3500 | apartment |
 | ck/mod_fastfood | 2438 | 2598 | 2500 | shop (1200 / 6 m, min 2500) |
 | ck/ck_brk3_corner2 | 3516 (over already) | 3596 | 3500 | apartment block (3-storey row) |
+| apartments/apt_garden_cream | 3475 | 3585 | 3500 | apartment |
 | commercial/com_orange_corner | 2366 | 2584 | 2500 | shop (1200 / 6 m, min 2500) |
 | apartments/apt_beach_condo | 3452 | 3568 | 3500 | apartment |
 | apartments/apt_stucco3_peach | 3440 | 3526 | 3500 | apartment |
 
 - Not built in (no room contract, or no front entrance at the row's door): they keep their hand-made room scenes:
 
-  - apartments/apt_garden_cream: un_sw__uni_dorm_1__0 (no front entrance at -7.95)
-  - apartments/apt_garden_mint: un_sw__uni_dorm_2__0 (no front entrance at -7.95)
-  - civic/civ_museum: un_nw__uni_museum__0
-  - commercial/com_kiosk: m_gr_ad5nw__recycling_booth__0 (no front entrance at 1.15), wfa_b2e__harbour_tours_kiosk__0 (no front entrance at 1.15)
-  - commercial/com_shallow_books: res_books (no front entrance at -2.01), m_gr_e4s__bridge_motors_office__0 (no front entrance at -2.01)
-  - commercial/com_shallow_surf: wfa_b1e__pier_bait_tackle__0
-  - extras/ext_hospital: hp_main_er_wing_1
-  - public/pub_chapel: un_nw__uni_chapel__0
-  - public/pub_hospital: hp_main_hospital_1, hp_main_hospital_0
-  - public/pub_university: un_ne__uni_hall__0
-  - services/svc_carwash: m_gr_ad5ne__bayside_express_wash__0
-  - urban/urb_courthouse: cc_b1_court__courthouse__0
 

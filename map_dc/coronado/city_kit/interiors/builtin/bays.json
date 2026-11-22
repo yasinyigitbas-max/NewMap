@@ -1723,10 +1723,10 @@
      "i": 0
     }
    ],
+   "lean": false,
    "near_budget": 3600,
    "budget_class": "shop (1200 / 6 m, min 2500)",
-   "ext_tris": 1724,
-   "lean": false
+   "ext_tris": 1724
   },
   "extras/motel_inn_court": {
    "box_min": [

@@ -509,6 +509,23 @@
   ],
   "shell_tris": 426
  },
+ "commercial/com_bank|0": {
+  "ceiling": 4.3,
+  "err": 0,
+  "front_only": false,
+  "glass_tris": 20,
+  "lean": false,
+  "lean2": false,
+  "lights": 4,
+  "ops": 11,
+  "rect": [
+   -6.7,
+   -6.7,
+   6.7,
+   6.55
+  ],
+  "shell_tris": 728
+ },
  "commercial/com_bar_crown|0": {
   "ceiling": 3.88,
   "err": 0,

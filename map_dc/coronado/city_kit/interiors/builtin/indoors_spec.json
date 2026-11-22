@@ -3619,8 +3619,8 @@
   "bank": {
    "places": 8,
    "core": [
-    "shop_counter",
     "bulletproof_teller_window",
+    "shop_counter",
     "office_desk",
     "office_chair"
    ],
@@ -3642,7 +3642,7 @@
     "atm_wall",
     "vault_door"
    ],
-   "note": "Pilot set (com_bank). Teller line + queue stanchions + 2 officer desks.",
+   "note": "Teller counter + queue stanchions + officer desks; ATM and vault door on the walls (page K).",
    "prop_tris_max": 16200,
    "over_cap": 0
   },
