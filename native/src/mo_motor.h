@@ -78,7 +78,7 @@ struct Clip {
 
 class Motor {
 public:
-	enum State { OFF = 0, IDLE, START, MOVE, STOP, TURN, PIVOT, TRAV, CROUCH, STANCE, COVER_IN, COVER, COVER_OUT, CARRY, JUMP, AIR, LAND, RUNJUMP };
+	enum State { OFF = 0, IDLE, START, MOVE, STOP, TURN, PIVOT, TRAV, CROUCH, STANCE, COVER_IN, COVER, COVER_OUT, CARRY, JUMP, AIR, LAND, RUNJUMP, DESCEND };
 
 	bool attach(CityPed *p_fig);   // loads the libraries, puts MoInertial first on the skeleton; false: no clips
 	bool ready() const { return fig != nullptr && n_loops > 0; }
@@ -89,7 +89,7 @@ public:
 	void step(float p_dt, const Intent &p_in, Host &p_host);
 	bool in_trav() const { return st == TRAV; }
 	bool air_ready_pub() const { return air_ready(); }
-	bool in_air() const { return st == JUMP || st == AIR || st == LAND || st == RUNJUMP; }
+	bool in_air() const { return st == JUMP || st == AIR || st == LAND || st == RUNJUMP || st == DESCEND; }
 	bool in_cover() const { return st == COVER_IN || st == COVER || st == COVER_OUT; }
 	bool crouched() const { return st == CROUCH || (st == STANCE && stance_to == 1) || (in_cover() && !cv_tall); }
 
@@ -205,10 +205,19 @@ private:
 	bool air_ready() const;
 	float ground_below(const Vector3 &p_at, float p_down) const;
 	void jump_start(const Vector3 &p_dir, float p_want_speed);
+	bool run_jump_when();
+	float jump_pending = 0.0f;   // a jump asked while running, waiting for its stride (s left)
 	void air_start(const Vector3 &p_vel, bool p_from_jump);
 	void air_step(float p_dt, const Intent &p_in);
 	Vector3 fwd_of_yaw() const;
+	// DOWN OFF A LEDGE, not running (Yasin, 23 Nov: "implement step down or slower jump down or climb down when not running
+	// at height"): a hop (to 0.65 m), a jump down landing standing (to 1.2 m), a climb down (to 2 m)
+	struct Descent { Clip c; float ledge_h = 0.0f; double t_off = 0.0, t_land = 0.0; };
+	Descent dn_hop, dn_jump, dn_climb;
+	void load_descent(Descent &r_d, const char *p_name);
+	bool descend_probe(const Vector3 &p_fwd);
 public:
+	int n_descents = 0;
 	int n_jumps = 0, n_falls = 0, n_landings = 0, n_soft = 0, n_hard = 0, n_flat = 0;   // (tests)
 	float land_fallen = 0.0f;                                                          // (tests) the last landing's height fallen
 private:
@@ -233,7 +242,7 @@ private:
 	// hips (in, out, the stance changes) play as ROOT clips: the figure held at an anchor, the body following the hips.
 	Clip cr_idle, cr_walk, cr_in, cr_out;
 	Clip cv_in[2], cv_idle[2], cv_out[2], cv_sneak_l[2], cv_sneak_r[2];   // [0] low (crouched), [1] tall
-	struct RootPlay { const Clip *c = nullptr; Vector3 a_from, a_to; float yaw = 0.0f; double t0 = 0.0, t_warp = 0.0; };
+	struct RootPlay { const Clip *c = nullptr; Vector3 a_from, a_to; float yaw = 0.0f; double t0 = 0.0, t_warp = 0.0; bool vy_on = false; float ay_from = 0.0f, ay_to = 0.0f; double vy_t0 = 0.0, vy_t1 = 0.0; };
 	RootPlay rp;
 	int stance_to = 0;              // STANCE: 0 to standing, 1 to crouched
 	Vector3 cv_w, cv_n; bool cv_tall = true; int cv_dir = 0; float cv_t = 0.0f;

@@ -38,6 +38,51 @@ void Motor::load_air() {
 	ai_soft = load("ptrav/Falling_To_Landing"); ai_hard = load("ptrav/Hard_Landing_b");
 	ai_flat = load("ptrav/Falling_Flat_Impact"); ai_getup = load("ptrav/Getting_Up");
 	tc_soft = first_touch(ai_soft); tc_hard = first_touch(ai_hard); tc_flat = first_touch(ai_flat);
+	load_descent(dn_hop, "ptrav/Jumping_Down_a"); load_descent(dn_jump, "ptrav/Jumping_Down_c"); load_descent(dn_climb, "mx/Climbing_Down");
+}
+
+// a descent clip measured: how high its ledge is over its floor (its feet at the start against at the end), when its
+// feet leave the ledge and when they come down
+void Motor::load_descent(Descent &r_d, const char *p_name) {
+	r_d.c = load(p_name);
+	if (!r_d.c.ok()) return;
+	const ClipData &D = *r_d.c.d;
+	const int n = (int)D.f.size();
+	const float y0 = std::min((float)D.f[0].foot[0].y, (float)D.f[0].foot[1].y), y1 = std::min((float)D.f[n - 1].foot[0].y, (float)D.f[n - 1].foot[1].y);
+	r_d.ledge_h = y0 - y1;
+	int k_off = 0, k_land = n - 1;
+	for (int k = 0; k < n; k++) { if (std::min((float)D.f[k].foot[0].y, (float)D.f[k].foot[1].y) > y0 - 0.06f) k_off = k; else break; }
+	for (int k = k_off; k < n; k++) if (std::min((float)D.f[k].foot[0].y, (float)D.f[k].foot[1].y) < y1 + 0.04f) { k_land = k; break; }
+	r_d.t_off = k_off / 30.0; r_d.t_land = k_land / 30.0;
+}
+
+// walking at a ledge: the drop just ahead, the move for it, fitted so its feet leave this edge and land on that ground
+bool Motor::descend_probe(const Vector3 &p_fwd) {
+	if (!host) return false;
+	const Vector3 p = host->position();
+	const float here = ground_below(p, 0.6f);
+	if (here < -1e8f) return false;
+	float drop = -1.0f, ground = 0.0f;
+	for (float a = 0.25f; a <= 0.55f; a += 0.1f) {
+		const Vector3 q = p + p_fwd * a;
+		const float g = ground_below(Vector3(q.x, here, q.z), 3.0f);
+		if (g < -1e8f) { drop = 9.0f; break; }
+		if (here - g >= 0.3f) { drop = here - g; ground = g; break; }
+	}
+	if (drop < 0.3f || drop > 2.0f) return false;   // (no drop; or higher: the fall and its landing)
+	Descent *d = drop <= 0.65f ? &dn_hop : (drop <= 1.2f ? &dn_jump : &dn_climb);
+	if (!d->c.ok()) return false;
+	if (limbs) { limbs->lock_on = false; limbs->unlock_all(); }
+	rate = 1.0f;
+	root_start(d->c, 0.0, 0.25f, yaw, nullptr, false);
+	rp.vy_on = true;
+	rp.ay_from = here - d->ledge_h;   // (its floor where its feet stand on this ledge)
+	rp.ay_to = ground;                // (its floor on the ground below)
+	rp.vy_t0 = d->t_off; rp.vy_t1 = std::max(d->t_land, d->t_off + 0.1);
+	rp.a_from.y = rp.ay_from; rp.a_to.y = rp.ay_to;
+	fig->set_global_transform(Transform3D(Basis(UP, rp.yaw), root_anchor(0.0)));
+	st = DESCEND; n_descents++;
+	return true;
 }
 
 bool Motor::air_ready() const { return ai_up.ok() && ai_loop.ok() && ai_soft.ok() && ai_hard.ok(); }
@@ -53,8 +98,11 @@ float Motor::ground_below(const Vector3 &p_at, float p_down) const {
 void Motor::jump_start(const Vector3 &p_dir, float p_want_speed) {
 	if (limbs) { limbs->lock_on = false; limbs->unlock_all(); }
 	if (speed > 2.2f && ai_run.ok()) {   // running: the running leap (its own travel)
-		rate = std::min(std::max(speed / 4.2f, 0.75f), 1.15f);
-		root_start(ai_run, 0.0, 0.15f, yaw, nullptr, false);
+		rate = std::min(std::max(speed / 4.2f, 0.92f), 1.1f);   // (its own timing: from a jog at 0.75 of it the leap floated - Yasin, 23 Nov: "make a better jog jump")
+		// (from the moment of it most like the stride now - run_jump_when waited for that stride)
+		double t0 = 0.0; float c = 0.0f;
+		if (cur) t0 = best_entry(*cur->d, t, *ai_run.d, 0.0, std::min(0.3, ai_run.d->len * 0.35), &c);
+		root_start(ai_run, t0, 0.15f, yaw, nullptr, false);
 		rp.c = &ai_run;
 		st = RUNJUMP; n_jumps++;
 		return;
@@ -133,3 +181,18 @@ void Motor::air_step(float p_dt, const Intent &p_in) {
 }
 
 Vector3 Motor::fwd_of_yaw() const { return Vector3(std::sin(yaw), 0.0f, std::cos(yaw)); }
+
+// A JUMP ASKED WHILE RUNNING: the run goes on (at most 0.35 s) to the stride most like the leap's take-off, then the leap
+// from there (Yasin, 23 Nov: "jumping while jogging is bad": begun on whatever foot was down, it began with a stumble)
+bool Motor::run_jump_when() {
+	if (!ai_run.ok() || loop_i < 0) return true;
+	const Clip &L = loops[loop_i];
+	double best_w = 0.0; float best_c = 1e30f;
+	for (double w = 0.0; w <= 0.35 + 1e-6; w += 1.0 / 60.0) {
+		float c = 0.0f;
+		best_entry(*L.d, t + w * rate, *ai_run.d, 0.0, std::min(0.3, ai_run.d->len * 0.35), &c);
+		c += 0.1f * (float)w;
+		if (c < best_c) { best_c = c; best_w = w; }
+	}
+	return best_w < 0.5 / 60.0;
+}

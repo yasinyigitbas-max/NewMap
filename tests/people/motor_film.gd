@@ -5,6 +5,7 @@ extends SceneTree
 ## Writes DIR/<segment>/f_00000.png ...; ffmpeg makes the film.
 var out := "OUT/motor_film"
 var only := ""
+var loops_kept := PackedStringArray(); var run_speed := 0.0   # (tuning: the walk / run loops kept, the run's pace)
 var player: CharacterBody3D
 var cam: Camera3D
 var seg := -1; var t := 0.0; var t_prev := 0.0; var n := 0
@@ -56,6 +57,8 @@ func _initialize() -> void:
 	for a: String in OS.get_cmdline_user_args():
 		if a.begins_with("--out="): out = a.trim_prefix("--out=")
 		elif a.begins_with("--only="): only = a.trim_prefix("--only=")
+		elif a.begins_with("--loops="): loops_kept = PackedStringArray(a.trim_prefix("--loops=").split(";"))
+		elif a.begins_with("--run-speed="): run_speed = float(a.trim_prefix("--run-speed="))
 	var sun := DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-50, 50, 0); sun.shadow_enabled = true; root.add_child(sun)
 	var we := WorldEnvironment.new(); var env := Environment.new(); env.background_mode = Environment.BG_COLOR; env.background_color = Color(0.70, 0.78, 0.88)
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR; env.ambient_light_color = Color(0.78, 0.79, 0.83); env.ambient_light_energy = 0.7; we.environment = env; root.add_child(we)
@@ -110,6 +113,8 @@ func _next() -> void:
 	if seg >= SEGS.size(): quit(0); return
 	player.global_position = Vector3(_lane(seg), _start_y(seg) + 0.05, -2.5 if _start_y(seg) > 0.0 else -0.5); player.velocity = Vector3.ZERO
 	player.call(&"set_move", Vector2.ZERO, false); player.call(&"set_crouch", false); player.call(&"set_carry", 0)
+	if not loops_kept.is_empty(): player.call(&"motor_keep_loops", loops_kept)
+	if run_speed > 0.0: player.call(&"set_run_speed", run_speed)
 	t = 0.0; t_prev = 0.0; n = 0
 	DirAccess.make_dir_recursive_absolute("%s/%02d_%s" % [out, seg, SEGS[seg][0]])
 	look = player.global_position + Vector3(0, 0.9, 0)

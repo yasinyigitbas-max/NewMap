@@ -79,14 +79,19 @@ void Motor::root_start(const Clip &p_c, double p_t0, float p_blend, float p_yaw,
 	fig->set_global_transform(Transform3D(Basis(UP, rp.yaw), rp.a_from));   // (placed in the same frame as the clip changes)
 }
 
-Vector3 Motor::root_anchor(double p_t) const { return rp.a_from.lerp(rp.a_to, sstepc(rp.t0, rp.t_warp, p_t)); }
+Vector3 Motor::root_anchor(double p_t) const {
+	Vector3 a = rp.a_from.lerp(rp.a_to, sstepc(rp.t0, rp.t_warp, p_t));
+	// (a descent: the floor taken from the ledge's level to the ground's while the feet are in the air only)
+	if (rp.vy_on) a.y = rp.ay_from + (rp.ay_to - rp.ay_from) * sstepc(rp.vy_t0, rp.vy_t1, p_t);
+	return a;
+}
 
 bool Motor::root_step(float p_dt) {
 	advance(p_dt);
 	const Vector3 A = root_anchor(t);
 	const Frame f = rp.c->d->lerp(t);
 	Vector3 body = A + Basis(UP, rp.yaw).xform(level(f.hips));
-	body.y = A.y;
+	body.y = A.y + std::max(0.0f, std::min((float)f.foot[0].y, (float)f.foot[1].y) - rp.c->d->ground_y);   // (the body under the lower foot: on a ledge, on the ledge)
 	host->teleport(body);
 	speed = 0.0f;
 	draw_y = (float)A.y; draw_v = 0.0f; draw_ok = true;

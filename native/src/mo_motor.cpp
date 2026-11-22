@@ -94,7 +94,7 @@ void Motor::keep_loops(const PackedStringArray &p_names) {
 float Motor::rnd() { rng ^= rng << 13; rng ^= rng >> 17; rng ^= rng << 5; return (rng & 0xffffff) / 16777216.0f; }
 
 const char *Motor::state_name() const {
-	static const char *N[] = { "off", "idle", "start", "move", "stop", "turn", "pivot", "trav", "crouch", "stance", "cover_in", "cover", "cover_out", "carry", "jump", "air", "land", "runjump" };
+	static const char *N[] = { "off", "idle", "start", "move", "stop", "turn", "pivot", "trav", "crouch", "stance", "cover_in", "cover", "cover_out", "carry", "jump", "air", "land", "runjump", "descend" };
 	return N[st];
 }
 
@@ -604,7 +604,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	}
 	if (st == AIR) { air_step(p_dt, p_in); host = nullptr; return; }
 	// ROOT CLIPS (mo_motor_cover.cpp): a stance change, into or out of cover, a landing, a running leap - the clip has the body
-	if (st == STANCE || st == COVER_IN || st == COVER_OUT || st == LAND || st == RUNJUMP) {
+	if (st == STANCE || st == COVER_IN || st == COVER_OUT || st == LAND || st == RUNJUMP || st == DESCEND) {
 		const bool done = root_step(p_dt);
 		if (limbs && cur) {
 			const Frame fr = cur->d->lerp(t);
@@ -617,6 +617,17 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 				if (rp.c == &ai_flat && ai_getup.ok()) { root_start(ai_getup, 0.0, 0.3f, yaw, nullptr, false); host = nullptr; return; }   // (down flat: up again)
 				if (want) { speed = std::max(speed, 0.8f); to_loop(pick_loop(want_speed, loop_i), blend_loop); }
 				else to_idle(0.35f);
+				place(p_host);
+				host = nullptr;
+				return;
+			}
+			if (st == DESCEND) {   // (down: on as he was, facing as the clip ends)
+				const Frame f0 = rp.c->d->lerp(0.0), f1 = rp.c->d->lerp(rp.c->d->len);
+				yaw = rp.yaw + std::remainder((float)(f1.face - f0.face), 6.2831853f);
+				align_full = true;
+				if (want) { speed = std::max(speed, 0.8f); to_loop(pick_loop(want_speed, loop_i), blend_loop); }
+				else to_idle(0.35f);
+				align_full = false;
 				place(p_host);
 				host = nullptr;
 				return;
@@ -653,7 +664,14 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	}
 	// A JUMP (the right double tap), OFF AN EDGE (the ground gone from under him, 0.5 m or more down)
 	if (air_ready() && (st == IDLE || st == START || st == MOVE || st == STOP || st == TURN || st == PIVOT)) {
-		if (p_in.jump) { jump_start(dir, want_speed); host = nullptr; return; }
+		if (p_in.jump) jump_pending = 0.4f;
+		if (jump_pending > 0.0f) {
+			jump_pending -= p_dt;
+			// (running: on the stride that fits the leap; else at once)
+			if (!(st == MOVE && speed > 2.2f) || run_jump_when() || jump_pending <= 0.0f) { jump_pending = 0.0f; jump_start(dir, want_speed); host = nullptr; return; }
+		}
+		// walking at a ledge (not running): down it by a hop, a jump down or a climb down
+		if (want && std::fabs(d) < 0.5f && want_speed <= 2.0f && speed <= 2.2f && descend_probe(fwd_of(yaw))) { host = nullptr; return; }
 		if (!p_host.on_floor()) {
 			const Vector3 b = p_host.position();
 			const float gb = ground_below(b, 60.0f);
