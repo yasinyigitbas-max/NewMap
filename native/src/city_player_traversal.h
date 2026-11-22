@@ -49,6 +49,7 @@ struct TravState {
 	// take drawn turned round, or the stance's facing, changes the figure's yaw by up to 180 degrees: blended in the
 	// figure's own frame the pose spun through it, the feet swinging round the hips)
 	float yo = 0.0f, yo_t = 0.0f, yo_len = 0.3f, add_prev = 0.0f, cov_yaw_prev = 0.0f;
+	bool fo_track = false; float fo_track_t = 0.0f; Vector3 fo_c_prev, fo_off_dbg; int fo_c_n = 0; StringName fo_clip;   // (the hand-over to the locomotion, followed as drawn)
 	float mess_chance = 0.10f;
 	int last[24];
 	uint32_t rng = 0x7f4a7c15u;

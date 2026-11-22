@@ -79,11 +79,15 @@ var plant_body := [Vector3(), Vector3()]; var plant_clips := [[], []]; var plant
 var quiet := false
 var plant_raw0 := [Vector3(), Vector3()]; var plant_rawmax := [0.0, 0.0]
 var slides_dbg := "slides" in OS.get_cmdline_user_args()
+var trace_dbg := "trace" in OS.get_cmdline_user_args(); var trace_n := 0; var trace_ring := []
 
 func _frame() -> void:
 	await physics_frame
 	var c := _clip()
 	if c != last_c:
+		if trace_dbg and last_c.begins_with("ptrav/") and not c.begins_with("ptrav/"):
+			trace_n = 25
+			for l in trace_ring: print(l)
 		print("PTRAV    %s (y %.2f mode %d)" % [c, player.global_position.y, int(_trav().get("mode", 0))]); last_c = c
 	if not seen.has(c): seen[c] = 0
 	seen[c] += 1
@@ -98,6 +102,14 @@ func _frame() -> void:
 			var j := (pel - pel_prev).length()
 			if j > pel_jump: pel_jump = j; pel_jump_at = c
 			if j > 0.2 and j < 3.0: print("PTRAV    jump %.2f m at %s t %.2f mode %d (body moved %.2f, pelvis %s, body %s)" % [j, c, float(_trav().get("t", 0)), int(_trav().get("mode", 0)), (player.global_position - body_prev).length(), pel, player.global_position])
+		if trace_dbg:
+			var lp := g.affine_inverse() * pel
+			var ln := ("PTRAV      trace %s t %.3f pel %.3f local (%.3f, %.3f, %.3f) fo %s fo_t %.3f body %s fig %s" % [c, float(_trav().get("t", 0)), (pel - pel_prev).length(), lp.x, lp.y, lp.z, _trav().get("fo_off", Vector3()), float(_trav().get("fo_t", 0.0)) + (10.0 if _trav().get("fo_track", false) else 0.0), player.global_position, (player.call(&"get_frame_log") as Dictionary).get("fig_at", "")])
+			trace_ring.append(ln); if trace_ring.size() > 4: trace_ring.pop_front()
+		if trace_n > 0:
+			trace_n -= 1
+			var lp := g.affine_inverse() * pel
+			print("PTRAV      trace %s pel %.3f local (%.3f, %.3f, %.3f) off %s track %s fo_t %.3f yaw %.3f body %s" % [c, (pel - pel_prev).length(), lp.x, lp.y, lp.z, _trav().get("fo_off", Vector3()), _trav().get("fo_track", false), float(_trav().get("fo_t", 0.0)), g.basis.get_euler().y, (player.call(&"get_frame_log") as Dictionary).get("fig_at", Vector3()) - player.global_position])
 		body_prev = player.global_position
 		pel_prev = pel
 		# a planted foot: low (within 14 cm of the lower foot) and still in height; its slide over the plant
@@ -171,9 +183,12 @@ func _report(what: String, pop_max := 0.3) -> void:
 	_check(pel_jump < pop_max, "%s: no pop (hips %.2f m in a frame)" % [what, pel_jump])
 	# (as drawn, the foot plant's pin included; a foot on the ground only. Under 0.2 m in a traversal clip; in the walk /
 	# run loops around it (their own clips) under 0.7 m, reported)
-	var loco := slide_at.begins_with("prun/") or slide_at.begins_with("pwalk/") or slide_at.begins_with("pidle/")
-	var lim := 0.7 if loco else 0.2
-	_check(slide < lim, "%s: a planted foot slides under %.1f m (%.2f m, %s)" % [what, lim, slide, slide_at])
+	# (the jog after a move: under 0.15 m since the hand-over follows the old pose out as drawn, 22 Nov. The walk / run
+	# starts and stops are the locomotion's own takes, its own business: up to 0.4 m in a walk stop on its own, reported)
+	var lim := 0.2
+	if slide_at.begins_with("prun/jog") or slide_at.begins_with("prun/fast"): lim = 0.15
+	elif slide_at.begins_with("prun/") or slide_at.begins_with("pwalk/") or slide_at.begins_with("pidle/"): lim = 0.7
+	_check(slide < lim, "%s: a planted foot slides under %.2f m (%.2f m, %s)" % [what, lim, slide, slide_at])
 
 func _run() -> void:
 	await _wait(0.5)
@@ -295,7 +310,7 @@ func _obstacle(what: String, at: Vector3, tier: int, key: String, top: float, ke
 	var on_ok := absf(y - top) < 0.15 if (top > 0.0) else y < 0.2
 	_check(ok and on_ok and (not keep_running or _running(cl)), "%s: %s, y %.2f (want %.2f), then %s" % [what, key, y, top, cl])
 	_stop(); await _wait(1.0)
-	_report(what, 0.35)
+	_report(what, 0.25)
 
 func _drop(i: int, want: String, mess: float) -> void:
 	var hs := [1.5, 2.5, 4.0, 6.0, 8.0, 6.0]

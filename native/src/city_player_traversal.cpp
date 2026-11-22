@@ -200,6 +200,8 @@ void CityPlayer::trav_done() {
 	const double hb = 0.3;
 	fig->set_next_blend(hb);
 	trav_hand(trav_hips_now(), p, s.then == TravState::THEN_COVER ? y : yaw, hb);
+	// (to the locomotion: the hand-over offset follows the old pose out as it is actually drawn; see trav_figure)
+	s.fo_track = s.then != TravState::THEN_COVER && s.fo_t > 0.0f; s.fo_track_t = 0.0f; s.fo_c_n = 0;
 	if (plant && s.then != TravState::THEN_COVER) plant->reset();   // (the walk's pins from before the move are stale)
 	switch (s.then) {
 		case TravState::THEN_RUN: {
@@ -876,6 +878,43 @@ void CityPlayer::trav_figure(StringName &r_clip, double &r_cs, double &r_hold, f
 	const float yoe = trav_lib() ? trav_yo(s, dt) : 0.0f;
 	r_yaw_add = yoe;
 	r_off = trav_lib() ? trav_fo(dt) : Vector3();
+	// THE HAND-OVER TO THE LOCOMOTION, followed as drawn: the move's clip carried his hips metres along its root motion,
+	// the walk / run / idle clips draw theirs over the figure's origin, so the figure is offset back by the old pose's
+	// share of the hips while it fades. That share was assumed to fade linearly over the blend (fo, 0.3 s), but the
+	// locomotion's clips cross-fade at their own rate (the stride-matched seek, the start handing to the loop): the hips
+	// shot 0.2-0.3 m a frame into the jog and the planted foot went with them. So the share is read off the pose drawn
+	// (the pelvis against the clip's own hips, a frame on by its last change) and the offset cancels exactly that.
+	struct Track {
+		CityPlayer *p; StringName &clip; Vector3 &off; float dt;
+		~Track() {
+			TravState &s = p->trv;
+			if (!s.fo_track || !p->fig) return;
+			if (s.mode != TravState::NONE) { s.fo_track = false; return; }
+			s.fo_track_t += dt;
+			const StringName cur = p->fig->current_clip();
+			if (cur == s.clip) { off.x = s.fo.x; off.z = s.fo.z; return; }   // (the first frame: the old pose still whole, its whole offset)
+			// (another clip of the locomotion's own: its cross-fade is not the move's; the offset held fades out plainly)
+			if (s.fo_c_n == 0) s.fo_clip = cur;
+			if (cur != s.fo_clip || s.fo_track_t > 1.2f) {
+				s.fo_track = false;
+				const float k = s.fo_t > 0.0f ? s.fo_t / s.fo_len : 0.0f;
+				s.fo = Vector3(s.fo_off_dbg.x, s.fo.y * k, s.fo_off_dbg.z); s.fo_len = s.fo_t = 0.25f;
+				off.x = s.fo.x; off.z = s.fo.z;
+				return;
+			}
+			const Transform3D G = p->fig->get_global_transform();
+			Vector3 c = G.affine_inverse().xform(p->pelvis_world()) - p->fig->clip_hips_at(cur, p->fig->clip_pos());
+			c.y = 0.0f;
+			Vector3 cp = c;
+			if (s.fo_c_n > 0) cp = c + (c - s.fo_c_prev);
+			else cp = c * std::max(1.0f - dt / std::max(s.fo_len, 0.05f), 0.0f);   // (no change seen yet: the blend's own rate)
+			if (cp.dot(c) < 0.0f) cp = Vector3();
+			s.fo_c_prev = c; s.fo_c_n++;
+			const Vector3 o = G.basis.orthonormalized().xform(-cp);
+			off.x = o.x; off.z = o.z; s.fo_off_dbg = off;
+			if (s.fo_c_n > 3 && c.length() < 0.01f) { s.fo_track = false; s.fo.x = 0.0f; s.fo.z = 0.0f; }   // (done: the plain offset's sideways part is not to come back)
+		}
+	} track{ this, r_clip, r_off, dt };
 	// (a crouch take drawn turned round, or back from one: the turn is the hand-over's, not a spin of the pose)
 	auto add = [&](float a) {
 		if (std::fabs(wrapf(a - s.add_prev)) > 0.3f && s.mode == TravState::NONE) {
@@ -924,7 +963,7 @@ Dictionary CityPlayer::get_trav() const {
 	d["last_land"] = s.last_land; d["last_drop"] = s.last_drop;
 	d["crouches"] = s.n_crouch; d["sprint_out"] = s.n_sprint_out; d["strafe"] = s.strafe;
 	d["cover"] = s.n_cover; d["cover_switch"] = s.n_cover_switch; d["cover_turn"] = s.n_cover_turn; d["peek"] = s.n_peek; d["cover_vault"] = s.n_cover_vault; d["cover_exit"] = s.n_cover_exit;
-	d["in_cover"] = s.mode == TravState::COVER; d["cover_high"] = s.high; d["wall_n"] = s.wall_n; d["edge_t"] = s.edge_t; d["fo"] = s.fo; d["fo_t"] = s.fo_t;
+	d["in_cover"] = s.mode == TravState::COVER; d["cover_high"] = s.high; d["wall_n"] = s.wall_n; d["edge_t"] = s.edge_t; d["fo"] = s.fo; d["fo_t"] = s.fo_t; d["fo_track"] = s.fo_track; d["fo_off"] = s.fo_off_dbg;
 	return d;
 }
 
