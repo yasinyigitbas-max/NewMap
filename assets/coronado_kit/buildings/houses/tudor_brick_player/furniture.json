@@ -533,11 +533,11 @@
         {
           "id": "prop_box_open",
           "cond": "clean",
-          "x": 5.5,
-          "y": 0.92,
-          "z": -4.2,
+          "x": 1.7,
+          "y": 0.0,
+          "z": -1.7,
           "yaw": 0,
-          "note": "a tea box on the east counter, so the run is not a bare slab"
+          "note": "a tea or packaging box on the floor by the fridge, not floating on a missing counter"
         }
       ]
     },
