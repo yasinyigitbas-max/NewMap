@@ -121,3 +121,37 @@ Each one is built, tested and pushed on its own. Yasin plays it and gives notes.
 ## 7. Building and testing
 `native/build.sh` builds for Windows and Android on Yasin's PC. A cloud session can download Godot and godot-cpp and
 build a Linux copy of the module, so tests run headless here and only the playing is left for Yasin's PC.
+
+## 8. Step 2, the base (22 Nov): what is built, what the numbers say
+New, all in `native/src/` (character-generic, no player-only code; NPCs can own one later):
+- `mo_clip.{h,cpp}`: each clip measured once from its own tracks (hips, feet, toes, hands per 1/30 s in the figure's
+  frame, facing, speeds over the ground, foot contacts by height), pose matching (`best_entry`), and THE BODY'S
+  TRAVEL READ FROM THE PLANTED FEET (`root_v`): the converter's smoothed vz / vx pace did not match the feet.
+- `mo_inertial.{h,cpp}` (`MoInertial`, first modifier on the skeleton): inertialized hand-overs (Bollo's quintic),
+  root bone taken in the world so a re-anchored figure does not jump, ONE history entry per engine frame.
+- `mo_limbs.{h,cpp}` (`MoLimbs`, second modifier): foot lock (a foot the clip has down is pinned where it landed,
+  its offset fading 0.15 s after the clip lifts it; two-bone IK, the knee toward the clip's own); hand targets ready
+  for the vault / climb step.
+- `mo_motor.{h,cpp}` (`mo::Motor`): idle (3 forward-facing idles, fidgets every 9-21 s, never the same twice), starts
+  (walk a / b, run, run turning starts), loops by pace (walk x2, jog x3, run x3; never the same walk twice running),
+  stops (the stop and the moment of it most like the feet now), turns on the spot (the take nearest the angle), 180
+  pivots while moving. It plays clips itself (manual AnimationPlayer, time set each frame). One owner of the body.
+- `CityPlayer`: the motor has him while he is on the ground and nothing else does; the old code keeps jumps, climbs,
+  crouch, swimming, combat, acts, talk, phone, and the two hand over both ways. `--old-moves` turns the motor off.
+- `native/build_linux.sh`: a Linux copy of the module for headless tests in a cloud session.
+- `tests/people/test_motor_base.gd`: 19 phases of locomotion, new and old.
+
+Measured (`test_motor_base.gd`, 60 fps, flat ground; the drawn figure after every modifier):
+| | new | old |
+|---|---|---|
+| hips' height jump in one frame, worst | 3.2 cm (run pivot); every other phase 0.7-2.9 | 4.2 cm |
+| hips' level speed jump in one frame | 14 of 19 phases under 1.2 m/s (0.16-0.94); 5 at 1.3-2.0 | 0.2-2.4, most hand-overs 1.0-2.0 |
+| planted foot slide (the clip's own contacts) | stand 2.3 cm, stops 3-6, starts 6-13, loops 6, turns 4-6 | not measurable the same way (no contacts) |
+OPEN (next fixes): the 180 pivots slide a planted foot 30-41 cm (both feet are "down" while the body turns; the travel
+from the feet is wrong there); the run stop has a hitch at 0.17 s that is IN the clip (it is there with the hand-over
+off: prun/stop_a / stop_b, made with festive's "stance_fit"); walk -> run and stops hand over at 1.3-1.6 m/s.
+What the numbers cannot see: the arms, the spine, the look. Yasin plays it.
+
+Traps found (also in the skill): read the pose on `skeleton_updated` (a read in `_process` saw the raw clip, before
+the modifiers); the skeleton can be posed twice in a frame (a seek, then its own update): count frames, not passes;
+the skeleton node is scaled 0.01 (bone units are cm); the root's offset speed is the hips' own, not their world speed.

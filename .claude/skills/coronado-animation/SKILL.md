@@ -24,6 +24,12 @@ the rules. Re-read both after a context compression.
 - 22 Nov: "work in your own branch, project is moving forward fast, I dont want anything to break." -> work ONLY on the
   session branch (`claude/cool-galileo-6y68se` on 22 Nov); never push to main, never merge into main, no PR unless asked.
   Keep changes additive and behind the player's own code paths; the crowd (CityPed for NPCs) must keep working.
+- 22 Nov: "animators animations played terrible too, just keep in mind. You might have to make a new system from
+  scratch for players movement. I eventually want every npc to have players capabilities too." -> the Animator's
+  playback is NOT a quality bar to keep; a new movement / animation system from scratch is allowed. Design it as a
+  CHARACTER component (a "body" with locomotion, traversal, actions, IK) that any figure can own, driven by a
+  controller: the player's input today, an NPC brain later. Nothing player-only (camera, keys, touch) inside it.
+  Keep the per-frame cost low enough for many NPCs later (LOD: full IK and warping near the camera, cheaper far).
 
 ## The techniques (studied 22 Nov; GDC / SIGGRAPH: Gears of War 4 inertialization and warping, Horizon Zero Dawn
 ## traversal, RDR2 locomotion, UE5 motion warping)
@@ -80,3 +86,22 @@ move at 3 heights / angles.
 LF endings; tests are SceneTree scripts that print PASS / FAIL and quit by themselves; one fix = one thing changed;
 say what a check cannot see; commit and push after every step (session branch only); `native/build.sh` builds on
 Yasin's PC (Windows / Android) - a cloud session builds a Linux copy for headless tests.
+
+## The new system (step 2 built 22 Nov; docs/ANIMATION_PLAN.md section 8)
+Files: native/src/mo_clip, mo_inertial (MoInertial), mo_limbs (MoLimbs), mo_motor (mo::Motor); CityPlayer hands the
+body to the motor on the ground (`motor_can`), the old code keeps the rest; `--old-moves` turns it off. Test:
+tests/people/test_motor_base.gd (`-- --only=new|old --trace --no-inertial --no-footlock`).
+Build and run here: `bash native/build_linux.sh` (godot-cpp in /root/native_tools/godot-cpp, scons platform=linux
+target=template_debug, about 10 min once), Godot 4.7.2 from github godot-builds releases on PATH as `godot`.
+TRAPS (each cost a run):
+- Measure the drawn pose on `Skeleton3D.skeleton_updated`, not in _process (that is the raw clip before modifiers),
+  and keep only the LAST pose of a frame (seek(update=true) poses the skeleton again in the same frame).
+- A modifier that keeps history (MoInertial, MoLimbs) must count engine frames, not modifier passes.
+- The figure's skeleton node is scaled 0.01: bone space is centimetres. Convert with the skeleton's global transform.
+- Inertialization: the offset's speed is the bone's own (against the figure); a root's world speed made T collapse.
+- Quaternion angle near zero: use atan2(|xyz|, w), not acos / sqrt(1-w*w) (floats lose every digit).
+- In-place clips (pwalk / prun / turns): move the body by the travel read from the planted feet (ClipData root_v), not
+  by the converter's vz / vx (they do not match the feet: hitches, 6-12 cm slides).
+- Foot contacts for a clip: by height near the local lowest + small vertical speed. Not by level speed (that needs the
+  travel, which is what the contacts are used to find).
+- A test's own contact guess (height + speed) counts a slowly dragged toe as a slide: use the clip's contacts.

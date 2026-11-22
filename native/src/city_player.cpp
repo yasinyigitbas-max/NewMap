@@ -79,11 +79,13 @@ void CityPlayer::_ready() {
 	cam_yaw = get_rotation().y + 3.14159265f;
 	yaw = std::atan2(-std::sin(cam_yaw), -std::cos(cam_yaw));   // (he looks the way his camera looks)
 	if (capture_mouse) Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
+	if (OS::get_singleton()->get_cmdline_user_args().has("--old-moves")) motor_on = false;   // (the new movement system off)
 	set_physics_process(true); set_process(true); set_process_input(true);
 }
 
 void CityPlayer::_exit_tree() {
 	if (capture_mouse && !Engine::get_singleton()->is_editor_hint()) Input::get_singleton()->set_mouse_mode(Input::MOUSE_MODE_VISIBLE);
+	if (motor) { delete motor; motor = nullptr; motor_tried = false; }
 }
 
 void CityPlayer::_input(const Ref<InputEvent> &p_event) {
@@ -327,6 +329,35 @@ void CityPlayer::_physics_process(double p_delta) {
 		}
 	} else swimming = false;
 	clock_s += dt;
+	// THE NEW MOVEMENT SYSTEM (mo_motor.h): on the ground, walking, running, starting, stopping, turning
+	if (motor_on && !motor_tried && fig->skeleton()) {
+		motor_tried = true;
+		motor = new mo::Motor();
+		if (!motor->attach(fig)) { delete motor; motor = nullptr; }
+	}
+	if (motor && motor_on && motor_can()) {
+		if (!motor->active()) motor->begin(yaw, speed);
+		struct PlayerHost : mo::Host {
+			CityPlayer *p;
+			explicit PlayerHost(CityPlayer *q) : p(q) {}
+			Vector3 position() const override { return p->get_global_position(); }
+			Vector3 slide(const Vector3 &v, float) override { p->set_velocity(v); p->move_and_slide(); return p->get_velocity(); }
+			bool on_floor() const override { return p->is_on_floor(); }
+		} host(this);
+		// the stick's walk (a key walks at 0.6 of the stick: the old game's) is his whole walk; Shift runs
+		mo::Intent in;
+		const float ml = std::min(mv.length() / (run ? 1.0f : 0.6f), 1.0f);
+		in.dir = mv.length() > 0.05f ? (fwd * mv.y + right * mv.x).normalized() * ml : Vector3();
+		in.speed = run ? run_speed : walk_speed;
+		motor->step(dt, in, host);
+		yaw = motor->yaw; speed = motor->speed; move_speed = speed;
+		if (in.dir.length() > 0.3f) step_or_climb(in.dir * in.speed, p_delta);
+		return;
+	}
+	if (motor && motor->active()) {   // the old code has him again
+		motor->end();
+		step_mode = 0; gait_i = -1; stop_ph_prev = -1.0; move_speed = speed;
+	}
 	if (climb) {   // climbing: up first, then over the edge, as the clip plays; nothing else moves him
 		climb_t += dt;
 		if (climb == 2 && !hang_set && climb_t > dt * 1.5f) {   // (the clip's first pose is up: its hands over its hips)
@@ -560,26 +591,7 @@ void CityPlayer::_physics_process(double p_delta) {
 	move_and_slide();
 	// STEP UP (Yasin: "make the small heights like 20 cm walkable over"): walking into something no higher than 24 cm (a
 	// kerb, a step) he is lifted onto it: free to rise 24 cm, free 30 cm ahead up there, and something to stand on there
-	if (!swimming && !frozen && !combat && !crouch && Vector3(want.x, 0, want.z).length() > 0.3f && try_climb(Vector3(want.x, 0, want.z).normalized())) {}
-	else if (!swimming && !airborne && !frozen && is_on_wall() && Vector3(want.x, 0, want.z).length() > 0.3f) {
-		const Vector3 dir = Vector3(want.x, 0, want.z).normalized();
-		Transform3D t2 = get_global_transform();
-		// (only as far ahead as this frame's step: a 30 cm jump forward was a pop; the figure is drawn rising onto it: vis_dy)
-		const Vector3 up(0, 0.24f, 0), ahead = dir * std::max(Vector3(get_velocity().x, 0, get_velocity().z).length() * (float)p_delta, 0.04f);
-		if (!test_move(t2, up)) {
-			t2.origin += up;
-			if (!test_move(t2, ahead)) {
-				t2.origin += ahead;
-				if (test_move(t2, Vector3(0, -0.3f, 0))) {   // down onto its top, exactly (the whole 24 cm lift left him 10 cm over a 14 cm kerb for a frame)
-					const float y0 = (float)get_global_position().y;
-					set_global_position(t2.origin);
-					move_and_collide(Vector3(0, -0.3f, 0));
-					steps_up++; vis_dy -= (float)get_global_position().y - y0;
-					kerb_t = 0.25f;   // (the frame the kerb's face stopped him is not a stop: the clip walks on)
-				}
-			}
-		}
-	}
+	step_or_climb(want, p_delta);
 	const Vector3 got = get_velocity();
 	speed = Vector3(got.x, 0, got.z).length();
 	if (kerb_t > 0.0f) { kerb_t -= dt; speed = std::max(speed, Vector3(nh.x, 0, nh.z).length()); }   // (onto a kerb: his pace, not the face's stop)
@@ -741,6 +753,32 @@ void CityPlayer::_physics_process(double p_delta) {
 	}
 }
 
+// STEP UP (Yasin: "make the small heights like 20 cm walkable over"): walking into something no higher than 24 cm (a
+// kerb, a step) he is lifted onto it; a ledge or a fence ahead starts a climb or a vault (try_climb). Both movement paths.
+bool CityPlayer::step_or_climb(const Vector3 &p_want, double p_delta) {
+	if (!swimming && !frozen && !combat && !crouch && Vector3(p_want.x, 0, p_want.z).length() > 0.3f && try_climb(Vector3(p_want.x, 0, p_want.z).normalized())) return true;
+	else if (!swimming && !airborne && !frozen && is_on_wall() && Vector3(p_want.x, 0, p_want.z).length() > 0.3f) {
+		const Vector3 dir = Vector3(p_want.x, 0, p_want.z).normalized();
+		Transform3D t2 = get_global_transform();
+		// (only as far ahead as this frame's step: a 30 cm jump forward was a pop; the figure is drawn rising onto it: vis_dy)
+		const Vector3 up(0, 0.24f, 0), ahead = dir * std::max(Vector3(get_velocity().x, 0, get_velocity().z).length() * (float)p_delta, 0.04f);
+		if (!test_move(t2, up)) {
+			t2.origin += up;
+			if (!test_move(t2, ahead)) {
+				t2.origin += ahead;
+				if (test_move(t2, Vector3(0, -0.3f, 0))) {   // down onto its top, exactly (the whole 24 cm lift left him 10 cm over a 14 cm kerb for a frame)
+					const float y0 = (float)get_global_position().y;
+					set_global_position(t2.origin);
+					move_and_collide(Vector3(0, -0.3f, 0));
+					steps_up++; vis_dy -= (float)get_global_position().y - y0;
+					kerb_t = 0.25f;   // (the frame the kerb's face stopped him is not a stop: the clip walks on)
+				}
+			}
+		}
+	}
+	return false;
+}
+
 // A ledge ahead: its top (a ray down just past the wall), room to stand there, how high over the ground he stands on
 // (or jumped from): 24-50 cm on foot: climb onto it; 0.5-2.5 m in a jump: grab it and pull up.
 bool CityPlayer::try_climb(const Vector3 &p_dir) {
@@ -842,6 +880,22 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 	return true;
 }
 
+bool CityPlayer::motor_can() const {
+	return fig && fig->get_mode() == CityPed::MODE_ANIM && climb == 0 && settle_t >= 0.45f && !swimming && !combat && uncombat_t >= 0.9
+			&& act_left <= 0.0 && gest_t <= 0.0f && !airborne && land_t <= 0.0f && !crouch && crouch == crouch_prev && crouch_t > 1.2f && !jump_want && phone_kind == 0
+			&& !auto_on && !frozen && !talk_on && hit_t > 0.45 && !hold_on && is_on_floor();
+}
+
+Dictionary CityPlayer::get_motor_state() const {
+	Dictionary d;
+	d["on"] = motor != nullptr && motor->active();
+	if (!motor) return d;
+	d["state"] = String(motor->state_name()); d["clip"] = motor->clip_name(); d["t"] = motor->clip_time(); d["speed"] = motor->speed; d["yaw"] = motor->yaw;
+	d["starts"] = motor->n_starts; d["stops"] = motor->n_stops; d["turns"] = motor->n_turns; d["pivots"] = motor->n_pivots; d["gaits"] = motor->n_gait;
+	d["fidgets"] = motor->n_fidgets; d["switches"] = motor->n_switch; d["entry_cost"] = motor->last_entry_cost; d["i_switches"] = motor->inert_switches(); d["i_jump"] = motor->inert_jump(); d["i_live"] = motor->inert_live(); d["down_l"] = motor->foot_down(0); d["down_r"] = motor->foot_down(1); d["pull_l"] = motor->foot_pull(0); d["pull_r"] = motor->foot_pull(1); d["locks"] = motor->foot_locks();
+	return d;
+}
+
 bool CityPlayer::cur_clip_is(const StringName &p_clip) const { return fig && StringName(fig->current_clip()) == p_clip; }
 
 Vector3 CityPlayer::pelvis_world() const {
@@ -916,7 +970,7 @@ void CityPlayer::stand_at(const Vector3 &p_at, double p_yaw) {
 	if (fig) fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), p_at), StringName("ual/Idle_Loop"), 1.0, -1.0);
 }
 
-String CityPlayer::get_clip() const { return fig ? String(fig->current_clip()) : String(); }
+String CityPlayer::get_clip() const { if (motor && motor->active()) return motor->clip_name(); return fig ? String(fig->current_clip()) : String(); }   // (the new motor plays its own clips)
 
 void CityPlayer::_process(double p_delta) {
 	pm::Scope _pm(pm::PLAYER);   // (the slow-frame marks, perf_marks.h)
@@ -1033,6 +1087,9 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("gesture", "kind", "seconds"), &CityPlayer::gesture);
 	ClassDB::bind_method(D_METHOD("set_phone", "kind"), &CityPlayer::set_phone);
 	ClassDB::bind_method(D_METHOD("set_frozen", "on"), &CityPlayer::set_frozen);
+	ClassDB::bind_method(D_METHOD("set_motor", "on"), &CityPlayer::set_motor);
+	ClassDB::bind_method(D_METHOD("get_motor"), &CityPlayer::get_motor);
+	ClassDB::bind_method(D_METHOD("get_motor_state"), &CityPlayer::get_motor_state);
 	ClassDB::bind_method(D_METHOD("act", "clip", "seconds", "yaw"), &CityPlayer::act);
 	ClassDB::bind_method(D_METHOD("get_act"), &CityPlayer::get_act);
 	ClassDB::bind_method(D_METHOD("get_acts"), &CityPlayer::get_acts);

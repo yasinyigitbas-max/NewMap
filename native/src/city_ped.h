@@ -139,6 +139,14 @@ public:
 	// a hard knock: once down it lies until told (a medic has been); false: it gets up as it would
 	void set_stay_down(bool p_on) { stay_down = p_on; }
 	bool get_stay_down() const { return stay_down; }
+	// ---- the new movement system (mo_motor.h; docs/ANIMATION_PLAN.md): it plays the clips itself, so it reaches the
+	// figure's player, the skeleton's place in this node, and loads the player's clip libraries ("pwalk", "prun", "pidle",
+	// "ptrav", "pact": characters/rocketbox/clips_player_<walk|run|idle|trav|act>_<g>.res) beside the crowd's
+	AnimationPlayer *anim_player() const { return anim; }
+	Transform3D skel_frame() const { return skel_in_node; }
+	bool add_library(const StringName &p_name, const String &p_stem);
+	// the clip CityPed::drive played is forgotten (another system played clips meanwhile): its next drive starts fresh
+	void forget_clip() { cur_req = StringName(); cur_clip = StringName(); cur_hold = -1.0; cur_token = 0; }
 	Skeleton3D *skeleton() const { return skel; }   // (the player's bicycle reaches its feet and hands to the pedals and grips)
 	Vector3 body_at() const;
 	float body_yaw() const { return body.heading; }

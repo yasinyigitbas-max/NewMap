@@ -165,6 +165,16 @@ Vector3 CityPed::bone_world(const char *p_bone) const {
 Ref<Mesh> CityPed::get_body_mesh() const { return mi ? mi->get_mesh() : Ref<Mesh>(); }
 Ref<ShaderMaterial> CityPed::get_look() const { return mi ? Ref<ShaderMaterial>(Object::cast_to<ShaderMaterial>(mi->get_material_override().ptr())) : Ref<ShaderMaterial>(); }
 
+bool CityPed::add_library(const StringName &p_name, const String &p_stem) {
+	if (!anim) return false;
+	if (anim->has_animation_library(p_name)) return true;
+	const String g = body_id.begins_with("F") ? "female" : "male";
+	Ref<AnimationLibrary> lib = ResourceLoader::get_singleton()->load(String("res://characters/rocketbox/clips_") + p_stem + String("_") + g + String(".res"));
+	if (lib.is_null()) return false;
+	anim->add_animation_library(p_name, lib);
+	return true;
+}
+
 double CityPed::clip_pos() const { return anim && anim->is_playing() ? anim->get_current_animation_position() : 0.0; }
 
 static bool clip_pose_at(Skeleton3D *skel, const Ref<Animation> &a, const Transform3D &skel_in_node, int b_hips, int b_head, double p_t, Vector3 &r_hips, Vector3 &r_head) {
