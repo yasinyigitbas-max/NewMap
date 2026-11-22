@@ -157,7 +157,7 @@ bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_
 		const float e = std::fabs(clip_dist - dist);
 		if (e < best_e) { best_e = e; t0 = k / FPS; }
 	}
-	if (best_e > (&p_c == &c_mid && !p_chain ? 0.1f : 0.45f)) { tr = was; return false; }   // (Climbing_Single from the ground: begun only once he is where its own steps up start, its warp small)   // (too far yet, or too close to fit it: walking on, the old moves)
+	if (best_e > (&p_c == &c_mid && !p_chain ? 0.2f : 0.45f)) { tr = was; return false; }   // (Climbing_Single from the ground: begun only once he is where its own steps up start, its warp small)   // (too far yet, or too close to fit it: walking on, the old moves)
 	const Frame &F0 = D.f[(int)std::lround(t0 * FPS)];
 	tr.c = &p_c; tr.t0 = t0; tr.tc = tc; tr.yaw = yaw_m; tr.edge_p = edge; tr.edge_n = p_n; tr.top_y = p_top_y; tr.start_y = (float)p.y; tr.vault = p_vault;
 	tr.c_contact = C;

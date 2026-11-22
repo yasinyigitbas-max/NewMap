@@ -11,8 +11,9 @@ const Row SET1[] = {
 	{ "pwalk/sturn_r", "ms/S2_Turn_Right_90" }, { "pwalk/sturn_r1", "ms/S2_Turn_Right_90" }, { "pwalk/sturn_r2", "ms/S2_Turn_Right_90" },
 	{ "ptrav/Jump_a", "ms/S2_Jump_Standing" }, { "ptrav/Running_Jump_a", "ms/S2_Leap_Moving" },
 	{ "ptrav/Hard_Landing_b", "ms/S2_Landing_Fall_B" },   // (its "Fall A" soft landing starts from another fall pose: the feet met the ground 40 cm off - set 1's kept)
-	{ "ptrav/Crouching_Idle", "ms/S2_Crouch_Idle" }, { "ptrav/Crouched_Walking", "ms/S2_Crouch_Walk_Forward" },
-	{ "ptrav/Crouched_Sneaking_Left", "ms/S2_Crouch_Walk_Left" }, { "ptrav/Crouched_Sneaking_Right", "ms/S2_Crouch_Walk_Right" },
+	// (its crouch idle and crouched walks: into low cover, the cover entry's planted foot slid 6-10 cm - set 1's crouch kept
+	// until they are fitted to it)
+	// (its crouched walks to the sides, along low cover: the feet slid 10.6 cm - the cover sneaks stay set 1's)
 	{ nullptr, nullptr }
 };
 // SET 3 ("casual": the classic Mixamo male library - standard and hurried walks, quick / medium / intent runs, a two-cycle

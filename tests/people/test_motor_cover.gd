@@ -154,7 +154,7 @@ func _judge() -> void:
 	print("COVER   %-12s states %s  hips low %.2f, at the end %.2f  gap %.2f-%.2f  along %.2f..%.2f  slide %.1f pop %.1f cm  hips_dv %.2f  sneaks %d  clips %s" % [name, str(states.keys()), pel_min, high_end, gap_min, gap_max, x_min, x_max, s_slide * 100, s_pop * 100, s_dv, int(ms.get("sneaks", 0)), str(clips.keys())])
 	if name == "crouch":
 		_check(states.has("stance") and states.has("crouch"), "crouch: down and up by their clips (%s)" % str(states.keys()))
-		_check(clips.has("ptrav/Crouched_Walking"), "crouch: the crouched walk played")
+		_check(clips.has(String(player.call(&"motor_clip_for", "ptrav/Crouched_Walking"))), "crouch: the crouched walk played")
 		_check(pel_min < 0.62, "crouch: the hips low while crouched (%.2f m)" % pel_min)
 	else:
 		var tall: bool = L[1] >= 1.45
