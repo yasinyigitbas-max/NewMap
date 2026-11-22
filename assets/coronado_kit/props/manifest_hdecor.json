@@ -1560,5 +1560,31 @@
   ],
   "atlas_page": "props_k_*",
   "note": "Three bottles on a small tray for a vanity. Pivot at the base. Page K."
+ },
+ "laundry_shelf": {
+  "file_base": "prop_laundry_shelf",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 132
+  },
+  "footprint_w": 0.8,
+  "footprint_d": 0.22,
+  "height": 0.26,
+  "regions": [
+   "oak",
+   "ti_metal",
+   "paint_navy",
+   "paint_cream",
+   "plastic",
+   "plastic_black"
+  ],
+  "atlas_page": "props_k_*",
+  "note": "Wall shelf with detergent bottles. Pivot at the shelf top-back. Page K."
  }
 }
