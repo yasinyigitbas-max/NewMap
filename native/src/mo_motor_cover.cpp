@@ -116,10 +116,12 @@ void Motor::to_stance(int p_to) {
 void Motor::crouch_step(float p_dt, const Intent &p_in, float p_d, bool p_want, Vector3 &r_vel) {
 	if (!p_in.crouch) { to_stance(0); return; }
 	if (p_want) {
-		if (cur != &cr_walk) { into_loop = true; face_only = cur == &cr_idle; play(cr_walk, best_entry(*cur->d, t, *cr_walk.d, 0.0, cr_walk.d->len, &last_entry_cost), 0.3f); }
+		if (cur != &cr_walk) { into_loop = true; face_only = cur == &cr_idle; play(cr_walk, best_entry(*cur->d, t, *cr_walk.d, 0.0, cr_walk.d->len, &last_entry_cost), 0.3f); rate = 0.45f; }
 		yaw += clampc(p_d, -crouch_turn_rate * p_dt, crouch_turn_rate * p_dt);
 		const float wl = std::min((float)p_in.dir.length(), 1.0f);
-		rate = clampc(wl, 0.5f, 1.0f);
+		// (no crouched start or stop clip: the walk's rate eased up from 0.45 and down to it - at full pace at once, the
+		// hips' speed jumped 1.3-1.4 m/s)
+		rate = std::min(clampc(wl, 0.5f, 1.0f), rate + 2.0f * p_dt);
 		advance(p_dt);
 		r_vel = Basis(UP, yaw).xform(cr_walk.d->root_v.empty() ? Vector3(0, 0, 1.1f) : cr_walk.d->root_vel(t)) * rate;
 		speed = (float)r_vel.length();
@@ -134,7 +136,8 @@ void Motor::crouch_step(float p_dt, const Intent &p_in, float p_d, bool p_want, 
 				c += 0.05f * (float)w;
 				if (c < best_c) { best_c = c; best_w = w; }
 			}
-			if (best_w < 0.5 / 60.0) to_crouch(0.3f);
+			rate = std::max(0.45f, rate - 2.0f * p_dt);
+			if (best_w < 0.5 / 60.0 && rate <= 0.5f) to_crouch(0.3f);
 			else {
 				advance(p_dt);
 				r_vel = Basis(UP, yaw).xform(cr_walk.d->root_v.empty() ? Vector3(0, 0, 1.1f) : cr_walk.d->root_vel(t)) * rate;
@@ -220,7 +223,8 @@ void Motor::cover_sneak(int p_dir) {
 	play(c, best_entry(*cur->d, t, *c.d, 0.0, c.d->len, &last_entry_cost), 0.25f);
 	align_full = false;
 	yaw0 = yaw;
-	sneak_off = wrapc(yaw_of(want) - (yaw + yaw_of(level(tv))));   // (tests: how far its travel is off the wall)
+	sneak_off = wrapc(yaw_of(want) - (yaw + yaw_of(level(tv))));   // how far its travel is off the wall: turned out over its first steps
+	sneak_turned = 0.0f;
 	cv_dir = p_dir; n_sneaks++;
 }
 
@@ -236,7 +240,21 @@ void Motor::cover_step(float p_dt, const Intent &p_in, Vector3 &r_vel) {
 	// along the wall: the stick's share along it; stopped where the wall ends (40 cm ahead of the body, no wall)
 	const float s = (float)dir.dot(left);
 	int want = std::fabs(s) > 0.3f ? (s > 0.0f ? 1 : -1) : 0;
-	if (want != 0 && cover_dist(host->position() + left * (0.55f * want)) < 0.0f) want = 0;   // (0.4 m: the stop's hand-over ran 11 cm past the end)
+	if (want != 0 && cover_dist(host->position() + left * (0.85f * want)) < 0.0f) want = 0;
+	if (cv_dir != 0 && want == -cv_dir) want = 0;   // (a reversal through the idle: sneak into sneak turned the figure 20 degrees under a planted foot)   // (the stop's stride and hand-over run on up to half a metre)
+	// (let go: the sneak runs on, at most half a stride, to the moment most like the cover idle's stance - switched
+	// mid-stride, a planted foot slid 30 cm)
+	if (want == 0 && cv_dir != 0) {
+		const Clip &ci = cv_idle[cv_tall ? 1 : 0];
+		double best_w = 0.0; float best_c = 1e30f;
+		for (double w = 0.0; w <= std::min(0.5, cur->d->len) + 1e-6; w += 1.0 / 30.0) {
+			float c = 0.0f;
+			best_entry(*cur->d, t + w * rate, *ci.d, 0.0, std::min(ci.d->len, 1.0), &c);
+			c += 0.05f * (float)w;
+			if (c < best_c) { best_c = c; best_w = w; }
+		}
+		if (best_w >= 0.5 / 60.0 && cover_dist(host->position() + left * (0.3f * cv_dir)) > 0.0f) want = cv_dir;
+	}
 	if (want != cv_dir) {
 		if (want == 0) {
 			cv_dir = 0;
@@ -248,6 +266,11 @@ void Motor::cover_step(float p_dt, const Intent &p_in, Vector3 &r_vel) {
 	advance(p_dt);
 	speed = 0.0f;
 	if (cv_dir != 0) {
+		// (turned onto the drawn hips its travel ran 15 degrees off the wall - festive's cover idle and sneaks were
+		// captured at different hip angles; projected onto the wall, a planted foot drifted 30 cm: the figure turns till
+		// the sneak's own travel runs along it, 6 per second)
+		const float k = (sneak_off - sneak_turned) * std::min(1.0f, 6.0f * p_dt);
+		yaw += k; yaw0 += k; sneak_turned += k;
 		const Vector3 v = Basis(UP, yaw).xform(cur->d->root_v.empty() ? Vector3() : cur->d->root_vel(t)) * rate;
 		r_vel = left * (float)v.dot(left);   // (along the wall only)
 		dbg_v = r_vel; dbg_t = (float)t;

@@ -202,7 +202,7 @@ private:
 	bool no_align = false, face_only = false;
 	float last_gap = -1.0f;
 public:
-	float sneak_off = 0.0f; Vector3 dbg_v; float dbg_t = 0.0f;
+	float sneak_off = 0.0f, sneak_turned = 0.0f; Vector3 dbg_v; float dbg_t = 0.0f;
 private:
 	Vector3 root_anchor(double p_t) const;
 	bool root_step(float p_dt);     // true at the clip's end

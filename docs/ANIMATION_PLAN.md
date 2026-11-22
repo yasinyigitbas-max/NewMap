@@ -249,3 +249,32 @@ OPEN: the 17 cm stairs' first and last steps, and the kerb: the figures have NO 
 13 cm ahead of the ankle; whether the sole stands on the step's edge or before it decides these numbers, and the test
 and the motor estimate the toe differently. Yasin's eye on stairs decides the next fix (a stair-climb clip set would be
 the studio answer for long flights; ask Yasin for "stairs up / down" takes).
+
+## 10. Step 5, crouch and cover (22 Nov): `native/src/mo_motor_cover.cpp`, `tests/people/test_motor_cover.gd` PASS
+- THE CROUCH (C / Ctrl, CityPlayer's own key; the motor now does it): Standing_To_Crouched in, Crouched_To_Standing out
+  (root clips: the figure at an anchor, the body following the hips), Crouching_Idle and Crouched_Walking between
+  (steered at 2.5 rad/s). No crouched start / stop clip: the walk's rate eased up from 0.45 and down to it, and on
+  letting go it runs on to the stride most like the idle. Switches inside the crouch keep the body where it is (facing
+  alignment only: the walk's hips ride 34 cm higher and further on than the idle's).
+- COVER (Q; `request_cover()`): a wall the way he faces or pushes within 1.6 m, else the nearest round him; from 1.45 m
+  high standing cover (Cover_Idle), from 0.6 m crouched (Crouch_Cover_Idle). In: Stand_To_Cover_a / _b as a root clip
+  facing the wall, its end warped so the body ends 0.30 m (standing) / 0.38 m (crouched) off the wall. Along it: the
+  cover sneaks (in-place loops that travel sideways about 1 m/s; Left/Right_Cover_Sneak_a, Crouched_Sneaking_Left/Right),
+  the body held at the wall's distance, stopped 0.85 m before its end, a reversal passing through the idle, a stop
+  waiting for the stride most like the idle. Out: Cover_To_Stand_b / _a (a root clip back off the wall).
+- Festive's cover clips were captured in different frames (Cover_Idle half round against Stand_To_Cover's end; the
+  sneaks' hips 15 degrees off the idle's): hand-overs in cover turn the new clip onto the drawn hips by any amount
+  (align_full) and leave the body where the wall puts it (face_only); a sneak then turns (6/s) until its own travel runs
+  along the wall.
+- Fixed on the way: a sideways loop keeps its travel (the straight-loop correction had removed a sneak's whole
+  travel); the old kerb step is skipped in cover (touching the wall read as a kerb's face: 4 cm a frame along it); the
+  body does not follow its pinned feet in cover (it drifted 30 cm off the wall); a pin about to break steps whenever
+  the other foot holds him, else fades (never snaps).
+| lane | states | gap to the wall | along | slide | pop | hips speed jump |
+|---|---|---|---|---|---|---|
+| crouch | stance, crouch | - | - | 0.7 cm | 0.6 cm | 0.67 m/s |
+| tall cover | in, cover, out | 0.30-0.30 m | 3.5 m, inside the ends | 1.0 cm | 0.4 cm | 1.14 m/s |
+| low cover | in, cover, out | 0.30-0.38 m | 3.1 m, inside the ends | 0.2 cm | 0.5 cm | 1.18 m/s |
+NOT YET: peeking round a corner (Crouch_Look_Around_Corner), turning in cover (Standing/Crouch_Cover_Turn), cover to
+cover (Crouch_Cover_To_Cover), sneaking off the cover (Sneak_Off_The_Cover), a crouched turn on the spot. What the test
+cannot see: his back and hands against the wall, where he looks - Yasin plays it.

@@ -573,7 +573,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		const bool done = root_step(p_dt);
 		if (limbs && cur) {
 			const Frame fr = cur->d->lerp(t);
-			limbs->lock_on = true; limbs->may_step = false;
+			limbs->lock_on = true; limbs->may_step = st == STANCE;   // (getting up / down: a foot far off the clip's re-plants)
 			limbs->down[0] = fr.down[0]; limbs->down[1] = fr.down[1];
 		}
 		ground_feet(p_host);
@@ -738,7 +738,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	// THE BODY FOLLOWS ITS PLANTED FEET: a foot pinned where the clip no longer has it (pinned during a hand-over, the
 	// leg's offset then decayed away from it; or the clip's stance and its travel disagree) draws the body toward it,
 	// 3 per second, at most 0.5 m/s, rather than bend the leg off the clip's pose (a walk stop held a leg 25 cm off for 0.6 s)
-	if (limbs) {
+	if (limbs && st != COVER) {   // (in cover the wall places the body: followed, it drifted 30 cm off the wall)
 		Vector3 sum; int m = 0;
 		for (int s = 0; s < 2; s++) if (drawn_locked[s]) { sum += Vector3(drawn_pull[s].x, 0.0f, drawn_pull[s].z); m++; }
 		Vector3 want_v = m ? sum / (float)m * follow_rate : Vector3();

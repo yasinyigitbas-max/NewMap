@@ -107,12 +107,14 @@ func _sample() -> void:
 	for s in 2:
 		var down: bool = st != "off" and bool(ms.get(["down_l", "down_r"][s], false)) and not bool(ms.get(["step_l", "step_r"][s], false))
 		var a: Vector3 = snap_ft[s]
+		# (and on the ground as drawn, as test_motor_base.gd: a hand-over can hold a foot up while the clip has it down)
+		if down and a.y - player.global_position.y > 0.15: down = false
 		if not down: plant[s] = null; continue
 		if plant[s] == null: plant[s] = a
 		var sl := Vector2(a.x - plant[s].x, a.z - plant[s].z).length()
 		if sl > s_slide:
 			s_slide = sl
-			if trace: print("TRACES lane %d t %.2f %s %s foot %d slide %.3f" % [lane, t, st, ms.get("clip", ""), s, sl])
+			if trace: print("TRACES lane %d t %.2f %s %s foot %d slide %.3f at %s plant %s ct %.3f" % [lane, t, st, ms.get("clip", ""), s, sl, str(a), str(plant[s]), float(ms.get("t", 0.0))])
 	if have > 1:
 		var pop := absf((pel.y - pel_prev.y) - dy_prev)
 		if pop > s_pop: s_pop = pop; if trace: print("TRACEP lane %d t %.2f %s %s pop %.3f" % [lane, t, st, ms.get("clip", ""), pop])

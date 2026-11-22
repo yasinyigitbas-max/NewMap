@@ -97,7 +97,7 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 		bool have = false;
 		// a re-plant step under way: from the old pin to where the clip has the foot, in an arc, then pinned there
 		if (step_t[s] >= 0.0f) {
-			if (!down[s] || !may_step) {   // (the clip lifts it, or he moves off: the step's offset fades like a release)
+			if (!down[s]) {   // (the clip lifts it: the step's offset fades like a release)
 				const float u = std::min(step_t[s] / step_s, 1.0f), e = u * u * (3.0f - 2.0f * u);
 				rel_off[s] = step_from[s].lerp(anim_w, e) + Vector3(0, step_h * std::sin(3.14159265f * u), 0) - anim_w;
 				rel_t[s] = 0.0f; step_t[s] = -1.0f; locked[s] = false;
@@ -116,8 +116,10 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 				if (!locked[s]) { if ((float)raw[s].y - ground_y < pin_h) { locked[s] = true; lock_w[s] = anim_w; rel_t[s] = 9.0f; lock_t[s] = 0.0f; locks++; } }
 				else if ((lock_w[s] - anim_w).length() > max_pull) {
 					// (standing: a step there, not a snap - a stop into the idle moved the clip's foot 27 cm in 0.1 s)
-					if (may_step && down[1 - s] && step_t[1 - s] < 0.0f) { step_t[s] = 0.0f; step_from[s] = lock_w[s]; steps++; }
-					else { locked[s] = false; rel_off[s] = Vector3(); rel_t[s] = 9.0f; }
+					// (any time the other foot holds him: a step; else let go with its offset fading - never a snap: a stand-up
+					// and a cover's switch snapped a foot 30 cm)
+					if (down[1 - s] && step_t[1 - s] < 0.0f) { step_t[s] = 0.0f; step_from[s] = lock_w[s]; steps++; }
+					else { locked[s] = false; rel_off[s] = lock_w[s] - anim_w; rel_t[s] = 0.0f; }
 				}
 			} else if (locked[s]) {   // the clip lifts it: the pin lets go, its offset fading
 				locked[s] = false; rel_off[s] = lock_w[s] - anim_w; rel_t[s] = 0.0f;

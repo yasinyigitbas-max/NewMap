@@ -121,5 +121,11 @@ TRAPS (each cost a run):
   (snapshot at the start of Motor::step).
 - Easing by a rate (x += (goal - x) * k dt) starts at full speed: a pop when the goal jumps; use a damped spring.
 - Mocap loops drift sideways over a cycle: take the mean out (mo_clip loop_drift).
+- Festive's clips of one family can be captured in different frames (cover: idle half round against the "in" clip's
+  end; sneaks 15 degrees off the idle): chain them by aligning the new clip's facing to the drawn hips (align_full), and
+  let the world (the wall) place the body (face_only); then turn toward the travel the world needs, gradually.
+- The old CityPlayer code still runs around the motor (step_or_climb's kerb lift, try_climb): skip what does not
+  belong (in cover the wall reads as a kerb's face).
 - Tests: test_motor_base.gd (19 phases), test_motor_trav.gd (12 lanes), test_motor_slopes.gd (ramps, stairs, kerbs),
-  test_step_up.gd (old + new); run all four after any change to mo_*.
+  test_motor_cover.gd (crouch, tall / low cover), test_step_up.gd (old + new); run all five after any change to mo_*.
+  tools/people/survey_mo_clips.gd and dump_mo_clip.gd show a clip as mo_clip measures it.
