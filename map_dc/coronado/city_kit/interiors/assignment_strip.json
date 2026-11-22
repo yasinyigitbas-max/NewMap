@@ -1,6 +1,68 @@
 {
  "_doc": "Which shop is behind every shop door of the commercial strip's GROWTH blocks (claude/grow-strip, 18 Nov; Yasin:",
- "count": 26,
+ "_removed": [
+  {
+   "id": "m_gr_ad5ne__taqueria_adela__0",
+   "name": "Tacos El Puente",
+   "when": "22 Nov 2026",
+   "why": "Strand / Adela NEW-18 trim (Yasin 22 Nov 02:57: swap to non-shopfront buildings, drop their rooms; only shops of a kind found nowhere else are kept); the locked room scene stays until Yasin approves removing it"
+  },
+  {
+   "id": "m_gr_ad5ne__route_75_diner__0",
+   "name": "Route 75 Diner",
+   "when": "22 Nov 2026",
+   "why": "Strand / Adela NEW-18 trim (Yasin 22 Nov 02:57: swap to non-shopfront buildings, drop their rooms; only shops of a kind found nowhere else are kept); the locked room scene stays until Yasin approves removing it"
+  },
+  {
+   "id": "m_gr_ad5nw__dollar_plus_market__0",
+   "name": "Dollar Plus Market",
+   "when": "22 Nov 2026",
+   "why": "Strand / Adela NEW-18 trim (Yasin 22 Nov 02:57: swap to non-shopfront buildings, drop their rooms; only shops of a kind found nowhere else are kept); the locked room scene stays until Yasin approves removing it"
+  },
+  {
+   "id": "m_gr_ad5nw__adela_plaza_row__0",
+   "name": "Suds & Spin Laundry",
+   "when": "22 Nov 2026",
+   "why": "Strand / Adela NEW-18 trim (Yasin 22 Nov 02:57: swap to non-shopfront buildings, drop their rooms; only shops of a kind found nowhere else are kept); the locked room scene stays until Yasin approves removing it"
+  },
+  {
+   "id": "m_gr_ad5nw__adela_plaza_row__1",
+   "name": "Lucky Nails",
+   "when": "22 Nov 2026",
+   "why": "Strand / Adela NEW-18 trim (Yasin 22 Nov 02:57: swap to non-shopfront buildings, drop their rooms; only shops of a kind found nowhere else are kept); the locked room scene stays until Yasin approves removing it"
+  },
+  {
+   "id": "m_gr_ad5nw__adela_plaza_corner__1",
+   "name": "Pressed Right Cleaners",
+   "when": "22 Nov 2026",
+   "why": "Strand / Adela NEW-18 trim (Yasin 22 Nov 02:57: swap to non-shopfront buildings, drop their rooms; only shops of a kind found nowhere else are kept); the locked room scene stays until Yasin approves removing it"
+  },
+  {
+   "id": "m_gr_ad3sw__visitors_corner__0",
+   "name": "Ward Coffee",
+   "when": "22 Nov 2026",
+   "why": "Strand / Adela NEW-18 trim (Yasin 22 Nov 02:57: swap to non-shopfront buildings, drop their rooms; only shops of a kind found nowhere else are kept); the locked room scene stays until Yasin approves removing it"
+  },
+  {
+   "id": "m_gr_ad3se__harbor_view_motel_east__0",
+   "name": "Guest Laundry",
+   "when": "22 Nov 2026",
+   "why": "Strand / Adela NEW-18 trim (Yasin 22 Nov 02:57: swap to non-shopfront buildings, drop their rooms; only shops of a kind found nowhere else are kept); the locked room scene stays until Yasin approves removing it"
+  },
+  {
+   "id": "m_gr_ad3se__crosswalk_coffee__0",
+   "name": "Crosswalk Coffee",
+   "when": "22 Nov 2026",
+   "why": "Strand / Adela NEW-18 trim (Yasin 22 Nov 02:57: swap to non-shopfront buildings, drop their rooms; only shops of a kind found nowhere else are kept); the locked room scene stays until Yasin approves removing it"
+  },
+  {
+   "id": "m_gr_ad3se__iron_tide_gym__0",
+   "name": "Iron Tide Gym 24/7",
+   "when": "22 Nov 2026",
+   "why": "Strand / Adela NEW-18 trim (Yasin 22 Nov 02:57: swap to non-shopfront buildings, drop their rooms; only shops of a kind found nowhere else are kept); the locked room scene stays until Yasin approves removing it"
+  }
+ ],
+ "count": 16,
  "rooms": [
   {
    "id": "m_gr_ad5ne__crown_car_care_row__0",
@@ -141,37 +203,6 @@
    "built": ""
   },
   {
-   "id": "m_gr_ad5ne__taqueria_adela__0",
-   "piece": "m_gr_ad5ne",
-   "label": "taqueria_adela",
-   "model": "commercial/com_shallow_surf",
-   "pos": [
-    512.7,
-    4.149,
-    -1062.0
-   ],
-   "yaw": -90.0,
-   "door_index": 0,
-   "door_along": 3.26,
-   "door_w": 1.0,
-   "bay": [
-    -4.2,
-    4.2
-   ],
-   "kind": "taqueria",
-   "name": "Tacos El Puente",
-   "style": "sun",
-   "signs": [
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 8.18
-    }
-   ],
-   "source": "strip growth (hand-made shop list)",
-   "built": ""
-  },
-  {
    "id": "m_gr_ad5ne__tax_office__0",
    "piece": "m_gr_ad5ne",
    "label": "tax_office",
@@ -295,42 +326,6 @@
    "built": ""
   },
   {
-   "id": "m_gr_ad5ne__route_75_diner__0",
-   "piece": "m_gr_ad5ne",
-   "label": "route_75_diner",
-   "model": "commercial/com_bistro",
-   "pos": [
-    580.0,
-    4.143,
-    -1036.0
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": 4.76,
-   "door_w": 1.6,
-   "bay": [
-    -5.7,
-    5.7
-   ],
-   "kind": "diner",
-   "name": "Route 75 Diner",
-   "style": "teal",
-   "signs": [
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 11.18
-    },
-    {
-     "facade": "right",
-     "along": 2.4,
-     "w": 3.2
-    }
-   ],
-   "source": "strip growth (hand-made shop list)",
-   "built": ""
-  },
-  {
    "id": "m_gr_ad5ne__bridge_tire_pros__0",
    "piece": "m_gr_ad5ne",
    "label": "bridge_tire_pros",
@@ -398,109 +393,6 @@
    "built": ""
   },
   {
-   "id": "m_gr_ad5nw__dollar_plus_market__0",
-   "piece": "m_gr_ad5nw",
-   "label": "dollar_plus_market",
-   "model": "extras/ext_grocery_market",
-   "pos": [
-    414.0,
-    4.18,
-    -1084.0
-   ],
-   "yaw": 90.0,
-   "door_index": 0,
-   "door_along": 7.92,
-   "door_w": 1.6,
-   "bay": [
-    -14.7,
-    14.7
-   ],
-   "kind": "discount",
-   "name": "Dollar Plus Market",
-   "style": "sun",
-   "signs": [
-    {
-     "facade": "front",
-     "along": -3.0,
-     "w": 23.18
-    },
-    {
-     "facade": "front",
-     "along": 12.0,
-     "w": 5.18
-    },
-    {
-     "facade": "right",
-     "along": 2.4,
-     "w": 3.2
-    }
-   ],
-   "source": "strip growth (hand-made shop list)",
-   "built": ""
-  },
-  {
-   "id": "m_gr_ad5nw__adela_plaza_row__0",
-   "piece": "m_gr_ad5nw",
-   "label": "adela_plaza_row",
-   "model": "commercial/com_boutique_row",
-   "pos": [
-    437.0,
-    4.161,
-    -1092.0
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": -4.08,
-   "door_w": 1.6,
-   "bay": [
-    -8.7,
-    -3.0
-   ],
-   "kind": "laundromat",
-   "name": "Suds & Spin Laundry",
-   "style": "sea",
-   "signs": [
-    {
-     "facade": "front",
-     "along": -6.0,
-     "w": 5.18
-    }
-   ],
-   "source": "strip growth (hand-made shop list)",
-   "built": ""
-  },
-  {
-   "id": "m_gr_ad5nw__adela_plaza_row__1",
-   "piece": "m_gr_ad5nw",
-   "label": "adela_plaza_row",
-   "model": "commercial/com_boutique_row",
-   "pos": [
-    437.0,
-    4.161,
-    -1092.0
-   ],
-   "yaw": 0.0,
-   "door_index": 1,
-   "door_along": -1.92,
-   "door_w": 1.6,
-   "bay": [
-    -3.0,
-    3.0
-   ],
-   "kind": "nails",
-   "name": "Lucky Nails",
-   "style": "red",
-   "signs": [
-    {
-     "facade": "front",
-     "along": 0.0,
-     "w": 5.18
-    }
-   ],
-   "source": "strip growth (hand-made shop list)",
-   "built": ""
-  },
-  {
    "id": "m_gr_ad5nw__adela_plaza_row__2",
    "piece": "m_gr_ad5nw",
    "label": "adela_plaza_row",
@@ -556,37 +448,6 @@
     {
      "facade": "front",
      "along": -3.0,
-     "w": 5.18
-    }
-   ],
-   "source": "strip growth (hand-made shop list)",
-   "built": ""
-  },
-  {
-   "id": "m_gr_ad5nw__adela_plaza_corner__1",
-   "piece": "m_gr_ad5nw",
-   "label": "adela_plaza_corner",
-   "model": "commercial/com_orange_corner",
-   "pos": [
-    454.0,
-    4.158,
-    -1092.0
-   ],
-   "yaw": 0.0,
-   "door_index": 1,
-   "door_along": 1.08,
-   "door_w": 1.6,
-   "bay": [
-    0.0,
-    5.7
-   ],
-   "kind": "dry_cleaner",
-   "name": "Pressed Right Cleaners",
-   "style": "navy",
-   "signs": [
-    {
-     "facade": "front",
-     "along": 3.0,
      "w": 5.18
     }
    ],
@@ -723,37 +584,6 @@
    "built": ""
   },
   {
-   "id": "m_gr_ad3sw__visitors_corner__0",
-   "piece": "m_gr_ad3sw",
-   "label": "visitors_corner",
-   "model": "commercial/com_orange_corner",
-   "pos": [
-    476.0,
-    2.363,
-    -1373.0
-   ],
-   "yaw": -180.0,
-   "door_index": 0,
-   "door_along": -1.08,
-   "door_w": 1.6,
-   "bay": [
-    -5.7,
-    0.0
-   ],
-   "kind": "coffee",
-   "name": "Ward Coffee",
-   "style": "black",
-   "signs": [
-    {
-     "facade": "front",
-     "along": -3.0,
-     "w": 5.18
-    }
-   ],
-   "source": "strip growth (hand-made shop list)",
-   "built": ""
-  },
-  {
    "id": "m_gr_ad3sw__visitors_corner__1",
    "piece": "m_gr_ad3sw",
    "label": "visitors_corner",
@@ -810,114 +640,6 @@
      "facade": "front",
      "along": 15.0,
      "w": 5.0
-    }
-   ],
-   "source": "strip growth (hand-made shop list)",
-   "built": ""
-  },
-  {
-   "id": "m_gr_ad3se__harbor_view_motel_east__0",
-   "piece": "m_gr_ad3se",
-   "label": "harbor_view_motel_east",
-   "model": "extras/motel_inn_court",
-   "pos": [
-    598.0,
-    2.368,
-    -1376.0
-   ],
-   "yaw": 0.0,
-   "door_index": 0,
-   "door_along": 13.3,
-   "door_w": 1.4,
-   "bay": [
-    10.0,
-    17.7
-   ],
-   "kind": "laundromat",
-   "name": "Guest Laundry",
-   "style": "navy",
-   "signs": [
-    {
-     "facade": "front",
-     "along": 15.0,
-     "w": 5.0
-    }
-   ],
-   "source": "strip growth (hand-made shop list)",
-   "built": ""
-  },
-  {
-   "id": "m_gr_ad3se__crosswalk_coffee__0",
-   "piece": "m_gr_ad3se",
-   "label": "crosswalk_coffee",
-   "model": "commercial/com_kiosk",
-   "pos": [
-    520.0,
-    2.263,
-    -1378.0
-   ],
-   "yaw": -180.0,
-   "door_index": 0,
-   "door_along": 1.15,
-   "door_w": 0.9,
-   "bay": [
-    -1.7,
-    1.7
-   ],
-   "kind": "coffee",
-   "name": "Crosswalk Coffee",
-   "style": "red",
-   "signs": [
-    {
-     "facade": "left",
-     "along": 0.9,
-     "w": 1.2
-    }
-   ],
-   "source": "strip growth (hand-made shop list)",
-   "built": ""
-  },
-  {
-   "id": "m_gr_ad3se__iron_tide_gym__0",
-   "piece": "m_gr_ad3se",
-   "label": "iron_tide_gym",
-   "model": "industrial/ind_warehouse",
-   "pos": [
-    616.0,
-    3.155,
-    -1318.0
-   ],
-   "yaw": -90.0,
-   "door_index": 0,
-   "door_along": -9.0,
-   "door_w": 1.0,
-   "bay": [
-    -11.7,
-    11.7
-   ],
-   "kind": "gym",
-   "name": "Iron Tide Gym 24/7",
-   "style": "black",
-   "signs": [
-    {
-     "facade": "right",
-     "along": 12.87,
-     "w": 1.75
-    },
-    {
-     "facade": "left",
-     "along": 12.87,
-     "w": 1.75
-    },
-    {
-     "facade": "right",
-     "along": 12.87,
-     "w": 1.75
-    },
-    {
-     "facade": "left",
-     "along": 12.87,
-     "w": 1.75
     }
    ],
    "source": "strip growth (hand-made shop list)",
