@@ -90,7 +90,8 @@ Yasin's PC (Windows / Android) - a cloud session builds a Linux copy for headles
 ## The new system (step 2 built 22 Nov; docs/ANIMATION_PLAN.md section 8)
 Files: native/src/mo_clip, mo_inertial (MoInertial), mo_limbs (MoLimbs: foot lock, re-plant steps, hands), mo_motor
 (mo::Motor; align_facing / align_contacts / align_hips at every play(), the body follows its planted feet),
-mo_motor_trav (vault / climb); tools/people/dump_mo_clip.gd prints a clip as mo_clip measures it; CityPlayer hands the
+mo_motor_trav (vault / climb), mo_motor_cover (crouch, cover), mo_motor_carry (box, bags);
+tools/people/dump_mo_clip.gd prints a clip as mo_clip measures it; CityPlayer hands the
 body to the motor on the ground (`motor_can`), the old code keeps the rest; `--old-moves` turns it off. Test:
 tests/people/test_motor_base.gd (`-- --only=new|old --trace --no-inertial --no-footlock`).
 Build and run here: `bash native/build_linux.sh` (godot-cpp in /root/native_tools/godot-cpp, scons platform=linux
@@ -127,5 +128,8 @@ TRAPS (each cost a run):
 - The old CityPlayer code still runs around the motor (step_or_climb's kerb lift, try_climb): skip what does not
   belong (in cover the wall reads as a kerb's face).
 - Tests: test_motor_base.gd (19 phases), test_motor_trav.gd (12 lanes), test_motor_slopes.gd (ramps, stairs, kerbs),
-  test_motor_cover.gd (crouch, tall / low cover), test_step_up.gd (old + new); run all five after any change to mo_*.
+  test_motor_cover.gd (crouch, tall / low cover), test_motor_carry.gd (box, briefcase), test_step_up.gd (old + new);
+  run all six after any change to mo_*. Keys on the PC: C crouch, Q cover, G a box to carry; `--old-moves` = old code.
+- A clip whose hips stand away from its origin can play in place with Clip::off (the box idle = a walk-stop's tail);
+  Clip::lo loops only its tail.
   tools/people/survey_mo_clips.gd and dump_mo_clip.gd show a clip as mo_clip measures it.
