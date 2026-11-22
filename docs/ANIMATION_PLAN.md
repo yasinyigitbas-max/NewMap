@@ -155,3 +155,29 @@ What the numbers cannot see: the arms, the spine, the look. Yasin plays it.
 Traps found (also in the skill): read the pose on `skeleton_updated` (a read in `_process` saw the raw clip, before
 the modifiers); the skeleton can be posed twice in a frame (a seek, then its own update): count frames, not passes;
 the skeleton node is scaled 0.01 (bone units are cm); the root's offset speed is the hips' own, not their world speed.
+
+### Step 2, second pass (22 Nov): the pivots and the stops
+- The run stops and the right run pivot are Mixamo's own takes now (`mx/Run_To_Stop`, `Run_To_Stop_2`,
+  `Running_Turn_180`): festive's prun copies were tuned (`_fit_stance` bent the legs toward the idle's stance; the
+  turns' pace smoothed) and the stop had a hitch inside it.
+- A raw clip whose pose already turns ignores the converter's "yaw" curve (Run_To_Stop's pose turns -43 degrees and its
+  yaw said -47: played both, he turned twice). Decided per clip from its measured facing (`ClipData::yaw_turns`).
+- A clip that turns the body round counts a foot down only within 2 cm of its floor (the stepping foot was taken as
+  planted).
+- LET GO while moving: the loop runs on (at most 0.7 s) until its stride is where a stop's opening pose is, and the stop
+  starts from there (cut in anywhere, a hand-over swept a planted foot 66 cm).
+- CONTACT ALIGNMENT at every hand-over: the new clip is placed so its planted foot lands on the foot already pinned.
+- A foot is pinned only when the drawn ankle is within 15 cm of the ground (a hand-over held a foot 25 cm up while
+  the new clip had it down).
+| phase | slide before -> now (cm) |
+|---|---|
+| run stop | 13.2 -> 6.9 |
+| run turn back (pivot) | 40.9 -> 1.0 |
+| walk turn back (pivot) | 30.2 -> 6.0 |
+| turns on the spot | 3.2-4.0 -> 2.7-3.2 |
+| walk stop (first) | 5.7 -> 28.8 (OPEN: one stop_b case) |
+Tried and taken back, with their numbers: travel from the lower foot only (walks 35 cm), from the foot nearest the
+clip's own travel (walks 35 cm), the clip's own travel for turning clips (pivots unchanged), the floor rule for every
+clip (stops 12 cm), a soft foot lock easing at 0.8 m/s (walks 18 cm), pinning at the clip's own foot instead of the drawn
+one (standing 18 cm, runs 26-35 cm).
+Still failing the 1.2 m/s hip speed check: run stop 1.62, walk -> run 1.56, run pivot 1.96, a second run stop 1.63.

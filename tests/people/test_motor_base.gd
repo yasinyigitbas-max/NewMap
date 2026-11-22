@@ -137,7 +137,7 @@ func _measure(dt: float) -> void:
 		var v: Vector3 = (p - foot_prev[s]) / maxf(dt, 1e-4) if have_prev > 0 else Vector3()
 		var down: bool
 		if flags != null:   # the clip says which foot is down: its ankle is the contact (no toe guess)
-			down = s < 2 and bool(flags[s]) and have_prev > 0
+			down = s < 2 and bool(flags[s]) and have_prev > 0 and p.y - player.global_position.y < 0.15   # (and on the ground as drawn: a hand-over can hold a foot up while the clip has it down)
 		else:
 			down = p.y < low[s] + 0.025 and Vector2(v.x, v.z).length() < 0.5 and have_prev > 0
 		if down:

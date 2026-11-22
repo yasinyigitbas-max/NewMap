@@ -46,6 +46,9 @@ struct Host {
 	// move by this velocity for dt (it slides along walls); the velocity it actually got
 	virtual Vector3 slide(const Vector3 &p_vel, float p_dt) = 0;
 	virtual bool on_floor() const = 0;
+	// moved at once by this (level, a few cm: a hand-over lines up the new clip's planted foot with the one down);
+	// false when something is in the way (it then stays)
+	virtual bool shift(const Vector3 &p_by) = 0;
 };
 
 // One clip as the motor knows it
@@ -86,6 +89,7 @@ public:
 	// (the tests)
 	int n_starts = 0, n_stops = 0, n_turns = 0, n_pivots = 0, n_gait = 0, n_fidgets = 0, n_switch = 0;
 	float last_entry_cost = 0.0f;
+	int n_aligned = 0; float last_align = 0.0f;   // (tests) contact alignments made, the last one's size (m)
 	int inert_switches() const;
 	float inert_jump() const;
 	bool inert_live() const;
@@ -123,11 +127,17 @@ private:
 	void to_idle(float p_blend);
 	void to_loop(int p_i, float p_blend);
 	void to_stop();
+	void stop_with(const Clip *p_c, double p_t0, float p_cost);
 	void to_start(float p_angle, float p_want);
 	void to_turn(float p_angle);
 	void to_pivot(float p_angle);
 	Vector3 clip_vel(const Clip &p_c, double p_t) const;   // world, from the clip's vz / vx and the turn so far
 	void advance(float p_dt);   // the clip's time on, the pose set
+	// CONTACT ALIGNMENT: at a hand-over the new clip is placed so its planted foot lands on the foot already pinned there
+	// (the hand-over smooths the hips; the foot does not move). Without it the pin held the old foot while the hand-over
+	// pulled the drawn foot 27 cm toward the new clip's, and it let go.
+	void align_contacts(const Clip &p_c, double p_t0);
+	Host *host = nullptr;       // (the body, while step runs)
 	void place(Host &p_host);   // the figure on the body
 };
 

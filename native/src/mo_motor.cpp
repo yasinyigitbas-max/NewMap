@@ -80,7 +80,7 @@ Clip Motor::load(const char *p_name) {
 	c.a = anim->get_animation(c.name);
 	c.d = clip_data(c.a, fig->skeleton(), fig->skel_frame());
 	c.ground_v = c.meta("ground_v", 0.0f);
-	if (c.a->has_meta("yaw")) { const PackedFloat32Array y = c.a->get_meta("yaw"); if (y.size() > 0) c.yaw_end = y[y.size() - 1]; }
+	c.yaw_end = c.d->yaw(c.d->len);
 	return c;
 }
 
@@ -103,12 +103,18 @@ bool Motor::attach(CityPed *p_fig) {
 	r_start[0] = load("prun/start_a"); r_start[1] = load("prun/start_b");
 	r_tstart[0] = load("prun/tstart_l"); r_tstart[1] = load("prun/tstart_r");
 	w_stop[0] = load("pwalk/stop_a"); w_stop[1] = load("pwalk/stop_b");
-	r_stop[0] = load("prun/stop_a"); r_stop[1] = load("prun/stop_b");
+	// the run stops and the run pivot as Mixamo made them (the "mx" library: retargeted only). Festive's prun copies were
+	// tuned ("stance_fit": the legs bent toward the idle's stance; the turns' pace smoothed) and the stop had a hitch at
+	// 0.17 s (Yasin, 22 Nov: "take only clips from festive work, not the code or the animation tuning")
+	r_stop[0] = load("mx/Run_To_Stop"); r_stop[1] = load("mx/Run_To_Stop_2");
+	if (!r_stop[0].ok()) r_stop[0] = load("prun/stop_a");
+	if (!r_stop[1].ok()) r_stop[1] = load("prun/stop_b");
 	n_tl = n_tr = 0;
 	for (const char *n : { "pwalk/sturn_l", "pwalk/sturn_l1", "pwalk/sturn_l2" }) { Clip c = load(n); if (c.ok()) s_turn_l[n_tl++] = c; }
 	for (const char *n : { "pwalk/sturn_r", "pwalk/sturn_r1", "pwalk/sturn_r2" }) { Clip c = load(n); if (c.ok()) s_turn_r[n_tr++] = c; }
 	w_pivot[0] = load("pwalk/turn180_l"); w_pivot[1] = load("pwalk/turn180_r");
-	r_pivot[0] = load("prun/turn180_l"); r_pivot[1] = load("prun/turn180_r");
+	r_pivot[0] = load("prun/turn180_l"); r_pivot[1] = load("mx/Running_Turn_180");   // (left: festive's mirror of it; no raw take that way)
+	if (!r_pivot[1].ok()) r_pivot[1] = load("prun/turn180_r");
 	if (n_loops == 0 || n_idles == 0) { fig = nullptr; return false; }
 	if (!inert) {   // first on the skeleton: it sees the clip's own pose, the IK after it sees the handed-over one
 		inert = memnew(MoInertial);
@@ -126,7 +132,28 @@ bool Motor::attach(CityPed *p_fig) {
 	return true;
 }
 
+void Motor::align_contacts(const Clip &p_c, double p_t0) {
+	if (!host || !limbs || !limbs->lock_on) return;
+	const Frame f = p_c.d->lerp(p_t0);
+	// where the new clip puts each foot, placed as the figure will be (the body's place, this frame's facing)
+	const Basis R(UP, yaw);
+	const Vector3 at = host->position();
+	Vector3 sum; int m = 0;
+	for (int s = 0; s < 2; s++) {
+		if (!f.down[s] || !limbs->locked[s]) continue;
+		const Vector3 p_new = at + R.xform(f.foot[s]);
+		const Vector3 d = limbs->lock_w[s] - p_new;
+		sum += Vector3(d.x, 0.0f, d.z); m++;
+	}
+	if (!m) return;
+	const Vector3 by = sum / (float)m;
+	last_align = (float)by.length();
+	if (last_align < 0.005f || last_align > 0.45f) return;   // (nothing to do / too far: a different stance, not a slide)
+	if (host->shift(by)) n_aligned++;
+}
+
 void Motor::play(const Clip &p_c, double p_t0, float p_blend) {
+	align_contacts(p_c, p_t0);
 	anim->play(p_c.name, 0.0);
 	t = std::min(std::max(p_t0, 0.0), p_c.d->len);
 	anim->seek(t, true);
@@ -144,7 +171,7 @@ void Motor::advance(float p_dt) {
 
 Vector3 Motor::clip_vel(const Clip &p_c, double p_t) const {
 	// the clip's own travel, read from its planted feet (mo_clip root_v), turned as the clip turns
-	const float y = turn_k * p_c.curve("yaw", p_t, 0.0f);
+	const float y = turn_k * p_c.d->yaw(p_t);
 	const Vector3 v = p_c.d->root_v.empty() ? fwd_of(y) * p_c.curve("vz", p_t, 0.0f) + left_of(y) * p_c.curve("vx", p_t, 0.0f) : Basis(UP, y).xform(p_c.d->root_vel(p_t));
 	return Basis(UP, yaw0).xform(v) * rate;
 }
@@ -221,11 +248,15 @@ void Motor::to_stop() {
 			if (cost < best_c) { best_c = cost; best = &c; best_t = tt; }
 		}
 	}
-	if (!best) { to_idle(blend_idle); return; }
-	last_entry_cost = best_c;
+	stop_with(best, best_t, best_c);
+}
+
+void Motor::stop_with(const Clip *p_c, double p_t0, float p_cost) {
+	if (!p_c) { to_idle(blend_idle); return; }
+	last_entry_cost = p_cost;
 	turn_k = 1.0f; rate = 1.0f;
-	yaw0 = yaw - best->curve("yaw", best_t, 0.0f);
-	play(*best, best_t, blend_step);
+	yaw0 = yaw - p_c->d->yaw(p_t0);
+	play(*p_c, p_t0, blend_step);
 	st = STOP; n_stops++;
 }
 
@@ -282,7 +313,7 @@ void Motor::to_pivot(float p_angle) {
 	last_entry_cost = best_c;
 	turn_k = std::fabs(c.yaw_end) > 0.1f ? clampf(p_angle / c.yaw_end, 0.75f, 1.1f) : 1.0f;
 	rate = 1.0f;
-	yaw0 = yaw - turn_k * c.curve("yaw", best_t, 0.0f);
+	yaw0 = yaw - turn_k * c.d->yaw(best_t);
 	const String key = String("out_at_") + loop_key(loops[loop_i >= 0 ? loop_i : 0].name);
 	hand_at = c.a->has_meta(key) ? (double)c.a->get_meta(key) : c.meta("done_at", (float)c.d->len);
 	play(c, best_t, blend_step);
@@ -295,6 +326,7 @@ void Motor::place(Host &p_host) {
 
 void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	if (st == OFF || !cur) return;
+	host = &p_host;
 	const Vector3 dir(p_in.dir.x, 0.0f, p_in.dir.z);
 	const float wl = std::min((float)dir.length(), 1.0f);
 	const bool want = wl > 0.1f;
@@ -323,7 +355,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		}
 		case TURN: {
 			advance(p_dt);
-			yaw = yaw0 + turn_k * cur->curve("yaw", t, 0.0f);
+			yaw = yaw0 + turn_k * cur->d->yaw(t);
 			vel = clip_vel(*cur, t);
 			if (t >= cur->d->len - 0.02) {
 				if (want) {
@@ -337,10 +369,10 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 			advance(p_dt);
 			if (!want) { if (t < 0.4) to_idle(blend_step); else to_stop(); break; }
 			// steering on the way: the start's facing eased toward the way wanted
-			const float y_now = yaw0 + turn_k * cur->curve("yaw", t, 0.0f);
+			const float y_now = yaw0 + turn_k * cur->d->yaw(t);
 			const float d2 = wrapf(std::atan2((float)dir.x, (float)dir.z) - y_now);
 			if (cur != &r_tstart[0] && cur != &r_tstart[1]) yaw0 += clampf(d2, -2.5f * p_dt, 2.5f * p_dt);
-			yaw = yaw0 + turn_k * cur->curve("yaw", t, 0.0f);
+			yaw = yaw0 + turn_k * cur->d->yaw(t);
 			vel = clip_vel(*cur, t);
 			speed = (float)vel.length();
 			if (t >= hand_at) to_loop(pick_loop(std::max(speed, want_speed), loop_i), blend_loop);
@@ -348,7 +380,29 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		}
 		case MOVE: {
 			if (!want) {
-				if (speed > 0.6f) to_stop(); else to_idle(blend_idle);
+				// LET GO: a stop on the foot that fits. The loop runs on (at most a stride, its pace held) until its
+				// stride is where a stop's opening pose is; then the stop from that moment of it (cut in anywhere, the
+				// hand-over swept a planted foot 66 cm over the ground)
+				if (speed <= 0.6f) { to_idle(blend_idle); break; }
+				const Clip *set = speed > 2.0f ? r_stop : w_stop;
+				const Clip &L = loops[loop_i];
+				const double ahead = std::min(L.d->len, 0.7);
+				double best_w = 0.0, best_t = 0.0; int best_k = -1; float best_c = 1e30f;
+				for (double w = 0.0; w <= ahead + 1e-6; w += 1.0 / FPS) {
+					const Frame lf = L.d->lerp(t + w * rate);
+					for (int k = 0; k < 2; k++) {
+						if (!set[k].ok()) continue;
+						for (double tt = 0.0; tt <= std::min(0.25, set[k].d->len * 0.3); tt += 1.0 / FPS) {
+							const float dv = set[k].curve("vz", tt, 0.0f) - speed;
+							const float c = pose_cost(lf, set[k].d->at(tt)) + 0.3f * dv * dv + 0.05f * (float)w;   // (sooner is better)
+							if (c < best_c) { best_c = c; best_w = w; best_k = k; best_t = tt; }
+						}
+					}
+				}
+				if (best_k < 0 || best_w < 0.5 / FPS) { stop_with(best_k >= 0 ? &set[best_k] : nullptr, best_t, best_c); break; }
+				rate = clampf(std::max(speed, 0.3f) / L.ground_v, 0.55f, 1.5f);
+				advance(p_dt);
+				vel = Basis(UP, yaw).xform(L.d->root_v.empty() ? Vector3(0, 0, L.ground_v) : L.d->root_vel(t)) * rate;
 				break;
 			}
 			if (std::fabs(d) > 2.4f && speed > 0.8f && (speed > 2.0f ? r_pivot[0].ok() : w_pivot[0].ok())) { to_pivot(d); break; }
@@ -375,7 +429,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		}
 		case STOP: {
 			advance(p_dt);
-			yaw = yaw0 + cur->curve("yaw", t, 0.0f);
+			yaw = yaw0 + cur->d->yaw(t);
 			vel = clip_vel(*cur, t);
 			speed = (float)vel.length();
 			if (want && std::fabs(d) < 1.2f) { to_loop(pick_loop(std::max(speed, 0.8f), loop_i), blend_loop); break; }
@@ -384,7 +438,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		}
 		case PIVOT: {
 			advance(p_dt);
-			yaw = yaw0 + turn_k * cur->curve("yaw", t, 0.0f);
+			yaw = yaw0 + turn_k * cur->d->yaw(t);
 			vel = clip_vel(*cur, t);
 			speed = (float)vel.length();
 			if (t >= hand_at || t >= cur->d->len - 0.02) {
@@ -400,6 +454,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		const Frame fr = cur->d->lerp(t);
 		limbs->lock_on = st != OFF;
 		limbs->down[0] = fr.down[0]; limbs->down[1] = fr.down[1];
+		limbs->ground_y = (float)p_host.position().y;
 	}
 	// the body: level motion as above, and down onto the ground
 	Vector3 v = vel;
@@ -408,4 +463,5 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	const float got_s = (float)Vector3(got.x, 0, got.z).length();
 	if (st == MOVE) speed = std::min(speed, got_s + 0.6f);   // (into a wall he does not keep a pace he cannot walk)
 	place(p_host);
+	host = nullptr;
 }

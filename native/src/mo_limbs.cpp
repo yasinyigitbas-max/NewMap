@@ -64,7 +64,7 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 		const Vector3 anim_w = G.xform(sk->get_bone_global_pose(b_ft[s]).origin);
 		if (!lock_on) { locked[s] = false; rel_t[s] = 9.0f; continue; }
 		if (down[s]) {
-			if (!locked[s]) { locked[s] = true; lock_w[s] = anim_w; rel_t[s] = 9.0f; locks++; }
+			if (!locked[s]) { if ((float)anim_w.y - ground_y < pin_h) { locked[s] = true; lock_w[s] = anim_w; rel_t[s] = 9.0f; locks++; } }
 			else if ((lock_w[s] - anim_w).length() > max_pull) { locked[s] = false; rel_off[s] = Vector3(); rel_t[s] = 9.0f; }
 		} else if (locked[s]) {   // the clip lifts it: the pin lets go, its offset fading
 			locked[s] = false; rel_off[s] = lock_w[s] - anim_w; rel_t[s] = 0.0f;

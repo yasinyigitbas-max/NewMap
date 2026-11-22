@@ -343,6 +343,11 @@ void CityPlayer::_physics_process(double p_delta) {
 			Vector3 position() const override { return p->get_global_position(); }
 			Vector3 slide(const Vector3 &v, float) override { p->set_velocity(v); p->move_and_slide(); return p->get_velocity(); }
 			bool on_floor() const override { return p->is_on_floor(); }
+			bool shift(const Vector3 &by) override {
+				Transform3D t = p->get_global_transform();
+				if (p->test_move(t, by)) return false;
+				t.origin += by; p->set_global_transform(t); return true;
+			}
 		} host(this);
 		// the stick's walk (a key walks at 0.6 of the stick: the old game's) is his whole walk; Shift runs
 		mo::Intent in;
@@ -892,7 +897,7 @@ Dictionary CityPlayer::get_motor_state() const {
 	if (!motor) return d;
 	d["state"] = String(motor->state_name()); d["clip"] = motor->clip_name(); d["t"] = motor->clip_time(); d["speed"] = motor->speed; d["yaw"] = motor->yaw;
 	d["starts"] = motor->n_starts; d["stops"] = motor->n_stops; d["turns"] = motor->n_turns; d["pivots"] = motor->n_pivots; d["gaits"] = motor->n_gait;
-	d["fidgets"] = motor->n_fidgets; d["switches"] = motor->n_switch; d["entry_cost"] = motor->last_entry_cost; d["i_switches"] = motor->inert_switches(); d["i_jump"] = motor->inert_jump(); d["i_live"] = motor->inert_live(); d["down_l"] = motor->foot_down(0); d["down_r"] = motor->foot_down(1); d["pull_l"] = motor->foot_pull(0); d["pull_r"] = motor->foot_pull(1); d["locks"] = motor->foot_locks();
+	d["fidgets"] = motor->n_fidgets; d["switches"] = motor->n_switch; d["entry_cost"] = motor->last_entry_cost; d["i_switches"] = motor->inert_switches(); d["i_jump"] = motor->inert_jump(); d["i_live"] = motor->inert_live(); d["down_l"] = motor->foot_down(0); d["down_r"] = motor->foot_down(1); d["pull_l"] = motor->foot_pull(0); d["pull_r"] = motor->foot_pull(1); d["locks"] = motor->foot_locks(); d["aligned"] = motor->n_aligned; d["align"] = motor->last_align;
 	return d;
 }
 

@@ -30,6 +30,9 @@ public:
 	// ---- the feet (set by the motor each frame)
 	bool lock_on = false;            // foot lock wanted at all (the motor's states that walk on the ground)
 	bool down[2] = { false, false }; // the clip has the foot planted now
+	float ground_y = -1e9f;          // the ground the body stands on (world y): a foot is pinned only near it (a hand-over can
+	                                 // still hold a foot 25 cm up while the new clip has it down: pinned there, it was dragged)
+	float pin_h = 0.15f;             // the ankle at most this high over the ground to be pinned
 	float release_s = 0.15f, max_pull = 0.30f;
 	// state (world)
 	bool locked[2] = { false, false };

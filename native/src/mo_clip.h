@@ -29,6 +29,10 @@ struct Frame {
 struct ClipData {
 	double len = 0.0;
 	bool loop = false, in_place = false;       // in_place: the travel was taken out of the hips into vz / vx / yaw
+	// the converter's "yaw" curve is the body's turn only when the pose does not turn by itself: a raw Mixamo stop's
+	// pose turns -43 degrees AND its yaw says -47 (played both, the body turned twice). False: ignore "yaw".
+	bool yaw_turns = true;
+	float yaw(double t) const;                  // the body's turn by t (0 when the pose holds it), rad
 	float ground_y = 0.0f;                      // the lowest foot over the whole clip (its floor)
 	std::vector<Frame> f;                       // 30 a second, f.size() = round(len * 30) + 1
 	// THE BODY'S TRAVEL READ FROM ITS FEET (an in-place clip): while a foot is down the body moves so that foot stays
@@ -36,6 +40,7 @@ struct ClipData {
 	// own vz / vx. Figure frame (it turns with the clip's yaw), m/s, a little smoothed. The converter's smooth pace curve
 	// does not match the feet: moved by it, a run stop's hips went back 2 cm for two frames and planted feet slid 6-12 cm.
 	std::vector<Vector3> root_v;
+	std::vector<float> yaw_c;                   // the "yaw" curve at 30 Hz (empty: none)
 	Vector3 root_vel(double t) const;
 	const Frame &at(double t) const;            // the nearest frame (no blend: for costs and contacts)
 	Frame lerp(double t) const;                 // blended between frames

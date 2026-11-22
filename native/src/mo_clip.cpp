@@ -33,6 +33,13 @@ int mo::ClipData::idx(double t) const {
 
 const mo::Frame &mo::ClipData::at(double t) const { return f[idx(t)]; }
 
+float mo::ClipData::yaw(double t) const {
+	if (yaw_c.empty()) return 0.0f;
+	const double x = std::min(std::max(t * FPS, 0.0), (double)(yaw_c.size() - 1));
+	const int i = (int)x, j = std::min(i + 1, (int)yaw_c.size() - 1);
+	return yaw_c[i] + (yaw_c[j] - yaw_c[i]) * (float)(x - i);
+}
+
 Vector3 mo::ClipData::root_vel(double t) const {
 	if (root_v.empty()) return Vector3();
 	if (loop && len > 0.0) { t = std::fmod(t, len); if (t < 0.0) t += len; }
@@ -106,6 +113,13 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 		const Vector3 fw = -Vector3(0, 1, 0).cross(th);
 		F.face = std::atan2((float)fw.x, (float)fw.z);
 	}
+	// is the turn in the pose or in the yaw curve? (the pose's own facing change against the curve's)
+	{
+		const float yend = d->in_place ? curve(a, "yaw", d->len) : 0.0f;
+		const float fturn = wrap(d->f[n - 1].face - d->f[0].face);
+		d->yaw_turns = !(std::fabs(yend) > 0.2f && std::fabs(fturn) > 0.5f * std::fabs(yend) && fturn * yend > 0.0f);
+		if (d->in_place && a->has_meta("yaw")) { d->yaw_c.resize(n); for (int k = 0; k < n; k++) d->yaw_c[k] = d->yaw_turns ? curve(a, "yaw", k / FPS) : 0.0f; }
+	}
 	// speeds over the ground: an in-place clip's own travel (its vz / vx, in the figure's turning frame) added back
 	float gy = 1e9f;
 	for (int k = 0; k < n; k++) {
@@ -123,7 +137,7 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 	// a foot is down: slow over the ground and near the lowest it gets within 0.4 s either side (a climb's feet are
 	// down on the top too)
 	const int w = (int)(0.4 * FPS);
-	const bool turns = d->in_place && a->has_meta("yaw") && std::fabs(curve(a, "yaw", d->len)) > 1.0f;
+	const bool turns = d->in_place && std::fabs(d->yaw(d->len)) > 1.0f;
 	for (int k = 0; k < n; k++) {
 		for (int s = 0; s < 2; s++) {
 			float lo = 1e9f;
@@ -144,7 +158,7 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 			const Frame &F = d->f[k];
 			const double tk = k / FPS;
 			const Vector3 trav(curve(a, "vx", tk), 0.0f, curve(a, "vz", tk));
-			const float om = (curve(a, "yaw", std::min(tk + 1.0 / FPS, d->len)) - curve(a, "yaw", std::max(tk - 1.0 / FPS, 0.0))) / (float)(2.0 / FPS);
+			const float om = (d->yaw(std::min(tk + 1.0 / FPS, d->len)) - d->yaw(std::max(tk - 1.0 / FPS, 0.0))) / (float)(2.0 / FPS);
 			Vector3 sum; int m = 0;
 			for (int s = 0; s < 2; s++) {
 				if (!F.down[s]) continue;
