@@ -889,6 +889,33 @@
           "z": -2.3,
           "yaw": 5,
           "note": "a utility crate by the hall door, out of the swing"
+        },
+        {
+          "id": "prop_laundry_shelf",
+          "cond": "clean",
+          "x": 1.16,
+          "y": 1.35,
+          "z": -3.6,
+          "yaw": -90,
+          "note": "shelf with detergent on the east wall, above the washer and dryer"
+        },
+        {
+          "id": "prop_ironing_board",
+          "cond": "clean",
+          "x": -1.4,
+          "y": 0.0,
+          "z": -3.5,
+          "yaw": 90,
+          "note": "standing along the west aisle, between the hamper and the crate, clear of the machines"
+        },
+        {
+          "id": "prop_woven_basket",
+          "cond": "clean",
+          "x": -1.8,
+          "y": 0.0,
+          "z": -3.8,
+          "yaw": 20,
+          "note": "an extra laundry basket on the west side, next to the ironing board"
         }
       ]
     },
