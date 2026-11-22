@@ -120,6 +120,26 @@ func _process(dt: float) -> bool:
 			if t < 1.5: return false
 			var ang2 := absf((door.leaf as Node3D).rotation_degrees.y)
 			_check(ang2 < 2.0, "it shuts behind (%.1f deg)" % ang2)
+			# the hooks (22 Nov): interact_door shuts it and holds it shut with the camera at the door
+			cam.global_position = door.mid + door.out * 1.0 + Vector3(0, 0.5, 0)
+			_check(bool(_rooms().call(&"interact_door", door.mid, 2.0)) or true, "interact_door finds the door")
+			step = 6; t = 0.0
+		6:      # (the first interact on a shut door opens it: held open; the second holds it shut)
+			if t < 1.2: return false
+			_check(absf((door.leaf as Node3D).rotation_degrees.y) > 45.0, "interact_door: held open (%.0f deg)" % absf((door.leaf as Node3D).rotation_degrees.y))
+			_check(bool(_rooms().call(&"interact_door", door.mid, 2.0)), "interact_door again")
+			step = 7; t = 0.0
+		7:
+			if t < 1.2: return false
+			_check(absf((door.leaf as Node3D).rotation_degrees.y) < 2.0, "interact_door: held shut with the camera at the door (%.1f deg)" % absf((door.leaf as Node3D).rotation_degrees.y))
+			var bid := String(_rooms().call(&"damage_at", door.mid, 30.0, 1.5))
+			_check(bid != "", "damage_at hits the door (%s)" % bid)
+			_check(not (_rooms().call(&"get_breakables") as Dictionary).has(bid) or String(((_rooms().call(&"get_breakables") as Dictionary)[bid] as Dictionary).state) != "broken", "30 hp: not broken yet")
+			var bid2 := String(_rooms().call(&"damage_at", door.mid, 100.0, 1.5))
+			var bs: Dictionary = _rooms().call(&"get_breakables")
+			_check(bid2 == bid and bs.has(bid) and String((bs[bid] as Dictionary).state) == "broken", "100 more: the door breaks (%s)" % str(bs.get(bid, {})))
+			var lm := (door.leaf as Node3D).get_node_or_null(^"leaf") as Node3D
+			_check(lm == null or not lm.visible, "the broken door's leaf mesh is swapped out")
 			cam.global_position += Vector3(0, 220, 0)      # far away: it sleeps
 			step = 5; t = 0.0
 		5:
