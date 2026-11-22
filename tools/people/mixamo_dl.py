@@ -4,15 +4,21 @@ requests to www.mixamo.com (a network secret Yasin saved). Settings as Yasin's o
 no keyframe reduction, the moving ones In Place, on his account's character.
   python3 -I tools/people/mixamo_dl.py OUT_DIR "Name=product-id[:inplace]" ...
 """
-import json, sys, time, urllib.request, os
+import json, sys, time, urllib.request, urllib.error, os
 
 API = "https://www.mixamo.com/api/v1"
 H = {"X-Api-Key": "mixamo2", "Authorization": "Bearer proxy-injected", "Content-Type": "application/json", "Accept": "application/json"}
 
 def call(path, body=None):
-    req = urllib.request.Request(API + path, data=json.dumps(body).encode() if body is not None else None, headers=H, method="POST" if body is not None else "GET")
-    with urllib.request.urlopen(req, timeout=60) as r:
-        return json.loads(r.read())
+    # (Mixamo answers 429 "too many requests" after ~60 downloads in a row: wait and try again, longer each time)
+    for k in range(8):
+        req = urllib.request.Request(API + path, data=json.dumps(body).encode() if body is not None else None, headers=H, method="POST" if body is not None else "GET")
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                return json.loads(r.read())
+        except urllib.error.HTTPError as e:
+            if e.code != 429 or k == 7: raise
+            time.sleep(30 * (k + 1))
 
 def export(out_dir, name, pid, inplace, cid):
     d = call(f"/products/{pid}?similar=0&character_id={cid}")
@@ -38,5 +44,7 @@ if __name__ == "__main__":
     for spec in sys.argv[2:]:
         name, rest = spec.split("=", 1)
         pid, _, ip = rest.partition(":")
+        if os.path.exists(os.path.join(out, name + ".fbx")): continue   # (already here)
         try: print("MIXAMO ok", name, *export(out, name, pid, ip != "0", cid), flush=True)
         except Exception as e: print("MIXAMO FAIL", name, e, flush=True)
+        time.sleep(4)   # (paced)

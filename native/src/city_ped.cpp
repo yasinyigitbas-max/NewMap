@@ -93,6 +93,9 @@ void CityPed::make() {
 		// the clips for the other movement sets)
 		Ref<AnimationLibrary> yl = rl->load(dir + String("clips_yl_") + g + String(".res"));
 		if (yl.is_valid()) anim->add_animation_library(StringName("yl"), yl);
+		// the movement sets' own clips from Mixamo (tools/people/make_msets.gd): "ms/S2_Walk_Forward" ...
+		Ref<AnimationLibrary> ms = rl->load(dir + String("clips_ms_") + g + String(".res"));
+		if (ms.is_valid()) anim->add_animation_library(StringName("ms"), ms);
 		if (lib->has_animation("get_up")) { Ref<Animation> a = lib->get_animation("get_up"); getup_len = a->get_length(); }
 		if (anim->has_animation(clip)) { anim->play(clip); if (clip_at >= 0.0) { anim->seek(clip_at, true); anim->pause(); } }
 	}
