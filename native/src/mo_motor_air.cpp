@@ -17,6 +17,8 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
 
 using namespace godot;
 using namespace godot::mo;
@@ -39,7 +41,7 @@ void Motor::load_air() {
 	ai_soft = load("ptrav/Falling_To_Landing"); ai_hard = load("ptrav/Hard_Landing_b");
 	ai_flat = load("ptrav/Falling_Flat_Impact"); ai_getup = load("ptrav/Getting_Up");
 	tc_soft = first_touch(ai_soft); tc_hard = first_touch(ai_hard); tc_flat = first_touch(ai_flat);
-	load_descent(dn_hop, "ptrav/Jumping_Down_b"); load_descent(dn_jump, "ptrav/Jumping_Down_b");   // (Jumping_Down_a is only a 0.4 m hop in place; _c ends turned 58 deg) load_descent(dn_climb, "mx/Climbing_Down");
+	load_descent(dn_hop, "mx/Ledge_Climb_Down"); load_descent(dn_jump, "mx/Ledge_Drop"); load_descent(dn_climb, "mx/Climbing_Down");   // (Yasin's own clips, 24 Nov: "use this climb down animation for 1 meter, for 1.8m use this jump off anim for walk off")
 }
 
 // a descent clip measured: how high its ledge is over its floor (its feet at the start against at the end), when its
@@ -66,13 +68,14 @@ bool Motor::descend_probe(const Vector3 &p_fwd) {
 	float drop = -1.0f, ground = 0.0f;
 	for (float a = 0.25f; a <= 0.55f; a += 0.1f) {
 		const Vector3 q = p + p_fwd * a;
-		const float g = ground_below(Vector3(q.x, here, q.z), 3.0f);
+		const float g = ground_below(Vector3(q.x, here + 1.2f, q.z), 4.2f);   // (from over his head: from his feet, up a 30 deg ramp the ray began inside it and saw a drop)
+		if (g > here - 0.1f && g > -1e8f) continue;
 		if (g < -1e8f) { drop = 9.0f; break; }
 		if (here - g >= 0.5f) { drop = here - g; ground = g; break; }   // (under 0.5 m: stepped down, the feet fitted)
 	}
 	if (drop < 0.5f || drop > 2.0f) return false;   // (no drop; or higher: the fall and its landing)
-	Descent *d = &dn_climb;   // (walking off an edge: climbed down - Yasin, 24 Nov: "if we walk off the edge we should look like climbing down"; running: the leap off it and its landing)
-	if (!d->c.ok() && d == &dn_climb) load_descent(dn_climb, "mx/Climbing_Down");   // (the "mx" library can come after the motor)
+	Descent *d = drop <= 1.3f ? &dn_hop : &dn_jump;   // (walking off an edge: climbed down - Yasin, 24 Nov: "if we walk off the edge we should look like climbing down"; running: the leap off it and its landing)
+	if (!d->c.ok()) load_descent(*d, d == &dn_hop ? "mx/Ledge_Climb_Down" : "mx/Ledge_Drop");   // (the "mx" library can come after the motor)
 	if (!d->c.ok()) return false;
 	if (limbs) { limbs->lock_on = false; limbs->unlock_all(); }
 	rate = 1.0f;
@@ -84,6 +87,7 @@ bool Motor::descend_probe(const Vector3 &p_fwd) {
 	rp.a_from.y = rp.ay_from; rp.a_to.y = rp.ay_to;
 	fig->set_global_transform(Transform3D(Basis(UP, rp.yaw), root_anchor(0.0)));
 	st = DESCEND; n_descents++;
+	if (std::getenv("MO_DBG")) std::printf("DESCEND drop %.2f at %.2f %.2f %.2f\n", drop, (float)p.x, (float)p.y, (float)p.z);
 	return true;
 }
 

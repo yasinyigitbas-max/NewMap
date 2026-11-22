@@ -56,12 +56,24 @@ void MoLimbs::reach(Skeleton3D *sk, int a, int b, int c, const Vector3 &p_target
 
 // THE KNEE'S WAY (Yasin, 23 Nov: "knees shouldnt be able to bend backwards"): forward, the way he faces. The clip's own knee direction taken whole bent swinging and
 // fitted legs 12-21 cm backwards on stairs and a run up 22 degrees: near straight, its bend is noise.
-Vector3 MoLimbs::knee_pole(const Transform3D &p_gi, const Vector3 &p_clip) const {
+Vector3 MoLimbs::knee_pole(Skeleton3D *p_sk, const Transform3D &p_gi, const Vector3 &p_clip) const {
+	// (the way the drawn hips face, not the figure's: a clip taken facing another way - the low cover's left sneak
+	// faces 157 degrees off his own - had its knees bent backwards; Yasin, 24 Nov: "when you move left in the cover,
+	// his legs turn backwards")
+	(void)p_clip;
+	const Vector3 up = p_gi.basis.xform(Vector3(0, 1, 0)).normalized();
+	if (b_th[0] >= 0 && b_th[1] >= 0) {
+		const Vector3 th = p_sk->get_bone_global_pose(b_th[0]).origin - p_sk->get_bone_global_pose(b_th[1]).origin;
+		Vector3 f = th.cross(up);   // (left thigh - right thigh = his left; left x up = forward)
+		f -= up * f.dot(up);
+		const Vector3 fw = p_gi.basis.xform(fwd_w);
+		// (only a clip turned well away from him: in his own walks and runs the hips swing 20-30 degrees a stride, and
+		// following that tipped a knee back 4 cm on the stairs)
+		if (f.length_squared() > 1e-8f && fw.length_squared() > 1e-10f && f.normalized().dot(fw.normalized()) < 0.5f) return f.normalized();
+	}
 	Vector3 f = p_gi.basis.xform(fwd_w);
 	if (f.length_squared() < 1e-10f) return p_clip;
-	f.normalize();
-	(void)p_clip;
-	return f;   // (even half the clip's sideways lean tipped a knee back 12 cm with the foot far ahead: forward only)
+	return f.normalized();   // (even half the clip's sideways lean tipped a knee back 12 cm with the foot far ahead: forward only)
 }
 
 void MoLimbs::_process_modification_with_delta(double p_delta) {
@@ -160,7 +172,7 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 		if ((want_w - drawn).length() < 1e-4f) continue;
 		// the knee toward where the clip has it (its own bend), a little forward of the line hip-foot
 		const Vector3 hip = sk->get_bone_global_pose(b_th[s]).origin, knee = sk->get_bone_global_pose(b_ca[s]).origin;
-		reach(sk, b_th[s], b_ca[s], b_ft[s], Gi.xform(want_w), knee_pole(Gi, knee - hip));
+		reach(sk, b_th[s], b_ca[s], b_ft[s], Gi.xform(want_w), knee_pole(sk, Gi, knee - hip));
 		// the sole turned onto the ground's slope while the clip has the foot down (at most 30 degrees)
 		if (fit_on && fit_w[s] > 0.01f && ground_n[s].y > 0.5f) {
 			Vector3 n = ground_n[s];

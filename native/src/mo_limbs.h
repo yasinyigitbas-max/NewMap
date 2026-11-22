@@ -52,7 +52,7 @@ public:
 	// ---- the ground under each foot (the motor's rays, each frame): the foot fitted to it, the hips dropped for the
 	// lower one, the sole turned onto its slope
 	Vector3 fwd_w = Vector3(0, 0, 1);   // the way he faces (world): the knees bend that way
-	Vector3 knee_pole(const Transform3D &p_gi, const Vector3 &p_clip) const;
+	Vector3 knee_pole(Skeleton3D *p_sk, const Transform3D &p_gi, const Vector3 &p_clip) const;
 	bool fit_on = false;
 	float fit_off[2] = { 0.0f, 0.0f };   // m, the clip's foot moved up / down to the ground there (already weighted)
 	float fit_w[2] = { 0.0f, 0.0f };     // how much the clip has that foot on its floor (0 in the swing)

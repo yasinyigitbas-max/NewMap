@@ -27,3 +27,5 @@ __pycache__/
 
 # Mixamo downloads: the source of characters/rocketbox/clips_mx_*.res (tools/people/make_mixamo.gd); 218 MB, kept out of git
 characters/mixamo/*.fbx
+characters/mixamo2/*.fbx
+characters/mixamo2/*.import

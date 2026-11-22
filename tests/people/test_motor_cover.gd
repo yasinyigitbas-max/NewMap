@@ -18,6 +18,7 @@ const WALL_W := 6.0
 # [name, wall height (0: none)]
 const LANES := [["crouch", 0.0], ["tall cover", 2.4], ["low cover", 1.0]]
 var states := {}; var clips := {}
+var knee_back := 0.0; var b_th := [-1, -1]; var b_ca := [-1, -1]
 var s_slide := 0.0; var s_pop := 0.0; var s_dv := 0.0; var pel_min := 9.0; var pel_max := -9.0
 var gap_min := 9.0; var gap_max := -9.0; var x_min := 9e9; var x_max := -9e9
 var plant := [null, null]
@@ -41,7 +42,7 @@ func _next() -> void:
 	if lane >= LANES.size(): _finish(); return
 	player.global_position = Vector3(lane * 12.0, 0.02, 1.6); player.velocity = Vector3.ZERO
 	player.call(&"set_move", Vector2.ZERO, false); player.call(&"set_crouch", false)
-	t = 0.0; states = {}; clips = {}; s_slide = 0.0; s_pop = 0.0; s_dv = 0.0; pel_min = 9.0; pel_max = -9.0
+	t = 0.0; states = {}; clips = {}; knee_back = 0.0; s_slide = 0.0; s_pop = 0.0; s_dv = 0.0; pel_min = 9.0; pel_max = -9.0
 	gap_min = 9.0; gap_max = -9.0; x_min = 9e9; x_max = -9e9; plant = [null, null]; have = 0
 
 # the script of each lane: [time, what]
@@ -92,6 +93,19 @@ func _on_pose() -> void:
 	snap_pel = sk.global_transform * sk.get_bone_global_pose(b_pel).origin
 	for s in 2: snap_ft[s] = sk.global_transform * sk.get_bone_global_pose(b_ft[s]).origin
 	snap_ms = player.call(&"get_motor_state")
+	# (a knee bent backwards: behind the line hip-ankle against the way his own hips face - Yasin, 24 Nov: "when you
+	# move left in the cover, his legs turn backwards")
+	if b_th[0] < 0:
+		b_th = [sk.find_bone("Bip01_L_Thigh"), sk.find_bone("Bip01_R_Thigh")]; b_ca = [sk.find_bone("Bip01_L_Calf"), sk.find_bone("Bip01_R_Calf")]
+	var hl: Vector3 = sk.global_transform * sk.get_bone_global_pose(b_th[0]).origin
+	var hr: Vector3 = sk.global_transform * sk.get_bone_global_pose(b_th[1]).origin
+	var fw := (hl - hr).cross(Vector3.UP); fw.y = 0.0; fw = fw.normalized()
+	if lane >= 0 and t > 0.3:
+		for s in 2:
+			var hp: Vector3 = hl if s == 0 else hr
+			var kn: Vector3 = sk.global_transform * sk.get_bone_global_pose(b_ca[s]).origin
+			var fs: Vector3 = snap_ft[s]; var u: Vector3 = (fs - hp).normalized(); var off: Vector3 = (kn - hp) - u * (kn - hp).dot(u)
+			knee_back = maxf(knee_back, -off.dot(fw))
 	snap_ok = true
 
 func _sample() -> void:
@@ -153,6 +167,7 @@ func _judge() -> void:
 		_check(x_max - x_min > 1.5, "%s: moved along it (%.2f m)" % [name, x_max - x_min])
 		if not tall: _check(pel_min < 0.62, "%s: crouched behind it (hips %.2f m)" % [name, pel_min])
 	_check(high_end > 0.78, "%s: standing again at the end (hips %.2f m)" % [name, high_end])
+	_check(knee_back < 0.02, "%s: the knees never bend backwards (%.1f cm behind the line hip-ankle at most)" % [name, knee_back * 100])
 	_check(s_slide < 0.03, "%s: planted feet do not slide (%.1f < 3 cm)" % [name, s_slide * 100])
 	_check(s_pop < 0.03, "%s: no hip pop (%.1f < 3 cm)" % [name, s_pop * 100])
 	_check(s_dv < 1.2, "%s: no hip speed jump (%.2f < 1.2 m/s)" % [name, s_dv])

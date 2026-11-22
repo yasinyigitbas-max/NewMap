@@ -125,7 +125,7 @@ func _judge() -> void:
 			_check(absf(p.y - land_y) < 0.1, "%s: on the ground below (at %.2f)" % [name, p.y])
 			_next(); return
 		if not L[2] and h <= 2.0:   # walking off a ledge up to 2 m: down it, not off it (Yasin, 23 Nov: "step down or slower jump down or climb down when not running")
-			var dw := "mx/Climbing_Down"
+			var dw := "mx/Ledge_Climb_Down" if h <= 1.3 else "mx/Ledge_Drop"
 			_check(states.has("descend") and clips.has(dw) and not states.has("air"), "%s: down it with %s, no fall" % [name, dw])
 			_check(foot_lo > land_y + 0.105 - 0.05, "%s: the feet never under the ground (lowest %.2f over it)" % [name, foot_lo - land_y - 0.105])
 			_check(absf(p.y - land_y) < 0.1 and String(ms.get("state", "")) in ["idle", "stop", "move"], "%s: standing again on the ground (at %.2f, %s)" % [name, p.y, ms.get("state", "")])
