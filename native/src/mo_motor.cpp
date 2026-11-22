@@ -327,8 +327,18 @@ void Motor::to_pivot(float p_angle) {
 	st = PIVOT; n_pivots++;
 }
 
+// (the capsule's height is not the ground's: on the floor it bobs 4 mm every other frame, and after a vault's snap it
+// sank 3 cm for a frame: the drawn hips dipped with it)
+float Motor::ground_at(Host &p_host, const Vector3 &p_at) const {
+	Vector3 g, gn;
+	if (p_host.ray(p_at + Vector3(0, 0.4f, 0), p_at - Vector3(0, 0.4f, 0), g, gn) && gn.y > 0.5f) return (float)g.y;
+	return (float)p_at.y;
+}
+
 void Motor::place(Host &p_host) {
-	fig->set_global_transform(Transform3D(Basis(UP, yaw), p_host.position()));
+	Vector3 at = p_host.position();
+	if (st != TRAV) at.y = ground_at(p_host, at);
+	fig->set_global_transform(Transform3D(Basis(UP, yaw), at));
 }
 
 void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
@@ -468,7 +478,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		const Frame fr = cur->d->lerp(t);
 		limbs->lock_on = st != OFF;
 		limbs->down[0] = fr.down[0]; limbs->down[1] = fr.down[1];
-		limbs->ground_y = (float)p_host.position().y;
+		limbs->ground_y = ground_at(p_host, p_host.position());
 	}
 	// the body: level motion as above, and down onto the ground
 	Vector3 v = vel;

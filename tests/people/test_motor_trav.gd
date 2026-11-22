@@ -87,6 +87,10 @@ func _on_pose() -> void:
 	snap_pel = sk.global_transform * sk.get_bone_global_pose(b_pel).origin
 	for s in 2: snap_hand[s] = sk.global_transform * sk.get_bone_global_pose(b_hand[s]).origin
 	snap_ok = true
+	if trace and lane == 0 and t > 4.8 and t < 5.15:
+		var inn = sk.get_children().filter(func(c): return c.get_class() == "MoInertial")
+		var ms2: Dictionary = player.call(&"get_motor_state")
+		print("TRACEP f %d t %.3f pel %s fig %s left %.3f st %s clip %s ct %.3f" % [f, t, str(snap_pel), str(sk.global_position), inn[0].get_left() if inn.size() else -1.0, ms2.get("state", ""), ms2.get("clip", ""), float(ms2.get("t", 0.0))])
 
 func _sample() -> void:
 	var pel: Vector3 = snap_pel

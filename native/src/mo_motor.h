@@ -181,7 +181,8 @@ public:
 	float trav_wmax = 0.0f;         // (tests) the largest hand weight given
 	Array trav_hands() const;       // (tests) [L target, L weight, R target, R weight] now
 private:
-	void place(Host &p_host);   // the figure on the body
+	void place(Host &p_host);   // the figure on the body, its feet on the ground under it (a ray: not the capsule's height)
+	float ground_at(Host &p_host, const Vector3 &p_at) const;   // the ground's height under a point (its own y when none near)
 };
 
 } // namespace mo
