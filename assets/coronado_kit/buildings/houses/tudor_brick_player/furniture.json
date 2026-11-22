@@ -1130,11 +1130,65 @@
         {
           "id": "prop_rug_accent",
           "cond": "clean",
-          "x": 0.6,
+          "x": 0.55,
+          "y": 3.5,
+          "z": -3.2,
+          "yaw": 90,
+          "note": "a small rug under the rear console, so the runner and the console each have their own ground"
+        },
+        {
+          "id": "prop_rug_runner",
+          "cond": "clean",
+          "x": 0.4,
+          "y": 3.5,
+          "z": -0.5,
+          "yaw": 90,
+          "note": "a runner along the landing, clear of the stair arrival at z=2.60"
+        },
+        {
+          "id": "prop_side_table",
+          "cond": "clean",
+          "x": 0.55,
+          "y": 3.5,
+          "z": -3.28,
+          "yaw": 0,
+          "note": "a console against the rear wall, facing the stair"
+        },
+        {
+          "id": "prop_hurricane_lamp",
+          "cond": "clean",
+          "x": 0.55,
+          "y": 4.05,
+          "z": -3.28,
+          "yaw": 0,
+          "note": "a lamp on the landing console"
+        },
+        {
+          "id": "prop_frame_print_medium",
+          "cond": "clean",
+          "x": 0.55,
+          "y": 4.7,
+          "z": -3.47,
+          "yaw": 0,
+          "note": "art centred over the landing console"
+        },
+        {
+          "id": "prop_coat_hook_rail",
+          "cond": "clean",
+          "x": 2.02,
+          "y": 4.95,
+          "z": 2.2,
+          "yaw": -90,
+          "note": "coat hooks on the east wall, north of the bath door, by the plant"
+        },
+        {
+          "id": "prop_shoe_bench",
+          "cond": "clean",
+          "x": 1.91,
           "y": 3.5,
           "z": 0.4,
-          "yaw": 90,
-          "note": "a small rug at the top of the stair, not on a tread"
+          "yaw": -90,
+          "note": "a bench against the east wall, between the studio and bath doors, under the ocean print"
         }
       ]
     },
