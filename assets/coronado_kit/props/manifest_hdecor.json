@@ -1382,5 +1382,49 @@
   "bake_px_per_m": 1878.3,
   "col": 1,
   "secs": 7.7
+ },
+ "curtain_panel": {
+  "file_base": "prop_curtain_panel",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 176
+  },
+  "footprint_w": 0.82,
+  "footprint_d": 0.08,
+  "height": 1.8,
+  "regions": [
+   "ti_fabric",
+   "brass"
+  ],
+  "atlas_page": "props_k_*",
+  "note": "One gathered linen panel, pivot at the top-back (rod). Hang a pair per window. Page K."
+ },
+ "towel_hand": {
+  "file_base": "prop_towel_hand",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 48
+  },
+  "footprint_w": 0.32,
+  "footprint_d": 0.07,
+  "height": 0.52,
+  "regions": [
+   "ti_fabric",
+   "brass"
+  ],
+  "atlas_page": "props_k_*",
+  "note": "Hand towel over a short brass rail. Pivot at the rail. Page K."
  }
 }

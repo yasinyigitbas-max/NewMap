@@ -997,5 +997,31 @@
   "bake_px_per_m": 1337.5,
   "col": 1,
   "secs": 15.1
+ },
+ "tv_set": {
+  "file_base": "prop_tv_set",
+  "batch": "hfurn",
+  "class": "medium",
+  "budget": 400,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 50
+  },
+  "footprint_w": 1.04,
+  "footprint_d": 0.09,
+  "height": 0.62,
+  "regions": [
+   "paint_black",
+   "plastic_black",
+   "screen",
+   "ti_metal",
+   "brass"
+  ],
+  "atlas_page": "props_k_*",
+  "col": 1,
+  "note": "Living-room flatscreen for the player house. Page K. Sits on prop_tv_console."
  }
 }
