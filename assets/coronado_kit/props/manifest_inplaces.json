@@ -1070,7 +1070,7 @@
   ],
   "mount": "ground",
   "tiers": {
-   "near": 414
+   "near": 440
   },
   "footprint_w": 0.817,
   "footprint_d": 0.804,
@@ -1081,11 +1081,11 @@
   ],
   "trim": {
    "ti_paint": {
-    "area_m2": 2.39,
+    "area_m2": 2.42,
     "px_per_m": 128.0
    },
    "ti_wood": {
-    "area_m2": 1.38,
+    "area_m2": 1.49,
     "px_per_m": 128.0
    },
    "ti_fabric": {
@@ -1096,17 +1096,17 @@
     "area_m2": 0.02,
     "px_per_m": 128.0
    },
-   "ti_glass": {
+   "ti_metal": {
     "area_m2": 0.01,
     "px_per_m": 128.0
    }
   },
   "atlas_page": "props_k_*",
-  "high_tris": 3283,
+  "high_tris": 5118,
   "bake_slot_px": 64,
-  "bake_px_per_m": 222.1,
+  "bake_px_per_m": 181.6,
   "col": 1,
-  "secs": 10.9
+  "secs": 11.8
  },
  "pizza_oven": {
   "file_base": "prop_pizza_oven",

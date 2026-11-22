@@ -1253,6 +1253,10 @@ def key_rack_wall(b, hi=False):
 def model_house_display(b, hi=False):
     box(b,(0,0,0),(0.80,0.80,0.04),'paint_black',skip=('bottom',))                            # plinth toe
     box(b,(0,0,0.04),(0.76,0.76,0.24),'paint_white',skip=('bottom','top'))
+    box(b,(0,0,0.245),(0.77,0.77,0.035),'wal_dk',skip=('bottom','top'))                       # walnut band under the tray
+    box(b,(0,0,0.075),(0.765,0.765,0.008),'paint_grey',skip=('bottom','top'))                  # reveal line
+    box(b,(0,-0.385,0.12),(0.34,0.006,0.075),'plate',skip=('back',))                           # front plaque
+    txt(b,hi,'BAYVIEW TERRACE',0.032,(0,-0.3885,0.162),'paint_black'); txt(b,hi,'PHASE 2  -  4 HOMES',0.022,(0,-0.3885,0.133),'paint_black')
     box(b,(0,0,0.28),(0.80,0.80,0.025),'oak')                                                 # oak tray
     box(b,(0,0,0.305),(0.74,0.74,0.008),'lawn',skip=('bottom',))
     zg=0.313
