@@ -13,8 +13,9 @@ var look := Vector3()
 # [name, length s]: each on its own lane (x = index * 10), built by _build
 const SEGS := [
 	["idle", 22.0], ["walk_stop", 8.0], ["run_stop", 8.0], ["walk_to_run_to_walk", 10.0], ["turns_on_the_spot", 9.0],
-	["walk_turn_back", 8.0], ["run_turn_back", 8.0], ["jump", 6.0], ["crouch", 10.0],
-	["vault_walking", 6.0], ["vault_running", 6.0], ["climb_1m", 6.0], ["climb_1m_running", 6.0], ["climb_1_4m", 7.0], ["climb_2m", 8.0], ["climb_1_8m_running", 7.0],
+	["walk_turn_back", 8.0], ["run_turn_back", 8.0], ["jump_standing", 5.0], ["jump_walking", 6.0], ["jump_running", 6.0], ["crouch", 10.0],
+	["vault_walking", 6.0], ["vault_running", 6.0], ["climb_1m", 6.0], ["climb_1m_running", 6.0], ["climb_1_4m", 8.0], ["climb_1_75m", 8.0], ["climb_2m", 11.0], ["climb_1_8m_running", 7.0],
+	["drop_off_1m", 7.0], ["drop_off_3_5m", 8.0], ["drop_off_8m", 11.0], ["run_off_2m", 7.0],
 	["cover_tall", 16.0], ["cover_low", 16.0],
 	["carry_box", 12.0], ["carry_briefcase", 9.0], ["carry_shopping_bag", 7.0],
 	["ramp_15deg_walk", 10.0], ["ramp_15deg_run", 7.0], ["ramp_25deg_walk", 11.0], ["stairs_walk", 10.0], ["stairs_run", 7.0], ["kerbs", 9.0],
@@ -22,6 +23,13 @@ const SEGS := [
 var wall := Color(0.78, 0.70, 0.60)
 
 func _lane(i: int) -> float: return i * 10.0
+func _start_y(i: int) -> float:
+	match SEGS[i][0]:
+		"drop_off_1m": return 1.0
+		"drop_off_3_5m": return 3.5
+		"drop_off_8m": return 8.0
+		"run_off_2m": return 2.0
+	return 0.0
 
 func _build(i: int) -> void:
 	var x := _lane(i)
@@ -29,7 +37,11 @@ func _build(i: int) -> void:
 		"vault_walking", "vault_running": _box(Vector3(3, 1.0, 0.12), Vector3(x, 0.5, 3.06), null, Vector3.ONE, wall)
 		"climb_1m", "climb_1m_running": _box(Vector3(3, 1.0, 2.0), Vector3(x, 0.5, 4.0), null, Vector3.ONE, wall)
 		"climb_1_4m": _box(Vector3(3, 1.4, 2.0), Vector3(x, 0.7, 4.0), null, Vector3.ONE, wall)
+		"climb_1_75m": _box(Vector3(3, 1.75, 2.0), Vector3(x, 0.875, 4.0), null, Vector3.ONE, wall)
 		"climb_2m": _box(Vector3(3, 2.0, 2.0), Vector3(x, 1.0, 4.0), null, Vector3.ONE, wall)
+		"drop_off_1m", "drop_off_3_5m", "drop_off_8m", "run_off_2m":   # (a ledge he starts on, the ground below)
+			var hh := _start_y(i)
+			_box(Vector3(4, hh, 5.0), Vector3(x, hh * 0.5, -1.5), null, Vector3.ONE, wall)
 		"climb_1_8m_running": _box(Vector3(3, 1.8, 2.0), Vector3(x, 0.9, 7.0), null, Vector3.ONE, wall)
 		"cover_tall": _box(Vector3(6, 2.4, 0.3), Vector3(x, 1.2, 3.15), null, Vector3.ONE, wall)
 		"cover_low": _box(Vector3(6, 1.0, 0.3), Vector3(x, 0.5, 3.15), null, Vector3.ONE, wall)
@@ -94,9 +106,9 @@ func _stairs(x: float, rise: float, col: Color) -> void:
 
 func _next() -> void:
 	seg += 1
-	while seg < SEGS.size() and only != "" and not (SEGS[seg][0] as String).contains(only): seg += 1
+	while seg < SEGS.size() and only != "" and not Array(only.split(",")).any(func(o): return (SEGS[seg][0] as String).contains(o)): seg += 1
 	if seg >= SEGS.size(): quit(0); return
-	player.global_position = Vector3(_lane(seg), 0.05, -0.5); player.velocity = Vector3.ZERO
+	player.global_position = Vector3(_lane(seg), _start_y(seg) + 0.05, -2.5 if _start_y(seg) > 0.0 else -0.5); player.velocity = Vector3.ZERO
 	player.call(&"set_move", Vector2.ZERO, false); player.call(&"set_crouch", false); player.call(&"set_carry", 0)
 	t = 0.0; t_prev = 0.0; n = 0
 	DirAccess.make_dir_recursive_absolute("%s/%02d_%s" % [out, seg, SEGS[seg][0]])
@@ -136,11 +148,16 @@ func _act() -> void:
 			if _at(0.8): mv(Vector2(0, 1), true)
 			if _at(3.2): mv(Vector2(0, -1), true)
 			if _at(5.5): mv(Vector2.ZERO)
-		"jump":
+		"jump_standing":
 			if _at(1.0): player.call(&"jump")
-			if _at(2.5): mv(Vector2(0, 1), true)
-			if _at(3.5): player.call(&"jump")
-			if _at(5.0): mv(Vector2.ZERO)
+		"jump_walking":
+			if _at(0.6): mv(Vector2(0, 1))
+			if _at(2.2): player.call(&"jump")
+			if _at(4.5): mv(Vector2.ZERO)
+		"jump_running":
+			if _at(0.6): mv(Vector2(0, 1), true)
+			if _at(2.2): player.call(&"jump")
+			if _at(4.0): mv(Vector2.ZERO)
 		"crouch":
 			if _at(0.8): player.call(&"set_crouch", true)
 			if _at(2.5): mv(Vector2(0, 1))
@@ -169,7 +186,7 @@ func _act() -> void:
 		_:   # (vaults, climbs, ramps, stairs, kerbs: walked or run at it)
 			var run := name.contains("run")
 			if _at(0.8): mv(Vector2(0, 1), run)
-			if name.begins_with("ramp") or name.begins_with("stairs") or name == "kerbs":
+			if name.begins_with("ramp") or name.begins_with("stairs") or name == "kerbs" or name.contains("off_"):
 				if _at(SEGS[seg][1] - 1.5): mv(Vector2.ZERO)
 
 var started := false
