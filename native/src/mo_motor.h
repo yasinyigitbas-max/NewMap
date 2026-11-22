@@ -28,6 +28,7 @@
 namespace godot {
 
 class CityPed;
+class Node3D;
 class MoInertial;
 class MoLimbs;
 
@@ -105,7 +106,7 @@ public:
 	float last_entry_cost = 0.0f;
 	bool into_loop = false;
 	Vector3 last_follow; int n_pin_fix = 0;
-	Vector3 drawn_pull[2]; bool drawn_locked[2] = { false, false };
+	Vector3 drawn_pull[2]; bool drawn_locked[2] = { false, false }; Vector3 drawn_pel;
 	Vector3 follow_v; float follow_acc = 4.0f;
 	float follow_rate = 3.0f, follow_max = 0.5f, follow_sum = 0.0f;   // the body drawn toward its planted feet (per second; (tests) the total, m)
 	int n_hips_aligned = 0; float last_align_yaw = 0.0f; int n_aligned = 0; float last_align = 0.0f;   // (tests) contact alignments made, the last one's size (m)
@@ -196,8 +197,10 @@ private:
 	Clip ca_walk, ca_jog, ca_idle, bg_idle, bg_walk, sb_walk;
 	int carry = 0;
 	float carry_w = 0.0f;           // the hands on the prop (eased in and out)
-	Vector3 hc_s, hc_v; bool hc_ok = false, carry_was_box = false;   // the box's centre, on a spring
+	float carry_yaw = 0.0f; bool carry_yaw_ok = false;
+	Vector3 hc_s, hc_l, hc_v; bool hc_ok = false, carry_was_box = false;   // the box's centre, on a spring
 	float box_w = 0.42f;            // the box's width (between the palms), m: from the carry walk's hands
+	float box_d = 0.30f, belly = 0.14f;   // its depth; the belly in front of the hips' middle (m)
 	void load_carry();
 	void carry_step(float p_dt, const Intent &p_in, float p_d, bool p_want, Vector3 &r_vel);
 	void carry_hands(float p_dt);
@@ -238,6 +241,8 @@ public:
 	Transform3D carry_xf;                              // where the carried thing is drawn (world): the box's centre / the bag's handle
 	float carry_weight() const { return carry_w; }
 	float box_width() const { return box_w; }
+	float box_depth() const { return box_d; }
+	void set_prop(Node3D *p_node);   // the carried thing's node: placed on the drawn hips each frame (MoLimbs)
 	Vector3 carry_hand_target(int s) const;            // (tests) where each hand is pinned (world)
 	int n_covers = 0, n_sneaks = 0;                    // (tests)
 	float cover_gap() const;                           // (tests) the body's distance to the wall now (m)

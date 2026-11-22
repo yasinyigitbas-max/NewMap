@@ -563,6 +563,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	// moved on and the figure not yet placed, gave a pull that alternated frame to frame - the body followed it, the
 	// hips' speed jumped 1.4 m/s)
 	if (limbs) for (int s = 0; s < 2; s++) { drawn_pull[s] = limbs->pull_v[s]; drawn_locked[s] = limbs->locked[s] && !limbs->stepping(s); }
+	drawn_pel = fig->bone_world("Bip01_Pelvis");   // (as drawn last frame: mid-step, at a hand-over, it is the new clip's raw pose)
 	const Vector3 dir(p_in.dir.x, 0.0f, p_in.dir.z);
 	const float wl = std::min((float)dir.length(), 1.0f);
 	const bool want = wl > 0.1f;

@@ -37,7 +37,7 @@ void Motor::load_carry() {
 	if (ca_walk.ok()) {   // the box's width: the carry walk's palms apart, on average
 		float w = 0.0f; int m = 0;
 		for (const Frame &f : ca_walk.d->f) { w += (float)(f.hand[0] - f.hand[1]).length(); m++; }
-		if (m) box_w = w / m;
+		if (m) box_w = std::max(0.30f, w / m - 0.06f);   // (the box between the hand bones less the palms)
 	}
 }
 
@@ -116,29 +116,36 @@ void Motor::carry_hands(float p_dt) {
 	if (!limbs || !cur || !fig) return;
 	const bool on = carry != 0 && st == CARRY;
 	carry_w = clampk(carry_w + (on ? 1.0f : -1.0f) * p_dt / 0.3f, 0.0f, 1.0f);
-	if (carry_w <= 0.0f && !on) { if (limbs->hand_w[0] > 0.0f || limbs->hand_w[1] > 0.0f) { limbs->hand_w[0] = limbs->hand_w[1] = 0.0f; } hc_ok = false; return; }
-	const Transform3D X = fig->get_global_transform();
+	limbs->hold_w = carry_w;
+	if (carry_w <= 0.0f && !on) { limbs->hold_kind = 0; hc_ok = false; carry_yaw_ok = false; return; }
+	if (limbs->hold_kind != 0) carry_xf = limbs->hold_xf;   // (where it was drawn last frame: for tests; the thing itself is placed by MoLimbs)
 	const Frame f = cur->d->lerp(t);
-	const Basis R(UP, yaw);
-	const Vector3 left = R.xform(Vector3(1, 0, 0));
 	const bool box = carry == 1 || (carry == 0 && carry_was_box);
 	if (carry != 0) carry_was_box = carry == 1;
-	// where the clip holds it - the box: its hands' middle; a bag: the right hand - on a spring (a hand-over does not jump
-	// it; read from the drawn bone mid-step, the bag jumped 30 cm at a hand-over)
-	const Vector3 hc = X.xform(box ? (f.hand[0] + f.hand[1]) * 0.5f : f.hand[1]);
-	if (!hc_ok) { hc_s = hc; hc_v = Vector3(); hc_ok = true; }
+	// HOW IT IS HELD, from the hips: the clip's hands (their middle for the box, the right one for a bag) against the
+	// clip's own hips, in his facing (a spring smooths the clip changes). WHERE is the drawn hips' - only a modifier sees
+	// the drawn pose (MoLimbs: it places the thing and the hands in the same pass; read here, mid-step, the skeleton
+	// holds the clip's raw pose, and at a hand-over its hips jumped 30 cm: the bag with them)
+	Vector3 hl = (box ? (f.hand[0] + f.hand[1]) * 0.5f : f.hand[1]) - f.hips;
+	if (box) {
+		// (Yasin, 23 Nov: "both box and hands go into the body, neither should be able to do that"): the clip holds its
+		// box close, the hands 20 cm in front of the hips - a box centred there was half inside the belly. Its back face
+		// kept 2 cm off the belly (14 cm in front of the hips' middle), whatever the clip
+		const float need = belly + box_d * 0.5f + 0.02f;
+		if (hl.z < need) hl.z = need;
+	}
+	if (!hc_ok) { hc_l = hl; hc_v = Vector3(); hc_ok = true; }
 	else if (p_dt > 0.0f) {
 		const float w = box ? 14.0f : 18.0f;
-		hc_v += (w * w * (hc - hc_s) - 2.0f * w * hc_v) * p_dt;
-		hc_s += hc_v * p_dt;
+		hc_v += (w * w * (hl - hc_l) - 2.0f * w * hc_v) * p_dt;
+		hc_l += hc_v * p_dt;
 	}
-	carry_xf = Transform3D(R, hc_s);
-	if (box) {   // the palms on its sides
-		limbs->hand_target[0] = hc_s + left * (box_w * 0.5f);
-		limbs->hand_target[1] = hc_s - left * (box_w * 0.5f);
-		limbs->hand_w[0] = limbs->hand_w[1] = carry_w;
-	} else {     // a bag hangs from the right hand: the hand pinned to its handle
-		limbs->hand_target[1] = hc_s;
-		limbs->hand_w[0] = 0.0f; limbs->hand_w[1] = carry_w;
-	}
+	// (its facing eased: a hand-over turns the facing at once, the drawn figure through the blend)
+	if (!carry_yaw_ok) { carry_yaw = yaw; carry_yaw_ok = true; }
+	else carry_yaw += std::remainder(yaw - carry_yaw, 6.2831853f) * std::min(1.0f, 10.0f * p_dt);
+	limbs->hold_kind = box ? 1 : 2;
+	limbs->hold_l = hc_l; limbs->hold_yaw = carry_yaw;
+	limbs->box_w = box_w; limbs->box_d = box_d;
 }
+
+void Motor::set_prop(Node3D *p_node) { if (limbs) limbs->prop = p_node; }

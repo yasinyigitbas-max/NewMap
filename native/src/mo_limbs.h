@@ -10,6 +10,7 @@
 #pragma once
 
 #include <godot_cpp/classes/skeleton_modifier3d.hpp>
+#include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/variant/transform3d.hpp>
 #include <godot_cpp/variant/vector3.hpp>
 
@@ -62,6 +63,14 @@ public:
 	float drop = 0.0f, drop_v = 0.0f, drop_slack = 0.01f, drop_max = 0.35f, drop_down = 14.0f, drop_up = 9.0f;   // the hips lowered (m), its spring (rad/s down, up)
 	int b_root = -1;
 	uint64_t frame_id = ~0ull; float dt_frame = 1.0f / 60.0f;
+	// ---- a thing held (the motor's carry): where it is held from the hips (his facing hold_yaw), placed on the hips AS
+	// DRAWN, with the hands on it; the thing's node placed here too, in the same pass
+	int hold_kind = 0;                 // 0 nothing, 1 a box (both hands on its sides), 2 a bag (the right hand on its handle)
+	float hold_w = 0.0f, hold_yaw = 0.0f, box_w = 0.4f, box_d = 0.3f;
+	Vector3 hold_l;                    // the hold point from the hips (his facing frame), m
+	Transform3D hold_xf;               // where it was drawn (world)
+	Node3D *prop = nullptr;            // the thing's node (the game's), placed at hold_xf (a bag hangs 0.2 m under the hand)
+	int b_pel = -1; bool prop_owned_hands = false;
 	// ---- the hands
 	Vector3 hand_target[2]; float hand_w[2] = { 0.0f, 0.0f };
 	// (the tests) how far each foot was moved from the clip's place this frame, m; locks taken

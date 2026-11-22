@@ -920,17 +920,14 @@ void CityPlayer::carry_draw() {
 		if (!carry_mesh) { carry_mesh = memnew(MeshInstance3D); add_child(carry_mesh); carry_mesh->set_as_top_level(true); }
 		Ref<BoxMesh> m; m.instantiate();
 		Ref<StandardMaterial3D> mat; mat.instantiate();
-		if (kind == 1) { m->set_size(Vector3(0.36f, 0.32f, 0.34f)); mat->set_albedo(Color(0.62f, 0.47f, 0.30f)); }        // (cardboard)
+		if (kind == 1) { m->set_size(Vector3(motor->box_width(), 0.30f, motor->box_depth())); mat->set_albedo(Color(0.62f, 0.47f, 0.30f)); }        // (cardboard, as wide and deep as the motor holds it)
 		else if (kind == 2) { m->set_size(Vector3(0.10f, 0.32f, 0.44f)); mat->set_albedo(Color(0.12f, 0.10f, 0.09f)); }   // (a briefcase)
 		else { m->set_size(Vector3(0.14f, 0.36f, 0.30f)); mat->set_albedo(Color(0.85f, 0.83f, 0.78f)); }                  // (a paper bag)
 		m->set_material(mat);
 		carry_mesh->set_mesh(m); carry_mesh_kind = kind;
 	}
 	carry_mesh->set_visible(true);
-	Transform3D xf = motor->carry_xf;
-	if (kind == 1) { xf.basis.scale(Vector3(motor->box_width() / 0.36f * 0.92f, 1.0f, 1.0f)); }   // (between the palms)
-	else xf.origin += Vector3(0, -0.2f, 0);   // (hanging under the hand)
-	carry_mesh->set_global_transform(xf);
+	motor->set_prop(carry_mesh);   // (placed on his hips as drawn, by the motor's limbs, in the same frame)
 }
 
 bool CityPlayer::motor_can() const {

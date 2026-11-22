@@ -8,7 +8,8 @@ extends SceneTree
 ## What it cannot see: the fingers round the box, the box's look - Yasin plays it.
 var player: CharacterBody3D
 var sk: Skeleton3D
-var b_pel := -1; var b_ft := [-1, -1]; var b_hd := [-1, -1]
+var b_pel := -1; var b_ft := [-1, -1]; var b_hd := [-1, -1]; var b_el := [-1, -1]
+var box_gap := 9.0; var in_torso := 0; var snap_el := [Vector3(), Vector3()]
 var fails := 0
 var trace := false
 var lane := -1; var t := 0.0; var t_prev := 0.0
@@ -33,6 +34,7 @@ func _next() -> void:
 	if lane >= LANES.size(): _finish(); return
 	player.global_position = Vector3(lane * 10.0, 0.02, 0.0); player.velocity = Vector3.ZERO
 	player.call(&"set_move", Vector2.ZERO, false); player.call(&"set_carry", 0)
+	box_gap = 9.0; in_torso = 0
 	t = 0.0; t_prev = 0.0; states = {}; clips = {}; s_slide = 0.0; s_pop = 0.0; s_dv = 0.0; hand_miss = 0.0; prop_jump = 0.0
 	plant = [null, null]; have = 0; prop_have = false; free_end = false; start_p = player.global_position
 
@@ -58,7 +60,7 @@ func _process(delta: float) -> bool:
 	if sk == null:
 		var s := player.find_children("*", "Skeleton3D", true, false)
 		if s.is_empty(): return false
-		sk = s[0]; b_pel = sk.find_bone("Bip01_Pelvis"); b_ft = [sk.find_bone("Bip01_L_Foot"), sk.find_bone("Bip01_R_Foot")]; b_hd = [sk.find_bone("Bip01_L_Hand"), sk.find_bone("Bip01_R_Hand")]
+		sk = s[0]; b_pel = sk.find_bone("Bip01_Pelvis"); b_ft = [sk.find_bone("Bip01_L_Foot"), sk.find_bone("Bip01_R_Foot")]; b_hd = [sk.find_bone("Bip01_L_Hand"), sk.find_bone("Bip01_R_Hand")]; b_el = [sk.find_bone("Bip01_L_Forearm"), sk.find_bone("Bip01_R_Forearm")]
 		sk.skeleton_updated.connect(_on_pose)
 		_next(); return false
 	if lane >= LANES.size(): return true
@@ -76,6 +78,7 @@ func _on_pose() -> void:
 	for s in 2:
 		snap_ft[s] = sk.global_transform * sk.get_bone_global_pose(b_ft[s]).origin
 		snap_hd[s] = sk.global_transform * sk.get_bone_global_pose(b_hd[s]).origin
+		snap_el[s] = sk.global_transform * sk.get_bone_global_pose(b_el[s]).origin
 	snap_ms = player.call(&"get_motor_state")
 	snap_ok = true
 
@@ -92,8 +95,24 @@ func _sample() -> void:
 			if miss > hand_miss:
 				hand_miss = miss
 				if trace: print("TRACEH lane %d t %.2f %s hand %d miss %.3f" % [lane, t, ms.get("clip", ""), s, miss])
+	# CLEAR OF THE BODY (Yasin, 23 Nov: "both box and hands go into the body"): the box's back face against the belly
+	# (14 cm in front of the hips' middle), the hands and elbows outside the torso (17 cm either side of the spine,
+	# from 12 cm behind to 14 cm in front of it, from the hips up 60 cm)
+	if int(ms.get("carry", 0)) == 1 and float(ms.get("carry_w", 0.0)) >= 0.999:
+		var yw: float = float(ms.get("yaw", 0.0)); var fw := Vector3(sin(yw), 0, cos(yw)); var lf := Vector3(cos(yw), 0, -sin(yw))
+		var xf: Transform3D = ms.get("carry_xf", Transform3D())
+		# (the box as drawn LAST frame: against last frame's hips - at a jog a frame is 4 cm)
+		var back: float = (xf.origin - (pel_prev if have > 0 else snap_pel)).dot(fw) - 0.15 - 0.14
+		if back < box_gap:
+			box_gap = back
+			if trace and back < 0.0: print("TRACEG lane %d t %.2f %s %s box back %.3f box %s pel %s" % [lane, t, st, ms.get("clip", ""), back, str(xf.origin), str(snap_pel)])
+		for q in [snap_hd[0], snap_hd[1], snap_el[0], snap_el[1]]:
+			var d: Vector3 = q - snap_pel
+			if absf(d.dot(lf)) < 0.17 and d.dot(fw) > -0.12 and d.dot(fw) < 0.14 and d.y > 0.0 and d.y < 0.6:
+				in_torso += 1
+				if trace: print("TRACEB lane %d t %.2f %s a hand / elbow in the torso at %s" % [lane, t, ms.get("clip", ""), str(d)])
 	# the prop: no jump in a frame (its own motion at most a run's pace)
-	if int(ms.get("carry", 0)) != 0 and float(ms.get("carry_w", 0.0)) > 0.0:
+	if int(ms.get("carry", 0)) != 0 and float(ms.get("carry_w", 0.0)) > 0.1:
 		var pp: Vector3 = (ms.get("carry_xf", Transform3D()) as Transform3D).origin
 		if prop_have:
 			var j := (pp - prop_prev).length()
@@ -132,6 +151,8 @@ func _judge() -> void:
 	if L[1] == 1:
 		_check(clips.has("pact/Walking_Carry") and clips.has("pact/Walk_Carry_Stop") and clips.has("pact/Jogging_With_Box_a"), "box: its walk, idle and jog played")
 		_check(hand_miss < 0.03, "box: the hands on its sides (%.1f < 3 cm)" % (hand_miss * 100))
+		_check(box_gap > -0.005, "box: its back clear of the belly (%.1f cm at the closest)" % (box_gap * 100))
+		_check(in_torso == 0, "box: hands and elbows outside the torso (%d frames in it)" % in_torso)
 	else:
 		_check(clips.has("pact/Briefcase_Idle") and clips.has("pact/Walk_With_Briefcase"), "briefcase: its idle and walk played")
 	_check(prop_jump < 0.07, "%s: the prop moves smoothly (%.1f cm a frame at most)" % [name, prop_jump * 100])

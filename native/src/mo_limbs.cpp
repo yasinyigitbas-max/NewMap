@@ -28,6 +28,7 @@ void MoLimbs::find_bones(Skeleton3D *sk) {
 		b_th[s] = sk->find_bone(TH[s]); b_ca[s] = sk->find_bone(CA[s]); b_ft[s] = sk->find_bone(FT[s]);
 		b_ua[s] = sk->find_bone(UA[s]); b_fa[s] = sk->find_bone(FA[s]); b_hd[s] = sk->find_bone(HD[s]);
 	}
+	b_pel = sk->find_bone("Bip01_Pelvis");
 	found = true;
 }
 
@@ -171,11 +172,41 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 			sk->set_bone_global_pose(b_ft[s], Transform3D(Basis(q) * F.basis, F.origin));
 		}
 	}
+	// A THING HELD: on the drawn hips, the hands on it
+	if (hold_kind != 0 && b_pel >= 0) {
+		const Vector3 pel = G.xform(sk->get_bone_global_pose(b_pel).origin);
+		const Basis Rc(Vector3(0, 1, 0), hold_yaw);
+		const Vector3 hc = pel + Rc.xform(hold_l);
+		hold_xf = Transform3D(Rc, hc);
+		if (hold_kind == 1) {   // (the palms on its sides, toward its back as one holds a box against oneself; the hand bone 2 cm out: the palm)
+			const Vector3 left = Rc.xform(Vector3(1, 0, 0)), back = Rc.xform(Vector3(0, 0, -box_d * 0.15f));
+			hand_target[0] = hc + left * (box_w * 0.5f + 0.02f) + back;
+			hand_target[1] = hc - left * (box_w * 0.5f + 0.02f) + back;
+			hand_w[0] = hand_w[1] = hold_w;
+		} else { hand_target[1] = hc; hand_w[0] = 0.0f; hand_w[1] = hold_w; }
+		if (prop && prop->is_inside_tree()) {
+			Transform3D xf = hold_xf;
+			if (hold_kind != 1) xf.origin += Vector3(0, -0.2f, 0);
+			prop->set_global_transform(xf);
+		}
+	} else if (hold_kind == 0 && prop_owned_hands) { hand_w[0] = hand_w[1] = 0.0f; }
+	prop_owned_hands = hold_kind != 0;
 	for (int s = 0; s < 2; s++) {
 		if (hand_w[s] <= 0.001f || b_ua[s] < 0 || b_fa[s] < 0 || b_hd[s] < 0) continue;
 		const Vector3 wr = sk->get_bone_global_pose(b_hd[s]).origin;
 		const Vector3 tgt = wr.lerp(Gi.xform(hand_target[s]), std::min(hand_w[s], 1.0f));
 		const Vector3 sh = sk->get_bone_global_pose(b_ua[s]).origin, el = sk->get_bone_global_pose(b_fa[s]).origin;
-		reach(sk, b_ua[s], b_fa[s], b_hd[s], tgt, el - sh);
+		// (the elbow out to the side and down, never in toward the ribs: with the hands on a box's sides the clip's own
+		// elbow drawn in put the forearm into the body)
+		Vector3 pole = el - sh;
+		const Vector3 fw = Gi.basis.xform(fwd_w);
+		if (fw.length_squared() > 1e-10f) {
+			const Vector3 up_s = Gi.basis.xform(Vector3(0, 1, 0)).normalized(), f = fw.normalized();
+			const Vector3 left_s = up_s.cross(f).normalized();   // (his left: up x forward)
+			const Vector3 out = s == 0 ? left_s : -left_s;
+			const float L = std::max((float)pole.length(), 1e-3f);
+			pole = pole / L * 0.3f + out * 0.8f - up_s * 0.4f;
+		}
+		reach(sk, b_ua[s], b_fa[s], b_hd[s], tgt, pole);
 	}
 }
