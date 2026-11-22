@@ -305,11 +305,47 @@
         {
           "id": "prop_box_ship_small",
           "cond": "clean",
-          "x": -1.7,
+          "x": -1.95,
           "y": 0.0,
-          "z": -0.4,
+          "z": -0.8,
           "yaw": 15,
-          "note": "in the hall recess, a leftover moving box parked out of the office-door swing"
+          "note": "in the hall recess, against the west wall, clear of the new console and of the office-door swing"
+        },
+        {
+          "id": "prop_side_table",
+          "cond": "clean",
+          "x": -1.5,
+          "y": 0.0,
+          "z": -1.55,
+          "yaw": 0,
+          "note": "a console in the recess, against the north wall"
+        },
+        {
+          "id": "prop_hurricane_lamp",
+          "cond": "clean",
+          "x": -1.5,
+          "y": 0.55,
+          "z": -1.55,
+          "yaw": 0,
+          "note": "a lamp on the hall console"
+        },
+        {
+          "id": "prop_frame_print_medium",
+          "cond": "clean",
+          "x": -1.5,
+          "y": 1.2,
+          "z": -1.74,
+          "yaw": 0,
+          "note": "art centred over the recess console"
+        },
+        {
+          "id": "prop_coat_hook_rail",
+          "cond": "clean",
+          "x": -1.5,
+          "y": 1.5,
+          "z": 0.16,
+          "yaw": 180,
+          "note": "coat hooks on the south wall of the recess, facing the console"
         }
       ]
     },
