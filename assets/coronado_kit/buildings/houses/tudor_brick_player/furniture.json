@@ -1,0 +1,1003 @@
+{
+  "model": "houses/tudor_brick_player",
+  "palette": "Cream plaster, oak floors, walnut and linen furniture, brass accents, jute and muted teal textiles. One language through the whole house: warm, uncluttered, a young adult's first real home.",
+  "notes": "Every item is placed by hand in house-local metres. Origin: footprint centre, y=0 ground floor, +Z is the street (front). Prop yaw 0 faces +Z. y is the prop origin (ground-foot props sit on the floor; wall frames/mirrors/shelves/upper cabinets use y as the bottom of the object). Attic floor is y=3.50. Leave 0.90 m walkways; door swings unobstructed; windows kept clear.",
+  "floors": {
+    "ground": 0.0,
+    "attic": 3.5
+  },
+  "rooms": {
+    "snug": {
+      "purpose": "A window alcove off the living room for reading, lit by the leaded front window.",
+      "focal": "The leaded window, with a chair angled to it and into the living room.",
+      "items": [
+        {
+          "id": "prop_rug_accent",
+          "cond": "clean",
+          "x": -3.4,
+          "y": 0.0,
+          "z": 4.55,
+          "yaw": 90,
+          "note": "small rug under the chair, long axis along the bay"
+        },
+        {
+          "id": "prop_lounge_chair",
+          "cond": "clean",
+          "x": -4.35,
+          "y": 0.0,
+          "z": 4.52,
+          "yaw": 155,
+          "note": "angled to the window and the living room; window x -3.41..-1.83 stays clear"
+        },
+        {
+          "id": "prop_side_table",
+          "cond": "clean",
+          "x": -3.7,
+          "y": 0.0,
+          "z": 4.5,
+          "yaw": 180,
+          "note": "at the chair's right hand"
+        },
+        {
+          "id": "prop_hurricane_lamp",
+          "cond": "clean",
+          "x": -3.7,
+          "y": 0.55,
+          "z": 4.5,
+          "yaw": 0,
+          "note": "reading light on the side table"
+        },
+        {
+          "id": "prop_vase_bud",
+          "cond": "clean",
+          "x": -3.62,
+          "y": 0.55,
+          "z": 4.42,
+          "yaw": 20,
+          "note": "one small stem, not a crowd"
+        }
+      ]
+    },
+    "living": {
+      "purpose": "The main sitting room. Conversation and TV, lit from the west gable window.",
+      "focal": "Sofa facing the TV on the rear wall, over a rug with a coffee table.",
+      "items": [
+        {
+          "id": "prop_rug_living_mcm",
+          "cond": "clean",
+          "x": -3.4,
+          "y": 0.0,
+          "z": 2.15,
+          "yaw": 0,
+          "note": "centres the seating group; teal-and-walnut of the house palette"
+        },
+        {
+          "id": "prop_tv_console",
+          "cond": "clean",
+          "x": -3.4,
+          "y": 0.0,
+          "z": 0.48,
+          "yaw": 0,
+          "note": "against the office partition, facing the sofa; west window clear to the left"
+        },
+        {
+          "id": "prop_sofa_3seat",
+          "cond": "clean",
+          "x": -3.4,
+          "y": 0.0,
+          "z": 3.32,
+          "yaw": 180,
+          "note": "back to the front wall, faces the TV; 0.9 m around the coffee table"
+        },
+        {
+          "id": "prop_coffee_table",
+          "cond": "clean",
+          "x": -3.4,
+          "y": 0.0,
+          "z": 2.2,
+          "yaw": 0,
+          "note": "on the rug, between sofa and TV"
+        },
+        {
+          "id": "prop_decorative_tray",
+          "cond": "clean",
+          "x": -3.4,
+          "y": 0.401,
+          "z": 2.2,
+          "yaw": 10,
+          "note": "anchors the table"
+        },
+        {
+          "id": "prop_bowl_ceramic",
+          "cond": "clean",
+          "x": -3.55,
+          "y": 0.435,
+          "z": 2.25,
+          "yaw": 0,
+          "note": "on the tray"
+        },
+        {
+          "id": "prop_books_stack",
+          "cond": "clean",
+          "x": -3.15,
+          "y": 0.401,
+          "z": 2.1,
+          "yaw": 15,
+          "note": "lived-in, not styled to death"
+        },
+        {
+          "id": "prop_lounge_chair",
+          "cond": "clean",
+          "x": -5.05,
+          "y": 0.0,
+          "z": 2.55,
+          "yaw": 115,
+          "note": "beside the group, north of the gable window so the view stays open"
+        },
+        {
+          "id": "prop_ottoman",
+          "cond": "clean",
+          "x": -4.35,
+          "y": 0.0,
+          "z": 1.7,
+          "yaw": 25,
+          "note": "shared by sofa and chair, clear of both footprints"
+        },
+        {
+          "id": "prop_side_table",
+          "cond": "clean",
+          "x": -2.15,
+          "y": 0.0,
+          "z": 3.35,
+          "yaw": 180,
+          "note": "sofa's left when seated"
+        },
+        {
+          "id": "prop_floor_lamp",
+          "cond": "clean",
+          "x": -5.2,
+          "y": 0.0,
+          "z": 3.4,
+          "yaw": 30,
+          "note": "behind the lounge chair in the north-west corner, reading light for chair and sofa; front wall and window kept clear"
+        },
+        {
+          "id": "prop_potted_plant",
+          "cond": "clean",
+          "x": -5.35,
+          "y": 0.0,
+          "z": 0.7,
+          "note": "beside the window, not in front of it",
+          "yaw": 0
+        },
+        {
+          "id": "prop_frame_print_large",
+          "cond": "clean",
+          "x": -1.05,
+          "y": 1.25,
+          "z": 2.1,
+          "yaw": 90,
+          "note": "on the hall partition, faces the room"
+        },
+        {
+          "id": "prop_clock_wall_sunburst",
+          "cond": "clean",
+          "x": -3.4,
+          "y": 1.7,
+          "z": 0.28,
+          "yaw": 0,
+          "note": "above the TV console"
+        },
+        {
+          "id": "prop_candle_pair_brass",
+          "cond": "clean",
+          "x": -2.15,
+          "y": 0.55,
+          "z": 3.35,
+          "yaw": 90,
+          "note": "on the side table"
+        }
+      ]
+    },
+    "hall": {
+      "purpose": "Entry from the street and the spine of the house; the stair rises along the dining wall.",
+      "focal": "The front door and the runner leading to the stair.",
+      "items": [
+        {
+          "id": "prop_rug_runner",
+          "cond": "clean",
+          "x": -0.35,
+          "y": 0.0,
+          "z": 1.55,
+          "yaw": 90,
+          "note": "in the 1.10 m walkway west of the stair; starts clear of the front-door swing"
+        },
+        {
+          "id": "prop_side_table",
+          "cond": "clean",
+          "x": -0.65,
+          "y": 0.0,
+          "z": 3.35,
+          "yaw": 90,
+          "note": "against the living wall, left of the door swing (door leaf opens to x -0.79..0.38, z 2.8..3.95)"
+        },
+        {
+          "id": "prop_bowl_shell",
+          "cond": "clean",
+          "x": -0.65,
+          "y": 0.55,
+          "z": 3.35,
+          "yaw": 0,
+          "note": "keys and change"
+        },
+        {
+          "id": "prop_frame_print_tall",
+          "cond": "clean",
+          "x": -0.78,
+          "y": 1.15,
+          "z": 2.4,
+          "yaw": -90,
+          "note": "on the living side of the hall"
+        },
+        {
+          "id": "prop_potted_plant",
+          "cond": "clean",
+          "x": 0.85,
+          "y": 0.0,
+          "z": 3.55,
+          "yaw": 40,
+          "note": "right of the door, clear of the leaf and the stair"
+        }
+      ]
+    },
+    "dining": {
+      "purpose": "Everyday meals for one, room for a friend or two.",
+      "focal": "The table under the front window, with the chimney breast as a backdrop to the right.",
+      "items": [
+        {
+          "id": "prop_rug_living_jute",
+          "cond": "clean",
+          "x": 3.15,
+          "y": 0.0,
+          "z": 1.9,
+          "yaw": 0,
+          "note": "under the table, short of the chimney keep-out at x 4.05..4.95, z 2.80..3.50"
+        },
+        {
+          "id": "prop_dining_table",
+          "cond": "clean",
+          "x": 3.15,
+          "y": 0.0,
+          "z": 1.9,
+          "yaw": 0,
+          "note": "centred in the clear floor; 0.9 m passage to the kitchen opening and hall"
+        },
+        {
+          "id": "prop_dining_chair",
+          "cond": "clean",
+          "x": 3.15,
+          "y": 0.0,
+          "z": 2.58,
+          "yaw": 180,
+          "note": "north side, faces the table"
+        },
+        {
+          "id": "prop_dining_chair",
+          "cond": "clean",
+          "x": 3.15,
+          "y": 0.0,
+          "z": 1.22,
+          "yaw": 0,
+          "note": "south side"
+        },
+        {
+          "id": "prop_dining_chair",
+          "cond": "clean",
+          "x": 2.22,
+          "y": 0.0,
+          "z": 1.9,
+          "yaw": 90,
+          "note": "west side"
+        },
+        {
+          "id": "prop_dining_chair",
+          "cond": "clean",
+          "x": 4.08,
+          "y": 0.0,
+          "z": 1.9,
+          "yaw": -90,
+          "note": "east side; still clear of the chimney"
+        },
+        {
+          "id": "prop_decanter",
+          "cond": "clean",
+          "x": 3.25,
+          "y": 0.75,
+          "z": 1.95,
+          "yaw": 10,
+          "note": "on the table"
+        },
+        {
+          "id": "prop_candle_pillar",
+          "cond": "clean",
+          "x": 3.0,
+          "y": 0.75,
+          "z": 1.82,
+          "yaw": 0
+        },
+        {
+          "id": "prop_sideboard",
+          "cond": "clean",
+          "x": 5.48,
+          "y": 0.0,
+          "z": 1.5,
+          "yaw": -90,
+          "note": "east wall, south of the side window's sightline into the kitchen; front faces the table"
+        },
+        {
+          "id": "prop_vase_ginger",
+          "cond": "clean",
+          "x": 5.48,
+          "y": 0.85,
+          "z": 1.35,
+          "yaw": 0
+        },
+        {
+          "id": "prop_frame_print_medium",
+          "cond": "clean",
+          "x": 1.32,
+          "y": 1.3,
+          "z": 2.2,
+          "yaw": 90,
+          "note": "on the hall partition, not on the window wall"
+        },
+        {
+          "id": "prop_clock_mantel",
+          "cond": "clean",
+          "x": 5.48,
+          "y": 0.85,
+          "z": 1.75,
+          "yaw": -90,
+          "note": "on the sideboard"
+        }
+      ]
+    },
+    "kitchen": {
+      "purpose": "A working kitchen: fridge, sink and range in a compact L, enough counter to cook for one or two.",
+      "focal": "The sink under the rear window, with the range on the east wall.",
+      "items": [
+        {
+          "id": "prop_sink_base",
+          "cond": "clean",
+          "x": 3.2,
+          "y": 0.0,
+          "z": -4.78,
+          "yaw": 0,
+          "note": "centred on the rear window; back to the wall, faces into the room"
+        },
+        {
+          "id": "prop_fridge_home",
+          "cond": "clean",
+          "x": 1.68,
+          "y": 0.0,
+          "z": -4.7,
+          "yaw": 90,
+          "note": "west wall, left of the sink run; door swings into the room, walkway kept to the east"
+        },
+        {
+          "id": "prop_range_gas",
+          "cond": "clean",
+          "x": 5.44,
+          "y": 0.0,
+          "z": -3.55,
+          "yaw": -90,
+          "note": "east wall, south of the side window (z -2.0..-1.0 left clear)"
+        },
+        {
+          "id": "prop_upper_cabinet",
+          "cond": "clean",
+          "x": 4.4,
+          "y": 1.4,
+          "z": -4.9,
+          "yaw": 0,
+          "note": "rear wall, east of the window, not over the sink"
+        },
+        {
+          "id": "prop_upper_cabinet",
+          "cond": "clean",
+          "x": 5.5,
+          "y": 1.4,
+          "z": -4.2,
+          "yaw": -90,
+          "note": "east wall, south of the range hood line"
+        },
+        {
+          "id": "prop_upper_cabinet",
+          "cond": "clean",
+          "x": 5.5,
+          "y": 1.4,
+          "z": -2.85,
+          "yaw": -90,
+          "note": "east wall, still south of the side window"
+        },
+        {
+          "id": "prop_bowl_wood",
+          "cond": "clean",
+          "x": 2.75,
+          "y": 0.9,
+          "z": -4.55,
+          "yaw": 15,
+          "note": "fruit on the sink's left counter, not floating between fridge and sink"
+        },
+        {
+          "id": "prop_woven_basket",
+          "cond": "clean",
+          "x": 3.65,
+          "y": 0.9,
+          "z": -4.55,
+          "yaw": -10,
+          "note": "tea towels on the sink's right counter"
+        },
+        {
+          "id": "prop_indoor_bin",
+          "cond": "clean",
+          "x": 1.55,
+          "y": 0.0,
+          "z": -3.7,
+          "yaw": 90,
+          "note": "beside the fridge, out of the work aisle"
+        }
+      ]
+    },
+    "bath": {
+      "purpose": "The house bathroom: bath, vanity and toilet, lit from the rear window.",
+      "focal": "The tub under the rear window, vanity to the left as you enter.",
+      "items": [
+        {
+          "id": "prop_bathtub",
+          "cond": "clean",
+          "x": -3.9,
+          "y": 0.0,
+          "z": -4.78,
+          "yaw": 0,
+          "note": "along the rear wall, under the window but leaving the sill clear; long axis east-west"
+        },
+        {
+          "id": "prop_bath_mat",
+          "cond": "clean",
+          "x": -3.9,
+          "y": 0.0,
+          "z": -4.15,
+          "yaw": 0,
+          "note": "in front of the tub"
+        },
+        {
+          "id": "prop_vanity_sink",
+          "cond": "clean",
+          "x": -5.4,
+          "y": 0.0,
+          "z": -3.4,
+          "yaw": 90,
+          "note": "west wall, facing into the room; not in the door swing from x=-2.20"
+        },
+        {
+          "id": "prop_mirror_rect",
+          "cond": "clean",
+          "x": -5.68,
+          "y": 1.15,
+          "z": -3.4,
+          "yaw": 90,
+          "note": "centred over the vanity"
+        },
+        {
+          "id": "prop_toilet",
+          "cond": "clean",
+          "x": -2.75,
+          "y": 0.0,
+          "z": -4.7,
+          "yaw": 180,
+          "note": "east side of the rear wall, faces into the room; door at z -4.50..-3.60 stays clear"
+        },
+        {
+          "id": "prop_laundry_hamper",
+          "cond": "clean",
+          "x": -5.4,
+          "y": 0.0,
+          "z": -2.45,
+          "yaw": 90,
+          "note": "beside the vanity, near the door from utility"
+        },
+        {
+          "id": "prop_wall_plate_floral",
+          "cond": "clean",
+          "x": -4.4,
+          "y": 1.45,
+          "z": -2.12,
+          "yaw": 180,
+          "note": "on the office partition, a quiet picture"
+        }
+      ]
+    },
+    "office": {
+      "purpose": "A small den to work and write, without a window \u2014 lamp and a calm desk are the light.",
+      "focal": "The desk against the west wall, facing the door.",
+      "items": [
+        {
+          "id": "prop_rug_accent",
+          "cond": "clean",
+          "x": -4.2,
+          "y": 0.0,
+          "z": -0.9,
+          "yaw": 0,
+          "note": "under the chair and desk"
+        },
+        {
+          "id": "prop_office_desk",
+          "cond": "clean",
+          "x": -5.28,
+          "y": 0.0,
+          "z": -0.9,
+          "yaw": 90,
+          "note": "west wall, faces the door; 0.9 m path along the east side"
+        },
+        {
+          "id": "prop_office_chair",
+          "cond": "clean",
+          "x": -4.35,
+          "y": 0.0,
+          "z": -0.9,
+          "yaw": -90,
+          "note": "faces the desk"
+        },
+        {
+          "id": "prop_floor_lamp",
+          "cond": "clean",
+          "x": -3.55,
+          "y": 0.0,
+          "z": -1.78,
+          "yaw": 10,
+          "note": "south of the chair, lights the desk from the side; clear of the door path"
+        },
+        {
+          "id": "prop_filing_cabinet",
+          "cond": "clean",
+          "x": -2.55,
+          "y": 0.0,
+          "z": -0.05,
+          "yaw": -90,
+          "note": "north-east corner, faces the desk; north of the office door swing"
+        },
+        {
+          "id": "prop_books_stack",
+          "cond": "clean",
+          "x": -5.1,
+          "y": 0.74,
+          "z": -0.4,
+          "yaw": -15,
+          "note": "on the desk"
+        },
+        {
+          "id": "prop_globe_desktop",
+          "cond": "clean",
+          "x": -5.2,
+          "y": 0.74,
+          "z": -1.35,
+          "yaw": 30,
+          "note": "on the desk, left"
+        },
+        {
+          "id": "prop_frame_stand_photo",
+          "cond": "clean",
+          "x": -5.0,
+          "y": 0.74,
+          "z": -1.15,
+          "yaw": 70,
+          "note": "one photograph"
+        },
+        {
+          "id": "prop_briefcase_laptop",
+          "cond": "clean",
+          "x": -4.7,
+          "y": 0.0,
+          "z": -1.55,
+          "yaw": 70,
+          "note": "on the floor beside the desk, lived-in"
+        }
+      ]
+    },
+    "utility": {
+      "purpose": "Laundry and household store, a straight path from the hall to the bathroom.",
+      "focal": "The washer and dryer as a pair on the east wall.",
+      "items": [
+        {
+          "id": "prop_washer_home",
+          "cond": "clean",
+          "x": -0.4,
+          "y": 0.0,
+          "z": -4.2,
+          "yaw": -90,
+          "note": "east wall (stair/dining side), south end"
+        },
+        {
+          "id": "prop_dryer_home",
+          "cond": "clean",
+          "x": -0.4,
+          "y": 0.0,
+          "z": -3.35,
+          "yaw": -90,
+          "note": "next to the washer, leaving the 0.9 m path on the west"
+        },
+        {
+          "id": "prop_laundry_hamper",
+          "cond": "clean",
+          "x": -0.5,
+          "y": 0.0,
+          "z": -2.6,
+          "yaw": -90,
+          "note": "beside the dryer"
+        },
+        {
+          "id": "prop_storage_cabinet",
+          "cond": "clean",
+          "x": -0.4,
+          "y": 0.0,
+          "z": -1.2,
+          "yaw": -90,
+          "note": "north of the laundry, still south of the office door"
+        },
+        {
+          "id": "prop_woven_basket",
+          "cond": "clean",
+          "x": -1.85,
+          "y": 0.0,
+          "z": -4.85,
+          "yaw": 10,
+          "note": "rear corner, spare linens"
+        },
+        {
+          "id": "prop_indoor_bin",
+          "cond": "clean",
+          "x": -1.85,
+          "y": 0.0,
+          "z": -0.2,
+          "yaw": 180,
+          "note": "near the hall door, out of the path"
+        }
+      ]
+    },
+    "attic_bedroom": {
+      "purpose": "The only bedroom: sleep, a little storage, the west gable for morning light.",
+      "focal": "The bed, south of the gable window, with a nightstand on each side.",
+      "items": [
+        {
+          "id": "prop_rug_living_jute",
+          "cond": "clean",
+          "x": -3.2,
+          "y": 3.5,
+          "z": -1.2,
+          "yaw": 90,
+          "note": "under the bed, long axis north-south"
+        },
+        {
+          "id": "prop_bed_queen",
+          "cond": "clean",
+          "x": -4.55,
+          "y": 3.5,
+          "z": -1.5,
+          "yaw": 90,
+          "note": "head to the west wall, south of the gable window (z 0.40..1.20 left clear); foot toward the landing"
+        },
+        {
+          "id": "prop_nightstand",
+          "cond": "clean",
+          "x": -5.25,
+          "y": 3.5,
+          "z": -0.25,
+          "yaw": 90,
+          "note": "north side of the bed"
+        },
+        {
+          "id": "prop_nightstand",
+          "cond": "clean",
+          "x": -5.25,
+          "y": 3.5,
+          "z": -2.75,
+          "yaw": 90,
+          "note": "south side of the bed"
+        },
+        {
+          "id": "prop_hurricane_lamp",
+          "cond": "clean",
+          "x": -5.25,
+          "y": 4.08,
+          "z": -0.25,
+          "yaw": 0,
+          "note": "bedside light"
+        },
+        {
+          "id": "prop_candle_pillar",
+          "cond": "clean",
+          "x": -5.25,
+          "y": 4.08,
+          "z": -2.75,
+          "yaw": 0,
+          "note": "the quieter side"
+        },
+        {
+          "id": "prop_frame_stand_photo",
+          "cond": "clean",
+          "x": -5.1,
+          "y": 4.08,
+          "z": -0.4,
+          "yaw": 60
+        },
+        {
+          "id": "prop_dresser",
+          "cond": "clean",
+          "x": -1.0,
+          "y": 3.5,
+          "z": -3.15,
+          "yaw": 180,
+          "note": "south wall, east of the bed, not in the walk to the landing"
+        },
+        {
+          "id": "prop_mirror_rect",
+          "cond": "clean",
+          "x": -1.0,
+          "y": 4.4,
+          "z": -3.4,
+          "yaw": 180,
+          "note": "above the dresser"
+        },
+        {
+          "id": "prop_floor_lamp",
+          "cond": "clean",
+          "x": -5.35,
+          "y": 3.5,
+          "z": 1.45,
+          "yaw": 40,
+          "note": "by the gable window, just south of the opening, not in the view"
+        },
+        {
+          "id": "prop_frame_ocean",
+          "cond": "clean",
+          "x": -0.05,
+          "y": 4.7,
+          "z": 0.8,
+          "yaw": 90,
+          "note": "on the landing partition"
+        },
+        {
+          "id": "prop_backpack_daypack",
+          "cond": "clean",
+          "x": -1.7,
+          "y": 3.5,
+          "z": -2.9,
+          "yaw": 40,
+          "note": "on the floor by the dresser"
+        }
+      ]
+    },
+    "attic_bath": {
+      "purpose": "A second bathroom off the landing, for the bedroom.",
+      "focal": "The vanity as you enter, tub along the north wall.",
+      "items": [
+        {
+          "id": "prop_vanity_sink",
+          "cond": "clean",
+          "x": 2.2,
+          "y": 3.5,
+          "z": 0.45,
+          "yaw": 180,
+          "note": "against the studio partition, left as you enter from the landing"
+        },
+        {
+          "id": "prop_mirror_rect",
+          "cond": "clean",
+          "x": 2.2,
+          "y": 4.55,
+          "z": 0.22,
+          "yaw": 180,
+          "note": "over the vanity"
+        },
+        {
+          "id": "prop_toilet",
+          "cond": "clean",
+          "x": 3.4,
+          "y": 3.5,
+          "z": 0.48,
+          "yaw": 180,
+          "note": "beside the vanity, tank to the south wall"
+        },
+        {
+          "id": "prop_bathtub",
+          "cond": "clean",
+          "x": 3.8,
+          "y": 3.5,
+          "z": 2.38,
+          "yaw": 0,
+          "note": "along the north wall; long axis east-west; 0.9 m in front"
+        },
+        {
+          "id": "prop_bath_mat",
+          "cond": "clean",
+          "x": 3.8,
+          "y": 3.5,
+          "z": 1.7,
+          "yaw": 0
+        },
+        {
+          "id": "prop_laundry_hamper",
+          "cond": "clean",
+          "x": 5.4,
+          "y": 3.5,
+          "z": 0.55,
+          "yaw": -90,
+          "note": "east corner, out of the door swing"
+        }
+      ]
+    },
+    "attic_studio": {
+      "purpose": "A work-and-make room under the eaves, with the stair arriving next door.",
+      "focal": "The drafting table facing the landing, a place to draw and leave work out.",
+      "items": [
+        {
+          "id": "prop_rug_shag_oval",
+          "cond": "clean",
+          "x": 3.2,
+          "y": 3.5,
+          "z": -1.7,
+          "yaw": 20,
+          "note": "under the work area"
+        },
+        {
+          "id": "prop_drafting_table",
+          "cond": "clean",
+          "x": 3.2,
+          "y": 3.5,
+          "z": -1.2,
+          "yaw": 0,
+          "note": "faces north, toward the landing door; the right gable stays in the corner of the eye"
+        },
+        {
+          "id": "prop_office_chair",
+          "cond": "clean",
+          "x": 3.2,
+          "y": 3.5,
+          "z": -1.95,
+          "yaw": 0,
+          "note": "faces the table"
+        },
+        {
+          "id": "prop_wall_shelf",
+          "cond": "clean",
+          "x": 5.55,
+          "y": 4.7,
+          "z": -1.7,
+          "yaw": -90,
+          "note": "east wall, tools and paper"
+        },
+        {
+          "id": "prop_storage_cabinet",
+          "cond": "clean",
+          "x": 5.48,
+          "y": 3.5,
+          "z": -3.1,
+          "yaw": -90,
+          "note": "south-east corner, materials"
+        },
+        {
+          "id": "prop_books_stack",
+          "cond": "clean",
+          "x": 3.55,
+          "y": 4.0,
+          "z": -0.95,
+          "yaw": 20,
+          "note": "on the table"
+        },
+        {
+          "id": "prop_sculpture_organic",
+          "cond": "clean",
+          "x": 2.7,
+          "y": 4.0,
+          "z": -1.0,
+          "yaw": 40,
+          "note": "a single object on the table"
+        },
+        {
+          "id": "prop_potted_plant",
+          "cond": "clean",
+          "x": 1.6,
+          "y": 3.5,
+          "z": -3.15,
+          "yaw": 0,
+          "note": "rear corner, not in the walk"
+        },
+        {
+          "id": "prop_floor_lamp",
+          "cond": "clean",
+          "x": 4.35,
+          "y": 3.5,
+          "z": -0.55,
+          "yaw": 200,
+          "note": "over the table, right"
+        },
+        {
+          "id": "prop_bag_tote_woven",
+          "cond": "clean",
+          "x": 2.2,
+          "y": 3.5,
+          "z": -3.15,
+          "yaw": 30,
+          "note": "on the floor, used"
+        }
+      ]
+    },
+    "eaves_store": {
+      "purpose": "Low storage in the eaves, outside the 2.0 m headroom band, along the front and rear margins of the attic.",
+      "focal": "A neat line of boxes and baskets, not a junk pile.",
+      "items": [
+        {
+          "id": "prop_box_moving",
+          "cond": "clean",
+          "x": -4.8,
+          "y": 3.5,
+          "z": 3.15,
+          "yaw": 8,
+          "note": "front eaves, west, in the low zone north of z=2.75"
+        },
+        {
+          "id": "prop_box_stack",
+          "cond": "clean",
+          "x": -3.9,
+          "y": 3.5,
+          "z": 3.15,
+          "yaw": -6
+        },
+        {
+          "id": "prop_box_ship_small",
+          "cond": "clean",
+          "x": -3.1,
+          "y": 3.5,
+          "z": 3.2,
+          "yaw": 12
+        },
+        {
+          "id": "prop_crate_rope",
+          "cond": "clean",
+          "x": 2.4,
+          "y": 3.5,
+          "z": 3.15,
+          "yaw": 0,
+          "note": "front eaves, east of the stair landing"
+        },
+        {
+          "id": "prop_woven_basket",
+          "cond": "clean",
+          "x": 3.2,
+          "y": 3.5,
+          "z": 3.18,
+          "yaw": 15
+        },
+        {
+          "id": "prop_box_long",
+          "cond": "clean",
+          "x": -2.2,
+          "y": 3.5,
+          "z": -3.85,
+          "yaw": 90,
+          "note": "rear eaves, west, south of z=-3.53"
+        },
+        {
+          "id": "prop_box_open",
+          "cond": "clean",
+          "x": 2.8,
+          "y": 3.5,
+          "z": -3.85,
+          "yaw": -20,
+          "note": "rear eaves, east"
+        }
+      ]
+    }
+  }
+}
