@@ -165,7 +165,7 @@ bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_
 	tr.anchor0.y = p.y;                                                 // (the clip's floor on his ground)
 	{   // (a clip begun with its feet up - Climbing_Single starts on footholds 21 cm up - its feet on his ground)
 		const float lo = std::min((float)F0.foot[0].y, (float)F0.foot[1].y) - 0.10f;
-		if (!p_chain && lo > 0.03f) tr.anchor0.y -= lo;
+		if (!p_chain && &p_c == &c_mid && lo > 0.03f) tr.anchor0.y -= lo;
 	}
 	if (p_chain) {   // (its hips where the drawn hips are: the hang held)
 		const Vector3 dh = fig->bone_world("Bip01_Pelvis");
