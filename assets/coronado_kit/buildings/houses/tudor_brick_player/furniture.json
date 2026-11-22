@@ -856,18 +856,18 @@
           "cond": "clean",
           "x": -5.8,
           "y": 5.35,
-          "z": -2.16,
+          "z": -2.51,
           "yaw": -90,
-          "note": "drawn back to the south jamb of the west gable window"
+          "note": "drawn back along the north jamb so the 1 m gable light stays open"
         },
         {
           "id": "prop_curtain_panel",
           "cond": "clean",
           "x": -5.8,
           "y": 5.35,
-          "z": -1.04,
+          "z": -0.69,
           "yaw": -90,
-          "note": "drawn back to the north jamb of the west gable window"
+          "note": "drawn back along the south jamb so the 1 m gable light stays open"
         },
         {
           "id": "prop_backpack_daypack",
