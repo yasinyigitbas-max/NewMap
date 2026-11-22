@@ -1090,6 +1090,7 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_motor", "on"), &CityPlayer::set_motor);
 	ClassDB::bind_method(D_METHOD("get_motor"), &CityPlayer::get_motor);
 	ClassDB::bind_method(D_METHOD("get_motor_state"), &CityPlayer::get_motor_state);
+	ClassDB::bind_method(D_METHOD("motor_dump", "clip"), &CityPlayer::motor_dump);
 	ClassDB::bind_method(D_METHOD("act", "clip", "seconds", "yaw"), &CityPlayer::act);
 	ClassDB::bind_method(D_METHOD("get_act"), &CityPlayer::get_act);
 	ClassDB::bind_method(D_METHOD("get_acts"), &CityPlayer::get_acts);

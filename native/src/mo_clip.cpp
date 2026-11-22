@@ -123,6 +123,7 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 	// a foot is down: slow over the ground and near the lowest it gets within 0.4 s either side (a climb's feet are
 	// down on the top too)
 	const int w = (int)(0.4 * FPS);
+	const bool turns = d->in_place && a->has_meta("yaw") && std::fabs(curve(a, "yaw", d->len)) > 1.0f;
 	for (int k = 0; k < n; k++) {
 		for (int s = 0; s < 2; s++) {
 			float lo = 1e9f;
@@ -130,7 +131,10 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 			const Frame &F = d->f[k];
 			// (by height and the vertical speed only: the level speed over the ground needs the clip's travel, which is
 			// what this is used to find)
-			d->f[k].down[s] = F.foot[s].y < lo + 0.05f && std::fabs((float)F.foot_v[s].y) < 0.3f;
+			// (a clip that turns the body round keeps a foot low while it steps round the other: on flat ground, the clip's
+			// floor is the measure there; elsewhere the foot's own lowest nearby)
+			const float floor_y = turns ? gy + 0.02f : lo + 0.05f;
+			d->f[k].down[s] = F.foot[s].y < floor_y && std::fabs((float)F.foot_v[s].y) < 0.3f;
 		}
 	}
 	// the travel from the planted feet (in-place clips)
@@ -152,6 +156,7 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 			// (both down: their average. Taking the lower foot alone was tried, 22 Nov: the walks' planted feet then slid
 			// 35 cm; the 180-degree pivots stay open, docs/ANIMATION_PLAN.md)
 			rv[k] = m ? Vector3(sum.x / m, 0.0f, sum.z / m) : trav;
+
 		}
 		d->root_v.resize(n);
 		for (int k = 0; k < n; k++) {   // smoothed over 5 frames (a loop wraps)

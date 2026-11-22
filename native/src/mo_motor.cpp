@@ -49,6 +49,23 @@ bool Motor::inert_live() const { return inert && inert->is_blending(); }
 float Motor::foot_pull(int p_side) const { return limbs ? limbs->pull[p_side & 1] : 0.0f; }
 int Motor::foot_locks() const { return limbs ? limbs->locks : 0; }
 
+Array Motor::dump(const String &p_clip) const {
+	Array out;
+	if (!anim || !anim->has_animation(p_clip)) return out;
+	const Ref<Animation> a = anim->get_animation(p_clip);
+	const ClipData *d = clip_data(a, fig->skeleton(), fig->skel_frame());
+	Clip c; c.a = a; c.d = d;
+	for (int k = 0; k < (int)d->f.size(); k++) {
+		const Frame &F = d->f[k];
+		Array r;
+		r.push_back(k / FPS); r.push_back(F.foot[0]); r.push_back(F.foot[1]); r.push_back(F.down[0]); r.push_back(F.down[1]);
+		r.push_back(F.hips); r.push_back(d->root_v.empty() ? Vector3() : d->root_v[k]); r.push_back(c.curve("yaw", k / FPS, 0.0f));
+		r.push_back(Vector3(c.curve("vx", k / FPS, 0.0f), 0.0f, c.curve("vz", k / FPS, 0.0f))); r.push_back(F.face);
+		out.push_back(r);
+	}
+	return out;
+}
+
 float Motor::rnd() { rng ^= rng << 13; rng ^= rng >> 17; rng ^= rng << 5; return (rng & 0xffffff) / 16777216.0f; }
 
 const char *Motor::state_name() const {
@@ -371,7 +388,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 			vel = clip_vel(*cur, t);
 			speed = (float)vel.length();
 			if (t >= hand_at || t >= cur->d->len - 0.02) {
-				if (want) to_loop(pick_loop(std::max(speed, 0.8f), loop_i), blend_loop);
+				if (want) { speed = std::max(speed, 0.8f); to_loop(pick_loop(std::max(speed, want_speed), loop_i), blend_loop); }   // (on at the pace wanted: a run's pivot runs on)
 				else if (speed > 0.6f) to_stop(); else to_idle(blend_idle);
 			}
 			break;

@@ -194,7 +194,8 @@ public:
 	// he stands and takes no keys (while a line is typed to somebody)
 	void set_motor(bool p_on) { motor_on = p_on; }
 	bool get_motor() const { return motor_on; }
-	Dictionary get_motor_state() const;   // (tests) the motor's state, clip, time, counts, the hand-over
+	Dictionary get_motor_state() const;
+	Array motor_dump(const String &p_clip) const { return motor ? motor->dump(p_clip) : Array(); }   // (tests) the motor's state, clip, time, counts, the hand-over
 	void set_frozen(bool p_on) { frozen = p_on; }
 	// AN ACT (Yasin, 20 Nov: "add us and npcs giving money receiving things animations"): a clip played once where he stands,
 	// turned to p_yaw, his feet still while it lasts (paying at a counter, taking what he bought)

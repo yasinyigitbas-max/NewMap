@@ -18,6 +18,7 @@
 #include "mo_clip.h"
 
 #include <godot_cpp/classes/animation_player.hpp>
+#include <godot_cpp/variant/array.hpp>
 #include <godot_cpp/variant/string.hpp>
 #include <godot_cpp/variant/string_name.hpp>
 #include <godot_cpp/variant/vector3.hpp>
@@ -90,6 +91,7 @@ public:
 	bool inert_live() const;
 	float foot_pull(int p_side) const;   // (tests) how far the foot lock moved that foot from the clip this frame, m
 	int foot_locks() const;
+	Array dump(const String &p_clip) const;   // (tests / tools) a clip's measured frames: t, feet, down, hips, root_v, yaw
 
 private:
 	CityPed *fig = nullptr;
