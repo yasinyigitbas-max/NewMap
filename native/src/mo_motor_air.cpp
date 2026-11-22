@@ -37,7 +37,7 @@ double first_touch(const Clip &c) {
 
 void Motor::load_air() {
 	ai_up = load("ptrav/Jumping_Up"); ai_loop = load("ptrav/Falling_Idle"); ai_run = load("ptrav/Running_Jump_a");
-	ai_stand = load("ptrav/Jump_a"); ai_walk = load("ptrav/Jumping_c");   // (Yasin, 24 Nov: the standing and walking jumps were the bad ones - festive's own jumps instead)
+	ai_stand = load("ptrav/Jump_a"); ai_stand2 = load("ms/S3_Jump_In_Place");   // (Yasin, 24 Nov: "set 1, 3 jump standing rotate randomly") ai_walk = load("ptrav/Jumping_c");   // (Yasin, 24 Nov: the standing and walking jumps were the bad ones - festive's own jumps instead)
 	ai_soft = load("ptrav/Falling_To_Landing"); ai_hard = load("ptrav/Hard_Landing_b");
 	ai_flat = load("ptrav/Falling_Flat_Impact"); ai_getup = load("ptrav/Getting_Up");
 	tc_soft = first_touch(ai_soft); tc_hard = first_touch(ai_hard); tc_flat = first_touch(ai_flat);
@@ -103,6 +103,7 @@ float Motor::ground_below(const Vector3 &p_at, float p_down) const {
 
 void Motor::jump_start(const Vector3 &p_dir, float p_want_speed) {
 	if (limbs) { limbs->lock_on = false; limbs->unlock_all(); }
+	jump_chain = since_land < 2.5f ? jump_chain + 1 : 1;   // (back to back: within 2.5 s of the last landing - stamina)
 	if (speed > 2.2f && ai_run.ok()) {   // running: the running leap (its own travel; Yasin, 24 Nov: "revert the running jump to previous one")
 		rate = std::min(std::max(speed / 4.2f, 0.75f), 1.15f);
 		root_start(ai_run, 0.0, 0.15f, yaw, nullptr, false);
@@ -118,11 +119,15 @@ void Motor::jump_start(const Vector3 &p_dir, float p_want_speed) {
 		if (p_dir.length() > 0.1f && !walking) yaw = std::atan2((float)p_dir.x, (float)p_dir.z);
 		const float pace = walking ? std::min(speed, 1.6f) : 0.0f;
 		rate = 1.0f;
-		root_start(ai_stand, walking ? 0.3 : 0.0, walking ? 0.2f : 0.15f, yaw, nullptr, false);
-		rp.c = &ai_stand;
-		if (pace > 0.0f) {
-			rp.a_to = rp.a_from + fwd_of_yaw() * pace * 0.75f;
-			rp.t0 = 0.62; rp.t_warp = 1.4;
+		const Clip &J = (ai_stand2.ok() && rnd() < 0.5f) ? ai_stand2 : ai_stand;
+		root_start(J, walking ? std::min(0.3, J.d->len * 0.15) : 0.0, walking ? 0.2f : 0.15f, yaw, nullptr, false);
+		rp.c = &J;
+		if (pace > 0.0f) {   // (carried on at his pace while both feet are off the ground: its own flight)
+			int k0 = -1, k1 = -1;
+			for (int k = 0; k < (int)J.d->f.size(); k++) if (!J.d->f[k].down[0] && !J.d->f[k].down[1]) { if (k0 < 0) k0 = k; k1 = k; }
+			const double f0 = k0 >= 0 ? k0 / 30.0 : 0.62, f1 = k1 >= 0 ? (k1 + 1) / 30.0 : 1.4;
+			rp.a_to = rp.a_from + fwd_of_yaw() * pace * (float)(f1 - f0 + 0.15);
+			rp.t0 = f0 - 0.08; rp.t_warp = f1 + 0.08;
 		}
 		st = RUNJUMP; n_jumps++;
 		return;

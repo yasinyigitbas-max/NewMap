@@ -124,12 +124,22 @@ Clip Motor::load(const char *p_name) {
 // for it, or none (then set 1's). A set is changed only standing (applied in the idle), all clips loaded again.
 void Motor::load_clips() {
 	n_idles = 0;   // (the idles that face ahead: the -38 degree ones would turn the body in place)
-	for (const char *n : { "pidle/base_idle", "pidle/base_loco", "pidle/base_standing" }) { Clip c = load(n); if (c.ok()) idles[n_idles++] = c; }
+	for (const char *n : { "pidle/base_idle" }) { Clip c = load(n); if (c.ok()) idles[n_idles++] = c; }   // (Yasin, 24 Nov: "idle 1 is standard" - the main idle; base_loco is the same take, base_standing went with the others)
+	n_tired = 0;
+	for (const char *n : { "ms/S2_Idle_Unarmed", "ms/S2_Idle_Unarmed_b", "ms/S2_Idle_Loop" }) { Clip c = load(n); if (c.ok()) tired_idles[n_tired++] = c; }
 	if (n_idles > 0 && idles[0].d->ground_y > 0.03f && idles[0].d->ground_y < 0.2f) ankle_rest = idles[0].d->ground_y;   // (the standing ankle over the floor)
 	n_fidgets_c = 0;
-	for (const char *n : { "pidle/Arm_Stretching", "pidle/Bored", "pidle/Looking", "pidle/Neck_Stretching", "pidle/Looking_Around_idle" }) { Clip c = load(n); if (c.ok() && n_fidgets_c < 6) fidgets[n_fidgets_c++] = c; }
+	// (Yasin, 24 Nov: "add all of the clips from festives idle gestures in between, main idle should have 2 loops before a
+	// gesture ... gestures should be random too")
+	for (const char *n : { "pidle/Arm_Stretching", "pidle/Bored", "pidle/Looking", "pidle/Neck_Stretching", "pidle/Looking_Around_idle", "pidle/Idle_Transition" }) { Clip c = load(n); if (c.ok() && n_fidgets_c < 6) fidgets[n_fidgets_c++] = c; }
 	n_loops = 0;
-	for (const char *n : { "pwalk/walk_mx3", "pwalk/walk_mx2", "prun/jog_a", "prun/jog_d", "prun/jog_c", "prun/fast_b", "prun/fast_c", "prun/fast_d" }) { Clip c = load(n); if (c.ok() && c.ground_v > 0.2f) loops[n_loops++] = c; }
+	// (Yasin, 24 Nov: "set 1, 3 walk rotate randomly, set 1, 3 run rotate randomly" - set 3's walks and runs with set 1's;
+	// pick_loop takes one at random among those near the pace wanted. Out (Yasin: "remove the parts that break the
+	// quality chain"): set 3's walks and its happy run - on stairs and kerbs their planted feet floated 8-17 cm)
+	for (const char *n : { "pwalk/walk_mx3", "pwalk/walk_mx2", "prun/jog_a", "prun/jog_d", "prun/jog_c", "prun/fast_b", "prun/fast_c", "prun/fast_d",
+			"ms/S3_Run_Quick_b", "ms/S3_Run_Medium", "ms/S3_Run_Intention", "ms/S3_Sprint_Two_Cycle" }) {
+		Clip c = load(n); if (c.ok() && c.ground_v > 0.2f && n_loops < 16) loops[n_loops++] = c;
+	}
 	std::sort(loops, loops + n_loops, [](const Clip &a, const Clip &b) { return a.ground_v < b.ground_v; });
 	w_start[0] = load("pwalk/start_a"); w_start[1] = load("pwalk/start_b");
 	r_start[0] = load("prun/start_a"); r_start[1] = load("prun/start_b");
@@ -252,7 +262,7 @@ void Motor::play(const Clip &p_c, double p_t0, float p_blend) {
 	anim->play(p_c.name, 0.0);
 	t = std::min(std::max(p_t0, 0.0), p_c.d->len);
 	anim->seek(t, true);
-	if (style != 0 && cur && cur->ok()) {   // (between a set's own clip and one it shares with set 1 - a run stop, a pivot -
+	if (cur && cur->ok()) {   // (between a set's own clip and one it shares with set 1 - a run stop, a pivot -
 		// another actor's pose: a longer hand-over; at set 1's, the hips' speed jumped 1.4-2.7 m/s there)
 		const String a = String(cur->name), b = String(p_c.name);
 		const bool own_a = a.begins_with("ms/") || a.begins_with("yl/"), own_b = b.begins_with("ms/") || b.begins_with("yl/");
@@ -278,12 +288,17 @@ Vector3 Motor::clip_vel(const Clip &p_c, double p_t) const {
 	return Basis(UP, yaw0).xform(v) * rate;
 }
 
-int Motor::pick_loop(float p_speed, int p_keep) const {
+int Motor::pick_loop(float p_speed, int p_keep, bool p_random) {
 	const float sp = std::max(p_speed, 0.3f);
 	int best = 0;
 	for (int i = 1; i < n_loops; i++) if (std::fabs(std::log(sp / loops[i].ground_v)) < std::fabs(std::log(sp / loops[best].ground_v))) best = i;
-	if (p_keep >= 0 && p_keep < n_loops && std::fabs(std::log(sp / loops[p_keep].ground_v)) < std::fabs(std::log(sp / loops[best].ground_v)) + 0.15f) best = p_keep;
-	return best;
+	const float lb = std::fabs(std::log(sp / loops[best].ground_v));
+	if (p_keep >= 0 && p_keep < n_loops && std::fabs(std::log(sp / loops[p_keep].ground_v)) < lb + 0.15f) return p_keep;   // (on the move: the one he is in)
+	if (!p_random) return best;   // (out of a pivot, a turn, a pace change: the nearest - a random one after a run pivot jumped the hips)
+	// a new one: at random among those as near the pace (within 15 %) - set 1's and set 3's takes rotate
+	int cand[16]; int nc = 0;
+	for (int i = 0; i < n_loops; i++) if (std::fabs(std::log(sp / loops[i].ground_v)) < lb + 0.15f) cand[nc++] = i;
+	return nc > 0 ? cand[(int)(rnd() * nc) % nc] : best;
 }
 
 void Motor::begin(float p_yaw, float p_speed) {
@@ -315,6 +330,9 @@ void Motor::end() {
 }
 
 void Motor::to_idle(float p_blend) {
+	idle_tired = tired && n_tired > 0;
+	Clip *idles = idle_tired ? tired_idles : this->idles;
+	const int n_idles = idle_tired ? n_tired : this->n_idles;
 	int k = n_idles > 1 ? (int)(rnd() * n_idles) % n_idles : 0;
 	if (k == last_idle && n_idles > 1) k = (k + 1) % n_idles;
 	double e = 0.0;
@@ -377,7 +395,7 @@ void Motor::stop_with(const Clip *p_c, double p_t0, float p_cost) {
 
 void Motor::to_start(float p_angle, float p_want) {
 	const bool run = p_want > 2.0f;
-	loop_i = pick_loop(p_want, -1);
+	loop_i = pick_loop(p_want, -1, true);   // (from a stand: set 1's and set 3's takes at random)
 	if (n_loops > 1 && loops[loop_i].ground_v < 2.0f) {   // (the walks: never the same take twice running)
 		int other = -1;
 		for (int i = 0; i < n_loops; i++) if (i != loop_i && loops[i].ground_v < 2.0f && std::fabs(std::log(loops[i].ground_v / loops[loop_i].ground_v)) < 0.15f) other = i;
@@ -619,6 +637,7 @@ void Motor::ground_feet(Host &p_host) {
 }
 
 void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
+	stamina_step(p_dt);
 	if (style_want != style && fig && st == IDLE) { style = style_want; load_clips(); to_idle(0.3f); }   // (a new movement set: taken while he stands)
 	if (st == OFF || !cur) return;
 	host = &p_host;
@@ -682,7 +701,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 				air_start(Vector3(v.x, std::max(0.0f, (float)v.y), v.z), true);
 				host = nullptr; return;
 			}
-			if (st == RUNJUMP && rp.c == &ai_stand) {
+			if (st == RUNJUMP && (rp.c == &ai_stand || rp.c == &ai_stand2)) {
 				if (want) { speed = std::max(speed, 0.8f); to_loop(pick_loop(want_speed, loop_i), blend_loop); }
 				else to_idle(0.3f);
 				place(p_host);
@@ -761,7 +780,8 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 			bool fid = false;
 			for (int k = 0; k < n_fidgets_c; k++) if (cur == &fidgets[k]) fid = true;
 			if (fid && t >= cur->d->len - 0.02) { to_idle(0.45f); }
-			else if (!fid && idle_t > fidget_in && n_fidgets_c > 0) {
+			else if (!fid && (tired && n_tired > 0) != idle_tired) { to_idle(0.6f); }   // (out of breath / rested: the other idle)
+			else if (!fid && !idle_tired && idle_t >= 2.0f * (float)cur->d->len && n_fidgets_c > 0) {   // (two loops of the idle, then a gesture)
 				int k = (int)(rnd() * n_fidgets_c) % n_fidgets_c; if (k == last_fidget) k = (k + 1) % n_fidgets_c;
 				last_fidget = k; rate = 1.0f;
 				const double e = best_entry(*cur->d, t, *fidgets[k].d, 0.0, std::min(1.0, fidgets[k].d->len), &last_entry_cost);
@@ -913,4 +933,16 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	ground_feet(p_host);
 	carry_hands(p_dt);
 	host = nullptr;
+}
+
+// STAMINA: tired after 30 s of running without a break, or a fifth jump each within 2 s of landing the one before; rested
+// after 10 s without running or jumping (the clock of a jump chain starts at its landing)
+void Motor::stamina_step(float p_dt) {
+	const bool running = (st == MOVE || st == START || st == PIVOT || st == TURN || st == RUNJUMP) && (speed > 2.0f || run_t > 0.0f && speed > 1.0f);   // (its turns and pivots are running too)
+	since_land += p_dt;
+	if (running) { run_t += p_dt; rest_t = 0.0f; }
+	else { run_t = std::max(0.0f, run_t - 0.5f * p_dt); if (st != JUMP && st != AIR && st != RUNJUMP && st != LAND) rest_t += p_dt; }
+	if (st == JUMP || st == AIR || st == RUNJUMP) { rest_t = 0.0f; since_land = 0.0f; }
+	if (!tired && (run_t >= 30.0f || jump_chain >= 5)) { tired = true; n_tired_spells++; rest_t = 0.0f; }
+	if (tired && rest_t >= 10.0f) { tired = false; run_t = 0.0f; jump_chain = 0; }
 }

@@ -86,7 +86,13 @@ public:
 	int get_style() const { return style; }
 	static int style_count();
 	static const char *style_clip(int p_style, const char *p_set1);
-	int style = 0, style_want = 0;   // loads the libraries, puts MoInertial first on the skeleton; false: no clips
+	int style = 0, style_want = 0;
+	// STAMINA (Yasin, 24 Nov: "it will happen after running for 30 second or jumping 5 times back to back"): out of it,
+	// the idle is set 2's ("idle 2 is after stamina runs out"); back after a rest
+	bool tired = false, idle_tired = false;
+	float run_t = 0.0f, rest_t = 0.0f, since_land = 99.0f;
+	int jump_chain = 0, n_tired_spells = 0;
+	void stamina_step(float p_dt);   // loads the libraries, puts MoInertial first on the skeleton; false: no clips
 	bool ready() const { return fig != nullptr && n_loops > 0; }
 	// take the figure over (from whatever played it) / give it back; p_speed, p_yaw: the body's now
 	void begin(float p_yaw, float p_speed);
@@ -138,8 +144,9 @@ private:
 	MoInertial *inert = nullptr;
 	MoLimbs *limbs = nullptr;
 	Clip idles[4]; int n_idles = 0;
+	Clip tired_idles[4]; int n_tired = 0;          // played while out of stamina (set 2's idles)
 	Clip fidgets[6]; int n_fidgets_c = 0;
-	Clip loops[12]; int n_loops = 0;               // sorted by ground_v
+	Clip loops[16]; int n_loops = 0;               // sorted by ground_v
 	Clip w_start[2], r_start[2], r_tstart[2];      // walk starts (two feet), run starts, run turning starts (L, R)
 	Clip w_stop[2], r_stop[2];
 	Clip s_turn_l[3], s_turn_r[3]; int n_tl = 0, n_tr = 0;   // standing turns
@@ -159,7 +166,7 @@ private:
 	Clip load(const char *p_name);   // (by its set-1 name: the set's own clip for it, mo_sets.cpp)
 	void load_clips();
 	void play(const Clip &p_c, double p_t0, float p_blend);
-	int pick_loop(float p_speed, int p_keep) const;
+	int pick_loop(float p_speed, int p_keep, bool p_random = false);
 	void to_idle(float p_blend);
 	void to_loop(int p_i, float p_blend);
 	void to_stop();
@@ -205,7 +212,7 @@ private:
 	Vector3 trav_anchor(double p_t) const;
 
 	// ---- JUMPS, FALLS, LANDINGS (mo_motor_air.cpp; step 7)
-	Clip ai_up, ai_loop, ai_run, ai_stand, ai_walk, ai_soft, ai_hard, ai_flat, ai_getup;
+	Clip ai_up, ai_loop, ai_run, ai_stand, ai_stand2, ai_walk, ai_soft, ai_hard, ai_flat, ai_getup;
 	double tc_soft = 0.0, tc_hard = 0.0, tc_flat = 0.0;   // each landing's first touch of the feet (clip time)
 	Vector3 air_v; float air_top = 0.0f, air_t = 0.0f, jump_v = 4.3f;
 	void load_air();
