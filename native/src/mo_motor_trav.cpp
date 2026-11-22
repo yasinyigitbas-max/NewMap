@@ -182,11 +182,15 @@ bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_
 		target.y = p_top_y + ((float)C.y - clip_top);
 	}
 	tr.delta = target - c_world;
+	// (the braced hang and the sprint up the wall: their knees bend into the wall - taken where it was thinner - 16-18 cm;
+	// the body set back from it that much, the hands still on the edge by their IK)
+	if (!p_vault && (&p_c == &c_braced || &p_c == &c_mid_run)) tr.delta += p_n * 0.16f;
+	if (!p_vault && &p_c == &c_mid && !p_chain) tr.delta += p_n * 0.10f;   // (Climbing_Single: a knee 10 cm in at the mantle)
 	// the warp is all done by the first hand touch (still ramping as a hand came down on the rail, the body was too high
 	// for the arm: the hand hung 9-16 cm over the top)
 	tr.tw = tc;
 	for (int s = 0; s < 2; s++) if (tr.hs[s] >= 0.0) tr.tw = std::min(tr.tw, std::max(tr.hs[s] - 0.1, t0 + 0.1));
-	tr.ty0 = std::max(t0, tr.tw - 0.45);
+	tr.ty0 = std::max(t0, tr.tw - (&p_c == &c_mid ? 0.9 : 0.45));   // (Climbing_Single lifted from 21 cm under his ground: over 0.45 s the hips' rise popped 4 cm)
 	// the end: a vault where it lands (the clip's own landing, else 0.6 s after the hand lets go); a climb at its end
 	const double he = std::max(tr.hend[0], tr.hend[1]);
 	tr.he = he > 0.0 ? he : tc + 0.3;
@@ -234,7 +238,8 @@ void Motor::trav_step(float p_dt) {
 		for (int s = 0; s < 2; s++) {
 			float w = 0.0f;
 			// (eased in from the touch, over 0.08 s: full from the first frame of the touch, the arm was still 5 cm short)
-			if (tr.hs[s] >= 0.0) w = sstep(tr.hs[s], tr.hs[s] + 0.08, t) * (1.0f - sstep(tr.hend[s], tr.hend[s] + 0.1, t));
+			const double ease = tr.c == &c_mid ? 0.2 : 0.08;   // (Climbing_Single's hand comes up fast to its hold: full at once, it was 20 cm short for 2 frames)
+			if (tr.hs[s] >= 0.0) w = sstep(tr.hs[s], tr.hs[s] + ease, t) * (1.0f - sstep(tr.hend[s], tr.hend[s] + 0.1, t));
 			if (w > 0.001f && !tr.hand_set[s]) {
 				// the hand's spot: where the warped clip puts it at its own stillest moment (not where it is as the pin
 				// starts to ease in: still moving there, 10-20 cm short), on the top

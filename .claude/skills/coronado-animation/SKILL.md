@@ -65,6 +65,11 @@ the rules. Re-read both after a context compression.
   pivots, climbs, vaults, cover, carry, set 2's crouch (its crouch into low cover slid the feet 6-10 cm), set 2's soft
   landing (lands 40 cm off). Open: the run stop and run pivot into a set's own run / idle still jump the hips 1.3-2.9 m/s
   (limit 1.2).
+- mx/Ledge_Drop (Yasin's "Jumping Down") IS Mixamo's "Jumping Down Over A Railing": its left hand rests on a railing
+  ~45 cm over the ledge (bone-identical to ms/TV_Drop_Over_Railing). On a bare ledge the hand cannot reach the top without
+  invented motion (he stays upright) - it brushes the corner as he goes over. A hand planted on a bare ledge needs another
+  take (none of Mixamo's jump-downs downloaded has one).
+
 ## The techniques (studied 22 Nov; GDC / SIGGRAPH: Gears of War 4 inertialization and warping, Horizon Zero Dawn
 ## traversal, RDR2 locomotion, UE5 motion warping)
 1. **Inertialization, not crossfades.** On a switch the new clip plays at full weight at once. Store per bone the
