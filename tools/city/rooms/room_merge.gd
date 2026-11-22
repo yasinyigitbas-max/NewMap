@@ -30,6 +30,12 @@ func _run() -> void:
 		if a.begins_with("--out="): OUT = a.trim_prefix("--out=").trim_suffix("/") + "/"
 		if a.begins_with("--lib="): LIB = a.trim_prefix("--lib=").trim_suffix("/") + "/"
 		if a.begins_with("--prefix="): PREFIX = a.trim_prefix("--prefix=")
+	# (22 Nov) without the texture arrays it hit a script error and never quit, holding the box's Godot lock for 25 min:
+	# stop at once instead (and run it under `timeout`)
+	for need: String in [TEXD + "arrays.json", TEXD + "arr_room.json", TEXD + "arr_room.png", LIB + "mat_prop_merged_near.tres"]:
+		if not FileAccess.file_exists(need) and not ResourceLoader.exists(need):
+			push_error("room_merge: %s missing (tools/city/rooms/make_room_array.py + the runtime bake first)" % need)
+			print("MERGE_DONE rooms=0 (missing %s)" % need); quit(2); return
 	prop_pages = JSON.parse_string(FileAccess.get_file_as_string(TEXD + "arrays.json")).prop_albedo
 	room_layers = JSON.parse_string(FileAccess.get_file_as_string(TEXD + "arr_room.json")).layers
 	shell_mat = ShaderMaterial.new(); shell_mat.shader = load("res://tools/city/rooms/rt_room_shell.gdshader")

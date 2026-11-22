@@ -1,16 +1,9 @@
 extends RefCounted
-## Built-in interiors (22 Nov 2026 pilot, com_bank / Crownado Savings). A kit building that carries its own interior:
-##  - its near model (<prefix>_near.glb, same file name, same node names: drop-in) holds the exterior with REAL openings
-##    at its shop door and ground-floor windows plus the interior shell (floor, walls, ceiling, reveals, frames, trim) in
-##    the same single mesh and material (the kit's city atlas, AO in the vertex colours, the atlas normal map);
-##  - <prefix>_interior.scn next to it holds what cannot live in that one mesh: "Slots" (Marker3D, meta slot_type /
-##    variant / lift: hand-placed per model), "Glass" (all window panes, one draw, builtin_glass.gdshader), "Windows"
-##    (breakable windows, builtin_window.gd), "Doors" (hinged DoorLeaf_* nodes, builtin_door.gd), "Lights", "col" (the
-##    building's collision as boxes, open at the door) and metas (builtin_interior, model, kinds, cuts, floors);
-##  - map_dc/coronado/city_kit/interiors/builtin/furniture_sets.json: per shop kind, which kit indoor prop fills each slot
-##    type. No fallback filler: a missing set / slot type / prop fails validate().
-## The bake (tools/city/bake/bake_runtime.gd) uses this for every building whose model has an _interior.scn: no cutting,
-## the kit's near replaces the piece's frozen copy, the col boxes replace its shell, and fill() makes the room scene.
+## Built-in interiors (22 Nov 2026). Every built-in model keeps the kit's closed near; each bay a place uses has a
+## <prefix>_bay<i>.scn (make_interiors.gd) and the bake composes / fills it (the rollout section below; validate_bays.gd
+## checks every bay). The pilot's hand-placed <model>_interior.scn path (fill / validate / col_boxes, validate_builtin.gd)
+## is retired (Yasin, 22 Nov): no slot-filling outside the bay templates.
+## furniture_sets.json: per kind, which kit prop fills each slot type. No fallback filler.
 const R := preload("res://map_dc/coronado/city_kit/interiors/rooms/room_lib.gd")
 const K := preload("res://tools/city/pilot/kit_lib.gd")
 const BLD := "res://assets/coronado_kit/buildings/"
@@ -34,13 +27,8 @@ static func near_scene(model: String) -> Node:
 	if FileAccess.file_exists(p + "_near.glb"): return glb_scene(p + "_near.glb", true)
 	return (load(p + "_near.scn") as PackedScene).instantiate()
 
-static func interior_path(model: String) -> String:
-	var p := prefix_of(model)
-	return p + "_interior.scn" if p != "" else ""
-
-static func has_builtin(model: String) -> bool:
-	var p := interior_path(model)
-	return p != "" and (ResourceLoader.exists(p) or has_bays(model))
+## (22 Nov: the pilot's hand-placed <model>_interior.scn path is retired: every built-in model is on bay scenes)
+static func has_builtin(model: String) -> bool: return has_bays(model)
 
 static func sets() -> Dictionary:
 	if _sets.is_empty():
@@ -60,250 +48,11 @@ static func glb_scene(path: String, force_file := false) -> Node:
 	if doc.append_from_file(ProjectSettings.globalize_path(path), st) != OK: return null
 	return doc.generate_scene(st)
 
-static var _near_cache := {}
-static func near_mesh(model: String) -> Mesh:
-	if _near_cache.has(model): return _near_cache[model]
-	var g: Node = glb_scene(prefix_of(model) + "_near.glb", true)
-	var mi := g.find_children("*", "MeshInstance3D", true, false)[0] as MeshInstance3D
-	var m := mi.mesh; g.free(); _near_cache[model] = m; return m
-
-## every problem of a built-in model for the given shop kinds (empty = passes). Run by the bake for each flagged
-## building (a failure fails the bake) and by validate_builtin.gd for every model with an _interior.scn.
-static func validate(model: String, kinds: Array, contract: Dictionary = {}) -> Array:
-	var P: Array = []
-	if not has_builtin(model): return ["%s: no interior scene (%s)" % [model, interior_path(model)]]
-	var it: Node3D = (load(interior_path(model)) as PackedScene).instantiate()
-	if not bool(it.get_meta(&"builtin_interior", false)): P.append("%s: interior scene lacks meta builtin_interior" % model)
-	# 1. the shell: one surface; an upward floor over most of the floor rectangle; inward walls on all four sides
-	var m := near_mesh(model)
-	if m.get_surface_count() != 1: P.append("%s: near has %d surfaces (one mesh, one material)" % [model, m.get_surface_count()])
-	var fl: Array = it.get_meta(&"floors", [])
-	if fl.is_empty(): P.append("%s: no floors meta" % model)
-	else:
-		var f0: Array = fl[0]
-		var x0 := float(f0[0]); var z0 := float(f0[1]); var x1 := float(f0[2]); var z1 := float(f0[3])
-		var area := 0.0; var walls := {"x0": 0, "x1": 0, "z0": 0, "z1": 0}; var ceil := 0.0
-		var ma := m.surface_get_arrays(0)
-		var mv: PackedVector3Array = ma[Mesh.ARRAY_VERTEX]; var mn: PackedVector3Array = ma[Mesh.ARRAY_NORMAL]; var mix: PackedInt32Array = ma[Mesh.ARRAY_INDEX]
-		for k in range(0, mix.size(), 3):
-			var a := mv[mix[k]]; var b := mv[mix[k + 1]]; var c := mv[mix[k + 2]]
-			var ar := (b - a).cross(c - a).length() * 0.5
-			if ar < 1e-6: continue
-			var n := (mn[mix[k]] + mn[mix[k + 1]] + mn[mix[k + 2]]).normalized()      # the shading normal (which way the face looks)
-			var ctr := (a + b + c) / 3.0
-			var inside := ctr.x > x0 - 0.05 and ctr.x < x1 + 0.05 and ctr.z > z0 - 0.05 and ctr.z < z1 + 0.05
-			if not inside: continue
-			if n.y > 0.9 and ctr.y < 0.1: area += ar
-			if n.y < -0.9 and ctr.y > 2.4: ceil += ar
-			if absf(ctr.x - x0) < 0.02 and n.x > 0.9: walls.x0 += 1
-			if absf(ctr.x - x1) < 0.02 and n.x < -0.9: walls.x1 += 1
-			if absf(ctr.z - z0) < 0.02 and n.z > 0.9: walls.z0 += 1
-			if absf(ctr.z - z1) < 0.02 and n.z < -0.9: walls.z1 += 1
-		var want := (x1 - x0) * (z1 - z0)
-		if area < want * 0.9: P.append("%s: interior floor covers %.1f of %.1f m2" % [model, area, want])
-		if ceil < want * 0.9: P.append("%s: interior ceiling covers %.1f of %.1f m2" % [model, ceil, want])
-		for w: String in walls:
-			if int(walls[w]) == 0: P.append("%s: no inward interior wall at %s" % [model, w])
-	# 2. slots: inside the floor, of a type the kind's set names, a variant it has, a prop that exists
-	var slots := it.get_node_or_null(^"Slots")
-	var have := {}
-	if slots == null or slots.get_child_count() == 0: P.append("%s: no slot markers" % model)
-	else:
-		for s: Node in slots.get_children():
-			if not (s is Marker3D): P.append("%s: slot %s is not a Marker3D" % [model, s.name]); continue
-			var st := String(s.get_meta(&"slot_type", ""))
-			if st == "": P.append("%s: slot %s has no slot_type" % [model, s.name]); continue
-			have[st] = int(have.get(st, 0)) + 1
-			var p := (s as Marker3D).position
-			if not fl.is_empty():
-				var f1: Array = fl[0]
-				if p.x < float(f1[0]) or p.x > float(f1[2]) or p.z < float(f1[1]) or p.z > float(f1[3]): P.append("%s: slot %s outside the floor" % [model, s.name])
-			for kind: String in kinds:
-				var set_k: Dictionary = sets().get(kind, {})
-				if set_k.is_empty(): continue
-				if not set_k.has(st): P.append("%s: kind %s has no props for slot type %s (no fallback)" % [model, kind, st]); continue
-				var lst: Array = set_k[st]; var v := int(s.get_meta(&"variant", 0))
-				if v < 0 or v >= lst.size(): P.append("%s: slot %s variant %d out of range for %s/%s" % [model, s.name, v, kind, st]); continue
-				if prop_file(String(lst[v])) == "": P.append("%s: prop %s (slot %s) has no kit file" % [model, lst[v], s.name])
-	if slots and not fl.is_empty():
-		for kind: String in kinds:
-			if sets().has(kind): P.append_array(facing_problems(model, slots, fl[0], kind))
-	for kind: String in kinds:
-		var set_k2: Dictionary = sets().get(kind, {})
-		if set_k2.is_empty(): P.append("%s: no furniture set for kind %s (no fallback)" % [model, kind]); continue
-		for req: String in set_k2.get("required", []):
-			if not have.has(req): P.append("%s: kind %s needs a %s slot" % [model, kind, req])
-	# 3. doors: every contract entrance (the shop door) has hinged leaves spanning it and a real opening in the mesh
-	var doors := it.get_node_or_null(^"Doors")
-	var cuts: Array = it.get_meta(&"cuts", [])
-	for e: Dictionary in contract.get("entrances", []):
-		if String(e.get("kind", "")) == "residential": continue      # staff / back doors stay painted
-		var along := float(e.along); var w := float(e.w)
-		var s0 := 1e9; var s1 := -1e9; var nleaf := 0
-		if doors:
-			for d: Node in doors.get_children():
-				if not String(d.name).begins_with("DoorLeaf_"): continue
-				if String(d.get_meta(&"facade", "")) != String(e.facade): continue
-				var sp: Vector2 = d.get_meta(&"span", Vector2.ZERO)
-				s0 = minf(s0, sp.x); s1 = maxf(s1, sp.y); nleaf += 1
-		if nleaf == 0: P.append("%s: entrance %s %.2f has no door leaves" % [model, e.facade, along])
-		elif absf(s0 - (along - w * 0.5)) > 0.04 or absf(s1 - (along + w * 0.5)) > 0.04: P.append("%s: door leaves %.2f..%.2f do not fill the %s entrance %.2f..%.2f" % [model, s0, s1, e.facade, along - w * 0.5, along + w * 0.5])
-		if not cuts.any(func(c: Array) -> bool: return String(c[0]) == String(e.facade) and absf(float(c[1]) - along) < 0.05): P.append("%s: entrance %s %.2f is not opened in the near mesh" % [model, e.facade, along])
-	# 4. every cut window has glass (in Glass or a breakable window)
-	var panes: Array = it.get_meta(&"panes", [])
-	for c2: Array in cuts:
-		if String(c2[2]) == "door": continue
-		if not panes.any(func(p2: Array) -> bool: return String(p2[0]) == String(c2[0]) and absf(float(p2[1]) - float(c2[1])) < 0.05): P.append("%s: opening %s %.2f has no glass" % [model, c2[0], c2[1]])
-	# 5. collision: boxes only, at most 12, none across a door
-	var col := it.get_node_or_null(^"col") as StaticBody3D
-	if col == null: P.append("%s: no col body" % model)
-	else:
-		var nb := 0
-		for cs: Node in col.get_children():
-			if not (cs is CollisionShape3D): continue
-			nb += 1
-			if not ((cs as CollisionShape3D).shape is BoxShape3D): P.append("%s: col %s is not a box" % [model, cs.name])
-		if nb > MAX_COL_BOXES: P.append("%s: %d col boxes (max %d)" % [model, nb, MAX_COL_BOXES])
-		for e2: Dictionary in contract.get("entrances", []):
-			if String(e2.get("kind", "")) == "residential": continue
-			var probe := _entrance_point(e2, contract)
-			for cs2: Node in col.get_children():
-				if cs2 is CollisionShape3D and (cs2 as CollisionShape3D).shape is BoxShape3D:
-					var bx := (cs2 as CollisionShape3D).shape as BoxShape3D
-					var lp := (cs2 as CollisionShape3D).transform.affine_inverse() * probe
-					if absf(lp.x) < bx.size.x * 0.5 and absf(lp.y) < bx.size.y * 0.5 and absf(lp.z) < bx.size.z * 0.5: P.append("%s: col box %s blocks the %s door" % [model, cs2.name, e2.facade])
-	it.free()
-	return P
-
-## FACING (Yasin 22 Nov: "the PCs face the wrong way"). The convention is one axis for props and slots alike: a kit
-## indoor prop's FRONT (screen + keyboard, drawer fronts, seat front, sign or picture face) is its local +Z (Blender -Y,
-## assets/coronado_kit/tools/indoor/i_check.py; tools/city/rooms/builtin/prop_facing_sheet.gd shows every prop of a set
-## from +Z), and a slot marker's +Z (its yaw) is where that front goes: TOWARD THE PERSON WHO USES OR READS IT. So:
-##  - desk: its user's chair (a slot whose prop is one of the set's "desk_users", default office_chair) within 1.1 m
-##    in front of it, facing back at it - a visitor chair in front does not count (a desk turned round fails)
-##  - till: its staff slot behind it (customers in front)
-##  - staff and seat: face the desk / till / counter they serve when one is within 1.3 m
-##  - wall things (decor, shelf, safe, bin, and a seat with nothing to serve): face away from the wall they stand at
-## Rules live here, not per model, so every rollout model is checked the same way.
-const WALL_TYPES := ["decor", "shelf", "safe", "bin", "seat"]
 static func _fwd(m: Marker3D) -> Vector3: return Vector3(sin(m.rotation.y), 0.0, cos(m.rotation.y))
-static func facing_problems(model: String, slots: Node, f1: Array, kind: String) -> Array:
-	var P: Array = []
-	var set_k: Dictionary = sets().get(kind, {})
-	var users_p: Array = set_k.get("desk_users", ["office_chair"])
-	var prop_of := func(m: Marker3D) -> String:
-		var lst: Array = set_k.get(String(m.get_meta(&"slot_type", "")), [])
-		var v := int(m.get_meta(&"variant", 0))
-		return String(lst[v]) if v >= 0 and v < lst.size() else ""
-	var ms: Array = slots.get_children().filter(func(n: Node) -> bool: return n is Marker3D)
-	var of_type := func(types: Array) -> Array: return ms.filter(func(m: Marker3D) -> bool: return types.has(String(m.get_meta(&"slot_type", ""))))
-	var nearest := func(m: Marker3D, cands: Array, maxd: float) -> Marker3D:
-		var best: Marker3D = null; var bd := maxd
-		for c: Marker3D in cands:
-			if c == m: continue
-			var d := Vector2(c.position.x - m.position.x, c.position.z - m.position.z).length()
-			if d < bd: bd = d; best = c
-		return best
-	var dir := func(a: Marker3D, b: Marker3D) -> Vector3: var v := b.position - a.position; v.y = 0.0; return v.normalized()
-	var served := {}
-	for d: Marker3D in of_type.call(["desk"]):
-		var users: Array = (of_type.call(["seat", "staff"]) as Array).filter(func(u: Marker3D) -> bool: return users_p.has(prop_of.call(u)) and _fwd(d).dot(dir.call(d, u)) > 0.7)
-		var u: Marker3D = nearest.call(d, users, 1.1)
-		if u == null: P.append("%s (%s): desk %s has no user chair in front of it (its +Z = screen / keyboard side)" % [model, kind, d.name]); continue
-		if _fwd(u).dot(dir.call(u, d)) < 0.7: P.append("%s: seat %s does not face its desk %s" % [model, u.name, d.name])
-		served[u] = true
-	for t: Marker3D in of_type.call(["till"]):
-		var st: Marker3D = nearest.call(t, of_type.call(["staff"]), 1.3)
-		if st and _fwd(t).dot(dir.call(t, st)) > -0.7: P.append("%s: till %s faces its staff %s (its front is the customer side)" % [model, t.name, st.name])
-	for u2: Marker3D in of_type.call(["staff", "seat"]):
-		if served.has(u2): continue
-		var tgt: Marker3D = nearest.call(u2, of_type.call(["desk", "till", "counter"]), 1.3)
-		if tgt:
-			if _fwd(u2).dot(dir.call(u2, tgt)) < 0.7: P.append("%s: %s %s does not face %s" % [model, u2.get_meta(&"slot_type"), u2.name, tgt.name])
-			served[u2] = true
-	for w: Marker3D in of_type.call(WALL_TYPES):
-		if served.has(w): continue
-		var p := w.position
-		var walls := [[p.x - float(f1[0]), Vector3(1, 0, 0)], [float(f1[2]) - p.x, Vector3(-1, 0, 0)], [p.z - float(f1[1]), Vector3(0, 0, 1)], [float(f1[3]) - p.z, Vector3(0, 0, -1)]]
-		walls.sort_custom(func(a: Array, b: Array) -> bool: return float(a[0]) < float(b[0]))
-		if float(walls[0][0]) > 0.8: continue      # (free-standing)
-		if _fwd(w).dot(walls[0][1]) < 0.7: P.append("%s: %s %s at a wall does not face into the room" % [model, w.get_meta(&"slot_type"), w.name])
-	return P
-
-static func _entrance_point(e: Dictionary, contract: Dictionary) -> Vector3:
-	for o: Dictionary in contract.get("openings", []):
-		if String(o.facade) == String(e.facade) and absf(float(o.along) - float(e.along)) < 0.05:
-			var pl := float(o.plane); var y := 1.0
-			match String(o.facade):
-				"front": return Vector3(float(o.along), y, pl)
-				"back": return Vector3(float(o.along), y, pl)
-				"right": return Vector3(pl, y, float(o.along))
-				"left": return Vector3(pl, y, float(o.along))
-	return Vector3(0, 1, 0)
-
-## the room scene of one shop in a built-in model: the slots filled from the kind's set (kit props as MultiMeshes,
-## room_lib's build), plus the model's glass, breakable windows, doors and lights. bid_prefix makes the breakables'
-## persistent ids unique per building ("<piece>|<label>").
-static func fill(model: String, kind: String, room_name: String, bid_prefix: String) -> Node3D:
-	var it: Node3D = (load(interior_path(model)) as PackedScene).instantiate()
-	var set_k: Dictionary = sets()[kind]
-	var r: RefCounted = R.new(room_name)
-	for s: Node in it.get_node(^"Slots").get_children():
-		var mk := s as Marker3D
-		var lst: Array = set_k[String(mk.get_meta(&"slot_type"))]
-		var base := String(lst[int(mk.get_meta(&"variant", 0))])
-		r.call("prop", base, mk.position.x, mk.position.z, rad_to_deg(mk.rotation.y), mk.position.y + float(mk.get_meta(&"lift", 0.0)))
-	var room := Node3D.new(); room.name = room_name
-	var pn := Node3D.new(); pn.name = "Props"; room.add_child(pn)
-	var props: Dictionary = r.get("_props")
-	for base: String in props:
-		var f := prop_file(base)
-		if f == "": push_error("builtin fill: no kit file for " + base); return null
-		var inst: Node = glb_scene(f)
-		var src := K._first_mesh(inst)
-		var mm := MultiMesh.new(); mm.transform_format = MultiMesh.TRANSFORM_3D; mm.mesh = src.mesh
-		var ts: Array = props[base]; mm.instance_count = ts.size()
-		for i in ts.size(): mm.set_instance_transform(i, (ts[i] as Transform3D) * src.transform)
-		var mmi := MultiMeshInstance3D.new(); mmi.name = base; mmi.multimesh = mm
-		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF      # (indoors: the sun's shadow pass would draw every prop again)
-		if src.mesh.get_surface_count() == 1:
-			var wm: Material = K.prop_wear_mat(src.mesh.surface_get_material(0), R.PROP_WEAR)
-			if wm != src.mesh.surface_get_material(0): mmi.material_override = wm
-		pn.add_child(mmi); inst.free()
-	for gi: GeometryInstance3D in room.find_children("*", "GeometryInstance3D", true, false):
-		gi.visibility_range_end = PROP_END; gi.visibility_range_end_margin = 1.0
-		gi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED
-	for nm: String in ["Glass", "Windows", "Doors", "Lights"]:
-		var src := it.get_node_or_null(NodePath(nm))
-		if src == null: continue
-		var cp := src.duplicate(Node.DUPLICATE_SCRIPTS | Node.DUPLICATE_GROUPS | Node.DUPLICATE_SIGNALS)
-		room.add_child(cp)
-		for n: Node in cp.find_children("*", "", true, false) + [cp]:
-			if n.get_script() != null: n.set_meta(&"bid", bid_prefix + "|" + String(n.name))
-			if n is GeometryInstance3D:
-				(n as GeometryInstance3D).visibility_range_end = NEAR_END
-	_own(room, room)
-	room.set_meta(&"builtin", true); room.set_meta(&"kind", kind); room.set_meta(&"model", model)
-	room.set_meta(&"floors", it.get_meta(&"floors", [])); room.set_meta(&"entrances", it.get_meta(&"entrances", []))
-	room.set_meta(&"cut", []); room.set_meta(&"openings", [])
-	it.free()
-	return room
-
 static func _own(n: Node, o: Node) -> void:
 	for c in n.get_children():
 		if c != o: c.owner = o
 		_own(c, o)
-
-## the building's collision boxes from the interior scene: [[BoxShape3D, Transform3D]] in the model frame
-static func col_boxes(model: String) -> Array:
-	var it: Node3D = (load(interior_path(model)) as PackedScene).instantiate()
-	var out: Array = []
-	var col := it.get_node_or_null(^"col")
-	if col:
-		for cs: Node in col.get_children():
-			if cs is CollisionShape3D: out.append([(cs as CollisionShape3D).shape, (cs as CollisionShape3D).transform])
-	it.free()
-	return out
 
 # ================================================================ the rollout (22 Nov 2026): bays
 ## A rollout model keeps the kit's closed near glb; each bay with a place has <prefix>_bay<i>.scn (make_interiors.gd):
@@ -524,9 +273,10 @@ static func validate_bay(model: String, i: int, kinds: Array, contract: Dictiona
 						var inf := prop_info(String(pr2)); w = maxf(w, float(inf.get("footprint_w", 0.5))); d = maxf(d, float(inf.get("footprint_d", 0.5)))
 					if absf(sin((m2 as Marker3D).rotation.y)) > 0.7: var tmp := w; w = d; d = tmp
 					var r := Rect2((m2 as Marker3D).position.x - w * 0.5, (m2 as Marker3D).position.z - d * 0.5, w, d)
-					if r.grow(-0.02).intersects(clear) and st2 != "bin" and st2 != "plant": P.append("%s: %s blocks the entry" % [tagt, m2.name])
+					var sh := minf(0.03, minf(w, d) * 0.4)      # (a tiny prop: never a negative-size rect)
+					if r.grow(-minf(0.02, sh)).intersects(clear) and st2 != "bin" and st2 != "plant": P.append("%s: %s blocks the entry" % [tagt, m2.name])
 					for q: Array in rects:
-						if r.grow(-0.03).intersects(q[1]): P.append("%s: %s overlaps %s" % [tagt, m2.name, q[0]])
+						if r.grow(-sh).intersects(q[1]): P.append("%s: %s overlaps %s" % [tagt, m2.name, q[0]])
 					rects.append([String(m2.name), r])
 				P.append_array(_facing_bay(tagt, h, f1, set_k))
 				h.free()
@@ -558,7 +308,7 @@ static func validate_bay(model: String, i: int, kinds: Array, contract: Dictiona
 	it.free()
 	return P
 
-## the facing rules (see facing_problems) for a bay template
+## the facing rules for a bay template (staff / visitors face their desk, till fronts face the customers, wall things face into the room)
 static func _facing_bay(tag: String, slots: Node, f1: Array, set_k: Dictionary) -> Array:
 	var P: Array = []
 	var users_p: Array = set_k.get("desk_users", ["office_chair"])
@@ -605,7 +355,7 @@ static func _facing_bay(tag: String, slots: Node, f1: Array, set_k: Dictionary) 
 	return P
 
 ## one place in a bay: the template's slots (mirrored, decor shifted) filled from the kind's set, + the bay's glass,
-## windows, doors, lights (as fill())
+## windows, doors, lights
 static func fill_bay(model: String, i: int, kind: String, t: String, mirror: bool, shift: int, room_name: String, bid_prefix: String) -> Node3D:
 	var it: Node3D = (load(bay_path(model, i)) as PackedScene).instantiate()
 	var set_k: Dictionary = sets()[kind]
@@ -652,7 +402,8 @@ static func fill_bay(model: String, i: int, kind: String, t: String, mirror: boo
 		var cp := srcn.duplicate(Node.DUPLICATE_SCRIPTS | Node.DUPLICATE_GROUPS | Node.DUPLICATE_SIGNALS)
 		room.add_child(cp)
 		for n: Node in cp.find_children("*", "", true, false) + [cp]:
-			if n.get_script() != null: n.set_meta(&"bid", bid_prefix + "|" + String(n.name))
+			if n.get_script() != null:      # (the game's CityRooms swings/breaks them in C++: no GDScript baked in)
+				n.set_meta(&"bid", bid_prefix + "|" + String(n.name)); n.set_script(null)
 			if n is GeometryInstance3D: (n as GeometryInstance3D).visibility_range_end = NEAR_END
 	_own(room, room)
 	room.set_meta(&"builtin", true); room.set_meta(&"kind", kind); room.set_meta(&"model", model); room.set_meta(&"bay", i)

@@ -171,7 +171,6 @@ func _run() -> void:
 	var n_ok := 0
 	for model: String in bays:
 		if not only.is_empty() and not only.has(model): continue
-		if model == "commercial/com_bank": continue      # (the pilot: hand-built, make_bank_interior.gd)
 		var pfx := BL.prefix_of(model)
 		if pfx == "" or not contracts.has(model): push_error("no kit dir / contract for " + model); continue
 		var c: Dictionary = contracts[model]

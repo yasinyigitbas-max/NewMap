@@ -2,7 +2,8 @@ extends SceneTree
 ## Built-in interiors rollout validator: every bay of interiors/builtin/bays.json for every kind it furnishes, over
 ## every template x mirror x decor set (BuiltinLib.validate_bay), + the composed near (one surface) and its tri count.
 ## Exit 1 on any problem. Writes interiors/builtin/validate_bays.json (per bay: problems, near tris).
-##   godot --headless --path . -s res://tools/city/rooms/builtin/validate_bays.gd -- [--models=a,b]
+##   godot --headless --path . -s res://tools/city/rooms/builtin/validate_bays.gd -- [--models=a,b] [--negative]
+## --negative: also proves it fails (an unknown kind on a bay, a model with no bay scene): exit 1 if it does not.
 const BL := preload("res://tools/city/rooms/builtin/builtin_lib.gd")
 const IB := "res://map_dc/coronado/city_kit/interiors/builtin/"
 func _init() -> void: _go.call_deferred()
@@ -16,11 +17,6 @@ func _go() -> void:
 	for model: String in bays:
 		var t0 := Time.get_ticks_msec()
 		if not only.is_empty() and not only.has(model): continue
-		if model == "commercial/com_bank":
-			var pp := BL.validate(model, ["bank"], contracts.get(model, {}))
-			out[model] = {"problems": pp}; nprob += pp.size()
-			for p0: String in pp: print("PROB ", p0)
-			continue
 		var used: Array = []
 		for b: Dictionary in bays[model].bays:
 			nb += 1
@@ -34,6 +30,17 @@ func _go() -> void:
 		if m.get_surface_count() != 1: nprob += 1; print("PROB %s: composed near has %d surfaces" % [model, m.get_surface_count()])
 		out[model + "|near"] = {"ext_tris": m.get_meta(&"ext_tris"), "all_bays_tris": m.get_meta(&"tris")}
 		print("TIME %s %d ms" % [model, Time.get_ticks_msec() - t0])
+	if OS.get_cmdline_user_args().has("--negative"):      # (22 Nov: was validate_builtin.gd --negative, now retired)
+		var m1: String = bays.keys()[0]
+		var n1 := BL.validate_bay(m1, int(bays[m1].bays[0].i), ["florist_nonexistent"], contracts.get(m1, {}))
+		var bare := ""
+		for cm: String in contracts:
+			if not bays.has(cm) and not BL.has_bays(cm): bare = cm; break
+		var n2 := BL.validate_bay(bare, 0, ["cafe"], contracts.get(bare, {})) if bare != "" else []
+		print("NEGATIVE unknown kind on %s -> %d problems: %s" % [m1, n1.size(), str(n1.slice(0, 3))])
+		print("NEGATIVE no interior (%s) -> %d problems: %s" % [bare, n2.size(), str(n2)])
+		if n1.is_empty() or n2.is_empty(): print("NEGATIVE FAIL: the validator let a bad model through"); nprob += 1
+	DirAccess.remove_absolute(IB + "validate_bays.json")      # (delete, then write: the checkouts share files by hard link)
 	var f := FileAccess.open(IB + "validate_bays.json", FileAccess.WRITE); f.store_string(JSON.stringify(out, " ")); f.close()
 	print("VALIDATE_BAYS %d bays, %d problems" % [nb, nprob])
 	quit(1 if nprob > 0 else 0)

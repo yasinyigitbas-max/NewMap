@@ -11,7 +11,7 @@ till / top)]. Footprints are the largest prop of the slot type in the kind's set
 Checked here: inside the floor, no two footprints overlap, the door's entry zone and a 0.9 m path to the back stay
 clear, wall things stand at a wall facing into the room, seats face what they serve, the prop tri cap (25k).
 Writes interiors/builtin/layouts.json; prints a summary. Mirror (x -> 2c - x, yaw -> -yaw) is applied at fill time
-and checked by validate_builtin.gd."""
+and checked by validate_bays.gd."""
 import json, glob, math, os, sys, collections
 REPO = '/workspace/NewMap'; R = REPO + '/map_dc/coronado/city_kit/interiors/'
 B = json.load(open(R + 'builtin/bays.json'))['models']

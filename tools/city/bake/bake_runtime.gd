@@ -948,71 +948,14 @@ func _room_building(rec: Dictionary, piece: String) -> void:
 	rec["rooms"] = list
 	stat["rooms_placed"] = int(stat.get("rooms_placed", 0)) + list.size()
 
-# ---------------------------------------------------------------- built-in interiors (22 Nov pilot: com_bank)
-## Yasin, 22 Nov: the shop models carry their own interiors (tools/city/rooms/builtin/, <model>_interior.scn beside the
-## kit's near glb). For such a model nothing is cut: its near tier IS the kit's near (the interior shell inside it, the
-## openings already open, glass / doors / windows in the interior scene), its collision is the interior scene's boxes
-## (<= 12; the kit's concave shell is dropped, the gap hulls kept), and each assignment row's shop kind fills the hand-placed
-## slots with that kind's furniture set (interiors/builtin/furniture_sets.json; no fallback). A model that fails
-## BL.validate for its kinds fails the bake. Mid and far stay the kit's closed tiers. Other buildings: _room_building.
+# ---------------------------------------------------------------- built-in interiors (22 Nov)
+## Yasin, 22 Nov: a kit model with bay scenes (tools/city/rooms/builtin/make_interiors.gd) carries its interiors:
+## _bay_building below. (The pilot's hand-placed <model>_interior.scn fill path is retired: no slot filling outside the
+## bay templates, validate_bays.gd is the check.) Other buildings: _room_building.
 func _builtin_building(rec: Dictionary, piece: String) -> void:
 	var model := String(rec.kit)
-	var key := "%s|%s" % [piece, String(rec.label)]
-	var rows: Array = builtin_idx.get(key, [])
-	if BL.has_bays(model): _bay_building(rec, piece, model, rows); return
-	for r0: Dictionary in rows: r0.kind = String(builtin_dress.get(r0.id, r0.kind))   # (the INDOORS dress: Shore Bank is a bank)
-	var kinds: Array = []
-	for r: Dictionary in rows: if not kinds.has(r.kind): kinds.append(r.kind)
-	var probs := BL.validate(model, kinds, room_contracts.get(model, {}))
-	if not probs.is_empty():
-		for pr: String in probs: push_error("BAKE builtin %s (%s): %s" % [rec.name, model, pr])
-		builtin_fail.append_array(probs.map(func(pr: String) -> String: return "%s: %s" % [rec.name, pr]))
-		return
-	for t: Dictionary in rec.tiers:
-		if String(t.name) == "near": t.mesh = BL.near_mesh(model)
-	var lay := 1; var msk := 1
-	for e: Array in rec.col:
-		if e[0] is ConcavePolygonShape3D: lay = int(e[2]); msk = int(e[3]); break
-	var keep_col: Array = (rec.col as Array).filter(func(e: Array) -> bool: return not (e[0] is ConcavePolygonShape3D))      # (the gap hulls)
-	for bx: Array in BL.col_boxes(model): keep_col.append([bx[0], bx[1], lay, msk])
-	rec.col = keep_col
-	var list: Array = []
-	for r: Dictionary in rows:
-		var nm := "bi_" + String(r.id)
-		var room := BL.fill(model, String(r.kind), nm, "%s|%s" % [piece, String(rec.label)])
-		if room == null: builtin_fail.append("%s: fill %s failed" % [rec.name, nm]); continue
-		room.set_meta(&"shop", {"kind": String(r.kind), "name": String(builtin_name.get(r.id, "")), "id": String(r.id)})
-		_own(room, room)
-		var ps := PackedScene.new(); ps.pack(room)
-		var scn := out + "rooms/" + nm + ".scn"
-		ResourceSaver.save(ps, scn, ResourceSaver.FLAG_COMPRESS)
-		# its collision: a box for each piece of furniture (room frame = building frame), as _room_meta's
-		var faces := PackedVector3Array()
-		for mmi: Node in room.get_node(^"Props").get_children():
-			var mm := (mmi as MultiMeshInstance3D).multimesh
-			var ab := mm.mesh.get_aabb()
-			if ab.size.y < 0.25: continue
-			for i in mm.instance_count:
-				var xf := (mmi as Node3D).transform * mm.get_instance_transform(i)
-				var c := [ab.position, ab.position + Vector3(ab.size.x, 0, 0), ab.position + Vector3(ab.size.x, 0, ab.size.z), ab.position + Vector3(0, 0, ab.size.z)]
-				var tq := []
-				for q: Vector3 in c: tq.append(xf * q)
-				for q2: Vector3 in c: tq.append(xf * (q2 + Vector3(0, ab.size.y, 0)))
-				for quad: Array in [[0, 1, 2, 3], [4, 7, 6, 5], [0, 4, 5, 1], [1, 5, 6, 2], [2, 6, 7, 3], [3, 7, 4, 0]]:
-					faces.append(tq[quad[0]]); faces.append(tq[quad[1]]); faces.append(tq[quad[2]])
-					faces.append(tq[quad[0]]); faces.append(tq[quad[2]]); faces.append(tq[quad[3]])
-		var cd: Resource = ColData.new(); cd.kind = 0; cd.data = faces; cd.backface = true
-		ResourceSaver.save(cd, out + "rooms/" + nm + "_col.res", ResourceSaver.FLAG_COMPRESS)
-		BL.merge_props(room)      # (1-3 draws of props; the scene saved again, merged)
-		stat["builtin_prop_draws"] = int(stat.get("builtin_prop_draws", 0)) + int(room.get_meta(&"prop_draws", 0))
-		var ps2 := PackedScene.new(); ps2.pack(room)
-		ResourceSaver.save(ps2, scn, ResourceSaver.FLAG_COMPRESS)
-		var fl: Array = (room.get_meta(&"floors", [[0, 0, 0, 0]]) as Array)[0]
-		list.append({"scn": scn, "raw": "", "col": out + "rooms/" + nm + "_col.res", "centre": Vector3((float(fl[0]) + float(fl[2])) * 0.5, 1.5, (float(fl[1]) + float(fl[3])) * 0.5)})
-		room.free()
-	if not list.is_empty(): rec["rooms"] = list
-	stat["builtin_buildings"] = int(stat.get("builtin_buildings", 0)) + 1
-	stat["rooms_placed"] = int(stat.get("rooms_placed", 0)) + list.size()
+	var rows: Array = builtin_idx.get("%s|%s" % [piece, String(rec.label)], [])
+	_bay_building(rec, piece, model, rows)
 
 ## Rollout (22 Nov): a model with bay scenes (make_interiors.gd). Its INDOORS places (indoors_spec.json) find their bay
 ## by the row's door; the near is the kit's closed near with only the used bays opened and their shells added (a bay

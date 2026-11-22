@@ -14,6 +14,8 @@
 #include <godot_cpp/classes/static_body3d.hpp>
 #include <godot_cpp/classes/collision_shape3d.hpp>
 #include <godot_cpp/classes/collision_object3d.hpp>
+#include <godot_cpp/classes/cpu_particles3d.hpp>
+#include <godot_cpp/classes/geometry_instance3d.hpp>
 #include <godot_cpp/classes/spot_light3d.hpp>
 #include <godot_cpp/classes/viewport.hpp>
 #include <godot_cpp/core/class_db.hpp>
@@ -109,17 +111,24 @@ void CityRooms::finish(int i) {
 		}
 		rm.leaves.push_back(f);
 	}
-	// the breakable windows: they keep their own script when they have one (it saves its state); else swapped here
+	// the breakable windows: their script dropped too (an older bake still carried builtin_window.gd), swapped here
 	rm.wins.clear();
 	const TypedArray<Node> wv = root->find_children("Window_*", "Node3D", true, false);
 	for (int k = 0; k < wv.size(); k++) {
 		Node3D *w = Object::cast_to<Node3D>(wv[k]);
 		if (!w || !w->get_node_or_null(NodePath("pane"))) continue;
+		w->set_script(Variant());      // (22 Nov) as the doors: no GDScript per window in the game, C++ cracks/breaks it (shards + sound)
 		Win wi; wi.node = (uint64_t)w->get_instance_id(); wi.bid = bid_of(w, rm.scn); wi.hp = WINDOW_HP;
 		if (breakables.has(wi.bid)) {
 			const Dictionary st = breakables[wi.bid];
 			wi.hp = (float)(double)st.get("hp", WINDOW_HP);
-			if (String(st.get("state", "")) == "broken") { wi.broken = true; if (!w->has_method("damage")) win_broken(w); }
+			const Array uv = st.get("uv", Array());
+			if (uv.size() == 2) wi.uv = Vector2((float)(double)uv[0], (float)(double)uv[1]);
+			const String sv = st.get("state", "");
+			if (!w->has_method("damage")) {
+				if (sv == "broken") { wi.broken = true; win_broken(w, wi.uv, false); }
+				else if (sv == "cracked") { wi.cracked = true; win_cracked(w, wi.uv); }
+			} else if (sv == "broken") wi.broken = true;
 		}
 		rm.wins.push_back(wi);
 	}
@@ -358,11 +367,32 @@ void CityRooms::leaf_broken(Node3D *p_leaf) {
 		for (int k = 0; k < body->get_child_count(); k++) if (CollisionShape3D *c = Object::cast_to<CollisionShape3D>(body->get_child(k))) c->set_deferred("disabled", true);
 }
 
-void CityRooms::win_broken(Node3D *p_win) {
+Vector2 CityRooms::win_uv(Node3D *p_win, const Vector3 &p_at) {
+	const Vector2 sz = p_win->has_meta("size") ? (Vector2)p_win->get_meta("size") : Vector2(1, 1);
+	const Vector3 l = p_win->get_global_transform().affine_inverse().xform(p_at);      // (origin: the pane's bottom-left, +X along, +Y up)
+	return Vector2(std::clamp(l.x / sz.x, 0.05f, 0.95f), std::clamp(1.0f - l.y / sz.y, 0.05f, 0.95f));
+}
+
+void CityRooms::win_cracked(Node3D *p_win, const Vector2 &p_uv) {
+	if (GeometryInstance3D *p = Object::cast_to<GeometryInstance3D>(p_win->get_node_or_null(NodePath("pane")))) {
+		p->set_instance_shader_parameter("crack", 1.0f); p->set_instance_shader_parameter("crack_at", p_uv);
+	}
+}
+
+void CityRooms::win_broken(Node3D *p_win, const Vector2 &p_uv, bool p_burst) {
 	if (Node3D *a = Object::cast_to<Node3D>(p_win->get_node_or_null(NodePath("pane")))) a->set_visible(false);
 	if (Node3D *b = Object::cast_to<Node3D>(p_win->get_node_or_null(NodePath("remnant")))) b->set_visible(true);
 	if (Node *body = p_win->get_node_or_null(NodePath("body")))
 		for (int k = 0; k < body->get_child_count(); k++) if (CollisionShape3D *c = Object::cast_to<CollisionShape3D>(body->get_child(k))) c->set_deferred("disabled", true);
+	if (!p_burst) return;
+	const Vector2 sz = p_win->has_meta("size") ? (Vector2)p_win->get_meta("size") : Vector2(1, 1);
+	const Vector3 hit_local(p_uv.x * sz.x, (1.0f - p_uv.y) * sz.y, 0.0f);
+	if (CPUParticles3D *sh = Object::cast_to<CPUParticles3D>(p_win->get_node_or_null(NodePath("shards")))) {
+		sh->set_position(hit_local); sh->restart(); sh->set_emitting(true);
+	}
+	const Vector3 at = get_global_transform().affine_inverse().xform(p_win->get_global_transform().xform(hit_local));
+	elsfx::play(this, "res://audio/sfx/glass_shatter_", -3.0f, 0.06f, at, 35.0f);
+	shard_bursts++;
 }
 
 bool CityRooms::interact_door(const Vector3 &p_at, float p_radius) {
@@ -425,14 +455,24 @@ String CityRooms::damage_at(const Vector3 &p_at, float p_amount, float p_radius)
 	if (bw) {
 		Node3D *n = Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(bw->node)));
 		bw->hp = std::max(0.0f, bw->hp - p_amount);
-		if (n && n->has_method("damage")) n->call("damage", p_amount, p_at);      // (its script: crack, shards, sound, its own save)
-		Dictionary st; st["hp"] = bw->hp; st["state"] = bw->hp <= 0.0f ? "broken" : "intact";
-		breakables[bw->bid] = st;
+		const bool scripted = n && n->has_method("damage");
+		if (scripted) n->call("damage", p_amount, p_at);      // (a preview with its script: it does the crack, shards, sound)
+		if (!bw->cracked && !bw->broken && n) bw->uv = win_uv(n, p_at);
 		if (bw->hp <= 0.0f) {
 			bw->broken = true;
-			if (n && !n->has_method("damage")) win_broken(n);
+			if (n && !scripted) win_broken(n, bw->uv, true);
 			emit_signal("window_broken", bw->bid, p_at);
+		} else if (bw->hp <= WINDOW_CRACK_HP && !bw->cracked) {
+			bw->cracked = true;
+			if (n && !scripted) {
+				win_cracked(n, bw->uv);
+				elsfx::play(this, "res://audio/sfx/door/door_glass_close_", -10.0f, 0.1f, get_global_transform().affine_inverse().xform(p_at), 20.0f);
+			}
+			emit_signal("window_cracked", bw->bid, p_at);
 		}
+		Dictionary st; st["hp"] = bw->hp; st["state"] = bw->broken ? "broken" : (bw->cracked ? "cracked" : "intact");
+		Array uv; uv.push_back(bw->uv.x); uv.push_back(bw->uv.y); st["uv"] = uv;
+		breakables[bw->bid] = st;
 		return bw->bid;
 	}
 	return String();
@@ -442,7 +482,7 @@ Dictionary CityRooms::get_state() const {
 	Dictionary d; int known = 0;
 	for (const Room &rm : rooms) if (!rm.cell.is_empty()) known++;
 	d["known"] = known; d["live"] = live; d["loading"] = loading; d["woken_total"] = woken;
-	d["door_sounds"] = door_sounds; d["tone_room"] = tone_room;
+	d["door_sounds"] = door_sounds; d["tone_room"] = tone_room; d["shard_bursts"] = shard_bursts;
 	return d;
 }
 
@@ -458,6 +498,7 @@ void CityRooms::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("door_toggled", PropertyInfo(Variant::STRING, "bid"), PropertyInfo(Variant::BOOL, "open")));
 	ADD_SIGNAL(MethodInfo("door_broken", PropertyInfo(Variant::STRING, "bid"), PropertyInfo(Variant::VECTOR3, "at")));
 	ADD_SIGNAL(MethodInfo("window_broken", PropertyInfo(Variant::STRING, "bid"), PropertyInfo(Variant::VECTOR3, "at")));
+	ADD_SIGNAL(MethodInfo("window_cracked", PropertyInfo(Variant::STRING, "bid"), PropertyInfo(Variant::VECTOR3, "at")));
 }
 
 } // namespace godot
