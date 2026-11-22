@@ -57,6 +57,22 @@ void Motor::load_descent(Descent &r_d, const char *p_name) {
 	for (int k = 0; k < n; k++) { if (std::min((float)D.f[k].foot[0].y, (float)D.f[k].foot[1].y) > y0 - 0.06f) k_off = k; else break; }
 	for (int k = k_off; k < n; k++) if (std::min((float)D.f[k].foot[0].y, (float)D.f[k].foot[1].y) < y1 + 0.04f) { k_land = k; break; }
 	r_d.t_off = k_off / 30.0; r_d.t_land = k_land / 30.0;
+	// its feet below its ledge (from here the floor may go down: lowered sooner, they sank into the ledge - Yasin, 24 Nov:
+	// "landing character clips into the shape")
+	int k_drop = k_land;
+	for (int k = k_off; k < k_land; k++) if (std::min((float)D.f[k].foot[0].y, (float)D.f[k].foot[1].y) < y0 - 0.05f) { k_drop = k; break; }
+	r_d.t_drop = k_drop / 30.0;
+	// ITS CORNER: where the hand going down past its ledge's top passes it (a hand brushes the corner as he drops - Yasin,
+	// 24 Nov: "the hand doesnt reach the corner of the obstacle"); its edge is there. (Taken from the foot that pushed off,
+	// the take was placed 20 cm short: the feet went down inside the ledge.)
+	const float top = y0 - 0.10f;   // (its ledge's top: the ankles stand 10 cm over it)
+	r_d.hand = -1; int kc = -1;
+	for (int k = std::max(0, k_drop - 12); k < k_land && kc < 0; k++) for (int h = 0; h < 2; h++)
+		if ((float)D.f[k].hand[h].y < top + 0.12f && (float)D.f[k].hand[h].z > 0.2f) { kc = k; r_d.hand = h; break; }
+	if (kc >= 0) {
+		r_d.edge_z = (float)D.f[kc].hand[r_d.hand].z;
+		r_d.h0 = kc / 30.0 - 0.12; r_d.h1 = kc / 30.0 + 0.06;
+	} else r_d.edge_z = std::min((float)D.f[k_drop].foot[0].z, (float)D.f[k_drop].foot[1].z) - 0.15f;
 }
 
 // walking at a ledge: the drop just ahead, the move for it, fitted so its feet leave this edge and land on that ground
@@ -66,7 +82,7 @@ bool Motor::descend_probe(const Vector3 &p_fwd) {
 	const float here = ground_below(p, 0.6f);
 	if (here < -1e8f) return false;
 	float drop = -1.0f, ground = 0.0f;
-	for (float a = 0.25f; a <= 0.55f; a += 0.1f) {
+	for (float a = 0.25f; a <= 1.25f; a += 0.1f) {   // (as far as the take starts from its edge)
 		const Vector3 q = p + p_fwd * a;
 		const float g = ground_below(Vector3(q.x, here + 1.2f, q.z), 4.2f);   // (from over his head: from his feet, up a 30 deg ramp the ray began inside it and saw a drop)
 		if (g > here - 0.1f && g > -1e8f) continue;
@@ -74,16 +90,41 @@ bool Motor::descend_probe(const Vector3 &p_fwd) {
 		if (here - g >= 0.5f) { drop = here - g; ground = g; break; }   // (under 0.5 m: stepped down, the feet fitted)
 	}
 	if (drop < 0.5f || drop > 2.0f) return false;   // (no drop; or higher: the fall and its landing)
-	Descent *d = drop <= 1.3f ? &dn_hop : &dn_jump;   // (walking off an edge: climbed down - Yasin, 24 Nov: "if we walk off the edge we should look like climbing down"; running: the leap off it and its landing)
-	if (!d->c.ok()) load_descent(*d, d == &dn_hop ? "mx/Ledge_Climb_Down" : "mx/Ledge_Drop");   // (the "mx" library can come after the motor)
+	// (Yasin, 24 Nov: "walk off 1m goes away, we use walk off 1.8m for both") - his Jumping Down for every height
+	Descent *d = &dn_jump;
+	if (!d->c.ok()) load_descent(*d, "mx/Ledge_Drop");   // (the "mx" library can come after the motor)
 	if (!d->c.ok()) return false;
+	// the edge, to 2 cm, and his distance to it against the clip's own: walked on until they agree (its feet push off its
+	// edge, the step before it lands where his are)
+	float de = 1.4f;
+	for (float a = 0.0f; a <= 1.4f; a += 0.02f) {
+		const Vector3 q = p + p_fwd * a;
+		const float g = ground_below(Vector3(q.x, here + 1.2f, q.z), 4.2f);
+		if (g < -1e8f || g < here - 0.3f) { de = a; break; }
+	}
+	const float want_d = d->edge_z - (float)d->c.d->f[0].hips.z;
+	if (de > want_d + 0.04f) return false;   // (not there yet)
 	if (limbs) { limbs->lock_on = false; limbs->unlock_all(); }
 	rate = 1.0f;
 	root_start(d->c, 0.0, 0.25f, yaw, nullptr, false);
 	rp.vy_on = true;
 	rp.ay_from = here - d->ledge_h;   // (its floor where its feet stand on this ledge)
 	rp.ay_to = ground;                // (its floor on the ground below)
-	rp.vy_t0 = d->t_off; rp.vy_t1 = std::max(d->t_land, d->t_off + 0.1);
+	rp.vy_t0 = std::max(d->t_off, d->t_drop - 0.12); rp.vy_t1 = std::max(d->t_land, rp.vy_t0 + 0.1);
+	if (de < want_d) {   // (a little too close: the clip moved back that much while he still stands, before he pushes off)
+		rp.a_to = rp.a_from - p_fwd * (want_d - de); rp.a_to.y = rp.a_from.y; rp.t0 = 0.0; rp.t_warp = std::max(0.2, d->t_off * 0.6);
+	}
+	dn_cur = d; dn_edge = p + p_fwd * de; dn_edge.y = here; dn_n = -p_fwd;
+	// the moment, on this ledge, a hand going down passes its top (lowered at another rate than the clip's own ledge, its
+	// hand passes the corner sooner or later than in the take): the hand pinned on the corner around it
+	dn_hand = -1;
+	for (double tt = d->t_off; tt < d->t_land && dn_hand < 0; tt += 1.0 / 30.0) {
+		const Frame f = d->c.d->lerp(tt);
+		for (int h = 0; h < 2; h++) {
+			const Vector3 w = root_anchor(tt) + Basis(UP, rp.yaw).xform(f.hand[h]);
+			if ((float)w.y < here + 0.12f && (float)(w - dn_edge).dot(p_fwd) > -0.6f) { dn_hand = h; dn_h0 = tt - 0.12; dn_h1 = tt + 0.16; break; }
+		}
+	}
 	rp.a_from.y = rp.ay_from; rp.a_to.y = rp.ay_to;
 	fig->set_global_transform(Transform3D(Basis(UP, rp.yaw), root_anchor(0.0)));
 	st = DESCEND; n_descents++;

@@ -673,9 +673,23 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 			const Frame fr = cur->d->lerp(t);
 			limbs->lock_on = true; limbs->may_step = st == STANCE;   // (getting up / down: a foot far off the clip's re-plants)
 			limbs->down[0] = fr.down[0]; limbs->down[1] = fr.down[1];
+			// OFF A LEDGE: the hand that reaches down as he goes over is put on the ledge's corner (Yasin, 24 Nov: "the hand
+			// doesnt reach the corner of the obstacle") - eased in and out of its reach, held where it first comes down
+			if (st == DESCEND && dn_cur && dn_hand >= 0) {
+				const int s = dn_hand;
+				const float w = sstep((float)dn_h0 - 0.1f, (float)dn_h0 + 0.06f, (float)t) * (1.0f - sstep((float)dn_h1, (float)dn_h1 + 0.15f, (float)t));
+				if (w > 0.001f && limbs->hand_w[s] <= 0.001f) {
+					const Vector3 own = root_anchor(t) + Basis(UP, rp.yaw).xform(fr.hand[s]);
+					const Vector3 side = UP.cross(dn_n).normalized();
+					dn_hand_w = dn_edge + side * (float)(own - dn_edge).dot(side) + dn_n * 0.05f;   // (on the top, 5 cm in from its edge)
+					dn_hand_w.y = dn_edge.y + 0.05f;   // (the wrist over the palm)
+				}
+				limbs->hand_w[s] = w; limbs->hand_target[s] = dn_hand_w;
+			}
 		}
 		ground_feet(p_host);
 		if (done) {
+			if (limbs && st == DESCEND) { limbs->hand_w[0] = limbs->hand_w[1] = 0.0f; dn_cur = nullptr; }
 			if (st == LAND) {
 				if (rp.c == &ai_flat && ai_getup.ok()) { root_start(ai_getup, 0.0, 0.3f, yaw, nullptr, false); host = nullptr; return; }   // (down flat: up again)
 				if (want) { speed = std::max(speed, 0.8f); to_loop(pick_loop(want_speed, loop_i), blend_loop); }

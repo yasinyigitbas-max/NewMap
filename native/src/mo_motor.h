@@ -226,7 +226,9 @@ private:
 	Vector3 fwd_of_yaw() const;
 	// DOWN OFF A LEDGE, not running (Yasin, 23 Nov: "implement step down or slower jump down or climb down when not running
 	// at height"): a hop (to 0.65 m), a jump down landing standing (to 1.2 m), a climb down (to 2 m)
-	struct Descent { Clip c; float ledge_h = 0.0f; double t_off = 0.0, t_land = 0.0; };
+	struct Descent { Clip c; float ledge_h = 0.0f; double t_off = 0.0, t_land = 0.0, t_drop = 0.0; float edge_z = 0.3f;
+		int hand = -1; double h0 = 0.0, h1 = 0.0; };   // (t_drop: its feet below its ledge; edge_z: its edge ahead of its start; the hand that reaches for the corner and when)
+	const Descent *dn_cur = nullptr; Vector3 dn_hand_w; Vector3 dn_edge; Vector3 dn_n; int dn_hand = -1; double dn_h0 = 0.0, dn_h1 = 0.0;
 	Descent dn_hop, dn_jump, dn_climb;
 	void load_descent(Descent &r_d, const char *p_name);
 	bool descend_probe(const Vector3 &p_fwd);

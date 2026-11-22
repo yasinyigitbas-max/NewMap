@@ -21,6 +21,7 @@ var states := {}; var clips := {}
 var pel_lo := 9.0; var pel_hi := -9.0; var off_frames := 0; var touch_miss := -1.0; var in_land := false
 var land_y := 0.0
 var foot_lo := 9.0
+var into_ledge := 0.0; var hand_corner := 9.0; var body_b := []; var hand_b := []
 
 func _box(size: Vector3, at: Vector3) -> void:
 	var b := StaticBody3D.new(); var cs := CollisionShape3D.new(); var sh := BoxShape3D.new(); sh.size = size; cs.shape = sh; b.add_child(cs)
@@ -41,7 +42,7 @@ func _next() -> void:
 	var h: float = LANES[lane][1]
 	player.global_position = Vector3(lane * 12.0, 0.05, -3.0 if h > 0.0 else 0.0); player.velocity = Vector3.ZERO
 	player.call(&"set_move", Vector2.ZERO, false)
-	t = 0.0; t_prev = 0.0; states = {}; clips = {}; pel_lo = 9.0; pel_hi = -9.0; off_frames = 0; touch_miss = -1.0; in_land = false; foot_lo = 9.0
+	t = 0.0; t_prev = 0.0; states = {}; clips = {}; pel_lo = 9.0; pel_hi = -9.0; off_frames = 0; touch_miss = -1.0; in_land = false; foot_lo = 9.0; into_ledge = 0.0; hand_corner = 9.0
 	land_y = -h
 
 func _at(w: float) -> bool: return t_prev < w and t >= w
@@ -92,6 +93,20 @@ func _sample() -> void:
 	if st == "off": off_frames += 1
 	pel_hi = maxf(pel_hi, snap_pel.y); pel_lo = minf(pel_lo, snap_pel.y)
 	foot_lo = minf(foot_lo, minf(snap_ft[0].y, snap_ft[1].y))
+	# OFF A LEDGE (the ledge: top y 0, its edge at z 2): no bone in it (under its top, short of its edge), a hand on its corner
+	if st == "descend":
+		if body_b.is_empty():
+			for b in ["Bip01_Pelvis", "Bip01_L_Calf", "Bip01_R_Calf", "Bip01_L_Foot", "Bip01_R_Foot", "Bip01_Spine1"]: body_b.append(sk.find_bone(b))
+			hand_b = [sk.find_bone("Bip01_L_Hand"), sk.find_bone("Bip01_R_Hand")]
+		for bi in body_b:
+			var w: Vector3 = sk.global_transform * sk.get_bone_global_pose(bi).origin
+			if w.y < -0.06 and w.z < 2.0:
+				into_ledge = maxf(into_ledge, minf(2.0 - w.z, -w.y))
+				if trace: print("TRACEL lane %d t %.2f ct %.2f %s at %s" % [lane, t, float(ms.get("t", 0)), sk.get_bone_name(bi), str(w.snapped(Vector3.ONE * 0.01))])
+		for hb in hand_b:
+			var w: Vector3 = sk.global_transform * sk.get_bone_global_pose(hb).origin
+			hand_corner = minf(hand_corner, Vector2(w.z - 1.95, w.y - 0.05).length())
+			if trace: print("TRACEH lane %d ct %.2f %s at %s" % [lane, float(ms.get("t", 0)), sk.get_bone_name(hb), str(w.snapped(Vector3.ONE * 0.01))])
 	# the feet at the landing's touch: the first frame of the landing with a foot down, its height over the ground
 	if st == "land" and not in_land:
 		in_land = true
@@ -127,9 +142,11 @@ func _judge() -> void:
 			_check(absf(p.y - land_y) < 0.1, "%s: on the ground below (at %.2f)" % [name, p.y])
 			_next(); return
 		if not L[2] and h <= 2.0:   # walking off a ledge up to 2 m: down it, not off it (Yasin, 23 Nov: "step down or slower jump down or climb down when not running")
-			var dw := "mx/Ledge_Climb_Down" if h <= 1.3 else "mx/Ledge_Drop"
+			var dw := "mx/Ledge_Drop"
 			_check(states.has("descend") and clips.has(_c(dw)) and not states.has("air"), "%s: down it with %s, no fall" % [name, dw])
 			_check(foot_lo > land_y + 0.105 - 0.05, "%s: the feet never under the ground (lowest %.2f over it)" % [name, foot_lo - land_y - 0.105])
+			_check(into_ledge < 0.04, "%s: nothing goes into the ledge (%.1f cm at most)" % [name, into_ledge * 100])
+			_check(hand_corner < 0.06, "%s: a hand on the ledge's corner (%.1f cm from it at nearest)" % [name, hand_corner * 100])
 			_check(absf(p.y - land_y) < 0.1 and String(ms.get("state", "")) in ["idle", "stop", "move"], "%s: standing again on the ground (at %.2f, %s)" % [name, p.y, ms.get("state", "")])
 			_next(); return
 		var want := "ptrav/Falling_To_Landing" if h < 3.0 else ("ptrav/Hard_Landing_b" if h < 7.0 else "ptrav/Falling_Flat_Impact")
