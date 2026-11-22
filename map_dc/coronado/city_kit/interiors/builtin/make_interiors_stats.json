@@ -1,0 +1,872 @@
+{
+ "apartments/apt_beach_condo|0": {
+  "ceiling": 3.6,
+  "err": 0,
+  "glass_tris": 10,
+  "lean": true,
+  "lights": 4,
+  "ops": 5,
+  "rect": [
+   -8.7,
+   -5.2,
+   8.7,
+   5.05
+  ],
+  "shell_tris": 174
+ },
+ "apartments/apt_spanish_revival|0": {
+  "ceiling": 3.2,
+  "err": 0,
+  "glass_tris": 4,
+  "lean": false,
+  "lights": 2,
+  "ops": 3,
+  "rect": [
+   -4.5,
+   -4.7,
+   4.5,
+   4.55
+  ],
+  "shell_tris": 300
+ },
+ "apartments/apt_spanish_white|0": {
+  "ceiling": 3.2,
+  "err": 0,
+  "glass_tris": 12,
+  "lean": true,
+  "lights": 4,
+  "ops": 7,
+  "rect": [
+   -8.7,
+   -4.7,
+   8.7,
+   4.55
+  ],
+  "shell_tris": 218
+ },
+ "apartments/apt_stucco3_cream|0": {
+  "ceiling": 3.6,
+  "err": 0,
+  "glass_tris": 2,
+  "lean": false,
+  "lights": 3,
+  "ops": 1,
+  "rect": [
+   -5.3,
+   -5.7,
+   5.3,
+   5.55
+  ],
+  "shell_tris": 232
+ },
+ "apartments/apt_stucco3_peach|0": {
+  "ceiling": 3.6,
+  "err": 0,
+  "glass_tris": 2,
+  "lean": true,
+  "lights": 3,
+  "ops": 1,
+  "rect": [
+   -5.3,
+   -5.7,
+   5.3,
+   5.55
+  ],
+  "shell_tris": 88
+ },
+ "civic/civ_church|0": {
+  "ceiling": 4.6,
+  "err": 0,
+  "glass_tris": 2,
+  "lean": false,
+  "lights": 4,
+  "ops": 1,
+  "rect": [
+   -6.7,
+   -12.7,
+   6.7,
+   12.55
+  ],
+  "shell_tris": 230
+ },
+ "civic/civ_city_hall|0": {
+  "ceiling": 3.88,
+  "err": 0,
+  "glass_tris": 20,
+  "lean": true,
+  "lights": 4,
+  "ops": 11,
+  "rect": [
+   -12.7,
+   -7.2,
+   12.7,
+   7.05
+  ],
+  "shell_tris": 248
+ },
+ "civic/civ_community_center|0": {
+  "ceiling": 4.6,
+  "err": 0,
+  "glass_tris": 24,
+  "lean": false,
+  "lights": 4,
+  "ops": 13,
+  "rect": [
+   -11.7,
+   -6.7,
+   11.7,
+   6.55
+  ],
+  "shell_tris": 822
+ },
+ "civic/civ_harbor_office|0": {
+  "ceiling": 3.88,
+  "err": 0,
+  "glass_tris": 12,
+  "lean": false,
+  "lights": 4,
+  "ops": 7,
+  "rect": [
+   -7.7,
+   -5.7,
+   7.7,
+   5.55
+  ],
+  "shell_tris": 534
+ },
+ "civic/civ_library|0": {
+  "ceiling": 4.6,
+  "err": 0,
+  "glass_tris": 24,
+  "lean": false,
+  "lights": 4,
+  "ops": 13,
+  "rect": [
+   -11.7,
+   -7.7,
+   11.7,
+   7.55
+  ],
+  "shell_tris": 830
+ },
+ "civic/civ_police|0": {
+  "ceiling": 3.88,
+  "err": 0,
+  "glass_tris": 20,
+  "lean": false,
+  "lights": 4,
+  "ops": 11,
+  "rect": [
+   -10.7,
+   -6.7,
+   10.7,
+   6.55
+  ],
+  "shell_tris": 722
+ },
+ "civic/civ_post_office|0": {
+  "ceiling": 4.6,
+  "err": 0,
+  "glass_tris": 20,
+  "lean": false,
+  "lights": 4,
+  "ops": 11,
+  "rect": [
+   -10.7,
+   -7.2,
+   10.7,
+   7.05
+  ],
+  "shell_tris": 734
+ },
+ "civic/civ_rec_center|0": {
+  "ceiling": 3.88,
+  "err": 0,
+  "glass_tris": 20,
+  "lean": false,
+  "lights": 4,
+  "ops": 11,
+  "rect": [
+   -11.7,
+   -6.7,
+   11.7,
+   6.55
+  ],
+  "shell_tris": 722
+ },
+ "civic/civ_school_wing|0": {
+  "ceiling": 4.6,
+  "err": 0,
+  "glass_tris": 24,
+  "lean": false,
+  "lights": 4,
+  "ops": 13,
+  "rect": [
+   -14.7,
+   -5.7,
+   14.7,
+   5.55
+  ],
+  "shell_tris": 818
+ },
+ "ck/ck_brk3_corner2|0": {
+  "ceiling": 3.3,
+  "err": 0,
+  "glass_tris": 6,
+  "lean": true,
+  "lights": 3,
+  "ops": 4,
+  "rect": [
+   -1.1,
+   -6.7,
+   5.7,
+   6.55
+  ],
+  "shell_tris": 112
+ },
+ "ck/ck_brk3_row2_fe|0": {
+  "ceiling": 3.3,
+  "err": 0,
+  "glass_tris": 8,
+  "lean": true,
+  "lights": 3,
+  "ops": 5,
+  "rect": [
+   -5.7,
+   -6.7,
+   2.1,
+   6.55
+  ],
+  "shell_tris": 150
+ },
+ "ck/ck_brk3_row2|0": {
+  "ceiling": 3.3,
+  "err": 0,
+  "glass_tris": 8,
+  "lean": false,
+  "lights": 3,
+  "ops": 5,
+  "rect": [
+   -5.7,
+   -6.7,
+   2.1,
+   6.55
+  ],
+  "shell_tris": 416
+ },
+ "ck/ck_grt_row3|0": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 6,
+  "lean": false,
+  "lights": 3,
+  "ops": 4,
+  "rect": [
+   -8.7,
+   -5.7,
+   1.5,
+   5.55
+  ],
+  "shell_tris": 190
+ },
+ "ck/ck_grt_row3|1": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 6,
+  "lean": false,
+  "lights": 2,
+  "ops": 4,
+  "rect": [
+   1.7,
+   -5.7,
+   8.7,
+   5.55
+  ],
+  "shell_tris": 178
+ },
+ "ck/ck_svc_bank_pharm|0": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 14,
+  "lean": true,
+  "lights": 4,
+  "ops": 8,
+  "rect": [
+   -5.7,
+   -5.7,
+   5.7,
+   5.55
+  ],
+  "shell_tris": 220
+ },
+ "ck/ck_svc_pawn_fast|0": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 6,
+  "lean": true,
+  "lights": 2,
+  "ops": 4,
+  "rect": [
+   0.0,
+   -5.7,
+   5.7,
+   5.55
+  ],
+  "shell_tris": 118
+ },
+ "ck/ck_svc_trade_1d|0": {
+  "ceiling": 3.3,
+  "err": 0,
+  "glass_tris": 4,
+  "lean": false,
+  "lights": 4,
+  "ops": 3,
+  "rect": [
+   -5.7,
+   -5.7,
+   5.7,
+   5.55
+  ],
+  "shell_tris": 258
+ },
+ "ck/ck_svc_trade|0": {
+  "ceiling": 3.3,
+  "err": 0,
+  "glass_tris": 10,
+  "lean": false,
+  "lights": 4,
+  "ops": 6,
+  "rect": [
+   -5.7,
+   -5.7,
+   5.7,
+   5.55
+  ],
+  "shell_tris": 376
+ },
+ "ck/ck_svc_trade|1": {
+  "ceiling": 3.3,
+  "err": 0,
+  "glass_tris": 4,
+  "lean": false,
+  "lights": 2,
+  "ops": 3,
+  "rect": [
+   0.1,
+   -5.7,
+   5.7,
+   5.55
+  ],
+  "shell_tris": 254
+ },
+ "ck/mod_fastfood|0": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 6,
+  "lean": true,
+  "lights": 1,
+  "ops": 3,
+  "rect": [
+   -5.7,
+   -5.7,
+   -3.16,
+   5.55
+  ],
+  "shell_tris": 76
+ },
+ "ck/mod_fastfood|1": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 8,
+  "lean": true,
+  "lights": 3,
+  "ops": 5,
+  "rect": [
+   -2.96,
+   -5.7,
+   5.7,
+   5.55
+  ],
+  "shell_tris": 148
+ },
+ "commercial/com_bakery|0": {
+  "ceiling": 3.88,
+  "err": 0,
+  "glass_tris": 10,
+  "lean": false,
+  "lights": 3,
+  "ops": 6,
+  "rect": [
+   -4.2,
+   -6.7,
+   4.2,
+   6.55
+  ],
+  "shell_tris": 426
+ },
+ "commercial/com_bar_crown|0": {
+  "ceiling": 3.88,
+  "err": 0,
+  "glass_tris": 6,
+  "lean": false,
+  "lights": 3,
+  "ops": 4,
+  "rect": [
+   -4.2,
+   -6.7,
+   4.2,
+   6.55
+  ],
+  "shell_tris": 352
+ },
+ "commercial/com_bistro|0": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 10,
+  "lean": false,
+  "lights": 4,
+  "ops": 6,
+  "rect": [
+   -5.7,
+   -6.7,
+   5.7,
+   6.55
+  ],
+  "shell_tris": 436
+ },
+ "commercial/com_boutique_row|0": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 6,
+  "lean": false,
+  "lights": 2,
+  "ops": 4,
+  "rect": [
+   -8.7,
+   -6.7,
+   -3.1,
+   6.55
+  ],
+  "shell_tris": 352
+ },
+ "commercial/com_boutique_row|1": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 2,
+  "lean": false,
+  "lights": 2,
+  "ops": 2,
+  "rect": [
+   -2.9,
+   -6.7,
+   2.82,
+   6.55
+  ],
+  "shell_tris": 272
+ },
+ "commercial/com_boutique_row|2": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 6,
+  "lean": false,
+  "lights": 2,
+  "ops": 4,
+  "rect": [
+   3.1,
+   -6.7,
+   8.7,
+   6.55
+  ],
+  "shell_tris": 352
+ },
+ "commercial/com_cafe_seaside|0": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 8,
+  "lean": false,
+  "lights": 2,
+  "ops": 5,
+  "rect": [
+   -2.7,
+   -6.7,
+   2.7,
+   6.55
+  ],
+  "shell_tris": 398
+ },
+ "commercial/com_gas_station|0": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 10,
+  "lean": true,
+  "lights": 2,
+  "ops": 6,
+  "rect": [
+   -4.7,
+   -4.2,
+   4.7,
+   4.05
+  ],
+  "shell_tris": 138
+ },
+ "commercial/com_orange_arcade_block|0": {
+  "ceiling": 3.88,
+  "err": 0,
+  "glass_tris": 2,
+  "lean": false,
+  "lights": 3,
+  "ops": 2,
+  "rect": [
+   0.1,
+   -8.2,
+   6.4,
+   8.05
+  ],
+  "shell_tris": 278
+ },
+ "commercial/com_orange_corner|0": {
+  "ceiling": 3.88,
+  "err": 0,
+  "glass_tris": 14,
+  "lean": true,
+  "lights": 4,
+  "ops": 8,
+  "rect": [
+   -5.7,
+   -6.7,
+   5.7,
+   6.55
+  ],
+  "shell_tris": 200
+ },
+ "commercial/com_orange_corner|1": {
+  "ceiling": 3.88,
+  "err": 0,
+  "glass_tris": 6,
+  "lean": true,
+  "lights": 2,
+  "ops": 4,
+  "rect": [
+   0.1,
+   -6.7,
+   5.7,
+   6.55
+  ],
+  "shell_tris": 114
+ },
+ "commercial/com_orange_row|0": {
+  "ceiling": 3.88,
+  "err": 0,
+  "glass_tris": 10,
+  "lean": true,
+  "lights": 4,
+  "ops": 6,
+  "rect": [
+   -8.7,
+   -6.7,
+   2.9,
+   6.55
+  ],
+  "shell_tris": 332
+ },
+ "commercial/com_orange_row|1": {
+  "ceiling": 3.88,
+  "err": 0,
+  "glass_tris": 6,
+  "lean": true,
+  "lights": 2,
+  "ops": 4,
+  "rect": [
+   3.02,
+   -6.7,
+   8.7,
+   6.55
+  ],
+  "shell_tris": 234
+ },
+ "commercial/com_realty|0": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 8,
+  "lean": false,
+  "lights": 2,
+  "ops": 5,
+  "rect": [
+   -2.7,
+   -6.7,
+   2.7,
+   6.55
+  ],
+  "shell_tris": 398
+ },
+ "commercial/com_spanish_arcade_block|0": {
+  "ceiling": 3.88,
+  "err": 0,
+  "glass_tris": 8,
+  "lean": false,
+  "lights": 4,
+  "ops": 5,
+  "rect": [
+   -11.7,
+   -7.7,
+   -1.1,
+   7.55
+  ],
+  "shell_tris": 398
+ },
+ "commercial/com_spanish_arcade_block|1": {
+  "ceiling": 3.88,
+  "err": 0,
+  "glass_tris": 8,
+  "lean": false,
+  "lights": 4,
+  "ops": 5,
+  "rect": [
+   -11.7,
+   -7.7,
+   0.9,
+   7.55
+  ],
+  "shell_tris": 410
+ },
+ "commercial/com_spanish_arcade_block|2": {
+  "ceiling": 3.88,
+  "err": 0,
+  "glass_tris": 6,
+  "lean": false,
+  "lights": 4,
+  "ops": 4,
+  "rect": [
+   1.1,
+   -7.7,
+   11.7,
+   7.55
+  ],
+  "shell_tris": 372
+ },
+ "commercial/com_strip_mall_l|0": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 2,
+  "lean": false,
+  "lights": 4,
+  "ops": 2,
+  "rect": [
+   6.095,
+   -9.7,
+   14.27,
+   9.55
+  ],
+  "shell_tris": 278
+ },
+ "commercial/com_surf_shop|0": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 10,
+  "lean": false,
+  "lights": 3,
+  "ops": 6,
+  "rect": [
+   -4.2,
+   -6.7,
+   4.2,
+   6.55
+  ],
+  "shell_tris": 434
+ },
+ "extras/motel_inn_court|0": {
+  "ceiling": 3.38,
+  "err": 0,
+  "glass_tris": 4,
+  "lean": false,
+  "lights": 2,
+  "ops": 3,
+  "rect": [
+   10.1,
+   -4.7,
+   17.7,
+   4.55
+  ],
+  "shell_tris": 312
+ },
+ "houses/craftsman_sage|0": {
+  "ceiling": 4.8,
+  "err": 0,
+  "glass_tris": 16,
+  "lean": true,
+  "lights": 3,
+  "ops": 9,
+  "rect": [
+   -4.7,
+   -5.95,
+   4.7,
+   5.8
+  ],
+  "shell_tris": 194
+ },
+ "houses/tudor_stucco|0": {
+  "ceiling": 4.8,
+  "err": 0,
+  "glass_tris": 8,
+  "lean": false,
+  "lights": 3,
+  "ops": 5,
+  "rect": [
+   -5.95,
+   -4.8,
+   5.95,
+   4.65
+  ],
+  "shell_tris": 412
+ },
+ "industrial/ind_repair|0": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 4,
+  "lean": false,
+  "lights": 3,
+  "ops": 3,
+  "rect": [
+   -8.7,
+   -7.7,
+   -2.3,
+   7.55
+  ],
+  "shell_tris": 288
+ },
+ "modular/examples/mod_brk_row|0": {
+  "ceiling": 3.3,
+  "err": 0,
+  "glass_tris": 18,
+  "lean": true,
+  "lights": 4,
+  "ops": 10,
+  "rect": [
+   -8.7,
+   -6.7,
+   8.7,
+   6.55
+  ],
+  "shell_tris": 246
+ },
+ "modular/examples/mod_svc_row|0": {
+  "ceiling": 3.3,
+  "err": 0,
+  "glass_tris": 6,
+  "lean": false,
+  "lights": 2,
+  "ops": 4,
+  "rect": [
+   0.24,
+   -5.7,
+   5.7,
+   5.55
+  ],
+  "shell_tris": 326
+ },
+ "public/pub_skate_shed|0": {
+  "ceiling": 4.3,
+  "err": 0,
+  "glass_tris": 4,
+  "lean": false,
+  "lights": 3,
+  "ops": 2,
+  "rect": [
+   -5.7,
+   -4.7,
+   5.7,
+   4.55
+  ],
+  "shell_tris": 238
+ },
+ "urban/twr_glass|0": {
+  "ceiling": 4.6,
+  "err": 0,
+  "glass_tris": 14,
+  "lean": false,
+  "lights": 4,
+  "ops": 8,
+  "rect": [
+   -11.7,
+   -11.7,
+   11.7,
+   11.55
+  ],
+  "shell_tris": 630
+ },
+ "urban/twr_office|0": {
+  "ceiling": 3.6,
+  "err": 0,
+  "glass_tris": 4,
+  "lean": false,
+  "lights": 4,
+  "ops": 3,
+  "rect": [
+   -11.7,
+   -9.7,
+   11.7,
+   9.55
+  ],
+  "shell_tris": 322
+ },
+ "urban/urb_brick_corner|0": {
+  "ceiling": 3.3,
+  "err": 0,
+  "glass_tris": 10,
+  "lean": false,
+  "lights": 4,
+  "ops": 6,
+  "rect": [
+   -8.7,
+   -7.7,
+   8.7,
+   7.55
+  ],
+  "shell_tris": 430
+ },
+ "urban/urb_brick_row|0": {
+  "ceiling": 3.3,
+  "err": 0,
+  "glass_tris": 6,
+  "lean": false,
+  "lights": 3,
+  "ops": 4,
+  "rect": [
+   -8.7,
+   -6.7,
+   -1.2,
+   6.55
+  ],
+  "shell_tris": 348
+ },
+ "urban/urb_brick_row|1": {
+  "ceiling": 3.3,
+  "err": 0,
+  "glass_tris": 2,
+  "lean": false,
+  "lights": 2,
+  "ops": 2,
+  "rect": [
+   -2.36,
+   -6.7,
+   3.44,
+   6.55
+  ],
+  "shell_tris": 248
+ },
+ "urban/urb_dept_store|0": {
+  "ceiling": 3.5,
+  "err": 0,
+  "glass_tris": 10,
+  "lean": false,
+  "lights": 4,
+  "ops": 6,
+  "rect": [
+   -17.7,
+   -11.7,
+   17.7,
+   11.55
+  ],
+  "shell_tris": 490
+ }
+}

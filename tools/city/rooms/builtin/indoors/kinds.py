@@ -354,4 +354,8 @@ DRESS_X = {'Coronado Post Office': 'post_office', 'Alcala Architects': 'architec
  'Ridgeview Elementary': 'classroom', 'Ridgeview Elementary - Library': 'library', 'Hill Rec Center': 'rec_center',
  'Island Hospital Main Lobby': 'hospital_lobby', 'Emergency Department': 'er', 'Bayview Wellness Center': 'clinic',
  'Get Well Flowers': 'florist', 'Strand Auto Parts': 'auto_parts', 'Bayside Urgent Care': 'clinic',
- 'Coronado Community Credit Union': 'bank', 'Island Tax & Insurance': 'tax'}
+ 'Coronado Community Credit Union': 'bank', 'Island Tax & Insurance': 'tax',
+ # 22 Nov rollout check of the names: banks, dentists, tax and realty offices dressed as what they are
+ 'Shore Bank': 'bank', 'Anchor Credit Union': 'bank', 'Wagon Bank': 'bank', 'Sixth Street Dental': 'dentist',
+ 'Uphill Dental': 'dentist', "Abe's Tax Office": 'tax', "Vera's Tax Office": 'tax', 'Crownado Post Office': 'post_office',
+ 'Saltwater Realty': 'realty', 'Ridge Realty': 'realty', 'Shores Holiday Rentals': 'realty', 'Crownado Public Library': 'library'}

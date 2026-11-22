@@ -74,7 +74,7 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 | bail | 1 | security_grille_counter, office_desk, office_chair | filing_cabinet, waiting_bench |  | queue_ticket_dispenser | 13907 | Grille counter; plain, no plants. |
 | bait | 1 | checkout_counter, cash_register | drinks_fridge, chest_freezer, pegboard_wall, wall_shelf | wall_plate_fish | - | 7764 |  |
 | bakery | 2 | shop_counter, cash_register, pastry_case, bakery_shelf, menu_board | bakery_shelf, display_table, cafe_table, cafe_chair | frame_print_small, woven_basket, wall_plate_floral | - | 15743 | Bread on the back wall, cakes in the case. |
-| bank | 5 | shop_counter, bulletproof_teller_window, office_desk, office_chair | filing_cabinet, waiting_bench, brochure_rack, stanchion, wall_safe | frame_print_large, clock_wall_sunburst, potted_plant (1) | atm_wall, vault_door | 16356 | Pilot set (com_bank). Teller line + queue stanchions + 2 officer desks. |
+| bank | 8 | shop_counter, bulletproof_teller_window, office_desk, office_chair | filing_cabinet, waiting_bench, brochure_rack, stanchion, wall_safe | frame_print_large, clock_wall_sunburst, potted_plant (1) | atm_wall, vault_door | 16356 | Pilot set (com_bank). Teller line + queue stanchions + 2 officer desks. |
 | bar | 4 | bar_counter, bar_stool, wine_backbar, beer_taps | booth_bench, restaurant_table, dining_chair | mirror_rect, frame_print_large, clock_mantel | - | 12524 | Mirror behind the bar; no plants. |
 | barber | 3 | shop_counter, cash_register, barber_chair, mirror_station | salon_product_shelf, wash_basin, waiting_bench | frame_print_small, clock_wall_sunburst | - | 24993 |  |
 | bike | 1 | shop_counter, cash_register, workbench | bike_stand, pegboard_wall, wall_shelf |  | - | 17657 |  |
@@ -99,7 +99,7 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 | community | 2 | shop_counter, brochure_rack | dining_table, dining_chair, sofa_3seat, lounge_chair, coffee_table, tv_console, waiting_bench | frame_print_large, clock_wall_sunburst, rug_living_mcm, vase_tall, potted_plant (1) | - | 15496 | Ridge Senior Center: a lounge, not a theatre. |
 | corner_shop | 5 | checkout_counter, cash_register, cigarette_cabinet | gondola_aisle, grocery_shelf, drinks_fridge, chest_freezer, produce_stand, brochure_rack |  | - | 21108 |  |
 | court | 1 | judge_bench, shop_counter | court_bench, witness_box, jury_box, office_desk, office_chair, filing_cabinet | clock_wall_sunburst, frame_print_large | court_bench, judge_bench, jury_box, lectern, witness_box | 6866 | Courtroom: bench at the back on a step, gallery benches face it. |
-| dentist | 1 | reception_desk, office_chair | waiting_bench, dental_chair, storage_cabinet | frame_print_small, potted_plant (1) | dental_chair, reception_desk | 9712 |  |
+| dentist | 3 | reception_desk, office_chair | waiting_bench, dental_chair, storage_cabinet | frame_print_small, potted_plant (1) | dental_chair, reception_desk | 17412 |  |
 | diner | 2 | bar_counter, bar_stool, cash_register, pastry_case, soda_fountain, espresso_machine | booth_bench, restaurant_table, menu_board | clock_wall_sunburst, frame_motel_floral | - | 18569 | Counter with stools + booths along the window. |
 | discount | 1 | checkout_counter, cash_register | gondola_aisle, grocery_shelf, wall_shelf, display_table, drinks_fridge |  | - | 11310 |  |
 | dive | 1 | shop_counter, cash_register | garment_rail, surfboard_rack, wall_shelf | frame_ocean, sculpture_coral | - | 10548 |  |
@@ -124,13 +124,13 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 | laundry | 1 | laundry_counter | washer, dryer, garment_rail, waiting_bench |  | - | 10542 |  |
 | law | 2 | office_desk, office_chair, filing_cabinet | bookcase, waiting_bench, side_chair, storage_cabinet | frame_print_medium, globe_desktop, books_stack, clock_mantel | conference_table | 13237 | Bookcases on every wall; client chairs face the desk. |
 | lecture | 5 | lectern, office_desk | lecture_seating_row, whiteboard_wall, projector_screen | clock_wall_sunburst | lectern, lecture_seating_row, projector_screen, whiteboard_wall | 17868 | Rows face the lectern/whiteboard wall. |
-| library | 3 | office_desk, office_chair, filing_cabinet | bookcase, dining_table, dining_chair, lounge_chair, floor_lamp, card_spinner, magazine_rack | globe_desktop, bookends, books_stack, clock_wall_sunburst, rug_living_jute, potted_plant (1) | - | 15853 | Rows of bookcase, reading tables, a lounge corner. |
+| library | 4 | office_desk, office_chair, filing_cabinet | bookcase, dining_table, dining_chair, lounge_chair, floor_lamp, card_spinner, magazine_rack | globe_desktop, bookends, books_stack, clock_wall_sunburst, rug_living_jute, potted_plant (1) | - | 15853 | Rows of bookcase, reading tables, a lounge corner. |
 | liquor | 1 | checkout_counter, cash_register, cigarette_cabinet | wine_backbar, drinks_fridge, grocery_shelf, gondola_aisle |  | - | 19462 | Bottles on wine_backbar walls. |
 | lobby | 10 | shop_counter, brochure_rack | waiting_bench, lounge_chair, coffee_table, potted_plant, indoor_bin | frame_print_large, clock_wall_sunburst, vase_tall | directory_board, reception_desk, water_cooler | 12625 | Tower lobby: reception counter facing the door, lounge group, directory by the lifts. |
 | lube | 1 | shop_counter, cash_register | oil_can_shelf, waiting_bench, vending_soda, tool_chest |  | - | 6176 | Waiting room + counter of a quick lube. |
 | motel_office | 1 | shop_counter, key_rack_wall | brochure_rack, waiting_bench, vending_snack, ice_chest | frame_motel_floral | key_rack_wall | 4952 | Harbor View Motel office. |
 | nails | 1 | shop_counter, cash_register, nail_table | salon_product_shelf, waiting_bench, side_chair | frame_print_small, vase_bud | - | 8076 |  |
-| office | 24 | office_desk, office_chair, filing_cabinet | office_desk, office_chair, filing_cabinet, bookcase, waiting_bench, storage_cabinet | frame_print_medium, clock_wall_sunburst, potted_plant (1) | conference_table, cubicle_partition, water_cooler | 21082 | Desks in pairs facing each other or the window; one plant. |
+| office | 12 | office_desk, office_chair, filing_cabinet | office_desk, office_chair, filing_cabinet, bookcase, waiting_bench, storage_cabinet | frame_print_medium, clock_wall_sunburst, potted_plant (1) | conference_table, cubicle_partition, water_cooler | 21082 | Desks in pairs facing each other or the window; one plant. |
 | panaderia | 1 | shop_counter, cash_register, pastry_case, bakery_shelf | bakery_shelf, display_table, drinks_fridge | wall_plate_floral, woven_basket | - | 16315 | Self-serve rack is the signature; build it. |
 | parts | 1 | shop_counter, cash_register | pegboard_wall, wall_shelf, gondola_aisle |  | - | 8442 |  |
 | parts_counter | 1 | shop_counter, cash_register, workbench | pegboard_wall, pharmacy_shelf, wall_shelf, waiting_bench |  | - | 11393 |  |
@@ -141,9 +141,9 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 | phones | 1 | glass_display_case, shop_counter, cash_register | pegboard_wall, wall_shelf, display_table |  | - | 15942 |  |
 | physio | 1 | reception_desk, office_chair | physio_table, weight_bench, dumbbell_rack, waiting_bench | frame_print_small | physio_table, reception_desk | 17863 |  |
 | pizza | 1 | shop_counter, cash_register, pizza_oven, menu_board | restaurant_table, cafe_chair, drinks_fridge, booth_bench | frame_print_small | pizza_oven | 8832 |  |
-| post_office | 2 | shop_counter, stanchion, brochure_rack | waiting_bench, filing_cabinet, wall_shelf, card_spinner, indoor_bin | clock_wall_sunburst, frame_print_medium | - | 16644 | Story shop; queue lane with stanchions, PO boxes are the signature. |
+| post_office | 3 | shop_counter, stanchion, brochure_rack | waiting_bench, filing_cabinet, wall_shelf, card_spinner, indoor_bin | clock_wall_sunburst, frame_print_medium | - | 16644 | Story shop; queue lane with stanchions, PO boxes are the signature. |
 | print | 1 | shop_counter, cash_register, workbench | filing_cabinet, pegboard_wall, display_table | frame_print_medium | - | 12131 | The printer is the gap that makes it read. |
-| realty | 2 | office_desk, office_chair, filing_cabinet | side_chair, brochure_rack, display_plinth | frame_print_large, vase_bud, potted_plant (1) | listing_board_wall, model_house_display | 6180 | Window listing boards are the signature. |
+| realty | 5 | office_desk, office_chair, filing_cabinet | side_chair, brochure_rack, display_plinth | frame_print_large, vase_bud, potted_plant (1) | listing_board_wall, model_house_display | 7738 | Window listing boards are the signature. |
 | rec_center | 1 | shop_counter | weight_bench, treadmill, rowing_machine, dumbbell_rack, waiting_bench |  | noticeboard_wall | 18483 | Hill Rec Center; all gym props built. |
 | records | 1 | shop_counter, cash_register | display_table, bookcase, poster_case, wall_shelf | frame_print_large, floor_lamp, rug_accent | - | 10882 |  |
 | recycling | 1 | security_grille_counter | reverse_vending_machine, laundry_cart, pallet_racking |  | reverse_vending_machine | 3278 | Booth: grille window, bins, carts. |
@@ -158,7 +158,7 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 | taproom | 1 | bar_counter, bar_stool, beer_taps, drinks_fridge | booth_bench, restaurant_table, dining_chair | frame_print_large | - | 10226 | Concrete + kegs; remove potted_plant from its extras. |
 | taqueria | 2 | shop_counter, cash_register, kitchen_line, menu_board | booth_bench, restaurant_table, drinks_fridge, indoor_bin | wall_plate_floral, woven_basket | - | 17732 | Salsa bar is in the room recipe but has no prop. |
 | tattoo | 1 | glass_display_case, shop_counter, cash_register | mirror_station, wall_shelf, filing_cabinet, waiting_bench | frame_print_medium, sculpture_organic | - | 15348 |  |
-| tax | 2 | office_desk, office_chair, filing_cabinet | waiting_bench, brochure_rack, side_chair | frame_print_small, clock_wall_sunburst | water_cooler | 6469 | Small office: 2 desks, waiting bench. |
+| tax | 4 | office_desk, office_chair, filing_cabinet | waiting_bench, brochure_rack, side_chair | frame_print_small, clock_wall_sunburst | water_cooler | 6469 | Small office: 2 desks, waiting bench. |
 | thrift | 1 | shop_counter, cash_register | garment_rail, clothes_rack, bookcase, shoe_wall, display_table, mannequin | figurine_cat, vase_lava, frame_motel_floral, globe_desktop, books_stack | - | 16730 | The one place a jumble of house decor is right. |
 | trade_counter | 1 | shop_counter, cash_register | pegboard_wall, grocery_shelf, wall_shelf, display_table |  | - | 16768 | Drop the potted plant from its extras. |
 | transit | 2 | ticket_booth, stanchion | waiting_bench, brochure_rack, vending_snack, vending_soda, indoor_bin | clock_wall_sunburst | departure_board, ticket_machine | 12124 | Ferry / bus tickets: booth + queue + benches facing the board. |
@@ -193,80 +193,80 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 | 16 | m_gr_ad5ne__bayside_express_wash__0 | Bayside Express Wash | wash_office | Strand/Adela shop kept (one of a kind) | m_gr_ad5ne | services/svc_carwash | 5.4 x 8.0 | S | yes |
 | 17 | cc_b2_s__alleyc2s_architects__0 | Alcala Architects | law -> architect | non-shop indoor place | n_cc_b2_s | ck/ck_brk3_row2 | 11.4 x 13.2 | M | yes |
 | 18 | cc_b1_court__law_office_s__0 | Bayview Bail Bonds | bail | non-shop indoor place | n_cc_b1_court | ck/ck_brk3_row2 | 11.4 x 13.2 | M | yes |
-| 19 | cc_b1_am__amber_bank__0 | Amber Savings Bank | bank | non-shop indoor place | n_cc_b1_am | urban/urb_brick_corner | 17.4 x 15.2 | L | yes |
-| 20 | cc_b5_w__amber6ne_corner__0 | Coastal Credit Union | bank | non-shop indoor place | n_cc_b5_w | urban/urb_brick_corner | 17.4 x 15.1 | L | yes |
-| 21 | hs_b2_amber_bank_0 | Crownado Savings | bank | non-shop indoor place | n_hs_b2_amber | commercial/com_bank | 13.4 x 13.2 | L | yes |
-| 22 | hs_b6_amber_bankph_0 | Hill Savings | bank | non-shop indoor place | n_hs_b6_amber | ck/ck_svc_bank_pharm | 11.4 x 11.1 | M | yes |
-| 23 | ind_va_w600_n1600_se__bay_boatworks_office__0 | Bay Boatworks | broker | non-shop indoor place | i_va_w600_n1600_se | civic/civ_harbor_office | 15.4 x 11.2 | L | yes |
-| 24 | un_ne__uni_hall__0 | Coronado University - Founders Hall | campus_hall | non-shop indoor place | n_un_ne | public/pub_university | 31.4 x 16.0 | XL | yes |
-| 25 | apt_b2_7th__church_7th__0 | Seventh Street Community Church | chapel | non-shop indoor place | n_apt_b2_7th | civic/civ_church | 13.4 x 16.0 | L | yes |
-| 26 | cc_b1_west__downtown_church__0 | Sacred Heart Church | church | non-shop indoor place | n_cc_b1_west | civic/civ_church | 13.4 x 25.2 | XL | yes |
-| 27 | un_nw__uni_chapel__0 | University Chapel | church | non-shop indoor place | n_un_nw | public/pub_chapel | 9.4 x 15.2 | M | yes |
-| 28 | w_c1__church__0 | St. Andrew's | church | non-shop indoor place | n_w_c1 | civic/civ_church | 13.4 x 16.0 | L | yes |
-| 29 | w_w6__ridge_church__0 | Ridge Community Church | church | non-shop indoor place | n_w_w6 | civic/civ_church | 13.4 x 16.0 | L | yes |
-| 30 | w_w4__school_a__0 | Ridgeview Elementary | lecture -> classroom | non-shop indoor place | n_w_w4 | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
-| 31 | hp_west_tower_0 | Bay Medical Plaza Urgent Care | clinic | non-shop indoor place | n_hp_west | urban/twr_office | 23.4 x 16.0 | XL | yes |
-| 32 | hp_west_wellness_0 | Bayview Wellness Center | hall -> clinic | non-shop indoor place | n_hp_west | civic/civ_community_center | 23.4 x 13.2 | L | yes |
-| 33 | apt_b2_bw__community_room__0 | Glorietta Hill Community Room | community | non-shop indoor place | n_apt_b2_bw | civic/civ_community_center | 23.4 x 12.0 | L | yes |
-| 34 | cc_b1_court__courthouse__0 | Coronado County Courthouse | court | non-shop indoor place | n_cc_b1_court | urban/urb_courthouse | ? x ? | ? | yes |
-| 35 | hp_main_er_wing_1 | Emergency Department | clinic -> er | non-shop indoor place | n_hp_main | extras/ext_hospital | 15.7 x 15.2 | L | yes |
-| 36 | ind_va_w800_n1600_sw__hfs_office__0 | Harbor Freight Station | freight_office | non-shop indoor place | i_va_w800_n1600_sw | ck/ck_brk3_corner2 | 11.4 x 13.1 | M | yes |
-| 37 | fw_court_community_0 | Crown Hill Community Center | hall | non-shop indoor place | n_fw_court | civic/civ_community_center | 23.4 x 13.2 | L | yes |
-| 38 | hs_b2_ninth_hall_0 | Christ Church Community Center | hall | non-shop indoor place | n_hs_b2_ninth | civic/civ_community_center | 23.4 x 13.2 | L | yes |
-| 39 | hp_main_hospital_0 | Island Hospital Main Lobby | clinic -> hospital_lobby | non-shop indoor place | n_hp_main | public/pub_hospital | 17.7 x 16.0 | L | yes |
-| 40 | wfa_b1w__casa_del_mar_inn__0 | Casa del Mar Inn | hotel | non-shop indoor place | n_wf_b1w | apartments/apt_spanish_revival | 9.2 x 9.2 | M | yes |
-| 41 | wfa_b2w__bayview_inn__0 | Bayview Inn | hotel | non-shop indoor place | n_wf_b2w | extras/motel_inn_court | 6.7 x 9.2 | S | yes |
-| 42 | cc_b1_court__district_attorney__0 | District Attorney | law | non-shop indoor place | n_cc_b1_court | modular/examples/mod_brk_row | 6.0 x 13.2 | M | yes |
-| 43 | cc_b1_court__law_office_n__0 | Hale & Ortiz Attorneys | law | non-shop indoor place | n_cc_b1_court | ck/ck_brk3_row2_fe | 11.4 x 13.2 | M | yes |
-| 44 | un_ne__uni_lecture_west__0 | Lecture Halls West | lecture | non-shop indoor place | n_un_ne | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
-| 45 | un_ne__uni_science__0 | Science Building | lecture | non-shop indoor place | n_un_ne | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
-| 46 | un_nw__uni_arts__0 | Fine Arts | lecture | non-shop indoor place | n_un_nw | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
-| 47 | un_nw__uni_humanities__0 | Humanities | lecture | non-shop indoor place | n_un_nw | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
-| 48 | un_se__uni_kinesiology__0 | Kinesiology | lecture | non-shop indoor place | n_un_se | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
-| 49 | hs_b1_amber_library_0 | Coronado Public Library | library | non-shop indoor place | n_hs_b1_amber | civic/civ_library | 23.4 x 15.2 | XL | yes |
-| 50 | w_w4__school_b__0 | Ridgeview Elementary - Library | lecture -> library | non-shop indoor place | n_w_w4 | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
-| 51 | cc_b1_am__amber6_tower__0 | Sixth & Amber Tower | lobby | non-shop indoor place | n_cc_b1_am | urban/twr_glass | 23.4 x 23.2 | XL | yes |
-| 52 | cc_b3_am__amber8_glass_tower__0 | Eighth & Amber Tower | lobby | non-shop indoor place | n_cc_b3_am | urban/twr_glass | 23.4 x 23.2 | XL | yes |
-| 53 | cc_b5_e__bave6_glass_tower__0 | B Avenue Tower | lobby | non-shop indoor place | n_cc_b5_e | urban/twr_glass | 23.4 x 16.0 | XL | yes |
-| 54 | un_sw__uni_dorm_1__0 | Torrey Hall | lobby | non-shop indoor place | n_un_sw | apartments/apt_garden_cream | 21.0 x 8.2 | L | yes |
-| 55 | un_sw__uni_dorm_2__0 | Jacaranda Hall | lobby | non-shop indoor place | n_un_sw | apartments/apt_garden_mint | 21.0 x 8.2 | L | yes |
-| 56 | un_sw__uni_dorm_3__0 | Coral Hall | lobby | non-shop indoor place | n_un_sw | apartments/apt_stucco3_peach | 18.4 x 11.2 | L | yes |
-| 57 | un_sw__uni_dorm_4__0 | Magnolia Hall | lobby | non-shop indoor place | n_un_sw | apartments/apt_stucco3_cream | 18.4 x 11.2 | L | yes |
-| 58 | un_sw__uni_dorm_5__0 | Palm Hall | lobby | non-shop indoor place | n_un_sw | apartments/apt_spanish_revival | 17.4 x 9.2 | L | yes |
-| 59 | un_sw__uni_dorm_6__0 | Ficus Hall | lobby | non-shop indoor place | n_un_sw | apartments/apt_spanish_white | 17.4 x 9.2 | L | yes |
-| 60 | w_c6__child_care__0 | Bright Start Child Care | lobby | non-shop indoor place | n_w_c6 | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
-| 61 | b_nw__com_realty__0 | Kelp Travel | office | non-shop indoor place | b_nw | commercial/com_realty | 5.4 x 13.0 | M | yes |
-| 62 | b_se__civ_post_office__0 | Crownado Post Office | office | non-shop indoor place | b_se | civic/civ_post_office | 21.4 x 14.2 | L | yes |
-| 63 | c_sw__com_bank__0 | Shore Bank | office | non-shop indoor place | c_sw | commercial/com_bank | 13.4 x 13.2 | L | yes |
-| 64 | cc_b1_court__legal_aid__0 | Island Legal Aid | office | non-shop indoor place | n_cc_b1_court | ck/ck_brk3_row2 | 11.4 x 13.2 | M | yes |
-| 65 | cc_b2_7th__seventh_insurance__0 | Pacific Insurance | law -> office | non-shop indoor place | n_cc_b2_7th | urban/urb_brick_corner | 17.4 x 15.2 | L | yes |
-| 66 | cc_b2_n__sixth_e_dentist__0 | Sixth Street Dental | office | non-shop indoor place | n_cc_b2_n | ck/ck_brk3_row2 | 11.4 x 13.2 | M | yes |
-| 67 | cc_b3_arm__seventh_s_arcade__1 | Bay Travel | office | non-shop indoor place | n_cc_b3_arm | commercial/com_spanish_arcade_block | 10.6 x 15.2 | L | yes |
-| 68 | cc_b3_main__eighth_optician__0 | Uphill Dental | office | non-shop indoor place | n_cc_b3_main | ck/ck_brk3_row2 | 11.4 x 13.2 | M | yes |
-| 69 | cc_b5_w__sixth_ne_arcade__1 | Sunny Travel | office | non-shop indoor place | n_cc_b5_w | commercial/com_spanish_arcade_block | 10.7 x 15.0 | L | yes |
-| 70 | i_ne__machine_shop__0 | Abe's Tax Office | office | non-shop indoor place | i_ne | ck/ck_svc_trade | 5.7 x 11.1 | S | yes |
-| 71 | i_nw__drivers_cafe__1 | Ocean Travel | office | non-shop indoor place | i_nw | commercial/com_orange_corner | 5.7 x 13.0 | M | yes |
-| 72 | i_se__auto_parts__1 | Vera's Tax Office | office | non-shop indoor place | i_se | ck/ck_svc_trade | 5.7 x 11.1 | S | yes |
+| 19 | c_sw__com_bank__0 | Shore Bank | office -> bank | non-shop indoor place | c_sw | commercial/com_bank | 13.4 x 13.2 | L | yes |
+| 20 | cc_b1_am__amber_bank__0 | Amber Savings Bank | bank | non-shop indoor place | n_cc_b1_am | urban/urb_brick_corner | 17.4 x 15.2 | L | yes |
+| 21 | cc_b5_w__amber6ne_corner__0 | Coastal Credit Union | bank | non-shop indoor place | n_cc_b5_w | urban/urb_brick_corner | 17.4 x 15.1 | L | yes |
+| 22 | hs_b2_amber_bank_0 | Crownado Savings | bank | non-shop indoor place | n_hs_b2_amber | commercial/com_bank | 13.4 x 13.2 | L | yes |
+| 23 | hs_b6_amber_bankph_0 | Hill Savings | bank | non-shop indoor place | n_hs_b6_amber | ck/ck_svc_bank_pharm | 11.4 x 11.1 | M | yes |
+| 24 | m_ne__bank_pharmacy__0 | Wagon Bank | office -> bank | non-shop indoor place | m_ne | ck/ck_svc_bank_pharm | 11.4 x 11.1 | M | yes |
+| 25 | m_ne__insurance_office__0 | Anchor Credit Union | office -> bank | non-shop indoor place | m_ne | commercial/com_realty | 5.4 x 13.0 | M | yes |
+| 26 | ind_va_w600_n1600_se__bay_boatworks_office__0 | Bay Boatworks | broker | non-shop indoor place | i_va_w600_n1600_se | civic/civ_harbor_office | 15.4 x 11.2 | L | yes |
+| 27 | un_ne__uni_hall__0 | Coronado University - Founders Hall | campus_hall | non-shop indoor place | n_un_ne | public/pub_university | 31.4 x 16.0 | XL | yes |
+| 28 | apt_b2_7th__church_7th__0 | Seventh Street Community Church | chapel | non-shop indoor place | n_apt_b2_7th | civic/civ_church | 13.4 x 16.0 | L | yes |
+| 29 | cc_b1_west__downtown_church__0 | Sacred Heart Church | church | non-shop indoor place | n_cc_b1_west | civic/civ_church | 13.4 x 25.2 | XL | yes |
+| 30 | un_nw__uni_chapel__0 | University Chapel | church | non-shop indoor place | n_un_nw | public/pub_chapel | 9.4 x 15.2 | M | yes |
+| 31 | w_c1__church__0 | St. Andrew's | church | non-shop indoor place | n_w_c1 | civic/civ_church | 13.4 x 16.0 | L | yes |
+| 32 | w_w6__ridge_church__0 | Ridge Community Church | church | non-shop indoor place | n_w_w6 | civic/civ_church | 13.4 x 16.0 | L | yes |
+| 33 | w_w4__school_a__0 | Ridgeview Elementary | lecture -> classroom | non-shop indoor place | n_w_w4 | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
+| 34 | hp_west_tower_0 | Bay Medical Plaza Urgent Care | clinic | non-shop indoor place | n_hp_west | urban/twr_office | 23.4 x 16.0 | XL | yes |
+| 35 | hp_west_wellness_0 | Bayview Wellness Center | hall -> clinic | non-shop indoor place | n_hp_west | civic/civ_community_center | 23.4 x 13.2 | L | yes |
+| 36 | apt_b2_bw__community_room__0 | Glorietta Hill Community Room | community | non-shop indoor place | n_apt_b2_bw | civic/civ_community_center | 23.4 x 12.0 | L | yes |
+| 37 | cc_b1_court__courthouse__0 | Coronado County Courthouse | court | non-shop indoor place | n_cc_b1_court | urban/urb_courthouse | ? x ? | ? | yes |
+| 38 | cc_b2_n__sixth_e_dentist__0 | Sixth Street Dental | office -> dentist | non-shop indoor place | n_cc_b2_n | ck/ck_brk3_row2 | 11.4 x 13.2 | M | yes |
+| 39 | cc_b3_main__eighth_optician__0 | Uphill Dental | office -> dentist | non-shop indoor place | n_cc_b3_main | ck/ck_brk3_row2 | 11.4 x 13.2 | M | yes |
+| 40 | hp_main_er_wing_1 | Emergency Department | clinic -> er | non-shop indoor place | n_hp_main | extras/ext_hospital | 15.7 x 15.2 | L | yes |
+| 41 | ind_va_w800_n1600_sw__hfs_office__0 | Harbor Freight Station | freight_office | non-shop indoor place | i_va_w800_n1600_sw | ck/ck_brk3_corner2 | 11.4 x 13.1 | M | yes |
+| 42 | fw_court_community_0 | Crown Hill Community Center | hall | non-shop indoor place | n_fw_court | civic/civ_community_center | 23.4 x 13.2 | L | yes |
+| 43 | hs_b2_ninth_hall_0 | Christ Church Community Center | hall | non-shop indoor place | n_hs_b2_ninth | civic/civ_community_center | 23.4 x 13.2 | L | yes |
+| 44 | hp_main_hospital_0 | Island Hospital Main Lobby | clinic -> hospital_lobby | non-shop indoor place | n_hp_main | public/pub_hospital | 17.7 x 16.0 | L | yes |
+| 45 | wfa_b1w__casa_del_mar_inn__0 | Casa del Mar Inn | hotel | non-shop indoor place | n_wf_b1w | apartments/apt_spanish_revival | 9.2 x 9.2 | M | yes |
+| 46 | wfa_b2w__bayview_inn__0 | Bayview Inn | hotel | non-shop indoor place | n_wf_b2w | extras/motel_inn_court | 6.7 x 9.2 | S | yes |
+| 47 | cc_b1_court__district_attorney__0 | District Attorney | law | non-shop indoor place | n_cc_b1_court | modular/examples/mod_brk_row | 6.0 x 13.2 | M | yes |
+| 48 | cc_b1_court__law_office_n__0 | Hale & Ortiz Attorneys | law | non-shop indoor place | n_cc_b1_court | ck/ck_brk3_row2_fe | 11.4 x 13.2 | M | yes |
+| 49 | un_ne__uni_lecture_west__0 | Lecture Halls West | lecture | non-shop indoor place | n_un_ne | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
+| 50 | un_ne__uni_science__0 | Science Building | lecture | non-shop indoor place | n_un_ne | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
+| 51 | un_nw__uni_arts__0 | Fine Arts | lecture | non-shop indoor place | n_un_nw | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
+| 52 | un_nw__uni_humanities__0 | Humanities | lecture | non-shop indoor place | n_un_nw | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
+| 53 | un_se__uni_kinesiology__0 | Kinesiology | lecture | non-shop indoor place | n_un_se | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
+| 54 | hs_b1_amber_library_0 | Coronado Public Library | library | non-shop indoor place | n_hs_b1_amber | civic/civ_library | 23.4 x 15.2 | XL | yes |
+| 55 | v_ne__library__0 | Crownado Public Library | office -> library | non-shop indoor place | v_ne | civic/civ_library | 23.4 x 15.2 | XL | yes |
+| 56 | w_w4__school_b__0 | Ridgeview Elementary - Library | lecture -> library | non-shop indoor place | n_w_w4 | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
+| 57 | cc_b1_am__amber6_tower__0 | Sixth & Amber Tower | lobby | non-shop indoor place | n_cc_b1_am | urban/twr_glass | 23.4 x 23.2 | XL | yes |
+| 58 | cc_b3_am__amber8_glass_tower__0 | Eighth & Amber Tower | lobby | non-shop indoor place | n_cc_b3_am | urban/twr_glass | 23.4 x 23.2 | XL | yes |
+| 59 | cc_b5_e__bave6_glass_tower__0 | B Avenue Tower | lobby | non-shop indoor place | n_cc_b5_e | urban/twr_glass | 23.4 x 16.0 | XL | yes |
+| 60 | un_sw__uni_dorm_1__0 | Torrey Hall | lobby | non-shop indoor place | n_un_sw | apartments/apt_garden_cream | 21.0 x 8.2 | L | yes |
+| 61 | un_sw__uni_dorm_2__0 | Jacaranda Hall | lobby | non-shop indoor place | n_un_sw | apartments/apt_garden_mint | 21.0 x 8.2 | L | yes |
+| 62 | un_sw__uni_dorm_3__0 | Coral Hall | lobby | non-shop indoor place | n_un_sw | apartments/apt_stucco3_peach | 18.4 x 11.2 | L | yes |
+| 63 | un_sw__uni_dorm_4__0 | Magnolia Hall | lobby | non-shop indoor place | n_un_sw | apartments/apt_stucco3_cream | 18.4 x 11.2 | L | yes |
+| 64 | un_sw__uni_dorm_5__0 | Palm Hall | lobby | non-shop indoor place | n_un_sw | apartments/apt_spanish_revival | 17.4 x 9.2 | L | yes |
+| 65 | un_sw__uni_dorm_6__0 | Ficus Hall | lobby | non-shop indoor place | n_un_sw | apartments/apt_spanish_white | 17.4 x 9.2 | L | yes |
+| 66 | w_c6__child_care__0 | Bright Start Child Care | lobby | non-shop indoor place | n_w_c6 | civic/civ_school_wing | 29.4 x 11.2 | XL | yes |
+| 67 | b_nw__com_realty__0 | Kelp Travel | office | non-shop indoor place | b_nw | commercial/com_realty | 5.4 x 13.0 | M | yes |
+| 68 | cc_b1_court__legal_aid__0 | Island Legal Aid | office | non-shop indoor place | n_cc_b1_court | ck/ck_brk3_row2 | 11.4 x 13.2 | M | yes |
+| 69 | cc_b2_7th__seventh_insurance__0 | Pacific Insurance | law -> office | non-shop indoor place | n_cc_b2_7th | urban/urb_brick_corner | 17.4 x 15.2 | L | yes |
+| 70 | cc_b3_arm__seventh_s_arcade__1 | Bay Travel | office | non-shop indoor place | n_cc_b3_arm | commercial/com_spanish_arcade_block | 10.6 x 15.2 | L | yes |
+| 71 | cc_b5_w__sixth_ne_arcade__1 | Sunny Travel | office | non-shop indoor place | n_cc_b5_w | commercial/com_spanish_arcade_block | 10.7 x 15.0 | L | yes |
+| 72 | i_nw__drivers_cafe__1 | Ocean Travel | office | non-shop indoor place | i_nw | commercial/com_orange_corner | 5.7 x 13.0 | M | yes |
 | 73 | i_sw__locksmith__1 | Crown Insurance | office | non-shop indoor place | i_sw | ck/ck_svc_pawn_fast | 5.8 x 11.1 | S | yes |
-| 74 | m_ne__bank_pharmacy__0 | Wagon Bank | office | non-shop indoor place | m_ne | ck/ck_svc_bank_pharm | 11.4 x 11.1 | M | yes |
-| 75 | m_ne__insurance_office__0 | Anchor Credit Union | office | non-shop indoor place | m_ne | commercial/com_realty | 5.4 x 13.0 | M | yes |
-| 76 | m_sw__check_cashing__0 | Palm Travel | office | non-shop indoor place | m_sw | commercial/com_realty | 5.4 x 13.0 | M | yes |
-| 77 | r_s__craftsman_sage__0 | Saltwater Realty | office | non-shop indoor place | r_s | houses/craftsman_sage | 9.4 x 11.8 | M | yes |
-| 78 | v_ne__city_hall__0 | City Hall Front Desk | office | non-shop indoor place | v_ne | civic/civ_city_hall | 25.4 x 14.2 | XL | yes |
-| 79 | v_ne__library__0 | Crownado Public Library | office | non-shop indoor place | v_ne | civic/civ_library | 23.4 x 15.2 | XL | yes |
-| 80 | v_se__police__0 | Crownado Police Front Desk | office | non-shop indoor place | v_se | civic/civ_police | 21.4 x 13.2 | L | yes |
-| 81 | w_c5__realty__0 | Ridge Realty | office | non-shop indoor place | n_w_c5 | commercial/com_realty | 5.4 x 13.0 | M | yes |
-| 82 | w_s1__housing_office__0 | Student Housing Office | office | non-shop indoor place | n_w_s1 | commercial/com_realty | 5.4 x 13.0 | M | yes |
-| 83 | wfa_b2e__harbour_tours_kiosk__0 | Harbour Tours | office | non-shop indoor place | n_wf_b2e | commercial/com_kiosk | 3.4 x 5.2 | S | yes |
-| 84 | wfa_b2w__shores_holiday_rentals__0 | Shores Holiday Rentals | office | non-shop indoor place | n_wf_b2w | commercial/com_realty | 5.4 x 13.0 | M | yes |
-| 85 | ind_vb_w800_n1600_se__public_works_office__1 | Public Works Permits | permits | non-shop indoor place | i_vb_w800_n1600_se | modular/examples/mod_brk_row | 6.0 x 13.1 | M | yes |
-| 86 | hs_b5_amber_post_0 | Coronado Post Office | bank -> post_office | non-shop indoor place | n_hs_b5_amber | civic/civ_post_office | 21.4 x 14.2 | L | yes |
-| 87 | fn_east_realty_0 | North End Realty | realty | non-shop indoor place | n_fn_east | commercial/com_realty | 5.4 x 13.0 | M | yes |
-| 88 | hs_b3_amber_realty_0 | Ocean Realty | realty | non-shop indoor place | n_hs_b3_amber | commercial/com_realty | 5.4 x 13.0 | M | yes |
-| 89 | hs_b6_ninth_rec_center_0 | Hill Rec Center | hall -> rec_center | non-shop indoor place | n_hs_b6_ninth | civic/civ_rec_center | 23.4 x 13.2 | L | yes |
-| 90 | ind_vb_w600_n1400_sw__island_movers_office__0 | Island Movers | sales_office | non-shop indoor place | i_vb_w600_n1400_sw | ck/ck_svc_bank_pharm | 7.7 x 11.1 | M | yes |
-| 91 | ind_vc_w600_n1600_sw__pacific_seafood_sales__0 | Pacific Seafood Co. | sales_office | non-shop indoor place | i_vc_w600_n1600_sw | commercial/com_realty | 5.4 x 13.0 | M | yes |
-| 92 | apt_b1_7th__corner_shops_7th__1 | Island Tax Service | tax | non-shop indoor place | n_apt_b1_7th | commercial/com_boutique_row | 6.0 x 10.0 | S | yes |
+| 74 | m_sw__check_cashing__0 | Palm Travel | office | non-shop indoor place | m_sw | commercial/com_realty | 5.4 x 13.0 | M | yes |
+| 75 | v_ne__city_hall__0 | City Hall Front Desk | office | non-shop indoor place | v_ne | civic/civ_city_hall | 25.4 x 14.2 | XL | yes |
+| 76 | v_se__police__0 | Crownado Police Front Desk | office | non-shop indoor place | v_se | civic/civ_police | 21.4 x 13.2 | L | yes |
+| 77 | w_s1__housing_office__0 | Student Housing Office | office | non-shop indoor place | n_w_s1 | commercial/com_realty | 5.4 x 13.0 | M | yes |
+| 78 | wfa_b2e__harbour_tours_kiosk__0 | Harbour Tours | office | non-shop indoor place | n_wf_b2e | commercial/com_kiosk | 3.4 x 5.2 | S | yes |
+| 79 | ind_vb_w800_n1600_se__public_works_office__1 | Public Works Permits | permits | non-shop indoor place | i_vb_w800_n1600_se | modular/examples/mod_brk_row | 6.0 x 13.1 | M | yes |
+| 80 | b_se__civ_post_office__0 | Crownado Post Office | office -> post_office | non-shop indoor place | b_se | civic/civ_post_office | 21.4 x 14.2 | L | yes |
+| 81 | hs_b5_amber_post_0 | Coronado Post Office | bank -> post_office | non-shop indoor place | n_hs_b5_amber | civic/civ_post_office | 21.4 x 14.2 | L | yes |
+| 82 | fn_east_realty_0 | North End Realty | realty | non-shop indoor place | n_fn_east | commercial/com_realty | 5.4 x 13.0 | M | yes |
+| 83 | hs_b3_amber_realty_0 | Ocean Realty | realty | non-shop indoor place | n_hs_b3_amber | commercial/com_realty | 5.4 x 13.0 | M | yes |
+| 84 | r_s__craftsman_sage__0 | Saltwater Realty | office -> realty | non-shop indoor place | r_s | houses/craftsman_sage | 9.4 x 11.8 | M | yes |
+| 85 | w_c5__realty__0 | Ridge Realty | office -> realty | non-shop indoor place | n_w_c5 | commercial/com_realty | 5.4 x 13.0 | M | yes |
+| 86 | wfa_b2w__shores_holiday_rentals__0 | Shores Holiday Rentals | office -> realty | non-shop indoor place | n_wf_b2w | commercial/com_realty | 5.4 x 13.0 | M | yes |
+| 87 | hs_b6_ninth_rec_center_0 | Hill Rec Center | hall -> rec_center | non-shop indoor place | n_hs_b6_ninth | civic/civ_rec_center | 23.4 x 13.2 | L | yes |
+| 88 | ind_vb_w600_n1400_sw__island_movers_office__0 | Island Movers | sales_office | non-shop indoor place | i_vb_w600_n1400_sw | ck/ck_svc_bank_pharm | 7.7 x 11.1 | M | yes |
+| 89 | ind_vc_w600_n1600_sw__pacific_seafood_sales__0 | Pacific Seafood Co. | sales_office | non-shop indoor place | i_vc_w600_n1600_sw | commercial/com_realty | 5.4 x 13.0 | M | yes |
+| 90 | apt_b1_7th__corner_shops_7th__1 | Island Tax Service | tax | non-shop indoor place | n_apt_b1_7th | commercial/com_boutique_row | 6.0 x 10.0 | S | yes |
+| 91 | i_ne__machine_shop__0 | Abe's Tax Office | office -> tax | non-shop indoor place | i_ne | ck/ck_svc_trade | 5.7 x 11.1 | S | yes |
+| 92 | i_se__auto_parts__1 | Vera's Tax Office | office -> tax | non-shop indoor place | i_se | ck/ck_svc_trade | 5.7 x 11.1 | S | yes |
 | 93 | fn_east_ferry_office_0 | Coronado Ferry Tickets | transit | non-shop indoor place | n_fn_east | civic/civ_harbor_office | 15.4 x 11.2 | L | yes |
 | 94 | hp_transit_transit_hall_0 | Island Transit Center | transit | non-shop indoor place | n_hp_transit | civic/civ_post_office | 21.4 x 14.2 | L | yes |
 | 95 | wfa_b1e__pier_bait_tackle__0 | Pier Bait & Tackle | bait | shop (kept, NEW-18 plan) | n_wf_b1e | commercial/com_shallow_surf | 8.4 x 7.0 | S | yes |

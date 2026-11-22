@@ -2957,7 +2957,7 @@
    "id": "b_se__civ_post_office__0",
    "name": "Crownado Post Office",
    "kind": "office",
-   "dress": "office",
+   "dress": "post_office",
    "group": "non-shop indoor place",
    "district": "",
    "piece": "b_se",
@@ -2968,14 +2968,14 @@
    "old_props": 32,
    "area": 304,
    "size": "L",
-   "prop_tris_est": 21082,
-   "prop_tris_capped": 21082
+   "prop_tris_est": 16644,
+   "prop_tris_capped": 16644
   },
   {
    "id": "c_sw__com_bank__0",
    "name": "Shore Bank",
    "kind": "office",
-   "dress": "office",
+   "dress": "bank",
    "group": "non-shop indoor place",
    "district": "",
    "piece": "c_sw",
@@ -2986,8 +2986,8 @@
    "old_props": 18,
    "area": 177,
    "size": "L",
-   "prop_tris_est": 20158,
-   "prop_tris_capped": 20158
+   "prop_tris_est": 15492,
+   "prop_tris_capped": 15492
   },
   {
    "id": "cc_b1_court__legal_aid__0",
@@ -3011,7 +3011,7 @@
    "id": "cc_b2_n__sixth_e_dentist__0",
    "name": "Sixth Street Dental",
    "kind": "office",
-   "dress": "office",
+   "dress": "dentist",
    "group": "non-shop indoor place",
    "district": "",
    "piece": "n_cc_b2_n",
@@ -3022,8 +3022,8 @@
    "old_props": null,
    "area": 150,
    "size": "M",
-   "prop_tris_est": 16761,
-   "prop_tris_capped": 16761
+   "prop_tris_est": 17412,
+   "prop_tris_capped": 17412
   },
   {
    "id": "cc_b3_arm__seventh_s_arcade__1",
@@ -3047,7 +3047,7 @@
    "id": "cc_b3_main__eighth_optician__0",
    "name": "Uphill Dental",
    "kind": "office",
-   "dress": "office",
+   "dress": "dentist",
    "group": "non-shop indoor place",
    "district": "",
    "piece": "n_cc_b3_main",
@@ -3058,8 +3058,8 @@
    "old_props": null,
    "area": 150,
    "size": "M",
-   "prop_tris_est": 16761,
-   "prop_tris_capped": 16761
+   "prop_tris_est": 17412,
+   "prop_tris_capped": 17412
   },
   {
    "id": "cc_b5_w__sixth_ne_arcade__1",
@@ -3083,7 +3083,7 @@
    "id": "i_ne__machine_shop__0",
    "name": "Abe's Tax Office",
    "kind": "office",
-   "dress": "office",
+   "dress": "tax",
    "group": "non-shop indoor place",
    "district": "",
    "piece": "i_ne",
@@ -3094,8 +3094,8 @@
    "old_props": 22,
    "area": 63,
    "size": "S",
-   "prop_tris_est": 9273,
-   "prop_tris_capped": 9273
+   "prop_tris_est": 6469,
+   "prop_tris_capped": 6469
   },
   {
    "id": "i_nw__drivers_cafe__1",
@@ -3119,7 +3119,7 @@
    "id": "i_se__auto_parts__1",
    "name": "Vera's Tax Office",
    "kind": "office",
-   "dress": "office",
+   "dress": "tax",
    "group": "non-shop indoor place",
    "district": "",
    "piece": "i_se",
@@ -3130,8 +3130,8 @@
    "old_props": 21,
    "area": 63,
    "size": "S",
-   "prop_tris_est": 9273,
-   "prop_tris_capped": 9273
+   "prop_tris_est": 6469,
+   "prop_tris_capped": 6469
   },
   {
    "id": "i_sw__locksmith__1",
@@ -3155,7 +3155,7 @@
    "id": "m_ne__bank_pharmacy__0",
    "name": "Wagon Bank",
    "kind": "office",
-   "dress": "office",
+   "dress": "bank",
    "group": "non-shop indoor place",
    "district": "",
    "piece": "m_ne",
@@ -3166,14 +3166,14 @@
    "old_props": 28,
    "area": 127,
    "size": "M",
-   "prop_tris_est": 15167,
-   "prop_tris_capped": 15167
+   "prop_tris_est": 11778,
+   "prop_tris_capped": 11778
   },
   {
    "id": "m_ne__insurance_office__0",
    "name": "Anchor Credit Union",
    "kind": "office",
-   "dress": "office",
+   "dress": "bank",
    "group": "non-shop indoor place",
    "district": "",
    "piece": "m_ne",
@@ -3184,8 +3184,8 @@
    "old_props": 22,
    "area": 70,
    "size": "M",
-   "prop_tris_est": 10074,
-   "prop_tris_capped": 10074
+   "prop_tris_est": 8540,
+   "prop_tris_capped": 8540
   },
   {
    "id": "m_sw__check_cashing__0",
@@ -3209,7 +3209,7 @@
    "id": "r_s__craftsman_sage__0",
    "name": "Saltwater Realty",
    "kind": "office",
-   "dress": "office",
+   "dress": "realty",
    "group": "non-shop indoor place",
    "district": "",
    "piece": "r_s",
@@ -3220,8 +3220,8 @@
    "old_props": 17,
    "area": 111,
    "size": "M",
-   "prop_tris_est": 13594,
-   "prop_tris_capped": 13594
+   "prop_tris_est": 7738,
+   "prop_tris_capped": 7738
   },
   {
    "id": "v_ne__city_hall__0",
@@ -3245,7 +3245,7 @@
    "id": "v_ne__library__0",
    "name": "Crownado Public Library",
    "kind": "office",
-   "dress": "office",
+   "dress": "library",
    "group": "non-shop indoor place",
    "district": "",
    "piece": "v_ne",
@@ -3256,8 +3256,8 @@
    "old_props": null,
    "area": 356,
    "size": "XL",
-   "prop_tris_est": 21082,
-   "prop_tris_capped": 21082
+   "prop_tris_est": 15853,
+   "prop_tris_capped": 15853
   },
   {
    "id": "v_se__police__0",
@@ -3281,7 +3281,7 @@
    "id": "w_c5__realty__0",
    "name": "Ridge Realty",
    "kind": "office",
-   "dress": "office",
+   "dress": "realty",
    "group": "non-shop indoor place",
    "district": "",
    "piece": "n_w_c5",
@@ -3292,8 +3292,8 @@
    "old_props": 16,
    "area": 70,
    "size": "M",
-   "prop_tris_est": 10074,
-   "prop_tris_capped": 10074
+   "prop_tris_est": 6180,
+   "prop_tris_capped": 6180
   },
   {
    "id": "w_s1__housing_office__0",
@@ -3335,7 +3335,7 @@
    "id": "wfa_b2w__shores_holiday_rentals__0",
    "name": "Shores Holiday Rentals",
    "kind": "office",
-   "dress": "office",
+   "dress": "realty",
    "group": "non-shop indoor place",
    "district": "",
    "piece": "n_wf_b2w",
@@ -3346,8 +3346,8 @@
    "old_props": 25,
    "area": 70,
    "size": "M",
-   "prop_tris_est": 10074,
-   "prop_tris_capped": 10074
+   "prop_tris_est": 6180,
+   "prop_tris_capped": 6180
   },
   {
    "id": "ind_vb_w800_n1600_se__public_works_office__1",
@@ -3615,7 +3615,7 @@
    "over_cap": 0
   },
   "bank": {
-   "places": 5,
+   "places": 8,
    "core": [
     "shop_counter",
     "bulletproof_teller_window",
@@ -4257,7 +4257,7 @@
    "over_cap": 0
   },
   "dentist": {
-   "places": 1,
+   "places": 3,
    "core": [
     "reception_desk",
     "office_chair"
@@ -4277,7 +4277,7 @@
    ],
    "built_since_new21": [],
    "note": "",
-   "prop_tris_max": 9712,
+   "prop_tris_max": 17412,
    "over_cap": 0
   },
   "diner": {
@@ -4865,7 +4865,7 @@
    "over_cap": 0
   },
   "library": {
-   "places": 3,
+   "places": 4,
    "core": [
     "office_desk",
     "office_chair",
@@ -5011,7 +5011,7 @@
    "over_cap": 0
   },
   "office": {
-   "places": 24,
+   "places": 12,
    "core": [
     "office_desk",
     "office_chair",
@@ -5277,7 +5277,7 @@
    "over_cap": 0
   },
   "post_office": {
-   "places": 2,
+   "places": 3,
    "core": [
     "shop_counter",
     "stanchion",
@@ -5327,7 +5327,7 @@
    "over_cap": 0
   },
   "realty": {
-   "places": 2,
+   "places": 5,
    "core": [
     "office_desk",
     "office_chair",
@@ -5349,7 +5349,7 @@
    ],
    "built_since_new21": [],
    "note": "Window listing boards are the signature.",
-   "prop_tris_max": 6180,
+   "prop_tris_max": 7738,
    "over_cap": 0
   },
   "rec_center": {
@@ -5697,7 +5697,7 @@
    "over_cap": 0
   },
   "tax": {
-   "places": 2,
+   "places": 4,
    "core": [
     "office_desk",
     "office_chair",
