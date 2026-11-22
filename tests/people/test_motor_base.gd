@@ -27,7 +27,7 @@ var results := {}
 var b_foot := [-1, -1, -1, -1]   # L ankle, R ankle, L toe, R toe (each a contact point of its own)
 var b_pel := -1
 # per phase
-var slide_most := 0.0; var dv_most := 0.0; var dy_most := 0.0
+var slide_most := 0.0; var dv_most := 0.0; var dy_most := 0.0; var pull_most := 0.0; var pull_at := ""
 var plant_at := [null, null, null, null]; var low := [9.0, 9.0, 9.0, 9.0]
 var foot_prev := [Vector3(), Vector3(), Vector3(), Vector3()]
 var pel_prev := Vector3(); var pel_v_prev := Vector3(); var have_prev := 0
@@ -76,12 +76,13 @@ func _spawn(m: String) -> void:
 	sk = null; phase = -1; t = 0.0; phase_t = 0.0
 
 func _reset_phase() -> void:
-	slide_most = 0.0; dv_most = 0.0; dy_most = 0.0; clips = []; dv_at = ""; slide_at = ""   # (the hips and feet go on from the last phase: one motion)
+	slide_most = 0.0; dv_most = 0.0; dy_most = 0.0; pull_most = 0.0; pull_at = ""; clips = []; dv_at = ""; slide_at = ""   # (the hips and feet go on from the last phase: one motion)
 
 func _end_phase() -> void:
 	var P = PHASES[phase]
-	results["%s|%s" % [mode, P[0]]] = [slide_most, dv_most, dy_most]
-	print("MOTOR %s %-16s slide %5.1f cm%s  hips_dv %4.2f m/s%s  hips_dy %4.1f cm  clips %s" % [mode, P[0], slide_most * 100.0, slide_at, dv_most, dv_at, dy_most * 100.0, str(clips)])
+	results["%s|%s" % [mode, P[0]]] = [slide_most, dv_most, dy_most, pull_most]
+	var stp: int = player.call(&"get_motor_state").get("steps", 0) if mode == "new" else 0
+	print("MOTOR %s %-16s steps %d slide %5.1f cm%s  hips_dv %4.2f m/s%s  hips_dy %4.1f cm  pull %4.1f cm%s  clips %s" % [mode, P[0], stp, slide_most * 100.0, slide_at, dv_most, dv_at, dy_most * 100.0, pull_most * 100.0, pull_at, str(clips)])
 
 func _process(delta: float) -> bool:
 	if not player or not player.is_inside_tree(): return false
@@ -116,20 +117,27 @@ func _on_pose() -> void:
 
 var snap_feet := [Vector3(), Vector3(), Vector3(), Vector3()]
 var snap_pel := Vector3()
+var snap_ms := {}; var snap_clip := ""
 func _snap() -> void:
+	# (the motor's state as it was for THIS pose: read when the next frame's first pose comes, the motor had already
+	# stepped on - its contact flags a frame ahead; a foot swinging in at 7 m/s showed as a 12 cm slide)
+	snap_clip = player.call(&"get_clip")
+	if mode == "new": snap_ms = player.call(&"get_motor_state")
 	var g := sk.global_transform
 	for s in 4: snap_feet[s] = g * sk.get_bone_global_pose(b_foot[s]).origin
 	snap_pel = g * sk.get_bone_global_pose(b_pel).origin
 
 func _measure(dt: float) -> void:
-	var clip: String = player.call(&"get_clip")
+	var clip: String = snap_clip
 	var flags = null   # the clip's own foot contacts (new motor): [L down, R down]
 	if mode == "new":
-		var ms: Dictionary = player.call(&"get_motor_state")
-		if ms.get("on", false): flags = [ms["down_l"], ms["down_r"]]
+		var ms: Dictionary = snap_ms
+		if ms.get("on", false): flags = [ms["down_l"] and not ms["step_l"], ms["down_r"] and not ms["step_r"]]   # (a re-plant step: lifted on purpose)
+		# (how far the foot lock had to pull a planted foot off the clip's: the leg bent off its own pose)
+		if ms.get("on", false) and maxf(ms["pull_l"], ms["pull_r"]) > pull_most: pull_most = maxf(ms["pull_l"], ms["pull_r"]); pull_at = " (at %.2f s, %s:%s)" % [phase_t, ms["state"], ms["clip"]]
 		if ms.get("on", false): clip = "%s:%s" % [ms["state"], ms["clip"]]
 		if trace and ms.get("on", false): print("TRACEP %s %.3f %s dl %s dr %s pl %.3f pr %.3f yaw %.2f" % [PHASES[phase][0], phase_t, clip, str(ms["down_l"]), str(ms["down_r"]), ms["pull_l"], ms["pull_r"], ms["yaw"]])
-		if trace and ms.get("on", false): print("TRACEI sw %d jump %.3f live %s t %.3f" % [ms["i_switches"], ms["i_jump"], str(ms["i_live"]), ms["t"]])
+		if trace and ms.get("on", false): print("TRACEI sw %d jump %.3f live %s t %.3f ayaw %.3f al %.3f nh %d na %d" % [ms["i_switches"], ms["i_jump"], str(ms["i_live"]), ms["t"], ms["align_yaw"], ms["align"], ms["hips_aligned"], ms["aligned"]])
 	if clips.is_empty() or clips[-1] != clip: clips.append(clip)
 	for s in 4:
 		var p: Vector3 = snap_feet[s]
@@ -165,9 +173,9 @@ func _finish() -> void:
 		for P in PHASES:
 			var r = results.get("new|%s" % P[0])
 			if r == null: continue
-			var ok: bool = r[1] < 1.2 and r[2] < 0.03
+			var ok: bool = r[1] < 1.2 and r[2] < 0.03 and r[0] < 0.03
 			if not ok: fails += 1
-			print("CHECK %s new %-16s hips_dv %.2f < 1.2 m/s, hips_dy %.1f < 3 cm" % ["ok  " if ok else "FAIL", P[0], r[1], r[2] * 100.0])
+			print("CHECK %s new %-16s hips_dv %.2f < 1.2 m/s, hips_dy %.1f < 3 cm, slide %.1f < 3 cm (pull %.1f cm)" % ["ok  " if ok else "FAIL", P[0], r[1], r[2] * 100.0, r[0] * 100.0, r[3] * 100.0])
 	if modes.has("new") and modes.has("old"):
 		var sn := 0.0; var so := 0.0; var dn := 0.0; var do_ := 0.0
 		for P in PHASES:

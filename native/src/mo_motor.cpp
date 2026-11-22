@@ -47,6 +47,8 @@ int Motor::inert_switches() const { return inert ? inert->switches : 0; }
 float Motor::inert_jump() const { return inert ? inert->last_jump : 0.0f; }
 bool Motor::inert_live() const { return inert && inert->is_blending(); }
 float Motor::foot_pull(int p_side) const { return limbs ? limbs->pull[p_side & 1] : 0.0f; }
+int Motor::foot_steps() const { return limbs ? limbs->steps : 0; }
+bool Motor::foot_stepping(int s) const { return limbs && limbs->stepping(s); }
 int Motor::foot_locks() const { return limbs ? limbs->locks : 0; }
 
 Array Motor::dump(const String &p_clip) const {
@@ -139,8 +141,8 @@ bool Motor::attach(CityPed *p_fig) {
 	return true;
 }
 
-void Motor::align_contacts(const Clip &p_c, double p_t0) {
-	if (!host || !limbs || !limbs->lock_on) return;
+bool Motor::align_contacts(const Clip &p_c, double p_t0) {
+	if (!host || !limbs || !limbs->lock_on) return false;
 	const Frame f = p_c.d->lerp(p_t0);
 	// where the new clip puts each foot, placed as the figure will be (the body's place, this frame's facing)
 	const Basis R(UP, yaw);
@@ -152,15 +154,46 @@ void Motor::align_contacts(const Clip &p_c, double p_t0) {
 		const Vector3 d = limbs->lock_w[s] - p_new;
 		sum += Vector3(d.x, 0.0f, d.z); m++;
 	}
-	if (!m) return;
+	if (!m) return false;
 	const Vector3 by = sum / (float)m;
 	last_align = (float)by.length();
-	if (last_align < 0.005f || last_align > 0.45f) return;   // (nothing to do / too far: a different stance, not a slide)
+	if (last_align < 0.005f || last_align > 0.45f) return true;   // (nothing to do / too far: a different stance, not a slide)
 	if (host->shift(by)) n_aligned++;
+	return true;
+}
+
+// FACING ALIGNMENT: the new clip turned so its hips face the way the drawn hips face. Left to the hand-over, the hips'
+// turn offset decays over its time and swings the whole figure about the hips (a foot a metre under them, pinned
+// meanwhile, was pulled 10 cm in the run pivot)
+void Motor::align_facing(const Clip &p_c, double p_t0) {
+	if (!host || st == TRAV) return;
+	const Vector3 th = fig->bone_world("Bip01_L_Thigh") - fig->bone_world("Bip01_R_Thigh");
+	const Vector3 fw = -UP.cross(th);
+	if (Vector2(fw.x, fw.z).length() < 1e-3) return;
+	const float drawn = std::atan2((float)fw.x, (float)fw.z);
+	const float dy = wrapf(drawn - (yaw + (float)p_c.d->lerp(p_t0).face));
+	last_align_yaw = dy;
+	if (std::fabs(dy) < 0.005f || std::fabs(dy) > 0.5f) return;
+	yaw += dy; yaw0 += dy;
+}
+
+// ROOT ALIGNMENT: no foot to put on its pin: the new clip is placed so its hips start (level) where the hips are drawn.
+// Left to the hand-over, their offset decays over its time and carries the whole figure with it, a foot pinned
+// meanwhile too (the run pivot: the left foot planted 0.1 s into the hand-over was pulled 25 cm)
+void Motor::align_hips(const Clip &p_c, double p_t0) {
+	if (!host || st == TRAV) return;
+	const Frame f = p_c.d->lerp(p_t0);
+	const Vector3 drawn = fig->bone_world("Bip01_Pelvis");
+	const Vector3 p_new = host->position() + Basis(UP, yaw).xform(f.hips);
+	Vector3 by = drawn - p_new; by.y = 0.0f;
+	last_align = (float)by.length();
+	if (last_align < 0.005f || last_align > 0.4f) return;
+	if (host->shift(by)) n_hips_aligned++;
 }
 
 void Motor::play(const Clip &p_c, double p_t0, float p_blend) {
-	align_contacts(p_c, p_t0);
+	align_facing(p_c, p_t0);
+	if (!align_contacts(p_c, p_t0)) align_hips(p_c, p_t0);
 	anim->play(p_c.name, 0.0);
 	t = std::min(std::max(p_t0, 0.0), p_c.d->len);
 	anim->seek(t, true);
@@ -307,17 +340,8 @@ void Motor::to_turn(float p_angle) {
 	st = TURN; n_turns++;
 }
 
-void Motor::to_pivot(float p_angle) {
-	const Clip &c = (speed > 2.0f ? r_pivot : w_pivot)[p_angle > 0.0f ? 0 : 1];
-	if (!c.ok()) return;
-	const Frame now = cur->d->lerp(t);
-	double best_t = 0.0; float best_c = 1e30f;
-	for (double tt = 0.0; tt <= std::min(0.35, c.d->len * 0.4); tt += 1.0 / FPS) {
-		const float dv = c.curve("vz", tt, 0.0f) - speed;
-		const float cost = pose_cost(now, c.d->at(tt)) + 0.3f * dv * dv;
-		if (cost < best_c) { best_c = cost; best_t = tt; }
-	}
-	last_entry_cost = best_c;
+void Motor::to_pivot(const Clip &c, double best_t, float p_angle, float p_cost) {
+	last_entry_cost = p_cost;
 	turn_k = std::fabs(c.yaw_end) > 0.1f ? clampf(p_angle / c.yaw_end, 0.75f, 1.1f) : 1.0f;
 	rate = 1.0f;
 	yaw0 = yaw - turn_k * c.d->yaw(best_t);
@@ -325,6 +349,35 @@ void Motor::to_pivot(float p_angle) {
 	hand_at = c.a->has_meta(key) ? (double)c.a->get_meta(key) : c.meta("done_at", (float)c.d->len);
 	play(c, best_t, blend_step);
 	st = PIVOT; n_pivots++;
+}
+
+// TURNING BACK while moving: the pivot (left or right; for a full reversal either, whichever fits the feet) and the
+// moment of it most like the stride ahead, at most a step ahead (cut in on whatever foot was down, the hand-over bent
+// the planted leg 29 cm off the clip's). Returns false while the loop should run on to that stride.
+bool Motor::pivot_when(float p_d) {
+	const Clip *set = speed > 2.0f ? r_pivot : w_pivot;
+	const Clip &L = loops[loop_i];
+	const double ahead = std::min(L.d->len, 0.35);
+	double best_w = 0.0, best_t = 0.0; int best_k = -1; float best_c = 1e30f, best_a = p_d;
+	for (int k = 0; k < 2; k++) {
+		const Clip &c = set[k];
+		if (!c.ok()) continue;
+		// (k 0 turns left, positive; the other way round is the angle less a full turn)
+		const bool same = (k == 0) == (p_d > 0.0f);
+		if (!same && std::fabs(p_d) < 2.8f) continue;
+		const float ang = same ? p_d : p_d - std::copysign(TAU_F, p_d);
+		for (double w = 0.0; w <= ahead + 1e-6; w += 1.0 / FPS) {
+			const Frame lf = L.d->lerp(t + w * rate);
+			for (double tt = 0.0; tt <= std::min(0.35, c.d->len * 0.4); tt += 1.0 / FPS) {
+				const float dv = c.curve("vz", tt, 0.0f) - speed;
+				const float cost = pose_cost(lf, c.d->at(tt)) + 0.3f * dv * dv + 0.1f * (float)w + (same ? 0.0f : 0.02f);
+				if (cost < best_c) { best_c = cost; best_w = w; best_k = k; best_t = tt; best_a = ang; }
+			}
+		}
+	}
+	if (best_k < 0) return false;
+	if (best_w < 0.5 / FPS) { to_pivot(set[best_k], best_t, best_a, best_c); return true; }
+	return false;
 }
 
 // (the capsule's height is not the ground's: on the floor it bobs 4 mm every other frame, and after a vault's snap it
@@ -429,7 +482,14 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 				vel = Basis(UP, yaw).xform(L.d->root_v.empty() ? Vector3(0, 0, L.ground_v) : L.d->root_vel(t)) * rate;
 				break;
 			}
-			if (std::fabs(d) > 2.4f && speed > 0.8f && (speed > 2.0f ? r_pivot[0].ok() : w_pivot[0].ok())) { to_pivot(d); break; }
+			if (std::fabs(d) > 2.4f && speed > 0.8f && (speed > 2.0f ? r_pivot[0].ok() : w_pivot[0].ok())) {
+				if (pivot_when(d)) break;
+				// (on to the stride that fits: straight on at the pace held, at most a step)
+				advance(p_dt);
+				const Clip &L = loops[loop_i];
+				vel = Basis(UP, yaw).xform(L.d->root_v.empty() ? Vector3(0, 0, L.ground_v) : L.d->root_vel(t)) * rate;
+				break;
+			}
 			// the heavy body: it turns at a limited rate and slows into a sharp turn
 			const float tr = speed > 2.0f ? run_turn_rate : walk_turn_rate;
 			yaw += clampf(d, -tr * p_dt, tr * p_dt);
@@ -477,6 +537,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	if (limbs && cur) {
 		const Frame fr = cur->d->lerp(t);
 		limbs->lock_on = st != OFF;
+		limbs->may_step = st == IDLE || st == STOP;   // (standing: a foot held off the clip's stance re-plants)
 		limbs->down[0] = fr.down[0]; limbs->down[1] = fr.down[1];
 		limbs->ground_y = ground_at(p_host, p_host.position());
 	}

@@ -43,7 +43,8 @@ float mo::ClipData::yaw(double t) const {
 Vector3 mo::ClipData::root_vel(double t) const {
 	if (root_v.empty()) return Vector3();
 	if (loop && len > 0.0) { t = std::fmod(t, len); if (t < 0.0) t += len; }
-	const double x = std::min(std::max(t * FPS, 0.0), (double)(root_v.size() - 1));
+	// (one value per 1/30 s interval, at its middle; t is the END of a 1/60 s step: taken at the step's middle)
+	const double x = std::min(std::max(t * FPS - 0.75, 0.0), (double)(root_v.size() - 1));
 	const int i = (int)x, j = std::min(i + 1, (int)root_v.size() - 1);
 	return root_v[i].lerp(root_v[j], (float)(x - i));
 }
@@ -158,27 +159,35 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 			// floor is the measure there; elsewhere the foot's own lowest nearby)
 			const float floor_y = turns ? gy + 0.02f : lo + 0.05f;
 			d->f[k].down[s] = F.foot[s].y < floor_y && std::fabs((float)F.foot_v[s].y) < 0.3f;
+			// (a clip that carries itself, or stands: its feet's speeds are over the ground already; one sliding along the
+			// floor (an idle's shuffle) is not planted: pinned, the lock pulled it 17 cm off the clip's)
+			if (!d->in_place && Vector2(F.foot_v[s].x, F.foot_v[s].z).length() > 0.25f) d->f[k].down[s] = false;
 		}
 	}
 	// the travel from the planted feet (in-place clips)
 	if (d->in_place) {
+		// PER INTERVAL [k, k+1] (a root track): the body moves by exactly what the planted foot moves back against the
+		// figure over that 1/30 s (a central difference over two intervals, smoothed over five more, smeared a run stop's
+		// sharp plant: the hips stalled two frames, a 1.6 m/s jump)
 		std::vector<Vector3> rv(n);
 		for (int k = 0; k < n; k++) {
 			const Frame &F = d->f[k];
-			const double tk = k / FPS;
+			const int k1 = std::min(k + 1, n - 1), ka = k1 > k ? k : std::max(k - 1, 0), kb = k1 > k ? k1 : k;
+			const Frame &F1 = d->f[kb], &F0 = d->f[ka];
+			const double tk = (ka + 0.5) / FPS;
 			const Vector3 trav(curve(a, "vx", tk), 0.0f, curve(a, "vz", tk));
-			const float om = (d->yaw(std::min(tk + 1.0 / FPS, d->len)) - d->yaw(std::max(tk - 1.0 / FPS, 0.0))) / (float)(2.0 / FPS);
+			const float om = kb > ka ? (d->yaw(kb / FPS) - d->yaw(ka / FPS)) * (float)FPS : 0.0f;
 			Vector3 sum; int m = 0; Vector3 by[2]; bool dn[2] = { false, false };
 			for (int s = 0; s < 2; s++) {
-				if (!F.down[s]) continue;
-				const Vector3 rel = F.foot_v[s] - trav;            // the foot against the figure
-				const Vector3 fp(F.foot[s].x, 0.0f, F.foot[s].z);
+				if (!F.down[s] || !F1.down[s]) continue;   // (down over the whole interval)
+				const Vector3 rel = (F1.foot[s] - F0.foot[s]) * (float)FPS;   // the foot against the figure
+				const Vector3 fp((F0.foot[s].x + F1.foot[s].x) * 0.5f, 0.0f, (F0.foot[s].z + F1.foot[s].z) * 0.5f);
 				const Vector3 spin(om * (float)fp.z, 0.0f, -om * (float)fp.x);   // (the frame's turn under the foot)
 				by[s] = -(rel + spin); by[s].y = 0.0f; dn[s] = true;
 				sum += by[s]; m++;
 			}
 			// (both down: their average. Taking the lower foot alone was tried, 22 Nov: the walks' planted feet then slid
-			// 35 cm; the 180-degree pivots stay open, docs/ANIMATION_PLAN.md)
+			// 35 cm)
 			rv[k] = m ? Vector3(sum.x / m, 0.0f, sum.z / m) : trav;
 			// ... unless they disagree: one of them is not planted (a heel still landing, sliding on; a toe pushing off).
 			// The one whose travel is nearer the clip's own pace is (pwalk/stop_b at 0.2 s: the landing right foot still
@@ -192,15 +201,28 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 			}
 
 		}
+		// SMOOTHED: the HIPS' path in the world (the body's travel plus the hips' own move in the figure, per interval),
+		// 1-2-3-2-1 over five intervals (a loop wraps); the body takes up the 30 Hz keys' noise in the hips, the foot lock
+		// the little left at the feet. (The body's travel smoothed by itself: exact per interval, the hips' speed stepped
+		// 1.5 m/s at the keys in the jogs; over five intervals, a run stop's sharp plant was smeared into a 1.6 m/s stall.)
 		d->root_v.resize(n);
-		for (int k = 0; k < n; k++) {   // smoothed over 5 frames (a loop wraps)
-			Vector3 acc; int m = 0;
-			for (int j = k - 2; j <= k + 2; j++) {
-				int jj = j;
-				if (d->loop) jj = ((j % (n - 1)) + (n - 1)) % (n - 1); else jj = std::min(std::max(j, 0), n - 1);
-				acc += rv[jj]; m++;
-			}
-			d->root_v[k] = acc / (float)m;
+		const int ni = std::max(n - 1, 1);
+		// (in a clip that turns, the figure's frame turns under the hips: each interval's hips speed is taken in the clip's
+		// start frame, with the turn about the figure's origin, then back; averaged in a turning frame, the run pivot slid
+		// a foot 43 cm)
+		std::vector<Vector3> hl(n), hw(n); std::vector<float> ym(n);
+		for (int k = 0; k < n; k++) {
+			const int kb = std::min(k + 1, n - 1), ka = kb > k ? k : std::max(k - 1, 0);
+			const float om = kb > ka ? (d->yaw(kb / FPS) - d->yaw(ka / FPS)) * (float)FPS : 0.0f;
+			const Vector3 hp = (d->f[ka].hips + d->f[kb].hips) * 0.5f;
+			hl[k] = (d->f[kb].hips - d->f[ka].hips) * (float)FPS + Vector3(om * (float)hp.z, 0.0f, -om * (float)hp.x); hl[k].y = 0.0f;
+			ym[k] = (d->yaw(ka / FPS) + d->yaw(kb / FPS)) * 0.5f;
+			hw[k] = Basis(Vector3(0, 1, 0), ym[k]).xform(rv[k] + hl[k]);
+		}
+		auto at = [&](int j) { if (d->loop) j = ((j % ni) + ni) % ni; else j = std::min(std::max(j, 0), ni - 1); return hw[j]; };
+		for (int k = 0; k < n; k++) {
+			const Vector3 sm = (at(k - 2) + at(k - 1) * 2.0f + at(k) * 3.0f + at(k + 1) * 2.0f + at(k + 2)) / 9.0f;
+			d->root_v[k] = Basis(Vector3(0, 1, 0), -ym[k]).xform(sm) - hl[k];
 		}
 	}
 	g_cache[key] = d;

@@ -95,12 +95,14 @@ public:
 	// (the tests)
 	int n_starts = 0, n_stops = 0, n_turns = 0, n_pivots = 0, n_gait = 0, n_fidgets = 0, n_switch = 0;
 	float last_entry_cost = 0.0f;
-	int n_aligned = 0; float last_align = 0.0f;   // (tests) contact alignments made, the last one's size (m)
+	int n_hips_aligned = 0; float last_align_yaw = 0.0f; int n_aligned = 0; float last_align = 0.0f;   // (tests) contact alignments made, the last one's size (m)
 	int inert_switches() const;
 	float inert_jump() const;
 	bool inert_live() const;
 	float foot_pull(int p_side) const;   // (tests) how far the foot lock moved that foot from the clip this frame, m
 	int foot_locks() const;
+	int foot_steps() const;
+	bool foot_stepping(int s) const;
 	Array dump(const String &p_clip) const;   // (tests / tools) a clip's measured frames: t, feet, down, hips, root_v, yaw
 
 private:
@@ -136,13 +138,16 @@ private:
 	void stop_with(const Clip *p_c, double p_t0, float p_cost);
 	void to_start(float p_angle, float p_want);
 	void to_turn(float p_angle);
-	void to_pivot(float p_angle);
+	void to_pivot(const Clip &c, double best_t, float p_angle, float p_cost);
+	bool pivot_when(float p_d);
 	Vector3 clip_vel(const Clip &p_c, double p_t) const;   // world, from the clip's vz / vx and the turn so far
 	void advance(float p_dt);   // the clip's time on, the pose set
 	// CONTACT ALIGNMENT: at a hand-over the new clip is placed so its planted foot lands on the foot already pinned there
 	// (the hand-over smooths the hips; the foot does not move). Without it the pin held the old foot while the hand-over
 	// pulled the drawn foot 27 cm toward the new clip's, and it let go.
-	void align_contacts(const Clip &p_c, double p_t0);
+	bool align_contacts(const Clip &p_c, double p_t0);   // (true: a planted foot was there to align)
+	void align_hips(const Clip &p_c, double p_t0);
+	void align_facing(const Clip &p_c, double p_t0);
 	Host *host = nullptr;       // (the body, while step runs)
 
 	// ---- TRAVERSAL (mo_motor_trav.cpp; step 3 of docs/ANIMATION_PLAN.md): vaults and climbs as root-motion clips,

@@ -62,15 +62,39 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 		pull[s] = 0.0f;
 		if (b_th[s] < 0 || b_ca[s] < 0 || b_ft[s] < 0) continue;
 		const Vector3 anim_w = G.xform(sk->get_bone_global_pose(b_ft[s]).origin);
-		if (!lock_on) { locked[s] = false; rel_t[s] = 9.0f; continue; }
+		if (!lock_on) { locked[s] = false; rel_t[s] = 9.0f; step_t[s] = -1.0f; held[s] = 0.0f; continue; }
+		// a re-plant step under way: from the old pin to where the clip has the foot, in an arc, then pinned there
+		if (step_t[s] >= 0.0f) {
+			if (!down[s] || !may_step) {   // (the clip lifts it, or he moves off: the step's offset fades like a release)
+				const float u = std::min(step_t[s] / step_s, 1.0f), e = u * u * (3.0f - 2.0f * u);
+				rel_off[s] = step_from[s].lerp(anim_w, e) + Vector3(0, step_h * std::sin(3.14159265f * u), 0) - anim_w;
+				rel_t[s] = 0.0f; step_t[s] = -1.0f; locked[s] = false;
+			} else {
+				step_t[s] += dt;
+				const float u = std::min(step_t[s] / step_s, 1.0f), e = u * u * (3.0f - 2.0f * u);
+				Vector3 want_w = step_from[s].lerp(anim_w, e) + Vector3(0, step_h * std::sin(3.14159265f * u), 0);
+				if (u >= 1.0f) { step_t[s] = -1.0f; locked[s] = true; lock_w[s] = anim_w; held[s] = 0.0f; want_w = anim_w; }
+				pull[s] = (float)(want_w - anim_w).length();
+				if (pull[s] > 1e-4f) {
+					const Vector3 hip = sk->get_bone_global_pose(b_th[s]).origin, knee = sk->get_bone_global_pose(b_ca[s]).origin;
+					reach(sk, b_th[s], b_ca[s], b_ft[s], Gi.xform(want_w), knee - hip);
+				}
+				continue;
+			}
+		}
 		if (down[s]) {
 			if (!locked[s]) { if ((float)anim_w.y - ground_y < pin_h) { locked[s] = true; lock_w[s] = anim_w; rel_t[s] = 9.0f; locks++; } }
 			else if ((lock_w[s] - anim_w).length() > max_pull) { locked[s] = false; rel_off[s] = Vector3(); rel_t[s] = 9.0f; }
 		} else if (locked[s]) {   // the clip lifts it: the pin lets go, its offset fading
 			locked[s] = false; rel_off[s] = lock_w[s] - anim_w; rel_t[s] = 0.0f;
 		}
+		// held off the clip's place while standing, both feet down, the other not stepping: a re-plant step
+		if (locked[s] && may_step && down[0] && down[1] && step_t[1 - s] < 0.0f && (lock_w[s] - anim_w).length() > step_pull) {
+			held[s] += dt;
+			if (held[s] >= step_after && held[s] >= held[1 - s]) { step_t[s] = 0.0f; step_from[s] = lock_w[s]; steps++; }   // (held on its pin this frame; it lifts from the next)
+		} else held[s] = 0.0f;
 		Vector3 want_w;
-		if (locked[s]) want_w = lock_w[s];
+		if (locked[s]) { want_w = lock_w[s]; if (step_t[s] >= 0.0f) locked[s] = false; }
 		else if (rel_t[s] < release_s) {
 			rel_t[s] += dt;
 			const float u = std::min(rel_t[s] / release_s, 1.0f), f = 1.0f - u * u * (3.0f - 2.0f * u);

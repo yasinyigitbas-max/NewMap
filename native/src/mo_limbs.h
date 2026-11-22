@@ -38,7 +38,16 @@ public:
 	bool locked[2] = { false, false };
 	Vector3 lock_w[2], rel_off[2];   // where a pinned foot is held; the offset fading after a release
 	float rel_t[2] = { 9.0f, 9.0f };
-	void unlock_all() { locked[0] = locked[1] = false; rel_t[0] = rel_t[1] = 9.0f; }
+	void unlock_all() { locked[0] = locked[1] = false; rel_t[0] = rel_t[1] = 9.0f; step_t[0] = step_t[1] = -1.0f; held[0] = held[1] = 0.0f; }
+	// RE-PLANT: standing (the motor allows it: idle, the end of a stop), a planted foot held well off where the clip has
+	// it (a hand-over from another stance: the feet kept the old one, the legs bent off the clip's for as long as he
+	// stood) lifts and steps there: an arc step_h high over step_s, one foot at a time, then pinned again
+	bool may_step = false;
+	float step_pull = 0.06f, step_after = 0.15f, step_s = 0.3f, step_h = 0.06f;
+	float step_t[2] = { -1.0f, -1.0f }, held[2] = { 0.0f, 0.0f };
+	Vector3 step_from[2];
+	int steps = 0;   // (the tests)
+	bool stepping(int s) const { return step_t[s] >= 0.0f; }
 	// ---- the hands
 	Vector3 hand_target[2]; float hand_w[2] = { 0.0f, 0.0f };
 	// (the tests) how far each foot was moved from the clip's place this frame, m; locks taken
