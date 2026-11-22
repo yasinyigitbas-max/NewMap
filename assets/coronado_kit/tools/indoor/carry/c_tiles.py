@@ -7,7 +7,10 @@ Layout (1024 px page, rows 0-255 reserved, bake slots from y=256):
    x=0 kraft_paper  x=128 paper_white  x=256 kraft_board  x=384 pine  x=512 leather  x=640 nylon  x=768 film  x=896 tape
  row y=128: cords 32x128 (length along v): rope_kraft x=0, rope_white x=40, rope_black x=80
    32 px swatches from x=120 step 40: ink_black ink_navy ink_red ink_green ink_white ink_gold
-Only the cells a built prop uses are filled; the rest stay neutral grey until their variants are built.
+   row y=128 cells (128 px): x=384 tape  x=512 metal  x=640 abs  x=768 canvas  x=896 webbing
+   swatches y=168 / y=208 (x=120 step 40): label_white ink_orange orange_peel bread_crust leaf_green glass_green /
+   brass chrome rubber_black cap_red tape_red zip_black
+Neutral light cells (leather, nylon, woven, abs, canvas, webbing, metal) take the colour from per-key vertex tint.
 """
 import os, json, sys, numpy as np, cv2
 from PIL import Image
@@ -84,6 +87,78 @@ for i,(k,v) in enumerate(INK.items()):
     x=120+40*i; S=32*SS; m=noise(S,S,3,2)
     col=np.clip(np.asarray(v,np.float32)[None,None,:]*(1+0.05*m[...,None]),0,1)
     put([x,128,32,32],col,m*0.15,1.0,0.78); reg(k,[x,128,32,32],(0.25,0.25))
+
+# ================= carry batch (appended after the pilot cells so their random streams stay identical) =================
+from scipy.spatial import cKDTree
+def worley(S,n,seed):
+    r=np.random.default_rng(seed); P=r.random((n,2))*S
+    Q=np.concatenate([P+np.array([dx,dy])*S for dx in (-1,0,1) for dy in (-1,0,1)])
+    yy,xx=np.mgrid[0:S,0:S]; d,_=cKDTree(Q).query(np.c_[xx.ravel(),yy.ravel()],k=2)
+    return (d[:,1]-d[:,0]).reshape(S,S).astype(np.float32), d[:,0].reshape(S,S).astype(np.float32)
+def cellput(px,col,hgt,strength,rough,metal=0.0): put(px,col,hgt,strength,rough,metal)
+S=128*SS; yy,xx=np.mgrid[0:S,0:S].astype(np.float32)
+# corrugated board (box faces): kraft liner, flutes along u every ~8 mm (faint), fibres, light scuffs
+mott=noise(S,S,20,4)*0.03+noise(S,S,5,2)*0.015; fb=fibres(S,S,1800,3,12)
+fl=np.sin(yy/S*2*np.pi*24)                      # liner ripple over the flutes (soft, 20 mm)
+col=np.clip(np.array([0.66,0.50,0.34])[None,None,:]*(1+mott+fb*0.04+fl*0.012)[...,None],0,1)
+sc=np.clip(noise(S,S,1.2,1)*0.5-1.6,0,1)*np.clip(noise(S,S,30,2),0,1); col=col*(1-0.10*sc[...,None])
+cellput([256,0,128,128],col,fl*0.12+fb*0.3+noise(S,S,8,3)*0.08,1.4,np.clip(0.88+mott,0.7,0.95)); reg('kraft_board',[256,0,128,128],(0.48,0.48),trim=True)
+# pine (crates): grain along u, ring warp, a knot, saw marks; light pine (tint for stains)
+warp=noise(S,S,60,2)*2.2+noise(S,S,14,2)*0.6
+g=np.sin((yy+warp)/S*2*np.pi*14)*0.5+0.5; g2=np.sin((yy+warp*1.3)/S*2*np.pi*37)*0.5+0.5
+lum=0.86+0.10*g**3+0.04*g2+noise(S,S,3,2)*0.02
+kx,ky=S*0.63,S*0.36; dk=np.sqrt(((xx-kx+S/2)%S-S/2)**2/4+((yy-ky+S/2)%S-S/2)**2)
+knot=np.exp(-(dk/(S*0.022))**2); lum=lum*(1-0.45*knot)-0.06*np.exp(-(dk/(S*0.05))**2)
+saw=np.sin(xx/S*2*np.pi*48+noise(S,S,20,2)*2)*0.5+0.5
+col=np.clip(np.array([0.86,0.70,0.50])[None,None,:]*lum[...,None],0,1)
+cellput([384,0,128,128],col,g*0.5+g2*0.25+saw*0.15-knot*0.8,1.6,np.clip(0.80+noise(S,S,6,2)*0.03,0.7,0.9)); reg('pine',[384,0,128,128],(0.48,0.48),trim=True)
+# leather (pebble grain), light neutral warm grey -> vertex tint brown / black / tan
+w1,d1=worley(S,2600,5)
+peb=np.clip(w1/4.0,0,1); hgt=peb*0.8+noise(S,S,2,2)*0.1
+col=np.clip(np.array([0.80,0.76,0.72])[None,None,:]*(0.92+0.10*peb+noise(S,S,14,3)*0.025)[...,None],0,1)
+cellput([512,0,128,128],col,hgt,1.6,np.clip(0.55+0.12*(1-peb),0.4,0.75)); reg('leather',[512,0,128,128],(0.48,0.48),trim=True)
+# nylon: fine twill + 6 mm ripstop grid, light neutral -> tint
+tw=noise(S,S,0.8,1)*0.3+0.5
+rip=np.maximum(np.exp(-((((xx/S*40)%1.0)-0.5)/0.08)**2),np.exp(-((((yy/S*40)%1.0)-0.5)/0.08)**2))
+col=np.clip(np.array([0.84,0.84,0.86])[None,None,:]*(0.95+0.04*tw+0.05*rip+noise(S,S,16,3)*0.015)[...,None],0,1)
+cellput([640,0,128,128],col,tw*0.25+rip*0.5,1.2,0.62); reg('nylon',[640,0,128,128],(0.24,0.24),trim=True)
+# film (plastic bags): white LDPE, long soft stretch wrinkles, a little gloss
+wv=noise(S,S,26,2); wr_=np.abs(np.sin((yy+noise(S,S,30,2)*12)/S*2*np.pi*9))
+col=np.clip(np.array([0.93,0.93,0.92])[None,None,:]*(0.985+wv[...,None]*0.012),0,1)
+cellput([768,0,128,128],col,wv*0.4+wr_*0.35,1.0,np.clip(0.42+wv*0.04,0.3,0.55)); reg('film',[768,0,128,128],(0.48,0.48),trim=True)
+# woven PP (reusable tote): 2.5 mm tape weave, light neutral -> tint
+uu=(xx/S*48)%1.0; vv=(yy/S*48)%1.0; over=((np.floor(xx/S*48)+np.floor(yy/S*48))%2)
+wh=np.where(over>0,np.sin(np.pi*uu),np.sin(np.pi*vv))
+col=np.clip(np.array([0.86,0.87,0.88])[None,None,:]*(0.90+0.12*wh)[...,None],0,1)
+cellput([896,0,128,128],col,wh,1.4,0.5); reg('woven',[896,0,128,128],(0.24,0.24),trim=True)
+# row 128 cells: tape, brushed metal, ABS, canvas, webbing
+st=noise(S,S,1.5,1)*0.5; stx=cv2.resize(st[:, :8],(S,S))     # streaks along u
+col=np.clip(np.array([0.74,0.58,0.38])[None,None,:]*(0.97+0.04*stx+noise(S,S,20,2)*0.02)[...,None],0,1)
+cellput([384,128,128,128],col,stx*0.2,0.6,0.32); reg('tape',[384,128,128,128],(0.48,0.48),trim=True)
+bm_=cv2.resize(rng.standard_normal((S,4)).astype(np.float32),(S,S))*0.5+noise(S,S,1,1)*0.1
+col=np.clip(np.array([0.80,0.81,0.83])[None,None,:]*(0.97+0.03*bm_)[...,None],0,1)
+cellput([512,128,128,128],col,bm_*0.3,0.8,np.clip(0.32+0.04*bm_,0.2,0.45),1.0); reg('metal',[512,128,128,128],(0.48,0.48),trim=True)
+ab=noise(S,S,0.9,1)
+col=np.clip(np.array([0.82,0.82,0.83])[None,None,:]*(0.98+0.02*ab)[...,None],0,1)
+cellput([640,128,128,128],col,ab*0.3,0.8,0.55); reg('abs',[640,128,128,128],(0.48,0.48),trim=True)
+cw=np.sin(xx/S*2*np.pi*48)*np.sin(yy/S*2*np.pi*48)
+col=np.clip(np.array([0.84,0.82,0.76])[None,None,:]*(0.94+0.05*cw+noise(S,S,12,3)*0.03)[...,None],0,1)
+cellput([768,128,128,128],col,cw*0.4+noise(S,S,3,2)*0.1,1.2,0.85); reg('canvas',[768,128,128,128],(0.24,0.24),trim=True)
+wb=np.sin(yy/S*2*np.pi*48)*0.5+0.5; rib=np.sin(xx/S*2*np.pi*12)*0.5+0.5
+col=np.clip(np.array([0.80,0.80,0.80])[None,None,:]*(0.92+0.06*wb+0.04*rib)[...,None],0,1)
+cellput([896,128,128,128],col,wb*0.4+rib*0.3,1.3,0.7); reg('webbing',[896,128,128,128],(0.24,0.24),trim=True)
+# 32 px swatches (bake sources for small baked parts)
+SW={168:{'label_white':(0.95,0.95,0.93),'ink_orange':(0.93,0.45,0.08),'orange_peel':(0.95,0.52,0.08),'bread_crust':(0.76,0.50,0.24),
+         'leaf_green':(0.30,0.55,0.22),'glass_green':(0.12,0.30,0.16)},
+    208:{'brass':(0.80,0.64,0.32),'chrome':(0.86,0.87,0.89),'rubber_black':(0.07,0.07,0.075),'cap_red':(0.70,0.10,0.08),
+         'tape_red':(0.80,0.14,0.10),'zip_black':(0.06,0.06,0.07)}}
+MET={'brass','chrome'}
+for yv,dd in SW.items():
+    for i,(k,v) in enumerate(dd.items()):
+        x=120+40*i; S2=32*SS; m=noise(S2,S2,3,2)
+        col=np.clip(np.asarray(v,np.float32)[None,None,:]*(1+0.04*m[...,None]),0,1)
+        rough=0.35 if k in MET else (0.45 if k in ('glass_green','cap_red','orange_peel') else 0.8)
+        put([x,yv,32,32],col,m*0.15,1.0,rough,1.0 if k in MET else 0.0); reg(k,[x,yv,32,32],(0.25,0.25))
 def u8(a): return (np.clip(a,0,1)*255+0.5).astype(np.uint8)
 for c in ('clean','worn','dirty'):
     a=np.dstack([u8(COL),np.full((N,N),255,np.uint8)])

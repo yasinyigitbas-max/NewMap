@@ -28,7 +28,7 @@
   "bake_slot_px": 192,
   "bake_px_per_m": 347.7,
   "col": 1,
-  "secs": 10.0,
+  "secs": 8.8,
   "grips": {
    "space": "glTF / Godot local, metres, Y up, front +Z",
    "points": {
@@ -44,6 +44,1072 @@
     ]
    },
    "hold": "one_hand_hang",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "bag_plastic_corner": {
+  "file_base": "prop_bag_plastic_corner",
+  "batch": "incarry",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 230
+  },
+  "footprint_w": 0.241,
+  "footprint_d": 0.131,
+  "height": 0.406,
+  "regions": [
+   "baked:bag_plastic_corner"
+  ],
+  "trim": {
+   "film": {
+    "area_m2": 0.21,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "high_tris": 3260,
+  "bake_slot_px": 32,
+  "bake_px_per_m": 331.0,
+  "col": 1,
+  "secs": 7.9,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_r": [
+     0.006,
+     0.382,
+     -0.0
+    ],
+    "grip_l": [
+     0.006,
+     0.382,
+     -0.0
+    ]
+   },
+   "hold": "one_hand_hang",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "briefcase_leather": {
+  "file_base": "prop_briefcase_leather",
+  "batch": "incarry",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 592
+  },
+  "footprint_w": 0.443,
+  "footprint_d": 0.122,
+  "height": 0.379,
+  "regions": [
+   "brass",
+   "brass_dk",
+   "lea_br",
+   "lea_dk"
+  ],
+  "trim": {
+   "leather": {
+    "area_m2": 0.61,
+    "px_per_m": 258.3
+   },
+   "metal": {
+    "area_m2": 0.02,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "col": 1,
+  "secs": 8.0,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_r": [
+     0.0,
+     0.36,
+     -0.0
+    ],
+    "grip_l": [
+     0.0,
+     0.36,
+     -0.0
+    ]
+   },
+   "hold": "one_hand_hang",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "briefcase_aluminium": {
+  "file_base": "prop_briefcase_aluminium",
+  "batch": "incarry",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 468
+  },
+  "footprint_w": 0.468,
+  "footprint_d": 0.138,
+  "height": 0.388,
+  "regions": [
+   "abs_blk",
+   "alu",
+   "chrome"
+  ],
+  "trim": {
+   "metal": {
+    "area_m2": 0.54,
+    "px_per_m": 258.3
+   },
+   "abs": {
+    "area_m2": 0.42,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "col": 1,
+  "secs": 8.7,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_r": [
+     0.0,
+     0.37,
+     -0.0
+    ],
+    "grip_l": [
+     0.0,
+     0.37,
+     -0.0
+    ]
+   },
+   "hold": "one_hand_hang",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "briefcase_laptop": {
+  "file_base": "prop_briefcase_laptop",
+  "batch": "incarry",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 402
+  },
+  "footprint_w": 0.424,
+  "footprint_d": 0.119,
+  "height": 0.378,
+  "regions": [
+   "chrome",
+   "lea_dk",
+   "nyl_navy",
+   "nyl_navy2",
+   "web_blk",
+   "zip_blk"
+  ],
+  "trim": {
+   "nylon": {
+    "area_m2": 0.42,
+    "px_per_m": 516.7
+   },
+   "abs": {
+    "area_m2": 0.01,
+    "px_per_m": 258.3
+   },
+   "metal": {
+    "area_m2": 0.0,
+    "px_per_m": 258.3
+   },
+   "leather": {
+    "area_m2": 0.02,
+    "px_per_m": 258.3
+   },
+   "webbing": {
+    "area_m2": 0.04,
+    "px_per_m": 516.7
+   }
+  },
+  "atlas_page": "props_j_*",
+  "col": 1,
+  "secs": 8.7,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_r": [
+     0.0,
+     0.362,
+     -0.0
+    ],
+    "grip_l": [
+     0.0,
+     0.362,
+     -0.0
+    ]
+   },
+   "hold": "one_hand_hang",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "backpack_daypack": {
+  "file_base": "prop_backpack_daypack",
+  "batch": "incarry",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 350
+  },
+  "footprint_w": 0.29,
+  "footprint_d": 0.233,
+  "height": 0.462,
+  "regions": [
+   "abs_wht",
+   "nyl_blk",
+   "nyl_navy",
+   "nyl_red",
+   "web_blk",
+   "zip_blk"
+  ],
+  "trim": {
+   "nylon": {
+    "area_m2": 0.51,
+    "px_per_m": 516.7
+   },
+   "abs": {
+    "area_m2": 0.01,
+    "px_per_m": 258.3
+   },
+   "webbing": {
+    "area_m2": 0.01,
+    "px_per_m": 516.7
+   }
+  },
+  "atlas_page": "props_j_*",
+  "col": 1,
+  "secs": 8.5,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_r": [
+     0.0,
+     0.454,
+     -0.02
+    ],
+    "grip_l": [
+     0.0,
+     0.454,
+     -0.02
+    ]
+   },
+   "hold": "one_hand_hang",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "backpack_school": {
+  "file_base": "prop_backpack_school",
+  "batch": "incarry",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 562
+  },
+  "footprint_w": 0.376,
+  "footprint_d": 0.265,
+  "height": 0.492,
+  "regions": [
+   "abs_blue",
+   "nyl_blk",
+   "nyl_grey",
+   "nyl_grey2",
+   "nyl_teal",
+   "web_blk",
+   "zip_blk"
+  ],
+  "trim": {
+   "nylon": {
+    "area_m2": 0.65,
+    "px_per_m": 516.7
+   },
+   "abs": {
+    "area_m2": 0.05,
+    "px_per_m": 258.3
+   },
+   "webbing": {
+    "area_m2": 0.04,
+    "px_per_m": 516.7
+   }
+  },
+  "atlas_page": "props_j_*",
+  "col": 1,
+  "secs": 9.0,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_r": [
+     0.0,
+     0.484,
+     -0.025
+    ],
+    "grip_l": [
+     0.0,
+     0.484,
+     -0.025
+    ]
+   },
+   "hold": "one_hand_hang",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "backpack_canvas": {
+  "file_base": "prop_backpack_canvas",
+  "batch": "incarry",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 352
+  },
+  "footprint_w": 0.304,
+  "footprint_d": 0.216,
+  "height": 0.472,
+  "regions": [
+   "brass",
+   "canvas_ol",
+   "lea_br",
+   "lea_dk"
+  ],
+  "trim": {
+   "canvas": {
+    "area_m2": 0.4,
+    "px_per_m": 516.7
+   },
+   "leather": {
+    "area_m2": 0.35,
+    "px_per_m": 258.3
+   },
+   "metal": {
+    "area_m2": 0.0,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "col": 1,
+  "secs": 8.6,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_r": [
+     0.0,
+     0.464,
+     -0.03
+    ],
+    "grip_l": [
+     0.0,
+     0.464,
+     -0.03
+    ]
+   },
+   "hold": "one_hand_hang",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "box_open": {
+  "file_base": "prop_box_open",
+  "batch": "incarry",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 276
+  },
+  "footprint_w": 0.501,
+  "footprint_d": 0.446,
+  "height": 0.281,
+  "regions": [
+   "board",
+   "board_in",
+   "book_red",
+   "paper_crumple"
+  ],
+  "trim": {
+   "kraft_board": {
+    "area_m2": 1.43,
+    "px_per_m": 258.3
+   },
+   "paper_white": {
+    "area_m2": 0.13,
+    "px_per_m": 258.3
+   },
+   "abs": {
+    "area_m2": 0.09,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "col": 1,
+  "secs": 10.4,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_l": [
+     -0.2,
+     0.12,
+     -0.0
+    ],
+    "grip_r": [
+     0.2,
+     0.12,
+     -0.0
+    ]
+   },
+   "hold": "two_hand_sides",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "crate_rope": {
+  "file_base": "prop_crate_rope",
+  "batch": "incarry",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 552
+  },
+  "footprint_w": 0.564,
+  "footprint_d": 0.311,
+  "height": 0.25,
+  "regions": [
+   "baked:crate_rope"
+  ],
+  "trim": {
+   "pine": {
+    "area_m2": 0.99,
+    "px_per_m": 258.3
+   },
+   "kraft_board": {
+    "area_m2": 0.01,
+    "px_per_m": 258.3
+   },
+   "metal": {
+    "area_m2": 0.06,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "high_tris": 720,
+  "bake_slot_px": 32,
+  "bake_px_per_m": 240.1,
+  "col": 1,
+  "secs": 11.7,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_l": [
+     -0.27,
+     0.115,
+     -0.0
+    ],
+    "grip_r": [
+     0.27,
+     0.115,
+     -0.0
+    ]
+   },
+   "hold": "two_hand_sides",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "bag_paper_boutique": {
+  "file_base": "prop_bag_paper_boutique",
+  "batch": "incarry",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 240
+  },
+  "footprint_w": 0.24,
+  "footprint_d": 0.112,
+  "height": 0.374,
+  "regions": [
+   "baked:bag_paper_boutique"
+  ],
+  "trim": {
+   "paper_white": {
+    "area_m2": 0.31,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "high_tris": 24666,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 612.0,
+  "col": 1,
+  "secs": 8.0,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_r": [
+     0.0,
+     0.365,
+     -0.0
+    ],
+    "grip_l": [
+     0.0,
+     0.365,
+     -0.0
+    ]
+   },
+   "hold": "one_hand_hang",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "bag_paper_grocery": {
+  "file_base": "prop_bag_paper_grocery",
+  "batch": "incarry",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 298
+  },
+  "footprint_w": 0.36,
+  "footprint_d": 0.248,
+  "height": 0.487,
+  "regions": [
+   "baked:bag_paper_grocery"
+  ],
+  "trim": {
+   "kraft_paper": {
+    "area_m2": 0.77,
+    "px_per_m": 258.3
+   },
+   "bread_crust": {
+    "area_m2": 0.08,
+    "px_per_m": 58.3
+   },
+   "glass_green": {
+    "area_m2": 0.06,
+    "px_per_m": 58.3
+   },
+   "cap_red": {
+    "area_m2": 0.0,
+    "px_per_m": 58.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "high_tris": 25760,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 446.4,
+  "col": 1,
+  "secs": 9.2,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_r": [
+     0.0,
+     0.47,
+     -0.0
+    ],
+    "grip_l": [
+     0.0,
+     0.47,
+     -0.0
+    ]
+   },
+   "hold": "one_hand_hang",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "bag_plastic_thankyou": {
+  "file_base": "prop_bag_plastic_thankyou",
+  "batch": "incarry",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 256
+  },
+  "footprint_w": 0.296,
+  "footprint_d": 0.167,
+  "height": 0.495,
+  "regions": [
+   "baked:bag_plastic_thankyou"
+  ],
+  "trim": {
+   "film": {
+    "area_m2": 0.17,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "high_tris": 7368,
+  "bake_slot_px": 192,
+  "bake_px_per_m": 431.2,
+  "col": 1,
+  "secs": 8.3,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_r": [
+     0.006,
+     0.47,
+     -0.0
+    ],
+    "grip_l": [
+     0.006,
+     0.47,
+     -0.0
+    ]
+   },
+   "hold": "one_hand_hang",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "bag_tote_woven": {
+  "file_base": "prop_bag_tote_woven",
+  "batch": "incarry",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 224
+  },
+  "footprint_w": 0.383,
+  "footprint_d": 0.208,
+  "height": 0.465,
+  "regions": [
+   "baked:bag_tote_woven"
+  ],
+  "trim": {
+   "woven": {
+    "area_m2": 0.69,
+    "px_per_m": 516.7
+   },
+   "webbing": {
+    "area_m2": 0.11,
+    "px_per_m": 516.7
+   }
+  },
+  "atlas_page": "props_j_*",
+  "high_tris": 3412,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 272.7,
+  "col": 1,
+  "secs": 8.9,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_r": [
+     0.0,
+     0.445,
+     -0.0
+    ],
+    "grip_l": [
+     0.0,
+     0.445,
+     -0.0
+    ]
+   },
+   "hold": "one_hand_hang",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "box_ship_small": {
+  "file_base": "prop_box_ship_small",
+  "batch": "incarry",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 94
+  },
+  "footprint_w": 0.302,
+  "footprint_d": 0.22,
+  "height": 0.162,
+  "regions": [
+   "baked:box_ship_small"
+  ],
+  "trim": {
+   "kraft_board": {
+    "area_m2": 0.29,
+    "px_per_m": 258.3
+   },
+   "tape": {
+    "area_m2": 0.04,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "high_tris": 2110,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 465.5,
+  "col": 1,
+  "secs": 8.7,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_l": [
+     -0.15,
+     0.07,
+     -0.0
+    ],
+    "grip_r": [
+     0.15,
+     0.07,
+     -0.0
+    ]
+   },
+   "hold": "two_hand_sides",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "box_moving": {
+  "file_base": "prop_box_moving",
+  "batch": "incarry",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 108
+  },
+  "footprint_w": 0.452,
+  "footprint_d": 0.351,
+  "height": 0.352,
+  "regions": [
+   "baked:box_moving"
+  ],
+  "trim": {
+   "kraft_board": {
+    "area_m2": 0.88,
+    "px_per_m": 258.3
+   },
+   "tape": {
+    "area_m2": 0.01,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "high_tris": 6530,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 340.2,
+  "col": 1,
+  "secs": 10.0,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_l": [
+     -0.225,
+     0.252,
+     -0.0
+    ],
+    "grip_r": [
+     0.225,
+     0.252,
+     -0.0
+    ]
+   },
+   "hold": "two_hand_sides",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "box_long": {
+  "file_base": "prop_box_long",
+  "batch": "incarry",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 94
+  },
+  "footprint_w": 0.702,
+  "footprint_d": 0.221,
+  "height": 0.181,
+  "regions": [
+   "baked:box_long"
+  ],
+  "trim": {
+   "kraft_board": {
+    "area_m2": 0.63,
+    "px_per_m": 258.3
+   },
+   "tape": {
+    "area_m2": 0.08,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "high_tris": 2329,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 349.1,
+  "col": 1,
+  "secs": 10.3,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_l": [
+     -0.3,
+     0.08,
+     -0.0
+    ],
+    "grip_r": [
+     0.3,
+     0.08,
+     -0.0
+    ]
+   },
+   "hold": "two_hand_sides",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "box_stack": {
+  "file_base": "prop_box_stack",
+  "batch": "incarry",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 186
+  },
+  "footprint_w": 0.422,
+  "footprint_d": 0.32,
+  "height": 0.422,
+  "regions": [
+   "baked:box_stack"
+  ],
+  "trim": {
+   "kraft_board": {
+    "area_m2": 0.98,
+    "px_per_m": 258.3
+   },
+   "tape": {
+    "area_m2": 0.1,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "high_tris": 2202,
+  "bake_slot_px": 48,
+  "bake_px_per_m": 465.5,
+  "col": 1,
+  "secs": 9.8,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_l": [
+     -0.21,
+     0.1,
+     -0.0
+    ],
+    "grip_r": [
+     0.21,
+     0.1,
+     -0.0
+    ]
+   },
+   "hold": "two_hand_sides",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "box_produce": {
+  "file_base": "prop_box_produce",
+  "batch": "incarry",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 284
+  },
+  "footprint_w": 0.462,
+  "footprint_d": 0.303,
+  "height": 0.202,
+  "regions": [
+   "baked:box_produce"
+  ],
+  "trim": {
+   "kraft_board": {
+    "area_m2": 0.89,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "high_tris": 5496,
+  "bake_slot_px": 128,
+  "bake_px_per_m": 299.8,
+  "col": 1,
+  "secs": 10.2,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_l": [
+     -0.23,
+     0.156,
+     -0.0
+    ],
+    "grip_r": [
+     0.23,
+     0.156,
+     -0.0
+    ]
+   },
+   "hold": "two_hand_sides",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "crate_produce": {
+  "file_base": "prop_crate_produce",
+  "batch": "incarry",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 522
+  },
+  "footprint_w": 0.503,
+  "footprint_d": 0.32,
+  "height": 0.28,
+  "regions": [
+   "baked:crate_produce"
+  ],
+  "trim": {
+   "pine": {
+    "area_m2": 1.03,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "high_tris": 1166,
+  "bake_slot_px": 96,
+  "bake_px_per_m": 345.5,
+  "col": 1,
+  "secs": 10.4,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_l": [
+     -0.25,
+     0.257,
+     -0.0
+    ],
+    "grip_r": [
+     0.25,
+     0.257,
+     -0.0
+    ]
+   },
+   "hold": "two_hand_sides",
+   "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
+  }
+ },
+ "crate_wine": {
+  "file_base": "prop_crate_wine",
+  "batch": "incarry",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 244
+  },
+  "footprint_w": 0.346,
+  "footprint_d": 0.18,
+  "height": 0.181,
+  "regions": [
+   "baked:crate_wine"
+  ],
+  "trim": {
+   "pine": {
+    "area_m2": 0.56,
+    "px_per_m": 258.3
+   },
+   "kraft_board": {
+    "area_m2": 0.0,
+    "px_per_m": 258.3
+   }
+  },
+  "atlas_page": "props_j_*",
+  "high_tris": 2478,
+  "bake_slot_px": 64,
+  "bake_px_per_m": 355.6,
+  "col": 1,
+  "secs": 9.1,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, front +Z",
+   "points": {
+    "grip_l": [
+     -0.17,
+     0.08,
+     -0.0
+    ],
+    "grip_r": [
+     0.17,
+     0.08,
+     -0.0
+    ]
+   },
+   "hold": "two_hand_sides",
    "axes": "+X along the handle bar, +Y up (prop hangs along -Y)"
   }
  }

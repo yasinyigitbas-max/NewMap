@@ -6,7 +6,7 @@ a=sys.argv[sys.argv.index('--')+1:]; out,tag,glbs=a[0],a[1],a[2:]
 os.makedirs(out,exist_ok=True)
 for glb in glbs:
     bpy.ops.wm.read_factory_settings(use_empty=True)
-    sc=bpy.context.scene; sc.render.engine='CYCLES'; sc.cycles.device='CPU'; sc.cycles.samples=32; sc.cycles.use_denoising=True
+    sc=bpy.context.scene; sc.render.engine='CYCLES'; sc.cycles.device='CPU'; sc.cycles.samples=int(os.environ.get('CR_SAMPLES','32')); sc.cycles.use_denoising=True
     sc.render.threads_mode='FIXED'; sc.render.threads=2; sc.view_settings.view_transform='AgX'
     bpy.ops.import_scene.gltf(filepath=glb)
     obs=[o for o in sc.objects if o.type=='MESH']
@@ -35,7 +35,10 @@ for glb in glbs:
     l2.location=ctr+Vector((1.8,-0.6,1.2)); l2.rotation_euler=(ctr-l2.location).to_track_quat('-Z','Y').to_euler()
     cam=bpy.data.cameras.new('c'); co=bpy.data.objects.new('c',cam); sc.collection.objects.link(co); sc.camera=co; cam.lens=60
     name=os.path.basename(glb).replace('prop_','').replace('_clean_near.glb','')
-    def shot(nm,dirv,k=1.0,rx=900,ry=900):
+    VW=os.environ.get('CR_VIEWS','hero,front,side,back,top,low').split(','); RS=int(os.environ.get('CR_RES','900'))
+    def shot(nm,dirv,k=1.0,rx=None,ry=None):
+        if nm not in VW: return
+        rx=rx or RS; ry=ry or RS
         sc.render.resolution_x=rx; sc.render.resolution_y=ry
         d=Vector(dirv).normalized(); dist=size*2.2*k+0.15
         co.location=ctr+d*dist; co.rotation_euler=(ctr-co.location).to_track_quat('-Z','Y').to_euler()
