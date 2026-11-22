@@ -68,20 +68,20 @@
         {
           "id": "prop_curtain_panel",
           "cond": "clean",
-          "x": -3.7,
+          "x": -4.16,
           "y": 2.95,
           "z": 5.15,
           "yaw": 0,
-          "note": "west panel on the snug window, hangs into the bay"
+          "note": "drawn back to the west jamb so the leaded glass stays open"
         },
         {
           "id": "prop_curtain_panel",
           "cond": "clean",
-          "x": -2.9,
+          "x": -2.44,
           "y": 2.95,
           "z": 5.15,
           "yaw": 0,
-          "note": "east panel; the pair frames the leaded glass"
+          "note": "drawn back to the east jamb so the leaded glass stays open"
         }
       ]
     },
@@ -218,20 +218,20 @@
         {
           "id": "prop_books_stack",
           "cond": "clean",
-          "x": -3.7,
+          "x": -3.78,
           "y": 0.55,
-          "z": 0.42,
+          "z": 0.3,
           "yaw": 0,
-          "note": "a short stack on the left of the console, under the TV"
+          "note": "a short stack on the left of the console, behind the screen plane"
         },
         {
           "id": "prop_sculpture_organic",
           "cond": "clean",
-          "x": -3.0,
+          "x": -2.92,
           "y": 0.55,
-          "z": 0.42,
+          "z": 0.3,
           "yaw": 25,
-          "note": "a small object on the right of the console, not another empty surface"
+          "note": "a small object on the right of the console, behind the screen plane"
         }
       ]
     },
@@ -410,20 +410,20 @@
         {
           "id": "prop_curtain_panel",
           "cond": "clean",
-          "x": 3.85,
+          "x": 3.44,
           "y": 2.95,
           "z": 3.95,
           "yaw": 0,
-          "note": "west curtain on the dining window"
+          "note": "drawn back to the west jamb so the leaded glass stays open"
         },
         {
           "id": "prop_curtain_panel",
           "cond": "clean",
-          "x": 4.55,
+          "x": 4.96,
           "y": 2.95,
           "z": 3.95,
           "yaw": 0,
-          "note": "east curtain; the pair frames the leaded glass"
+          "note": "drawn back to the east jamb so the leaded glass stays open"
         },
         {
           "id": "prop_frame_print_medium",
@@ -847,18 +847,18 @@
           "cond": "clean",
           "x": -5.8,
           "y": 5.35,
-          "z": -1.85,
+          "z": -2.16,
           "yaw": -90,
-          "note": "south curtain on the west gable window (rod at y=5.35)"
+          "note": "drawn back to the south jamb of the west gable window"
         },
         {
           "id": "prop_curtain_panel",
           "cond": "clean",
           "x": -5.8,
           "y": 5.35,
-          "z": -1.35,
+          "z": -1.04,
           "yaw": -90,
-          "note": "north curtain; the pair frames the new stacked gable light"
+          "note": "drawn back to the north jamb of the west gable window"
         },
         {
           "id": "prop_backpack_daypack",
