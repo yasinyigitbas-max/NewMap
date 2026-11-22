@@ -211,6 +211,11 @@ public:
 	void set_crouch(bool p_on) { crouch = p_on; }
 	void request_cover() { cover_req = true; }
 	void set_carry(int p_kind) { carry_kind = p_kind; }
+	// SIT on a seat: its top's middle and the way he faces on it - he walks there, turns, sits; stand_up (or the stick
+	// pushed away from the seat) gets him up
+	void sit_at(const Vector3 &p_seat, float p_yaw) { sit_want = true; sit_seat = p_seat; sit_yaw_want = p_yaw; }
+	void stand_up() { sit_want = false; }
+	bool sit_want = false; Vector3 sit_seat; float sit_yaw_want = 0.0f;
 	void motor_set_style(int p_style) { if (motor) motor->set_style(p_style); }   // the movement set (0-2; mo_sets.cpp)
 	int motor_get_style() const { return motor ? motor->get_style() : 0; }
 	String motor_clip_for(const String &p_set1) const { const char *a = motor ? mo::Motor::style_clip(motor->get_style(), p_set1.utf8().get_data()) : nullptr; return a ? String(a) : p_set1; }   // (tests: the clip this set plays for a set-1 clip)

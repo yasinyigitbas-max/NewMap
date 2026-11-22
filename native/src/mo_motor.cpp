@@ -94,7 +94,7 @@ void Motor::keep_loops(const PackedStringArray &p_names) {
 float Motor::rnd() { rng ^= rng << 13; rng ^= rng >> 17; rng ^= rng << 5; return (rng & 0xffffff) / 16777216.0f; }
 
 const char *Motor::state_name() const {
-	static const char *N[] = { "off", "idle", "start", "move", "stop", "turn", "pivot", "trav", "crouch", "stance", "cover_in", "cover", "cover_out", "carry", "jump", "air", "land", "runjump", "descend" };
+	static const char *N[] = { "off", "idle", "start", "move", "stop", "turn", "pivot", "trav", "crouch", "stance", "cover_in", "cover", "cover_out", "carry", "jump", "air", "land", "runjump", "descend", "sit_in", "sit", "sit_out" };
 	return N[st];
 }
 
@@ -167,6 +167,7 @@ void Motor::load_clips() {
 	load_cover();
 	load_carry();
 	load_air();
+	load_sit();
 }
 
 void Motor::set_style(int p_style) {
@@ -655,10 +656,20 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	// hips' speed jumped 1.4 m/s)
 	if (limbs) for (int s = 0; s < 2; s++) { drawn_pull[s] = limbs->pull_v[s]; drawn_locked[s] = limbs->locked[s] && !limbs->stepping(s); }
 	drawn_pel = fig->bone_world("Bip01_Pelvis");   // (as drawn last frame: mid-step, at a hand-over, it is the new clip's raw pose)
-	const Vector3 dir(p_in.dir.x, 0.0f, p_in.dir.z);
+	Vector3 dir(p_in.dir.x, 0.0f, p_in.dir.z);
+	float sp_in = p_in.speed;
+	// SITTING (mo_motor_sit.cpp): on the seat, or into / out of it - the clip has the body; walking to a seat, the way to it
+	if (st == SIT) { sit_step(p_dt, p_in); host = nullptr; return; }
+	if (p_in.sit && (st == IDLE || st == START || st == MOVE || st == STOP || st == TURN)) {
+		if (sit_approach(p_in, dir, sp_in) && st == IDLE) {
+			const float dy = wrapf(p_in.seat_yaw - yaw);
+			if (std::fabs(dy) > 0.45f) { to_turn(dy); host = nullptr; return; }   // (his back to it first)
+			sit_start(p_in); host = nullptr; return;
+		}
+	}
 	const float wl = std::min((float)dir.length(), 1.0f);
 	const bool want = wl > 0.1f;
-	const float want_speed = p_in.speed * wl;
+	const float want_speed = sp_in * wl;
 	const float d = want ? wrapf(std::atan2((float)dir.x, (float)dir.z) - yaw) : 0.0f;
 	Vector3 vel;   // level velocity this frame (world)
 	if (st == TRAV) {   // a vault or a climb: the clip has the body (mo_motor_trav.cpp)
@@ -676,11 +687,12 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	}
 	if (st == AIR) { air_step(p_dt, p_in); host = nullptr; return; }
 	// ROOT CLIPS (mo_motor_cover.cpp): a stance change, into or out of cover, a landing, a running leap - the clip has the body
-	if (st == STANCE || st == COVER_IN || st == COVER_OUT || st == LAND || st == RUNJUMP || st == DESCEND) {
-		const bool done = root_step(p_dt);
+	if (st == STANCE || st == COVER_IN || st == COVER_OUT || st == LAND || st == RUNJUMP || st == DESCEND || st == SIT_IN || st == SIT_OUT) {
+		const bool done = root_step(p_dt) || (st == SIT_OUT && t >= sit_up_at);
 		if (limbs && cur) {
 			const Frame fr = cur->d->lerp(t);
 			limbs->lock_on = true; limbs->may_step = st == STANCE;   // (getting up / down: a foot far off the clip's re-plants)
+			limbs->drop_max = (st == SIT_IN || st == SIT_OUT) ? 0.0f : 0.35f;   // (sitting down / up: the hips on the seat, the legs reach - dropped for the feet, they went 11 cm into a 60 cm seat)
 			limbs->down[0] = fr.down[0]; limbs->down[1] = fr.down[1];
 			// OFF A LEDGE: the hand that reaches down as he goes over is put on the ledge's corner (Yasin, 24 Nov: "the hand
 			// doesnt reach the corner of the obstacle") - eased in and out of its reach, held where it first comes down
@@ -706,6 +718,12 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 				place(p_host);
 				host = nullptr;
 				return;
+			}
+			if (st == SIT_IN) { st = SIT; sit_t = 0.0f; sit_gesture = false; align_full = true; face_only = true; play(si_idle, 0.0, 0.35f); align_full = false; place_sit(); host = nullptr; return; }
+			if (st == SIT_OUT) {
+				yaw = sit_yaw; align_full = true;
+				if (want) { speed = std::max(speed, 0.8f); to_loop(pick_loop(want_speed, -1), blend_loop); } else to_idle(0.35f);
+				align_full = false; place(p_host); host = nullptr; return;
 			}
 			if (st == DESCEND) {   // (down: on as he was, facing as the clip ends)
 				const Frame f0 = rp.c->d->lerp(0.0), f1 = rp.c->d->lerp(rp.c->d->len);
@@ -765,7 +783,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		if (p_in.jump) jump_pending = 0.4f;
 		if (jump_pending > 0.0f) { jump_pending = 0.0f; jump_start(dir, want_speed); host = nullptr; return; }   // (at once: Yasin, 24 Nov, the running jump as it was)
 		// walking at a ledge (not running): down it by a hop, a jump down or a climb down
-		if (want && std::fabs(d) < 0.5f && want_speed <= 2.0f && speed <= 2.2f && descend_probe(fwd_of(yaw))) { host = nullptr; return; }
+		if (want && !p_in.sit && std::fabs(d) < 0.5f && want_speed <= 2.0f && speed <= 2.2f && descend_probe(fwd_of(yaw))) { host = nullptr; return; }
 		if (!p_host.on_floor()) {
 			const Vector3 b = p_host.position();
 			const float gb = ground_below(b, 60.0f);
@@ -787,7 +805,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		}
 	}
 	// a vault or a climb ahead, going the way he faces
-	if (want && std::fabs(d) < 0.5f && (st == IDLE || st == START || st == MOVE) && trav_probe(fwd_of(yaw), std::max(speed, want_speed > 2.0f ? speed : 0.0f))) { host = nullptr; return; }
+	if (want && !p_in.sit && std::fabs(d) < 0.5f && (st == IDLE || st == START || st == MOVE) && trav_probe(fwd_of(yaw), std::max(speed, want_speed > 2.0f ? speed : 0.0f))) { host = nullptr; return; }
 	switch (st) {
 		case CROUCH: crouch_step(p_dt, p_in, d, want, vel); break;
 		case CARRY: carry_step(p_dt, p_in, d, want, vel); break;
@@ -929,6 +947,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		limbs->lock_on = st != OFF;
 		// (standing in the idle and its gestures: a foot is moved only when 12 cm off the clip's stance, not 4 - the idle's
 		// and gestures' stances differ by 4-7 cm and every idle began with a step "as if about to walk", Yasin 24 Nov)
+		limbs->drop_max = 0.35f;
 		limbs->step_pull = st == IDLE ? 0.12f : 0.04f; limbs->step_now = st == IDLE ? 0.25f : 0.12f;
 		limbs->may_step = st == IDLE || st == STOP || (st == CROUCH && cur == &cr_idle) || (st == COVER && cv_dir == 0) || (st == CARRY && (cur == &ca_idle || cur == &bg_idle));   // (standing: a foot held off the clip's stance re-plants)
 		limbs->down[0] = fr.down[0]; limbs->down[1] = fr.down[1];

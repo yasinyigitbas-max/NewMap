@@ -43,6 +43,9 @@ struct Intent {
 	bool cover = false;   // into cover at the nearest wall / out of it (a request: an NPC's mind; the player's cover is automatic)
 	bool jump = false;    // a jump (a request, this frame)
 	int carry = 0;        // carrying: 0 nothing, 1 a box (both hands), 2 a briefcase, 3 a shopping bag (right hand)
+	bool sit = false;     // sitting on a seat (held as a state): he walks to it, sits, stays; let go - or the stick pushed away - he stands
+	Vector3 seat;         // where his seat goes: the middle of the seat's top (world)
+	float seat_yaw = 0.0f; // the way he faces sitting on it
 };
 
 // What moves the body in the world
@@ -78,7 +81,7 @@ struct Clip {
 
 class Motor {
 public:
-	enum State { OFF = 0, IDLE, START, MOVE, STOP, TURN, PIVOT, TRAV, CROUCH, STANCE, COVER_IN, COVER, COVER_OUT, CARRY, JUMP, AIR, LAND, RUNJUMP, DESCEND };
+	enum State { OFF = 0, IDLE, START, MOVE, STOP, TURN, PIVOT, TRAV, CROUCH, STANCE, COVER_IN, COVER, COVER_OUT, CARRY, JUMP, AIR, LAND, RUNJUMP, DESCEND, SIT_IN, SIT, SIT_OUT };
 
 	bool attach(CityPed *p_fig);
 	// the movement set (0, 1, 2: different clips that go together; mo_sets.cpp) - changed when he next stands
@@ -233,7 +236,17 @@ private:
 	void load_descent(Descent &r_d, const char *p_name);
 	bool descend_probe(const Vector3 &p_fwd);
 public:
-	int n_descents = 0, n_peeks = 0;
+	int n_descents = 0, n_peeks = 0, n_sits = 0;
+	// SITTING (mo_motor_sit.cpp)
+	Clip si_in, si_idle, si_gest[3], si_out; int n_si_gest = 0, si_last = -1, si_cur = -1;
+	double sit_up_at = 0.0;
+	Vector3 sit_A; float sit_ground = 0.0f, sit_yaw = 0.0f, sit_t = 0.0f; bool sit_gesture = false;
+	void load_sit();
+	bool sit_approach(const Intent &p_in, Vector3 &r_dir, float &r_speed);   // walking to the seat: the way to it; true when there to sit
+	void sit_start(const Intent &p_in);
+	void sit_step(float p_dt, const Intent &p_in);
+	void sit_out();
+	void place_sit();
 	int n_jumps = 0, n_falls = 0, n_landings = 0, n_soft = 0, n_hard = 0, n_flat = 0;   // (tests)
 	float land_fallen = 0.0f;                                                          // (tests) the last landing's height fallen
 private:
