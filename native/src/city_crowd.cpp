@@ -31,6 +31,7 @@
 #include <godot_cpp/classes/world3d.hpp>
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/callable.hpp>
+#include <godot_cpp/variant/dictionary.hpp>
 #include <godot_cpp/variant/packed_vector3_array.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
@@ -1353,9 +1354,28 @@ PackedVector2Array CityCrowd::map_lines(int p_kind) const {
 	return out;
 }
 
+// The player's house on the in-game map / phone map. sub = 100 so HudMap can draw a
+// Home pin instead of a shop letter. Path and fields: map_dc/coronado/city_kit/player_home.json.
+static const int MAP_HOME_SUB = 100;
+static const char *const PLAYER_HOME_JSON = "res://map_dc/coronado/city_kit/player_home.json";
+
+static bool player_home_xz(float &x, float &z, String &name) {
+	if (!FileAccess::file_exists(PLAYER_HOME_JSON)) return false;
+	const Variant v = JSON::parse_string(FileAccess::get_file_as_string(PLAYER_HOME_JSON));
+	if (v.get_type() != Variant::DICTIONARY) return false;
+	const Dictionary d = v;
+	if (!d.has("x") || !d.has("z")) return false;
+	x = (float)(double)d["x"];
+	z = (float)(double)d["z"];
+	name = d.get("name", "Home");
+	return true;
+}
+
 PackedVector3Array CityCrowd::map_rooms() const {
 	PackedVector3Array out;
 	for (const pc::Place &pl : crowd->places) if (pl.kind == pc::PL_SHOP) out.push_back(Vector3(pl.x, pl.z, (float)pl.sub));
+	float hx = 0.0f, hz = 0.0f; String hn;
+	if (player_home_xz(hx, hz, hn)) out.push_back(Vector3(hx, hz, (float)MAP_HOME_SUB));
 	return out;
 }
 
@@ -1366,6 +1386,10 @@ String CityCrowd::room_name(int p_i) const {
 		if (k++ != p_i) continue;
 		if (pl.name >= 0 && pl.name < (int)crowd->place_names.size()) return String::utf8(crowd->place_names[pl.name].c_str());
 		return String(pl.sub < pc::N_SHOP_KINDS ? pc::SHOP_KINDS[pl.sub] : "shop").capitalize();
+	}
+	if (p_i == k) {
+		float hx = 0.0f, hz = 0.0f; String hn;
+		if (player_home_xz(hx, hz, hn)) return hn.is_empty() ? String("Home") : hn;
 	}
 	return String();
 }

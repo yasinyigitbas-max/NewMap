@@ -171,6 +171,14 @@ void HudMap::_draw() {
 			const Vector2 q = W(Vector2(rooms[i].x, rooms[i].y));
 			if (q.x < -20 || q.y < -20 || q.x > s.x + 20 || q.y > s.y + 20) continue;
 			const int sub = (int)rooms[i].z;
+			if (sub == 100) {   // the player's home (player_home.json), not a shop letter
+				draw_circle(q + Vector2(0, -14), 10.0f, Color(0.85f, 0.28f, 0.20f));
+				PackedVector2Array tri; tri.push_back(q); tri.push_back(q + Vector2(-7, -10)); tri.push_back(q + Vector2(7, -10));
+				draw_colored_polygon(tri, Color(0.85f, 0.28f, 0.20f));
+				draw_circle(q + Vector2(0, -14), 3.5f, Color(0.97f, 0.95f, 0.90f));
+				if (side > 10.0f) draw_string(f, q + Vector2(-14, -30), "Home", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color(0.97f, 0.95f, 0.90f));
+				continue;
+			}
 			const Color c = cols[sub % 6];
 			draw_rect(Rect2(q - Vector2(side, side) * 0.5f, Vector2(side, side)), c);
 			if (side > 10.0f && sub < 23) draw_string(f, q + Vector2(-4, 5), String::chr(L[sub]), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(0.05f, 0.05f, 0.06f));

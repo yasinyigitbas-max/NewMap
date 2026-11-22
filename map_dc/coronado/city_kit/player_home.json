@@ -1,0 +1,10 @@
+{
+  "name": "Home",
+  "marker": "home",
+  "piece": "n_hs_b6_tenth",
+  "lot": "n1",
+  "building": "houses/tudor_brick_player",
+  "note": "Front-door world XZ for HudMap / CityCrowd. House origin (154.1, cv) with cv = FRONT_V - near.bbox.max.z = -15.2 - 5.85 = -21.05; door local (-0.20, 4.15).",
+  "x": 153.9,
+  "z": -16.9
+}
