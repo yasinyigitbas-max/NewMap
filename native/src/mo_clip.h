@@ -42,6 +42,7 @@ struct ClipData {
 	std::vector<Vector3> root_v;
 	std::vector<float> yaw_c;                   // the "yaw" curve at 30 Hz (empty: none)
 	Vector3 root_vel(double t) const;
+	float loop_drift = 0.0f;   // (a loop's own sideways drift over its cycle, m/s, taken out of root_v)
 	const Frame &at(double t) const;            // the nearest frame (no blend: for costs and contacts)
 	Frame lerp(double t) const;                 // blended between frames
 	int idx(double t) const;

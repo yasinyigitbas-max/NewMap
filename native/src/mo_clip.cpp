@@ -242,6 +242,16 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 			const Vector3 sm = (at(k - 2) + at(k - 1) * 2.0f + at(k) * 3.0f + at(k + 1) * 2.0f + at(k + 2)) / 9.0f;
 			d->root_v[k] = Basis(Vector3(0, 1, 0), -ym[k]).xform(sm) - hl[k];
 		}
+		// A LOOP GOES STRAIGHT on average: the take's own sideways drift over the cycle taken out (the mocap's path was
+		// not straight: run on the jog, he drifted 2.7 m left in 14 m and ran off a ramp's side); the sway within the
+		// stride stays
+		if (d->loop && n > 2 && std::fabs(d->yaw(d->len)) < 0.2f) {
+			float mx = 0.0f;
+			for (int k = 0; k < n - 1; k++) mx += (float)d->root_v[k].x;
+			mx /= (float)(n - 1);
+			d->loop_drift = mx;
+			for (int k = 0; k < n; k++) d->root_v[k].x -= mx;
+		}
 	}
 	g_cache[key] = d;
 	return d;

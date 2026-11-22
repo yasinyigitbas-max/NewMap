@@ -96,6 +96,9 @@ public:
 	int n_starts = 0, n_stops = 0, n_turns = 0, n_pivots = 0, n_gait = 0, n_fidgets = 0, n_switch = 0;
 	float last_entry_cost = 0.0f;
 	bool into_loop = false;
+	Vector3 last_follow;
+	Vector3 drawn_pull[2]; bool drawn_locked[2] = { false, false };
+	Vector3 follow_v; float follow_acc = 4.0f;
 	float follow_rate = 3.0f, follow_max = 0.5f, follow_sum = 0.0f;   // the body drawn toward its planted feet (per second; (tests) the total, m)
 	int n_hips_aligned = 0; float last_align_yaw = 0.0f; int n_aligned = 0; float last_align = 0.0f;   // (tests) contact alignments made, the last one's size (m)
 	int inert_switches() const;
@@ -104,6 +107,8 @@ public:
 	float foot_pull(int p_side) const;   // (tests) how far the foot lock moved that foot from the clip this frame, m
 	int foot_locks() const;
 	int foot_steps() const;
+	float hips_drop() const;
+	float floor_y() const { return draw_y; }   // (tests) the figure's floor as drawn
 	bool foot_stepping(int s) const;
 	Array dump(const String &p_clip) const;   // (tests / tools) a clip's measured frames: t, feet, down, hips, root_v, yaw
 
@@ -188,7 +193,13 @@ public:
 	float trav_wmax = 0.0f;         // (tests) the largest hand weight given
 	Array trav_hands() const;       // (tests) [L target, L weight, R target, R weight] now
 private:
-	void place(Host &p_host);   // the figure on the body, its feet on the ground under it (a ray: not the capsule's height)
+	void place(Host &p_host, float p_dt = 0.0f);
+	void ground_feet(Host &p_host);
+public:
+	void replace(Host &p_host);   // the figure put back on its floor after the host moved the body (a kerb's lift)
+private:
+	float ankle_rest = 0.105f;   // the ankle's height over the ground standing (the idle's, set at begin)
+	float draw_y = 0.0f, draw_v = 0.0f, draw_omega = 10.0f; bool draw_ok = false;   // the figure's floor, eased   // the figure on the body, its feet on the ground under it (a ray: not the capsule's height)
 	float ground_at(Host &p_host, const Vector3 &p_at) const;   // the ground's height under a point (its own y when none near)
 };
 

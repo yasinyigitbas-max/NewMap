@@ -367,7 +367,11 @@ void CityPlayer::_physics_process(double p_delta) {
 		in.speed = run ? run_speed : walk_speed;
 		motor->step(dt, in, host);
 		yaw = motor->yaw; speed = motor->speed; move_speed = speed;
-		if (!motor->in_trav() && in.dir.length() > 0.3f) step_or_climb(in.dir * in.speed, p_delta);
+		if (!motor->in_trav() && in.dir.length() > 0.3f) {
+			step_or_climb(in.dir * in.speed, p_delta);
+			// (the figure hangs under the body: a kerb's lift after the motor placed it carried it up 4-8 cm for a frame)
+			if (motor->active() && !motor->in_trav()) motor->replace(host);
+		}
 		return;
 	}
 	if (motor && motor->active()) {   // the old code has him again
@@ -860,6 +864,9 @@ bool CityPlayer::try_climb(const Vector3 &p_dir) {
 			}
 		}
 	}
+	// (the new movement system walks kerbs and stairs: the body lifted by the step code in step_or_climb, the figure eased
+	// up, each foot fitted to its own step - Yasin: "kerbs shouldnt require step up animation")
+	if (motor && motor->active() && !motor->in_trav() && rise <= 0.24f) return false;
 	const bool step = !airborne && rise > 0.05f && rise <= 0.24f;   // (every kerb over 5 cm: Mixamo's step up, 21 Nov)   // (a kerb, up to 16 cm, is walked onto: no clip; Yasin: "kerbs shouldnt require step up animation")
 	const bool low = !airborne && rise > 0.24f && rise <= 0.5f;
 	const bool high = rise > 0.5f && rise <= 2.5f;   // (no jump needed: walking into it he climbs it)
@@ -900,7 +907,19 @@ bool CityPlayer::motor_can() const {
 	if (motor && motor->in_trav()) return fig && fig->get_mode() == CityPed::MODE_ANIM;   // (a vault / climb runs to its end)
 	return fig && fig->get_mode() == CityPed::MODE_ANIM && climb == 0 && settle_t >= 0.45f && !swimming && !combat && uncombat_t >= 0.9
 			&& act_left <= 0.0 && gest_t <= 0.0f && !airborne && land_t <= 0.0f && !crouch && crouch == crouch_prev && crouch_t > 1.2f && !jump_want && phone_kind == 0
-			&& !auto_on && !frozen && !talk_on && hit_t > 0.45 && !hold_on && is_on_floor();
+			&& !auto_on && !frozen && !talk_on && hit_t > 0.45 && !hold_on && (is_on_floor() || (motor && motor->active() && ground_near(0.5f)));
+}
+
+// (the new system keeps him over a crest run fast or a kerb's lift, where the body leaves the floor for a few frames:
+// the ground is right under him. Handed to the old code there, it took him for 0.4-1.8 s: a fall, a landing)
+bool CityPlayer::ground_near(float p_below) const {
+	if (!get_world_3d().is_valid()) return false;
+	PhysicsDirectSpaceState3D *ss = get_world_3d()->get_direct_space_state();
+	if (!ss) return false;
+	const Vector3 p = get_global_position();
+	Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(p + Vector3(0, 0.3f, 0), p - Vector3(0, p_below, 0), 1);
+	TypedArray<RID> ex; ex.push_back(get_rid()); q->set_exclude(ex);
+	return !ss->intersect_ray(q).is_empty();
 }
 
 Dictionary CityPlayer::get_motor_state() const {
@@ -909,7 +928,7 @@ Dictionary CityPlayer::get_motor_state() const {
 	if (!motor) return d;
 	d["state"] = String(motor->state_name()); d["clip"] = motor->clip_name(); d["t"] = motor->clip_time(); d["speed"] = motor->speed; d["yaw"] = motor->yaw;
 	d["starts"] = motor->n_starts; d["stops"] = motor->n_stops; d["turns"] = motor->n_turns; d["pivots"] = motor->n_pivots; d["gaits"] = motor->n_gait;
-	d["fidgets"] = motor->n_fidgets; d["switches"] = motor->n_switch; d["entry_cost"] = motor->last_entry_cost; d["i_switches"] = motor->inert_switches(); d["i_jump"] = motor->inert_jump(); d["i_live"] = motor->inert_live(); d["down_l"] = motor->foot_down(0); d["down_r"] = motor->foot_down(1); d["pull_l"] = motor->foot_pull(0); d["pull_r"] = motor->foot_pull(1); d["locks"] = motor->foot_locks(); d["steps"] = motor->foot_steps(); d["step_l"] = motor->foot_stepping(0); d["step_r"] = motor->foot_stepping(1); d["aligned"] = motor->n_aligned; d["align"] = motor->last_align; d["align_yaw"] = motor->last_align_yaw; d["hips_aligned"] = motor->n_hips_aligned; d["vaults"] = motor->n_vaults; d["climbs"] = motor->n_climbs; d["trav"] = motor->last_trav; d["hand_miss"] = motor->trav_hand_miss; d["hand_dy"] = motor->trav_hand_dy; d["hips_over"] = motor->trav_hips_over; d["warp"] = motor->trav_warp; d["top"] = motor->trav_top; d["win"] = motor->trav_win(); d["wmax"] = motor->trav_wmax; d["hands"] = motor->trav_hands();
+	d["fidgets"] = motor->n_fidgets; d["switches"] = motor->n_switch; d["entry_cost"] = motor->last_entry_cost; d["i_switches"] = motor->inert_switches(); d["i_jump"] = motor->inert_jump(); d["i_live"] = motor->inert_live(); d["down_l"] = motor->foot_down(0); d["down_r"] = motor->foot_down(1); d["pull_l"] = motor->foot_pull(0); d["pull_r"] = motor->foot_pull(1); d["locks"] = motor->foot_locks(); d["steps"] = motor->foot_steps(); d["drop"] = motor->hips_drop(); d["draw_y"] = motor->floor_y(); d["follow"] = motor->last_follow; d["step_l"] = motor->foot_stepping(0); d["step_r"] = motor->foot_stepping(1); d["aligned"] = motor->n_aligned; d["align"] = motor->last_align; d["align_yaw"] = motor->last_align_yaw; d["hips_aligned"] = motor->n_hips_aligned; d["vaults"] = motor->n_vaults; d["climbs"] = motor->n_climbs; d["trav"] = motor->last_trav; d["hand_miss"] = motor->trav_hand_miss; d["hand_dy"] = motor->trav_hand_dy; d["hips_over"] = motor->trav_hips_over; d["warp"] = motor->trav_warp; d["top"] = motor->trav_top; d["win"] = motor->trav_win(); d["wmax"] = motor->trav_wmax; d["hands"] = motor->trav_hands();
 	return d;
 }
 

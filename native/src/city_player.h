@@ -175,7 +175,8 @@ private:
 	mo::Motor *motor = nullptr;
 	bool motor_on = true, motor_tried = false;
 	bool motor_can() const;
-	bool step_or_climb(const Vector3 &p_want, double p_delta);   // kerbs and ledges ahead (both paths)
+	bool step_or_climb(const Vector3 &p_want, double p_delta);
+	bool ground_near(float p_below) const;   // kerbs and ledges ahead (both paths)
 	double water_y = -1000.0;   // the water's surface (-1000 = there is none): deeper than his chest he swims
 	bool swimming = false;
 

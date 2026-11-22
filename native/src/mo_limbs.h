@@ -43,11 +43,22 @@ public:
 	// it (a hand-over from another stance: the feet kept the old one, the legs bent off the clip's for as long as he
 	// stood) lifts and steps there: an arc step_h high over step_s, one foot at a time, then pinned again
 	bool may_step = false;
-	float step_pull = 0.04f, step_after = 0.15f, step_s = 0.3f, step_h = 0.06f;
+	float step_pull = 0.04f, step_now = 0.12f, step_after = 0.15f, step_s = 0.3f, step_h = 0.06f;
 	float step_t[2] = { -1.0f, -1.0f }, held[2] = { 0.0f, 0.0f };
 	Vector3 step_from[2];
 	int steps = 0;   // (the tests)
 	bool stepping(int s) const { return step_t[s] >= 0.0f; }
+	// ---- the ground under each foot (the motor's rays, each frame): the foot fitted to it, the hips dropped for the
+	// lower one, the sole turned onto its slope
+	bool fit_on = false;
+	float fit_off[2] = { 0.0f, 0.0f };   // m, the clip's foot moved up / down to the ground there (already weighted)
+	float fit_w[2] = { 0.0f, 0.0f };     // how much the clip has that foot on its floor (0 in the swing)
+	float fit_y[2] = { 0.0f, 0.0f };     // world: the clip's own foot height on the ground there (no hand-over offset): a pin's height
+	float lock_t[2] = { 9.0f, 9.0f };    // since a foot was pinned (its height eased onto fit_y over 0.1 s)
+	Vector3 ground_n[2] = { Vector3(0, 1, 0), Vector3(0, 1, 0) };
+	float drop = 0.0f, drop_v = 0.0f, drop_slack = 0.01f, drop_max = 0.35f, drop_down = 14.0f, drop_up = 9.0f;   // the hips lowered (m), its spring (rad/s down, up)
+	int b_root = -1;
+	uint64_t frame_id = ~0ull; float dt_frame = 1.0f / 60.0f;
 	// ---- the hands
 	Vector3 hand_target[2]; float hand_w[2] = { 0.0f, 0.0f };
 	// (the tests) how far each foot was moved from the clip's place this frame, m; locks taken

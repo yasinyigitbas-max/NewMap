@@ -138,7 +138,7 @@ func _measure(dt: float) -> void:
 		# leg's offset decays: that pull is the lock doing its job; a re-plant step is not counted either)
 		if ms.get("on", false) and not ms["i_live"] and not ms["step_l"] and not ms["step_r"] and maxf(ms["pull_l"], ms["pull_r"]) > pull_most: pull_most = maxf(ms["pull_l"], ms["pull_r"]); pull_at = " (at %.2f s, %s:%s)" % [phase_t, ms["state"], ms["clip"]]
 		if ms.get("on", false): clip = "%s:%s" % [ms["state"], ms["clip"]]
-		if trace and ms.get("on", false): print("TRACEP %s %.3f %s dl %s dr %s pl %.3f pr %.3f yaw %.2f" % [PHASES[phase][0], phase_t, clip, str(ms["down_l"]), str(ms["down_r"]), ms["pull_l"], ms["pull_r"], ms["yaw"]])
+		if trace and ms.get("on", false): print("TRACEP %s %.3f %s dl %s dr %s pl %.3f pr %.3f yaw %.2f stl %s str %s fol %s" % [PHASES[phase][0], phase_t, clip, str(ms["down_l"]), str(ms["down_r"]), ms["pull_l"], ms["pull_r"], ms["yaw"], str(ms["step_l"]), str(ms["step_r"]), str(ms["follow"] * 60.0)])
 		if trace and ms.get("on", false): print("TRACEI sw %d jump %.3f live %s t %.3f ayaw %.3f al %.3f nh %d na %d" % [ms["i_switches"], ms["i_jump"], str(ms["i_live"]), ms["t"], ms["align_yaw"], ms["align"], ms["hips_aligned"], ms["aligned"]])
 	if clips.is_empty() or clips[-1] != clip: clips.append(clip)
 	for s in 4:

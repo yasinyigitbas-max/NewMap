@@ -20,6 +20,7 @@ namespace {
 const float PI_F = 3.14159265f, TAU_F = 6.2831853f;
 const Vector3 UP(0, 1, 0);
 float wrapf(float a) { a = std::fmod(a + PI_F, TAU_F); if (a < 0.0f) a += TAU_F; return a - PI_F; }
+float sstep(float a, float b, float x) { if (b <= a) return x >= b ? 1.0f : 0.0f; const float u = std::min(std::max((x - a) / (b - a), 0.0f), 1.0f); return u * u * (3.0f - 2.0f * u); }
 float clampf(float x, float a, float b) { return std::min(std::max(x, a), b); }
 Vector3 fwd_of(float y) { return Vector3(std::sin(y), 0.0f, std::cos(y)); }
 Vector3 left_of(float y) { return Vector3(std::cos(y), 0.0f, -std::sin(y)); }
@@ -47,6 +48,7 @@ int Motor::inert_switches() const { return inert ? inert->switches : 0; }
 float Motor::inert_jump() const { return inert ? inert->last_jump : 0.0f; }
 bool Motor::inert_live() const { return inert && inert->is_blending(); }
 float Motor::foot_pull(int p_side) const { return limbs ? limbs->pull[p_side & 1] : 0.0f; }
+float Motor::hips_drop() const { return limbs ? limbs->drop : 0.0f; }
 int Motor::foot_steps() const { return limbs ? limbs->steps : 0; }
 bool Motor::foot_stepping(int s) const { return limbs && limbs->stepping(s); }
 int Motor::foot_locks() const { return limbs ? limbs->locks : 0; }
@@ -104,6 +106,7 @@ bool Motor::attach(CityPed *p_fig) {
 	fig->add_library("ptrav", "player_trav"); fig->add_library("pact", "player_act");
 	n_idles = 0;   // (the idles that face ahead: the -38 degree ones would turn the body in place)
 	for (const char *n : { "pidle/base_idle", "pidle/base_loco", "pidle/base_standing" }) { Clip c = load(n); if (c.ok()) idles[n_idles++] = c; }
+	if (n_idles > 0 && idles[0].d->ground_y > 0.03f && idles[0].d->ground_y < 0.2f) ankle_rest = idles[0].d->ground_y;   // (the standing ankle over the floor)
 	n_fidgets_c = 0;
 	for (const char *n : { "pidle/Arm_Stretching", "pidle/Bored", "pidle/Looking", "pidle/Neck_Stretching", "pidle/Looking_Around_idle" }) { Clip c = load(n); if (c.ok() && n_fidgets_c < 6) fidgets[n_fidgets_c++] = c; }
 	n_loops = 0;
@@ -409,15 +412,67 @@ float Motor::ground_at(Host &p_host, const Vector3 &p_at) const {
 	return (float)p_at.y;
 }
 
-void Motor::place(Host &p_host) {
+void Motor::place(Host &p_host, float p_dt) {
 	Vector3 at = p_host.position();
-	if (st != TRAV) at.y = ground_at(p_host, at);
+	if (st == TRAV) { draw_ok = false; fig->set_global_transform(Transform3D(Basis(UP, yaw), at)); return; }
+	// the figure's floor: the ground under the body, followed on a stiff spring (a kerb or a stair lifts the body at once;
+	// drawn so, the hips popped the step's height in a frame). Flat ground: exactly the ground
+	const float g = ground_at(p_host, at);
+	if (p_dt <= 0.0f || !draw_ok || std::fabs(g - draw_y) > 0.45f) {   // (more than a kerb or a stair: a teleport, a drop)
+		draw_y = g; draw_v = 0.0f; draw_ok = true; }
+	else {
+		const float w = draw_omega;
+		draw_v += (w * w * (g - draw_y) - 2.0f * w * draw_v) * p_dt;
+		draw_y += draw_v * p_dt;
+	}
+	at.y = draw_y;
 	fig->set_global_transform(Transform3D(Basis(UP, yaw), at));
+}
+
+void Motor::replace(Host &p_host) {
+	if (!fig || st == TRAV || !draw_ok) return;
+	Vector3 at = p_host.position(); at.y = draw_y;
+	fig->set_global_transform(Transform3D(Basis(UP, yaw), at));
+}
+
+// THE GROUND UNDER EACH FOOT (for MoLimbs): where the clip puts the foot this frame, a ray down there; the foot moved by
+// the ground's height there against the figure's floor - fully while the clip has it on its floor, and, in the swing,
+// only up (over a stair's edge; down, it stays where the clip swings it)
+void Motor::ground_feet(Host &p_host) {
+	if (!limbs || !cur) return;
+	limbs->ground_y = draw_y;
+	limbs->fit_on = st != TRAV && st != OFF;
+	if (!limbs->fit_on) return;
+	const Frame fr = cur->d->lerp(t);
+	const Transform3D X = fig->get_global_transform();
+	for (int s = 0; s < 2; s++) {
+		Vector3 fw = X.xform(Vector3(fr.foot[s].x, 0.0f, fr.foot[s].z)); fw.y = draw_y;
+		Vector3 g, gn;
+		if (!p_host.ray(fw + Vector3(0, 0.6f, 0), fw - Vector3(0, 0.6f, 0), g, gn) || gn.y < 0.5f) { g = fw; gn = UP; }
+		const float h = (float)fr.foot[s].y - cur->d->ground_y;
+		const float w = 1.0f - sstep(0.04f, 0.25f, h);
+		const float off = (float)g.y - draw_y;
+		limbs->fit_off[s] = off > 0.0f ? off : off * w;
+		// a pin's height: the ground at the PIN (on stairs the clip's foot and the pin can be on different steps) plus
+		// the clip's foot over its own floor plus the ankle's height standing (a raw Mixamo take's floor is not festive's)
+		Vector3 gp = g;
+		if (limbs->locked[s]) {
+			Vector3 lp = limbs->lock_w[s]; lp.y = draw_y;
+			Vector3 gn2;
+			if (!p_host.ray(lp + Vector3(0, 0.6f, 0), lp - Vector3(0, 0.6f, 0), gp, gn2) || gn2.y < 0.5f) gp = lp;
+		}
+		limbs->fit_y[s] = (float)gp.y + std::max((float)fr.foot[s].y - cur->d->ground_y, 0.0f) + ankle_rest;
+		limbs->fit_w[s] = w; limbs->ground_n[s] = gn;
+	}
 }
 
 void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	if (st == OFF || !cur) return;
 	host = &p_host;
+	// (the feet's pull as DRAWN last frame, read before this step seeks the clip: a pass made mid-step, with the clip
+	// moved on and the figure not yet placed, gave a pull that alternated frame to frame - the body followed it, the
+	// hips' speed jumped 1.4 m/s)
+	if (limbs) for (int s = 0; s < 2; s++) { drawn_pull[s] = limbs->pull_v[s]; drawn_locked[s] = limbs->locked[s] && !limbs->stepping(s); }
 	const Vector3 dir(p_in.dir.x, 0.0f, p_in.dir.z);
 	const float wl = std::min((float)dir.length(), 1.0f);
 	const bool want = wl > 0.1f;
@@ -560,19 +615,22 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		limbs->lock_on = st != OFF;
 		limbs->may_step = st == IDLE || st == STOP;   // (standing: a foot held off the clip's stance re-plants)
 		limbs->down[0] = fr.down[0]; limbs->down[1] = fr.down[1];
-		limbs->ground_y = ground_at(p_host, p_host.position());
 	}
 	// THE BODY FOLLOWS ITS PLANTED FEET: a foot pinned where the clip no longer has it (pinned during a hand-over, the
 	// leg's offset then decayed away from it; or the clip's stance and its travel disagree) draws the body toward it,
 	// 3 per second, at most 0.5 m/s, rather than bend the leg off the clip's pose (a walk stop held a leg 25 cm off for 0.6 s)
 	if (limbs) {
 		Vector3 sum; int m = 0;
-		for (int s = 0; s < 2; s++) if (limbs->locked[s] && !limbs->stepping(s)) { sum += Vector3(limbs->pull_v[s].x, 0.0f, limbs->pull_v[s].z); m++; }
-		if (m) {
-			Vector3 by = sum / (float)m * std::min(1.0f, follow_rate * p_dt);
-			if (by.length() > follow_max * p_dt) by = by.normalized() * follow_max * p_dt;   // (at most this fast: the hips' speed jumped 1.3 m/s at 5 per second unlimited)
-			if (by.length() > 1e-4f && p_host.shift(by)) follow_sum += (float)by.length();
-		}
+		for (int s = 0; s < 2; s++) if (drawn_locked[s]) { sum += Vector3(drawn_pull[s].x, 0.0f, drawn_pull[s].z); m++; }
+		Vector3 want_v = m ? sum / (float)m * follow_rate : Vector3();
+		if (want_v.length() > follow_max) want_v = want_v.normalized() * follow_max;   // (at most this fast)
+		// (its speed changes at most follow_acc: stepped in at once, its 0.5 m/s jumped the hips' speed 1.4 m/s in a stop)
+		Vector3 dv = want_v - follow_v;
+		if (dv.length() > follow_acc * p_dt) dv = dv.normalized() * follow_acc * p_dt;
+		follow_v += dv;
+		const Vector3 by = follow_v * p_dt;
+		last_follow = by;
+		if (by.length() > 1e-5f && p_host.shift(by)) follow_sum += (float)by.length();
 	}
 	// the body: level motion as above, and down onto the ground
 	Vector3 v = vel;
@@ -580,6 +638,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	const Vector3 got = p_host.slide(v, p_dt);
 	const float got_s = (float)Vector3(got.x, 0, got.z).length();
 	if (st == MOVE) speed = std::min(speed, got_s + 0.6f);   // (into a wall he does not keep a pace he cannot walk)
-	place(p_host);
+	place(p_host, p_dt);
+	ground_feet(p_host);
 	host = nullptr;
 }
