@@ -1023,5 +1023,30 @@
   "atlas_page": "props_k_*",
   "col": 1,
   "note": "Living-room flatscreen for the player house. Page K. Sits on prop_tv_console."
+ },
+ "ironing_board": {
+  "file_base": "prop_ironing_board",
+  "batch": "hfurn",
+  "class": "medium",
+  "budget": 400,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 132
+  },
+  "footprint_w": 1.13,
+  "footprint_d": 0.3,
+  "height": 0.86,
+  "regions": [
+   "ti_fabric",
+   "ti_metal",
+   "paint_cream",
+   "paint_black"
+  ],
+  "atlas_page": "props_k_*",
+  "col": 1,
+  "note": "Standing ironing board, length along X. Pivot at the footprint centre. Page K."
  }
 }

@@ -1426,5 +1426,139 @@
   ],
   "atlas_page": "props_k_*",
   "note": "Hand towel over a short brass rail. Pivot at the rail. Page K."
+ },
+ "kettle": {
+  "file_base": "prop_kettle",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 84
+  },
+  "footprint_w": 0.18,
+  "footprint_d": 0.31,
+  "height": 0.18,
+  "regions": [
+   "brass",
+   "paint_black"
+  ],
+  "atlas_page": "props_k_*",
+  "note": "Stovetop kettle. Pivot at the base. Page K. Sits on the range or the sink run."
+ },
+ "cutting_board": {
+  "file_base": "prop_cutting_board",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 72
+  },
+  "footprint_w": 0.38,
+  "footprint_d": 0.24,
+  "height": 0.026,
+  "regions": [
+   "walnut"
+  ],
+  "atlas_page": "props_k_*",
+  "note": "Walnut chopping board, pivot at the base. Page K."
+ },
+ "dish_rack": {
+  "file_base": "prop_dish_rack",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 108
+  },
+  "footprint_w": 0.38,
+  "footprint_d": 0.28,
+  "height": 0.16,
+  "regions": [
+   "oak",
+   "ceramic"
+  ],
+  "atlas_page": "props_k_*",
+  "note": "Wooden dish rack with two plates. Pivot at the base. Page K."
+ },
+ "fruit_bowl": {
+  "file_base": "prop_fruit_bowl",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 60
+  },
+  "footprint_w": 0.26,
+  "footprint_d": 0.26,
+  "height": 0.145,
+  "regions": [
+   "ceramic",
+   "leaf"
+  ],
+  "atlas_page": "props_k_*",
+  "note": "Ceramic bowl with fruit. Pivot at the base. Page K."
+ },
+ "coat_hook_rail": {
+  "file_base": "prop_coat_hook_rail",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "wall",
+  "tiers": {
+   "near": 108
+  },
+  "footprint_w": 0.56,
+  "footprint_d": 0.07,
+  "height": 0.14,
+  "regions": [
+   "oak",
+   "brass"
+  ],
+  "atlas_page": "props_k_*",
+  "note": "Four brass hooks on a short oak rail. Pivot at the top-back. Page K."
+ },
+ "toiletry_set": {
+  "file_base": "prop_toiletry_set",
+  "batch": "hdecor",
+  "class": "small",
+  "budget": 200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "ground",
+  "tiers": {
+   "near": 84
+  },
+  "footprint_w": 0.22,
+  "footprint_d": 0.12,
+  "height": 0.16,
+  "regions": [
+   "oak",
+   "ceramic",
+   "walnut",
+   "paint_black",
+   "paint_cream"
+  ],
+  "atlas_page": "props_k_*",
+  "note": "Three bottles on a small tray for a vanity. Pivot at the base. Page K."
  }
 }
