@@ -786,9 +786,15 @@
    "name": "Ninth St Bikes",
    "when": "21 Nov 2026",
    "why": "shop trim to 100 (Yasin: \"reduce the number of shops to 100 in the map ... replace them with buildings fitting into their scene\")"
+  },
+  {
+   "id": "cc_b5_w__l5s_bakery_depot__0",
+   "name": "Hill Print Works",
+   "when": "22 Nov 2026",
+   "why": "shop trim to 100: removed shop (its room, people and row go; INDOORS rollout)"
   }
  ],
- "count": 31,
+ "count": 30,
  "rooms": [
   {
    "id": "cc_b1_am__amber6_tower__0",
@@ -1675,42 +1681,6 @@
      "facade": "front",
      "along": 3.0,
      "w": 5.2
-    }
-   ],
-   "source": "city-centre fill (hand-made shop list)",
-   "built": ""
-  },
-  {
-   "id": "cc_b5_w__l5s_bakery_depot__0",
-   "piece": "n_cc_b5_w",
-   "label": "l5s_bakery_depot",
-   "model": "modular/examples/mod_svc_row",
-   "pos": [
-    111.09,
-    8.371,
-    -868.877
-   ],
-   "yaw": -180.0,
-   "door_index": 0,
-   "door_along": -1.4,
-   "door_w": 1.6,
-   "bay": [
-    -5.7,
-    5.7
-   ],
-   "kind": "print",
-   "name": "Hill Print Works",
-   "style": "black",
-   "signs": [
-    {
-     "facade": "front",
-     "along": -3.0,
-     "w": 3.4
-    },
-    {
-     "facade": "front",
-     "along": 3.0,
-     "w": 3.4
     }
    ],
    "source": "city-centre fill (hand-made shop list)",
