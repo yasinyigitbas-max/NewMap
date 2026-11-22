@@ -1046,7 +1046,7 @@ func _bay_building(rec: Dictionary, piece: String, model: String, rows: Array) -
 	for bi3: int in used:
 		var it: Node3D = (load(BL.bay_path(model, bi3)) as PackedScene).instantiate()
 		for o: Dictionary in it.get_meta(&"ops", []):
-			if ROOM_DOORS.any(func(pp: String) -> bool: return String(o.region).begins_with(pp)): doors.append(o)
+			if bool(o.get("entry", false)) or ROOM_DOORS.any(func(pp: String) -> bool: return String(o.region).begins_with(pp)): doors.append(o)
 		it.free()
 	var lay := 1; var msk := 1
 	for ci in (rec.col as Array).size():

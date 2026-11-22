@@ -2404,14 +2404,14 @@
    "district": "",
    "piece": "n_cc_b1_court",
    "model": "urban/urb_courthouse",
-   "w": null,
-   "d": null,
+   "w": 27.4,
+   "d": 19.2,
    "has_row": true,
    "old_props": null,
-   "area": 0,
-   "size": "S",
-   "prop_tris_est": 6866,
-   "prop_tris_capped": 6866
+   "area": 526,
+   "size": "XL",
+   "prop_tris_est": 27674,
+   "prop_tris_capped": 25000
   },
   {
    "id": "ind_va_w800_n1600_sw__hfs_office__0",
@@ -4253,8 +4253,8 @@
    ],
    "built_since_new21": [],
    "note": "Courtroom: bench at the back on a step, gallery benches face it.",
-   "prop_tris_max": 6866,
-   "over_cap": 0
+   "prop_tris_max": 27674,
+   "over_cap": 1
   },
   "dentist": {
    "places": 3,

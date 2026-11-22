@@ -1322,6 +1322,51 @@
    "budget_class": "civic",
    "ext_tris": 817
   },
+  "public/pub_hospital": {
+   "box_min": [
+    -17.7,
+    0.0,
+    -9.7
+   ],
+   "box_max": [
+    17.7,
+    2.7,
+    9.55
+   ],
+   "clear_h": 2.7,
+   "bays": [
+    {
+     "s0": -17.7,
+     "s1": -0.1,
+     "door_along": -2.2,
+     "door_w": 2.0,
+     "kinds": [
+      "hospital_lobby"
+     ],
+     "places": [
+      "hp_main_hospital_0"
+     ],
+     "i": 0
+    },
+    {
+     "s0": 0.1,
+     "s1": 17.7,
+     "door_along": 2.2,
+     "door_w": 2.0,
+     "kinds": [
+      "cafe"
+     ],
+     "places": [
+      "hp_main_hospital_1"
+     ],
+     "i": 1
+    }
+   ],
+   "near_budget": 5000,
+   "budget_class": "civic",
+   "ext_tris": 3626,
+   "lean": false
+  },
   "commercial/com_orange_corner": {
    "box_min": [
     -5.7,
@@ -1378,6 +1423,40 @@
    "budget_class": "shop (1200 / 6 m, min 2500)",
    "ext_tris": 2366
   },
+  "commercial/com_shallow_books": {
+   "box_min": [
+    -2.95,
+    0.0,
+    -2.7
+   ],
+   "box_max": [
+    2.95,
+    4.67,
+    2.55
+   ],
+   "clear_h": 4.67,
+   "bays": [
+    {
+     "s0": -2.95,
+     "s1": 2.95,
+     "door_along": -2.01,
+     "door_w": 1.0,
+     "kinds": [
+      "books",
+      "car_sales"
+     ],
+     "places": [
+      "res_books",
+      "m_gr_e4s__bridge_motors_office__0"
+     ],
+     "i": 0
+    }
+   ],
+   "near_budget": 2500,
+   "budget_class": "shop (1200 / 6 m, min 2500)",
+   "ext_tris": 987,
+   "lean": false
+  },
   "civic/civ_library": {
    "box_min": [
     -11.7,
@@ -1411,6 +1490,40 @@
    "near_budget": 5000,
    "budget_class": "civic",
    "ext_tris": 2270
+  },
+  "civic/civ_museum": {
+   "box_min": [
+    -11.7,
+    0.3,
+    -7.2
+   ],
+   "box_max": [
+    11.7,
+    4.2,
+    7.05
+   ],
+   "clear_h": 3.9,
+   "bays": [
+    {
+     "s0": -11.7,
+     "s1": 11.7,
+     "door_along": 0.0,
+     "door_w": 1.8,
+     "kinds": [
+      "gallery"
+     ],
+     "places": [
+      "un_nw__uni_museum__0"
+     ],
+     "i": 0
+    }
+   ],
+   "near_budget": 5000,
+   "budget_class": "civic",
+   "ext_tris": 4692,
+   "lean": true,
+   "lean2": true,
+   "front_only": true
   },
   "commercial/com_spanish_arcade_block": {
    "box_min": [
@@ -1474,6 +1587,38 @@
    "near_budget": 4800,
    "budget_class": "shop (1200 / 6 m, min 2500)",
    "ext_tris": 3154
+  },
+  "commercial/com_shallow_surf": {
+   "box_min": [
+    -4.2,
+    0.0,
+    -3.2
+   ],
+   "box_max": [
+    4.2,
+    4.67,
+    3.05
+   ],
+   "clear_h": 4.67,
+   "bays": [
+    {
+     "s0": -4.2,
+     "s1": 4.2,
+     "door_along": 3.26,
+     "door_w": 1.0,
+     "kinds": [
+      "bait"
+     ],
+     "places": [
+      "wfa_b1e__pier_bait_tackle__0"
+     ],
+     "i": 0
+    }
+   ],
+   "near_budget": 2500,
+   "budget_class": "shop (1200 / 6 m, min 2500)",
+   "ext_tris": 1054,
+   "lean": false
   },
   "civic/civ_community_center": {
    "box_min": [
@@ -1613,6 +1758,72 @@
    "budget_class": "apartment",
    "ext_tris": 4290
   },
+  "commercial/com_kiosk": {
+   "box_min": [
+    -1.7,
+    0.0,
+    -2.7
+   ],
+   "box_max": [
+    1.7,
+    3.6,
+    2.55
+   ],
+   "clear_h": 3.6,
+   "bays": [
+    {
+     "s0": -1.7,
+     "s1": 1.7,
+     "door_along": 1.15,
+     "door_w": 0.9,
+     "kinds": [
+      "recycling",
+      "office"
+     ],
+     "places": [
+      "m_gr_ad5nw__recycling_booth__0",
+      "wfa_b2e__harbour_tours_kiosk__0"
+     ],
+     "i": 0
+    }
+   ],
+   "near_budget": 2500,
+   "budget_class": "shop (1200 / 6 m, min 2500)",
+   "ext_tris": 576,
+   "lean": false
+  },
+  "services/svc_carwash": {
+   "box_min": [
+    -12.8,
+    0.0,
+    -7.7
+   ],
+   "box_max": [
+    12.8,
+    6.6,
+    7.55
+   ],
+   "clear_h": 6.6,
+   "bays": [
+    {
+     "s0": -12.8,
+     "s1": -7.5,
+     "door_along": -10.5,
+     "door_w": 1.6,
+     "kinds": [
+      "wash_office"
+     ],
+     "places": [
+      "m_gr_ad5ne__bayside_express_wash__0"
+     ],
+     "i": 0
+    }
+   ],
+   "near_budget": 6000,
+   "budget_class": "shop (1200 / 6 m, min 2500)",
+   "ext_tris": 1952,
+   "lean": false
+  },
   "ck/ck_svc_bank_pharm": {
    "box_min": [
     -5.7,
@@ -1684,6 +1895,38 @@
    "budget_class": "civic",
    "ext_tris": 2685
   },
+  "public/pub_university": {
+   "box_min": [
+    -15.7,
+    0.6,
+    -8.7
+   ],
+   "box_max": [
+    15.7,
+    3.7,
+    8.55
+   ],
+   "clear_h": 3.1,
+   "bays": [
+    {
+     "s0": -15.7,
+     "s1": 15.7,
+     "door_along": 0.0,
+     "door_w": 1.8,
+     "kinds": [
+      "campus_hall"
+     ],
+     "places": [
+      "un_ne__uni_hall__0"
+     ],
+     "i": 0
+    }
+   ],
+   "near_budget": 5000,
+   "budget_class": "civic",
+   "ext_tris": 3660,
+   "lean": false
+  },
   "civic/civ_church": {
    "box_min": [
     -6.7,
@@ -1719,6 +1962,104 @@
    "near_budget": 5000,
    "budget_class": "civic",
    "ext_tris": 4722
+  },
+  "public/pub_chapel": {
+   "box_min": [
+    -4.7,
+    0.3,
+    -7.7
+   ],
+   "box_max": [
+    4.7,
+    16.95,
+    7.55
+   ],
+   "clear_h": 16.65,
+   "bays": [
+    {
+     "s0": -4.7,
+     "s1": 4.7,
+     "door_along": 0.0,
+     "door_w": 1.6,
+     "kinds": [
+      "church"
+     ],
+     "places": [
+      "un_nw__uni_chapel__0"
+     ],
+     "i": 0
+    }
+   ],
+   "near_budget": 5000,
+   "budget_class": "civic",
+   "ext_tris": 1436,
+   "lean": false
+  },
+  "extras/ext_hospital": {
+   "box_min": [
+    -14.7,
+    0.3,
+    -7.7
+   ],
+   "box_max": [
+    14.7,
+    3.7,
+    7.55
+   ],
+   "clear_h": 3.4,
+   "bays": [
+    {
+     "s0": -0.9,
+     "s1": 14.7,
+     "door_along": 0.0,
+     "door_w": 1.8,
+     "kinds": [
+      "er"
+     ],
+     "places": [
+      "hp_main_er_wing_1"
+     ],
+     "i": 0
+    }
+   ],
+   "near_budget": 5000,
+   "budget_class": "civic",
+   "ext_tris": 4625,
+   "lean": true,
+   "lean2": true,
+   "front_only": true
+  },
+  "urban/urb_courthouse": {
+   "box_min": [
+    -13.7,
+    1.2,
+    -9.7
+   ],
+   "box_max": [
+    13.7,
+    4.7,
+    9.55
+   ],
+   "clear_h": 3.5,
+   "bays": [
+    {
+     "s0": -13.7,
+     "s1": 13.7,
+     "door_along": 0.0,
+     "door_w": 1.8,
+     "kinds": [
+      "court"
+     ],
+     "places": [
+      "cc_b1_court__courthouse__0"
+     ],
+     "i": 0
+    }
+   ],
+   "near_budget": 5000,
+   "budget_class": "civic",
+   "ext_tris": 3278,
+   "lean": false
   },
   "apartments/apt_spanish_revival": {
    "box_min": [
@@ -1865,6 +2206,74 @@
    "budget_class": "tower",
    "ext_tris": 5368
   },
+  "apartments/apt_garden_cream": {
+   "box_min": [
+    -10.5,
+    0.3,
+    -4.2
+   ],
+   "box_max": [
+    10.5,
+    3.2,
+    4.05
+   ],
+   "clear_h": 2.9,
+   "bays": [
+    {
+     "s0": -10.5,
+     "s1": 10.5,
+     "door_along": -7.95,
+     "door_w": 1.0,
+     "kinds": [
+      "lobby"
+     ],
+     "places": [
+      "un_sw__uni_dorm_1__0"
+     ],
+     "i": 0
+    }
+   ],
+   "near_budget": 3500,
+   "budget_class": "apartment",
+   "ext_tris": 3475,
+   "lean": true,
+   "lean2": true,
+   "front_only": true
+  },
+  "apartments/apt_garden_mint": {
+   "box_min": [
+    -10.5,
+    0.3,
+    -4.2
+   ],
+   "box_max": [
+    10.5,
+    3.2,
+    4.05
+   ],
+   "clear_h": 2.9,
+   "bays": [
+    {
+     "s0": -10.5,
+     "s1": 10.5,
+     "door_along": -7.95,
+     "door_w": 1.0,
+     "kinds": [
+      "lobby"
+     ],
+     "places": [
+      "un_sw__uni_dorm_2__0"
+     ],
+     "i": 0
+    }
+   ],
+   "near_budget": 3500,
+   "budget_class": "apartment",
+   "ext_tris": 3489,
+   "lean": true,
+   "lean2": true,
+   "front_only": true
+  },
   "apartments/apt_spanish_white": {
    "box_min": [
     -8.7,
@@ -1998,46 +2407,6 @@
    "ext_tris": 3809
   }
  },
- "skipped": {
-  "public/pub_hospital": [
-   "hp_main_hospital_1",
-   "hp_main_hospital_0"
-  ],
-  "commercial/com_shallow_books": [
-   "res_books (no front entrance at -2.01)",
-   "m_gr_e4s__bridge_motors_office__0 (no front entrance at -2.01)"
-  ],
-  "civic/civ_museum": [
-   "un_nw__uni_museum__0"
-  ],
-  "commercial/com_shallow_surf": [
-   "wfa_b1e__pier_bait_tackle__0"
-  ],
-  "commercial/com_kiosk": [
-   "m_gr_ad5nw__recycling_booth__0 (no front entrance at 1.15)",
-   "wfa_b2e__harbour_tours_kiosk__0 (no front entrance at 1.15)"
-  ],
-  "services/svc_carwash": [
-   "m_gr_ad5ne__bayside_express_wash__0"
-  ],
-  "public/pub_university": [
-   "un_ne__uni_hall__0"
-  ],
-  "public/pub_chapel": [
-   "un_nw__uni_chapel__0"
-  ],
-  "extras/ext_hospital": [
-   "hp_main_er_wing_1"
-  ],
-  "urban/urb_courthouse": [
-   "cc_b1_court__courthouse__0"
-  ],
-  "apartments/apt_garden_cream": [
-   "un_sw__uni_dorm_1__0 (no front entrance at -7.95)"
-  ],
-  "apartments/apt_garden_mint": [
-   "un_sw__uni_dorm_2__0 (no front entrance at -7.95)"
-  ]
- },
+ "skipped": {},
  "no_row": []
 }

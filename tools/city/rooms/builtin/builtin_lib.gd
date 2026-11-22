@@ -766,3 +766,16 @@ static func merge_props(room: Node3D, palette := -1) -> void:
 		pn.add_child(mi); mi.owner = room
 	room.set_meta(&"props_xf", xf); room.set_meta(&"prop_draws", gi); room.set_meta(&"palette", palette)
 
+## every room contract, merged as the bake merges them (interiors/room_contracts*.json in name order, the first wins)
+static var _contracts := {}
+static func all_contracts() -> Dictionary:
+	if _contracts.is_empty():
+		var d := "res://map_dc/coronado/city_kit/interiors/"
+		var fs: Array = []
+		for f in DirAccess.get_files_at(d): if f.begins_with("room_contracts") and f.ends_with(".json"): fs.append(f)
+		fs.sort()
+		for f2: String in fs:
+			var c: Variant = JSON.parse_string(FileAccess.get_file_as_string(d + f2))
+			if c is Dictionary: _contracts.merge((c as Dictionary).get("models", {}), false)
+	return _contracts
+

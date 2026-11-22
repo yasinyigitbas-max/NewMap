@@ -10,7 +10,7 @@ places}], "floor": box, "clear_h"}} and lists models skipped (no contract)."""
 import json, glob, os, collections
 REPO = '/workspace/NewMap'; R = REPO + '/map_dc/coronado/city_kit/interiors/'
 spec = json.load(open(R + 'builtin/indoors_spec.json'))
-con = json.load(open(R + 'room_contracts.json'))['models']
+import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import contracts; con = contracts.load(R)
 rows = {}
 for f in sorted(glob.glob(R + 'assignment_*.json')):
     if 'samples' in f: continue
@@ -25,6 +25,9 @@ for p in spec['places']:
     ents = [e for e in c['entrances'] if e.get('kind') != 'residential' and int(e.get('floor', 0)) == 0 and e['facade'] == 'front']
     da = float(r.get('door_along', 0.0))
     e = min(ents, key=lambda e: abs(float(e['along']) - da)) if ents else None
+    if e is None or abs(float(e['along']) - da) > 0.3:      # (22 Nov: a kiosk's / small shop's / dorm's door is an apt door: its entrance is 'residential')
+        ents2 = [e2 for e2 in c['entrances'] if int(e2.get('floor', 0)) == 0 and e2['facade'] == 'front']
+        e = min(ents2, key=lambda e2: abs(float(e2['along']) - da)) if ents2 else None
     if e is None or abs(float(e['along']) - da) > 0.3: skipped[m].append(p['id'] + ' (no front entrance at %.2f)' % da); continue
     f0 = c['floors'][0]
     bay = r.get('bay') or [f0['box_min'][0], f0['box_max'][0]]

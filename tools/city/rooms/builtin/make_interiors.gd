@@ -150,11 +150,14 @@ func strip_uv(nm: String, s0: float, s1: float) -> Array:
 	return [Vector2(s0 / 8.0, sv.y), Vector2(s1 / 8.0, sv.y), Vector2(s1 / 8.0, sv.x), Vector2(s0 / 8.0, sv.x)]
 
 
-func _is(o: Dictionary, pfx: Array) -> bool: return pfx.any(func(p: String) -> bool: return String(o.region).begins_with(p))
+func _is(o: Dictionary, pfx: Array) -> bool:
+	# (22 Nov) a bay whose way in is an apt door (kiosk, small shops, dorm lobbies): that one door counts as a shop door
+	if bool(o.get("entry", false)) and (pfx == DOORS or pfx == OPEN): return true
+	return pfx.any(func(p: String) -> bool: return String(o.region).begins_with(p))
 
 func _run() -> void:
 	regs = JSON.parse_string(FileAccess.get_file_as_string("res://assets/coronado_kit/textures/city_layout.json")).regions
-	var contracts: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://map_dc/coronado/city_kit/interiors/room_contracts.json")).models
+	var contracts: Dictionary = BL.all_contracts()
 	var bays: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(IB + "bays.json")).models
 	var lay: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(IB + "layouts.json")).layouts
 	var only: Array = []
@@ -181,6 +184,8 @@ func _run() -> void:
 			var ops: Array = []; var back_extra: Array = []
 			var maxy := 2.6
 			for o: Dictionary in c.openings:
+				if int(o.floor) == 0 and String(o.region).begins_with("O_apt_door") and String(o.facade) == "front" and absf(float(o.along) - float(b.door_along)) <= 0.3:
+					o = o.duplicate(); o["entry"] = true
 				if int(o.floor) != 0 or not regs.has(o.region) or not _is(o, OPEN): continue
 				var al := float(o.along); var fa := String(o.facade)
 				var inb := false

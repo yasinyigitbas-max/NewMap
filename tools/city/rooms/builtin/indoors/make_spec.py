@@ -17,7 +17,7 @@ base = lambda x: x.split(' ')[0]
 plan = [r for r in csv.DictReader(open('/workspace/share/shops_trim/shops_plan.csv')) if r['decision'] == 'KEEP']
 spp = {r['room_id']: r for r in csv.DictReader(open('/workspace/share/shops_trim/shop_props_plan.csv'))}
 aud = list(csv.DictReader(open('/workspace/share/shop_interiors/rollout_rooms_audit.csv')))
-con = json.load(open(REPO + '/map_dc/coronado/city_kit/interiors/room_contracts.json'))['models']
+import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import contracts; con = contracts.load(REPO + '/map_dc/coronado/city_kit/interiors/')
 assign = {}
 for f in glob.glob(REPO + '/map_dc/coronado/city_kit/interiors/assignment_*.json'):
     if 'samples' in f: continue

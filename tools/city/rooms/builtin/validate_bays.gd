@@ -8,7 +8,7 @@ const IB := "res://map_dc/coronado/city_kit/interiors/builtin/"
 func _init() -> void: _go.call_deferred()
 func _go() -> void:
 	var bays: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(IB + "bays.json")).models
-	var contracts: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://map_dc/coronado/city_kit/interiors/room_contracts.json")).models
+	var contracts: Dictionary = BL.all_contracts()
 	var only: Array = []
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--models="): only = a.trim_prefix("--models=").split(",")

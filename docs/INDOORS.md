@@ -98,7 +98,7 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 | coffee | 1 | shop_counter, cash_register, espresso_machine, pastry_case, menu_board | bar_stool, cafe_table, drinks_fridge | frame_print_small, clock_wall_sunburst | - | 9577 | Small walk-in: counter, a ledge with stools, one table. |
 | community | 2 | shop_counter, brochure_rack | dining_table, dining_chair, sofa_3seat, lounge_chair, coffee_table, tv_console, waiting_bench | frame_print_large, clock_wall_sunburst, rug_living_mcm, vase_tall, potted_plant (1) | - | 15496 | Ridge Senior Center: a lounge, not a theatre. |
 | corner_shop | 5 | checkout_counter, cash_register, cigarette_cabinet | gondola_aisle, grocery_shelf, drinks_fridge, chest_freezer, produce_stand, brochure_rack |  | - | 21108 |  |
-| court | 1 | judge_bench, shop_counter | court_bench, witness_box, jury_box, office_desk, office_chair, filing_cabinet | clock_wall_sunburst, frame_print_large | court_bench, judge_bench, jury_box, lectern, witness_box | 6866 | Courtroom: bench at the back on a step, gallery benches face it. |
+| court | 1 | judge_bench, shop_counter | court_bench, witness_box, jury_box, office_desk, office_chair, filing_cabinet | clock_wall_sunburst, frame_print_large | court_bench, judge_bench, jury_box, lectern, witness_box | 27674 (trimmed to 25k in 1) | Courtroom: bench at the back on a step, gallery benches face it. |
 | dentist | 3 | reception_desk, office_chair | waiting_bench, dental_chair, storage_cabinet | frame_print_small, potted_plant (1) | dental_chair, reception_desk | 17412 |  |
 | diner | 2 | bar_counter, bar_stool, cash_register, pastry_case, soda_fountain, espresso_machine | booth_bench, restaurant_table, menu_board | clock_wall_sunburst, frame_motel_floral | - | 18569 | Counter with stools + booths along the window. |
 | discount | 1 | checkout_counter, cash_register | gondola_aisle, grocery_shelf, wall_shelf, display_table, drinks_fridge |  | - | 11310 |  |
@@ -211,7 +211,7 @@ Do not build yet (next job after indoors). Until built, the stand-in is placed i
 | 34 | hp_west_tower_0 | Bay Medical Plaza Urgent Care | clinic | non-shop indoor place | n_hp_west | urban/twr_office | 23.4 x 16.0 | XL | yes |
 | 35 | hp_west_wellness_0 | Bayview Wellness Center | hall -> clinic | non-shop indoor place | n_hp_west | civic/civ_community_center | 23.4 x 13.2 | L | yes |
 | 36 | apt_b2_bw__community_room__0 | Glorietta Hill Community Room | community | non-shop indoor place | n_apt_b2_bw | civic/civ_community_center | 23.4 x 12.0 | L | yes |
-| 37 | cc_b1_court__courthouse__0 | Coronado County Courthouse | court | non-shop indoor place | n_cc_b1_court | urban/urb_courthouse | ? x ? | ? | yes |
+| 37 | cc_b1_court__courthouse__0 | Coronado County Courthouse | court | non-shop indoor place | n_cc_b1_court | urban/urb_courthouse | 27.4 x 19.2 | XL | yes |
 | 38 | cc_b2_n__sixth_e_dentist__0 | Sixth Street Dental | office -> dentist | non-shop indoor place | n_cc_b2_n | ck/ck_brk3_row2 | 11.4 x 13.2 | M | yes |
 | 39 | cc_b3_main__eighth_optician__0 | Uphill Dental | office -> dentist | non-shop indoor place | n_cc_b3_main | ck/ck_brk3_row2 | 11.4 x 13.2 | M | yes |
 | 40 | hp_main_er_wing_1 | Emergency Department | clinic -> er | non-shop indoor place | n_hp_main | extras/ext_hospital | 15.7 x 15.2 | L | yes |

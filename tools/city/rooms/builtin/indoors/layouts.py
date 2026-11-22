@@ -16,7 +16,7 @@ import json, glob, math, os, sys, collections
 REPO = '/workspace/NewMap'; R = REPO + '/map_dc/coronado/city_kit/interiors/'
 B = json.load(open(R + 'builtin/bays.json'))['models']
 S = json.load(open(R + 'builtin/furniture_sets.json'))['sets']
-con = json.load(open(R + 'room_contracts.json'))['models']
+import sys, os; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import contracts; con = contracts.load(R)
 man = {}
 for m in glob.glob(REPO + '/assets/coronado_kit/props/manifest_*.json'):
     for k, v in json.load(open(m)).items(): man[k] = v

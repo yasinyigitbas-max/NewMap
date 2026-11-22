@@ -10,6 +10,26 @@
   "all_bays_tris": 3568,
   "ext_tris": 3452
  },
+ "apartments/apt_garden_cream|0": {
+  "kinds": [
+   "lobby"
+  ],
+  "problems": []
+ },
+ "apartments/apt_garden_cream|near": {
+  "all_bays_tris": 3585,
+  "ext_tris": 3475
+ },
+ "apartments/apt_garden_mint|0": {
+  "kinds": [
+   "lobby"
+  ],
+  "problems": []
+ },
+ "apartments/apt_garden_mint|near": {
+  "all_bays_tris": 3599,
+  "ext_tris": 3489
+ },
  "apartments/apt_spanish_revival|0": {
   "kinds": [
    "hotel",
@@ -108,6 +128,16 @@
  "civic/civ_library|near": {
   "all_bays_tris": 3074,
   "ext_tris": 2270
+ },
+ "civic/civ_museum|0": {
+  "kinds": [
+   "gallery"
+  ],
+  "problems": []
+ },
+ "civic/civ_museum|near": {
+  "all_bays_tris": 4850,
+  "ext_tris": 4692
  },
  "civic/civ_police|0": {
   "kinds": [
@@ -379,6 +409,17 @@
   "all_bays_tris": 2452,
   "ext_tris": 2332
  },
+ "commercial/com_kiosk|0": {
+  "kinds": [
+   "recycling",
+   "office"
+  ],
+  "problems": []
+ },
+ "commercial/com_kiosk|near": {
+  "all_bays_tris": 842,
+  "ext_tris": 576
+ },
  "commercial/com_orange_arcade_block|0": {
   "kinds": [
    "diner"
@@ -443,6 +484,27 @@
   "all_bays_tris": 1554,
   "ext_tris": 1168
  },
+ "commercial/com_shallow_books|0": {
+  "kinds": [
+   "books",
+   "car_sales"
+  ],
+  "problems": []
+ },
+ "commercial/com_shallow_books|near": {
+  "all_bays_tris": 1303,
+  "ext_tris": 987
+ },
+ "commercial/com_shallow_surf|0": {
+  "kinds": [
+   "bait"
+  ],
+  "problems": []
+ },
+ "commercial/com_shallow_surf|near": {
+  "all_bays_tris": 1376,
+  "ext_tris": 1054
+ },
  "commercial/com_spanish_arcade_block|0": {
   "kinds": [
    "clinic"
@@ -488,6 +550,16 @@
  "commercial/com_surf_shop|near": {
   "all_bays_tris": 1680,
   "ext_tris": 1262
+ },
+ "extras/ext_hospital|0": {
+  "kinds": [
+   "er"
+  ],
+  "problems": []
+ },
+ "extras/ext_hospital|near": {
+  "all_bays_tris": 4731,
+  "ext_tris": 4625
  },
  "extras/ext_motel_crown|0": {
   "kinds": [
@@ -581,6 +653,32 @@
   "all_bays_tris": 2066,
   "ext_tris": 1776
  },
+ "public/pub_chapel|0": {
+  "kinds": [
+   "church"
+  ],
+  "problems": []
+ },
+ "public/pub_chapel|near": {
+  "all_bays_tris": 1650,
+  "ext_tris": 1436
+ },
+ "public/pub_hospital|0": {
+  "kinds": [
+   "hospital_lobby"
+  ],
+  "problems": []
+ },
+ "public/pub_hospital|1": {
+  "kinds": [
+   "cafe"
+  ],
+  "problems": []
+ },
+ "public/pub_hospital|near": {
+  "all_bays_tris": 4118,
+  "ext_tris": 3626
+ },
  "public/pub_skate_shed|0": {
   "kinds": [
    "skate"
@@ -590,6 +688,26 @@
  "public/pub_skate_shed|near": {
   "all_bays_tris": 1051,
   "ext_tris": 817
+ },
+ "public/pub_university|0": {
+  "kinds": [
+   "campus_hall"
+  ],
+  "problems": []
+ },
+ "public/pub_university|near": {
+  "all_bays_tris": 4482,
+  "ext_tris": 3660
+ },
+ "services/svc_carwash|0": {
+  "kinds": [
+   "wash_office"
+  ],
+  "problems": []
+ },
+ "services/svc_carwash|near": {
+  "all_bays_tris": 2252,
+  "ext_tris": 1952
  },
  "urban/twr_glass|0": {
   "kinds": [
@@ -640,6 +758,16 @@
  "urban/urb_brick_row|near": {
   "all_bays_tris": 3558,
   "ext_tris": 2974
+ },
+ "urban/urb_courthouse|0": {
+  "kinds": [
+   "court"
+  ],
+  "problems": []
+ },
+ "urban/urb_courthouse|near": {
+  "all_bays_tris": 4028,
+  "ext_tris": 3278
  },
  "urban/urb_dept_store|0": {
   "kinds": [

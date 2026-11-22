@@ -1,7 +1,7 @@
 import json, math
 import os
 R=os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../../../../map_dc/coronado/city_kit/interiors/')
-v=json.load(open(R+'builtin/validate_bays.json')); con=json.load(open(R+'room_contracts.json'))['models']
+v=json.load(open(R+'builtin/validate_bays.json')); import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import contracts; con = contracts.load(R)
 def budget(m):
     c=con[m]; w=c['footprint_wd'][0]; L=max(c['footprint_wd']); g=m.split('/')[0]; n=m.split('/')[1]
     if n.startswith('ck_brk3') or n.startswith('ck_grt_row') or n=='mod_brk_row': return 3500,'apartment block (3-storey row)'
