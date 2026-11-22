@@ -556,6 +556,87 @@
           "z": -1.7,
           "yaw": 0,
           "note": "a tea or packaging box on the floor by the fridge, not floating on a missing counter"
+        },
+        {
+          "id": "prop_upper_cabinet",
+          "cond": "clean",
+          "x": 5.1,
+          "y": 1.5,
+          "z": -4.9,
+          "yaw": 0,
+          "note": "on the rear wall, east of the window, completing the run up to the corner"
+        },
+        {
+          "id": "prop_upper_cabinet",
+          "cond": "clean",
+          "x": 5.5,
+          "y": 1.5,
+          "z": -1.55,
+          "yaw": -90,
+          "note": "on the east wall, north of the existing run, still south of the east window and above the breakfast spot"
+        },
+        {
+          "id": "prop_kettle",
+          "cond": "clean",
+          "x": 5.4,
+          "y": 0.92,
+          "z": -3.2,
+          "yaw": 90,
+          "note": "on the range, ready to boil"
+        },
+        {
+          "id": "prop_cutting_board",
+          "cond": "clean",
+          "x": 4.5,
+          "y": 0.9,
+          "z": -4.7,
+          "yaw": 15,
+          "note": "on the sink's east drainboard, for everyday prep"
+        },
+        {
+          "id": "prop_dish_rack",
+          "cond": "clean",
+          "x": 3.5,
+          "y": 0.9,
+          "z": -4.7,
+          "yaw": 0,
+          "note": "on the sink's west drainboard, where washing-up dries"
+        },
+        {
+          "id": "prop_bath_mat",
+          "cond": "clean",
+          "x": 4.0,
+          "y": 0.0,
+          "z": -4.25,
+          "yaw": 0,
+          "note": "a small rug at the sink, so the floor is not bare underfoot"
+        },
+        {
+          "id": "prop_cafe_table",
+          "cond": "clean",
+          "x": 5.42,
+          "y": 0.0,
+          "z": -0.75,
+          "yaw": 0,
+          "note": "a small breakfast spot against the east wall, near the dining opening, out of the work triangle"
+        },
+        {
+          "id": "prop_cafe_chair",
+          "cond": "clean",
+          "x": 4.9,
+          "y": 0.0,
+          "z": -0.75,
+          "yaw": -90,
+          "note": "pulled up to the breakfast table, facing the east wall"
+        },
+        {
+          "id": "prop_fruit_bowl",
+          "cond": "clean",
+          "x": 5.42,
+          "y": 0.75,
+          "z": -0.75,
+          "yaw": 10,
+          "note": "fruit on the breakfast table, in easy reach from the dining opening"
         }
       ]
     },
