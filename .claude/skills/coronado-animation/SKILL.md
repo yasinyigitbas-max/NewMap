@@ -24,6 +24,9 @@ the rules. Re-read both after a context compression.
 - 22 Nov: "work in your own branch, project is moving forward fast, I dont want anything to break." -> work ONLY on the
   session branch (`claude/cool-galileo-6y68se` on 22 Nov); never push to main, never merge into main, no PR unless asked.
   Keep changes additive and behind the player's own code paths; the crowd (CityPed for NPCs) must keep working.
+- 23 Nov: "We don't use any buttons, we use double clicks on touch screen right and left sides to initiate jumps and
+  crouch, left side for crouch and right side for jumps. Once we get near a wall or low obstacles while crouching,
+  cover automatically initiates, same for climbs when we are on foot."
 - 22 Nov: "animators animations played terrible too, just keep in mind. You might have to make a new system from
   scratch for players movement. I eventually want every npc to have players capabilities too." -> the Animator's
   playback is NOT a quality bar to keep; a new movement / animation system from scratch is allowed. Design it as a
@@ -129,7 +132,10 @@ TRAPS (each cost a run):
   belong (in cover the wall reads as a kerb's face).
 - Tests: test_motor_base.gd (19 phases), test_motor_trav.gd (12 lanes), test_motor_slopes.gd (ramps, stairs, kerbs),
   test_motor_cover.gd (crouch, tall / low cover), test_motor_carry.gd (box, briefcase), test_step_up.gd (old + new);
-  run all six after any change to mo_*. Keys on the PC: C crouch, Q cover, G a box to carry; `--old-moves` = old code.
+  run all six after any change to mo_*. `--old-moves` = old code.
+- THE GAME'S CONTROLS (Yasin, 23 Nov): no buttons. Touch: double tap on the LEFT half = crouch toggle, on the RIGHT half
+  = jump (CityPlayer line ~117; C / Space on a PC). Cover starts by itself when crouched and pushing into a wall; climbs
+  and vaults by themselves on foot. Check how the game drives a feature BEFORE adding an input for it.
 - A clip whose hips stand away from its origin can play in place with Clip::off (the box idle = a walk-stop's tail);
   Clip::lo loops only its tail.
   tools/people/survey_mo_clips.gd and dump_mo_clip.gd show a clip as mo_clip measures it.

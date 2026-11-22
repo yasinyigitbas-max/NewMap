@@ -602,8 +602,12 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		else to_carry_idle(0.35f);
 		st = CARRY;
 	}
-	// into cover (asked, a wall ahead), into the crouch
-	if (p_in.cover && (st == IDLE || st == START || st == MOVE || st == STOP || st == CROUCH) && cover_probe(want ? dir : fwd_of(yaw))) { host = nullptr; return; }
+	// INTO COVER (Yasin, 23 Nov: "once we get near a wall or low obstacles while crouching, cover automatically
+	// initiates"): crouched, pushing into a wall within 0.75 m of him, from 0.6 m high. Asked for (an NPC's mind): the
+	// nearest wall round him
+	if (st == CROUCH && want && cover_probe(dir, 0.75f, false)) { host = nullptr; return; }
+	if (p_in.cover && (st == IDLE || st == START || st == MOVE || st == STOP || st == CROUCH) && cover_probe(want ? dir : fwd_of(yaw), 1.6f, true)) { host = nullptr; return; }
+	// into the crouch
 	if (p_in.crouch && cr_idle.ok() && cr_walk.ok()) {
 		if (st == IDLE || st == STOP || st == TURN) { to_stance(1); host = nullptr; return; }
 		if (st == START || st == MOVE || st == PIVOT) {   // (on the move: into the crouched walk, in step)

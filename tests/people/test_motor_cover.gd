@@ -55,12 +55,15 @@ func _act() -> void:
 			if _at(5.0): player.call(&"set_crouch", false)
 			if _at(7.0): _judge()
 		_:
-			if _at(0.6): player.call(&"request_cover")
-			if _at(2.8): player.call(&"set_move", Vector2(1, 0), false)    # (along the wall one way, past its end)
-			if _at(7.5): player.call(&"set_move", Vector2(-1, 0), false)   # (and back the other)
-			if _at(10.5): player.call(&"set_move", Vector2.ZERO, false)
-			if _at(11.5): player.call(&"request_cover")
-			if _at(14.0): _judge()
+			# (as the game plays it, Yasin 23 Nov: crouched - a double tap on the left - and pushed into the wall, cover
+			# starts by itself; the crouch let go, out of it)
+			if _at(0.6): player.call(&"set_crouch", true)
+			if _at(1.6): player.call(&"set_move", Vector2(0, 1), false)    # (crouched, toward the wall)
+			if _at(4.0): player.call(&"set_move", Vector2(1, 0), false)    # (along the wall one way, past its end)
+			if _at(8.5): player.call(&"set_move", Vector2(-1, 0), false)   # (and back the other)
+			if _at(11.5): player.call(&"set_move", Vector2.ZERO, false)
+			if _at(12.5): player.call(&"set_crouch", false)
+			if _at(15.0): _judge()
 
 var t_prev := 0.0
 func _at(when: float) -> bool: return t_prev < when and t >= when
@@ -98,7 +101,7 @@ func _sample() -> void:
 	states[st] = true; clips[String(ms.get("clip", ""))] = true
 	var pel: Vector3 = snap_pel
 	if st == "crouch" or (st == "cover" and LANES[lane][1] < 1.45): pel_min = minf(pel_min, pel.y)
-	if t > (6.5 if LANES[lane][0] == "crouch" else 13.5): high_end = pel.y
+	if t > (6.5 if LANES[lane][0] == "crouch" else 14.5): high_end = pel.y
 	if st == "cover":
 		var g: float = float(ms.get("cover_gap", -1.0))
 		if g > 0.0: gap_min = minf(gap_min, g); gap_max = maxf(gap_max, g)

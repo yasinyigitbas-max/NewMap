@@ -164,7 +164,7 @@ float Motor::cover_gap() const { return st == COVER ? last_gap : -1.0f; }
 // a wall ahead, its face within 1.6 m of the body: knee-high ray; its top by a ray down just behind its face
 Vector3 Motor::fwd_dir() const { return Vector3(std::sin(yaw), 0.0f, std::cos(yaw)); }
 
-bool Motor::cover_probe(const Vector3 &p_dir) {
+bool Motor::cover_probe(const Vector3 &p_dir, float p_reach, bool p_around) {
 	if (!host || !cv_in[1].ok() || !cv_idle[1].ok()) return false;
 	const Vector3 p = host->position();
 	Vector3 dir = level(p_dir);
@@ -172,9 +172,9 @@ bool Motor::cover_probe(const Vector3 &p_dir) {
 	dir.normalize();
 	Vector3 g, n;
 	const Vector3 k0(p.x, draw_y + 0.5f, p.z);
-	// (the way he faces or pushes, 1.6 m; else the nearest wall round him within 1.6 m)
-	bool hit = host->ray(k0, k0 + dir * 1.6f, g, n) && std::fabs((float)n.y) <= 0.3f && level(n).dot(dir) <= -0.5f;
-	if (!hit) {
+	// (the way he pushes, within p_reach; asked for (an NPC's mind), also the nearest wall round him)
+	bool hit = host->ray(k0, k0 + dir * p_reach, g, n) && std::fabs((float)n.y) <= 0.3f && level(n).dot(dir) <= -0.6f;
+	if (!hit && p_around) {
 		float best = 1e9f;
 		for (int i = 0; i < 12; i++) {
 			const float a = TAU_C * i / 12.0f;
@@ -199,9 +199,22 @@ bool Motor::cover_probe(const Vector3 &p_dir) {
 	const Vector3 side = UP.cross(N);
 	const float along = (float)(level(p) - level(cv_w)).dot(side);
 	const Vector3 end_hips = level(cv_w) + side * along + N * (tall ? cover_d_tall : cover_d_low);
-	root_start(cin, 0.0, 0.25f, yaw_in, &end_hips, false);
-	st = COVER_IN; n_covers++;
-	if (limbs) { limbs->unlock_all(); }
+	// (the clip from the moment its own steps still to come carry him the way left to the wall: so little is left to
+	// warp - from its start it walks a metre, and he is often half a metre from the wall)
+	double t0 = 0.0;
+	{
+		const Frame fe = cin.d->lerp(cin.d->len);
+		const float need = (float)(level(fig->bone_world("Bip01_Pelvis")) - end_hips).dot(-N) * -1.0f;
+		float best = 1e9f;
+		for (double tt = 0.0; tt <= cin.d->len * 0.6; tt += 1.0 / 30.0) {
+			const Frame ft = cin.d->lerp(tt);
+			const float go = (float)(fe.hips.z - ft.hips.z);   // (its travel still to come, forward, toward the wall)
+			const float e = std::fabs(go - need) + 0.05f * (float)tt;
+			if (e < best) { best = e; t0 = tt; }
+		}
+	}
+	root_start(cin, t0, 0.25f, yaw_in, &end_hips, false);
+	st = COVER_IN; n_covers++;   // (the feet's pins kept: released, the hand-over from the crouch slid them 4 cm)
 	return true;
 }
 
@@ -233,7 +246,8 @@ void Motor::cover_step(float p_dt, const Intent &p_in, Vector3 &r_vel) {
 	const Vector3 dir = level(p_in.dir);
 	const Vector3 left = UP.cross(cv_n);
 	// out: asked, or pushed away from the wall a while
-	if ((p_in.cover && cv_t > 0.4f) || (dir.dot(cv_n) > 0.7f && cv_t > 0.5f)) {
+	// (the crouch let go - a double tap on the left of the screen - or a push away from the wall: out, standing)
+	if (((p_in.cover || !p_in.crouch) && cv_t > 0.4f) || (dir.dot(cv_n) > 0.7f && cv_t > 0.5f)) {
 		const Clip &c = cv_out[cv_tall ? 1 : 0];
 		if (c.ok()) { root_start(c, 0.0, 0.25f, yaw, nullptr, true); st = COVER_OUT; return; }
 	}

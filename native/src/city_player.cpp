@@ -312,12 +312,6 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (space && !space_was) jump_want = true;
 		if (ck && !c_was) crouch = !crouch;
 		space_was = space; c_was = ck;
-		const bool gk = in->is_key_pressed(KEY_G);   // (a box in his hands, to try the carry: the pick-up itself comes later)
-		if (gk && !g_was) carry_kind = carry_kind ? 0 : 1;
-		g_was = gk;
-		const bool qk = in->is_key_pressed(KEY_Q);   // (cover: into it at a wall ahead, out again - the new movement system)
-		if (qk && !q_was) cover_req = true;
-		q_was = qk;
 		cam_yaw += ((in->is_key_pressed(KEY_LEFT) ? 1.0f : 0.0f) - (in->is_key_pressed(KEY_RIGHT) ? 1.0f : 0.0f) - (std::fabs(in->get_joy_axis(0, JOY_AXIS_RIGHT_X)) > 0.2 ? (float)in->get_joy_axis(0, JOY_AXIS_RIGHT_X) : 0.0f)) * 2.2f * dt;
 		const bool e = in->is_key_pressed(KEY_E) || in->is_joy_button_pressed(0, JOY_BUTTON_X);
 		if (e && !e_was) emit_signal("interact");
@@ -376,6 +370,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		in.speed = run ? run_speed : walk_speed;
 		in.crouch = crouch; in.cover = cover_req; cover_req = false; in.carry = carry_kind;
 		motor->step(dt, in, host);
+		if (motor->st == mo::Motor::COVER_OUT) crouch = false;   // (out of cover he stands: the crouch is let go)
 		carry_draw();
 		yaw = motor->yaw; speed = motor->speed; move_speed = speed;
 		// (not in cover: touching the cover's wall read as a kerb's face, and the kerb step moved him 4 cm a frame along it)

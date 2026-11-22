@@ -38,7 +38,7 @@ struct Intent {
 	Vector3 dir;          // world, level; length 0..1 (0: stand)
 	float speed = 0.0f;   // m/s wanted at full stick
 	bool crouch = false;  // crouched (held as a state by the controller)
-	bool cover = false;   // into cover / out of it (a request, this frame)
+	bool cover = false;   // into cover at the nearest wall / out of it (a request: an NPC's mind; the player's cover is automatic)
 	int carry = 0;        // carrying: 0 nothing, 1 a box (both hands), 2 a briefcase, 3 a shopping bag (right hand)
 };
 
@@ -212,7 +212,7 @@ private:
 	Vector3 cv_w, cv_n; bool cv_tall = true; int cv_dir = 0; float cv_t = 0.0f;
 	bool align_full = false;        // the next hand-over may turn the figure any amount to the drawn hips (cover's own frames)
 	void load_cover();
-	bool cover_probe(const Vector3 &p_dir);
+	bool cover_probe(const Vector3 &p_dir, float p_reach, bool p_around);
 	Vector3 fwd_dir() const;
 	void root_start(const Clip &p_c, double p_t0, float p_blend, float p_yaw, const Vector3 *p_end_hips, bool p_face);
 	bool no_align = false, face_only = false;

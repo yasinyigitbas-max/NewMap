@@ -299,3 +299,15 @@ NOT YET: picking up and putting down (no clip in festive's set for a pick-up fro
 a slow careful put-down: ask Yasin for "pick up a box / put it down" takes), turning on the spot with a box (Box_Turn_a
 / _b, Carrying_Turn are there), the briefcase's turns, running with a bag. What the test cannot see: the fingers, the
 box's look - Yasin plays it.
+
+### 23 Nov: the controls are the game's own (Yasin: "We don't use any buttons, we use double clicks on touch screen
+right and left sides ... left side for crouch and right side for jumps. Once we get near a wall or low obstacles while
+crouching, cover automatically initiates, same for climbs when we are on foot")
+- The Q (cover) and G (box) keys are gone. COVER IS AUTOMATIC: crouched (the left double tap / C), pushing into a wall
+  within 0.75 m of him, from 0.6 m high; Stand_To_Cover started at the moment whose own steps still to come carry him
+  the way left to the wall (little left to warp). Out: the crouch let go (the left double tap again) or a push away from
+  the wall; he stands (CityPlayer lets the crouch go). Intent::cover stays as an NPC mind's request.
+- Vaults and climbs were already automatic on foot (trav_probe in idle / start / move).
+- Carrying is reached from code only (set_carry) until the pick-up of real objects is built.
+- test_motor_cover.gd plays it so (crouch, walk into the wall, sneak, let the crouch go): RESULT FAIL (1) - going into
+  the low cover from the crouch slides a planted foot 4.2 cm (3 allowed); the rest passes. OPEN.
