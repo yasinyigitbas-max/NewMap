@@ -213,6 +213,7 @@ public:
 	void set_carry(int p_kind) { carry_kind = p_kind; }
 	void motor_set_style(int p_style) { if (motor) motor->set_style(p_style); }   // the movement set (0-2; mo_sets.cpp)
 	int motor_get_style() const { return motor ? motor->get_style() : 0; }
+	String motor_clip_for(const String &p_set1) const { const char *a = motor ? mo::Motor::style_clip(motor->get_style(), p_set1.utf8().get_data()) : nullptr; return a ? String(a) : p_set1; }   // (tests: the clip this set plays for a set-1 clip)
 	void motor_keep_loops(const PackedStringArray &p_names) { if (motor) motor->keep_loops(p_names); }   // (tuning: which walk / run loops the new system uses)   // 0 nothing, 1 a box, 2 a briefcase, 3 a shopping bag (the new movement system)   // into cover at a wall ahead / out of it (the new movement system)
 	// combat: asked for (a swing / F) and punches (a back tap / J / click) are taken by the crowd
 	void request_combat() { combat_req = true; }

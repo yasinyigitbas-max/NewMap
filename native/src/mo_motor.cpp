@@ -187,6 +187,7 @@ bool Motor::attach(CityPed *p_fig) {
 		if (OS::get_singleton()->get_cmdline_user_args().has("--no-footlock")) limbs->set_active(false);   // (tests)
 	}
 	rng ^= (uint32_t)(uint64_t)fig->get_instance_id();
+	for (const String &a : OS::get_singleton()->get_cmdline_user_args()) if (a.begins_with("--mo-style=")) set_style(a.get_slice("=", 1).to_int());   // (tests, films: a movement set)
 	return true;
 }
 
@@ -251,6 +252,12 @@ void Motor::play(const Clip &p_c, double p_t0, float p_blend) {
 	anim->play(p_c.name, 0.0);
 	t = std::min(std::max(p_t0, 0.0), p_c.d->len);
 	anim->seek(t, true);
+	if (style != 0 && cur && cur->ok()) {   // (between a set's own clip and one it shares with set 1 - a run stop, a pivot -
+		// another actor's pose: a longer hand-over; at set 1's, the hips' speed jumped 1.4-2.7 m/s there)
+		const String a = String(cur->name), b = String(p_c.name);
+		const bool own_a = a.begins_with("ms/") || a.begins_with("yl/"), own_b = b.begins_with("ms/") || b.begins_with("yl/");
+		if (own_a != own_b) p_blend = std::max(p_blend * 1.6f, 0.35f);
+	}
 	if (inert) inert->inertialize(p_blend);
 	cur = &p_c; n_switch++;
 }
@@ -389,7 +396,28 @@ void Motor::to_start(float p_angle, float p_want) {
 	}
 	if (!c || !c->ok()) { to_loop(loop_i, blend_loop); return; }
 	const String key = String("out_at_") + loop_key(loops[loop_i].name);
-	hand_at = c->a->has_meta(key) ? (double)c->a->get_meta(key) : c->d->len * 0.75;
+	if (c->a->has_meta(key)) hand_at = (double)c->a->get_meta(key);
+	else {   // (a loop the start was not measured for - another movement set's: the moment of its second half most like
+		// the loop's own stride, at its pace; at 3/4 of it, set 2's run took over with the hips' speed jumping 1.8 m/s)
+		const Clip &L = loops[loop_i];
+		hand_at = c->d->len * 0.75; float best = 1e30f;
+		// (within the span its measured hand-overs use: past them, start_a's hips stall for 3 frames - never played in set 1)
+		double lo = c->d->len * 0.45, hi = c->d->len - 1.0 / FPS, mlo = 1e9, mhi = -1e9;
+		const TypedArray<StringName> metas = c->a->get_meta_list();
+		for (int mi = 0; mi < metas.size(); mi++) { const StringName m = metas[mi]; if (!String(m).begins_with("out_at_")) continue; const double v = (double)c->a->get_meta(m); mlo = std::min(mlo, v); mhi = std::max(mhi, v); }
+		if (mhi > 0.0) { lo = std::max(0.0, mlo - 0.05); hi = std::min(hi, mhi + 0.03); }
+		// (and before any jump in its own hips: prun/start_a's hips leap 8 cm back in one frame at 0.55 s - played into
+		// set 1's slowest jog too, unseen there behind the hand-over to it)
+		for (int k = (int)(lo * FPS); k + 1 < (int)c->d->f.size() && (k + 1) / FPS <= hi; k++)
+			if ((c->d->f[k + 1].hips - c->d->f[k].hips).length() > 0.05f) { hi = std::max(lo, k / FPS - 1.0 / FPS); break; }
+		for (double tt = lo; tt <= hi; tt += 1.0 / FPS) {
+			float pc = 0.0f;
+			best_entry(*c->d, tt, *L.d, 0.0, L.d->len, &pc);
+			const float dv = (float)c->d->root_vel(tt).length() - L.ground_v;
+			const float cost = pc + 0.3f * dv * dv;
+			if (cost < best) { best = cost; hand_at = tt; }
+		}
+	}
 	play(*c, 0.0, blend_step);
 	st = START; n_starts++;
 }
@@ -828,6 +856,13 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 			vel = clip_vel(*cur, t);
 			speed = (float)vel.length();
 			if (want && std::fabs(d) < 1.2f) { to_loop(pick_loop(std::max(speed, 0.8f), loop_i), blend_loop); break; }
+			if (speed > 0.05f && host) {   // (a stop's last steps never carry him off an edge: let go at a ledge, he fell from it)
+				const Vector3 p = host->position();
+				const float here = ground_below(p, 0.6f);
+				const Vector3 q = p + vel.normalized() * 0.3f;
+				const float g = ground_below(Vector3(q.x, here + 1.2f, q.z), 4.2f);
+				if (here > -1e8f && (g < -1e8f || g < here - 0.5f)) { vel = Vector3(); speed = 0.0f; }   // (a step under 0.5 m: stepped down)
+			}
 			if (t >= cur->meta("still_at", (float)cur->d->len) || t >= cur->d->len - 0.02) to_idle(blend_idle);
 			break;
 		}

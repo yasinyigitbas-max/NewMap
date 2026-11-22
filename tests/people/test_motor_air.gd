@@ -57,8 +57,8 @@ func _act() -> void:
 			if _at(3.6): player.call(&"set_move", Vector2.ZERO, false)
 		"off", "step":
 			if _at(0.6): player.call(&"set_move", Vector2(0, 1), L[2])
-			if _at(7.0): player.call(&"set_move", Vector2.ZERO, false)
-	if _at(14.0): _judge()
+			if _at(9.0): player.call(&"set_move", Vector2.ZERO, false)   # (long enough for a set whose first turn is slow to reach the edge)
+	if _at(16.0): _judge()
 
 func _process(delta: float) -> bool:
 	if not player or not player.is_inside_tree(): return false
@@ -101,6 +101,8 @@ func _sample() -> void:
 		if trace: print("TRACET lane %d t %.2f %s foot %.3f ground %.3f" % [lane, t, ms.get("clip", ""), lowf, land_y])
 	if trace: print("TRACE lane %d t %.3f %s %s pel %s body %s" % [lane, t, st, ms.get("clip", ""), str(snap_pel), str(player.global_position)])
 
+func _c(n: String) -> String: return String(player.call(&"motor_clip_for", n))   # (the movement set's own clip for it)
+
 func _check(ok: bool, what: String) -> void:
 	if not ok: fails += 1
 	print("AIR     %s: %s" % ["ok  " if ok else "FAIL", what])
@@ -115,9 +117,9 @@ func _judge() -> void:
 	if L[3] == "jump" or L[3] == "walkjump":
 		_check(states.has("air") or states.has("runjump"), "%s: a jump" % name)
 		if not L[2]: _check(pel_hi > 0.86 + 0.2, "%s: off the ground (hips up to %.2f m)" % [name, pel_hi])
-		if L[2]: _check(clips.has("ptrav/Running_Jump_a"), "%s: the running leap" % name)
-		elif L[3] == "jump": _check(clips.has("ptrav/Jump_a"), "%s: the standing jump (Jump_a)" % name)
-		else: _check(clips.has("ptrav/Jump_a"), "%s: the walking jump (Jump_a)" % name)
+		if L[2]: _check(clips.has(_c("ptrav/Running_Jump_a")), "%s: the running leap" % name)
+		elif L[3] == "jump": _check(clips.has(_c("ptrav/Jump_a")), "%s: the standing jump (Jump_a)" % name)
+		else: _check(clips.has(_c("ptrav/Jump_a")), "%s: the walking jump (Jump_a)" % name)
 	else:
 		var h: float = L[1]
 		if L[3] == "step":   # under 0.5 m: walked down, no jump
@@ -126,13 +128,13 @@ func _judge() -> void:
 			_next(); return
 		if not L[2] and h <= 2.0:   # walking off a ledge up to 2 m: down it, not off it (Yasin, 23 Nov: "step down or slower jump down or climb down when not running")
 			var dw := "mx/Ledge_Climb_Down" if h <= 1.3 else "mx/Ledge_Drop"
-			_check(states.has("descend") and clips.has(dw) and not states.has("air"), "%s: down it with %s, no fall" % [name, dw])
+			_check(states.has("descend") and clips.has(_c(dw)) and not states.has("air"), "%s: down it with %s, no fall" % [name, dw])
 			_check(foot_lo > land_y + 0.105 - 0.05, "%s: the feet never under the ground (lowest %.2f over it)" % [name, foot_lo - land_y - 0.105])
 			_check(absf(p.y - land_y) < 0.1 and String(ms.get("state", "")) in ["idle", "stop", "move"], "%s: standing again on the ground (at %.2f, %s)" % [name, p.y, ms.get("state", "")])
 			_next(); return
 		var want := "ptrav/Falling_To_Landing" if h < 3.0 else ("ptrav/Hard_Landing_b" if h < 7.0 else "ptrav/Falling_Flat_Impact")
-		_check(clips.has(want), "%s: the %s landing (%s)" % [name, "soft" if h < 3.0 else ("hard" if h < 7.0 else "flat"), want])
-		if h >= 7.0: _check(clips.has("ptrav/Getting_Up"), "%s: up again after the fall" % name)
+		_check(clips.has(_c(want)), "%s: the %s landing (%s)" % [name, "soft" if h < 3.0 else ("hard" if h < 7.0 else "flat"), want])
+		if h >= 7.0: _check(clips.has(_c("ptrav/Getting_Up")), "%s: up again after the fall" % name)
 		_check(touch_miss >= 0.0 and touch_miss < 0.06, "%s: the feet on the ground at the landing's touch (%.1f cm off)" % [name, touch_miss * 100])
 	_check(absf(p.y - land_y) < 0.1 and String(ms.get("state", "")) in ["idle", "stop", "move"], "%s: standing again on the ground (at %.2f, %s)" % [name, p.y, ms.get("state", "")])
 	_next()

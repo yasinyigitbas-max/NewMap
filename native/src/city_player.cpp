@@ -1170,6 +1170,7 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("motor_keep_loops", "names"), &CityPlayer::motor_keep_loops);
 	ClassDB::bind_method(D_METHOD("motor_set_style", "style"), &CityPlayer::motor_set_style);
 	ClassDB::bind_method(D_METHOD("motor_get_style"), &CityPlayer::motor_get_style);
+	ClassDB::bind_method(D_METHOD("motor_clip_for", "set1_clip"), &CityPlayer::motor_clip_for);
 	ClassDB::bind_method(D_METHOD("get_crouch"), &CityPlayer::get_crouch);
 	ClassDB::bind_method(D_METHOD("jump"), &CityPlayer::jump);
 	ClassDB::bind_method(D_METHOD("get_view"), &CityPlayer::get_view);
