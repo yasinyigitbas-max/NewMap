@@ -114,10 +114,10 @@ func _judge() -> void:
 	_check(off_frames == 0, "%s: the new system had him all the way (%d frames not)" % [name, off_frames])
 	if L[3] == "jump" or L[3] == "walkjump":
 		_check(states.has("air") or states.has("runjump"), "%s: a jump" % name)
-		if not L[2]: _check(pel_hi > 0.86 + (0.2 if L[3] == "jump" else 0.35), "%s: off the ground (hips up to %.2f m)" % [name, pel_hi])
+		if not L[2]: _check(pel_hi > 0.86 + 0.2, "%s: off the ground (hips up to %.2f m)" % [name, pel_hi])
 		if L[2]: _check(clips.has("ptrav/Running_Jump_a"), "%s: the running leap" % name)
 		elif L[3] == "jump": _check(clips.has("ptrav/Jump_a"), "%s: the standing jump (Jump_a)" % name)
-		else: _check(clips.has("ptrav/Jumping_c"), "%s: the walking leap (Jumping_c)" % name)
+		else: _check(clips.has("ptrav/Jump_a"), "%s: the walking jump (Jump_a)" % name)
 	else:
 		var h: float = L[1]
 		if L[3] == "step":   # under 0.5 m: walked down, no jump

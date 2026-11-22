@@ -677,11 +677,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	// A JUMP (the right double tap), OFF AN EDGE (the ground gone from under him, 0.5 m or more down)
 	if (air_ready() && (st == IDLE || st == START || st == MOVE || st == STOP || st == TURN || st == PIVOT)) {
 		if (p_in.jump) jump_pending = 0.4f;
-		if (jump_pending > 0.0f) {
-			jump_pending -= p_dt;
-			// (running: on the stride that fits the leap; else at once)
-			if (!(st == MOVE && speed > 2.2f) || run_jump_when() || jump_pending <= 0.0f) { jump_pending = 0.0f; jump_start(dir, want_speed); host = nullptr; return; }
-		}
+		if (jump_pending > 0.0f) { jump_pending = 0.0f; jump_start(dir, want_speed); host = nullptr; return; }   // (at once: Yasin, 24 Nov, the running jump as it was)
 		// walking at a ledge (not running): down it by a hop, a jump down or a climb down
 		if (want && std::fabs(d) < 0.5f && want_speed <= 2.0f && speed <= 2.2f && descend_probe(fwd_of(yaw))) { host = nullptr; return; }
 		if (!p_host.on_floor()) {

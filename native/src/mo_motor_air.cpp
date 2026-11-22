@@ -99,32 +99,27 @@ float Motor::ground_below(const Vector3 &p_at, float p_down) const {
 
 void Motor::jump_start(const Vector3 &p_dir, float p_want_speed) {
 	if (limbs) { limbs->lock_on = false; limbs->unlock_all(); }
-	if (speed > 2.2f && ai_run.ok()) {   // running: the running leap (its own travel)
-		rate = std::min(std::max(speed / 4.2f, 0.92f), 1.1f);   // (its own timing: from a jog at 0.75 of it the leap floated - Yasin, 23 Nov: "make a better jog jump")
-		// (from the moment of it most like the stride now - run_jump_when waited for that stride)
-		double t0 = 0.0; float c = 0.0f;
-		if (cur) t0 = best_entry(*cur->d, t, *ai_run.d, 0.0, std::min(0.3, ai_run.d->len * 0.35), &c);
-		root_start(ai_run, t0, 0.15f, yaw, nullptr, false);
+	if (speed > 2.2f && ai_run.ok()) {   // running: the running leap (its own travel; Yasin, 24 Nov: "revert the running jump to previous one")
+		rate = std::min(std::max(speed / 4.2f, 0.75f), 1.15f);
+		root_start(ai_run, 0.0, 0.15f, yaw, nullptr, false);
 		rp.c = &ai_run;
 		st = RUNJUMP; n_jumps++;
 		return;
 	}
-	// standing: a whole jump in place (its own dip, push, flight and landing); walking: a leap off one foot, then on in
-	// the flight to a soft landing (Yasin, 24 Nov: "definitely standing and walking jumps, not running jump")
-	if (speed < 0.3f && ai_stand.ok() && !(p_dir.length() > 0.1f)) {
+	// standing or walking: festive's whole jump in place, Jump_a (Yasin, 24 Nov: "jump standing is okay, use that for
+	// jump walking too"). Walking, it is entered after its idle start, and carries him on at his pace while his feet are
+	// off the ground (its flight 0.7 - 1.33 s).
+	if (ai_stand.ok()) {
+		const bool walking = speed >= 0.3f;
+		if (p_dir.length() > 0.1f && !walking) yaw = std::atan2((float)p_dir.x, (float)p_dir.z);
+		const float pace = walking ? std::min(speed, 1.6f) : 0.0f;
 		rate = 1.0f;
-		root_start(ai_stand, 0.0, 0.15f, yaw, nullptr, false);
+		root_start(ai_stand, walking ? 0.3 : 0.0, walking ? 0.2f : 0.15f, yaw, nullptr, false);
 		rp.c = &ai_stand;
-		st = RUNJUMP; n_jumps++;
-		return;
-	}
-	if (ai_walk.ok()) {
-		if (p_dir.length() > 0.1f && speed < 0.3f) yaw = std::atan2((float)p_dir.x, (float)p_dir.z);
-		rate = 1.0f;
-		double t0 = 0.0; float c = 0.0f;
-		if (cur && speed >= 0.3f) t0 = best_entry(*cur->d, t, *ai_walk.d, 0.0, 0.25, &c);
-		root_start(ai_walk, t0, 0.15f, yaw, nullptr, false);
-		rp.c = &ai_walk;
+		if (pace > 0.0f) {
+			rp.a_to = rp.a_from + fwd_of_yaw() * pace * 0.75f;
+			rp.t0 = 0.62; rp.t_warp = 1.4;
+		}
 		st = RUNJUMP; n_jumps++;
 		return;
 	}
