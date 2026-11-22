@@ -451,6 +451,15 @@
           "z": 2.2,
           "yaw": 90,
           "note": "on the hall partition, not on the window wall"
+        },
+        {
+          "id": "prop_frame_mcm_abstract",
+          "cond": "clean",
+          "x": 5.76,
+          "y": 1.5,
+          "z": 2.2,
+          "yaw": -90,
+          "note": "centred over the sideboard on the east wall"
         }
       ]
     },
