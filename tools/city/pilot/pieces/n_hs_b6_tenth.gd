@@ -24,7 +24,7 @@ const SPUR := [190.0, 196.0]
 const FRONT_V := -15.2       # the houses' fronts (6 m front yards)
 ## [label, house, garage, x0, x1, house centre u, garage centre u]   houses yaw 0 (face 10th St, model x -> +u)
 const LOTS := [
-	["n1", "houses/tudor_brick", "garages/double_stucco_clay", 146.6, 161.6, 154.1, 156.6],
+	["n1", "houses/tudor_brick_player", "garages/double_stucco_clay", 146.6, 161.6, 154.1, 156.6],
 	["n2", "houses/mcm_large", "garages/single_siding_comp", 161.6, 176.6, 169.1, 172.4],
 	["n3", "houses/narrow_2sty_stucco_clay", "garages/carport_clay", 176.6, 189.4, 182.6, 186.0],
 	["n4", "houses/spanish_pink", "garages/double_stucco_comp", 196.6, 211.4, 204.0, 201.0],
@@ -136,6 +136,8 @@ func _build(bl: Node3D, props: K.Props, dec: K.Decals, rr: RandomNumberGenerator
 		var st := K.building_stats(String(l[1]))
 		var fw: float = (st.footprint_wd[0] as float) * 0.5
 		K.building(bl, String(l[1]), Vector3(cu, y, cv), 0.0, String(l[0]))
+		if String(l[0]) == "n1":
+			furnish_player_house(props, Vector3(cu, y, cv))
 		var gb := bb(String(l[2]))
 		var gd := float(gb[1][2]) - float(gb[0][2])
 		K.building(bl, String(l[2]), Vector3(gu, y, ZB + float(gb[1][2])), 180.0, String(l[0]) + "_garage")
@@ -176,3 +178,22 @@ func _build(bl: Node3D, props: K.Props, dec: K.Decals, rr: RandomNumberGenerator
 	P.call("prop_storm_drain_grate", "worn", 193.0, -52.5, 0.0, false)
 	P.call("prop_lot_light_pole", "worn", 196.3, -30.0)
 	W.lane_wear(dec, rr, 193.0, B6.ALLEY[1], ZS, true, yf)
+
+## Hand-authored interior of the player house (n1 only). Positions in house-local metres
+## from furniture.json (origin = footprint centre, y = 0 at the pad, +Z to the street).
+## Do not replace this with a bay generator or layout template.
+func furnish_player_house(props: K.Props, origin: Vector3) -> void:
+	const PATH := "res://assets/coronado_kit/buildings/houses/tudor_brick_player/furniture.json"
+	var raw := FileAccess.get_file_as_string(PATH)
+	var v: Variant = JSON.parse_string(raw)
+	if typeof(v) != TYPE_DICTIONARY:
+		push_warning("player house: missing or invalid furniture.json")
+		return
+	var rooms: Dictionary = (v as Dictionary).get("rooms", {})
+	for rk in rooms:
+		var items: Array = (rooms[rk] as Dictionary).get("items", [])
+		for it in items:
+			var d: Dictionary = it
+			var pos := origin + Vector3(float(d.x), float(d.y), float(d.z))
+			props.add(String(d.id), String(d.get("cond", "clean")), pos, float(d.get("yaw", 0.0)), true)
+
