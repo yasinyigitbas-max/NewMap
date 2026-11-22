@@ -938,11 +938,11 @@
         {
           "id": "prop_ironing_board",
           "cond": "clean",
-          "x": -1.4,
+          "x": -1.85,
           "y": 0.0,
           "z": -3.5,
           "yaw": 90,
-          "note": "standing along the west aisle, between the hamper and the crate, clear of the machines"
+          "note": "standing along the west wall, between the hamper and the crate, clear of the aisle and of the machines"
         },
         {
           "id": "prop_woven_basket",
