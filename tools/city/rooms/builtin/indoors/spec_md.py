@@ -31,6 +31,7 @@ def md(o, inv):
                  p['w'] or '?', p['d'] or '?', p['size'] if p['w'] else '?', 'yes' if p['has_row'] else 'ADD'))
     L += ['', '## Variation (same kind never a copy)', '',
           '- 2-3 layout templates per kind and bay (A counter / desks at the back, B on a side wall, C an alternative from 90 m2), mirrored where the entry stays clear, the decor variants shifted, 6 colour palettes on the furniture (vertex-colour tint the prop shader reads; no extra draws).',
+          '- Repeat caps (interiors/builtin/repeat_caps.json): realistic counts per room by kind (e.g. barber: 6 chairs, 3 waiting, 6 shelves; cafe 16 seats / 8 tables; classroom 32 seats; church 24 pews) and per prop (floor_lamp 2, coffee_table 3, vault_door 1, atm_wall 2 ...). layouts.py leaves the rest of a big bay as open floor or a support type; validate_bays.gd reports any template past a cap.',
           '- Deterministic: same-kind places sorted by id are dealt round-robin over template x mirror x decor shift (BL.pick); palette = (rank + hash(kind)) % 6. The bake records the pick on the room (metas template, mirror, decor_shift, palette).',
           '- The validator (validate_bays.gd) checks every template x mirror x kind x decor set of every bay (slots, required types, facing, collision, doors, floor, ceiling) and fails the build on any problem.', '']
     import json, os

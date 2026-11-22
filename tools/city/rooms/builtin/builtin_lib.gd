@@ -203,6 +203,31 @@ static func _prop_for(set_k: Dictionary, mk: Marker3D, shift: int) -> String:
 	if st in ["decor", "top", "plant"]: v += shift      # the decor set
 	return String(lst[posmod(v, lst.size())])
 
+## (22 Nov) the repeat caps (interiors/builtin/repeat_caps.json, shared with layouts.py): per room, a slot type past its
+## kind's cap or a prop past its own cap is a problem (17 barber chairs in an office-tower lobby were caught by eye only)
+const CAPS := "res://map_dc/coronado/city_kit/interiors/builtin/repeat_caps.json"
+static var _caps := {}
+static func repeat_problems(tag: String, kind: String, slots: Node, set_k: Dictionary, nshift: int = 1) -> Array:
+	if _caps.is_empty(): _caps = JSON.parse_string(FileAccess.get_file_as_string(CAPS))
+	var P: Array = []
+	var kc: Dictionary = (_caps.kind as Dictionary).get(kind, {})
+	var nt := {}
+	for m: Node in slots.get_children():
+		var st := String(m.get_meta(&"slot_type", "")); nt[st] = int(nt.get(st, 0)) + 1
+	for st: String in nt:
+		var cap := int(kc.get(st, (_caps.type as Dictionary).get(st, _caps.default)))
+		if int(nt[st]) > cap: P.append("%s: %d %s slots, over the %s cap of %d" % [tag, nt[st], st, kind, cap])
+	for sh in nshift:
+		var np := {}
+		for m: Node in slots.get_children():
+			if m is Marker3D:
+				var pr := _prop_for(set_k, m, sh)
+				if pr != "": np[pr] = int(np.get(pr, 0)) + 1
+		for pr: String in np:
+			var pc := int((_caps.prop as Dictionary).get(pr, 1 << 20))
+			if int(np[pr]) > pc: P.append("%s: %d x %s (decor set %d), over its cap of %d" % [tag, np[pr], pr, sh, pc])
+	return P
+
 ## every problem of one bay for its kinds, over every template x mirror x decor shift (empty = passes)
 static func validate_bay(model: String, i: int, kinds: Array, contract: Dictionary = {}) -> Array:
 	var P: Array = []
@@ -251,6 +276,7 @@ static func validate_bay(model: String, i: int, kinds: Array, contract: Dictiona
 			for mir: bool in mirrors:
 				var h := template_markers(it, kind, String(tn.name), mir)
 				var tagt := "%s %s/%s%s" % [tag, kind, tn.name, " mirrored" if mir else ""]
+				if not mir: P.append_array(repeat_problems(tagt, kind, h, set_k, nshift))
 				var have := {}
 				for m: Node in h.get_children():
 					var st := String(m.get_meta(&"slot_type", ""))

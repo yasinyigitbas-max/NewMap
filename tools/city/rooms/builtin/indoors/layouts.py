@@ -24,6 +24,13 @@ for k, d in [('vending_snack', (0.9, 0.8, 1.8)), ('vending_soda', (0.9, 0.8, 1.8
     man.setdefault(k, dict(mount='ground', footprint_w=d[0], footprint_d=d[1], height=d[2], tiers={'near': 900}))
 WALLT = {'decor', 'board'}
 CAP = 25000
+# (22 Nov) realistic counts per room: a slot type / a prop past its cap is not placed (open floor), or the slot takes
+# a support type instead (SUP). Was: big bays filled to the wall (17 barber chairs in an office-tower lobby, 36 floor
+# lamps in a bookshop, 109 school chairs in one room).
+_C = json.load(open(R + 'builtin/repeat_caps.json'))      # (shared with validate_bays.gd)
+TYPE_CAP = _C['type']; KIND_CAP = _C['kind']; PROP_CAP = _C['prop']
+SUP = dict(shelf=['back', 'island'], station=['shelf'], waiting=['plant'], island=['big'])
+def type_cap(k, t): return KIND_CAP.get(k, {}).get(t, TYPE_CAP.get(t, _C['default']))
 def dims(kind, t):
     ws = [(float(man[p].get('footprint_w', 1)), float(man[p].get('footprint_d', 1)), float(man[p].get('height', 1))) for p in S[kind].get(t, []) if p in man]
     if not ws: return (0.5, 0.5, 1.0)
@@ -34,7 +41,7 @@ def tris(kind, t, v):
 class Room:
     def __init__(s, kind, X0, X1, ZB, ZF, da, dw, side_wins):
         s.k = kind; s.X0, s.X1, s.ZB, s.ZF, s.da, s.dw = X0, X1, ZB, ZF, da, dw
-        s.W = X1 - X0; s.D = ZF - ZB; s.slots = []; s.rects = []; s.n = collections.Counter(); s.side_wins = side_wins
+        s.W = X1 - X0; s.D = ZF - ZB; s.slots = []; s.rects = []; s.n = collections.Counter(); s.np = collections.Counter(); s.side_wins = side_wins
         s.clear = [(da - dw / 2 - 0.45, ZF - 1.9, da + dw / 2 + 0.45, ZF + 1)]      # entry zone
         s.tri = 0
     def has(s, t): return bool(S[s.k].get(t))
@@ -47,14 +54,25 @@ class Room:
         for q in s.rects + (s.clear if clear else []):
             if x0 < q[2] + gap and x1 > q[0] - gap and z0 < q[3] + gap and z1 > q[1] - gap: return False
         return True
-    def put(s, t, x, z, yaw, lift=0.0, on='', var=None, clear=True, front_gap=0.0):
+    def put(s, t, x, z, yaw, lift=0.0, on='', var=None, clear=True, front_gap=0.0, _sup=True):
         if not s.has(t): return None
+        l = S[s.k][t]; v0 = s.n[t] if var is None else var; ok = None
+        if s.n[t] < type_cap(s.k, t):
+            for dv in range(len(l)):
+                if s.np[l[(v0 + dv) % len(l)]] < PROP_CAP.get(l[(v0 + dv) % len(l)], 99): ok = v0 + dv; break
+        if ok is None:      # capped: a support type in its place (once), else open floor
+            if _sup:
+                for t2 in SUP.get(t, []):
+                    nm2 = s.put(t2, x, z, yaw, lift, on, None, clear, front_gap, _sup=False)
+                    if nm2: return nm2
+            return None
+        var = ok
         if t in ('till', 'top'):
             if not on: return None
             v = s.n[t] if var is None else var
             if s.tri + tris(s.k, t, v) > CAP - 2500 and t == 'top': return None
             nm = '%s_%d' % (t, s.n[t] + 1); s.n[t] += 1
-            s.slots.append([nm, t, v % len(S[s.k][t]), round(x, 3), round(z, 3), yaw, lift, on]); s.tri += tris(s.k, t, v); return nm
+            s.slots.append([nm, t, v % len(S[s.k][t]), round(x, 3), round(z, 3), yaw, lift, on]); s.tri += tris(s.k, t, v); s.np[S[s.k][t][v % len(S[s.k][t])]] += 1; return nm
         if t in WALLT:
             w = dims(s.k, t)[0]; r = (x - w / 2, z - 0.05, x + w / 2, z + 0.05) if abs(math.sin(math.radians(yaw))) < 0.7 else (x - 0.05, z - w / 2, x + 0.05, z + w / 2)
             for q in [q for q in s.slots if q[1] in WALLT]:
@@ -77,7 +95,7 @@ class Room:
             if t not in WALLT: s.rects.pop()
             return None
         nm = '%s_%d' % (t, s.n[t] + 1); s.n[t] += 1
-        s.slots.append([nm, t, v % len(S[s.k][t]), round(x, 3), round(z, 3), yaw, lift, on]); s.tri += t_tri
+        s.slots.append([nm, t, v % len(S[s.k][t]), round(x, 3), round(z, 3), yaw, lift, on]); s.tri += t_tri; s.np[S[s.k][t][v % len(S[s.k][t])]] += 1
         return nm
     # ---- helpers
     def wall_run(s, t, side, a0, a1, step=None, yaw=None, inset=0.0, tall_ok=True):
