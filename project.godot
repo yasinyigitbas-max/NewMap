@@ -8,11 +8,15 @@ config_version=5
 config/quit_on_go_back=false
 config/name="Coronado City Kit"
 run/main_scene="res://tools/city/rig/rig.tscn"
+; the obstacle course build (export preset "Obstacle course", feature "course"): its own scene
+run/main_scene.course="res://tests/people/obstacle_course.tscn"
 
 [rendering]
 renderer/rendering_method="mobile"
 ; B28 (Yasin, 20 Nov: "moving draws into its own thread? it won big in the old build"): the separate render thread
 driver/threads/thread_model=2
+; (the course: the separate render thread crashed the engine on its ledge ramps - "Index 0 out of bounds" - 23 Nov)
+driver/threads/thread_model.course=1
 textures/vram_compression/import_etc2_astc=true
 ; the game engine's own light grid (docs/engine, patch e): 32 omni + 32 spot lights for a fixed cost. A stock engine ignores it.
 lights_and_shadows/mobile_light_grid=true
