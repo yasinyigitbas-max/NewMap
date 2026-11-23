@@ -224,6 +224,7 @@ func _follow() -> void:
 	if idle_w > 0.001:
 		_stand(idle_w)
 		_idle_arms(idle_w)
+		_relaxed_hands(idle_w)
 	_fit_arms()
 	_carry_prop()
 
@@ -636,3 +637,72 @@ func _turn_chain(bones: Array, o: Vector3, v: Vector3, want: Vector3) -> void:
 		var par := dst.get_bone_parent(b)
 		var pg := dst.get_bone_global_pose(par).basis if par >= 0 else Basis()
 		dst.set_bone_pose_rotation(b, (pg.inverse() * (Basis(part) * g.basis)).orthonormalized().get_rotation_quaternion())
+
+# THE RELAXED HANGING HAND (Yasin 23 Nov: "study how hands connect to the lower arm and which position they sit in
+# naturally ... his fingertips are still curled in"): the wrist straight on from the forearm, the palm to the thigh with
+# the thumb's side forward; the fingers in the resting cascade - a gentle bend growing from the index to the little
+# finger (knuckle 8-20, middle joint 15-30, last joint 5-12 degrees), not curled into the palm; the thumb along the
+# index's side, a little bent
+const REST_BEND := {"index": [8.0, 15.0, 5.0], "middle": [12.0, 20.0, 7.0], "ring": [16.0, 25.0, 9.0], "pinky": [20.0, 30.0, 12.0]}
+
+func _relaxed_hands(w: float) -> void:
+	var f: Vector3 = dst.global_basis.inverse() * (src.global_basis.orthonormalized() * (Cs * Vector3(0, 0, 1)))
+	var up: Vector3 = (dst.global_basis.inverse() * Vector3.UP).normalized()
+	f -= up * f.dot(up)
+	if f.length() < 1e-6: return
+	f = f.normalized()
+	for i in 2:
+		var sd := "l" if i == 0 else "r"
+		var A: Array = arms[i]
+		var hb: int = A[2]
+		var fa := (dst.get_bone_global_pose(hb).origin - dst.get_bone_global_pose(A[1]).origin).normalized()   # the forearm, down
+		var mid := dst.find_bone(nm("middle_01_" + sd)); var ix := dst.find_bone(nm("index_01_" + sd)); var pk := dst.find_bone(nm("pinky_01_" + sd))
+		if mid < 0 or ix < 0 or pk < 0: continue
+		# 1. the hand: its length along the forearm, its width (index to little finger knuckle) pointing forward
+		var hd := dst.get_bone_global_pose(mid).origin - dst.get_bone_global_pose(hb).origin
+		var wd := dst.get_bone_global_pose(ix).origin - dst.get_bone_global_pose(pk).origin
+		var cur := _frame(hd, wd)
+		var fw := f - fa * f.dot(fa)
+		if fw.length() < 1e-6: continue
+		var tgt := _frame(fa, fw.normalized())
+		var R := Basis(Quaternion().slerp(Quaternion((tgt * cur.inverse()).orthonormalized()), w))
+		var g := dst.get_bone_global_pose(hb); var par := dst.get_bone_parent(hb)
+		var pg := dst.get_bone_global_pose(par).basis if par >= 0 else Basis()
+		dst.set_bone_pose_rotation(hb, (pg.inverse() * (R * g.basis)).orthonormalized().get_rotation_quaternion())
+		# the palm's side, as placed: toward his middle
+		var hand_dir := (dst.get_bone_global_pose(mid).origin - dst.get_bone_global_pose(hb).origin).normalized()
+		var width := (dst.get_bone_global_pose(ix).origin - dst.get_bone_global_pose(pk).origin).normalized()
+		var palm := hand_dir.cross(width).normalized()
+		var hips := dst.get_bone_global_pose(dst.find_bone(nm("pelvis"))).origin
+		if palm.dot(hips - dst.get_bone_global_pose(hb).origin) < 0.0: palm = -palm
+		# 2. the fingers: each segment bent toward the palm from the one before
+		for fname in REST_BEND:
+			var prev := hand_dir
+			for k in 3:
+				var b := dst.find_bone(nm("%s_%02d_%s" % [fname, k + 1, sd]))
+				if b < 0: break
+				var nxt := dst.find_bone(nm("%s_%02d_%s" % [fname, k + 2, sd])) if k < 2 else -1
+				var gb := dst.get_bone_global_pose(b)
+				var seg := (dst.get_bone_global_pose(nxt).origin - gb.origin) if nxt >= 0 else gb.basis.y * 1.0
+				if seg.length() < 1e-6: break
+				var a := deg_to_rad((REST_BEND[fname] as Array)[k])
+				var pn := (palm - prev * palm.dot(prev)).normalized()
+				var want := (prev * cos(a) + pn * sin(a)).normalized() * seg.length()
+				_aim(b, seg, seg.slerp(want, w))
+				prev = want.normalized()
+		# 3. the thumb: along the index's side - down and a little forward, toward the palm a little; slightly bent
+		var t1 := dst.find_bone(nm("thumb_01_" + sd))
+		if t1 >= 0:
+			var prev_t := (hand_dir * cos(deg_to_rad(20.0)) + width * sin(deg_to_rad(20.0))).normalized()
+			prev_t = (prev_t + palm * 0.4).normalized()
+			for k in 3:
+				var b := dst.find_bone(nm("thumb_%02d_%s" % [k + 1, sd]))
+				if b < 0: break
+				var nxt := dst.find_bone(nm("thumb_%02d_%s" % [k + 2, sd])) if k < 2 else -1
+				var gb := dst.get_bone_global_pose(b)
+				var seg := (dst.get_bone_global_pose(nxt).origin - gb.origin) if nxt >= 0 else gb.basis.y * 1.0
+				if seg.length() < 1e-6: break
+				var want := prev_t * seg.length()
+				_aim(b, seg, seg.slerp(want, w))
+				var pn2 := (palm - prev_t * palm.dot(prev_t)).normalized()
+				prev_t = (prev_t * cos(deg_to_rad(10.0)) + pn2 * sin(deg_to_rad(10.0))).normalized()
