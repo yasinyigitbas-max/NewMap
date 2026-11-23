@@ -53,7 +53,7 @@ func _initialize() -> void:
 	for nm in order:
 		var L := lib.get_animation(nm).length
 		for k in 4:
-			for v in ["side", "front"]: jobs.append([nm, L * k / 4.0, v])
+			for v in ["side", "front", "back"]: jobs.append([nm, L * k / 4.0, v])
 
 func _process(_d: float) -> bool:
 	n += 1
@@ -69,7 +69,7 @@ func _process(_d: float) -> bool:
 		ap.play(J[0]); ap.seek(J[1], true); ap.pause()
 		var hips := sk.global_transform * sk.get_bone_global_pose(sk.find_bone("Hips")).origin
 		var at := Vector3(hips.x, 0.9, hips.z)
-		var off: Vector3 = {"side": Vector3(4.2, 0.1, 0), "front": Vector3(0, 0.1, 4.2), "video": Vector3(3.0, 0.4, 3.0)}[J[2]]
+		var off: Vector3 = {"side": Vector3(4.2, 0.1, 0), "front": Vector3(0, 0.1, 4.2), "back": Vector3(0, 0.1, -4.2), "video": Vector3(3.0, 0.4, 3.0)}[J[2]]
 		cam.position = at + off * 1.6
 		cam.look_at(at)
 	return false
