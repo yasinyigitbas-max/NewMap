@@ -1,0 +1,7 @@
+# Kept out of git (duplicates of what is committed; re-downloadable with tools/people/meshy/meshy.py wait):
+*/preview.fbx
+*/refine.fbx
+*/refine.glb
+*/refine_tex*.png
+*/anim_*_glb_url.glb
+!*/anim_*_armature_glb_url.glb

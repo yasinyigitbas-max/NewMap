@@ -1,0 +1,12 @@
+{
+  "role": "the player (main character)",
+  "prompt": "Full body realistic 3D game character, a 28 year old muscular man, athletic bodybuilder physique, short dark fade haircut with skin fade on the sides, light stubble, black tattoo sleeves on both arms, fitted plain white crew-neck t-shirt, slim dark blue jeans, white sneakers, standing in a T-pose, arms straight out, fingers apart, neutral face, clean game-ready model",
+  "texture_prompt": "realistic skin, black ink tattoo sleeves on both arms, white cotton t-shirt, dark blue denim jeans, white sneakers, dark short fade hair",
+  "tris": 12000,
+  "height_m": 1.83,
+  "tasks": {
+    "preview": "01a20813-c5b8-764e-aa9b-9843296eb69c",
+    "refine": "01a20814-a6d0-7046-b6a0-3a384b69a1cb",
+    "rig": "01a20815-706d-716f-9a1f-9db2af15be06"
+  }
+}
