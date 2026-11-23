@@ -123,12 +123,13 @@ def main(a):
         start(a[1], "refine", body, "/v2/text-to-3d")
     elif cmd == "rig":
         c = load(a[1])
-        start(a[1], "rig", {"input_task_id": c["tasks"]["refine"], "height_meters": c.get("height_m", 1.8)},
+        start(a[1], "rig", {"input_task_id": c["tasks"][c.get("rig_from", "refine")], "height_meters": c.get("height_m", 1.8)},
               "/v1/rigging")
     elif cmd == "remesh":
         c = load(a[1])
         start(a[1], "remesh", {"input_task_id": c["tasks"]["refine"], "target_formats": ["glb"],
                                "topology": "triangle", "target_polycount": int(a[2])}, "/v1/remesh")
+        c = load(a[1]); c["rig_from"] = "remesh"; save(a[1], c)
     elif cmd == "wait":
         wait(a[1], a[2])
     else:
