@@ -39,6 +39,23 @@ const SRC_ANKLE := 0.105   # (the figure's ankle over the ground, standing: the 
 var d_pel := -1
 var tips := []   # (the fingers' last joints)
 var ready_ok := false
+var hip_fix := false     # (on for a Meshy body: the clip's pelvis tilt dropped)
+var hand_scale := 1.0    # (a Meshy body: its hands drawn smaller - 1.45x the figure's proportions, "enormous")
+var s_pel := -1
+var d_hands := []
+var meshy := false   # (a Meshy / Mixamo-named body: Hips, Spine02, LeftArm, LeftHandIndex1 ...)
+const MESHY := {"pelvis": "Hips", "spine_01": "Spine02", "spine_02": "Spine01", "spine_03": "Spine", "neck_01": "neck", "head": "Head",
+	"clavicle": "Shoulder", "upperarm": "Arm", "lowerarm": "ForeArm", "hand": "Hand", "thigh": "UpLeg", "calf": "Leg", "foot": "Foot"}
+
+# the body's own name for a bone, named as MakeHuman's Game-engine skeleton names it (its names are the keys here)
+func nm(k: String) -> String:
+	if not meshy: return k
+	if MESHY.has(k): return MESHY[k]
+	var parts := k.split("_")
+	var side := "Left" if parts[parts.size() - 1] == "l" else "Right"
+	if parts.size() == 2: return side + MESHY[parts[0]]
+	# fingers: index_02_l -> LeftHandIndex2
+	return "%sHand%s%d" % [side, parts[0].capitalize(), int(parts[1])]
 var torso := []           # [dst bone, its rest global (skeleton space), half-width, front, back, low, high]: his torso's flesh
 var arms := []            # per side [upperarm, lowerarm, hand]
 var hand_k := 1.0         # his hand's length against the figure's
@@ -55,11 +72,14 @@ func _char_frame(sk: Skeleton3D, pel: String, neck: String, lth: String, rth: St
 func setup(p_src: Skeleton3D, p_dst: Skeleton3D) -> void:
 	src = p_src; dst = p_dst
 	Cs = _char_frame(src, "Bip01_Pelvis", "Bip01_Neck", "Bip01_L_Thigh", "Bip01_R_Thigh")
-	Cd = _char_frame(dst, "pelvis", "neck_01", "thigh_l", "thigh_r")
+	meshy = dst.find_bone("Hips") >= 0
+	hip_fix = meshy and OS.get_environment("NOHIPFIX") == ""
+	s_pel = src.find_bone("Bip01_Pelvis")
+	Cd = _char_frame(dst, nm("pelvis"), nm("neck_01"), nm("thigh_l"), nm("thigh_r"))
 	var corr_of := {}   # src bone -> its correction (a finger's last joint takes its parent's: it has no child to aim it by -
 	# with none it kept the rests' difference and the fingers tangled, 25 Nov)
 	for sn in MAP:
-		var s := src.find_bone(sn); var d := dst.find_bone(MAP[sn])
+		var s := src.find_bone(sn); var d := dst.find_bone(nm(MAP[sn]))
 		if s < 0 or d < 0: continue
 		var corr := Basis()
 		var sc := src.get_bone_children(s); var dc := dst.get_bone_children(d)
@@ -77,7 +97,7 @@ func setup(p_src: Skeleton3D, p_dst: Skeleton3D) -> void:
 			var sdir2 := Vector3(); var ddir2 := Vector3()
 			if sn.ends_with("_Hand"):   # (the hand toward its middle finger's root: its first child is not the same finger in both)
 				sdir2 = Cs.inverse() * (src.get_bone_global_rest(src.find_bone("Bip01_%s_Finger2" % side)).origin - src.get_bone_global_rest(s).origin)
-				ddir2 = Cd.inverse() * (dst.get_bone_global_rest(dst.find_bone("middle_01_" + sd)).origin - dst.get_bone_global_rest(d).origin)
+				ddir2 = Cd.inverse() * (dst.get_bone_global_rest(dst.find_bone(nm("middle_01_" + sd))).origin - dst.get_bone_global_rest(d).origin)
 			elif sc.size() > 0 and dc.size() > 0:
 				sdir2 = Cs.inverse() * (src.get_bone_global_rest(sc[0]).origin - src.get_bone_global_rest(s).origin)
 				ddir2 = Cd.inverse() * (dst.get_bone_global_rest(dc[0]).origin - dst.get_bone_global_rest(d).origin)
@@ -86,12 +106,19 @@ func setup(p_src: Skeleton3D, p_dst: Skeleton3D) -> void:
 				sdir2 = Cs.inverse() * (src.get_bone_global_rest(s).origin - src.get_bone_global_rest(sp).origin)
 				ddir2 = Cd.inverse() * (dst.get_bone_global_rest(d).origin - dst.get_bone_global_rest(dp).origin)
 			var slat := Cs.inverse() * (src.get_bone_global_rest(src.find_bone("Bip01_%s_Finger1" % side)).origin - src.get_bone_global_rest(src.find_bone("Bip01_%s_Finger4" % side)).origin)
-			var dlat := Cd.inverse() * (dst.get_bone_global_rest(dst.find_bone("index_01_" + sd)).origin - dst.get_bone_global_rest(dst.find_bone("pinky_01_" + sd)).origin)
+			var dlat := Cd.inverse() * (dst.get_bone_global_rest(dst.find_bone(nm("index_01_" + sd))).origin - dst.get_bone_global_rest(dst.find_bone(nm("pinky_01_" + sd))).origin)
 			if sn.contains("_Finger0"):   # (the THUMB turns round its own axis: its root toward the index finger's root)
 				slat = Cs.inverse() * (src.get_bone_global_rest(src.find_bone("Bip01_%s_Finger1" % side)).origin - src.get_bone_global_rest(src.find_bone("Bip01_%s_Finger0" % side)).origin)
-				dlat = Cd.inverse() * (dst.get_bone_global_rest(dst.find_bone("index_01_" + sd)).origin - dst.get_bone_global_rest(dst.find_bone("thumb_01_" + sd)).origin)
+				dlat = Cd.inverse() * (dst.get_bone_global_rest(dst.find_bone(nm("index_01_" + sd))).origin - dst.get_bone_global_rest(dst.find_bone(nm("thumb_01_" + sd))).origin)
 			if sdir2.length() > 1e-5 and ddir2.length() > 1e-5:
 				corr = _frame(sdir2, slat) * _frame(ddir2, dlat).inverse()
+		if sn == "Bip01_Head":
+			# THE HEAD by its whole frame - up its neck, across its ears: Meshy's head's first child is a bone pointing out of
+			# its face ("headfront"), and aimed along it the head hung, chin down (Yasin 23 Nov)
+			var sn2 := src.find_bone("Bip01_Neck"); var dn2 := dst.find_bone(nm("neck_01"))
+			var su := Cs.inverse() * (src.get_bone_global_rest(s).origin - src.get_bone_global_rest(sn2).origin)
+			var du := Cd.inverse() * (dst.get_bone_global_rest(d).origin - dst.get_bone_global_rest(dn2).origin)
+			corr = _frame(su, Vector3(1, 0, 0)) * _frame(du, Vector3(1, 0, 0)).inverse()
 		corr_of[s] = corr
 		pairs.append([s, d, corr])
 		if sn == "Bip01_Pelvis": d_pel = d
@@ -99,19 +126,28 @@ func setup(p_src: Skeleton3D, p_dst: Skeleton3D) -> void:
 	for i in dst.get_bone_count():
 		if i in ds: order.append(i)
 	var sl := (src.global_basis * (src.get_bone_global_rest(src.find_bone("Bip01_L_Foot")).origin - src.get_bone_global_rest(src.find_bone("Bip01_L_Thigh")).origin)).length()
-	var dl := (dst.global_basis * (dst.get_bone_global_rest(dst.find_bone("foot_l")).origin - dst.get_bone_global_rest(dst.find_bone("thigh_l")).origin)).length()
+	var dl := (dst.global_basis * (dst.get_bone_global_rest(dst.find_bone(nm("foot_l"))).origin - dst.get_bone_global_rest(dst.find_bone(nm("thigh_l"))).origin)).length()
 	leg_k = dl / maxf(sl, 1e-4)
 	# (the new body's ankle over its floor standing: its skeleton's origin is its floor)
-	dst_ankle = (dst.global_basis * dst.get_bone_global_rest(dst.find_bone("foot_l")).origin).y
-	d_feet = [dst.find_bone("foot_l"), dst.find_bone("foot_r")]
+	dst_ankle = (dst.global_basis * dst.get_bone_global_rest(dst.find_bone(nm("foot_l"))).origin).y
+	d_feet = [dst.find_bone(nm("foot_l")), dst.find_bone(nm("foot_r"))]
 	s_feet = [src.find_bone("Bip01_L_Foot"), src.find_bone("Bip01_R_Foot")]
 	for f in ["index", "middle", "ring", "pinky", "thumb"]:
-		for sd in ["l", "r"]: tips.append(dst.find_bone("%s_03_%s" % [f, sd]))
+		for sd in ["l", "r"]: tips.append(dst.find_bone(nm("%s_03_%s" % [f, sd])))
+	d_hands = [dst.find_bone(nm("hand_l")), dst.find_bone(nm("hand_r"))]
+	if meshy:
+		# (his hand to his height as the figure's: the figure 0.107, Meshy's 0.157 - wrist to the last finger joint)
+		var hs := (src.get_bone_global_rest(src.find_bone("Bip01_R_Finger22")).origin - src.get_bone_global_rest(src.find_bone("Bip01_R_Hand")).origin).length() * src.global_basis.get_scale().x
+		var ht := ((src.global_basis * src.get_bone_global_rest(src.find_bone("Bip01_Head")).origin).y - (src.global_basis * src.get_bone_global_rest(src.find_bone("Bip01_R_Foot")).origin).y)
+		var hd := (dst.get_bone_global_rest(dst.find_bone(nm("middle_03_r"))).origin - dst.get_bone_global_rest(dst.find_bone(nm("hand_r"))).origin).length() * dst.global_basis.get_scale().x
+		var htd := ((dst.global_basis * dst.get_bone_global_rest(dst.find_bone(nm("head"))).origin).y - (dst.global_basis * dst.get_bone_global_rest(dst.find_bone(nm("foot_r"))).origin).y)
+		hand_scale = clampf((hs / ht) / maxf(hd / htd, 1e-4), 0.6, 1.0)
+		print("HANDS scale %.2f" % hand_scale)
 	_measure_torso()
-	for side in ["l", "r"]: arms.append([dst.find_bone("upperarm_" + side), dst.find_bone("lowerarm_" + side), dst.find_bone("hand_" + side)])
+	for side in ["l", "r"]: arms.append([dst.find_bone(nm("upperarm_" + side)), dst.find_bone(nm("lowerarm_" + side)), dst.find_bone(nm("hand_" + side))])
 	var hl_s := (src.get_bone_global_rest(src.find_bone("Bip01_R_Finger2")).origin - src.get_bone_global_rest(src.find_bone("Bip01_R_Hand")).origin).length() * src.global_basis.get_scale().x
-	var hl_d := (dst.get_bone_global_rest(dst.find_bone("middle_01_r")).origin - dst.get_bone_global_rest(dst.find_bone("hand_r")).origin).length() * dst.global_basis.get_scale().x
-	hand_k = hl_d / maxf(hl_s, 1e-4)
+	var hl_d := (dst.get_bone_global_rest(dst.find_bone(nm("middle_01_r"))).origin - dst.get_bone_global_rest(dst.find_bone(nm("hand_r"))).origin).length() * dst.global_basis.get_scale().x
+	hand_k = hl_d * hand_scale / maxf(hl_s, 1e-4)
 	src.skeleton_updated.connect(_follow)
 	ready_ok = true
 
@@ -135,6 +171,11 @@ func _follow() -> void:
 		var s: int = p[0]
 		# the source's turn away from its rest, in its character frame
 		var delta_c := Cs.inverse() * (src.get_bone_global_pose(s).basis * src.get_bone_global_rest(s).basis.inverse()) * Cs
+		if s == s_pel and hip_fix:
+			# (the clip's pelvis tilt dropped - forward / back, about his left-right axis, x in the character frame: on
+			# Meshy's deep body it curved the lower back and leaned him back - Yasin 23 Nov; turn and roll kept)
+			var q := Quaternion(delta_c.orthonormalized())
+			delta_c = Basis(q * Quaternion(q.x, 0.0, 0.0, q.w).normalized().inverse())
 		var want := Cd * delta_c * (p[2] as Basis) * Cd.inverse() * dst.get_bone_global_rest(d).basis
 		var par := dst.get_bone_parent(d)
 		var par_g: Basis = cur.get(par, dst.get_bone_global_pose(par).basis if par >= 0 else Basis())
@@ -165,6 +206,9 @@ func _follow() -> void:
 		var want_lo := fy + dst_ankle + (s_lo - fy - SRC_ANKLE)
 		target.y += want_lo - d_lo
 		dst.set_bone_pose_position(d_pel, par_x.affine_inverse() * target)
+	if hand_scale < 0.999:
+		for h in d_hands: dst.set_bone_pose_scale(h, Vector3.ONE * hand_scale)
+	_upright()
 	_fit_arms()
 	_carry_prop()
 
@@ -182,7 +226,7 @@ func _carry_prop() -> void:
 	# (by the PALMS' middles - the wrist to the middle finger's root, 0.8 along: by the wrists, his longer hands left it under them)
 	var palm := func(sk: Skeleton3D, h: String, f: String) -> Vector3: return (sw.call(sk, h) as Vector3).lerp(sw.call(sk, f), 0.8)
 	var sl: Vector3 = palm.call(src, "Bip01_L_Hand", "Bip01_L_Finger2"); var sr: Vector3 = palm.call(src, "Bip01_R_Hand", "Bip01_R_Finger2")
-	var dl: Vector3 = palm.call(dst, "hand_l", "middle_01_l"); var dr: Vector3 = palm.call(dst, "hand_r", "middle_01_r")
+	var dl: Vector3 = palm.call(dst, nm("hand_l"), nm("middle_01_l")); var dr: Vector3 = palm.call(dst, nm("hand_r"), nm("middle_01_r"))
 	var d := (dr - sr) if (sl - sr).length() > 0.25 else ((dl - sl) + (dr - sr)) * 0.5
 	prop.global_position += d
 
@@ -193,14 +237,15 @@ func _measure_torso() -> void:
 	# (by shape: slices from the hips to the neck, the skin within his shoulder joints' width - the arms hang outside it at
 	# rest - each slice turning with the spine bone nearest its height. By the skin's weights, few points have one bone)
 	var names := ["pelvis", "spine_01", "spine_02", "spine_03"]
-	var ids := names.map(func(n): return dst.find_bone(n))
+	var ids := names.map(func(n): return dst.find_bone(nm(n)))
 	# (all of him: under his shirt and jeans the skin is hidden - the garments are his outside there)
 	var meshes := dst.get_parent().find_children("*", "MeshInstance3D", true, false)
-	var pel := Cd.inverse() * dst.get_bone_global_rest(dst.find_bone("pelvis")).origin
-	var nk := Cd.inverse() * dst.get_bone_global_rest(dst.find_bone("neck_01")).origin
-	var shw := absf((Cd.inverse() * dst.get_bone_global_rest(dst.find_bone("upperarm_l")).origin).x - pel.x)
+	var pel := Cd.inverse() * dst.get_bone_global_rest(dst.find_bone(nm("pelvis"))).origin
+	var nk := Cd.inverse() * dst.get_bone_global_rest(dst.find_bone(nm("neck_01"))).origin
+	var shw := absf((Cd.inverse() * dst.get_bone_global_rest(dst.find_bone(nm("upperarm_l"))).origin).x - pel.x)
+	var arm_y := (Cd.inverse() * dst.get_bone_global_rest(dst.find_bone(nm("upperarm_l"))).origin).y
 	var NB := 14
-	var y0 := pel.y - 0.30; var y1 := nk.y   # (down to the middle of his thighs: hanging, his hands went into his jeans)
+	var y0 := pel.y - 0.30 / dst.global_basis.get_scale().x; var y1 := nk.y   # (down to the middle of his thighs: hanging, his hands went into his jeans)
 	var bands := []
 	for i in NB: bands.append([0.0, 0.0, 0.0])
 	var pts := PackedVector3Array()
@@ -209,6 +254,12 @@ func _measure_torso() -> void:
 		var skin := mm as MeshInstance3D
 		if skin.mesh == null: continue
 		var to_sk := dst.global_transform.affine_inverse() * skin.global_transform
+		# (a skinned mesh sits on its skeleton by its skin's binds: a bone's rest times its bind is the mesh -> skeleton map.
+		# Meshy's mesh is in metres on a skeleton in centimetres; by the nodes' transforms the torso measured nothing)
+		if skin.skin and skin.skin.get_bind_count() > 0:
+			var bb := skin.skin.get_bind_bone(0)
+			if bb < 0: bb = dst.find_bone(skin.skin.get_bind_name(0))
+			if bb >= 0: to_sk = dst.get_bone_global_rest(bb) * skin.skin.get_bind_pose(0)
 		for si in skin.mesh.get_surface_count():
 			var nofree := 1 if (String(skin.name).contains("jeans") or String(skin.name).contains("pants") or String(skin.name).contains("trouser")) else 0
 			for v in (skin.mesh.surface_get_arrays(si)[Mesh.ARRAY_VERTEX] as PackedVector3Array): pts.append(to_sk * v); free.append(nofree)
@@ -216,7 +267,9 @@ func _measure_torso() -> void:
 		var pv := pts[pi]
 		var q := Cd.inverse() * pv - pel
 		var yy := q.y + pel.y
-		if yy < y0 or yy >= y1 or (free[pi] == 0 and absf(q.x) > shw * 0.92): continue
+		# (a T-posed body - Meshy's - has no arm under its armpits: the full width counted there)
+		var below_arms := meshy and yy < arm_y - (nk.y - pel.y) * 0.25
+		if yy < y0 or yy >= y1 or (free[pi] == 0 and not below_arms and absf(q.x) > shw * 0.92): continue
 		var bi := int((yy - y0) / (y1 - y0) * NB)
 		var B: Array = bands[bi]
 		B[0] = maxf(B[0], absf(q.x)); B[1] = maxf(B[1], q.z); B[2] = maxf(B[2], -q.z)
@@ -296,3 +349,47 @@ func _fit_arms() -> void:
 		var pole := _out_of_torso(el, 0.055 / sc)
 		if (t - dst.get_bone_global_pose(A[2]).origin).length() > 1e-4 or (pole - el).length() > 1e-4:
 			_reach(A[0], A[1], A[2], t, pole + (pole - el) * 2.0)
+
+# HIS POSTURE AS THE FIGURE'S (Yasin 23 Nov: "he is leaning back too much again"): copied joint by joint, Meshy's deep
+# chest put his shoulders behind his hips. His line from the hips to the neck turned onto the figure's, a third at
+# each spine bone (a bend, not a hinge); the head and arms ride on it
+func _upright() -> void:
+	if not meshy: return
+	var sp: int = src.find_bone("Bip01_Pelvis"); var sn: int = src.find_bone("Bip01_Neck")
+	var dp := dst.find_bone(nm("pelvis")); var dn := dst.find_bone(nm("neck_01"))
+	var want := dst.global_basis.inverse() * (src.global_basis * (src.get_bone_global_pose(sn).origin - src.get_bone_global_pose(sp).origin))
+	var have := dst.get_bone_global_pose(dn).origin - dst.get_bone_global_pose(dp).origin
+	if want.length() < 1e-6 or have.length() < 1e-6: return
+	var q := Quaternion(have.normalized(), want.normalized())
+	var part := Quaternion().slerp(q, 1.0 / 3.0)
+	for k in ["spine_01", "spine_02", "spine_03"]:
+		var b := dst.find_bone(nm(k))
+		var g := dst.get_bone_global_pose(b)
+		var par := dst.get_bone_parent(b)
+		var pg := dst.get_bone_global_pose(par).basis if par >= 0 else Basis()
+		dst.set_bone_pose_rotation(b, (pg.inverse() * (Basis(part) * g.basis)).orthonormalized().get_rotation_quaternion())
+	# (and the head carried as the figure carries it: his neck-to-head line onto the figure's - it hung, chin down)
+	var sh: int = src.find_bone("Bip01_Head"); var dh := dst.find_bone(nm("head"))
+	var want2 := dst.global_basis.inverse() * (src.global_basis * (src.get_bone_global_pose(sh).origin - src.get_bone_global_pose(sn).origin))
+	var have2 := dst.get_bone_global_pose(dh).origin - dst.get_bone_global_pose(dn).origin
+	if want2.length() > 1e-6 and have2.length() > 1e-6:
+		var g2 := dst.get_bone_global_pose(dn)
+		var par2 := dst.get_bone_parent(dn)
+		var pg2 := dst.get_bone_global_pose(par2).basis if par2 >= 0 else Basis()
+		dst.set_bone_pose_rotation(dn, (pg2.inverse() * (Basis(Quaternion(have2.normalized(), want2.normalized())) * g2.basis)).orthonormalized().get_rotation_quaternion())
+	# (and his FACE where the figure's looks: by the rests alone his face pointed 21 degrees lower, every frame - a
+	# Meshy head bone whose face is its "headfront" child)
+	var hf := dst.find_bone("headfront")
+	if hf >= 0:
+		var sf: Vector3 = dst.global_basis.inverse() * (src.global_basis.orthonormalized() * ((src.get_bone_global_pose(sh).basis * src.get_bone_global_rest(sh).basis.inverse()) * (Cs * Vector3(0, 0, 1))))
+		var df := dst.get_bone_global_pose(hf).origin - dst.get_bone_global_pose(dh).origin
+		# (the phone out in front - texting - his eyes on it; at the ear - a call - not)
+		if prop != null and prop.visible:
+			var hw := dst.global_transform * dst.get_bone_global_pose(dh).origin
+			var to := prop.global_position - hw
+			if to.length() > 0.3:
+				sf = sf.normalized().slerp((dst.global_basis.inverse() * to).normalized(), 0.85)
+		if sf.length() > 1e-6 and df.length() > 1e-6:
+			var g3 := dst.get_bone_global_pose(dh)
+			var pg3 := dst.get_bone_global_pose(dst.get_bone_parent(dh)).basis
+			dst.set_bone_pose_rotation(dh, (pg3.inverse() * (Basis(Quaternion(df.normalized(), sf.normalized())) * g3.basis)).orthonormalized().get_rotation_quaternion())
