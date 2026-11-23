@@ -222,7 +222,10 @@ func _follow() -> void:
 		for h in d_hands: dst.set_bone_pose_scale(h, Vector3.ONE * hand_scale)
 	_upright()
 	if meshy: _shoulders_down(16.0)   # (Yasin 23 Nov: "push shoulders down a bit he looks like he is shrugging" - 8, then "8 more")   # (BEFORE the arms are placed: after them, the collarbones' turn swung the hanging arms into his body)
-	var idle := host != null and String(host.call(&"get_motor_state").get("state", "")) == "idle"
+	# (standing, the phone NOT out: texting and calls are played standing too - the standing arms and head fought the phone's
+	# layer, the phone hung at his hip and his head bent sideways, Yasin 23 Nov)
+	var ms_now: Dictionary = host.call(&"get_motor_state") if host != null else {}
+	var idle := String(ms_now.get("state", "")) == "idle" and int(ms_now.get("phone", 0)) == 0 and (prop == null or not prop.visible)
 	# (standing: the posture solved from his landmarks - _stand. The angles tried one by one before it - spine 20 forward,
 	# 5 more from the hip, neck and head 15 back each - replaced: Yasin 23 Nov, "study human anatomy a little")
 	# STANDING ARMS AS IN YASIN'S PHOTO (23 Nov: "his arms are reaching behind his body as if his hands are tied from the
