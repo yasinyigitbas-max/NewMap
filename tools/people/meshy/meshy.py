@@ -111,7 +111,7 @@ def main(a):
         c = load(a[1])
         start(a[1], "preview", {
             "mode": "preview", "prompt": c["prompt"], "art_style": "realistic", "ai_model": "latest",
-            "topology": "triangle", "target_polycount": c.get("tris", 12000), "should_remesh": True,
+            "topology": "triangle", "target_polycount": c.get("tris", 12000), "should_remesh": c.get("remesh", True),
             "symmetry_mode": "auto", "pose_mode": "t-pose",
         }, "/v2/text-to-3d")
     elif cmd == "refine":

@@ -1,0 +1,10 @@
+{
+  "role": "the player (main character), v2: detail on face and hands",
+  "prompt": "Full body realistic 3D game character, 28 year old muscular man, athletic build, highly detailed realistic face with defined eyes, nose, lips and jaw, short dark fade haircut, light stubble, black tattoo sleeves on both arms, fitted plain white t-shirt, dark blue jeans, white sneakers, T-pose, arms straight out, open hands palms down, five clearly separated straight fingers with visible gaps, detailed thumbs and knuckles",
+  "texture_prompt": "realistic even skin tone on face, hands and fingers, detailed face, black ink tattoo sleeves on forearms, white cotton t-shirt, blue denim jeans, white sneakers, dark short hair",
+  "tris": 150000,
+  "height_m": 1.83,
+  "tasks": {
+    "preview": "01a2087e-81b5-7626-be9a-a7eccf1b9dd5"
+  }
+}
