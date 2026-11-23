@@ -7,6 +7,8 @@
 // sits (two loops of the idle, then the gesture, as standing), and stands when the sit is let go or the stick pushed away
 // from the seat.
 #include "mo_motor.h"
+#include "rig_names.h"
+#include <godot_cpp/classes/skeleton3d.hpp>
 
 #include "city_ped.h"
 #include "mo_inertial.h"
@@ -64,7 +66,17 @@ void Motor::sit_start(const Intent &p_in) {
 	for (int k = (int)D.f.size() - 1; k > 0; k--) if ((float)D.f[k].hips.y > (float)f1.hips.y + 0.01f) { t_sat = (k + 1) / 30.0; break; }
 	rp.vy_on = true;
 	rp.ay_from = sit_ground;
-	rp.ay_to = (float)p_in.seat.y + SEAT_OVER - (float)f1.hips.y;
+	// (the hip JOINTS 7 cm over the seat: on the old figure its pelvis bone sits at them; the player v3's (standard skeleton)
+	// sits 9.3 cm above them - "the pelvis 7 cm over" sat him 9 cm high, his feet 5.7 cm off the ground)
+	float pel_over = 0.0f;
+	if (Skeleton3D *sk = fig->skeleton()) {
+		const int p = rig::find(sk, "Bip01_Pelvis"), l = rig::find(sk, "Bip01_L_Thigh"), r = rig::find(sk, "Bip01_R_Thigh");
+		if (p >= 0 && l >= 0 && r >= 0) {
+			const Transform3D X = sk->get_global_transform();
+			pel_over = (float)(X.xform(sk->get_bone_global_rest(p).origin).y - (X.xform(sk->get_bone_global_rest(l).origin).y + X.xform(sk->get_bone_global_rest(r).origin).y) * 0.5);
+		}
+	}
+	rp.ay_to = (float)p_in.seat.y + SEAT_OVER + pel_over - (float)f1.hips.y;
 	rp.vy_t0 = t_down; rp.vy_t1 = std::max(t_sat, t_down + 0.2);
 	rp.a_from.y = rp.ay_from; rp.a_to.y = rp.ay_to;
 	fig->set_global_transform(Transform3D(Basis(UP, rp.yaw), root_anchor(0.0)));
