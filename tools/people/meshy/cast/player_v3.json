@@ -5,7 +5,10 @@
   "tris": 150000,
   "height_m": 1.83,
   "tasks": {
-    "image3d": "01a20889-41d5-752f-a716-e2f3f7ae10cb"
+    "image3d": "01a20889-41d5-752f-a716-e2f3f7ae10cb",
+    "remesh": "01a2088b-edc2-760a-86e1-1ff445eb15d1",
+    "rig": "01a2088c-e6b6-7769-98e2-60b8849922f1"
   },
-  "refine_from": "image3d"
+  "refine_from": "image3d",
+  "rig_from": "remesh"
 }

@@ -97,3 +97,10 @@ complicated). He chose **Meshy** (AI text/image to 3D, remesh, auto-rig) and has
   the cut-down). Player v2 (`cast/player_v2.json`): text-to-3D at 150k tris (prompt: detailed face, five separated
   fingers) -> refine -> Meshy remesh 15k -> Meshy rig: 15,606 tris, 24 bones (Meshy's rig has no fingers), 40
   credits (953 left). Face and fingers much better (review/face_hands_close.png).
+- 23 Nov, v3 (Yasin: v2's chest "too compressed, he looks fat instead of muscular" next to his own character; "nike
+  sneakers better be omitted"; "let it rig it add the bones yourself on its hands then show me in our animations";
+  "fill that grey part too"). Meshy image-to-image removed the logos from his concept picture (12 credits) ->
+  image-to-3D at 150k, T-pose, textured (30) -> Meshy remesh 15k (5) -> Meshy rig (5): 52 credits, 901 left.
+  Then ours: `fill_seams.py` (texture padding; did not remove the grey) + `fix_hand_grey.py` (the photo's grey
+  background painted on the fingers: grey hand texels take the nearest skin colour) -> rigged_clean.glb;
+  add_fingers.py (`cast/player_v3_hand.json`) -> rigged_fingers.glb; our ten clips -> rigged_fingers_our_clips.glb.
