@@ -213,6 +213,7 @@ func _follow() -> void:
 	if idle:
 		_straight_back()
 		_arms_forward()
+	_bend_forward(10.0)
 	_fit_arms()
 	_carry_prop()
 
@@ -445,3 +446,22 @@ func _arms_forward() -> void:
 		var rot := Basis(lat, -ang)
 		if (rot * (wr - sh)).dot(f) < (wr - sh).dot(f): rot = Basis(lat, ang)   # (whichever way swings it forward)
 		dst.set_bone_pose_rotation(A[0], (pg.inverse() * (rot * g.basis)).orthonormalized().get_rotation_quaternion())
+
+# HIS SPINE BENT FORWARD (Yasin 23 Nov, after the x-ray: "bend his spine forward 10 degrees"): Meshy's rig runs the spine
+# along his back, so a straight spine reads as leaning back - the whole spine turned forward by p_deg about his left-right
+# axis, a third at each spine bone; the head, neck and arms ride on it
+func _bend_forward(p_deg: float) -> void:
+	var f: Vector3 = dst.global_basis.inverse() * (src.global_basis.orthonormalized() * (Cs * Vector3(0, 0, 1)))
+	var up: Vector3 = (dst.global_basis.inverse() * Vector3.UP).normalized()
+	f -= up * f.dot(up)
+	if f.length() < 1e-6: return
+	var lat := f.normalized().cross(up).normalized()   # (turning about this tips the top forward, along f)
+	var q := Quaternion(lat, deg_to_rad(p_deg / 3.0))
+	# (the sign: whichever way moves a point above the joint forward)
+	if (Basis(q) * up).dot(f.normalized()) < 0.0: q = q.inverse()
+	for k in ["spine_01", "spine_02", "spine_03"]:
+		var b := dst.find_bone(nm(k))
+		var g := dst.get_bone_global_pose(b)
+		var par := dst.get_bone_parent(b)
+		var pg := dst.get_bone_global_pose(par).basis if par >= 0 else Basis()
+		dst.set_bone_pose_rotation(b, (pg.inverse() * (Basis(q) * g.basis)).orthonormalized().get_rotation_quaternion())
