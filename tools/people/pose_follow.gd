@@ -87,6 +87,13 @@ func setup(p_src: Skeleton3D, p_dst: Skeleton3D) -> void:
 		if s < 0 or d < 0: continue
 		var corr := Basis()
 		var sc := src.get_bone_children(s); var dc := dst.get_bone_children(d)
+		# (the body's child that MATCHES the figure's first child, by name: a file's children can come in another order - the
+		# re-rigged body's Hips listed its left thigh first, and aimed along it the whole body twisted)
+		if sc.size() > 0 and dc.size() > 0:
+			var want_name: String = nm(MAP.get(src.get_bone_name(sc[0]), ""))
+			for c in dc:
+				if dst.get_bone_name(c) == want_name:
+					dc = PackedInt32Array([c]); break
 		if (sc.size() == 0 or dc.size() == 0) and corr_of.has(src.get_bone_parent(s)):
 			corr = corr_of[src.get_bone_parent(s)]
 		elif sc.size() > 0 and dc.size() > 0:

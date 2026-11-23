@@ -5,7 +5,7 @@ extends Node3D
 ## own figure, until the motor drives his skeleton itself.
 ## Run in the editor (F6 on obstacle_course.tscn) or the exported build (export preset "Obstacle course").
 
-const BODY := "res://assets/people/meshy/player_v3/rigged_fingers.glb"
+const BODY := "res://assets/people/meshy/player_v3/rigged_fingers_rerig.glb"   # (re-rigged: tools/people/meshy/rerig.py)
 const HELP := """W A S D  walk      Shift  run      Space  jump      C  crouch
 Q  cover (at a wall)      E  sit / stand (at the bench)
 1  texting      2  phone call      3  phone away
