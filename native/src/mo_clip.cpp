@@ -218,6 +218,13 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 				// its floor, still swung in at 2 m/s; pinned there, the lock pulled it 30 cm)
 				if ((by[1 - keep] - rv[k]).length() > 0.4f) d->f[k].down[1 - keep] = false;
 			}
+			// ... and a foot down ALONE must carry the body near the clip's own pace: pwalk/walk_mx2 at 0.70 s flagged its
+			// landing right foot down while it still swung forward against the hips at 1.8 m/s (the left just lifting);
+			// pinned there, the body stalled 0.2 s once a cycle (25 Nov, the ramps' and stairs' floating feet)
+			if (m == 1) {
+				const int s1 = dn[0] ? 0 : 1;
+				if ((by[s1] - trav).length() > 0.8f && trav.length() > 0.3f) { d->f[k].down[s1] = false; rv[k] = trav; }
+			}
 
 		}
 		despeckle();
