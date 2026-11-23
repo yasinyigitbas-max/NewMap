@@ -9,6 +9,9 @@ complicated). He chose **Meshy** (AI text/image to 3D, remesh, auto-rig) and has
   `Bearer <key>` (Yasin adds it in the environment's settings: Network secrets). The proxy injects it; never ask for
   it in chat, never put it in a file or a commit. `api.meshy.ai` is allowed by saving the secret.
 - Check it works with one cheap call (e.g. list tasks) before any batch.
+- Saved with the secure form and checked: `GET /openapi/v1/balance` -> 200, 1028 credits (1013 monthly + 15 permanent).
+  Free read-only checks: `/openapi/v1/balance`, `/openapi/v2/text-to-3d?page_size=1`. docs.meshy.ai is not reachable
+  from the container (pricing below is from the plan, not re-read live).
 
 ## Budget (from docs/BUDGET.md and docs/PERF_BUDGET.md - the phone, Redmi)
 - A view: <= 150 draws, <= 300k triangles (the city alone is already 400k-1M in its measured views: people must be lean).
