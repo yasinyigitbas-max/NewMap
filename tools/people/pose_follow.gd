@@ -637,9 +637,9 @@ func _stand(w: float) -> void:
 		var hf := dst.find_bone("headfront")
 		if hf >= 0:
 			var fv := dst.get_bone_global_pose(hf).origin - dst.get_bone_global_pose(hb).origin
-			var lv := (fv - up * fv.dot(up)).normalized() * fv.length()
-			lv = lv.rotated(up.cross(f).normalized(), 0.0)
-			var target := (lv.normalized() - up * 0.05).normalized() * fv.length()
+			# (straight ahead along his facing - no turn to a side: Yasin 23 Nov, "turn his face to face the camera directly ...
+			# his view in front"; the take's own head turn had it 8 degrees to his right)
+			var target := (f - up * 0.05).normalized() * fv.length()
 			_aim(hb, fv, fv.slerp(target, w))
 
 # a chain of bones turned (each a share) so the vector v from the point o becomes want
