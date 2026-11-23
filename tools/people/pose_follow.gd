@@ -73,7 +73,7 @@ func setup(p_src: Skeleton3D, p_dst: Skeleton3D) -> void:
 	src = p_src; dst = p_dst
 	Cs = _char_frame(src, "Bip01_Pelvis", "Bip01_Neck", "Bip01_L_Thigh", "Bip01_R_Thigh")
 	meshy = dst.find_bone("Hips") >= 0
-	hip_fix = meshy and OS.get_environment("NOHIPFIX") == ""
+	hip_fix = false   # (off: with the pelvis tilt dropped, a crouch folded his thighs into his belly - "his midsection folds in two", 23 Nov; posture is _upright's)
 	s_pel = src.find_bone("Bip01_Pelvis")
 	Cd = _char_frame(dst, nm("pelvis"), nm("neck_01"), nm("thigh_l"), nm("thigh_r"))
 	var corr_of := {}   # src bone -> its correction (a finger's last joint takes its parent's: it has no child to aim it by -
@@ -357,7 +357,16 @@ func _upright() -> void:
 	if not meshy: return
 	var sp: int = src.find_bone("Bip01_Pelvis"); var sn: int = src.find_bone("Bip01_Neck")
 	var dp := dst.find_bone(nm("pelvis")); var dn := dst.find_bone(nm("neck_01"))
-	var want := dst.global_basis.inverse() * (src.global_basis * (src.get_bone_global_pose(sn).origin - src.get_bone_global_pose(sp).origin))
+	var wv := src.global_basis * (src.get_bone_global_pose(sn).origin - src.get_bone_global_pose(sp).origin)
+	# (UPRIGHT, not the figure's lean: the old figure leans back in its idles too - Yasin 23 Nov, both screenshots. Leaning
+	# back is taken out - held at 3 degrees forward; leaning forward, a run's, kept)
+	var fw := (src.global_basis.orthonormalized() * (Cs * Vector3(0, 0, 1))); fw.y = 0.0
+	if fw.length() > 1e-4 and wv.length() > 1e-4:
+		fw = fw.normalized()
+		var up_c := wv.y; var f_c := wv.dot(fw)
+		var min_f := absf(up_c) * tan(deg_to_rad(3.0))
+		if f_c < min_f: wv += fw * (min_f - f_c)
+	var want := dst.global_basis.inverse() * wv
 	var have := dst.get_bone_global_pose(dn).origin - dst.get_bone_global_pose(dp).origin
 	if want.length() < 1e-6 or have.length() < 1e-6: return
 	var q := Quaternion(have.normalized(), want.normalized())

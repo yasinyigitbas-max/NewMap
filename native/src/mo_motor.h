@@ -118,10 +118,10 @@ public:
 	double clip_time() const { return t; }
 	bool foot_down(int p_side) const { return cur && cur->d->lerp(t).down[p_side & 1]; }   // the clip has that foot planted now
 	// tuning (Yasin's notes go here first)
-	float walk_turn_rate = 3.4f, run_turn_rate = 2.3f, idle_turn_rate = 5.0f, crouch_turn_rate = 2.5f, carry_turn_rate = 2.6f;   // rad/s while moving
-	float accel_up = 2.8f, accel_down = 3.5f;                                  // m/s2 in a loop
+	float walk_turn_rate = 6.0f, run_turn_rate = 4.5f, idle_turn_rate = 5.0f, crouch_turn_rate = 2.5f, carry_turn_rate = 2.6f;   // rad/s while moving
+	float accel_up = 5.0f, accel_down = 8.0f;   // (Yasin 23 Nov: "it takes seconds to switch from run to walk ... the character is fighting me": were 2.8 / 3.5, turns 3.4 / 2.3)                                  // m/s2 in a loop
 	float blend_loop = 0.25f, blend_step = 0.2f, blend_idle = 0.3f;            // hand-over times, s
-	float gait_hold = 0.4f;                                                    // s in a loop before another gait
+	float gait_hold = 0.15f;                                                    // s in a loop before another gait
 	// (the tests)
 	int n_starts = 0, n_stops = 0, n_turns = 0, n_pivots = 0, n_gait = 0, n_fidgets = 0, n_switch = 0;
 	float last_entry_cost = 0.0f;

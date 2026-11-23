@@ -914,7 +914,8 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 			// the heavy body: it turns at a limited rate and slows into a sharp turn
 			const float tr = speed > 2.0f ? run_turn_rate : walk_turn_rate;
 			yaw += clampf(d, -tr * p_dt, tr * p_dt);
-			const float target = want_speed * std::max(0.25f, std::cos(std::min(std::fabs(d), 1.5f)));
+			// (slowing only into a sharp turn: from a quarter turn up - a 45 degree change, W then W+D, slowed him 30 %)
+			const float target = want_speed * (std::fabs(d) < 0.8f ? 1.0f : std::max(0.35f, std::cos(std::min(std::fabs(d), 1.5f))));
 			const float acc = target > speed ? accel_up : accel_down;
 			speed += clampf(target - speed, -acc * p_dt, acc * p_dt);
 			// the gait by where the pace is going (speeding up into a run: the run, slow at first), held a while
