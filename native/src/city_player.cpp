@@ -12,6 +12,7 @@
 #include <godot_cpp/classes/skeleton3d.hpp>
 #include <godot_cpp/classes/mesh_instance3d.hpp>
 #include <godot_cpp/classes/box_mesh.hpp>
+#include <godot_cpp/classes/quad_mesh.hpp>
 #include <godot_cpp/classes/standard_material3d.hpp>
 
 #include <godot_cpp/classes/audio_effect_capture.hpp>
@@ -1234,6 +1235,12 @@ void CityPlayer::set_phone_use(int p_kind) {
 		Ref<BoxMesh> m; m.instantiate(); m->set_size(Vector3(0.072f, 0.148f, 0.009f));
 		Ref<StandardMaterial3D> mat; mat.instantiate(); mat->set_albedo(Color(0.06f, 0.06f, 0.07f)); m->set_material(mat);
 		phone_mesh->set_mesh(m);
+		// (its screen: a lit face on the palm-free side, so which way it faces reads at a glance)
+		MeshInstance3D *scr = memnew(MeshInstance3D); phone_mesh->add_child(scr);
+		Ref<QuadMesh> q; q.instantiate(); q->set_size(Vector2(0.064f, 0.136f));
+		Ref<StandardMaterial3D> sm; sm.instantiate(); sm->set_albedo(Color(0.25f, 0.42f, 0.62f));
+		sm->set_feature(BaseMaterial3D::FEATURE_EMISSION, true); sm->set_emission(Color(0.35f, 0.55f, 0.8f)); sm->set_emission_energy_multiplier(0.6f);
+		q->set_material(sm); scr->set_mesh(q); scr->set_position(Vector3(0, 0, 0.0047f));
 		// (in the palm: along the hand 9 cm, 2 cm off its back - the Biped hand's x runs to the fingers)
 		motor->set_hand_prop(phone_mesh, Transform3D(Basis(), Vector3(0.0f, 0.0f, 0.015f)));   // (1.5 cm off the palm)
 	}

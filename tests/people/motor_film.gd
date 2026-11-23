@@ -11,6 +11,7 @@ var cam: Camera3D
 var seg := -1; var t := 0.0; var t_prev := 0.0; var n := 0
 var cam_side := Vector3(3.6, 1.25, -0.5)
 var close := false
+var cam_off := Vector3.ZERO   # (--cam=x,y,z: the close camera's offset from his chest, world metres)
 var body_path := ""
 var body_done := false
 var look := Vector3()
@@ -66,6 +67,7 @@ func _initialize() -> void:
 		elif a.begins_with("--loops="): loops_kept = PackedStringArray(a.trim_prefix("--loops=").split(";"))
 		elif a.begins_with("--run-speed="): run_speed = float(a.trim_prefix("--run-speed="))
 		elif a == "--close": close = true
+		elif a.begins_with("--cam="): var c := a.trim_prefix("--cam=").split(","); cam_off = Vector3(float(c[0]), float(c[1]), float(c[2])); close = true
 		elif a.begins_with("--body="): body_path = a.trim_prefix("--body=")   # (a new body drawn in his pose: tools/people/pose_follow.gd)   # (the camera at his chest, 1.1 m off: hands, the phone)
 	var sun := DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-50, 50, 0); sun.shadow_enabled = true; root.add_child(sun)
 	var we := WorldEnvironment.new(); var env := Environment.new(); env.background_mode = Environment.BG_COLOR; env.background_color = Color(0.70, 0.78, 0.88)
@@ -241,7 +243,7 @@ func _process(delta: float) -> bool:
 	# the camera beside him, following softly
 	var p := player.global_position + Vector3(0, 1.25 if close else 0.9, 0)
 	look = look.lerp(p, 0.12)
-	cam.global_position = look + (Vector3(-1.3, 0.1, 1.0) if close else cam_side)
+	cam.global_position = look + ((cam_off if cam_off != Vector3.ZERO else Vector3(-1.3, 0.1, 1.0)) if close else cam_side)
 	cam.look_at(look, Vector3.UP)
 	cam.current = true   # (the player makes his own camera current: this one is the film's)
 	if t > 0.3:

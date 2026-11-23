@@ -70,7 +70,10 @@ public:
 	Vector3 hold_l;                    // the hold point from the hips (his facing frame), m
 	Transform3D hold_xf;               // where it was drawn (world)
 	float ear_w = 0.0f;
-	bool hand_prop_both = false;   // (texting with both hands: the phone between them, its screen to his eyes)   // (a call: the right hand held at the right ear as drawn, by this weight)
+	float hand_prop_face = 0.0f;   // (0..1: the phone turned upright, its screen to his eyes - eased in once it is out)
+	bool hand_prop_both = false;
+	bool hand_prop_two = false;    // (texting standing or seated: both hands brought to the phone; walking: the one-hand take)
+	float two_w = 0.0f; bool two_owned = false;   // (texting with both hands: the phone between them, its screen to his eyes)   // (a call: the right hand held at the right ear as drawn, by this weight)
 	Node3D *hand_prop = nullptr; bool hand_prop_on = false; Transform3D hand_prop_off;   // (a thing in the right hand - the phone: on the hand as drawn, last)
 	Node3D *prop = nullptr;            // the thing's node (the game's), placed at hold_xf (a bag hangs 0.2 m under the hand)
 	int b_pel = -1, b_head = -1, b_fing[2] = { -1, -1 }, b_lfing = -1; bool prop_owned_hands = false;

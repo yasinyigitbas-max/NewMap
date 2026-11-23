@@ -204,6 +204,22 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 		}
 	} else if (hold_kind == 0 && prop_owned_hands) { hand_w[0] = hand_w[1] = 0.0f; }
 	prop_owned_hands = hold_kind != 0;
+	// TEXTING WITH BOTH HANDS (Yasin, 25 Nov: "make sure it sits in between two hands", and a photo: the phone upright in
+	// both hands in front of the belly, its screen to the eyes). The take holds his hands 30 cm apart, the left one tapping
+	// the air: both wrists brought in to either side of the point between them, 13 cm apart (the phone's width and the
+	// palms' cupping) - the phone then sits between the palms (below). Eased with the phone's own turn.
+	{
+		const float want = (hand_prop_two && hold_kind == 0 && ear_w <= 0.001f) ? hand_prop_face : 0.0f;
+		two_w += std::max(-1.0f / 15.0f, std::min(1.0f / 15.0f, want - two_w));
+		if (two_w > 0.001f && b_hd[0] >= 0 && b_hd[1] >= 0 && b_ua[0] >= 0 && b_ua[1] >= 0) {
+			const Vector3 lw = G.xform(sk->get_bone_global_pose(b_hd[0]).origin), rw2 = G.xform(sk->get_bone_global_pose(b_hd[1]).origin);
+			Vector3 rt = G.xform(sk->get_bone_global_pose(b_ua[1]).origin) - G.xform(sk->get_bone_global_pose(b_ua[0]).origin);
+			rt.y = 0.0f; rt = rt.length_squared() > 1e-8f ? rt.normalized() : Vector3(1, 0, 0);
+			const Vector3 c = (lw + rw2) * 0.5f;
+			hand_target[0] = c - rt * 0.065f; hand_target[1] = c + rt * 0.065f;
+			hand_w[0] = hand_w[1] = two_w; two_owned = true;
+		} else if (two_owned) { hand_w[0] = hand_w[1] = 0.0f; two_owned = false; }
+	}
 	for (int s = 0; s < 2; s++) {
 		if (s == 1 && ear_w > 0.001f && b_head >= 0) {   // A CALL: the wrist under the right ear, where the head is drawn (the arm a
 			// standing take's on a walking spine put the phone 20 cm off the ear)
@@ -285,19 +301,29 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 					const Vector3 lw = SG.xform(sk->get_bone_global_pose(b_hd[0]).origin), lm = SG.xform(sk->get_bone_global_pose(b_lfing).origin);
 					const Vector3 lpalm = lw + (lm - lw) * 0.8f, rpalm = wr + along * (L * 0.8f);
 					const float apart = (float)(lpalm - rpalm).length();
-					const float k = std::min(1.0f, std::max(0.0f, (0.30f - apart) / 0.15f));
+					// (between the palms as they come together - from 30 cm apart to 15; held in the right hand when apart. Turned
+					// upright, its screen to his eyes, by the take's times (hand_prop_face) - by the hands' distance alone it stayed on its
+					// edge in the one hand's grip while the take held them apart)
+					const float kp = std::min(1.0f, std::max(0.0f, (0.30f - apart) / 0.15f)) * hand_prop_face;
+					const float k = hand_prop_face;
 					if (k > 0.0f) {
-						const Vector3 mid = (lpalm + rpalm) * 0.5f;
+						const Vector3 hold = rpalm.lerp((lpalm + rpalm) * 0.5f, kp);
 						const Vector3 eye = SG.xform(sk->get_bone_global_pose(b_head).origin);
-						Vector3 scr = (eye - mid).normalized();                     // (the screen to his eyes)
-						Vector3 up2 = (mid - SG.xform(sk->get_bone_global_pose(b_pel).origin)); up2.y = 0.0f;   // (its top away from him)
+						Vector3 scr = (eye - hold).normalized();                     // (the screen to his eyes)
+						// (upright - its top away from him, along his facing from the shoulders: from the hips to the hands it ran sideways,
+						// the hands held to his right, and the phone lay landscape - Yasin, 25 Nov: "the phone is landscape ... it should
+						// look like this", a photo of a phone held upright, its screen to the eyes)
+						const Vector3 rs = SG.xform(sk->get_bone_global_pose(b_ua[1]).origin), ls = SG.xform(sk->get_bone_global_pose(b_ua[0]).origin);
+						Vector3 rt = rs - ls; rt.y = 0.0f;
+						Vector3 up2 = rt.length_squared() > 1e-8f ? Vector3(0, 1, 0).cross(rt.normalized()) : lng;
+						if (up2.dot(hold - SG.xform(sk->get_bone_global_pose(b_pel).origin)) < 0.0f) up2 = -up2;
 						up2 -= scr * up2.dot(scr);
 						if (up2.length_squared() < 1e-8f) up2 = lng;
 						up2.normalize();
 						const Vector3 x2 = up2.cross(scr).normalized();
 						const Basis b2(x2, up2, x2.cross(up2).normalized());
 						bs = Basis(Quaternion(bs.orthonormalized()).slerp(Quaternion(b2.orthonormalized()), k));
-						at = at.lerp(mid + scr * 0.01f, k);
+						at = at.lerp(hold + scr * 0.01f, k);
 					}
 				}
 				hand_prop->set_global_transform(Transform3D(bs, at));
