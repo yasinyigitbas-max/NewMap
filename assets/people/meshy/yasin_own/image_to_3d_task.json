@@ -1,0 +1,27 @@
+{
+  "id": "390ab3c1-5916-4fe2-bab1-82c334fc3c7e",
+  "type": "image-to-3d",
+  "name": "Urban Muscular Character",
+  "art_style": "",
+  "object_prompt": "",
+  "style_prompt": "",
+  "negative_prompt": "",
+  "texture_prompt": "",
+  "texture_image_url": "",
+  "text_style_prompt": "",
+  "image_style_url": "",
+  "status": "SUCCEEDED",
+  "created_at": 1795390954062,
+  "progress": 100,
+  "started_at": 1795390954078,
+  "finished_at": 1795390981934,
+  "expires_at": 1795650181934,
+  "task_error": null,
+  "model_url": "https://assets.meshy.ai/e9d5632e-3ba8-43aa-b58f-b2c3ffdf41b5/tasks/390ab3c1-5916-4fe2-bab1-82c334fc3c7e/output/model.glb?Expires=1795650181&Signature=nO6Ftzw0I5DOZosayF6e4RdkOH8GWf7mQMdOe1KqHZZ5ayqN24CMO~r-Mnn5WlfBnA49ARjBGxudvpv-CzCOPghnQMb7hTmJODsh2liQTiBdtR5fgFkSBscaZIQNWVnNla89-YyUiw2oCiDmrVdLsjzpZx-0Aqsxv1uZXlGM3wbmITH1pmv1VPL~TUQhCikYvYbzqmiOrRTfPFEsYo~Ay~bxAtGKshSyl58w5mSFsULHvipRLBwtozDnrIZac1xUbdO7taEksfzHEGySQkI7XHPWlsXK9MzyGtBYVElabOWqxZdbtKWD6Q5WnZD0Z~-AxF15n9s-~s82pZ8nf9WRsQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "model_urls": {
+    "glb": "https://assets.meshy.ai/e9d5632e-3ba8-43aa-b58f-b2c3ffdf41b5/tasks/390ab3c1-5916-4fe2-bab1-82c334fc3c7e/output/model.glb?Expires=1795650181&Signature=nO6Ftzw0I5DOZosayF6e4RdkOH8GWf7mQMdOe1KqHZZ5ayqN24CMO~r-Mnn5WlfBnA49ARjBGxudvpv-CzCOPghnQMb7hTmJODsh2liQTiBdtR5fgFkSBscaZIQNWVnNla89-YyUiw2oCiDmrVdLsjzpZx-0Aqsxv1uZXlGM3wbmITH1pmv1VPL~TUQhCikYvYbzqmiOrRTfPFEsYo~Ay~bxAtGKshSyl58w5mSFsULHvipRLBwtozDnrIZac1xUbdO7taEksfzHEGySQkI7XHPWlsXK9MzyGtBYVElabOWqxZdbtKWD6Q5WnZD0Z~-AxF15n9s-~s82pZ8nf9WRsQ__&Key-Pair-Id=K1VGYTHIYLM9UM"
+  },
+  "thumbnail_url": "https://assets.meshy.ai/e9d5632e-3ba8-43aa-b58f-b2c3ffdf41b5/tasks/390ab3c1-5916-4fe2-bab1-82c334fc3c7e/output/preview.png?Expires=1795650181&Signature=QzjR-Zq1uWcKoFC5Q67CUzae-SvmwVFH~w~L78Xj3EpjbH3i7gEYoxhVDpH5edfcvO3Uj5eocVw3mx~lUAwMm-pMliV5~2z0nUlK8jQ4QD5l9tKIPru5npyBbt8rSwnAvDnZMHtdr9vFwu7XgM4-RbTGns5MIcF~5zftlJmJVAJXdNFrE2sUk22cEYQlIcHKNIhf-KkT5yvMUihvdJOQv6BU2OfgOiW5LVEH-VmNxQX0UU6YSyJ1hMT0hGkcg13Y4y1UK1n1PXV17WPb7SlfHNDNyJTsb2cEvbhGjbupXXq-TeOVz-3YLmwGnhIdK73JrlnP-~YfJHAyUUC4hnoJ-w__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "texture_urls": [],
+  "consumed_credits": 0
+}
