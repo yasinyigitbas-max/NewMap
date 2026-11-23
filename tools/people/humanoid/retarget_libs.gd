@@ -14,6 +14,10 @@ const SRC_DIR := "res://characters/rocketbox/"
 const OUT := "res://characters/hero_v3/"
 const STEMS := ["", "ual", "step", "mx", "yl", "ms", "player_idle", "player_walk", "player_run", "player_trav", "player_act"]
 const FPS := 30.0
+## (Yasin, 23 Nov: "shoulders drop way down whenever an animation plays other than the idle" - the walks hold the collarbone
+## up to 18 deg below level, the old figure the same; on his broad shoulders it reads as a slump) CLEANED like mocap: his
+## collarbone at most this far below level; the upper arm keeps its own direction in the world (only the shoulder line lifts)
+const CLAV_MIN_DEG := -5.0
 
 ## old bone -> his bone, old bone further along the limb (its rest direction lays his limb along the old one)
 const PAIRS := [
@@ -76,6 +80,10 @@ func _setup() -> void:
 		var ds := ((sx * ssk.get_bone_global_rest(sn)).origin - (sx * ssk.get_bone_global_rest(sb)).origin).normalized()
 		var dd := ((dx * dsk.get_bone_global_rest(dn)).origin - (dx * dsk.get_bone_global_rest(db)).origin).normalized()
 		if ds.dot(dd) > -0.999: lay[db] = Quaternion(dd, ds)
+	for nm in ["LeftShoulder", "RightShoulder"]:
+		var c := dsk.find_bone(nm); var u := dsk.find_bone(nm.replace("Shoulder", "UpperArm"))
+		clav.append(c)
+		clav_dir[c] = Basis(drest_w[c]).inverse() * ((dx * dsk.get_bone_global_rest(u)).origin - (dx * dsk.get_bone_global_rest(c)).origin).normalized()
 	s_th = [ssk.find_bone("Bip01_L_Thigh"), ssk.find_bone("Bip01_R_Thigh"), ssk.find_bone("Bip01_L_Foot"), ssk.find_bone("Bip01_R_Foot")]
 	d_th = [dsk.find_bone("LeftUpperLeg"), dsk.find_bone("RightUpperLeg"), dsk.find_bone("LeftFoot"), dsk.find_bone("RightFoot")]
 	d_hips = dsk.find_bone("Hips")
@@ -85,6 +93,17 @@ func _setup() -> void:
 	var s_leg: float = (sp.call(s_th[0]) - sp.call(s_th[2])).length(); var d_leg: float = (dp.call(d_th[0]) - dp.call(d_th[2])).length()
 	k_leg = d_leg / s_leg
 	print("RETARGET pairs %d  leg old %.3f his %.3f  k %.3f  path %s" % [map.size(), s_leg, d_leg, k_leg, d_path])
+
+## the collarbone's world turn lifted so the line to the shoulder joint is at most CLAV_MIN_DEG below level
+var clav := []; var clav_dir := {}   # his collarbones; their rest direction (to the shoulder joint) in the bone's own frame
+func _lift_clav(db: int, tw: Array[Quaternion], _pw: Quaternion) -> Quaternion:
+	var d: Vector3 = (Basis(tw[db]) * clav_dir[db]).normalized()
+	var flat := Vector2(d.x, d.z).length()
+	var ang := atan2(d.y, flat)
+	var lo := deg_to_rad(CLAV_MIN_DEG)
+	if ang >= lo or flat < 1e-4: return tw[db]
+	var axis := d.cross(Vector3.UP).normalized()
+	return (Quaternion(axis, lo - ang) * tw[db]).normalized()
 
 ## the old figure's bones in its figure, at time t
 func _src_globals(a: Animation, tracks: Dictionary, t: float) -> Array[Transform3D]:
@@ -126,6 +145,7 @@ func _clip(a: Animation) -> Animation:
 				var sb: int = map[db]
 				var turned := (_q(sx) * _q(g[sb])) * srest_w[sb].inverse()
 				tw[db] = (turned * lay[db] * drest_w[db]).normalized()
+				if db in clav: tw[db] = _lift_clav(db, tw, pw)
 				o.rotation_track_insert_key(tr[db], t, (pw.inverse() * tw[db]).normalized())
 			else:
 				tw[db] = (pw * dsk.get_bone_rest(db).basis.get_rotation_quaternion()).normalized()

@@ -74,6 +74,10 @@ public:
 	Vector3 hold_l;                    // the hold point from the hips (his facing frame), m
 	Transform3D hold_xf;               // where it was drawn (world)
 	float ear_w = 0.0f;
+	// THE EAR SOCKET (a body on the standard skeleton): his right ear measured on his own head mesh, in the head bone's frame
+	// - the call puts the PHONE on it (not the wrist under a guessed point: Yasin, 23 Nov, a screenshot, the hand at his neck)
+	bool ear_socket = false; Vector3 ear_local, ear_out_local, ear_up_local, ear_fwd_local;
+	bool ear_hand = false; Basis ear_hand_b;   // (this frame: the hand turned to hold the phone at the ear, skeleton space)
 	float hand_prop_face = 0.0f;   // (0..1: the phone turned upright, its screen to his eyes - eased in once it is out)
 	bool hand_prop_both = false;
 	bool hand_prop_two = false;    // (texting standing or seated: both hands brought to the phone; walking: the one-hand take)

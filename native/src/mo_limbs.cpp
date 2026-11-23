@@ -32,6 +32,18 @@ void MoLimbs::find_bones(Skeleton3D *sk) {
 	b_pel = rig::find(sk, "Bip01_Pelvis"); b_head = rig::find(sk, "Bip01_Head");
 	b_spine[0] = rig::find(sk, "Bip01_Spine"); b_spine[1] = rig::find(sk, "Bip01_Spine1"); b_spine[2] = rig::find(sk, "Bip01_Spine2"); b_neck = rig::find(sk, "Bip01_Neck");
 	b_fing[0] = rig::find(sk, "Bip01_R_Finger0"); b_fing[1] = rig::find(sk, "Bip01_R_Finger2"); b_lfing = rig::find(sk, "Bip01_L_Finger2");
+	// the ear socket on a standard-skeleton body (the player v3: measured on his head mesh at rest - the outer ear 8.5 cm to
+	// his right of the head joint, 11.5 cm above it, 1.3 cm ahead; the head joint sits at the base of his skull)
+	ear_socket = false;
+	if (b_head >= 0 && sk->find_bone("Hips") >= 0) {
+		const Transform3D Gh = sk->get_bone_global_rest(b_head);
+		const float k = 1.0f / std::max((float)sk->get_global_transform().basis.get_scale().x, 1e-4f);   // (skeleton units a metre)
+		const Vector3 ear = Gh.origin + Vector3(-0.085f, 0.115f, 0.013f) * k;   // (his right is -x: he faces +z, his left +x)
+		ear_local = Gh.affine_inverse().xform(ear);
+		ear_out_local = Gh.basis.inverse().xform(Vector3(-1, 0, 0)).normalized();
+		ear_up_local = Gh.basis.inverse().xform(Vector3(0, 1, 0)).normalized(); ear_fwd_local = Gh.basis.inverse().xform(Vector3(0, 0, 1)).normalized();
+		ear_socket = true;
+	}
 	found = true;
 }
 
@@ -266,6 +278,34 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 			// head bone itself, inside his head)
 			const Vector3 rw = G.basis.xform(right).normalized(), uw = G.basis.xform(up_s).normalized(), fw2 = G.basis.xform(f).normalized();
 			hand_target[1] = G.xform(hp) + rw * 0.11f - uw * 0.11f + fw2 * 0.03f;   // (the wrist under the ear, out from the face: the phone in the palm runs up the cheek)
+			ear_hand = false;
+			if (ear_socket && b_hd[1] >= 0 && b_fing[0] >= 0 && b_fing[1] >= 0) {
+				// THE PHONE AT THE EAR, keyed as a person holds one: its top at the ear, its bottom toward the mouth (tilted 37
+				// deg forward of the head's up), its screen against the cheek, the hand holding its lower half from behind -
+				// the palm toward the head, the fingers along the phone. The hand is turned to that; the wrist then goes where
+				// it puts the phone's middle (0.8 of the way to the middle finger's root, 1.5 cm off the palm - as the prop is
+				// placed below) 3 cm under and 1 cm ahead of the ear, 1 cm out from the head. The arm reaches it.
+				const Transform3D Gh = sk->get_bone_global_pose(b_head);
+				const Vector3 ear_s = Gh.xform(ear_local), out_s = Gh.basis.xform(ear_out_local).normalized();
+				const Vector3 hu = Gh.basis.xform(ear_up_local).normalized(), hf = Gh.basis.xform(ear_fwd_local).normalized();
+				const Vector3 wr = sk->get_bone_global_pose(b_hd[1]).origin, mid = sk->get_bone_global_pose(b_fing[1]).origin, th = sk->get_bone_global_pose(b_fing[0]).origin;
+				const float ks = 1.0f / std::max((float)G.basis.get_scale().x, 1e-4f);
+				Vector3 along = mid - wr; const float L = (float)along.length();
+				Vector3 nrm = (th - wr).cross(along);
+				if (L > 1e-5f && nrm.length_squared() > 1e-12f) {
+					along /= L; nrm.normalize();
+					// the hand's frame now (along the fingers, out of the palm) onto the one wanted
+					const Vector3 A = (hu * 0.8f - hf * 0.6f).normalized();
+					Vector3 N = -out_s; N = (N - A * N.dot(A)).normalized();
+					const Vector3 nc = (nrm - along * nrm.dot(along)).normalized();
+					const Basis Bc(along, nc, along.cross(nc)), Bt(A, N, A.cross(N));
+					const Basis R = Bt * Bc.transposed();
+					ear_hand_b = R * sk->get_bone_global_pose(b_hd[1]).basis; ear_hand = true;
+					const Vector3 phone_c = A * (L * 0.8f) + N * (0.015f * ks);   // (from the wrist, the hand so turned)
+					const Vector3 want_c = ear_s + out_s * (0.01f * ks) - hu * (0.03f * ks) + hf * (0.01f * ks);
+					hand_target[1] = G.xform(want_c - phone_c);
+				}
+			}
 			hand_w[1] = ear_w;
 		}
 		if (hand_w[s] <= 0.001f || b_ua[s] < 0 || b_fa[s] < 0 || b_hd[s] < 0) continue;
@@ -292,6 +332,11 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 			pole = pole.lerp(f * 0.6f - up_s * 0.6f + right * 0.3f, std::min(ear_w, 1.0f));
 		}
 		reach(sk, b_ua[s], b_fa[s], b_hd[s], tgt, pole);
+		if (s == 1 && ear_hand && ear_w > 0.001f) {   // (the hand turned to hold the phone at the ear)
+			const Transform3D Gw = sk->get_bone_global_pose(b_hd[1]);
+			const Quaternion q0 = Gw.basis.orthonormalized().get_rotation_quaternion(), q1 = ear_hand_b.orthonormalized().get_rotation_quaternion();
+			sk->set_bone_global_pose(b_hd[1], Transform3D(Basis(q0.slerp(q1, std::min(ear_w, 1.0f))).scaled_local(Gw.basis.get_scale()), Gw.origin));
+		}
 	}
 	// the thing in the right hand (the phone), on the hand as finally drawn
 	if (hand_prop && hand_prop->is_inside_tree()) {
@@ -310,7 +355,7 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 				Vector3 n = (th - wr).cross(along); n = n.length_squared() > 1e-10f ? n.normalized() : Vector3(0, 0, 1);
 				Vector3 at = wr + along * (L * 0.8f) + n * hand_prop_off.origin.z;
 				Vector3 lng = along;
-				if (ear_w > 0.5f && b_head >= 0) {
+				if (ear_w > 0.5f && b_head >= 0 && !ear_socket) {   // (the ear socket turns the hand itself)
 					// (on a call its lean mirrored - the top to the ear, the bottom toward the mouth: "phone would lean the other
 					// way when held against the ear". In the palm it is already ~3 cm nearer his head than on the hand's back:
 					// 5 cm more on top put it in his skull)
