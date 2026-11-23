@@ -28,6 +28,7 @@ const LANES := [
 	["kerb", 0.15, false], ["kerb", 0.15, true],
 ]
 var lane := -1; var t := 0.0
+var flat_hi := [0.0, 0.0]   # (the highest a planted ankle goes on the flat: the heel rising at push-off)
 var base := [0.0, 0.0]; var base_n := [0, 0]   # the flat's planted ankle height, walking / running (the jog's contact is lower)
 var end_z := 0.0; var top_h := 0.0
 var s_float := 0.0; var s_sink := 0.0; var s_slide := 0.0; var s_pop := 0.0; var s_drop := 0.0; var s_off := 0; var s_trav := 0
@@ -156,9 +157,12 @@ func _sample() -> void:
 		var g: int = 1 if LANES[lane][2] else 0
 		if flat:
 			base[g] += over; base_n[g] += 1
+			flat_hi[g] = maxf(flat_hi[g], over)
 		elif base_n[g] > 0:
 			var d: float = over - base[g] / base_n[g]
-			s_float = maxf(s_float, d); s_sink = maxf(s_sink, -d)
+			# (FLOAT against the flat's own highest - the heel rising at push-off, 2 cm there - not its average: the average
+			# called a stair's push-off a float; SINK against the average)
+			s_float = maxf(s_float, over - flat_hi[g]); s_sink = maxf(s_sink, -d)
 			if trace and absf(d) > 0.03: print("TRACEF lane %d t %.2f %s foot %d over %.3f (flat %.3f) at %s %s" % [lane, t, ms.get("clip", ""), s, over, base[g] / base_n[g], str(a), st])
 		if plant[s] == null: plant[s] = a
 		s_slide = maxf(s_slide, Vector2(a.x - plant[s].x, a.z - plant[s].z).length())
@@ -179,7 +183,7 @@ func _judge() -> void:
 	print("SLOPES  %-26s over %s (at %s, top %.2f / %.2f)  float %4.1f sink %4.1f slide %4.1f pop %4.1f drop %4.1f cm  old code %d trav %d frames" % [name, str(p.z > end_z - 0.1), str(p.snapped(Vector3.ONE * 0.01)), top_seen, top_h, s_float * 100, s_sink * 100, s_slide * 100, s_pop * 100, s_drop * 100, s_off, s_trav])
 	if L[0] == "flat":
 		var g: int = 1 if L[2] else 0
-		print("SLOPES  (flat: a planted ankle %.3f m over the ground)" % [base[g] / maxf(base_n[g], 1)])
+		print("SLOPES  (flat: a planted ankle %.3f m over the ground, %.3f at its highest - the heel rising at push-off)" % [base[g] / maxf(base_n[g], 1), flat_hi[g]])
 		return
 	_check(p.z > end_z - 0.1 and absf(p.y) < 0.1 and top_seen > top_h - 0.1, "%s: up and down the far side" % name)
 	_check(s_off == 0 and s_trav == 0, "%s: the new system had him all the way (old code %d, trav %d frames)" % [name, s_off, s_trav])
