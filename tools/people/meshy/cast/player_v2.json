@@ -5,6 +5,10 @@
   "tris": 150000,
   "height_m": 1.83,
   "tasks": {
-    "preview": "01a2087e-81b5-7626-be9a-a7eccf1b9dd5"
-  }
+    "preview": "01a2087e-81b5-7626-be9a-a7eccf1b9dd5",
+    "refine": "01a2087f-a7b7-77f5-b785-bfba3b8417fb",
+    "remesh": "01a20880-4837-72e4-b71e-3877692a0e2f",
+    "rig": "01a20881-418f-720f-ba6e-6fff98f6435c"
+  },
+  "rig_from": "remesh"
 }
