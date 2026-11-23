@@ -182,3 +182,39 @@ TRAPS (each cost a run):
 - A clip whose hips stand away from its origin can play in place with Clip::off (the box idle = a walk-stop's tail);
   Clip::lo loops only its tail.
   tools/people/survey_mo_clips.gd and dump_mo_clip.gd show a clip as mo_clip measures it.
+
+## 23 Nov (late): HIS BODY ON THE STANDARD SKELETON - state, lessons, the polish plan (read before any polish)
+State: the motor drives the player v3 (Meshy) natively: body_id "hero_v3" (CityPed), Godot's SkeletonProfileHumanoid
+names via native/src/rig_names.h (tests: tests/people/rig.gd), clips batch-retargeted by tools/people/humanoid/retarget_libs.gd
+into characters/hero_v3/clips_<stem>.res (same names + meta). PLAYER_BODY=hero_v3 runs any suite / film on him.
+Course build 10 (OUT/ObstacleCourse.zip). pose_follow.gd (the copy layer) is dead - never go back to it.
+Lessons (cost hours, Yasin furious each time):
+- JUDGE IN THE GAME, THROUGH THE GAME CAMERA, WITH REAL KEYS (scratchpad course_video.gd pattern: obstacle_course.tscn,
+  Input.parse_input_event, --render-thread safe, every 2nd frame -> ffmpeg). Test films pick clips and cameras that hide
+  faults; Yasin plays the game. Never call anything better from test films alone.
+- Measure before claiming: the collarbone slope / head-over-shoulder numbers (scratchpad hum/gsh.gd) found the 18 deg
+  shoulder drop in walk_mx2 that stills hid. The old figure had the same drop: the CLIPS carry it (Mixamo walks drop the
+  collarbone), his broad mesh shows it. Fixed in the asset (retarget CLAV_MIN_DEG -5), not at runtime.
+- Retarget: limbs are LAID (his rest T, old A); collarbone/spine copy the source DIRECTION (Bip01 clips already hold
+  Mixamo's absolute directions; Mixamo's collarbone rest is -2.8 deg ~ his level) - laying them "from rest" made him shrug.
+- Sockets, not offsets: anything fitted to a body part (the phone at the ear) uses a point measured on HIS mesh (ear:
+  8.5 cm right, 11.5 up, 1.3 ahead of the Head joint, which sits at the skull's base). Offsets tuned on the old figure
+  land elsewhere on him (the hand at his neck).
+Studied (23 Nov, web): shoulder artifacts are the most common retarget failure (clavicle orientation mismatch; fix at
+the source / additive layer); IK goals stabilise limbs after retarget (we have: feet, hands); judge on the MESH not the
+skeleton; transitions matched on foot phase (Gears of War 4) and new clips picked while a foot is planted (Half-Life:
+Alyx motion matching); procedural touch-ups after selection (For Honor); a physics-style LEAN on the spine into turns /
+acceleration (missing here); hand grips as ADDITIVE per-finger POSE LIBRARY (SteamVR Skeleton Poser, UE additive hand
+poses) - a "phone" grip pose curling the fingers round the phone.
+THE POLISH PLAN (one fix = one thing, each shown through the game camera, tests re-run):
+1. Phone grip: a phone hand pose (fingers wrapped round its back, thumb on the side) applied as an additive pose on the
+   right hand while it holds the phone (call and texting); the phone visible between fingers and cheek.
+2. Contacts failing on his body (old figure passes): cover feet slide 33-41 cm + hips 2.05 m/s; sit feet 5.7 cm off the
+   ground; box hands 4.3 cm off its sides; climbs (box 0.7/1.0 "leg 156 cm in the wall" - check the test; wall 1.4/1.75
+   hips pop 3.4-3.9 cm; 2.0 m "a move took it"; 1.8 m running hands 31.8 cm off); ramps/stairs walking a foot dragged
+   0.15 s after the jog -> walk hand-over (pwalk/walk_mx3, right foot, unpinned while "down").
+3. Shoulder / arm read on his mesh in every pool clip (walks, runs, starts, stops, turns, actions): film each from behind
+   and the front in the game, flag any slump / shrug / arm in the body.
+4. Lean into turns and speed changes (spine, procedural, small).
+5. Transitions on matching feet (check the hand-overs' foot phase; pick at a planted foot).
+6. Then the capture route if Yasin wants it (Move.ai / Rokoko Vision: one actor, his moves).
