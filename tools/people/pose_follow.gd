@@ -213,7 +213,8 @@ func _follow() -> void:
 	if idle:
 		_straight_back()
 		_arms_forward()
-	_bend_forward(10.0)
+	_bend_forward(20.0)   # (Yasin: 10, then "10 more")
+	_tilt(dst.find_bone(nm("head")), -15.0)   # (Yasin: "lift the head 15 degrees back")
 	_fit_arms()
 	_carry_prop()
 
@@ -465,3 +466,19 @@ func _bend_forward(p_deg: float) -> void:
 		var par := dst.get_bone_parent(b)
 		var pg := dst.get_bone_global_pose(par).basis if par >= 0 else Basis()
 		dst.set_bone_pose_rotation(b, (pg.inverse() * (Basis(q) * g.basis)).orthonormalized().get_rotation_quaternion())
+
+# one bone tipped forward (+) / back (-) by p_deg about his left-right axis, all below it riding on it
+func _tilt(b: int, p_deg: float) -> void:
+	if b < 0: return
+	var f: Vector3 = dst.global_basis.inverse() * (src.global_basis.orthonormalized() * (Cs * Vector3(0, 0, 1)))
+	var up: Vector3 = (dst.global_basis.inverse() * Vector3.UP).normalized()
+	f -= up * f.dot(up)
+	if f.length() < 1e-6: return
+	f = f.normalized()
+	var q := Quaternion(f.cross(up).normalized(), deg_to_rad(absf(p_deg)))
+	var fwd_q := (Basis(q) * up).dot(f) > 0.0
+	if fwd_q != (p_deg > 0.0): q = q.inverse()
+	var g := dst.get_bone_global_pose(b)
+	var par := dst.get_bone_parent(b)
+	var pg := dst.get_bone_global_pose(par).basis if par >= 0 else Basis()
+	dst.set_bone_pose_rotation(b, (pg.inverse() * (Basis(q) * g.basis)).orthonormalized().get_rotation_quaternion())
