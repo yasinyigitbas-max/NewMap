@@ -1,0 +1,11 @@
+{
+  "role": "the player (main character), v3: from Yasin's own concept picture, logos removed by Meshy (edit task 01a20888-9cf3-74de-9c64-9204749fd8d1)",
+  "image": "assets/people/meshy/player_v3/concept_nologo.png",
+  "texture_prompt": "realistic skin, detailed face, black and grey tattoo sleeves, grey t-shirt, black cargo pants, plain unbranded grey and white sneakers with no logos",
+  "tris": 150000,
+  "height_m": 1.83,
+  "tasks": {
+    "image3d": "01a20889-41d5-752f-a716-e2f3f7ae10cb"
+  },
+  "refine_from": "image3d"
+}

@@ -22,7 +22,7 @@ CTX = ssl.create_default_context(cafile=CA) if os.path.exists(CA) else ssl.creat
 
 ENDPOINT = {  # step -> GET path prefix
     "preview": "/v2/text-to-3d/", "refine": "/v2/text-to-3d/",
-    "rig": "/v1/rigging/", "remesh": "/v1/remesh/",
+    "rig": "/v1/rigging/", "remesh": "/v1/remesh/", "image3d": "/v1/image-to-3d/",
 }
 
 
@@ -81,7 +81,7 @@ def wait(name, step):
         print("FAILED:", t.get("task_error"))
         sys.exit(1)
     urls = {}
-    if step in ("preview", "refine", "remesh"):
+    if step in ("preview", "refine", "remesh", "image3d"):
         mu = t.get("model_urls", {})
         for fmt in ("glb", "fbx"):
             if mu.get(fmt):
@@ -114,6 +114,15 @@ def main(a):
             "topology": "triangle", "target_polycount": c.get("tris", 12000), "should_remesh": c.get("remesh", True),
             "symmetry_mode": "auto", "pose_mode": "t-pose",
         }, "/v2/text-to-3d")
+    elif cmd == "image3d":   # image-to-3D, textured in the same task; cast "image" = a local picture
+        import base64
+        c = load(a[1])
+        img = "data:image/png;base64," + base64.b64encode(open(os.path.join(REPO, c["image"]), "rb").read()).decode()
+        body = {"image_url": img, "ai_model": "latest", "topology": "triangle", "target_polycount": c.get("tris", 150000),
+                "should_remesh": c.get("remesh", True), "should_texture": True, "enable_pbr": False, "pose_mode": "t-pose"}
+        if c.get("texture_prompt"): body["texture_prompt"] = c["texture_prompt"]
+        start(a[1], "image3d", body, "/v1/image-to-3d")
+        c = load(a[1]); c["refine_from"] = "image3d"; save(a[1], c)
     elif cmd == "refine":
         c = load(a[1])
         body = {"mode": "refine", "preview_task_id": c["tasks"]["preview"], "enable_pbr": False,
@@ -127,7 +136,7 @@ def main(a):
               "/v1/rigging")
     elif cmd == "remesh":
         c = load(a[1])
-        start(a[1], "remesh", {"input_task_id": c["tasks"]["refine"], "target_formats": ["glb"],
+        start(a[1], "remesh", {"input_task_id": c["tasks"][c.get("refine_from", "refine")], "target_formats": ["glb"],
                                "topology": "triangle", "target_polycount": int(a[2])}, "/v1/remesh")
         c = load(a[1]); c["rig_from"] = "remesh"; save(a[1], c)
     elif cmd == "wait":
