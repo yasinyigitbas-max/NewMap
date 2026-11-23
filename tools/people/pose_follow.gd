@@ -214,6 +214,7 @@ func _follow() -> void:
 		_straight_back()
 		_arms_forward()
 	_bend_forward(20.0)   # (Yasin: 10, then "10 more")
+	_tilt(dst.find_bone(nm("spine_01")), 5.0)   # (Yasin: "bend him again 5 more degree from the hip": the whole upper body from its lowest spine joint)
 	_tilt(dst.find_bone(nm("head")), -15.0)   # (Yasin: "lift the head 15 degrees back")
 	_fit_arms()
 	_carry_prop()
