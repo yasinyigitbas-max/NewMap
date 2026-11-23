@@ -217,6 +217,7 @@ func _follow() -> void:
 	_tilt(dst.find_bone(nm("spine_01")), 5.0)   # (Yasin: "bend him again 5 more degree from the hip": the whole upper body from its lowest spine joint)
 	_tilt(dst.find_bone(nm("neck_01")), -15.0)   # (Yasin: "bend the head from the neck 15 degrees back")
 	_tilt(dst.find_bone(nm("head")), -15.0)   # (Yasin: "lift the head 15 degrees back")
+	_shoulders_forward(0.15)   # (Yasin: "push arms and shoulders 15 cm forward")
 	_fit_arms()
 	_carry_prop()
 
@@ -484,3 +485,20 @@ func _tilt(b: int, p_deg: float) -> void:
 	var par := dst.get_bone_parent(b)
 	var pg := dst.get_bone_global_pose(par).basis if par >= 0 else Basis()
 	dst.set_bone_pose_rotation(b, (pg.inverse() * (Basis(q) * g.basis)).orthonormalized().get_rotation_quaternion())
+
+# the shoulders (clavicles) moved forward p_m metres along his facing, the arms with them
+func _shoulders_forward(p_m: float) -> void:
+	var f: Vector3 = dst.global_basis.inverse() * (src.global_basis.orthonormalized() * (Cs * Vector3(0, 0, 1)))
+	var up: Vector3 = (dst.global_basis.inverse() * Vector3.UP).normalized()
+	f -= up * f.dot(up)
+	if f.length() < 1e-6: return
+	f = f.normalized()
+	var sc := dst.global_basis.get_scale().x
+	for side in ["l", "r"]:
+		var b := dst.find_bone(nm("clavicle_" + side))
+		if b < 0: continue
+		var par := dst.get_bone_parent(b)
+		var pg := dst.get_bone_global_pose(par) if par >= 0 else Transform3D()
+		# (from its rest place under its parent as posed now - not from last frame's, which already had the push: it piled up)
+		var want := pg * dst.get_bone_rest(b).origin + f * (p_m / sc)
+		dst.set_bone_pose_position(b, pg.affine_inverse() * want)
