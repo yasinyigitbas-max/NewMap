@@ -34,6 +34,8 @@ var Cs := Basis(); var Cd := Basis()   # each skeleton's character frame in its 
 var leg_k := 1.0
 var d_pel := -1
 var ready_ok := false
+var host: Node = null      # (the player: its phone, placed on the figure's hand, carried over to the new body's hand)
+var prop: Node3D = null
 
 func _char_frame(sk: Skeleton3D, pel: String, neck: String, lth: String, rth: String) -> Basis:
 	var up := (sk.get_bone_global_rest(sk.find_bone(neck)).origin - sk.get_bone_global_rest(sk.find_bone(pel)).origin).normalized()
@@ -96,3 +98,22 @@ func _follow() -> void:
 		var par := dst.get_bone_parent(d_pel)
 		var par_x := dst.global_transform * (dst.get_bone_global_pose(par) if par >= 0 else Transform3D())
 		dst.set_bone_pose_position(d_pel, par_x.affine_inverse() * target)
+	_carry_prop()
+
+func _carry_prop() -> void:
+	# THE PHONE (the motor puts it in the figure's hand, by the figure's own arms): moved by as much as the new body's hand is
+	# from the figure's - both hands' average when the hands hold it together (texting), else the right's. Its turn kept: the
+	# bones' directions are copied, the hands face the same way
+	if host == null: return
+	if prop == null:
+		for c in host.get_children():
+			if c is MeshInstance3D and (c as MeshInstance3D).mesh is BoxMesh and ((c as MeshInstance3D).mesh as BoxMesh).size.y > 0.14: prop = c; break
+		if prop == null: return
+	if not prop.visible: return
+	var sw := func(sk: Skeleton3D, n: String) -> Vector3: return sk.global_transform * sk.get_bone_global_pose(sk.find_bone(n)).origin
+	# (by the PALMS' middles - the wrist to the middle finger's root, 0.8 along: by the wrists, his longer hands left it under them)
+	var palm := func(sk: Skeleton3D, h: String, f: String) -> Vector3: return (sw.call(sk, h) as Vector3).lerp(sw.call(sk, f), 0.8)
+	var sl: Vector3 = palm.call(src, "Bip01_L_Hand", "Bip01_L_Finger2"); var sr: Vector3 = palm.call(src, "Bip01_R_Hand", "Bip01_R_Finger2")
+	var dl: Vector3 = palm.call(dst, "hand_l", "middle_01_l"); var dr: Vector3 = palm.call(dst, "hand_r", "middle_01_r")
+	var d := (dr - sr) if (sl - sr).length() > 0.25 else ((dl - sl) + (dr - sr)) * 0.5
+	prop.global_position += d

@@ -236,7 +236,7 @@ func _process(delta: float) -> bool:
 			var scn: Node3D = (load(body_path) as PackedScene).instantiate(); root.add_child(scn)
 			var dsk: Skeleton3D = scn.find_children("*", "Skeleton3D", true, false)[0]
 			var pf: Node3D = load("res://tools/people/pose_follow.gd").new(); root.add_child(pf)
-			pf.call(&"setup", src, dsk)
+			pf.set(&"host", player); pf.call(&"setup", src, dsk)
 	if seg >= SEGS.size(): return true
 	t_prev = t; t += delta
 	_act()
