@@ -85,6 +85,8 @@ public:
 	Node3D *hand_prop = nullptr; bool hand_prop_on = false; Transform3D hand_prop_off;   // (a thing in the right hand - the phone: on the hand as drawn, last)
 	Node3D *prop = nullptr;            // the thing's node (the game's), placed at hold_xf (a bag hangs 0.2 m under the hand)
 	int b_pel = -1, b_head = -1, b_fing[2] = { -1, -1 }, b_lfing = -1; bool prop_owned_hands = false;
+	int b_rf[5][3] = { { -1, -1, -1 }, { -1, -1, -1 }, { -1, -1, -1 }, { -1, -1, -1 }, { -1, -1, -1 } };   // the right hand's fingers (0 thumb .. 4 little), base to tip
+	void grip_pose(Skeleton3D *sk, float p_w);   // the right hand round a phone (a hand pose over the take's fingers)
 	// ---- the hands
 	Vector3 hand_target[2]; float hand_w[2] = { 0.0f, 0.0f };
 	// (the tests) how far each foot was moved from the clip's place this frame, m; locks taken

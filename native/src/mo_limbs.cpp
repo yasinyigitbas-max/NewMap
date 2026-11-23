@@ -32,6 +32,8 @@ void MoLimbs::find_bones(Skeleton3D *sk) {
 	b_pel = rig::find(sk, "Bip01_Pelvis"); b_head = rig::find(sk, "Bip01_Head");
 	b_spine[0] = rig::find(sk, "Bip01_Spine"); b_spine[1] = rig::find(sk, "Bip01_Spine1"); b_spine[2] = rig::find(sk, "Bip01_Spine2"); b_neck = rig::find(sk, "Bip01_Neck");
 	b_fing[0] = rig::find(sk, "Bip01_R_Finger0"); b_fing[1] = rig::find(sk, "Bip01_R_Finger2"); b_lfing = rig::find(sk, "Bip01_L_Finger2");
+	for (int f = 0; f < 5; f++) for (int j = 0; j < 3; j++)
+		b_rf[f][j] = rig::find(sk, String("Bip01_R_Finger") + String::num_int64(f) + (j == 0 ? String() : String::num_int64(j)));
 	// the ear socket on a standard-skeleton body (the player v3: measured on his head mesh at rest - the outer ear 8.5 cm to
 	// his right of the head joint, 11.5 cm above it, 1.3 cm ahead; the head joint sits at the base of his skull)
 	ear_socket = false;
@@ -45,6 +47,33 @@ void MoLimbs::find_bones(Skeleton3D *sk) {
 		ear_socket = true;
 	}
 	found = true;
+}
+
+// THE PHONE GRIP (a hand pose, as studios lay one over a take's fingers: Yasin, 23 Nov, the call's fingers straight and
+// spread over his head): the four fingers closed together and curled round the phone toward the palm (base 25, middle
+// 35, tip 20 degrees), the thumb in along its edge (20). Each joint bent about the hand's own side axis, the way that
+// brings the fingertip toward the palm side; eased in with the call.
+void MoLimbs::grip_pose(Skeleton3D *sk, float p_w) {
+	if (b_hd[1] < 0 || b_fing[0] < 0 || b_fing[1] < 0 || p_w <= 0.001f) return;
+	const Transform3D H = sk->get_bone_global_pose(b_hd[1]);
+	const Vector3 wr = H.origin, mid = sk->get_bone_global_pose(b_fing[1]).origin, th = sk->get_bone_global_pose(b_fing[0]).origin;
+	Vector3 along = mid - wr, palm = (th - wr).cross(along);
+	if (along.length_squared() < 1e-12f || palm.length_squared() < 1e-12f) return;
+	along.normalize(); palm.normalize();
+	const Vector3 side = along.cross(palm).normalized();
+	static const float BEND[3] = { 0.44f, 0.61f, 0.35f };   // (25, 35, 20 degrees)
+	for (int f = 0; f < 5; f++) {
+		for (int j = 0; j < 3; j++) {
+			const int b = b_rf[f][j]; if (b < 0) continue;
+			const Transform3D G = sk->get_bone_global_pose(b);
+			int nb = j < 2 ? b_rf[f][j + 1] : -1;
+			const Vector3 d = nb >= 0 ? (sk->get_bone_global_pose(nb).origin - G.origin) : along;
+			Vector3 ax = f == 0 ? along : side;   // (the thumb folds in across the palm, about the hand's length)
+			if (ax.cross(d).dot(palm) < 0.0f) ax = -ax;   // (the way that takes the tip toward the palm side)
+			const float a = (f == 0 ? 0.35f : BEND[j]) * p_w;
+			sk->set_bone_global_pose(b, Transform3D(Basis(ax.normalized(), a) * G.basis, G.origin));
+		}
+	}
 }
 
 void MoLimbs::reach(Skeleton3D *sk, int a, int b, int c, const Vector3 &p_target, const Vector3 &p_pole) {
@@ -336,6 +365,7 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 			const Transform3D Gw = sk->get_bone_global_pose(b_hd[1]);
 			const Quaternion q0 = Gw.basis.orthonormalized().get_rotation_quaternion(), q1 = ear_hand_b.orthonormalized().get_rotation_quaternion();
 			sk->set_bone_global_pose(b_hd[1], Transform3D(Basis(q0.slerp(q1, std::min(ear_w, 1.0f))).scaled_local(Gw.basis.get_scale()), Gw.origin));
+			grip_pose(sk, std::min(ear_w, 1.0f));
 		}
 	}
 	// the thing in the right hand (the phone), on the hand as finally drawn
