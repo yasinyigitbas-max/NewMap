@@ -62,3 +62,8 @@ complicated). He chose **Meshy** (AI text/image to 3D, remesh, auto-rig) and has
   models are published as base64 .txt and decoded in the page).
 - Proposed next: rig the same mesh with Mixamo's auto-rigger (full skeleton with fingers, our clip names), then show
   him in our own clips. Waiting for Yasin.
+- 23 Nov, Yasin: "strange artifacts on the face". Measured (no new generation, he said not to): normals are smooth (not
+  the cause); the face is ~600 triangles, gets 3.9 % of the 2048 texture (~320 px square for the whole face) and is cut
+  into ~100 UV pieces whose painted colours do not match at the cuts -> the sharp light/dark patches. In the model, not
+  the page. Fix proposed: generate high detail with no remesh, texture that, then reduce ourselves keeping the face
+  dense and give the face its own big texture area (re-bake), seams blended. Waiting for his word.
