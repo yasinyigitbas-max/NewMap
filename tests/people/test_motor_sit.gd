@@ -1,4 +1,5 @@
 extends SceneTree
+const Rig := preload("res://tests/people/rig.gd")
 ## Sitting (native/src/mo_motor_sit.cpp; Yasin, 24 Nov: "add sitting animations"): a bench ahead, sit_at(its top's
 ## middle, facing back the way he came) - he walks to it, turns his back to it, sits; stays (two idle loops and the longer
 ## take between); stand_up - he stands and is free again. Seats 0.35, 0.45 and 0.6 m high.
@@ -38,7 +39,7 @@ func _process(delta: float) -> bool:
 	if sk == null:
 		var s := player.find_children("*", "Skeleton3D", true, false)
 		if s.is_empty(): return false
-		sk = s[0]; b_pel = sk.find_bone("Bip01_Pelvis"); b_ft = [sk.find_bone("Bip01_L_Foot"), sk.find_bone("Bip01_R_Foot")]
+		sk = s[0]; b_pel = Rig.find(sk, "Bip01_Pelvis"); b_ft = [Rig.find(sk, "Bip01_L_Foot"), Rig.find(sk, "Bip01_R_Foot")]
 		sk.skeleton_updated.connect(_on_pose)
 		_next(); return false
 	if lane >= LANES.size(): return true

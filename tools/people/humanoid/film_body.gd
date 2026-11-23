@@ -7,6 +7,7 @@ const CLIPS := "res://assets/people/humanoid/clips/"
 var out := "user://film_body"
 var body: Node3D; var sk: Skeleton3D; var ap: AnimationPlayer; var cam: Camera3D
 var jobs := []   # [clip, t, view]
+var libpath := ""   # --lib=res://...res: an AnimationLibrary already on his skeleton (tools/people/humanoid/retarget_libs.gd)
 var video := false   # --video: every frame at 30 a second, a three-quarter view (frames to join with ffmpeg)
 var n := 0; var j := -1
 
@@ -16,6 +17,7 @@ func _initialize() -> void:
 		if a.begins_with("--out="): out = a.substr(6)
 		if a.begins_with("--clips="): want = a.substr(8).split(",")
 		if a == "--video": video = true
+		if a.begins_with("--lib="): libpath = a.substr(6)
 	DirAccess.make_dir_recursive_absolute(out)
 	var sun := DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-45, 35, 0); sun.shadow_enabled = true; root.add_child(sun)
 	var we := WorldEnvironment.new(); var env := Environment.new(); env.background_mode = Environment.BG_COLOR; env.background_color = Color(0.72, 0.78, 0.86)
@@ -27,9 +29,12 @@ func _initialize() -> void:
 	sk = body.find_children("*", "Skeleton3D", true, false)[0]
 	ap = AnimationPlayer.new(); body.add_child(ap)   # root_node ".." = the body scene, which owns %GeneralSkeleton
 	var lib := AnimationLibrary.new()
-	for f in DirAccess.get_files_at(CLIPS):
-		if not (f.ends_with(".fbx") or f.ends_with(".glb")): continue
-		var nm := f.get_basename()
+	if libpath != "":
+		var L0: AnimationLibrary = load(libpath)
+		for nm: StringName in L0.get_animation_list(): if want.is_empty() or want.has(String(nm)): lib.add_animation(nm, L0.get_animation(nm))
+	for f in ([] if libpath != "" else DirAccess.get_files_at(CLIPS)):
+		if not (String(f).ends_with(".fbx") or String(f).ends_with(".glb")): continue
+		var nm: String = f.get_basename()
 		if not want.is_empty() and not want.has(nm): continue
 		var c: Node = (load(CLIPS + f) as PackedScene).instantiate()
 		var cap: AnimationPlayer = c.find_children("*", "AnimationPlayer", true, false)[0]

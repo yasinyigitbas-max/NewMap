@@ -1,4 +1,5 @@
 extends SceneTree
+const Rig := preload("res://tests/people/rig.gd")
 ## The new movement system carrying things (native/src/mo_motor_carry.cpp; docs/ANIMATION_PLAN.md step 6; Yasin, 22 Nov:
 ## "picking objects"):
 ##   godot --headless --path . --fixed-fps 60 -s res://tests/people/test_motor_carry.gd [-- --trace]
@@ -60,7 +61,7 @@ func _process(delta: float) -> bool:
 	if sk == null:
 		var s := player.find_children("*", "Skeleton3D", true, false)
 		if s.is_empty(): return false
-		sk = s[0]; b_pel = sk.find_bone("Bip01_Pelvis"); b_ft = [sk.find_bone("Bip01_L_Foot"), sk.find_bone("Bip01_R_Foot")]; b_hd = [sk.find_bone("Bip01_L_Hand"), sk.find_bone("Bip01_R_Hand")]; b_el = [sk.find_bone("Bip01_L_Forearm"), sk.find_bone("Bip01_R_Forearm")]
+		sk = s[0]; b_pel = Rig.find(sk, "Bip01_Pelvis"); b_ft = [Rig.find(sk, "Bip01_L_Foot"), Rig.find(sk, "Bip01_R_Foot")]; b_hd = [Rig.find(sk, "Bip01_L_Hand"), Rig.find(sk, "Bip01_R_Hand")]; b_el = [Rig.find(sk, "Bip01_L_Forearm"), Rig.find(sk, "Bip01_R_Forearm")]
 		sk.skeleton_updated.connect(_on_pose)
 		_next(); return false
 	if lane >= LANES.size(): return true

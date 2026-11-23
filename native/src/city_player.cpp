@@ -1,5 +1,6 @@
 // CityPlayer: see city_player.h.
 #include "perf_marks.h"
+#include "rig_names.h"
 #include "city_player.h"
 #include "el_sfx.h"
 #include "foot_steps.h"
@@ -57,6 +58,10 @@ void CityPlayer::_ready() {
 	set_floor_snap_length(0.3f);
 	set_max_slides(4);
 	fig = memnew(CityPed);
+	{   // (tests and films: PLAYER_BODY=hero_v3 runs the same suites on the player v3, the standard-skeleton body)
+		const String env = OS::get_singleton()->get_environment("PLAYER_BODY");
+		if (!env.is_empty()) body_id = env;
+	}
 	fig->set_body_id(body_id);
 	fig->set_clip("ual/Idle_Loop");
 	add_child(fig);
@@ -393,7 +398,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		climb_t += dt;
 		if (climb == 2 && !hang_set && climb_t > dt * 1.5f) {   // (the clip's first pose is up: its hands over its hips)
 			Skeleton3D *sk = fig->skeleton();
-			const int hl = sk ? sk->find_bone("Bip01_L_Hand") : -1, hr = sk ? sk->find_bone("Bip01_R_Hand") : -1;
+			const int hl = sk ? rig::find(sk, "Bip01_L_Hand") : -1, hr = sk ? rig::find(sk, "Bip01_R_Hand") : -1;
 			if (hl >= 0 && hr >= 0) {
 				const Transform3D sg = sk->get_global_transform();
 				const Vector3 hands = (sg.xform(sk->get_bone_global_pose(hl).origin) + sg.xform(sk->get_bone_global_pose(hr).origin)) * 0.5f;
@@ -968,7 +973,7 @@ bool CityPlayer::cur_clip_is(const StringName &p_clip) const { return fig && Str
 Vector3 CityPlayer::pelvis_world() const {
 	Skeleton3D *sk = fig ? fig->skeleton() : nullptr;
 	if (!sk) return get_global_position() + Vector3(0, 0.95f, 0);
-	const int b = sk->find_bone("Bip01_Pelvis");
+	const int b = rig::find(sk, "Bip01_Pelvis");
 	return b >= 0 ? sk->get_global_transform().xform(sk->get_bone_global_pose(b).origin) : get_global_position() + Vector3(0, 0.95f, 0);
 }
 
@@ -1015,7 +1020,7 @@ Array CityPlayer::get_hand_points() const {
 	Skeleton3D *sk = fig ? fig->skeleton() : nullptr;
 	if (!sk) return a;
 	for (const char *n : { "Bip01_L_Hand", "Bip01_R_Hand", "Bip01_L_Finger2", "Bip01_R_Finger2", "Bip01_L_Finger22", "Bip01_R_Finger22" }) {
-		const int b = sk->find_bone(n);
+		const int b = rig::find(sk, n);
 		a.push_back(b >= 0 ? sk->get_global_transform().xform(sk->get_bone_global_pose(b).origin) : Vector3());
 	}
 	return a;

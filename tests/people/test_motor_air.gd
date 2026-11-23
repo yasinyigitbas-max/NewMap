@@ -1,4 +1,5 @@
 extends SceneTree
+const Rig := preload("res://tests/people/rig.gd")
 ## The new movement system's jumps, falls and landings (native/src/mo_motor_air.cpp; docs/ANIMATION_PLAN.md step 7;
 ## Yasin, 23 Nov: "in place jumps are terrible, use other animations"; "better edge jump down, use soft or hard landing
 ## like festive work"):
@@ -66,7 +67,7 @@ func _process(delta: float) -> bool:
 	if sk == null:
 		var s := player.find_children("*", "Skeleton3D", true, false)
 		if s.is_empty(): return false
-		sk = s[0]; b_pel = sk.find_bone("Bip01_Pelvis"); b_ft = [sk.find_bone("Bip01_L_Foot"), sk.find_bone("Bip01_R_Foot")]
+		sk = s[0]; b_pel = Rig.find(sk, "Bip01_Pelvis"); b_ft = [Rig.find(sk, "Bip01_L_Foot"), Rig.find(sk, "Bip01_R_Foot")]
 		sk.skeleton_updated.connect(_on_pose)
 		_next(); return false
 	if lane >= LANES.size(): return true
@@ -96,8 +97,8 @@ func _sample() -> void:
 	# OFF A LEDGE (the ledge: top y 0, its edge at z 2): no bone in it (under its top, short of its edge), a hand on its corner
 	if st == "descend":
 		if body_b.is_empty():
-			for b in ["Bip01_Pelvis", "Bip01_L_Calf", "Bip01_R_Calf", "Bip01_L_Foot", "Bip01_R_Foot", "Bip01_Spine1"]: body_b.append(sk.find_bone(b))
-			hand_b = [sk.find_bone("Bip01_L_Hand"), sk.find_bone("Bip01_R_Hand")]
+			for b in ["Bip01_Pelvis", "Bip01_L_Calf", "Bip01_R_Calf", "Bip01_L_Foot", "Bip01_R_Foot", "Bip01_Spine1"]: body_b.append(Rig.find(sk, b))
+			hand_b = [Rig.find(sk, "Bip01_L_Hand"), Rig.find(sk, "Bip01_R_Hand")]
 		for bi in body_b:
 			var w: Vector3 = sk.global_transform * sk.get_bone_global_pose(bi).origin
 			if w.y < -0.06 and w.z < 2.0:

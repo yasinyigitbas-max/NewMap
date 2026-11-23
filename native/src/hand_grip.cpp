@@ -1,5 +1,6 @@
 // HandGrip: see hand_grip.h.
 #include "hand_grip.h"
+#include "rig_names.h"
 
 #include <godot_cpp/classes/physics_direct_space_state3d.hpp>
 #include <godot_cpp/classes/physics_ray_query_parameters3d.hpp>
@@ -26,12 +27,12 @@ void HandGrip::find_bones(Skeleton3D *sk) {
 	found = true;
 	const char *ua[2] = { "Bip01_L_UpperArm", "Bip01_R_UpperArm" }, *fa[2] = { "Bip01_L_Forearm", "Bip01_R_Forearm" }, *hd[2] = { "Bip01_L_Hand", "Bip01_R_Hand" };
 	for (int s = 0; s < 2; s++) {
-		b_ua[s] = sk->find_bone(ua[s]); b_fa[s] = sk->find_bone(fa[s]); b_hd[s] = sk->find_bone(hd[s]);
+		b_ua[s] = rig::find(sk, ua[s]); b_fa[s] = rig::find(sk, fa[s]); b_hd[s] = rig::find(sk, hd[s]);
 		n_fing[s] = 0;
 		// the four fingers' joints, base to tip (the thumb is left as the clip has it)
 		for (int f = 1; f <= 4; f++) for (int j = 0; j < 3; j++) {
 			const String nm = String(s == 0 ? "Bip01_L_Finger" : "Bip01_R_Finger") + String::num_int64(f) + (j == 0 ? String() : String::num_int64(j));
-			const int b = sk->find_bone(nm);
+			const int b = rig::find(sk, nm);
 			if (b >= 0 && n_fing[s] < 15) b_fing[s][n_fing[s]++] = b;
 		}
 	}
@@ -97,7 +98,7 @@ void HandGrip::_process_modification_with_delta(double p_delta) {
 		}
 		miss[s] = held[s] ? sk->get_bone_global_pose(b_hd[s]).origin.distance_to(target) / std::max(k, 1e-4f) : 0.0f;
 		{   // the middle finger's last joint against the top of the edge
-			const int tip = sk->find_bone(s == 0 ? "Bip01_L_Finger22" : "Bip01_R_Finger22");
+			const int tip = rig::find(sk, s == 0 ? "Bip01_L_Finger22" : "Bip01_R_Finger22");
 			if (tip >= 0) tip_dy[s] = held[s] ? sk->get_global_transform().xform(sk->get_bone_global_pose(tip).origin).y - grip[s].y : 0.0f;
 		}
 	}
@@ -106,10 +107,10 @@ void HandGrip::_process_modification_with_delta(double p_delta) {
 // ---------------------------------------------------------------- the feet
 void FootPlant::find_bones(Skeleton3D *sk) {
 	found = true;
-	b_pel = sk->find_bone("Bip01_Pelvis");
+	b_pel = rig::find(sk, "Bip01_Pelvis");
 	const char *th[2] = { "Bip01_L_Thigh", "Bip01_R_Thigh" }, *ca[2] = { "Bip01_L_Calf", "Bip01_R_Calf" }, *ft[2] = { "Bip01_L_Foot", "Bip01_R_Foot" };
 	const char *toe[2] = { "Bip01_L_Toe0", "Bip01_R_Toe0" };
-	for (int s = 0; s < 2; s++) { b_th[s] = sk->find_bone(th[s]); b_ca[s] = sk->find_bone(ca[s]); b_ft[s] = sk->find_bone(ft[s]); b_toe[s] = sk->find_bone(toe[s]); }
+	for (int s = 0; s < 2; s++) { b_th[s] = rig::find(sk, th[s]); b_ca[s] = rig::find(sk, ca[s]); b_ft[s] = rig::find(sk, ft[s]); b_toe[s] = rig::find(sk, toe[s]); }
 	// the ankle's height over the sole: the foot bone's rest height over the figure's feet (its rest stands on 0)
 	if (b_ft[0] >= 0) {
 		const float k = sk->get_global_transform().basis.get_column(0).length();
@@ -330,9 +331,9 @@ void Posture::_process_modification_with_delta(double p_delta) {
 	if (!sk) return;
 	if (!found) {
 		found = true;
-		b_cl[0] = sk->find_bone("Bip01_L_Clavicle"); b_cl[1] = sk->find_bone("Bip01_R_Clavicle");
-		b_ua[0] = sk->find_bone("Bip01_L_UpperArm"); b_ua[1] = sk->find_bone("Bip01_R_UpperArm");
-		b_pel = sk->find_bone("Bip01_Pelvis"); b_neck = sk->find_bone("Bip01_Neck");
+		b_cl[0] = rig::find(sk, "Bip01_L_Clavicle"); b_cl[1] = rig::find(sk, "Bip01_R_Clavicle");
+		b_ua[0] = rig::find(sk, "Bip01_L_UpperArm"); b_ua[1] = rig::find(sk, "Bip01_R_UpperArm");
+		b_pel = rig::find(sk, "Bip01_Pelvis"); b_neck = rig::find(sk, "Bip01_Neck");
 	}
 	if (b_cl[0] < 0 || b_cl[1] < 0 || b_ua[0] < 0 || b_ua[1] < 0 || b_pel < 0 || b_neck < 0 || angle == 0.0f) return;
 	// the chest's frame as the clip has it now: up from the hips to the neck, left from the right shoulder to the left

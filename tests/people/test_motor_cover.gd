@@ -1,4 +1,5 @@
 extends SceneTree
+const Rig := preload("res://tests/people/rig.gd")
 ## The new movement system's crouch and cover (native/src/mo_motor_cover.cpp; docs/ANIMATION_PLAN.md step 5; Yasin, 22
 ## Nov: "taking cover"):
 ##   godot --headless --path . --fixed-fps 60 -s res://tests/people/test_motor_cover.gd [-- --trace]
@@ -74,7 +75,7 @@ func _process(delta: float) -> bool:
 	if sk == null:
 		var s := player.find_children("*", "Skeleton3D", true, false)
 		if s.is_empty(): return false
-		sk = s[0]; b_pel = sk.find_bone("Bip01_Pelvis"); b_ft = [sk.find_bone("Bip01_L_Foot"), sk.find_bone("Bip01_R_Foot")]
+		sk = s[0]; b_pel = Rig.find(sk, "Bip01_Pelvis"); b_ft = [Rig.find(sk, "Bip01_L_Foot"), Rig.find(sk, "Bip01_R_Foot")]
 		sk.skeleton_updated.connect(_on_pose)
 		_next(); return false
 	if lane >= LANES.size(): return true
@@ -96,7 +97,7 @@ func _on_pose() -> void:
 	# (a knee bent backwards: behind the line hip-ankle against the way his own hips face - Yasin, 24 Nov: "when you
 	# move left in the cover, his legs turn backwards")
 	if b_th[0] < 0:
-		b_th = [sk.find_bone("Bip01_L_Thigh"), sk.find_bone("Bip01_R_Thigh")]; b_ca = [sk.find_bone("Bip01_L_Calf"), sk.find_bone("Bip01_R_Calf")]
+		b_th = [Rig.find(sk, "Bip01_L_Thigh"), Rig.find(sk, "Bip01_R_Thigh")]; b_ca = [Rig.find(sk, "Bip01_L_Calf"), Rig.find(sk, "Bip01_R_Calf")]
 	var hl: Vector3 = sk.global_transform * sk.get_bone_global_pose(b_th[0]).origin
 	var hr: Vector3 = sk.global_transform * sk.get_bone_global_pose(b_th[1]).origin
 	var fw := (hl - hr).cross(Vector3.UP); fw.y = 0.0; fw = fw.normalized()

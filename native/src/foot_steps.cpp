@@ -1,5 +1,6 @@
 // FootSteps: see foot_steps.h.
 #include "perf_marks.h"
+#include "rig_names.h"
 #include "foot_steps.h"
 #include "el_sfx.h"
 #include "city_ped.h"
@@ -80,7 +81,7 @@ void FootSteps::_process(double p_delta) {
 	if (!ped || !ped->is_inside_tree() || !ped->is_visible_in_tree()) return;
 	Skeleton3D *sk = ped->skeleton();
 	if (!sk) return;
-	if (bone[0] < 0) { bone[0] = sk->find_bone("Bip01_L_Foot"); bone[1] = sk->find_bone("Bip01_R_Foot"); if (bone[0] < 0 || bone[1] < 0) return; }
+	if (bone[0] < 0) { bone[0] = rig::find(sk, "Bip01_L_Foot"); bone[1] = rig::find(sk, "Bip01_R_Foot"); if (bone[0] < 0 || bone[1] < 0) return; }
 	const Vector3 base = ped->get_global_position();
 	if (has_last && p_delta > 0.0) {
 		const Vector3 d = base - last_pos;

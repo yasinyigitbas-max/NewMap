@@ -1,5 +1,6 @@
 // mo_clip: see mo_clip.h.
 #include "mo_clip.h"
+#include "rig_names.h"
 
 #include <godot_cpp/variant/node_path.hpp>
 #include <godot_cpp/variant/packed_float32_array.hpp>
@@ -85,13 +86,13 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 	std::vector<int> tb(a->get_track_count(), -1);
 	for (int ti = 0; ti < a->get_track_count(); ti++) {
 		const NodePath path = a->track_get_path(ti);
-		if (path.get_subname_count() >= 1) tb[ti] = p_skel->find_bone(path.get_subname(0));
+		if (path.get_subname_count() >= 1) tb[ti] = rig::find(p_skel, path.get_subname(0));
 	}
-	const int b_hips = p_skel->find_bone("Bip01_Pelvis");
-	const int b_ft[2] = { p_skel->find_bone("Bip01_L_Foot"), p_skel->find_bone("Bip01_R_Foot") };
-	const int b_toe[2] = { p_skel->find_bone("Bip01_L_Toe0"), p_skel->find_bone("Bip01_R_Toe0") };
-	const int b_hd[2] = { p_skel->find_bone("Bip01_L_Hand"), p_skel->find_bone("Bip01_R_Hand") };
-	const int b_th[2] = { p_skel->find_bone("Bip01_L_Thigh"), p_skel->find_bone("Bip01_R_Thigh") };
+	const int b_hips = rig::find(p_skel, "Bip01_Pelvis");
+	const int b_ft[2] = { rig::find(p_skel, "Bip01_L_Foot"), rig::find(p_skel, "Bip01_R_Foot") };
+	const int b_toe[2] = { rig::find(p_skel, "Bip01_L_Toe0"), rig::find(p_skel, "Bip01_R_Toe0") };
+	const int b_hd[2] = { rig::find(p_skel, "Bip01_L_Hand"), rig::find(p_skel, "Bip01_R_Hand") };
+	const int b_th[2] = { rig::find(p_skel, "Bip01_L_Thigh"), rig::find(p_skel, "Bip01_R_Thigh") };
 	const int n = std::max(1, (int)std::lround(d->len * FPS) + 1);
 	d->f.resize(n);
 	std::vector<Transform3D> loc(nb), glob(nb);

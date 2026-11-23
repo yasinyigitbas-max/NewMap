@@ -81,6 +81,8 @@ public:
 
 	void set_body_id(const String &p_id) { body_id = p_id; }
 	String get_body_id() const { return body_id; }
+	String std_body_scene() const;           // a body on the standard skeleton: its scene (empty: the Rocketbox figure)
+	String lib_path(const String &p_stem) const;   // a clip library for this body ("" the base one)
 	void set_clip(const String &p_clip);
 	String get_clip() const { return clip; }
 	void set_clip_at(double p_t);

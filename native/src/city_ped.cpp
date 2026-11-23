@@ -1,5 +1,6 @@
 // CityPed: see city_ped.h.
 #include "perf_marks.h"
+#include "rig_names.h"
 #include "city_ped.h"
 #include "hand_grip.h"
 
@@ -48,7 +49,11 @@ void CityPed::make() {
 	ResourceLoader *rl = ResourceLoader::get_singleton();
 	const bool female = body_id.begins_with("F");
 	const String g = female ? "female" : "male", dir = "res://characters/rocketbox/";
-	Ref<PackedScene> ps = rl->load(dir + String("hero_") + g + String(".scn"));
+	// A BODY ON THE STANDARD SKELETON (Godot's humanoid profile, tools/people/humanoid): its own scene and meshes, its own
+	// clip libraries (the same clips and meta retargeted onto it, characters/<id>/clips_<stem>.res); the code finds its
+	// bones by the standard names (rig_names.h). "hero_v3": the player v3 (Meshy, re-rigged).
+	const String std_scene = std_body_scene();
+	Ref<PackedScene> ps = rl->load(std_scene.is_empty() ? dir + String("hero_") + g + String(".scn") : std_scene);
 	if (ps.is_null()) { UtilityFunctions::push_error("CityPed: no skeleton scene for ", g); return; }
 	model = Object::cast_to<Node3D>(ps->instantiate());
 	if (!model) return;
@@ -58,9 +63,9 @@ void CityPed::make() {
 	skel = Object::cast_to<Skeleton3D>(sks[0]);
 	// (no Posture: the shoulders as the clip has them) (Yasin, 21 Nov: "you still add things to them like jumps, remove all your modifications", "they are breaking every animation": the clips play as Mixamo made them)
 	// the scene carries the player's own model: out with its meshes, in with this person's body
-	const TypedArray<Node> old = model->find_children("*", "MeshInstance3D", true, false);
+	const TypedArray<Node> old = std_scene.is_empty() ? model->find_children("*", "MeshInstance3D", true, false) : TypedArray<Node>();
 	for (int i = 0; i < old.size(); i++) { Node *n = Object::cast_to<Node>(old[i]); if (n) { n->get_parent()->remove_child(n); n->queue_free(); } }
-	Ref<Mesh> mesh = rl->load(dir + String("bodies/") + body_id + String(".res"));
+	Ref<Mesh> mesh = std_scene.is_empty() ? Ref<Mesh>(rl->load(dir + String("bodies/") + body_id + String(".res"))) : Ref<Mesh>();
 	Ref<Skin> skin = rl->load(dir + String("skin_") + g + String(".res"));
 	if (mesh.is_valid()) {
 		mi = memnew(MeshInstance3D);
@@ -76,25 +81,25 @@ void CityPed::make() {
 	anim = memnew(AnimationPlayer);
 	model->add_child(anim);
 	anim->set_root_node(NodePath(".."));
-	Ref<AnimationLibrary> lib = rl->load(dir + String("clips_") + g + String(".res"));
+	Ref<AnimationLibrary> lib = rl->load(lib_path(""));
 	if (lib.is_valid()) {
 		anim->add_animation_library(StringName(), lib);
 		// the Quaternius library's clips, fitted to this figure (tool make_anims.gd): "ual/Walk_Loop" and so on
-		Ref<AnimationLibrary> ual = rl->load(dir + String("clips_ual_") + g + String(".res"));
+		Ref<AnimationLibrary> ual = rl->load(lib_path("ual"));
 		if (ual.is_valid()) anim->add_animation_library(StringName("ual"), ual);
 		// the walk starts and stops made from them (tools/people/make_steps.gd): "step/rb_start", "step/ual_stop_l" ...
-		Ref<AnimationLibrary> steps = rl->load(dir + String("clips_step_") + g + String(".res"));
+		Ref<AnimationLibrary> steps = rl->load(lib_path("step"));
 		if (steps.is_valid()) anim->add_animation_library(StringName("step"), steps);
 		// the Mixamo clips, fitted to this figure (tools/people/make_mixamo.gd): "mx/Walking", "mx/Fight_Idle" ... (Yasin, 21 Nov:
 		// "i want every action in the game animated. literally every action")
-		Ref<AnimationLibrary> mx = rl->load(dir + String("clips_mx_") + g + String(".res"));
+		Ref<AnimationLibrary> mx = rl->load(lib_path("mx"));
 		if (mx.is_valid()) anim->add_animation_library(StringName("mx"), mx);
 		// Yasin's own library from his Drive (tools/people/make_ylib.gd): "yl/Running_3", "yl/LP_Standard_Run" ... (24 Nov:
 		// the clips for the other movement sets)
-		Ref<AnimationLibrary> yl = rl->load(dir + String("clips_yl_") + g + String(".res"));
+		Ref<AnimationLibrary> yl = rl->load(lib_path("yl"));
 		if (yl.is_valid()) anim->add_animation_library(StringName("yl"), yl);
 		// the movement sets' own clips from Mixamo (tools/people/make_msets.gd): "ms/S2_Walk_Forward" ...
-		Ref<AnimationLibrary> ms = rl->load(dir + String("clips_ms_") + g + String(".res"));
+		Ref<AnimationLibrary> ms = rl->load(lib_path("ms"));
 		if (ms.is_valid()) anim->add_animation_library(StringName("ms"), ms);
 		if (lib->has_animation("get_up")) { Ref<Animation> a = lib->get_animation("get_up"); getup_len = a->get_length(); }
 		if (anim->has_animation(clip)) { anim->play(clip); if (clip_at >= 0.0) { anim->seek(clip_at, true); anim->pause(); } }
@@ -103,22 +108,23 @@ void CityPed::make() {
 	// (after the facing below is settled, the get-up clip's lying start is read: see the end of this function)
 	// The body's frame is: facing +z, +x to its left. A figure that faces the other way is turned round first.
 	{
-		const int hand = skel->find_bone("Bip01_L_Hand"), fing = skel->find_bone("Bip01_L_Finger1");
+		const int hand = rig::find(skel, "Bip01_L_Hand"), fing = rig::find(skel, "Bip01_L_Finger1");
 		const Transform3D t0 = get_global_transform().affine_inverse() * skel->get_global_transform();
 		if (hand >= 0 && fing >= 0 && ((t0 * skel->get_bone_global_rest(fing)).origin.z - (t0 * skel->get_bone_global_rest(hand)).origin.z) < 0.0) model->rotate_y(3.14159265);
 	}
 	skel_in_node = get_global_transform().affine_inverse() * skel->get_global_transform();
 	bool ok = true;
 	for (int i = 0; i < pb::NB; i++) {
-		bone[i] = skel->find_bone(BONE_NAMES[i]);
+		bone[i] = rig::find(skel, BONE_NAMES[i]);
 		if (bone[i] < 0) { ok = false; continue; }
 		bone_rest[i] = skel_in_node * skel->get_bone_global_rest(bone[i]);
 	}
-	auto at = [&](const char *name) { const int k = skel->find_bone(name); return k >= 0 ? (skel_in_node * skel->get_bone_global_rest(k)).origin : Vector3(); };
+	auto at = [&](const char *name) { const int k = rig::find(skel, name); return k >= 0 ? (skel_in_node * skel->get_bone_global_rest(k)).origin : Vector3(); };
 	if (!ok) { UtilityFunctions::push_error("CityPed: the skeleton is not the Bip01 figure"); skel = nullptr; return; }
 	pb::Rest r;
 	// the figure's feet on the ground: its ankles are 8.5 cm over it
-	const float lift = 0.085f - (float)std::min(at("Bip01_L_Foot").y, at("Bip01_R_Foot").y);
+	// (a standard-skeleton body stands on the ground at rest already: its ankle joint is where its rig put it)
+	const float lift = std_scene.is_empty() ? 0.085f - (float)std::min(at("Bip01_L_Foot").y, at("Bip01_R_Foot").y) : 0.0f;
 	auto P = [&](const char *name) { const Vector3 p = at(name); return vd::V3{ (float)p.x, (float)p.y + lift, (float)p.z }; };
 	const bool l_is_left = at("Bip01_L_Thigh").x > at("Bip01_R_Thigh").x;   // (+x is left for a figure that faces +z)
 	const char *LN[2][5] = { { "Bip01_L_UpperArm", "Bip01_L_Forearm", "Bip01_L_Hand", "Bip01_L_Thigh", "Bip01_L_Calf" }, { "Bip01_R_UpperArm", "Bip01_R_Forearm", "Bip01_R_Hand", "Bip01_R_Thigh", "Bip01_R_Calf" } };
@@ -142,7 +148,7 @@ void CityPed::make() {
 	if (anim && anim->has_animation(getup_name)) {   // the rise from lying (Mixamo's): where its figure lies at its start
 		Ref<Animation> a = anim->get_animation(getup_name);
 		Vector3 hips, head;
-		if (clip_start(skel, a, skel_in_node, skel->find_bone("Bip01_Pelvis"), skel->find_bone("Bip01_Head"), hips, head)) {
+		if (clip_start(skel, a, skel_in_node, rig::find(skel, "Bip01_Pelvis"), rig::find(skel, "Bip01_Head"), hips, head)) {
 			has_getup = true; getup_len = a->get_length(); getup_hips = hips; getup_axis = std::atan2(head.x - hips.x, head.z - hips.z);
 		}
 	}
@@ -158,14 +164,25 @@ Vector3 CityPed::clip_hips_at(const StringName &p_req, double p_t) const {
 	const StringName p_clip = take_of(p_req);
 	if (!anim || !skel || !anim->has_animation(p_clip)) return Vector3();
 	Vector3 hips, head;
-	const int bh = skel->find_bone("Bip01_Pelvis"), bd = skel->find_bone("Bip01_Head");
+	const int bh = rig::find(skel, "Bip01_Pelvis"), bd = rig::find(skel, "Bip01_Head");
 	if (!clip_pose_at(skel, anim->get_animation(p_clip), skel_in_node, bh, bd, p_t, hips, head)) return Vector3();
 	return hips;
 }
 
+String CityPed::std_body_scene() const {
+	if (body_id == "hero_v3") return "res://assets/people/humanoid/player_v3.glb";
+	return String();
+}
+
+String CityPed::lib_path(const String &p_stem) const {
+	if (!std_body_scene().is_empty()) return String("res://characters/") + body_id + String("/clips_") + (p_stem.is_empty() ? String("base") : p_stem) + String(".res");
+	const String g = body_id.begins_with("F") ? "female" : "male";
+	return String("res://characters/rocketbox/clips_") + (p_stem.is_empty() ? String() : p_stem + String("_")) + g + String(".res");
+}
+
 Vector3 CityPed::bone_world(const char *p_bone) const {
 	if (!skel) return Vector3();
-	const int b = skel->find_bone(p_bone);
+	const int b = rig::find(skel, p_bone);
 	return b >= 0 ? skel->get_global_transform().xform(skel->get_bone_global_pose(b).origin) : Vector3();
 }
 
@@ -175,8 +192,7 @@ Ref<ShaderMaterial> CityPed::get_look() const { return mi ? Ref<ShaderMaterial>(
 bool CityPed::add_library(const StringName &p_name, const String &p_stem) {
 	if (!anim) return false;
 	if (anim->has_animation_library(p_name)) return true;
-	const String g = body_id.begins_with("F") ? "female" : "male";
-	Ref<AnimationLibrary> lib = ResourceLoader::get_singleton()->load(String("res://characters/rocketbox/clips_") + p_stem + String("_") + g + String(".res"));
+	Ref<AnimationLibrary> lib = ResourceLoader::get_singleton()->load(lib_path(p_stem));
 	if (lib.is_null()) return false;
 	anim->add_animation_library(p_name, lib);
 	return true;
@@ -192,7 +208,7 @@ static bool clip_pose_at(Skeleton3D *skel, const Ref<Animation> &a, const Transf
 	for (int ti = 0; ti < a->get_track_count(); ti++) {
 		const NodePath path = a->track_get_path(ti);
 		if (path.get_subname_count() < 1) continue;
-		const int b = skel->find_bone(path.get_subname(0));
+		const int b = rig::find(skel, path.get_subname(0));
 		if (b < 0) continue;
 		if (a->track_get_type(ti) == Animation::TYPE_POSITION_3D) loc[b].origin = a->position_track_interpolate(ti, p_t);
 		else if (a->track_get_type(ti) == Animation::TYPE_ROTATION_3D) loc[b].basis = Basis(a->rotation_track_interpolate(ti, p_t)).scaled_local(loc[b].basis.get_scale());
@@ -405,7 +421,7 @@ bool CityPed::lie_as(const StringName &p_req) {
 	const StringName tk = take_of(p_req);
 	if (!anim->has_animation(tk)) return false;
 	Vector3 hips, head;
-	if (!clip_start(skel, anim->get_animation(tk), skel_in_node, skel->find_bone("Bip01_Pelvis"), skel->find_bone("Bip01_Head"), hips, head)) return false;
+	if (!clip_start(skel, anim->get_animation(tk), skel_in_node, rig::find(skel, "Bip01_Pelvis"), rig::find(skel, "Bip01_Head"), hips, head)) return false;
 	const pb::Body &P = body.b[pb::B_PELVIS];
 	const vd::V3 d = body.b[pb::B_HEAD].x - P.x;
 	const float yaw = std::atan2(d.x, d.z) - std::atan2(head.x - hips.x, head.z - hips.z);

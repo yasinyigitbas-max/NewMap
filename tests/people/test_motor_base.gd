@@ -1,4 +1,5 @@
 extends SceneTree
+const Rig := preload("res://tests/people/rig.gd")
 ## The new movement system's base (native/src/mo_motor.cpp, mo_inertial.cpp, mo_clip.cpp; docs/ANIMATION_PLAN.md):
 ## locomotion on flat ground, measured on the drawn figure, the same script once with the new motor and once with the
 ## old code (--old-moves path), so the two can be compared:
@@ -89,7 +90,7 @@ func _process(delta: float) -> bool:
 	if sk == null:
 		var s := player.find_children("*", "Skeleton3D", true, false)
 		if s.is_empty(): return false
-		sk = s[0]; sk.skeleton_updated.connect(_on_pose); print("SKEL scale %s root bones %s" % [str(sk.global_transform.basis.get_scale()), str(range(sk.get_bone_count()).filter(func(b): return sk.get_bone_parent(b) < 0).map(func(b): return sk.get_bone_name(b)))]); b_foot = [sk.find_bone("Bip01_L_Foot"), sk.find_bone("Bip01_R_Foot"), sk.find_bone("Bip01_L_Toe0"), sk.find_bone("Bip01_R_Toe0")]; b_pel = sk.find_bone("Bip01_Pelvis")
+		sk = s[0]; sk.skeleton_updated.connect(_on_pose); print("SKEL scale %s root bones %s" % [str(sk.global_transform.basis.get_scale()), str(range(sk.get_bone_count()).filter(func(b): return sk.get_bone_parent(b) < 0).map(func(b): return sk.get_bone_name(b)))]); b_foot = [Rig.find(sk, "Bip01_L_Foot"), Rig.find(sk, "Bip01_R_Foot"), Rig.find(sk, "Bip01_L_Toe0"), Rig.find(sk, "Bip01_R_Toe0")]; b_pel = Rig.find(sk, "Bip01_Pelvis")
 		phase = 0; phase_t = 0.0; _reset_phase()
 		player.call(&"set_move", PHASES[0][2], PHASES[0][3])
 	t += delta; phase_t += delta
@@ -124,7 +125,7 @@ func _snap() -> void:
 	snap_clip = player.call(&"get_clip")
 	if mode == "new": snap_ms = player.call(&"get_motor_state")
 	var g := sk.global_transform
-	for s in 4: snap_feet[s] = g * sk.get_bone_global_pose(b_foot[s]).origin
+	for s in 4: if b_foot[s] >= 0: snap_feet[s] = g * sk.get_bone_global_pose(b_foot[s]).origin
 	snap_pel = g * sk.get_bone_global_pose(b_pel).origin
 
 func _measure(dt: float) -> void:

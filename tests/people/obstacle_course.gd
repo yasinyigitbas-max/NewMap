@@ -1,21 +1,20 @@
 extends Node3D
 ## THE OBSTACLE COURSE (Yasin, 23 Nov: "put it into your obstacle course and give me a playable file, i wanna test it").
-## Every move the movement system knows, side by side in lanes, played with the keyboard / a gamepad, the player drawn as
-## the Meshy character (player v3) by tools/people/pose_follow.gd - a PREVIEW of the new body on the movement system's
-## own figure, until the motor drives his skeleton itself.
+## Every move the movement system knows, side by side in lanes, played with the keyboard / a gamepad. The player IS the
+## Meshy character (player v3): the movement system drives his own skeleton (Godot's standard humanoid; body_id
+## "hero_v3", tools/people/humanoid) - his feet, hands and hips are what the foot locks, grips and IK place.
 ## Run in the editor (F6 on obstacle_course.tscn) or the exported build (export preset "Obstacle course").
 
-const BODY := "res://assets/people/meshy/player_v3/rigged_fingers_rerig.glb"   # (re-rigged: tools/people/meshy/rerig.py)
+const BODY := "hero_v3"   # (CityPed: assets/people/humanoid/player_v3.glb, clips characters/hero_v3/)
 const HELP := """W A S D  walk      Shift  run      Space  jump      C  crouch
 Q  cover (at a wall)      E  sit / stand (at the bench)
 1  texting      2  phone call      3  phone away
-Mouse / arrow keys  look      R  back to the start      B  new body / old figure
+Mouse / arrow keys  look      R  back to the start      B  his body / the old figure
 Esc  free the mouse (click to take it back)      H  hide this help"""
 
 var player: Node3D
 var hud: Label
-var body_scene: Node3D
-var follower: Node3D
+var his_body := true
 var benches := []   # [seat top centre, yaw he faces sitting]
 var sitting := false
 var keys := {}
@@ -31,11 +30,7 @@ func _ready() -> void:
 		["Bench (E)", "bench", 0.45], ["Step off 0.35 m", "ledge", 0.35], ["Step off 0.6 m", "ledge", 0.6], ["Walk off 1 m", "ledge", 1.0],
 		["Walk off 1.8 m", "ledge", 1.8], ["Drop 3.5 m", "ledge", 3.5]]:
 		_station(lane, L[0], L[1], L[2]); lane += 1
-	player = ClassDB.instantiate(&"CityPlayer")
-	player.position = start
-	add_child(player)
-	player.set(&"capture_mouse", true)
-	_use_body(true)
+	_spawn(start)
 	var cl := CanvasLayer.new(); add_child(cl)
 	hud = Label.new(); hud.position = Vector2(16, 12); hud.add_theme_font_size_override(&"font_size", 18)
 	hud.add_theme_color_override(&"font_color", Color.WHITE); hud.add_theme_color_override(&"font_outline_color", Color.BLACK)
@@ -125,22 +120,14 @@ func _stairs(x: float, rise: float, col: Color) -> void:
 		_box(Vector3(3.0, hh, tread), Vector3(x, hh * 0.5, 2.0 + tread * n + 1.5 + tread * (i + 0.5)), col)
 
 # ---- the body --------------------------------------------------------------------------------------------------------
-func _use_body(on: bool) -> void:
-	var src: Skeleton3D = null
-	var sks := player.find_children("*", "Skeleton3D", true, false)
-	if sks.is_empty():
-		await get_tree().process_frame
-		sks = player.find_children("*", "Skeleton3D", true, false)
-		if sks.is_empty(): return
-	src = sks[0]
-	for m in src.find_children("*", "MeshInstance3D", true, false): m.visible = not on
-	if follower: follower.queue_free(); follower = null
-	if body_scene: body_scene.queue_free(); body_scene = null
-	if not on: return
-	body_scene = (load(BODY) as PackedScene).instantiate(); add_child(body_scene)
-	var dsk: Skeleton3D = body_scene.find_children("*", "Skeleton3D", true, false)[0]
-	follower = load("res://tools/people/pose_follow.gd").new(); add_child(follower)
-	follower.set(&"host", player); follower.call(&"setup", src, dsk)
+func _spawn(at: Vector3) -> void:
+	var yaw := 0.0
+	if player: yaw = player.rotation.y; player.queue_free()
+	player = ClassDB.instantiate(&"CityPlayer")
+	player.set(&"body_id", BODY if his_body else "M2")
+	player.position = at; player.rotation.y = yaw
+	add_child(player)
+	player.set(&"capture_mouse", true)
 
 # ---- input and the HUD -----------------------------------------------------------------------------------------------
 func _pressed(k: Key) -> bool:
@@ -159,7 +146,7 @@ func _process(_dt: float) -> void:
 		if sitting: player.call(&"stand_up"); sitting = false
 		player.call(&"set_phone_use", 0)
 		player.global_position = start
-	if _pressed(KEY_B): _use_body(follower == null)
+	if _pressed(KEY_B): his_body = not his_body; sitting = false; _spawn(player.global_position)
 	if _pressed(KEY_H): hud.visible = not hud.visible
 	if _pressed(KEY_E):
 		if sitting: player.call(&"stand_up"); sitting = false

@@ -1,5 +1,6 @@
 // BodyLayer: see body_layer.h.
 #include "body_layer.h"
+#include "rig_names.h"
 
 #include <godot_cpp/core/object.hpp>
 #include <godot_cpp/variant/quaternion.hpp>
@@ -41,16 +42,16 @@ void reach2(Skeleton3D *sk, int a, int b, int c, const Vector3 &target, const Ve
 
 void BodyLayer::find_bones(Skeleton3D *sk) {
 	found = true;
-	b_sp[0] = sk->find_bone("Bip01_Spine"); b_sp[1] = sk->find_bone("Bip01_Spine1"); b_sp[2] = sk->find_bone("Bip01_Spine2");
-	b_neck = sk->find_bone("Bip01_Neck"); b_head = sk->find_bone("Bip01_Head");
+	b_sp[0] = rig::find(sk, "Bip01_Spine"); b_sp[1] = rig::find(sk, "Bip01_Spine1"); b_sp[2] = rig::find(sk, "Bip01_Spine2");
+	b_neck = rig::find(sk, "Bip01_Neck"); b_head = rig::find(sk, "Bip01_Head");
 	for (int s = 0; s < 2; s++) {
 		const String P = s == 0 ? "Bip01_L_" : "Bip01_R_";
-		b_cl[s] = sk->find_bone(P + String("Clavicle")); b_ua[s] = sk->find_bone(P + String("UpperArm")); b_fa[s] = sk->find_bone(P + String("Forearm")); b_hd[s] = sk->find_bone(P + String("Hand"));
-		b_f2[s] = sk->find_bone(P + String("Finger2"));
+		b_cl[s] = rig::find(sk, P + String("Clavicle")); b_ua[s] = rig::find(sk, P + String("UpperArm")); b_fa[s] = rig::find(sk, P + String("Forearm")); b_hd[s] = rig::find(sk, P + String("Hand"));
+		b_f2[s] = rig::find(sk, P + String("Finger2"));
 		arm_bones[s].clear();
 		for (int b : { b_cl[s], b_ua[s], b_fa[s], b_hd[s] }) if (b >= 0) arm_bones[s].push_back(b);
 		for (int f = 0; f <= 4; f++) for (int j = 0; j < 3; j++) {
-			const int b = sk->find_bone(P + String("Finger") + String::num_int64(f) + (j == 0 ? String() : String::num_int64(j)));
+			const int b = rig::find(sk, P + String("Finger") + String::num_int64(f) + (j == 0 ? String() : String::num_int64(j)));
 			if (b >= 0) arm_bones[s].push_back(b);
 		}
 	}
@@ -65,7 +66,7 @@ void BodyLayer::overlay(Skeleton3D *sk) {
 			if (clip->track_get_type(k) != Animation::TYPE_ROTATION_3D) continue;
 			const String p = String(clip->track_get_path(k));
 			const int c = p.find(":");
-			const int b = sk->find_bone(c >= 0 ? p.substr(c + 1) : p);
+			const int b = rig::find(sk, c >= 0 ? p.substr(c + 1) : p);
 			if (b >= 0) trk[b] = k;
 		}
 	}
@@ -82,7 +83,7 @@ void BodyLayer::overlay(Skeleton3D *sk) {
 			if (clip_prev->track_get_type(k) != Animation::TYPE_ROTATION_3D) continue;
 			const String p = String(clip_prev->track_get_path(k));
 			const int c = p.find(":");
-			const int b = sk->find_bone(c >= 0 ? p.substr(c + 1) : p);
+			const int b = rig::find(sk, c >= 0 ? p.substr(c + 1) : p);
 			if (b >= 0) trk_prev[b] = k;
 		}
 	}

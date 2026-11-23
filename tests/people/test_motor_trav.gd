@@ -1,4 +1,5 @@
 extends SceneTree
+const Rig := preload("res://tests/people/rig.gd")
 ## The new movement system's vaults and climbs (native/src/mo_motor_trav.cpp; docs/ANIMATION_PLAN.md step 3; Yasin, 22
 ## Nov: "hands should hold edges of things when we interact with them like when we vault, character shouldnt jump to
 ## the sky after initiating climbs"):
@@ -59,7 +60,7 @@ func _process(delta: float) -> bool:
 	if sk == null:
 		var s := player.find_children("*", "Skeleton3D", true, false)
 		if s.is_empty(): return false
-		sk = s[0]; b_pel = sk.find_bone("Bip01_Pelvis"); b_hand = [sk.find_bone("Bip01_L_Hand"), sk.find_bone("Bip01_R_Hand")]; sk.skeleton_updated.connect(_on_pose)
+		sk = s[0]; b_pel = Rig.find(sk, "Bip01_Pelvis"); b_hand = [Rig.find(sk, "Bip01_L_Hand"), Rig.find(sk, "Bip01_R_Hand")]; sk.skeleton_updated.connect(_on_pose)
 		_next(); return false
 	if lane >= LANES.size(): return true
 	t += delta
@@ -90,7 +91,7 @@ func _on_pose() -> void:
 	# THE BODY INTO THE WALL (Yasin, 24 Nov, the 2 m climb: "sinking into the shape"): the drawn pelvis, spine, head,
 	# knees, feet in front of the face while under its top (a climb; 5 cm of the body's own thickness allowed)
 	if body_bones.is_empty():
-		for b in ["Bip01_Pelvis", "Bip01_Spine1", "Bip01_Neck", "Bip01_Head", "Bip01_L_Calf", "Bip01_R_Calf", "Bip01_L_Foot", "Bip01_R_Foot"]: body_bones.append(sk.find_bone(b))
+		for b in ["Bip01_Pelvis", "Bip01_Spine1", "Bip01_Neck", "Bip01_Head", "Bip01_L_Calf", "Bip01_R_Calf", "Bip01_L_Foot", "Bip01_R_Foot"]: body_bones.append(Rig.find(sk, b))
 	if lane >= 0 and lane < LANES.size() and LANES[lane][3] == "climb":
 		var h: float = LANES[lane][0]
 		for bi in body_bones:

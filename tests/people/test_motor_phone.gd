@@ -1,4 +1,5 @@
 extends SceneTree
+const Rig := preload("res://tests/people/rig.gd")
 ## The phone (native/src/mo_motor_phone.cpp, mo_layer.cpp; Yasin, 24 Nov: "walking text whenever we open the phone, and
 ## standing talk and walking talk when we take a call, we shouldnt be able to run while on a phone call"):
 ## texting standing, then walking; a call standing, then run asked (a walk it stays); put away.
@@ -28,7 +29,7 @@ func _process(d):
 	if _at(34.0): p.call(&"set_phone_use", 0)
 	if _at(40.0): _judge()
 	return false
-func _w(b: String) -> Vector3: return sk.global_transform * sk.get_bone_global_pose(sk.find_bone(b)).origin
+func _w(b: String) -> Vector3: return sk.global_transform * sk.get_bone_global_pose(Rig.find(sk, b)).origin
 func _pose():
 	var f := Engine.get_process_frames()
 	if f == pf: return

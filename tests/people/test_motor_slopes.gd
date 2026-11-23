@@ -1,4 +1,5 @@
 extends SceneTree
+const Rig := preload("res://tests/people/rig.gd")
 ## The new movement system on slopes, stairs and kerbs (docs/ANIMATION_PLAN.md step 4; Yasin, 22 Nov: "slope or tight
 ## area walk"): each lane a thing across his way, walked and run over, up and down the far side.
 ##   godot --headless --path . --fixed-fps 60 -s res://tests/people/test_motor_slopes.gd [-- --trace]
@@ -95,7 +96,7 @@ func _process(delta: float) -> bool:
 	if sk == null:
 		var s := player.find_children("*", "Skeleton3D", true, false)
 		if s.is_empty(): return false
-		sk = s[0]; b_pel = sk.find_bone("Bip01_Pelvis"); b_ft = [sk.find_bone("Bip01_L_Foot"), sk.find_bone("Bip01_R_Foot")]; b_toe = [sk.find_bone("Bip01_L_Toe0"), sk.find_bone("Bip01_R_Toe0")]; b_th = [sk.find_bone("Bip01_L_Thigh"), sk.find_bone("Bip01_R_Thigh")]; b_ca = [sk.find_bone("Bip01_L_Calf"), sk.find_bone("Bip01_R_Calf")]
+		sk = s[0]; b_pel = Rig.find(sk, "Bip01_Pelvis"); b_ft = [Rig.find(sk, "Bip01_L_Foot"), Rig.find(sk, "Bip01_R_Foot")]; b_toe = [Rig.find(sk, "Bip01_L_Toe0"), Rig.find(sk, "Bip01_R_Toe0")]; b_th = [Rig.find(sk, "Bip01_L_Thigh"), Rig.find(sk, "Bip01_R_Thigh")]; b_ca = [Rig.find(sk, "Bip01_L_Calf"), Rig.find(sk, "Bip01_R_Calf")]
 		sk.skeleton_updated.connect(_on_pose)
 		_next(); return false
 	if lane >= LANES.size(): return true
@@ -165,7 +166,9 @@ func _sample() -> void:
 			s_float = maxf(s_float, over - flat_hi[g]); s_sink = maxf(s_sink, -d)
 			if trace and absf(d) > 0.03: print("TRACEF lane %d t %.2f %s foot %d over %.3f (flat %.3f) at %s %s" % [lane, t, ms.get("clip", ""), s, over, base[g] / base_n[g], str(a), st])
 		if plant[s] == null: plant[s] = a
-		s_slide = maxf(s_slide, Vector2(a.x - plant[s].x, a.z - plant[s].z).length())
+		var sl := Vector2(a.x - plant[s].x, a.z - plant[s].z).length()
+		if trace and sl > 0.03 and sl > s_slide: print("TRACES lane %d t %.2f %s foot %d slide %.3f pull %.3f locked %s" % [lane, t, ms.get("clip", ""), s, sl, float(ms.get(["pull_l", "pull_r"][s], 0)), str(ms.get(["lock_l", "lock_r"][s], "?"))])
+		s_slide = maxf(s_slide, sl)
 	var pel: Vector3 = snap_pel
 	if have > 1: s_pop = maxf(s_pop, absf((pel.y - pel_prev.y) - dy_prev))
 	if have > 0: dy_prev = pel.y - pel_prev.y

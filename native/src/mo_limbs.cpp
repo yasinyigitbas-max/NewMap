@@ -1,5 +1,6 @@
 // MoLimbs: see mo_limbs.h.
 #include "mo_limbs.h"
+#include "rig_names.h"
 
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/skeleton3d.hpp>
@@ -25,12 +26,12 @@ void MoLimbs::find_bones(Skeleton3D *sk) {
 	const char *TH[2] = { "Bip01_L_Thigh", "Bip01_R_Thigh" }, *CA[2] = { "Bip01_L_Calf", "Bip01_R_Calf" }, *FT[2] = { "Bip01_L_Foot", "Bip01_R_Foot" };
 	const char *UA[2] = { "Bip01_L_UpperArm", "Bip01_R_UpperArm" }, *FA[2] = { "Bip01_L_Forearm", "Bip01_R_Forearm" }, *HD[2] = { "Bip01_L_Hand", "Bip01_R_Hand" };
 	for (int s = 0; s < 2; s++) {
-		b_th[s] = sk->find_bone(TH[s]); b_ca[s] = sk->find_bone(CA[s]); b_ft[s] = sk->find_bone(FT[s]);
-		b_ua[s] = sk->find_bone(UA[s]); b_fa[s] = sk->find_bone(FA[s]); b_hd[s] = sk->find_bone(HD[s]);
+		b_th[s] = rig::find(sk, TH[s]); b_ca[s] = rig::find(sk, CA[s]); b_ft[s] = rig::find(sk, FT[s]);
+		b_ua[s] = rig::find(sk, UA[s]); b_fa[s] = rig::find(sk, FA[s]); b_hd[s] = rig::find(sk, HD[s]);
 	}
-	b_pel = sk->find_bone("Bip01_Pelvis"); b_head = sk->find_bone("Bip01_Head");
-	b_spine[0] = sk->find_bone("Bip01_Spine"); b_spine[1] = sk->find_bone("Bip01_Spine1"); b_spine[2] = sk->find_bone("Bip01_Spine2"); b_neck = sk->find_bone("Bip01_Neck");
-	b_fing[0] = sk->find_bone("Bip01_R_Finger0"); b_fing[1] = sk->find_bone("Bip01_R_Finger2"); b_lfing = sk->find_bone("Bip01_L_Finger2");
+	b_pel = rig::find(sk, "Bip01_Pelvis"); b_head = rig::find(sk, "Bip01_Head");
+	b_spine[0] = rig::find(sk, "Bip01_Spine"); b_spine[1] = rig::find(sk, "Bip01_Spine1"); b_spine[2] = rig::find(sk, "Bip01_Spine2"); b_neck = rig::find(sk, "Bip01_Neck");
+	b_fing[0] = rig::find(sk, "Bip01_R_Finger0"); b_fing[1] = rig::find(sk, "Bip01_R_Finger2"); b_lfing = rig::find(sk, "Bip01_L_Finger2");
 	found = true;
 }
 
