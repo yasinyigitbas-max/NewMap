@@ -11,6 +11,8 @@ var cam: Camera3D
 var seg := -1; var t := 0.0; var t_prev := 0.0; var n := 0
 var cam_side := Vector3(3.6, 1.25, -0.5)
 var close := false
+var body_path := ""
+var body_done := false
 var look := Vector3()
 # [name, length s]: each on its own lane (x = index * 10), built by _build
 const SEGS := [
@@ -63,7 +65,8 @@ func _initialize() -> void:
 		elif a.begins_with("--only="): only = a.trim_prefix("--only=")
 		elif a.begins_with("--loops="): loops_kept = PackedStringArray(a.trim_prefix("--loops=").split(";"))
 		elif a.begins_with("--run-speed="): run_speed = float(a.trim_prefix("--run-speed="))
-		elif a == "--close": close = true   # (the camera at his chest, 1.1 m off: hands, the phone)
+		elif a == "--close": close = true
+		elif a.begins_with("--body="): body_path = a.trim_prefix("--body=")   # (a new body drawn in his pose: tools/people/pose_follow.gd)   # (the camera at his chest, 1.1 m off: hands, the phone)
 	var sun := DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-50, 50, 0); sun.shadow_enabled = true; root.add_child(sun)
 	var we := WorldEnvironment.new(); var env := Environment.new(); env.background_mode = Environment.BG_COLOR; env.background_color = Color(0.70, 0.78, 0.88)
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR; env.ambient_light_color = Color(0.78, 0.79, 0.83); env.ambient_light_energy = 0.7; we.environment = env; root.add_child(we)
@@ -222,6 +225,16 @@ func _process(delta: float) -> bool:
 	if not player or not player.is_inside_tree(): return false
 	if not started:
 		started = true; _next(); return false
+	if body_path != "" and not body_done:
+		var sks := player.find_children("*", "Skeleton3D", true, false)
+		if not sks.is_empty():
+			body_done = true
+			var src: Skeleton3D = sks[0]
+			for m in src.find_children("*", "MeshInstance3D", true, false): m.visible = false   # (the old body hidden; the phone is the player's, kept)
+			var scn: Node3D = (load(body_path) as PackedScene).instantiate(); root.add_child(scn)
+			var dsk: Skeleton3D = scn.find_children("*", "Skeleton3D", true, false)[0]
+			var pf: Node3D = load("res://tools/people/pose_follow.gd").new(); root.add_child(pf)
+			pf.call(&"setup", src, dsk)
 	if seg >= SEGS.size(): return true
 	t_prev = t; t += delta
 	_act()

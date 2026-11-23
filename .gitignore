@@ -33,3 +33,5 @@ characters/ylib/*.fbx
 characters/ylib/*.import
 characters/msets/*.fbx
 characters/msets/*.import
+characters/mpfb/*.glb
+characters/mpfb/*.import

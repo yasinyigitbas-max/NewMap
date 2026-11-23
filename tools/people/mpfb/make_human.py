@@ -22,7 +22,7 @@ def make(out, sliders):
     macros.update(sliders)
     body = HumanService.create_human(macro_detail_dict=macros)
     HumanService.add_builtin_rig(body, "game_engine")
-    bpy.ops.export_scene.gltf(filepath=out, export_format="GLB")
+    bpy.ops.export_scene.gltf(filepath=out, export_format="GLB", export_apply=True)   # (modifiers applied: the helpers masked off - else a white "dress" of fitting helpers)
     dg = bpy.context.evaluated_depsgraph_get()
     me = body.evaluated_get(dg).to_mesh()
     zs = [(body.matrix_world @ v.co).z for v in me.vertices]
