@@ -38,9 +38,7 @@ def fade_cut(body):
 
 def hide_under_clothes(body, names, gap=0.012):
     """The skin hidden where it lies right under a garment: a muscular body broke through the shirt at the shoulders.
-    A body vertex goes when the garment's nearest face is over it (the vertex under that face, not beside its edge - the
-    skin just past a sleeve stays) and less than `gap` under it, or out through it. Added to MakeHuman's own way of
-    hiding the body under clothes (a vertex group and a mask)."""
+    Added to MakeHuman's own way of hiding the body under clothes (a vertex group and a mask)."""
     from mathutils.bvhtree import BVHTree
     dg = bpy.context.evaluated_depsgraph_get()
     trees = []
@@ -54,14 +52,19 @@ def hide_under_clothes(body, names, gap=0.012):
     bme = body.evaluated_get(dg).to_mesh()
     cos = [body.matrix_world @ v.co for v in bme.vertices]
     for m, v in saved: m.show_viewport = v
+    nrm = [(body.matrix_world.to_3x3() @ v.normal).normalized() for v in bme.vertices]
     hide = []
     for i, c in enumerate(cos):
+        n = nrm[i]
         for t in trees:
-            loc, n, fi, d = t.find_nearest(c, 0.04)
-            if loc is None: continue
-            off = c - loc
-            along = off.dot(n)
-            if (off - n * along).length < 0.004 and along > -gap: hide.append(i); break
+            # UNDER the garment: straight out from the skin the garment's INSIDE comes within 3 cm (its face turned the way the
+            # skin faces), or the skin is through it (straight in, its outside within `gap`, facing the same way). A skin
+            # beside a garment - the arms hanging by the shirt and the jeans, as MakeHuman builds the body - meets its
+            # outside, facing it: kept (25 Nov: tested only by the nearest face, the forearms, wrists and neck went)
+            hit, fn, _, d = t.ray_cast(c + n * 0.001, n, 0.03)
+            if hit is not None and fn.dot(n) > 0.2: hide.append(i); break
+            hit, fn, _, d = t.ray_cast(c, -n, gap)
+            if hit is not None and fn.dot(n) > 0.2: hide.append(i); break
     g = body.vertex_groups.new(name="Delete.under_clothes"); g.add(hide, 1.0, "REPLACE")
     m = body.modifiers.new("Hide under clothes", "MASK"); m.vertex_group = g.name; m.invert_vertex_group = True
     print("HIDDEN %d body vertices under %s" % (len(hide), names))
