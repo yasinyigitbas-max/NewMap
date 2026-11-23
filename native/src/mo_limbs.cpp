@@ -29,6 +29,7 @@ void MoLimbs::find_bones(Skeleton3D *sk) {
 		b_ua[s] = sk->find_bone(UA[s]); b_fa[s] = sk->find_bone(FA[s]); b_hd[s] = sk->find_bone(HD[s]);
 	}
 	b_pel = sk->find_bone("Bip01_Pelvis"); b_head = sk->find_bone("Bip01_Head");
+	b_spine[0] = sk->find_bone("Bip01_Spine"); b_spine[1] = sk->find_bone("Bip01_Spine1"); b_spine[2] = sk->find_bone("Bip01_Spine2"); b_neck = sk->find_bone("Bip01_Neck");
 	b_fing[0] = sk->find_bone("Bip01_R_Finger0"); b_fing[1] = sk->find_bone("Bip01_R_Finger2"); b_lfing = sk->find_bone("Bip01_L_Finger2");
 	found = true;
 }
@@ -111,6 +112,35 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 	}
 	if (b_root < 0) { b_root = b_ft[0] >= 0 ? b_ft[0] : -1; while (b_root >= 0 && sk->get_bone_parent(b_root) >= 0) b_root = sk->get_bone_parent(b_root); }
 	if (b_root >= 0 && drop > 1e-4f) sk->set_bone_pose_position(b_root, sk->get_bone_pose_position(b_root) + Gi.basis.xform(Vector3(0, -drop, 0)));
+	// STANDING STRAIGHT (Yasin 23 Nov: "straighten his stand, as you said our animation was leaning back too, fix it"):
+	// the idles lean back from the hips. Standing idle (the motor sets upright_on) the line from the pelvis to the neck is
+	// held at least 3 degrees forward of upright, the turn spread over the upper spine (a bend, not a hinge);
+	// leaning forward - a run - is left as it is. Eased in and out over 0.25 s with the states that ask for it
+	if (dt > 0.0f) upright_w += std::max(-dt / 0.25f, std::min(dt / 0.25f, (upright_on ? 1.0f : 0.0f) - upright_w));
+	if (upright_w > 0.001f && b_pel >= 0 && b_neck >= 0 && b_spine[0] >= 0 && b_spine[1] >= 0 && b_spine[2] >= 0 && fwd_w.length_squared() > 1e-8f) {
+		const Vector3 up_s = Gi.basis.xform(Vector3(0, 1, 0)).normalized();
+		Vector3 f_s = Gi.basis.xform(fwd_w); f_s -= up_s * f_s.dot(up_s);
+		if (f_s.length_squared() > 1e-10f) {
+			f_s.normalize();
+			const Vector3 wv = sk->get_bone_global_pose(b_neck).origin - sk->get_bone_global_pose(b_pel).origin;
+			const float up_c = (float)wv.dot(up_s), f_c = (float)wv.dot(f_s);
+			const float min_f = std::fabs(up_c) * 0.0524f;   // (tan 3 degrees)
+			if (f_c < min_f && wv.length_squared() > 1e-10f) {
+				const Vector3 want = wv + f_s * ((min_f - f_c) * upright_w);
+				const Quaternion q(wv.normalized(), want.normalized());
+				// (over Spine1 and Spine2, half each: Bip01_Spine carries the thighs - turned, it swung the legs and the planted
+				// feet slid 5 cm)
+				const Quaternion part = Quaternion().slerp(q, 0.5f);
+				for (int k = 1; k < 3; k++) {
+					const int b = b_spine[k];
+					const int par = sk->get_bone_parent(b);
+					const Basis pg = par >= 0 ? sk->get_bone_global_pose(par).basis : Basis();
+					const Basis g = sk->get_bone_global_pose(b).basis;
+					sk->set_bone_pose_rotation(b, (pg.inverse() * (Basis(part) * g)).get_rotation_quaternion());
+				}
+			}
+		}
+	}
 	for (int s = 0; s < 2; s++) {
 		pull[s] = 0.0f; pull_v[s] = Vector3();
 		if (b_th[s] < 0 || b_ca[s] < 0 || b_ft[s] < 0) continue;

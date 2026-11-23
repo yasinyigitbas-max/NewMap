@@ -677,6 +677,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	Vector3 dir(p_in.dir.x, 0.0f, p_in.dir.z);
 	float sp_in = p_in.speed;
 	phone_step(p_dt, p_in);
+	if (limbs) limbs->upright_on = st == IDLE;   // (standing straight in the idle - Yasin: "i meant the idle stand": mo_limbs)
 	if (p_in.phone != 0 || ph_phase != 0) sp_in = std::min(sp_in, 1.6f);   // (the phone out: a walk at most - "we shouldnt be able to run while on a phone call")
 	// SITTING (mo_motor_sit.cpp): on the seat, or into / out of it - the clip has the body; walking to a seat, the way to it
 	if (st == SIT) { sit_step(p_dt, p_in); host = nullptr; return; }

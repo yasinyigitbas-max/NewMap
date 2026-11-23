@@ -63,6 +63,9 @@ public:
 	Vector3 ground_n[2] = { Vector3(0, 1, 0), Vector3(0, 1, 0) };
 	float drop = 0.0f, drop_v = 0.0f, drop_slack = 0.01f, drop_max = 0.35f, drop_down = 20.0f, drop_up = 9.0f;   // the hips lowered (m), its spring (rad/s down, up)
 	int b_root = -1;
+	bool upright_on = false;   // (the motor: on the ground moves, the backward lean taken out)
+	int b_spine[3] = { -1, -1, -1 }, b_neck = -1;
+	float upright_w = 0.0f;
 	uint64_t frame_id = ~0ull; float dt_frame = 1.0f / 60.0f;
 	// ---- a thing held (the motor's carry): where it is held from the hips (his facing hold_yaw), placed on the hips AS
 	// DRAWN, with the hands on it; the thing's node placed here too, in the same pass
