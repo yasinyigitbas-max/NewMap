@@ -258,9 +258,26 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 			Vector3 along = mid - wr; const float L = (float)along.length();
 			if (L > 1e-4f) {
 				along /= L;
-				Vector3 n = along.cross(th - wr); n = n.length_squared() > 1e-10f ? n.normalized() : Vector3(0, 0, 1);   // (out of the palm)
-				const Vector3 x = along.cross(n).normalized();
-				hand_prop->set_global_transform(Transform3D(Basis(x, along, n), wr + along * (L * 0.8f) + n * hand_prop_off.origin.z));
+				// (into the palm: the other way it sat on the back of the hand, outside it - Yasin, 25 Nov)
+				Vector3 n = (th - wr).cross(along); n = n.length_squared() > 1e-10f ? n.normalized() : Vector3(0, 0, 1);
+				Vector3 at = wr + along * (L * 0.8f) + n * hand_prop_off.origin.z;
+				Vector3 lng = along;
+				if (ear_w > 0.5f && b_head >= 0) {
+					// (on a call its lean mirrored - the top to the ear, the bottom toward the mouth: "phone would lean the other
+					// way when held against the ear". In the palm it is already ~3 cm nearer his head than on the hand's back:
+					// 5 cm more on top put it in his skull)
+					Vector3 fwd = SG.basis.xform(Vector3(0, 0, 1)); // (placeholder, replaced below)
+					const Vector3 rs = SG.xform(sk->get_bone_global_pose(b_ua[1]).origin), ls = SG.xform(sk->get_bone_global_pose(b_ua[0]).origin);
+					Vector3 right = rs - ls; right.y = 0.0f;
+					if (right.length() > 1e-4f) {
+						right.normalize();
+						fwd = Vector3(0, 1, 0).cross(right).normalized();
+						lng = (lng - fwd * (2.0f * (float)lng.dot(fwd))).normalized();   // (its forward lean mirrored)
+					}
+				}
+				const Vector3 x = lng.cross(n).normalized();
+				const Vector3 nn = x.cross(lng).normalized();
+				hand_prop->set_global_transform(Transform3D(Basis(x, lng, nn), at));
 			}
 		}
 	}
