@@ -196,7 +196,7 @@ private:
 	// clip's own contact windows. The body follows the clip's hips; nothing else moves it.
 	struct Trav {
 		const Clip *c = nullptr;
-		double t0 = 0.0, t_end = 0.0, tc = 0.0, tw = 0.0, ty0 = 0.0, he = 0.0, land_t = 0.0;   // (tw: the warp done by the first hand touch)
+		double t0 = 0.0, t_end = 0.0, tc = 0.0, tw = 0.0, ty0 = 0.0, ty1 = 0.0, he = 0.0, land_t = 0.0;   // (tw: the warp done by the first hand touch)
 		Vector3 anchor0, delta, edge_p, edge_n;   // the anchor at the start; the warp's full shift; the edge (world), out toward him
 		float yaw = 0.0f, top_y = 0.0f, start_y = 0.0f, land_dy = 0.0f;
 		bool vault = false;

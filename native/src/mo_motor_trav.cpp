@@ -41,7 +41,7 @@ Vector3 Motor::trav_anchor(double p_t) const {
 	Vector3 a = tr.anchor0;
 	const Vector3 dxz = level(tr.delta);
 	a += dxz * sstep(tr.t0, tr.tw, p_t);   // (level: over the approach)
-	float dy = (float)tr.delta.y * sstep(tr.ty0, tr.tw, p_t);
+	float dy = (float)tr.delta.y * sstep(tr.ty0, tr.ty1, p_t);
 	if (tr.vault && p_t > tr.he) dy += (tr.land_dy - (float)tr.delta.y) * sstep(tr.he, tr.land_t, p_t);   // (down to the ground beyond)
 	a.y += dy;
 	return a;
@@ -185,12 +185,16 @@ bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_
 	// (the braced hang and the sprint up the wall: their knees bend into the wall - taken where it was thinner - 16-18 cm;
 	// the body set back from it that much, the hands still on the edge by their IK)
 	if (!p_vault && (&p_c == &c_braced || &p_c == &c_mid_run)) tr.delta += p_n * 0.16f;
-	if (!p_vault && &p_c == &c_mid && !p_chain) tr.delta += p_n * 0.10f;   // (Climbing_Single: a knee 10 cm in at the mantle)
+	if (!p_vault && &p_c == &c_mid && !p_chain) tr.delta += p_n * 0.06f;   // (Climbing_Single: a knee 10 cm in at the mantle - 6 cm back enough once its rise was spread, 10 left the hands 8 cm short)
 	// the warp is all done by the first hand touch (still ramping as a hand came down on the rail, the body was too high
 	// for the arm: the hand hung 9-16 cm over the top)
 	tr.tw = tc;
 	for (int s = 0; s < 2; s++) if (tr.hs[s] >= 0.0) tr.tw = std::min(tr.tw, std::max(tr.hs[s] - 0.1, t0 + 0.1));
 	tr.ty0 = std::max(t0, tr.tw - (&p_c == &c_mid ? 0.9 : 0.45));   // (Climbing_Single lifted from 21 cm under his ground: over 0.45 s the hips' rise popped 4 cm)
+	// (the rise never shorter than 0.25 s - on past the hand's touch if need be, the hand held on the edge by its IK while
+	// the body finishes rising: joined late, close to a 2 m wall, 40 cm went up in 0.1 s - a 3.9 cm pop, and the hand
+	// eased in at the end of it 8 cm short, 25 Nov)
+	tr.ty1 = std::max(tr.tw, tr.ty0 + 0.25);
 	// the end: a vault where it lands (the clip's own landing, else 0.6 s after the hand lets go); a climb at its end
 	const double he = std::max(tr.hend[0], tr.hend[1]);
 	tr.he = he > 0.0 ? he : tc + 0.3;
@@ -238,7 +242,7 @@ void Motor::trav_step(float p_dt) {
 		for (int s = 0; s < 2; s++) {
 			float w = 0.0f;
 			// (eased in from the touch, over 0.08 s: full from the first frame of the touch, the arm was still 5 cm short)
-			const double ease = tr.c == &c_mid ? 0.2 : 0.08;   // (Climbing_Single's hand comes up fast to its hold: full at once, it was 20 cm short for 2 frames)
+			const double ease = tr.c == &c_mid ? 0.3 : 0.08;   // (Climbing_Single's hand comes up fast to its hold: full at once, it was 20 cm short for 2 frames)
 			if (tr.hs[s] >= 0.0) w = sstep(tr.hs[s], tr.hs[s] + ease, t) * (1.0f - sstep(tr.hend[s], tr.hend[s] + 0.1, t));
 			if (w > 0.001f && !tr.hand_set[s]) {
 				// the hand's spot: where the warped clip puts it at its own stillest moment (not where it is as the pin
