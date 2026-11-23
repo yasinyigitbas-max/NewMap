@@ -43,6 +43,8 @@ var hip_fix := false     # (on for a Meshy body: the clip's pelvis tilt dropped)
 var hand_scale := 1.0    # (a Meshy body: its hands drawn smaller - 1.45x the figure's proportions, "enormous")
 var s_pel := -1
 var d_hands := []
+var idle_w := 0.0
+var idle_clock := 0.0
 var meshy := false   # (a Meshy / Mixamo-named body: Hips, Spine02, LeftArm, LeftHandIndex1 ...)
 const MESHY := {"pelvis": "Hips", "spine_01": "Spine02", "spine_02": "Spine01", "spine_03": "Spine", "neck_01": "neck", "head": "Head",
 	"clavicle": "Shoulder", "upperarm": "Arm", "lowerarm": "ForeArm", "hand": "Hand", "thigh": "UpLeg", "calf": "Leg", "foot": "Foot"}
@@ -212,12 +214,16 @@ func _follow() -> void:
 	var idle := host != null and String(host.call(&"get_motor_state").get("state", "")) == "idle"
 	if idle:
 		_straight_back()
-		_arms_forward()
 	_bend_forward(20.0)   # (Yasin: 10, then "10 more")
 	_tilt(dst.find_bone(nm("spine_01")), 5.0)   # (Yasin: "bend him again 5 more degree from the hip": the whole upper body from its lowest spine joint)
 	_tilt(dst.find_bone(nm("neck_01")), -15.0)   # (Yasin: "bend the head from the neck 15 degrees back")
 	_tilt(dst.find_bone(nm("head")), -15.0)   # (Yasin: "lift the head 15 degrees back")
-	_shoulders_forward(0.15)   # (Yasin: "push arms and shoulders 15 cm forward")
+	# STANDING ARMS AS IN YASIN'S PHOTO (23 Nov: "his arms are reaching behind his body as if his hands are tied from the
+	# back, look at the reference photo"): eased in while he stands, out as he moves off
+	var now := Time.get_ticks_msec() / 1000.0
+	var dt := clampf(now - idle_clock, 0.0, 0.1); idle_clock = now
+	idle_w = move_toward(idle_w, 1.0 if idle else 0.0, dt * 3.0)
+	if idle_w > 0.001: _idle_arms(idle_w)
 	_fit_arms()
 	_carry_prop()
 
@@ -502,3 +508,51 @@ func _shoulders_forward(p_m: float) -> void:
 		# (from its rest place under its parent as posed now - not from last frame's, which already had the push: it piled up)
 		var want := pg * dst.get_bone_rest(b).origin + f * (p_m / sc)
 		dst.set_bone_pose_position(b, pg.affine_inverse() * want)
+
+# his torso's middle, front to back, at the hips: the skin measured (the joints sit at his back), skeleton units ahead of
+# the pelvis joint along his facing
+func _hip_centre_ahead() -> float:
+	for T in torso:
+		if T[0] == dst.find_bone(nm("pelvis")) and T[5] <= 0.0 and T[6] >= 0.0:
+			return (float(T[3]) - float(T[4])) * 0.5
+	return 0.0
+
+func _idle_arms(w: float) -> void:
+	var sc := dst.global_basis.get_scale().x
+	var f: Vector3 = dst.global_basis.inverse() * (src.global_basis.orthonormalized() * (Cs * Vector3(0, 0, 1)))
+	var up: Vector3 = (dst.global_basis.inverse() * Vector3.UP).normalized()
+	f -= up * f.dot(up)
+	if f.length() < 1e-6: return
+	f = f.normalized()
+	var lat := up.cross(f).normalized()   # (his left)
+	var pel := dst.get_bone_global_pose(dst.find_bone(nm("pelvis"))).origin
+	var ahead := _hip_centre_ahead()
+	var half_w := 0.0
+	for T in torso:
+		if T[0] == dst.find_bone(nm("pelvis")): half_w = maxf(half_w, float(T[2]))
+	for i in 2:
+		var side := 1.0 if i == 0 else -1.0   # (arms[0] is the left)
+		# the collarbone rolled forward 12 degrees: the shoulder comes round to the front, the skin turning with it
+		var cb := dst.find_bone(nm("clavicle_" + ("l" if i == 0 else "r")))
+		if cb >= 0:
+			var q := Quaternion(up, deg_to_rad(12.0 * w))
+			var g := dst.get_bone_global_pose(cb)
+			var tip := dst.get_bone_global_pose(arms[i][0]).origin - g.origin
+			if (Basis(q) * tip).dot(f) < tip.dot(f): q = q.inverse()
+			var par := dst.get_bone_parent(cb)
+			var pg := dst.get_bone_global_pose(par).basis if par >= 0 else Basis()
+			dst.set_bone_pose_rotation(cb, (pg.inverse() * (Basis(q) * g.basis)).orthonormalized().get_rotation_quaternion())
+		var A: Array = arms[i]
+		var wr := dst.get_bone_global_pose(A[2]).origin
+		var el := dst.get_bone_global_pose(A[1]).origin
+		# the wrist beside the thigh: just outside the hips' width, 12 cm under the hip joint, at the body's middle depth
+		var goal := pel + lat * side * (half_w + 0.035 / sc) - up * (0.12 / sc) + f * (ahead + 0.01 / sc)
+		var pole := el - f * (0.3 / sc) + lat * side * (0.1 / sc)   # (the elbow back and a little out)
+		_reach(A[0], A[1], A[2], wr.lerp(goal, w), pole)
+		# the hand hanging on from the forearm, palm to the thigh
+		var fa := dst.get_bone_global_pose(A[2]).origin - dst.get_bone_global_pose(A[1]).origin
+		var mid := dst.find_bone(nm("middle_01_" + ("l" if i == 0 else "r")))
+		if mid >= 0:
+			var hd := dst.get_bone_global_pose(mid).origin - dst.get_bone_global_pose(A[2]).origin
+			var want := hd.slerp(fa.normalized() * hd.length(), w * 0.8)
+			_aim(A[2], hd, want)
