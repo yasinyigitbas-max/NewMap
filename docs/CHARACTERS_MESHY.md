@@ -52,3 +52,13 @@ complicated). He chose **Meshy** (AI text/image to 3D, remesh, auto-rig) and has
 - Step off 0.6 m: Ledge_Drop's hand cannot reach the corner of a low ledge (the take is over a railing). Yasin to
   choose: a hop down with no hand below ~0.8 m, or a crouch and the hand on the edge.
 - Motor tests (tests/people/test_motor_*.gd): all PASS but test_motor_air (that 0.6 m hand).
+
+## 23 Nov: the player, first try (`tools/people/meshy/meshy.py`, cast/player.json, assets/people/meshy/player/)
+- Text-to-3D preview (latest model, T-pose, triangle remesh to 12k) -> refine (texture) -> rigging: 35 credits, ~5 min.
+  Needs `assets.meshy.ai` allowed (downloads); added to the environment.
+- Result: 12,473 triangles, 1 material, 2048 base colour (JPEG inside the GLB), 24 bones, Meshy names (Hips, Spine02,
+  LeftArm ... no `mixamorig:` prefix), NO finger bones. Meshy's own walk / run test clips come with it.
+- Shown to Yasin: https://claude.ai/artifact/7NdPMbRbZSThBW3coSsdG1 (model-viewer; .glb is not a served type, so the
+  models are published as base64 .txt and decoded in the page).
+- Proposed next: rig the same mesh with Mixamo's auto-rigger (full skeleton with fingers, our clip names), then show
+  him in our own clips. Waiting for Yasin.
