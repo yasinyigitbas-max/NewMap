@@ -44,6 +44,8 @@ var hand_scale := 1.0    # (a Meshy body: its hands drawn smaller - 1.45x the fi
 var s_pel := -1
 var d_hands := []
 var idle_w := 0.0
+var ear_rest := Vector3()
+var ear_ok := false
 var idle_clock := 0.0
 var meshy := false   # (a Meshy / Mixamo-named body: Hips, Spine02, LeftArm, LeftHandIndex1 ...)
 const MESHY := {"pelvis": "Hips", "spine_01": "Spine02", "spine_02": "Spine01", "spine_03": "Spine", "neck_01": "neck", "head": "Head",
@@ -212,18 +214,16 @@ func _follow() -> void:
 		for h in d_hands: dst.set_bone_pose_scale(h, Vector3.ONE * hand_scale)
 	_upright()
 	var idle := host != null and String(host.call(&"get_motor_state").get("state", "")) == "idle"
-	if idle:
-		_straight_back()
-	_bend_forward(20.0)   # (Yasin: 10, then "10 more")
-	_tilt(dst.find_bone(nm("spine_01")), 5.0)   # (Yasin: "bend him again 5 more degree from the hip": the whole upper body from its lowest spine joint)
-	_tilt(dst.find_bone(nm("neck_01")), -15.0)   # (Yasin: "bend the head from the neck 15 degrees back")
-	_tilt(dst.find_bone(nm("head")), -15.0)   # (Yasin: "lift the head 15 degrees back")
+	# (standing: the posture solved from his landmarks - _stand. The angles tried one by one before it - spine 20 forward,
+	# 5 more from the hip, neck and head 15 back each - replaced: Yasin 23 Nov, "study human anatomy a little")
 	# STANDING ARMS AS IN YASIN'S PHOTO (23 Nov: "his arms are reaching behind his body as if his hands are tied from the
 	# back, look at the reference photo"): eased in while he stands, out as he moves off
 	var now := Time.get_ticks_msec() / 1000.0
 	var dt := clampf(now - idle_clock, 0.0, 0.1); idle_clock = now
 	idle_w = move_toward(idle_w, 1.0 if idle else 0.0, dt * 3.0)
-	if idle_w > 0.001: _idle_arms(idle_w)
+	if idle_w > 0.001:
+		_stand(idle_w)
+		_idle_arms(idle_w)
 	_fit_arms()
 	_carry_prop()
 
@@ -300,6 +300,21 @@ func _measure_torso() -> void:
 		var ry := (Cd.inverse() * rest.origin).y
 		# (the slice's centre over the bone, in his frame: its lateral centre the pelvis's)
 		torso.append([best, rest, B[0], B[1], B[2], ylo - ry, yhi - ry, (Cd.inverse() * rest.origin) - pel])
+	# THE EAR (the plumb line's top): the head's middle, front to back, 11 cm under its top, on his centre line
+	var top := -INF
+	for pv in pts:
+		var q := Cd.inverse() * pv - pel
+		if absf(q.x) < 0.11 / dst.global_basis.get_scale().x and q.y + pel.y > nk.y: top = maxf(top, q.y + pel.y)
+	if top > -INF:
+		var ey := top - 0.11 / dst.global_basis.get_scale().x
+		var zmin := INF; var zmax := -INF
+		for pv in pts:
+			var q := Cd.inverse() * pv - pel
+			if absf(q.x) < 0.11 / dst.global_basis.get_scale().x and absf(q.y + pel.y - ey) < 0.02 / dst.global_basis.get_scale().x:
+				zmin = minf(zmin, q.z); zmax = maxf(zmax, q.z)
+		if zmax > zmin:
+			ear_rest = Cd * Vector3(0.0, ey - pel.y, (zmin + zmax) * 0.5) + Cd * pel
+			ear_ok = true
 	print("TORSO ", torso.map(func(T): return "%s w %.2f f %.2f b %.2f" % [dst.get_bone_name(T[0]), T[2], T[3], T[4]]))
 
 # a point (skeleton space) pushed out of his torso as posed now, by a margin (the arm's own flesh)
@@ -546,8 +561,14 @@ func _idle_arms(w: float) -> void:
 		var wr := dst.get_bone_global_pose(A[2]).origin
 		var el := dst.get_bone_global_pose(A[1]).origin
 		# the wrist beside the thigh: just outside the hips' width, 12 cm under the hip joint, at the body's middle depth
-		var goal := pel + lat * side * (half_w + 0.035 / sc) - up * (0.12 / sc) + f * (ahead + 0.01 / sc)
-		var pole := el - f * (0.3 / sc) + lat * side * (0.1 / sc)   # (the elbow back and a little out)
+		# (at the THIGH's middle depth where the hand hangs, 2 cm ahead of it - the hand by the trouser's side seam, as in the
+		# photo; at the hips' middle it hung back - "his hands are still reaching back")
+		var goal_h := pel - up * (0.12 / sc)
+		var tc := _band_centre_at(goal_h)
+		var goal := tc + lat * side * (half_w + 0.035 / sc) + f * (0.02 / sc)
+		goal -= lat * (goal - pel).dot(lat) - lat * side * (half_w + 0.035 / sc)   # (its side: by the hips' width)
+		goal -= up * (goal - goal_h).dot(up)                                       # (its height)
+		var pole := el + lat * side * (0.3 / sc) - f * (0.06 / sc)   # (the elbow out to the side, barely back - "bent back from the elbow")
 		_reach(A[0], A[1], A[2], wr.lerp(goal, w), pole)
 		# the hand hanging on from the forearm, palm to the thigh
 		var fa := dst.get_bone_global_pose(A[2]).origin - dst.get_bone_global_pose(A[1]).origin
@@ -556,3 +577,62 @@ func _idle_arms(w: float) -> void:
 			var hd := dst.get_bone_global_pose(mid).origin - dst.get_bone_global_pose(A[2]).origin
 			var want := hd.slerp(fa.normalized() * hd.length(), w * 0.8)
 			_aim(A[2], hd, want)
+
+# a torso slice's middle (front to back, on his centre line) as posed now, the slice nearest the given point's height
+func _band_centre_at(p: Vector3) -> Vector3:
+	var best: Array = []; var bd := INF
+	for T in torso:
+		var now := dst.get_bone_global_pose(T[0]); var rest: Transform3D = T[1]; var off: Vector3 = T[7]
+		var c_rest: Vector3 = rest.origin + Cd * Vector3(-off.x, (float(T[5]) + float(T[6])) * 0.5, (float(T[3]) - float(T[4])) * 0.5 - off.z)
+		var c := now * rest.affine_inverse() * c_rest
+		var d := absf((c - p).dot((dst.global_basis.inverse() * Vector3.UP).normalized()))
+		if d < bd: bd = d; best = [c]
+	return best[0] if not best.is_empty() else p
+
+# STANDING, ANATOMICALLY (the plumb line): the shoulders' middle over the hips' middle (the spine turned, a third at each
+# bone), the ear over the shoulders (the neck turned), the face level (the head turned) - landmarks from his body's shape,
+# not his joints (Meshy's sit along his back)
+func _stand(w: float) -> void:
+	var f: Vector3 = dst.global_basis.inverse() * (src.global_basis.orthonormalized() * (Cs * Vector3(0, 0, 1)))
+	var up: Vector3 = (dst.global_basis.inverse() * Vector3.UP).normalized()
+	f -= up * f.dot(up)
+	if f.length() < 1e-6: return
+	f = f.normalized()
+	var pel := dst.get_bone_global_pose(dst.find_bone(nm("pelvis"))).origin
+	var shj := (dst.get_bone_global_pose(arms[0][0]).origin + dst.get_bone_global_pose(arms[1][0]).origin) * 0.5
+	# 1. the shoulders' middle over the hips' middle
+	for it in 2:
+		var H := _band_centre_at(pel)
+		var S := _band_centre_at((dst.get_bone_global_pose(arms[0][0]).origin + dst.get_bone_global_pose(arms[1][0]).origin) * 0.5)
+		var v := S - H; var want := v - f * v.dot(f) * w
+		_turn_chain([dst.find_bone(nm("spine_01")), dst.find_bone(nm("spine_02")), dst.find_bone(nm("spine_03"))], H, v, want)
+	# 2. the ear over the shoulders' middle
+	if ear_ok:
+		var hb := dst.find_bone(nm("head")); var nb := dst.find_bone(nm("neck_01"))
+		var hr := dst.get_bone_global_rest(hb)
+		var E := dst.get_bone_global_pose(hb) * (hr.affine_inverse() * ear_rest)
+		var S2 := _band_centre_at((dst.get_bone_global_pose(arms[0][0]).origin + dst.get_bone_global_pose(arms[1][0]).origin) * 0.5)
+		var nkp := dst.get_bone_global_pose(nb).origin
+		var v2 := E - nkp
+		var want2 := v2 - f * ((E - S2).dot(f)) * w
+		_turn_chain([nb], nkp, v2, want2)
+		# 3. the face level: the head's forward pointer (Meshy's "headfront") level, 3 degrees down
+		var hf := dst.find_bone("headfront")
+		if hf >= 0:
+			var fv := dst.get_bone_global_pose(hf).origin - dst.get_bone_global_pose(hb).origin
+			var lv := (fv - up * fv.dot(up)).normalized() * fv.length()
+			lv = lv.rotated(up.cross(f).normalized(), 0.0)
+			var target := (lv.normalized() - up * 0.05).normalized() * fv.length()
+			_aim(hb, fv, fv.slerp(target, w))
+
+# a chain of bones turned (each a share) so the vector v from the point o becomes want
+func _turn_chain(bones: Array, o: Vector3, v: Vector3, want: Vector3) -> void:
+	if v.length() < 1e-6 or want.length() < 1e-6: return
+	var q := Quaternion(v.normalized(), want.normalized())
+	var part := Quaternion().slerp(q, 1.0 / bones.size())
+	for b in bones:
+		if b < 0: continue
+		var g := dst.get_bone_global_pose(b)
+		var par := dst.get_bone_parent(b)
+		var pg := dst.get_bone_global_pose(par).basis if par >= 0 else Basis()
+		dst.set_bone_pose_rotation(b, (pg.inverse() * (Basis(part) * g.basis)).orthonormalized().get_rotation_quaternion())
