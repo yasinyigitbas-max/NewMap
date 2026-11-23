@@ -15,6 +15,10 @@ func _init() -> void:
 	var hero: Node3D = load("res://characters/rocketbox/hero_male.scn").instantiate()
 	root.add_child(hero)
 	hero.position = Vector3(0, 0, -0.6)
+	var grey := StandardMaterial3D.new(); grey.albedo_color = Color(0.55, 0.5, 0.45)
+	for mi in hero.find_children("*", "MeshInstance3D", true, false):
+		mi.visible = mi.name.begins_with("M2_")
+		mi.material_override = grey
 	var hap: AnimationPlayer = hero.find_children("*", "AnimationPlayer", true, false)[0] if hero.find_children("*", "AnimationPlayer", true, false).size() > 0 else null
 	if hap == null:
 		hap = AnimationPlayer.new(); hero.add_child(hap)

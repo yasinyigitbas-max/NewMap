@@ -29,6 +29,7 @@ var AIM := {
 var SAME_AS := {"Bip01_L_Hand": "Bip01_L_Forearm", "Bip01_R_Hand": "Bip01_R_Forearm"}
 const FPS := 30.0
 var ARM := float(OS.get_environment("ARM")) if OS.get_environment("ARM") != "" else 0.0   # degrees forward
+var HIPFIX := OS.get_environment("HIPFIX") == "1"
 var LEAN := float(OS.get_environment("LEAN")) if OS.get_environment("LEAN") != "" else 0.0   # degrees forward
 
 
@@ -168,6 +169,14 @@ func _init() -> void:
 			for sb in MAP:
 				var sg: Transform3D = sw * (sgp[ss.find_bone(sb)] as Transform3D)
 				var delta: Basis = (yaw * sg.basis.orthonormalized()) * (yaw * s_rest[sb].basis.orthonormalized()).inverse()
+				if sb == "Bip01_Pelvis" and HIPFIX:
+					# drop the clip's pelvis tilt (forward / back about his left-right axis): on Meshy's body it bent the
+					# lower back into a curve (Yasin 23 Nov: "he is literally curved to the back"); turn and roll stay
+					var q := Quaternion(delta.orthonormalized())
+					var lat := t_latv.normalized()
+					var pr: Vector3 = Vector3(q.x, q.y, q.z).dot(lat) * lat
+					var twist := Quaternion(pr.x, pr.y, pr.z, q.w).normalized()
+					delta = Basis(q * twist.inverse())
 				tworld[MAP[sb]] = delta * C[sb] * t_rest[MAP[sb]].basis.orthonormalized()
 			# upright fix (Yasin 23 Nov: "he is leaning back too much"): the upper body tilted forward by LEAN degrees,
 			# spread over the spine (40 / 70 / 100 %), everything above the spine turned with it
