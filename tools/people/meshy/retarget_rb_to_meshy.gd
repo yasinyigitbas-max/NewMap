@@ -28,6 +28,7 @@ var AIM := {
 }
 var SAME_AS := {"Bip01_L_Hand": "Bip01_L_Forearm", "Bip01_R_Hand": "Bip01_R_Forearm"}
 const FPS := 30.0
+var ARM := float(OS.get_environment("ARM")) if OS.get_environment("ARM") != "" else 0.0   # degrees forward
 var LEAN := float(OS.get_environment("LEAN")) if OS.get_environment("LEAN") != "" else 0.0   # degrees forward
 
 
@@ -177,6 +178,13 @@ func _init() -> void:
 					if bn2 == "Hips" or "Leg" in bn2 or "Foot" in bn2 or "Toe" in bn2: continue
 					var k: float = share.get(bn2, 1.0)
 					tworld[bn2] = Basis(ax, deg_to_rad(LEAN * k)) * (tworld[bn2] as Basis)
+			# arms forward (Yasin 23 Nov: "the arms are falling back of the hips"): each whole arm swung forward by ARM
+			# degrees at the shoulder (Meshy's shoulder joints sit further back in his deep chest than Rocketbox's)
+			if ARM != 0.0:
+				var ax2: Vector3 = Vector3.UP.cross(-t_latv.cross(Vector3.UP)).normalized()
+				for bn3 in tworld:
+					if bn3.begins_with("LeftArm") or bn3.begins_with("RightArm") or "ForeArm" in bn3 or "Hand" in bn3:
+						tworld[bn3] = Basis(ax2, deg_to_rad(-ARM)) * (tworld[bn3] as Basis)
 			# to local, parents first (bone order is parent-first in a glTF skeleton)
 			var gpose := {}
 			for i in ts.get_bone_count():
@@ -208,6 +216,15 @@ func _init() -> void:
 				print("  segments fwd deg (pelvis-chest, chest-neck, neck-head)  source %.1f %.1f %.1f  target %.1f %.1f %.1f" % [
 					ang.call(sp.call("Bip01_Spine2") - sp.call("Bip01_Pelvis")), ang.call(sp.call("Bip01_Neck") - sp.call("Bip01_Spine2")), ang.call(sp.call("Bip01_Head") - sp.call("Bip01_Neck")),
 					ang.call(tq.call("Spine") - tq.call("Hips")), ang.call(tq.call("neck") - tq.call("Spine")), ang.call(tq.call("Head") - tq.call("neck"))])
+				var fw2: Vector3 = -fwd    # his facing (fwd above points to his back)
+				var s_ank: Vector3 = (sp.call("Bip01_L_Foot") + sp.call("Bip01_R_Foot")) * 0.5
+				var t_ank: Vector3 = (tq.call("LeftFoot") + tq.call("RightFoot")) * 0.5
+				print("  head ahead of ankles cm (+ = forward)  source %.1f (x%.2f = %.1f)  target %.1f ; hips ahead: source %.1f target %.1f" % [
+					(sp.call("Bip01_Head") - s_ank).dot(fw2) * 100.0, ratio, (sp.call("Bip01_Head") - s_ank).dot(fw2) * 100.0 * ratio, (tq.call("Head") - t_ank).dot(fw2) * 100.0,
+					(sp.call("Bip01_Pelvis") - s_ank).dot(fw2) * 100.0 * ratio, (tq.call("Hips") - t_ank).dot(fw2) * 100.0])
+				print("  wrists ahead of hips cm  source %.1f (scaled)  target %.1f" % [
+					((sp.call("Bip01_L_Hand") + sp.call("Bip01_R_Hand")) * 0.5 - sp.call("Bip01_Pelvis")).dot(fw2) * 100.0 * ratio,
+					((tq.call("LeftHand") + tq.call("RightHand")) * 0.5 - tq.call("Hips")).dot(fw2) * 100.0])
 				print("  rest segments  source %.1f %.1f %.1f  target %.1f %.1f %.1f" % [
 					ang.call(yaw * (s_rest["Bip01_Spine2"].origin - s_rest["Bip01_Pelvis"].origin)), ang.call(yaw * (s_rest["Bip01_Neck"].origin - s_rest["Bip01_Spine2"].origin)), ang.call(yaw * (s_rest["Bip01_Head"].origin - s_rest["Bip01_Neck"].origin)),
 					ang.call(t_rest["Spine"].origin - t_rest["Hips"].origin), ang.call(t_rest["neck"].origin - t_rest["Spine"].origin), ang.call(t_rest["Head"].origin - t_rest["neck"].origin)])
