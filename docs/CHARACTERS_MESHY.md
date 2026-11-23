@@ -80,3 +80,12 @@ complicated). He chose **Meshy** (AI text/image to 3D, remesh, auto-rig) and has
   rotation (works from Meshy's A-pose). Trap: snapshot bones before moving them (a connected tail drags the child's
   head: fingers ended inside the body). Result `assets/people/meshy/yasin_own/player_12k/player_12k_rigged_anim.glb`
   (idle, walk, run, jump, climb), review/anim_sheet.png, shown on the page.
+- 23 Nov, Yasin: "the fingers are too weird, go back to the first model ... put our animations on it ... without
+  modifying it", then "add the finger bones, we need them". Done: `tools/people/meshy/add_fingers.py` (15 bones a hand,
+  Mixamo names, hand weight shared by inverse distance; measures in `cast/player_hand.json`) ->
+  `assets/people/meshy/player/rigged_fingers.glb`; `tools/people/meshy/retarget_rb_to_meshy.gd` (Godot 4.7.2: our
+  Rocketbox player clips onto it, world-rotation change from each rest + a per-bone turn from Meshy's T rest onto
+  Rocketbox's A rest; hips by hip height; fingers mapped) -> `rigged_fingers_our_clips.glb` (10 clips). Godot here:
+  github release zip to /home/user/godot. Traps: global_transform is not ready in a SceneTree _init (walk the parents);
+  get_bone_global_pose is not refreshed outside the tree's process (chain the poses by hand) - both gave a frozen pose.
+  The Mixamo-skeleton version of Yasin's own character is set aside (he found its fingers weird).
