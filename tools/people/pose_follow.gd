@@ -146,7 +146,7 @@ func setup(p_src: Skeleton3D, p_dst: Skeleton3D) -> void:
 		var hd := (dst.get_bone_global_rest(dst.find_bone(nm("middle_03_r"))).origin - dst.get_bone_global_rest(dst.find_bone(nm("hand_r"))).origin).length() * dst.global_basis.get_scale().x
 		var htd := ((dst.global_basis * dst.get_bone_global_rest(dst.find_bone(nm("head"))).origin).y - (dst.global_basis * dst.get_bone_global_rest(dst.find_bone(nm("foot_r"))).origin).y)
 		hand_scale = clampf((hs / ht) / maxf(hd / htd, 1e-4), 0.6, 1.0)
-		hand_scale = minf(hand_scale * 1.10, 1.0)   # (Yasin 23 Nov: "they look too small now though. grow them by 10 percent")
+		hand_scale = minf(hand_scale * 1.21, 1.0)   # (Yasin 23 Nov: "they look too small now though. grow them by 10 percent", then "10 more")
 		print("HANDS scale %.2f" % hand_scale)
 	_measure_torso()
 	for side in ["l", "r"]: arms.append([dst.find_bone(nm("upperarm_" + side)), dst.find_bone(nm("lowerarm_" + side)), dst.find_bone(nm("hand_" + side))])
@@ -226,7 +226,7 @@ func _follow() -> void:
 		_stand(idle_w)
 		_idle_arms(idle_w)
 		_relaxed_hands(idle_w)
-	if meshy: _shoulders_down(8.0)   # (Yasin 23 Nov: "push shoulders down a bit he looks like he is shrugging")
+	if meshy: _shoulders_down(16.0)   # (Yasin 23 Nov: "push shoulders down a bit he looks like he is shrugging" - 8, then "8 more")
 	_fit_arms()
 	_carry_prop()
 
