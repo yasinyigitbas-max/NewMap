@@ -89,3 +89,7 @@ complicated). He chose **Meshy** (AI text/image to 3D, remesh, auto-rig) and has
   github release zip to /home/user/godot. Traps: global_transform is not ready in a SceneTree _init (walk the parents);
   get_bone_global_pose is not refreshed outside the tree's process (chain the poses by hand) - both gave a frozen pose.
   The Mixamo-skeleton version of Yasin's own character is set aside (he found its fingers weird).
+- 23 Nov, Yasin: the fingers are "whiter than the rest". Meshy painted them paler / pinker (r.72 g.44 b.36) than the
+  back of the hand (r.62 g.35 b.23). `tools/people/meshy/match_hand_skin.py` tints only the finger texels to the
+  back-of-hand tone (faded over the knuckles); rigged_fingers.glb now carries it. Checked in model-viewer itself
+  (npm @google/model-viewer + Playwright, unpkg is blocked here): review/fingers_colour_before_after.png.
