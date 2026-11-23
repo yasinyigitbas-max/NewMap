@@ -72,3 +72,11 @@ complicated). He chose **Meshy** (AI text/image to 3D, remesh, auto-rig) and has
   area, colour baked from his 10k (so skin stays soft). Shown on the same page. Shoe logos: an automatic paint-over
   (dark shapes ringed by white) hit the overlays instead; Yasin: "forget about the logo for now" -> logos stay, to
   remove before release. Next (his word needed): Mixamo auto-rig with fingers, then our clips.
+- 23 Nov, rig + animation (Yasin: "yes animate it"): Mixamo's auto-rigger API (PUT /characters/:id/rig, the call its
+  site makes) failed every time ("undefined method has_key? for nil"; `tools/people/meshy/mixamo_rig.py` kept, the
+  upload works). Instead `tools/people/meshy/fit_mixamo_rig.py`: Mixamo's own 65-bone skeleton (from a clip FBX,
+  X Bot) fitted in Blender to joints measured on the mesh (`cast/player_joints.json`), heat weights (needs the glTF
+  seams welded and the 0.01 armature scale applied, else 0 weights), clips carried by copying each bone's WORLD
+  rotation (works from Meshy's A-pose). Trap: snapshot bones before moving them (a connected tail drags the child's
+  head: fingers ended inside the body). Result `assets/people/meshy/yasin_own/player_12k/player_12k_rigged_anim.glb`
+  (idle, walk, run, jump, climb), review/anim_sheet.png, shown on the page.
