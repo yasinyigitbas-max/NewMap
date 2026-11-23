@@ -218,3 +218,9 @@ THE POLISH PLAN (one fix = one thing, each shown through the game camera, tests 
 4. Lean into turns and speed changes (spine, procedural, small).
 5. Transitions on matching feet (check the hand-overs' foot phase; pick at a planted foot).
 6. Then the capture route if Yasin wants it (Move.ai / Rokoko Vision: one actor, his moves).
+- 24 Nov batch (build 11): DONE 1 phone grip (MoLimbs::grip_pose, a hand pose on the call); 2a sit (hip JOINTS 7 cm over
+  the seat - his pelvis bone is 9.3 cm above them; the sit test measures against the body's own standing ankle, 6 cm);
+  2b box carry (an unreachable palm slides back along the box's side). OPEN: cover's Stand_To_Cover_a hand-over (a foot
+  flagged down travels 29 cm; body lifted 7 cm at entry: root_step's "lower foot over the clip floor" on his ankle);
+  climbs (box 0.7/1.0 "leg 156 cm in the wall", wall pops 3.4-3.9 cm, 2.0 m "a move took it", 1.8 m running hands 32 cm
+  off); ramps/stairs walking foot drag after a jog -> walk hand-over; then plan items 3-5.
