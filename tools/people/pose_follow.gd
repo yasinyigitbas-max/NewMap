@@ -146,6 +146,7 @@ func setup(p_src: Skeleton3D, p_dst: Skeleton3D) -> void:
 		var hd := (dst.get_bone_global_rest(dst.find_bone(nm("middle_03_r"))).origin - dst.get_bone_global_rest(dst.find_bone(nm("hand_r"))).origin).length() * dst.global_basis.get_scale().x
 		var htd := ((dst.global_basis * dst.get_bone_global_rest(dst.find_bone(nm("head"))).origin).y - (dst.global_basis * dst.get_bone_global_rest(dst.find_bone(nm("foot_r"))).origin).y)
 		hand_scale = clampf((hs / ht) / maxf(hd / htd, 1e-4), 0.6, 1.0)
+		hand_scale = minf(hand_scale * 1.10, 1.0)   # (Yasin 23 Nov: "they look too small now though. grow them by 10 percent")
 		print("HANDS scale %.2f" % hand_scale)
 	_measure_torso()
 	for side in ["l", "r"]: arms.append([dst.find_bone(nm("upperarm_" + side)), dst.find_bone(nm("lowerarm_" + side)), dst.find_bone(nm("hand_" + side))])
@@ -225,6 +226,7 @@ func _follow() -> void:
 		_stand(idle_w)
 		_idle_arms(idle_w)
 		_relaxed_hands(idle_w)
+	if meshy: _shoulders_down(8.0)   # (Yasin 23 Nov: "push shoulders down a bit he looks like he is shrugging")
 	_fit_arms()
 	_carry_prop()
 
@@ -706,3 +708,21 @@ func _relaxed_hands(w: float) -> void:
 				_aim(b, seg, seg.slerp(want, w))
 				var pn2 := (palm - prev_t * palm.dot(prev_t)).normalized()
 				prev_t = (prev_t * cos(deg_to_rad(10.0)) + pn2 * sin(deg_to_rad(10.0))).normalized()
+
+# the shoulders lowered: each collarbone turned down p_deg about his facing, the shoulder's end dropping (a shrug let go)
+func _shoulders_down(p_deg: float) -> void:
+	var f: Vector3 = dst.global_basis.inverse() * (src.global_basis.orthonormalized() * (Cs * Vector3(0, 0, 1)))
+	var up: Vector3 = (dst.global_basis.inverse() * Vector3.UP).normalized()
+	f -= up * f.dot(up)
+	if f.length() < 1e-6: return
+	f = f.normalized()
+	for i in 2:
+		var cb := dst.find_bone(nm("clavicle_" + ("l" if i == 0 else "r")))
+		if cb < 0: continue
+		var g := dst.get_bone_global_pose(cb)
+		var tip := dst.get_bone_global_pose(arms[i][0]).origin - g.origin
+		var q := Quaternion(f, deg_to_rad(p_deg))
+		if (Basis(q) * tip).dot(up) > tip.dot(up): q = q.inverse()   # (whichever way drops the shoulder's end)
+		var par := dst.get_bone_parent(cb)
+		var pg := dst.get_bone_global_pose(par).basis if par >= 0 else Basis()
+		dst.set_bone_pose_rotation(cb, (pg.inverse() * (Basis(q) * g.basis)).orthonormalized().get_rotation_quaternion())
