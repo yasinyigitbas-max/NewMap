@@ -67,3 +67,8 @@ complicated). He chose **Meshy** (AI text/image to 3D, remesh, auto-rig) and has
   into ~100 UV pieces whose painted colours do not match at the cuts -> the sharp light/dark patches. In the model, not
   the page. Fix proposed: generate high detail with no remesh, texture that, then reduce ourselves keeping the face
   dense and give the face its own big texture area (re-bake), seams blended. Waiting for his word.
+- 23 Nov: Yasin's own character (image-to-3D 557k + his 10k textured upload) chosen. Our 12k version
+  (`tools/people/meshy/build_low.py`, assets/people/meshy/yasin_own/player_12k/): head ~3,200 tris, face ~6x the texture
+  area, colour baked from his 10k (so skin stays soft). Shown on the same page. Shoe logos: an automatic paint-over
+  (dark shapes ringed by white) hit the overlays instead; Yasin: "forget about the logo for now" -> logos stay, to
+  remove before release. Next (his word needed): Mixamo auto-rig with fingers, then our clips.
