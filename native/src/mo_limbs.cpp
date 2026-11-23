@@ -268,6 +268,15 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 			const Vector3 left = Rc.xform(Vector3(1, 0, 0)), back = Rc.xform(Vector3(0, 0, -box_d * 0.15f));
 			hand_target[0] = hc + left * (box_w * 0.5f + 0.02f) + back;
 			hand_target[1] = hc - left * (box_w * 0.5f + 0.02f) + back;
+			// (a hand the arm cannot reach slides back along the box's side, toward its back edge - the palm stays on the
+			// side, never short of it in the air: the player v3's right hand ended 3.9 cm off the box walking)
+			for (int s = 0; s < 2; s++) {
+				if (b_ua[s] < 0 || b_fa[s] < 0 || b_hd[s] < 0) continue;
+				const Vector3 sh = G.xform(sk->get_bone_global_pose(b_ua[s]).origin);
+				const float arm = (float)(G.xform(sk->get_bone_global_pose(b_fa[s]).origin) - sh).length() + (float)(G.xform(sk->get_bone_global_pose(b_hd[s]).origin) - G.xform(sk->get_bone_global_pose(b_fa[s]).origin)).length();
+				const Vector3 bk = Rc.xform(Vector3(0, 0, -1));
+				for (int i = 0; i < 12 && (hand_target[s] - sh).length() > arm * 0.97f; i++) hand_target[s] += bk * (box_d * 0.03f);
+			}
 			hand_w[0] = hand_w[1] = hold_w;
 		} else { hand_target[1] = hc; hand_w[0] = 0.0f; hand_w[1] = hold_w; }
 		if (prop && prop->is_inside_tree()) {
