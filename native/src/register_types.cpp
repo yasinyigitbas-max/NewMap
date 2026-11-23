@@ -11,6 +11,7 @@
 #include "city_phone.h"
 #include "hand_grip.h"
 #include "mo_inertial.h"
+#include "mo_layer.h"
 #include "mo_limbs.h"
 #include "body_layer.h"
 #include "city_native.h"
@@ -50,7 +51,8 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(CityPhone);
 	GDREGISTER_CLASS(HandGrip);
 	GDREGISTER_CLASS(MoLimbs);       // the new movement system: feet pinned while down, hands reached to the world
-	GDREGISTER_CLASS(MoInertial);    // the new movement system: hand-overs between clips without crossfades (docs/ANIMATION_PLAN.md)
+	GDREGISTER_CLASS(MoInertial);
+	GDREGISTER_CLASS(MoLayer);       // the new movement system: an upper-body layer (the phone)    // the new movement system: hand-overs between clips without crossfades (docs/ANIMATION_PLAN.md)
 	GDREGISTER_CLASS(Posture);       // everyone's shoulders forward
 	GDREGISTER_CLASS(BodyLayer);     // the player's carry (the arms from a carry take, the prop in his hands) and look-at
 	GDREGISTER_CLASS(FootPlant);     // the player's feet on the ground under them      // the player's hands on a ledge's edge while he climbs     // the player's bicycle: the rider's feet and hands to the pedals and grips

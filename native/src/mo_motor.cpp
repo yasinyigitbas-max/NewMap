@@ -3,6 +3,7 @@
 
 #include "city_ped.h"
 #include "mo_inertial.h"
+#include "mo_layer.h"
 #include "mo_limbs.h"
 
 #include <godot_cpp/classes/animation_mixer.hpp>
@@ -168,6 +169,7 @@ void Motor::load_clips() {
 	load_carry();
 	load_air();
 	load_sit();
+	load_phone();
 }
 
 void Motor::set_style(int p_style) {
@@ -191,10 +193,15 @@ bool Motor::attach(CityPed *p_fig) {
 		sk->move_child(inert, 0);
 		if (OS::get_singleton()->get_cmdline_user_args().has("--no-inertial")) inert->set_active(false);   // (tests: the hand-overs off)
 	}
+	if (!layer && !OS::get_singleton()->get_cmdline_user_args().has("--no-layer")) {   // the upper-body layer (the phone): before the hand-overs, so they smooth its changes too
+		layer = memnew(MoLayer);
+		sk->add_child(layer);
+		sk->move_child(layer, 0);
+	}
 	if (!limbs) {   // right after the hand-over: the feet pinned on the pose that is drawn
 		limbs = memnew(MoLimbs);
 		sk->add_child(limbs);
-		sk->move_child(limbs, 1);
+		sk->move_child(limbs, inert ? inert->get_index() + 1 : 1);   // (right after the hand-overs - at a fixed index it fell behind the figure's own modifiers)
 		if (OS::get_singleton()->get_cmdline_user_args().has("--no-footlock")) limbs->set_active(false);   // (tests)
 	}
 	rng ^= (uint32_t)(uint64_t)fig->get_instance_id();
@@ -303,7 +310,9 @@ int Motor::pick_loop(float p_speed, int p_keep, bool p_random) {
 	}
 	// a new one: at random among those as near the pace (within 15 %) - set 1's and set 3's takes rotate
 	int cand[16]; int nc = 0;
-	for (int i = 0; i < n_loops; i++) if (std::fabs(std::log(sp / loops[i].ground_v)) < lb + 0.15f) cand[nc++] = i;
+	// (not jog_a unless it is the nearest: picked at random for a faster run, played sped up, its run stop jumped the hips'
+	// speed 2.1 m/s and its run pivot popped them 4.3 cm - Yasin: "remove the parts that break the quality chain")
+	for (int i = 0; i < n_loops; i++) if (std::fabs(std::log(sp / loops[i].ground_v)) < lb + 0.15f && (i == best || String(loops[i].name) != "prun/jog_a")) cand[nc++] = i;
 	return nc > 0 ? cand[(int)(rnd() * nc) % nc] : best;
 }
 
@@ -658,6 +667,8 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	drawn_pel = fig->bone_world("Bip01_Pelvis");   // (as drawn last frame: mid-step, at a hand-over, it is the new clip's raw pose)
 	Vector3 dir(p_in.dir.x, 0.0f, p_in.dir.z);
 	float sp_in = p_in.speed;
+	phone_step(p_dt, p_in);
+	if (p_in.phone != 0 || ph_phase != 0) sp_in = std::min(sp_in, 1.6f);   // (the phone out: a walk at most - "we shouldnt be able to run while on a phone call")
 	// SITTING (mo_motor_sit.cpp): on the seat, or into / out of it - the clip has the body; walking to a seat, the way to it
 	if (st == SIT) { sit_step(p_dt, p_in); host = nullptr; return; }
 	if (p_in.sit && (st == IDLE || st == START || st == MOVE || st == STOP || st == TURN)) {

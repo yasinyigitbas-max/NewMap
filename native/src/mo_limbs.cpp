@@ -28,7 +28,8 @@ void MoLimbs::find_bones(Skeleton3D *sk) {
 		b_th[s] = sk->find_bone(TH[s]); b_ca[s] = sk->find_bone(CA[s]); b_ft[s] = sk->find_bone(FT[s]);
 		b_ua[s] = sk->find_bone(UA[s]); b_fa[s] = sk->find_bone(FA[s]); b_hd[s] = sk->find_bone(HD[s]);
 	}
-	b_pel = sk->find_bone("Bip01_Pelvis");
+	b_pel = sk->find_bone("Bip01_Pelvis"); b_head = sk->find_bone("Bip01_Head");
+	b_fing[0] = sk->find_bone("Bip01_R_Finger0"); b_fing[1] = sk->find_bone("Bip01_R_Finger2");
 	found = true;
 }
 
@@ -204,6 +205,21 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 	} else if (hold_kind == 0 && prop_owned_hands) { hand_w[0] = hand_w[1] = 0.0f; }
 	prop_owned_hands = hold_kind != 0;
 	for (int s = 0; s < 2; s++) {
+		if (s == 1 && ear_w > 0.001f && b_head >= 0) {   // A CALL: the wrist under the right ear, where the head is drawn (the arm a
+			// standing take's on a walking spine put the phone 20 cm off the ear)
+			const Vector3 hp = sk->get_bone_global_pose(b_head).origin;
+			const Vector3 up_s = Gi.basis.xform(Vector3(0, 1, 0)).normalized();
+			// (his right from his own shoulders, as drawn: from his facing, turned in the skeleton's frame, it was his left -
+			// the hand went round the back of his head)
+			Vector3 right = sk->get_bone_global_pose(b_ua[1]).origin - sk->get_bone_global_pose(b_ua[0]).origin;
+			right -= up_s * right.dot(up_s); right = right.length_squared() > 1e-8f ? right.normalized() : Vector3(-1, 0, 0);
+			const Vector3 f = up_s.cross(right).normalized();
+			// (in METRES, in the world: the skeleton's own units are centimetres - offsets taken in them put the hand on the
+			// head bone itself, inside his head)
+			const Vector3 rw = G.basis.xform(right).normalized(), uw = G.basis.xform(up_s).normalized(), fw2 = G.basis.xform(f).normalized();
+			hand_target[1] = G.xform(hp) + rw * 0.11f - uw * 0.11f + fw2 * 0.03f;   // (the wrist under the ear, out from the face: the phone in the palm runs up the cheek)
+			hand_w[1] = ear_w;
+		}
 		if (hand_w[s] <= 0.001f || b_ua[s] < 0 || b_fa[s] < 0 || b_hd[s] < 0) continue;
 		const Vector3 wr = sk->get_bone_global_pose(b_hd[s]).origin;
 		const Vector3 tgt = wr.lerp(Gi.xform(hand_target[s]), std::min(hand_w[s], 1.0f));
@@ -219,6 +235,33 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 			const float L = std::max((float)pole.length(), 1e-3f);
 			pole = pole / L * 0.3f + out * 0.8f - up_s * 0.4f;
 		}
+		if (s == 1 && ear_w > 0.001f && b_ua[0] >= 0) {   // (a call: the elbow forward and down, a little out - the side pole
+			// above, from the facing in the skeleton's turned frame, swung it up across the face)
+			const Vector3 up_s = Gi.basis.xform(Vector3(0, 1, 0)).normalized();
+			Vector3 right = sk->get_bone_global_pose(b_ua[1]).origin - sk->get_bone_global_pose(b_ua[0]).origin;
+			right -= up_s * right.dot(up_s); right = right.normalized();
+			const Vector3 f = up_s.cross(right).normalized();
+			pole = pole.lerp(f * 0.6f - up_s * 0.6f + right * 0.3f, std::min(ear_w, 1.0f));
+		}
 		reach(sk, b_ua[s], b_fa[s], b_hd[s], tgt, pole);
+	}
+	// the thing in the right hand (the phone), on the hand as finally drawn
+	if (hand_prop && hand_prop->is_inside_tree()) {
+		hand_prop->set_visible(hand_prop_on);
+		if (hand_prop_on && b_hd[1] >= 0 && b_fing[0] >= 0 && b_fing[1] >= 0) {
+			// (in the palm, from the hand as drawn: its long side along the fingers - the wrist to the middle finger's root -
+			// its screen facing out of the palm; centred in the palm, 1.5 cm off it. From the hand bone's own axes, guessed,
+			// it stood out sideways; with the skeleton's scale - its bones in centimetres - it was a speck)
+			const Transform3D SG = sk->get_global_transform();
+			const Vector3 wr = SG.xform(sk->get_bone_global_pose(b_hd[1]).origin);
+			const Vector3 mid = SG.xform(sk->get_bone_global_pose(b_fing[1]).origin), th = SG.xform(sk->get_bone_global_pose(b_fing[0]).origin);
+			Vector3 along = mid - wr; const float L = (float)along.length();
+			if (L > 1e-4f) {
+				along /= L;
+				Vector3 n = along.cross(th - wr); n = n.length_squared() > 1e-10f ? n.normalized() : Vector3(0, 0, 1);   // (out of the palm)
+				const Vector3 x = along.cross(n).normalized();
+				hand_prop->set_global_transform(Transform3D(Basis(x, along, n), wr + along * (L * 0.8f) + n * hand_prop_off.origin.z));
+			}
+		}
 	}
 }

@@ -10,6 +10,7 @@ var player: CharacterBody3D
 var cam: Camera3D
 var seg := -1; var t := 0.0; var t_prev := 0.0; var n := 0
 var cam_side := Vector3(3.6, 1.25, -0.5)
+var close := false
 var look := Vector3()
 # [name, length s]: each on its own lane (x = index * 10), built by _build
 const SEGS := [
@@ -18,7 +19,7 @@ const SEGS := [
 	["vault_walking", 6.0], ["vault_running", 6.0], ["climb_1m", 6.0], ["climb_1m_running", 6.0], ["climb_1_4m", 8.0], ["climb_1_75m", 8.0], ["climb_2m", 11.0], ["climb_1_8m_running", 7.0],
 	["step_off_0_35m", 6.0], ["walk_off_1m", 8.0], ["walk_off_1_8m", 8.0], ["drop_off_3_5m", 8.0], ["drop_off_8m", 11.0], ["run_off_2m", 7.0],
 	["cover_tall", 16.0], ["cover_low", 16.0],
-	["carry_box", 12.0], ["carry_briefcase", 9.0], ["carry_shopping_bag", 7.0],
+	["phone_text", 16.0], ["phone_call", 20.0], ["sit_phone", 26.0], ["carry_box", 12.0], ["carry_briefcase", 9.0], ["carry_shopping_bag", 7.0],
 	["ramp_15deg_walk", 10.0], ["ramp_15deg_run", 7.0], ["ramp_25deg_walk", 11.0], ["stairs_walk", 10.0], ["stairs_run", 7.0], ["kerbs", 9.0],
 ]
 var wall := Color(0.78, 0.70, 0.60)
@@ -46,6 +47,7 @@ func _build(i: int) -> void:
 			var hh := _start_y(i)
 			_box(Vector3(4, hh, 5.0), Vector3(x, hh * 0.5, -1.5), null, Vector3.ONE, wall)
 		"climb_1_8m_running": _box(Vector3(3, 1.8, 2.0), Vector3(x, 0.9, 7.0), null, Vector3.ONE, wall)
+		"sit_phone": _box(Vector3(1.6, 0.45, 0.45), Vector3(x, 0.225, 3.05), null, Vector3.ONE, wall)
 		"cover_tall": _box(Vector3(6, 2.4, 0.3), Vector3(x, 1.2, 3.15), null, Vector3.ONE, wall)
 		"cover_low": _box(Vector3(6, 1.0, 0.3), Vector3(x, 0.5, 3.15), null, Vector3.ONE, wall)
 		"ramp_15deg_walk", "ramp_15deg_run": _ramp(x, 15.0, wall)
@@ -61,6 +63,7 @@ func _initialize() -> void:
 		elif a.begins_with("--only="): only = a.trim_prefix("--only=")
 		elif a.begins_with("--loops="): loops_kept = PackedStringArray(a.trim_prefix("--loops=").split(";"))
 		elif a.begins_with("--run-speed="): run_speed = float(a.trim_prefix("--run-speed="))
+		elif a == "--close": close = true   # (the camera at his chest, 1.1 m off: hands, the phone)
 	var sun := DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-50, 50, 0); sun.shadow_enabled = true; root.add_child(sun)
 	var we := WorldEnvironment.new(); var env := Environment.new(); env.background_mode = Environment.BG_COLOR; env.background_color = Color(0.70, 0.78, 0.88)
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR; env.ambient_light_color = Color(0.78, 0.79, 0.83); env.ambient_light_energy = 0.7; we.environment = env; root.add_child(we)
@@ -123,6 +126,7 @@ func _next() -> void:
 	print("FILM %s" % SEGS[seg][0])
 
 func _at(w: float) -> bool: return t_prev < w and t >= w
+func x_of() -> float: return _lane(seg)
 func mv(v: Vector2, run := false) -> void: player.call(&"set_move", v, run)
 
 func _act() -> void:
@@ -165,6 +169,21 @@ func _act() -> void:
 			if _at(0.6): mv(Vector2(0, 1), true)
 			if _at(2.2): player.call(&"jump")
 			if _at(4.0): mv(Vector2.ZERO)
+		"phone_text":   # (the phone open: texting standing, walking with it, put away)
+			if _at(0.8): player.call(&"set_phone_use", 1)
+			if _at(6.0): mv(Vector2(0, 1))
+			if _at(11.0): mv(Vector2.ZERO)
+			if _at(13.0): player.call(&"set_phone_use", 0)
+		"phone_call":   # (a call: standing, walking - run asked, a walk it stays - then hung up)
+			if _at(0.8): player.call(&"set_phone_use", 2)
+			if _at(8.0): mv(Vector2(0, 1), true)
+			if _at(14.0): mv(Vector2.ZERO)
+			if _at(16.0): player.call(&"set_phone_use", 0)
+		"sit_phone":   # (to the bench, sat, the phone out while sitting, away, up)
+			if _at(0.8): player.call(&"sit_at", Vector3(x_of(), 0.45, 3.0), PI)
+			if _at(9.0): player.call(&"set_phone_use", 1)
+			if _at(19.0): player.call(&"set_phone_use", 0)
+			if _at(23.0): player.call(&"stand_up")
 		"tired_after_jumps":   # (five jumps back to back: out of stamina - the tired idle, then rested, the idle again)
 			for k in 5: if _at(0.8 + k * 3.0): player.call(&"jump")
 		"crouch":
@@ -207,9 +226,9 @@ func _process(delta: float) -> bool:
 	t_prev = t; t += delta
 	_act()
 	# the camera beside him, following softly
-	var p := player.global_position + Vector3(0, 0.9, 0)
+	var p := player.global_position + Vector3(0, 1.25 if close else 0.9, 0)
 	look = look.lerp(p, 0.12)
-	cam.global_position = look + cam_side
+	cam.global_position = look + (Vector3(-1.3, 0.1, 1.0) if close else cam_side)
 	cam.look_at(look, Vector3.UP)
 	cam.current = true   # (the player makes his own camera current: this one is the film's)
 	if t > 0.3:

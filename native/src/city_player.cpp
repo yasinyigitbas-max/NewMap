@@ -370,7 +370,8 @@ void CityPlayer::_physics_process(double p_delta) {
 		in.speed = run ? run_speed : walk_speed;
 		in.crouch = crouch; in.cover = cover_req; cover_req = false; in.carry = carry_kind;
 		in.jump = jump_want; jump_want = false;   // (the new system's jumps: the right double tap / Space)
-		in.sit = sit_want; in.seat = sit_seat; in.seat_yaw = sit_yaw_want;   // (a seat: the game's bench / chair, or an NPC's mind)
+		in.sit = sit_want; in.seat = sit_seat; in.seat_yaw = sit_yaw_want;
+		in.phone = phone_use;   // (a seat: the game's bench / chair, or an NPC's mind)
 		motor->step(dt, in, host);
 		if (motor->st == mo::Motor::COVER_OUT) crouch = false;   // (out of cover he stands: the crouch is let go)
 		carry_draw();
@@ -957,7 +958,7 @@ Dictionary CityPlayer::get_motor_state() const {
 	if (!motor) return d;
 	d["state"] = String(motor->state_name()); d["clip"] = motor->clip_name(); d["t"] = motor->clip_time(); d["speed"] = motor->speed; d["yaw"] = motor->yaw;
 	d["starts"] = motor->n_starts; d["stops"] = motor->n_stops; d["turns"] = motor->n_turns; d["pivots"] = motor->n_pivots; d["gaits"] = motor->n_gait;
-	d["fidgets"] = motor->n_fidgets; d["switches"] = motor->n_switch; d["entry_cost"] = motor->last_entry_cost; d["i_switches"] = motor->inert_switches(); d["i_jump"] = motor->inert_jump(); d["i_live"] = motor->inert_live(); d["down_l"] = motor->foot_down(0); d["down_r"] = motor->foot_down(1); d["pull_l"] = motor->foot_pull(0); d["pull_r"] = motor->foot_pull(1); d["locks"] = motor->foot_locks(); d["steps"] = motor->foot_steps(); d["drop"] = motor->hips_drop(); d["draw_y"] = motor->floor_y(); d["follow"] = motor->last_follow; d["pin_fix"] = motor->n_pin_fix; d["covers"] = motor->n_covers; d["fallen"] = motor->land_fallen; d["tired"] = motor->tired; d["run_t"] = motor->run_t; d["jump_chain"] = motor->jump_chain; d["rest_t"] = motor->rest_t; d["jumps"] = motor->n_jumps; d["sneaks"] = motor->n_sneaks; d["peeks"] = motor->n_peeks; d["sits"] = motor->n_sits; d["cover_gap"] = motor->cover_gap(); d["crouched"] = motor->crouched(); d["carry"] = motor->carrying(); d["carry_w"] = motor->carry_weight(); d["carry_xf"] = motor->carry_xf; d["hand_t"] = Array::make(motor->carry_hand_target(0), motor->carry_hand_target(1)); d["sneak_off"] = motor->sneak_off; d["dbg_v"] = motor->dbg_v; d["dbg_t"] = motor->dbg_t; d["follow_v"] = motor->follow_v; d["step_l"] = motor->foot_stepping(0); d["step_r"] = motor->foot_stepping(1); d["aligned"] = motor->n_aligned; d["align"] = motor->last_align; d["align_yaw"] = motor->last_align_yaw; d["hips_aligned"] = motor->n_hips_aligned; d["vaults"] = motor->n_vaults; d["climbs"] = motor->n_climbs; d["trav"] = motor->last_trav; d["hand_miss"] = motor->trav_hand_miss; d["hand_dy"] = motor->trav_hand_dy; d["hips_over"] = motor->trav_hips_over; d["warp"] = motor->trav_warp; d["top"] = motor->trav_top; d["win"] = motor->trav_win(); d["wmax"] = motor->trav_wmax; d["hands"] = motor->trav_hands();
+	d["fidgets"] = motor->n_fidgets; d["switches"] = motor->n_switch; d["entry_cost"] = motor->last_entry_cost; d["i_switches"] = motor->inert_switches(); d["i_jump"] = motor->inert_jump(); d["i_live"] = motor->inert_live(); d["down_l"] = motor->foot_down(0); d["down_r"] = motor->foot_down(1); d["pull_l"] = motor->foot_pull(0); d["pull_r"] = motor->foot_pull(1); d["locks"] = motor->foot_locks(); d["steps"] = motor->foot_steps(); d["drop"] = motor->hips_drop(); d["draw_y"] = motor->floor_y(); d["follow"] = motor->last_follow; d["pin_fix"] = motor->n_pin_fix; d["covers"] = motor->n_covers; d["fallen"] = motor->land_fallen; d["tired"] = motor->tired; d["run_t"] = motor->run_t; d["jump_chain"] = motor->jump_chain; d["rest_t"] = motor->rest_t; d["jumps"] = motor->n_jumps; d["sneaks"] = motor->n_sneaks; d["peeks"] = motor->n_peeks; d["sits"] = motor->n_sits; d["phone"] = motor->phone_phase(); d["cover_gap"] = motor->cover_gap(); d["crouched"] = motor->crouched(); d["carry"] = motor->carrying(); d["carry_w"] = motor->carry_weight(); d["carry_xf"] = motor->carry_xf; d["hand_t"] = Array::make(motor->carry_hand_target(0), motor->carry_hand_target(1)); d["sneak_off"] = motor->sneak_off; d["dbg_v"] = motor->dbg_v; d["dbg_t"] = motor->dbg_t; d["follow_v"] = motor->follow_v; d["step_l"] = motor->foot_stepping(0); d["step_r"] = motor->foot_stepping(1); d["aligned"] = motor->n_aligned; d["align"] = motor->last_align; d["align_yaw"] = motor->last_align_yaw; d["hips_aligned"] = motor->n_hips_aligned; d["vaults"] = motor->n_vaults; d["climbs"] = motor->n_climbs; d["trav"] = motor->last_trav; d["hand_miss"] = motor->trav_hand_miss; d["hand_dy"] = motor->trav_hand_dy; d["hips_over"] = motor->trav_hips_over; d["warp"] = motor->trav_warp; d["top"] = motor->trav_top; d["win"] = motor->trav_win(); d["wmax"] = motor->trav_wmax; d["hands"] = motor->trav_hands();
 	return d;
 }
 
@@ -1170,6 +1171,7 @@ void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_carry", "kind"), &CityPlayer::set_carry);
 	ClassDB::bind_method(D_METHOD("sit_at", "seat", "yaw"), &CityPlayer::sit_at);
 	ClassDB::bind_method(D_METHOD("stand_up"), &CityPlayer::stand_up);
+	ClassDB::bind_method(D_METHOD("set_phone_use", "kind"), &CityPlayer::set_phone_use);
 	ClassDB::bind_method(D_METHOD("motor_keep_loops", "names"), &CityPlayer::motor_keep_loops);
 	ClassDB::bind_method(D_METHOD("motor_set_style", "style"), &CityPlayer::motor_set_style);
 	ClassDB::bind_method(D_METHOD("motor_get_style"), &CityPlayer::motor_get_style);
@@ -1220,4 +1222,20 @@ void CityPlayer::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("interact"));
 }
 
+} // namespace godot
+
+namespace godot {
+// THE PHONE (the new movement system's): a phone in his right hand while it is out - the motor plays its clips on his
+// upper body, its limbs put it in the hand as drawn
+void CityPlayer::set_phone_use(int p_kind) {
+	phone_use = p_kind;
+	if (!phone_mesh && motor) {
+		phone_mesh = memnew(MeshInstance3D); add_child(phone_mesh); phone_mesh->set_as_top_level(true); phone_mesh->set_visible(false);
+		Ref<BoxMesh> m; m.instantiate(); m->set_size(Vector3(0.072f, 0.148f, 0.009f));
+		Ref<StandardMaterial3D> mat; mat.instantiate(); mat->set_albedo(Color(0.06f, 0.06f, 0.07f)); m->set_material(mat);
+		phone_mesh->set_mesh(m);
+		// (in the palm: along the hand 9 cm, 2 cm off its back - the Biped hand's x runs to the fingers)
+		motor->set_hand_prop(phone_mesh, Transform3D(Basis(), Vector3(0.0f, 0.0f, 0.015f)));   // (1.5 cm off the palm)
+	}
+}
 } // namespace godot

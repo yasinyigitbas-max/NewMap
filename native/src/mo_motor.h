@@ -31,6 +31,7 @@ namespace godot {
 class CityPed;
 class Node3D;
 class MoInertial;
+class MoLayer;
 class MoLimbs;
 
 namespace mo {
@@ -46,6 +47,7 @@ struct Intent {
 	bool sit = false;     // sitting on a seat (held as a state): he walks to it, sits, stays; let go - or the stick pushed away - he stands
 	Vector3 seat;         // where his seat goes: the middle of the seat's top (world)
 	float seat_yaw = 0.0f; // the way he faces sitting on it
+	int phone = 0;        // the phone: 0 away, 1 open (texting), 2 a call - taken out, used, put away; no running with it out
 };
 
 // What moves the body in the world
@@ -247,6 +249,17 @@ public:
 	void sit_step(float p_dt, const Intent &p_in);
 	void sit_out();
 	void place_sit();
+	// THE PHONE (mo_motor_phone.cpp): an upper-body layer over whatever the legs do
+	MoLayer *layer = nullptr;
+	Clip ph_text, ph_text_walk, ph_call;
+	int ph_kind = 0, ph_phase = 0;   // (phase: 0 away, 1 taking it out, 2 using it, 3 putting it away)
+	double ph_t = 0.0; float ph_w = 0.0f; bool ph_walking = false, ph_visible = false;
+	int n_phone = 0;
+	void load_phone();
+	void phone_step(float p_dt, const Intent &p_in);
+public:
+	void set_hand_prop(Node3D *p_prop, const Transform3D &p_off);   // (the phone in his right hand, put on it as drawn)
+	int phone_phase() const { return ph_phase; }
 	int n_jumps = 0, n_falls = 0, n_landings = 0, n_soft = 0, n_hard = 0, n_flat = 0;   // (tests)
 	float land_fallen = 0.0f;                                                          // (tests) the last landing's height fallen
 private:

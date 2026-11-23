@@ -69,8 +69,10 @@ public:
 	float hold_w = 0.0f, hold_yaw = 0.0f, box_w = 0.4f, box_d = 0.3f;
 	Vector3 hold_l;                    // the hold point from the hips (his facing frame), m
 	Transform3D hold_xf;               // where it was drawn (world)
+	float ear_w = 0.0f;   // (a call: the right hand held at the right ear as drawn, by this weight)
+	Node3D *hand_prop = nullptr; bool hand_prop_on = false; Transform3D hand_prop_off;   // (a thing in the right hand - the phone: on the hand as drawn, last)
 	Node3D *prop = nullptr;            // the thing's node (the game's), placed at hold_xf (a bag hangs 0.2 m under the hand)
-	int b_pel = -1; bool prop_owned_hands = false;
+	int b_pel = -1, b_head = -1, b_fing[2] = { -1, -1 }; bool prop_owned_hands = false;
 	// ---- the hands
 	Vector3 hand_target[2]; float hand_w[2] = { 0.0f, 0.0f };
 	// (the tests) how far each foot was moved from the clip's place this frame, m; locks taken

@@ -215,6 +215,9 @@ public:
 	// pushed away from the seat) gets him up
 	void sit_at(const Vector3 &p_seat, float p_yaw) { sit_want = true; sit_seat = p_seat; sit_yaw_want = p_yaw; }
 	void stand_up() { sit_want = false; }
+	// THE PHONE (the new movement system): 0 away, 1 open (texting), 2 a call - out at a walk at most
+	void set_phone_use(int p_kind);
+	int phone_use = 0; MeshInstance3D *phone_mesh = nullptr;
 	bool sit_want = false; Vector3 sit_seat; float sit_yaw_want = 0.0f;
 	void motor_set_style(int p_style) { if (motor) motor->set_style(p_style); }   // the movement set (0-2; mo_sets.cpp)
 	int motor_get_style() const { return motor ? motor->get_style() : 0; }
