@@ -214,6 +214,7 @@ func _follow() -> void:
 	if hand_scale < 0.999:
 		for h in d_hands: dst.set_bone_pose_scale(h, Vector3.ONE * hand_scale)
 	_upright()
+	if meshy: _shoulders_down(16.0)   # (Yasin 23 Nov: "push shoulders down a bit he looks like he is shrugging" - 8, then "8 more")   # (BEFORE the arms are placed: after them, the collarbones' turn swung the hanging arms into his body)
 	var idle := host != null and String(host.call(&"get_motor_state").get("state", "")) == "idle"
 	# (standing: the posture solved from his landmarks - _stand. The angles tried one by one before it - spine 20 forward,
 	# 5 more from the hip, neck and head 15 back each - replaced: Yasin 23 Nov, "study human anatomy a little")
@@ -226,8 +227,7 @@ func _follow() -> void:
 		_stand(idle_w)
 		_idle_arms(idle_w)
 		_relaxed_hands(idle_w)
-	if meshy: _shoulders_down(16.0)   # (Yasin 23 Nov: "push shoulders down a bit he looks like he is shrugging" - 8, then "8 more")
-	_fit_arms()
+	if idle_w < 0.99: _fit_arms()   # (standing, the arms are as Yasin set them: upper arm vertical, forearm 20 forward)
 	_carry_prop()
 
 func _carry_prop() -> void:
@@ -571,8 +571,22 @@ func _idle_arms(w: float) -> void:
 		var goal := tc + lat * side * (half_w + 0.035 / sc) + f * (0.02 / sc)
 		goal -= lat * (goal - pel).dot(lat) - lat * side * (half_w + 0.035 / sc)   # (its side: by the hips' width)
 		goal -= up * (goal - goal_h).dot(up)                                       # (its height)
-		var pole := el + lat * side * (0.3 / sc) - f * (0.06 / sc)   # (the elbow out to the side, barely back - "bent back from the elbow")
+		# (first to beside the thigh - its outward angle from the front; then, SEEN FROM THE SIDE - Yasin 23 Nov: "make the
+		# upper arm bone completely vertical to ground, bend the arm from elbow 20 degree forward ... i was talking about
+		# his side profile": the upper arm's forward / back tilt taken out, the forearm 20 degrees forward of it)
+		var pole := el + lat * side * (0.3 / sc) - f * (0.06 / sc)
 		_reach(A[0], A[1], A[2], wr.lerp(goal, w), pole)
+		var sh := dst.get_bone_global_pose(A[0]).origin
+		el = dst.get_bone_global_pose(A[1]).origin
+		var ua := el - sh
+		var ua_side := ua - f * ua.dot(f)
+		_aim(A[0], ua, ua.slerp(ua_side.normalized() * ua.length(), w))
+		el = dst.get_bone_global_pose(A[1]).origin
+		var fa0 := dst.get_bone_global_pose(A[2]).origin - el
+		var fa_front := fa0 - f * fa0.dot(f)
+		if fa_front.length() > 1e-6:
+			var fdir := (fa_front.normalized() * cos(deg_to_rad(20.0)) + f * sin(deg_to_rad(20.0))).normalized()
+			_aim(A[1], fa0, fa0.slerp(fdir * fa0.length(), w))
 		# the hand hanging on from the forearm, palm to the thigh
 		var fa := dst.get_bone_global_pose(A[2]).origin - dst.get_bone_global_pose(A[1]).origin
 		var mid := dst.find_bone(nm("middle_01_" + ("l" if i == 0 else "r")))
