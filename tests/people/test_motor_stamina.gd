@@ -25,7 +25,7 @@ func _process(delta: float) -> bool:
 	if _at(33.5): _check(bool(ms.get("tired", false)), "tired after 30 s of running (%.1f s)" % float(ms.get("run_t", 0)))
 	if _at(33.0): player.call(&"set_move", Vector2.ZERO, false)
 	if _at(37.0): _check(String(ms.get("clip", "")).begins_with("ms/S2_Idle"), "the tired idle (set 2's): %s" % ms.get("clip", ""))
-	if _at(46.0): _check(not bool(ms.get("tired", false)) and String(ms.get("clip", "")).begins_with("pidle/"), "rested after 10 s: set 1's idle (%s)" % ms.get("clip", ""))
+	if _at(46.0): _check(not bool(ms.get("tired", false)) and (String(ms.get("clip", "")).begins_with("pidle/") or String(ms.get("clip", "")) == "ms/S3_Idle_Breathing"), "rested after 10 s: the main idle (%s)" % ms.get("clip", ""))
 	for k in 5: if _at(48.0 + k * 3.0): player.call(&"jump")   # (each as soon as the last has landed: set 3's takes 2.6 s)
 	if _at(63.5): _check(bool(ms.get("tired", false)), "tired after 5 jumps back to back (chain %d)" % int(ms.get("jump_chain", 0)))
 	for k in 8:   # (starts from a stand pick a run at random: eight of them)

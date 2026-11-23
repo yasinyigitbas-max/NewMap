@@ -125,7 +125,12 @@ Clip Motor::load(const char *p_name) {
 // for it, or none (then set 1's). A set is changed only standing (applied in the idle), all clips loaded again.
 void Motor::load_clips() {
 	n_idles = 0;   // (the idles that face ahead: the -38 degree ones would turn the body in place)
-	for (const char *n : { "pidle/base_idle" }) { Clip c = load(n); if (c.ok()) idles[n_idles++] = c; }   // (Yasin, 24 Nov: "idle 1 is standard" - the main idle; base_loco is the same take, base_standing went with the others)
+	{   // (MO_IDLE=<lib/clip>: another main idle, to compare stances - Yasin 23 Nov, a photo of a man standing straight)
+		const char *alt = std::getenv("MO_IDLE");
+		// (Yasin 23 Nov, a photo of a man standing straight: "it is supposed to be like this" - the breathing idle stands with its
+		// feet together under the hips, legs straight; base_idle stood split, one foot 10 degrees ahead, and read as bent over)
+		for (const char *n : { alt && *alt ? alt : "ms/S3_Idle_Breathing" }) { Clip c = load(n); if (c.ok()) idles[n_idles++] = c; }
+	}   // (Yasin, 24 Nov: "idle 1 is standard" - the main idle; base_loco is the same take, base_standing went with the others)
 	n_tired = 0;
 	for (const char *n : { "ms/S2_Idle_Unarmed", "ms/S2_Idle_Unarmed_b", "ms/S2_Idle_Loop" }) { Clip c = load(n); if (c.ok()) tired_idles[n_tired++] = c; }
 	if (n_idles > 0 && idles[0].d->ground_y > 0.03f && idles[0].d->ground_y < 0.2f) ankle_rest = idles[0].d->ground_y;   // (the standing ankle over the floor)
@@ -641,11 +646,16 @@ void Motor::ground_feet(Host &p_host) {
 		// (the ground under the foot WHERE IT IS DRAWN - the clip's spot moved by its landing's clearing of a step's face: from
 		// the clip's own spot, a swinging foot's toe over the first stair lifted it 17 cm, its landing moved back onto the
 		// floor - pinned there, it dropped 8 cm a frame, 25 Nov)
-		// (and a frame ahead: the figure is drawn after this, moved on by the frame's travel - at a stair's edge 2.5 cm
-		// put the sole on the step below for the frame it was pinned, then 5 cm a frame up onto the right one)
-		const Vector3 po = Vector3(limbs->place_off[s].x, 0.0f, limbs->place_off[s].z) + Vector3(last_vel.x, 0.0f, last_vel.z) * (1.0f / 60.0f);
+		// (and where the foot will be a frame on: the figure moved by the frame's travel AND the clip's foot moved in it - a
+		// landing foot stays put in the world, a swinging one goes on. By the figure's travel alone the stairs' top was
+		// right and a running kerb's landing wrong: 14 cm over the kerb's top for a frame, then down - 25 Nov)
+		const Frame fr1 = cur->d->lerp(t + rate * (1.0 / 60.0));
+		const Vector3 step1 = Vector3(last_vel.x, 0.0f, last_vel.z) * (1.0f / 60.0f);
+		const Vector3 fw1 = X.xform(Vector3(fr1.foot[s].x, 0.0f, fr1.foot[s].z)) + step1, tw1 = X.xform(Vector3(fr1.toe[s].x, 0.0f, fr1.toe[s].z)) + step1;
+		const Vector3 po = Vector3(limbs->place_off[s].x, 0.0f, limbs->place_off[s].z);
 		Vector3 g, gn;
-		if (!sole(fw + po, tw + po, g, gn)) { g = fw + po; gn = UP; }
+		Vector3 f1 = fw1 + po, t1 = tw1 + po; f1.y = draw_y; t1.y = draw_y;
+		if (!sole(f1, t1, g, gn)) { g = f1; gn = UP; }
 		const float h = (float)fr.foot[s].y - cur->d->ground_y;
 		const float w = 1.0f - sstep(0.04f, 0.25f, h);
 		const float off = (float)g.y - draw_y;

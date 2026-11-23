@@ -82,6 +82,7 @@ func _initialize() -> void:
 	for i in SEGS.size(): _build(i)
 	player = ClassDB.instantiate(&"CityPlayer"); player.position = Vector3(0, 0.05, 0); root.add_child(player)
 	cam = Camera3D.new(); cam.fov = 42.0; root.add_child(cam); cam.current = true
+	if OS.get_environment("FILM_ORTHO") != "": cam.projection = Camera3D.PROJECTION_ORTHOGONAL; cam.size = float(OS.get_environment("FILM_ORTHO"))   # (a flat side view: posture judged without perspective)
 
 func _box(size: Vector3, at: Vector3, tex: Texture2D, uv: Vector3, col := Color(0.6, 0.6, 0.6)) -> void:
 	var b := StaticBody3D.new(); var cs := CollisionShape3D.new(); var sh := BoxShape3D.new(); sh.size = size; cs.shape = sh; b.add_child(cs)

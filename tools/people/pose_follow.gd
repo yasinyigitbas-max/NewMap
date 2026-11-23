@@ -209,6 +209,10 @@ func _follow() -> void:
 	if hand_scale < 0.999:
 		for h in d_hands: dst.set_bone_pose_scale(h, Vector3.ONE * hand_scale)
 	_upright()
+	var idle := host != null and String(host.call(&"get_motor_state").get("state", "")) == "idle"
+	if idle:
+		_straight_back()
+		_arms_forward()
 	_fit_arms()
 	_carry_prop()
 
@@ -402,3 +406,42 @@ func _upright() -> void:
 			var g3 := dst.get_bone_global_pose(dh)
 			var pg3 := dst.get_bone_global_pose(dst.get_bone_parent(dh)).basis
 			dst.set_bone_pose_rotation(dh, (pg3.inverse() * (Basis(Quaternion(df.normalized(), sf.normalized())) * g3.basis)).orthonormalized().get_rotation_quaternion())
+
+# A STRAIGHT BACK standing (Yasin 23 Nov, a photo of a man standing straight; "back is still bent"): with only the line
+# hips-to-neck upright, the spine between still curved. Standing idle each spine bone points along that line
+func _straight_back() -> void:
+	var dp := dst.find_bone(nm("pelvis")); var dn := dst.find_bone(nm("neck_01"))
+	var line := dst.get_bone_global_pose(dn).origin - dst.get_bone_global_pose(dp).origin
+	if line.length() < 1e-6: return
+	var chain := [dst.find_bone(nm("spine_01")), dst.find_bone(nm("spine_02")), dst.find_bone(nm("spine_03")), dn]
+	for i in 3:
+		var b: int = chain[i]; var c: int = chain[i + 1]
+		var seg := dst.get_bone_global_pose(c).origin - dst.get_bone_global_pose(b).origin
+		if seg.length() < 1e-6: continue
+		_aim(b, seg, line)
+
+# THE ARMS AT HIS SIDES standing ("arms are still going behind his back"): his shoulders sit back in his deep chest, and
+# the figure's hanging arms hung behind him. Each upper arm swung forward until the wrist hangs 3 cm ahead of the hips'
+# joint, beside the thigh, as in the photo; never back
+func _arms_forward() -> void:
+	var f: Vector3 = dst.global_basis.inverse() * (src.global_basis.orthonormalized() * (Cs * Vector3(0, 0, 1)))
+	var up: Vector3 = dst.global_basis.inverse() * Vector3.UP
+	f -= up.normalized() * f.dot(up.normalized())
+	if f.length() < 1e-6: return
+	f = f.normalized()
+	var sc := dst.global_basis.get_scale().x
+	var hips := dst.get_bone_global_pose(dst.find_bone(nm("pelvis"))).origin
+	for A in arms:
+		var sh := dst.get_bone_global_pose(A[0]).origin; var wr := dst.get_bone_global_pose(A[2]).origin
+		var ahead := (wr - hips).dot(f)
+		var want := 0.03 / sc
+		if ahead >= want: continue
+		var lat := f.cross(up).normalized()
+		var r := (wr - sh); r -= lat * r.dot(lat)
+		if r.length() < 1e-6: continue
+		var ang := atan2(want - ahead, r.length())
+		var g := dst.get_bone_global_pose(A[0]); var par := dst.get_bone_parent(A[0])
+		var pg := dst.get_bone_global_pose(par).basis if par >= 0 else Basis()
+		var rot := Basis(lat, -ang)
+		if (rot * (wr - sh)).dot(f) < (wr - sh).dot(f): rot = Basis(lat, ang)   # (whichever way swings it forward)
+		dst.set_bone_pose_rotation(A[0], (pg.inverse() * (rot * g.basis)).orthonormalized().get_rotation_quaternion())
