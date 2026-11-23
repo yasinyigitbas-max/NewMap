@@ -29,7 +29,7 @@ void MoLimbs::find_bones(Skeleton3D *sk) {
 		b_ua[s] = sk->find_bone(UA[s]); b_fa[s] = sk->find_bone(FA[s]); b_hd[s] = sk->find_bone(HD[s]);
 	}
 	b_pel = sk->find_bone("Bip01_Pelvis"); b_head = sk->find_bone("Bip01_Head");
-	b_fing[0] = sk->find_bone("Bip01_R_Finger0"); b_fing[1] = sk->find_bone("Bip01_R_Finger2");
+	b_fing[0] = sk->find_bone("Bip01_R_Finger0"); b_fing[1] = sk->find_bone("Bip01_R_Finger2"); b_lfing = sk->find_bone("Bip01_L_Finger2");
 	found = true;
 }
 
@@ -275,9 +275,32 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 						lng = (lng - fwd * (2.0f * (float)lng.dot(fwd))).normalized();   // (its forward lean mirrored)
 					}
 				}
-				const Vector3 x = lng.cross(n).normalized();
-				const Vector3 nn = x.cross(lng).normalized();
-				hand_prop->set_global_transform(Transform3D(Basis(x, lng, nn), at));
+				Vector3 x = lng.cross(n).normalized();
+				Vector3 nn = x.cross(lng).normalized();
+				Basis bs(x, lng, nn);
+				if (hand_prop_both && b_hd[0] >= 0 && b_lfing >= 0 && b_head >= 0) {
+					// TEXTING WITH BOTH HANDS (Yasin, 25 Nov: "turn the phone 90 degrees to left before the hands meet ... he is
+					// looking at the side of the phone ... make sure it sits in between two hands"): between his palms, its screen
+					// turned to his eyes - eased in from the one hand's grip as the other hand comes to it (from 30 cm apart to 15)
+					const Vector3 lw = SG.xform(sk->get_bone_global_pose(b_hd[0]).origin), lm = SG.xform(sk->get_bone_global_pose(b_lfing).origin);
+					const Vector3 lpalm = lw + (lm - lw) * 0.8f, rpalm = wr + along * (L * 0.8f);
+					const float apart = (float)(lpalm - rpalm).length();
+					const float k = std::min(1.0f, std::max(0.0f, (0.30f - apart) / 0.15f));
+					if (k > 0.0f) {
+						const Vector3 mid = (lpalm + rpalm) * 0.5f;
+						const Vector3 eye = SG.xform(sk->get_bone_global_pose(b_head).origin);
+						Vector3 scr = (eye - mid).normalized();                     // (the screen to his eyes)
+						Vector3 up2 = (mid - SG.xform(sk->get_bone_global_pose(b_pel).origin)); up2.y = 0.0f;   // (its top away from him)
+						up2 -= scr * up2.dot(scr);
+						if (up2.length_squared() < 1e-8f) up2 = lng;
+						up2.normalize();
+						const Vector3 x2 = up2.cross(scr).normalized();
+						const Basis b2(x2, up2, x2.cross(up2).normalized());
+						bs = Basis(Quaternion(bs.orthonormalized()).slerp(Quaternion(b2.orthonormalized()), k));
+						at = at.lerp(mid + scr * 0.01f, k);
+					}
+				}
+				hand_prop->set_global_transform(Transform3D(bs, at));
 			}
 		}
 	}

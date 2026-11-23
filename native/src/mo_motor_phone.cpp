@@ -58,6 +58,7 @@ void Motor::phone_step(float p_dt, const Intent &p_in) {
 	ph_visible = (ph_phase == 1 && ph_t > G.in0 + 0.8) || ph_phase == 2 || (ph_phase == 3 && ph_t < G.out1 - 0.8);
 	if (limbs) {
 		limbs->hand_prop_on = ph_visible;
+		limbs->hand_prop_both = ph_kind == 1 && !ph_walking;   // (texting standing / seated: both hands; walking: the one-hand take)
 		// (a call held: the right hand at the ear - eased in after it is dialled, out as it is put away)
 		const float ew = ph_kind == 2 ? (ph_phase == 2 ? 1.0f : (ph_phase == 1 ? (float)std::min(1.0, std::max(0.0, (ph_t - (G.in1 - 0.4)) / 0.4)) : (float)std::min(1.0, std::max(0.0, (G.out0 + 0.8 - ph_t) / 0.8)))) : 0.0f;
 		limbs->ear_w = ew;
