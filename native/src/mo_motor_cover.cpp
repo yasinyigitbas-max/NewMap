@@ -211,11 +211,14 @@ bool Motor::cover_probe(const Vector3 &p_dir, float p_reach, bool p_around) {
 	{
 		const Frame fe = cin.d->lerp(cin.d->len);
 		const float need = (float)(level(fig->bone_world("Bip01_Pelvis")) - end_hips).dot(-N) * -1.0f;
+		// (and the same feet down as now: joined where a foot swinging now is planted, the hand-over carried the pinned
+		// foot on 5 cm a frame - the low cover's entry from a crouched walk slid it 4.2 cm, 25 Nov)
+		const Frame fn = cur->d->lerp(t);
 		float best = 1e9f;
 		for (double tt = 0.0; tt <= cin.d->len * 0.6; tt += 1.0 / 30.0) {
 			const Frame ft = cin.d->lerp(tt);
 			const float go = (float)(fe.hips.z - ft.hips.z);   // (its travel still to come, forward, toward the wall)
-			const float e = std::fabs(go - need) + 0.05f * (float)tt;
+			const float e = std::fabs(go - need) + 0.05f * (float)tt + ((ft.down[0] && !fn.down[0]) || (ft.down[1] && !fn.down[1]) ? 0.25f : 0.0f);
 			if (e < best) { best = e; t0 = tt; }
 		}
 	}
