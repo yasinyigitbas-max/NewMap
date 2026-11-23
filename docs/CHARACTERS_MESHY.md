@@ -93,3 +93,7 @@ complicated). He chose **Meshy** (AI text/image to 3D, remesh, auto-rig) and has
   back of the hand (r.62 g.35 b.23). `tools/people/meshy/match_hand_skin.py` tints only the finger texels to the
   back-of-hand tone (faded over the knuckles); rigged_fingers.glb now carries it. Checked in model-viewer itself
   (npm @google/model-viewer + Playwright, unpkg is blocked here): review/fingers_colour_before_after.png.
+- 23 Nov, Yasin: "make another model that spends more effort on face and fingers", "let meshy do everything" (incl.
+  the cut-down). Player v2 (`cast/player_v2.json`): text-to-3D at 150k tris (prompt: detailed face, five separated
+  fingers) -> refine -> Meshy remesh 15k -> Meshy rig: 15,606 tris, 24 bones (Meshy's rig has no fingers), 40
+  credits (953 left). Face and fingers much better (review/face_hands_close.png).

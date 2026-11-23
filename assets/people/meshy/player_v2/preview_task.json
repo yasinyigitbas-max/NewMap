@@ -1,0 +1,50 @@
+{
+  "id": "01a2087e-81b5-7626-be9a-a7eccf1b9dd5",
+  "type": "text-to-3d-preview",
+  "mode": "preview",
+  "name": "",
+  "model_type": "standard",
+  "seed": 3943638087,
+  "prompt": "Full body realistic 3D game character, 28 year old muscular man, athletic build, highly detailed realistic face with defined eyes, nose, lips and jaw, short dark fade haircut, light stubble, black tattoo sleeves on both arms, fitted plain white t-shirt, dark blue jeans, white sneakers, T-pose, arms straight out, open hands palms down, five clearly separated straight fingers with visible gaps, detailed thumbs and knuckles",
+  "texture_prompt": "",
+  "texture_image_url": "",
+  "status": "SUCCEEDED",
+  "created_at": 1795438840453,
+  "progress": 100,
+  "started_at": 1795438840464,
+  "finished_at": 1795438900473,
+  "model_urls": {
+    "glb": "https://assets.meshy.ai/e9d5632e-3ba8-43aa-b58f-b2c3ffdf41b5/tasks/01a2087e-81b5-7626-be9a-a7eccf1b9dd5/output/model.glb?Expires=4948992000&Signature=Wne5aHscEPBTRtTtBWR76x0S5WasuOqJTpR89~m7uNoc6VrmXLF3fOTQtCP~5KDtH-VbsFtV1wTOL-PM3--JrK5DPM2j2Pfv4hMv1olr-6lOetrcUiPoj~c3wP3PgXzHMT2ecq7sEvi8K5VCOEph27AGxjI2b3bS6LMC6fMtXK~GFo9IQjxXbYJW~Dbp7rjvj89vAOVtVLzBJdEnqlwZf5Chp2lP~f3eEG350GckGExwsy~ovd8~E4fRQavWe~Rb~xPG3MKb~4BiBKiDx8YU9MaPMJmNZVSBi7qJmIlombZfVDaCMd2wdbwvR1MvjGAoZRKjAXKmff5atYOFFz48~Q__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "fbx": "https://assets.meshy.ai/e9d5632e-3ba8-43aa-b58f-b2c3ffdf41b5/tasks/01a2087e-81b5-7626-be9a-a7eccf1b9dd5/output/model.fbx?Expires=4948992000&Signature=NR4mu93fpcQY2iktceZBHq~R6QmQtGyEsGpaeFQu~npO6J~~XSiOAWaJ3NFB~yakdY6Uc1~Z9aqqIbVNoz3OqSCoAHdSd42IlnnpE0vgl44S7yRH-3xN5O6JjntNrhYyq4~NTWjgiVQxaBfh~uS5nJYQ8YaJ~FqPJBP55MKL6PJ1F4~XCz8SUt9MIqwhPaMX2heP1cDDTF2FwoGGy6OKqA3y0guK2IfXXousrxLTmTKgPfLqdXgqLGfhVJhvNQHd6RsdzfiOt5s0IVihARTrjoY-h~ttmzKip2OFw3BZcBZ36uWUJ5JsQOTpeby8W3dxXs3P1GNcNWPyhrOXvWGMXQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "usdz": "https://assets.meshy.ai/e9d5632e-3ba8-43aa-b58f-b2c3ffdf41b5/tasks/01a2087e-81b5-7626-be9a-a7eccf1b9dd5/output/model.usdz?Expires=4948992000&Signature=DvTPueim8luJp0wS6XKncXN5aIU5tHCubWtlQ1GV64w3QSrOrsZglT4egN8fm45qaLNcm8BSqHcLa2T7MIizSE2tSm6v6sQ83zhHFx92lXGUJQQD81vjEbRWVdgp455HGN0fVlURssa41EDzqMdDjRrPXSxR91GiV~AUmfmmtmXW5BI7u7jn16YZMXd8sMnAkkLwn6UHhzV-Cdwc4u9PdHZmYEtSEqZMqtFl~XAHqsftcXgsLZNTwdiinrQlwjhfG0inniT3Vpg6FO4UvdEpsNpONmBSXDee0JnRwVs2uERVwy5Ec5VmtN4xr8E826nLxC9j6QVW3xvrUGmft0S6KQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "obj": "https://assets.meshy.ai/e9d5632e-3ba8-43aa-b58f-b2c3ffdf41b5/tasks/01a2087e-81b5-7626-be9a-a7eccf1b9dd5/output/model.obj?Expires=4948992000&Signature=jWMRr55Oq4PAnQqpHQL-N7cl35CSd4fSG9zy1Q389ibLjQueImlRY4OlJnmlN-TYlCzFULn7883EjbbIpgTyau07IZ0nDoN~QVA6A~U5lKCFpk1~~jhVG76wO8NCzL-AYaIJ1aQbPx8z90QMF-YzPQxZgjh5eOvO1TkJRKpf66etYwT91Z9zPr8NJk4LtybYWv-5hIHcm8jGiVkJB5uLzx5s0RrskwDP5eQyf2epTZbwWcbPyK9NrPTaiuzPj0Se6FHdXyGji~x7xUqr~ON5v-hWDENQZGaFQY6t9hV59qCbKsJaX7wng4JP~4kjxpH95unSvLzjguwc4NnnY8510g__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "stl": "https://assets.meshy.ai/e9d5632e-3ba8-43aa-b58f-b2c3ffdf41b5/tasks/01a2087e-81b5-7626-be9a-a7eccf1b9dd5/output/model.stl?Expires=4948992000&Signature=icRHb9-PXtG-r8~CsVNXa3Nu7eGKUirRhrV9~WhD-TohFObwbn5502Jk-WOlX0QqpGwEY~qhMHe~AotgdRUdVNSxWZ98hl9Z5BN0xJZcU2dpBcdhNbpvy5N2yM4o0WGaPNj1MnRa9feMNyg39LpTQGETDxaIIoU3KvI-vHrbEYhemgM6nqzcB6vEfqf0l-RgehQ~78HVO0ot5CMc9~xvebAjQzXwwlIsn3nd-OAZvY8btMxEiJyhngF~wQZFvrvOii9~3R8l6wodHLSSv40wGcFK4jRjttHOf9DYykjc5LZ5J8GD7GsNMrcXhIqjEkJgPS-PQniMkVC57Cw0hfH3wg__&Key-Pair-Id=K1VGYTHIYLM9UM"
+  },
+  "thumbnail_url": "https://assets.meshy.ai/e9d5632e-3ba8-43aa-b58f-b2c3ffdf41b5/tasks/01a2087e-81b5-7626-be9a-a7eccf1b9dd5/output/preview.png?Expires=4948992000&Signature=LiP4JvxN5EHGgjNR37w38A1wUlZrDQOTIJZuT2kd6MDpPVn-Q5NuacyDhTzPY-KXitEmrn0RsyjB8JxAj4ciJYc~haMKUjQfD0uyL5RkqhT~blHkRtFncB~a0U5I6x~MYFThRCr2PtN7B~y6q~UFJPQdFwYNepFIfApg7pZvxOV7h9R6Dj6RK0B8ON2e1OyEQJU7Up3dSRoUsQ-seB~jcVFPB2p0t2xYs8qJUZQkuhe-Mrvwd5uXKYWLPcQopRAutqIuFFnWHdgBwBA387AoTc5RNubG5Q9g1qdlM~GjvMEUHQbtbJxJM~XjWNBX1G0PUA4KF0vnkg171iCoCuX84Q__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "texture_urls": [],
+  "consumed_credits": 20,
+  "task_error": null,
+  "expires_at": null,
+  "input": {
+    "ai_model": "latest",
+    "mode": "preview",
+    "pose_mode": "t-pose",
+    "prompt": "Full body realistic 3D game character, 28 year old muscular man, athletic build, highly detailed realistic face with defined eyes, nose, lips and jaw, short dark fade haircut, light stubble, black tattoo sleeves on both arms, fitted plain white t-shirt, dark blue jeans, white sneakers, T-pose, arms straight out, open hands palms down, five clearly separated straight fingers with visible gaps, detailed thumbs and knuckles",
+    "should_remesh": true,
+    "target_polycount": 150000,
+    "topology": "triangle"
+  },
+  "output": {
+    "seed": 3943638087,
+    "model_urls": {
+      "fbx": "https://assets.meshy.ai/e9d5632e-3ba8-43aa-b58f-b2c3ffdf41b5/tasks/01a2087e-81b5-7626-be9a-a7eccf1b9dd5/output/model.fbx?Expires=4948992000&Signature=NR4mu93fpcQY2iktceZBHq~R6QmQtGyEsGpaeFQu~npO6J~~XSiOAWaJ3NFB~yakdY6Uc1~Z9aqqIbVNoz3OqSCoAHdSd42IlnnpE0vgl44S7yRH-3xN5O6JjntNrhYyq4~NTWjgiVQxaBfh~uS5nJYQ8YaJ~FqPJBP55MKL6PJ1F4~XCz8SUt9MIqwhPaMX2heP1cDDTF2FwoGGy6OKqA3y0guK2IfXXousrxLTmTKgPfLqdXgqLGfhVJhvNQHd6RsdzfiOt5s0IVihARTrjoY-h~ttmzKip2OFw3BZcBZ36uWUJ5JsQOTpeby8W3dxXs3P1GNcNWPyhrOXvWGMXQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+      "glb": "https://assets.meshy.ai/e9d5632e-3ba8-43aa-b58f-b2c3ffdf41b5/tasks/01a2087e-81b5-7626-be9a-a7eccf1b9dd5/output/model.glb?Expires=4948992000&Signature=Wne5aHscEPBTRtTtBWR76x0S5WasuOqJTpR89~m7uNoc6VrmXLF3fOTQtCP~5KDtH-VbsFtV1wTOL-PM3--JrK5DPM2j2Pfv4hMv1olr-6lOetrcUiPoj~c3wP3PgXzHMT2ecq7sEvi8K5VCOEph27AGxjI2b3bS6LMC6fMtXK~GFo9IQjxXbYJW~Dbp7rjvj89vAOVtVLzBJdEnqlwZf5Chp2lP~f3eEG350GckGExwsy~ovd8~E4fRQavWe~Rb~xPG3MKb~4BiBKiDx8YU9MaPMJmNZVSBi7qJmIlombZfVDaCMd2wdbwvR1MvjGAoZRKjAXKmff5atYOFFz48~Q__&Key-Pair-Id=K1VGYTHIYLM9UM",
+      "obj": "https://assets.meshy.ai/e9d5632e-3ba8-43aa-b58f-b2c3ffdf41b5/tasks/01a2087e-81b5-7626-be9a-a7eccf1b9dd5/output/model.obj?Expires=4948992000&Signature=jWMRr55Oq4PAnQqpHQL-N7cl35CSd4fSG9zy1Q389ibLjQueImlRY4OlJnmlN-TYlCzFULn7883EjbbIpgTyau07IZ0nDoN~QVA6A~U5lKCFpk1~~jhVG76wO8NCzL-AYaIJ1aQbPx8z90QMF-YzPQxZgjh5eOvO1TkJRKpf66etYwT91Z9zPr8NJk4LtybYWv-5hIHcm8jGiVkJB5uLzx5s0RrskwDP5eQyf2epTZbwWcbPyK9NrPTaiuzPj0Se6FHdXyGji~x7xUqr~ON5v-hWDENQZGaFQY6t9hV59qCbKsJaX7wng4JP~4kjxpH95unSvLzjguwc4NnnY8510g__&Key-Pair-Id=K1VGYTHIYLM9UM",
+      "stl": "https://assets.meshy.ai/e9d5632e-3ba8-43aa-b58f-b2c3ffdf41b5/tasks/01a2087e-81b5-7626-be9a-a7eccf1b9dd5/output/model.stl?Expires=4948992000&Signature=icRHb9-PXtG-r8~CsVNXa3Nu7eGKUirRhrV9~WhD-TohFObwbn5502Jk-WOlX0QqpGwEY~qhMHe~AotgdRUdVNSxWZ98hl9Z5BN0xJZcU2dpBcdhNbpvy5N2yM4o0WGaPNj1MnRa9feMNyg39LpTQGETDxaIIoU3KvI-vHrbEYhemgM6nqzcB6vEfqf0l-RgehQ~78HVO0ot5CMc9~xvebAjQzXwwlIsn3nd-OAZvY8btMxEiJyhngF~wQZFvrvOii9~3R8l6wodHLSSv40wGcFK4jRjttHOf9DYykjc5LZ5J8GD7GsNMrcXhIqjEkJgPS-PQniMkVC57Cw0hfH3wg__&Key-Pair-Id=K1VGYTHIYLM9UM",
+      "usdz": "https://assets.meshy.ai/e9d5632e-3ba8-43aa-b58f-b2c3ffdf41b5/tasks/01a2087e-81b5-7626-be9a-a7eccf1b9dd5/output/model.usdz?Expires=4948992000&Signature=DvTPueim8luJp0wS6XKncXN5aIU5tHCubWtlQ1GV64w3QSrOrsZglT4egN8fm45qaLNcm8BSqHcLa2T7MIizSE2tSm6v6sQ83zhHFx92lXGUJQQD81vjEbRWVdgp455HGN0fVlURssa41EDzqMdDjRrPXSxR91GiV~AUmfmmtmXW5BI7u7jn16YZMXd8sMnAkkLwn6UHhzV-Cdwc4u9PdHZmYEtSEqZMqtFl~XAHqsftcXgsLZNTwdiinrQlwjhfG0inniT3Vpg6FO4UvdEpsNpONmBSXDee0JnRwVs2uERVwy5Ec5VmtN4xr8E826nLxC9j6QVW3xvrUGmft0S6KQ__&Key-Pair-Id=K1VGYTHIYLM9UM"
+    },
+    "thumbnail_url": "https://assets.meshy.ai/e9d5632e-3ba8-43aa-b58f-b2c3ffdf41b5/tasks/01a2087e-81b5-7626-be9a-a7eccf1b9dd5/output/preview.png?Expires=4948992000&Signature=LiP4JvxN5EHGgjNR37w38A1wUlZrDQOTIJZuT2kd6MDpPVn-Q5NuacyDhTzPY-KXitEmrn0RsyjB8JxAj4ciJYc~haMKUjQfD0uyL5RkqhT~blHkRtFncB~a0U5I6x~MYFThRCr2PtN7B~y6q~UFJPQdFwYNepFIfApg7pZvxOV7h9R6Dj6RK0B8ON2e1OyEQJU7Up3dSRoUsQ-seB~jcVFPB2p0t2xYs8qJUZQkuhe-Mrvwd5uXKYWLPcQopRAutqIuFFnWHdgBwBA387AoTc5RNubG5Q9g1qdlM~GjvMEUHQbtbJxJM~XjWNBX1G0PUA4KF0vnkg171iCoCuX84Q__&Key-Pair-Id=K1VGYTHIYLM9UM",
+    "alpha_thumbnail_url": null,
+    "texture_urls": []
+  }
+}
