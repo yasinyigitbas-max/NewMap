@@ -28,6 +28,7 @@ var AIM := {
 }
 var SAME_AS := {"Bip01_L_Hand": "Bip01_L_Forearm", "Bip01_R_Hand": "Bip01_R_Forearm"}
 const FPS := 30.0
+var LEAN := float(OS.get_environment("LEAN")) if OS.get_environment("LEAN") != "" else 0.0   # degrees forward
 
 
 func _init() -> void:
@@ -81,16 +82,44 @@ func _init() -> void:
 	var yaw := Basis(Quaternion(s_lat.normalized(), t_lat.normalized()))
 	print("facing yaw deg ", rad_to_deg(Quaternion(yaw).get_angle()))
 
-	# per bone: C = rotation taking the target's rest direction onto the (turned) source rest direction
+	# per bone: C turns the target's rest frame onto the (turned) source rest frame. A frame = the bone's direction
+	# plus a second axis: the body's left-right axis for the hips, spine, neck, head and legs; the palm's normal for
+	# hands and fingers (direction alone left the twist free: the thumb curled like a finger, 23 Nov). Arms: direction
+	# only (in Meshy's T-pose the arm runs along the left-right axis).
+	var s_latv: Vector3 = yaw * (s_rest["Bip01_R_Thigh"].origin - s_rest["Bip01_L_Thigh"].origin)
+	var t_latv: Vector3 = t_rest["RightUpLeg"].origin - t_rest["LeftUpLeg"].origin
+	var palm := {}
+	for sd2 in [["L", "Left"], ["R", "Right"]]:
+		if ts.find_bone(sd2[1] + "HandIndex1") < 0: continue
+		var sw0: Vector3 = s_rest["Bip01_%s_Hand" % sd2[0]].origin
+		var tw0: Vector3 = t_rest[sd2[1] + "Hand"].origin
+		var sn: Vector3 = yaw * (s_rest["Bip01_%s_Finger1" % sd2[0]].origin - sw0).cross(s_rest["Bip01_%s_Finger4" % sd2[0]].origin - sw0)
+		var tn: Vector3 = (t_rest[sd2[1] + "HandIndex1"].origin - tw0).cross(t_rest[sd2[1] + "HandPinky1"].origin - tw0)
+		palm[sd2[0]] = [sn, tn]
 	var C := {}
 	for sb in MAP:
 		var key: String = SAME_AS.get(sb, sb)
+		var sd: Vector3
+		var td: Vector3
 		if AIM.has(key):
-			var sd: Vector3 = yaw * (s_rest[AIM[key][0]].origin - s_rest[key].origin)
-			var td: Vector3 = t_rest[AIM[key][1]].origin - t_rest[MAP[key]].origin
+			sd = yaw * (s_rest[AIM[key][0]].origin - s_rest[key].origin)
+			td = t_rest[AIM[key][1]].origin - t_rest[MAP[key]].origin
+		elif sb == "Bip01_Pelvis" or sb == "Bip01_Head":
+			sd = yaw * (s_rest["Bip01_Head"].origin - s_rest["Bip01_Pelvis"].origin)
+			td = t_rest["Head"].origin - t_rest["Hips"].origin
+		else:
+			C[sb] = Basis(); continue
+		var sn2 := Vector3.ZERO
+		var tn2 := Vector3.ZERO
+		if "Hand" in sb or "Finger" in sb:
+			var side := "L" if "_L_" in sb else "R"
+			if palm.has(side): sn2 = palm[side][0]; tn2 = palm[side][1]
+		elif not ("Arm" in sb or "Forearm" in sb or "Clavicle" in sb):
+			sn2 = s_latv; tn2 = t_latv
+		if sn2 == Vector3.ZERO:
 			C[sb] = Basis(Quaternion(td.normalized(), sd.normalized()))
 		else:
-			C[sb] = Basis()
+			C[sb] = _frame(sd, sn2) * _frame(td, tn2).inverse()
 	var s_hip_h: float = s_rest["Bip01_Pelvis"].origin.y - min(s_rest["Bip01_L_Foot"].origin.y, s_rest["Bip01_R_Foot"].origin.y)
 	var t_hip_h: float = t_rest["Hips"].origin.y - min(t_rest["LeftFoot"].origin.y, t_rest["RightFoot"].origin.y)
 	var ratio := t_hip_h / s_hip_h
@@ -139,6 +168,15 @@ func _init() -> void:
 				var sg: Transform3D = sw * (sgp[ss.find_bone(sb)] as Transform3D)
 				var delta: Basis = (yaw * sg.basis.orthonormalized()) * (yaw * s_rest[sb].basis.orthonormalized()).inverse()
 				tworld[MAP[sb]] = delta * C[sb] * t_rest[MAP[sb]].basis.orthonormalized()
+			# upright fix (Yasin 23 Nov: "he is leaning back too much"): the upper body tilted forward by LEAN degrees,
+			# spread over the spine (40 / 70 / 100 %), everything above the spine turned with it
+			if LEAN != 0.0:
+				var ax: Vector3 = Vector3.UP.cross(-t_latv.cross(Vector3.UP)).normalized()
+				var share := {"Spine02": 0.4, "Spine01": 0.7}
+				for bn2 in tworld:
+					if bn2 == "Hips" or "Leg" in bn2 or "Foot" in bn2 or "Toe" in bn2: continue
+					var k: float = share.get(bn2, 1.0)
+					tworld[bn2] = Basis(ax, deg_to_rad(LEAN * k)) * (tworld[bn2] as Basis)
 			# to local, parents first (bone order is parent-first in a glTF skeleton)
 			var gpose := {}
 			for i in ts.get_bone_count():
@@ -150,6 +188,29 @@ func _init() -> void:
 				else: wb = pw * ts.get_bone_rest(i).basis.orthonormalized()
 				gpose[bn] = wb
 				out.rotation_track_insert_key(tracks[bn], t, Quaternion((pw.inverse() * wb).orthonormalized()))
+			if f == int(FPS):   # lean check at 1 s: hips -> head, angle forward (+) / back (-) in the side plane
+				var sh: Vector3 = yaw * ((sw * (sgp[ss.find_bone("Bip01_Head")] as Transform3D)).origin - (sw * (sgp[ss.find_bone("Bip01_Pelvis")] as Transform3D)).origin)
+				var gt := {}
+				var hb := ts.find_bone("Hips")
+				var tp := []
+				tp.resize(ts.get_bone_count())
+				for bi in ts.get_bone_count():
+					var par2 := ts.get_bone_parent(bi)
+					var lq: Quaternion = out.rotation_track_interpolate(tracks[ts.get_bone_name(bi)], t)
+					var lt := Transform3D(Basis(lq), ts.get_bone_rest(bi).origin)
+					tp[bi] = (tw * lt) if par2 < 0 else (tp[par2] as Transform3D) * lt
+				var th: Vector3 = (tp[ts.find_bone("Head")] as Transform3D).origin - (tp[hb] as Transform3D).origin
+				var fwd := t_latv.cross(Vector3.UP).normalized()
+				print("  lean deg (+ = BACK: fwd is his back)  source %.1f  target %.1f" % [rad_to_deg(atan2(sh.dot(fwd), sh.y)), rad_to_deg(atan2(th.dot(fwd), th.y))])
+				var sp := func(a: String) -> Vector3: return yaw * (sw * (sgp[ss.find_bone(a)] as Transform3D)).origin
+				var tq := func(a: String) -> Vector3: return (tp[ts.find_bone(a)] as Transform3D).origin
+				var ang := func(v: Vector3) -> float: return rad_to_deg(atan2(v.dot(fwd), v.y))
+				print("  segments fwd deg (pelvis-chest, chest-neck, neck-head)  source %.1f %.1f %.1f  target %.1f %.1f %.1f" % [
+					ang.call(sp.call("Bip01_Spine2") - sp.call("Bip01_Pelvis")), ang.call(sp.call("Bip01_Neck") - sp.call("Bip01_Spine2")), ang.call(sp.call("Bip01_Head") - sp.call("Bip01_Neck")),
+					ang.call(tq.call("Spine") - tq.call("Hips")), ang.call(tq.call("neck") - tq.call("Spine")), ang.call(tq.call("Head") - tq.call("neck"))])
+				print("  rest segments  source %.1f %.1f %.1f  target %.1f %.1f %.1f" % [
+					ang.call(yaw * (s_rest["Bip01_Spine2"].origin - s_rest["Bip01_Pelvis"].origin)), ang.call(yaw * (s_rest["Bip01_Neck"].origin - s_rest["Bip01_Spine2"].origin)), ang.call(yaw * (s_rest["Bip01_Head"].origin - s_rest["Bip01_Neck"].origin)),
+					ang.call(t_rest["Spine"].origin - t_rest["Hips"].origin), ang.call(t_rest["neck"].origin - t_rest["Spine"].origin), ang.call(t_rest["Head"].origin - t_rest["neck"].origin)])
 			# hips position
 			var spel: Vector3 = (sw * (sgp[ss.find_bone("Bip01_Pelvis")] as Transform3D)).origin
 			var d: Vector3 = yaw * (spel - s_rest["Bip01_Pelvis"].origin) * ratio
@@ -171,6 +232,12 @@ func _init() -> void:
 	ex.write_to_filesystem(es, out_glb)
 	print("WROTE ", out_glb)
 	quit()
+
+
+func _frame(d: Vector3, n: Vector3) -> Basis:
+	var x := d.normalized()
+	var z := (n - x * x.dot(n)).normalized()
+	return Basis(x, z.cross(x), z)
 
 
 func _world(n: Node) -> Transform3D:
