@@ -57,10 +57,11 @@ public:
 	float fit_off[2] = { 0.0f, 0.0f };   // m, the clip's foot moved up / down to the ground there (already weighted)
 	float fit_w[2] = { 0.0f, 0.0f };     // how much the clip has that foot on its floor (0 in the swing)
 	Vector3 place_off[2];                // a level move of the foot's landing (off a step's face; the motor's)
+	float floor_y[2] = { -1e9f, -1e9f };   // world: the lowest the ankle may be drawn - the ground under the foot plus a sole (never into it)
 	float fit_y[2] = { 0.0f, 0.0f };     // world: the clip's own foot height on the ground there (no hand-over offset): a pin's height
 	float lock_t[2] = { 9.0f, 9.0f };    // since a foot was pinned (its height eased onto fit_y over 0.1 s)
 	Vector3 ground_n[2] = { Vector3(0, 1, 0), Vector3(0, 1, 0) };
-	float drop = 0.0f, drop_v = 0.0f, drop_slack = 0.01f, drop_max = 0.35f, drop_down = 14.0f, drop_up = 9.0f;   // the hips lowered (m), its spring (rad/s down, up)
+	float drop = 0.0f, drop_v = 0.0f, drop_slack = 0.01f, drop_max = 0.35f, drop_down = 20.0f, drop_up = 9.0f;   // the hips lowered (m), its spring (rad/s down, up)
 	int b_root = -1;
 	uint64_t frame_id = ~0ull; float dt_frame = 1.0f / 60.0f;
 	// ---- a thing held (the motor's carry): where it is held from the hips (his facing hold_yaw), placed on the hips AS

@@ -613,15 +613,8 @@ void Motor::ground_feet(Host &p_host) {
 	for (int s = 0; s < 2; s++) {
 		Vector3 fw = X.xform(Vector3(fr.foot[s].x, 0.0f, fr.foot[s].z)); fw.y = draw_y;
 		Vector3 tw = X.xform(Vector3(fr.toe[s].x, 0.0f, fr.toe[s].z)); tw.y = draw_y;
-		Vector3 g, gn;
-		if (!sole(fw, tw, g, gn)) { g = fw; gn = UP; }
-		const float h = (float)fr.foot[s].y - cur->d->ground_y;
-		const float w = 1.0f - sstep(0.04f, 0.25f, h);
-		const float off = (float)g.y - draw_y;
-		limbs->fit_off[s] = off > 0.0f ? off : off * w;
 		// a pin's height: the ground at the PIN (on stairs the clip's foot and the pin can be on different steps) plus
 		// the clip's foot over its own floor plus the ankle's height standing (a raw Mixamo take's floor is not festive's)
-		Vector3 gp = g;
 		// A FOOT ACROSS A STEP'S FACE: decided in the swing, not after it lands (moved once pinned, it slid 7 cm). The
 		// clip's landing looked up ahead (within 0.2 s), its spot predicted (the clip's foot then, the body's travel till
 		// then), the sole there sampled heel to toe; across a face, the landing moved clear of it - back, or forward onto
@@ -645,12 +638,28 @@ void Motor::ground_feet(Host &p_host) {
 			if (want_off.length() < 1e-4f && k_in <= 0.0f) place_off[s] *= 0.8f;   // (no landing near: gone)
 			limbs->place_off[s] = place_off[s];
 		}
+		// (the ground under the foot WHERE IT IS DRAWN - the clip's spot moved by its landing's clearing of a step's face: from
+		// the clip's own spot, a swinging foot's toe over the first stair lifted it 17 cm, its landing moved back onto the
+		// floor - pinned there, it dropped 8 cm a frame, 25 Nov)
+		// (and a frame ahead: the figure is drawn after this, moved on by the frame's travel - at a stair's edge 2.5 cm
+		// put the sole on the step below for the frame it was pinned, then 5 cm a frame up onto the right one)
+		const Vector3 po = Vector3(limbs->place_off[s].x, 0.0f, limbs->place_off[s].z) + Vector3(last_vel.x, 0.0f, last_vel.z) * (1.0f / 60.0f);
+		Vector3 g, gn;
+		if (!sole(fw + po, tw + po, g, gn)) { g = fw + po; gn = UP; }
+		const float h = (float)fr.foot[s].y - cur->d->ground_y;
+		const float w = 1.0f - sstep(0.04f, 0.25f, h);
+		const float off = (float)g.y - draw_y;
+		limbs->fit_off[s] = off > 0.0f ? off : off * w;
+		Vector3 gp = g;
 		if (limbs->locked[s]) {
 			Vector3 lp = limbs->lock_w[s]; lp.y = draw_y;
 			Vector3 gn2;
 			if (!sole(lp, lp + (tw - fw), gp, gn2)) gp = lp;
 		}
 		limbs->fit_y[s] = (float)gp.y + std::max((float)fr.foot[s].y - cur->d->ground_y, 0.0f) + ankle_rest;
+		// (never into the ground: the run's start-to-loop hand-over drew a landing foot 6 cm under the floor, pinned there
+		// and eased up - 25 Nov. The ground where it is drawn: the pin's when pinned, else the clip's spot)
+		limbs->floor_y[s] = (float)(limbs->locked[s] ? gp.y : g.y) + ankle_rest - 0.02f;
 		limbs->fit_w[s] = w; limbs->ground_n[s] = gn;
 	}
 }

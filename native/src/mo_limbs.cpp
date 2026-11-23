@@ -170,6 +170,7 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 			pull[s] = (float)(want_w - anim_w).length();
 			if (locked[s]) pull_v[s] = want_w - anim_w;
 		}
+		if (fit_on && want_w.y < floor_y[s]) { want_w.y = floor_y[s]; if (locked[s] && lock_w[s].y < floor_y[s]) lock_w[s].y = floor_y[s]; }
 		if ((want_w - drawn).length() < 1e-4f) continue;
 		// the knee toward where the clip has it (its own bend), a little forward of the line hip-foot
 		const Vector3 hip = sk->get_bone_global_pose(b_th[s]).origin, knee = sk->get_bone_global_pose(b_ca[s]).origin;
