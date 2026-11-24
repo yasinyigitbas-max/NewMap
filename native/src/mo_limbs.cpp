@@ -380,6 +380,40 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 			grip_pose(sk, std::min(ear_w, 1.0f));
 		}
 	}
+	// THE ARMS OUT OF THE BODY (an arm-against-body correction, as studios run after a retarget: the takes were made on a
+	// thinner figure - on the player v3's broad chest a running swing put the hand 13 cm inside it). In the chest's frame
+	// (across: the shoulders; up: hips to chest), an elbow or wrist inside the torso (half as wide as 0.4 of the shoulder
+	// span, 10 cm behind to 12 cm in front of the chest bone, between the hips and the chest) swings its upper arm out
+	// about the forward axis just enough to clear it. Hands placed by a target (a box, the phone, a grip) are left.
+	if (b_ua[0] >= 0 && b_ua[1] >= 0 && b_spine[2] >= 0 && b_pel >= 0) {
+		const float k = 1.0f / std::max((float)G.basis.get_scale().x, 1e-4f);
+		for (int s = 0; s < 2; s++) {
+			if (hand_w[s] > 0.01f || b_fa[s] < 0 || b_hd[s] < 0) continue;
+			if (s == 1 && (hand_prop_on || ear_w > 0.001f)) continue;
+			for (int it = 0; it < 2; it++) {
+				const Vector3 shL = sk->get_bone_global_pose(b_ua[0]).origin, shR = sk->get_bone_global_pose(b_ua[1]).origin;
+				const Vector3 chest = sk->get_bone_global_pose(b_spine[2]).origin, pel = sk->get_bone_global_pose(b_pel).origin;
+				Vector3 lat = shL - shR; const float sw = (float)lat.length(); if (sw < 1e-5f) break; lat /= sw;
+				Vector3 up = chest - pel; if (up.length_squared() < 1e-10f) break; up.normalize();
+				const Vector3 fwd = lat.cross(up).normalized();
+				const float hw = 0.4f * sw, sgn = s == 0 ? 1.0f : -1.0f;
+				float pen = 0.0f; float reach = 1.0f;
+				const Vector3 sh = s == 0 ? shL : shR;
+				for (int b : { b_fa[s], b_hd[s] }) {
+					const Vector3 rel = sk->get_bone_global_pose(b).origin - chest;
+					const float h = (float)rel.dot(up), d = (float)rel.dot(fwd);
+					if (h < (float)(pel - chest).dot(up) || h > 0.1f * k || d < -0.10f * k || d > 0.12f * k) continue;
+					const float p = hw - (float)rel.dot(lat) * sgn;
+					if (p > pen) { pen = p; reach = std::max((float)(sk->get_bone_global_pose(b).origin - sh).length(), 1e-4f); }
+				}
+				if (pen <= 0.0f) break;
+				const float ang = std::atan2(pen, reach) * sgn;
+				const Transform3D Gu = sk->get_bone_global_pose(b_ua[s]);
+				sk->set_bone_global_pose(b_ua[s], Transform3D(Basis(fwd, ang) * Gu.basis, Gu.origin));
+				arms_out++;
+			}
+		}
+	}
 	// the thing in the right hand (the phone), on the hand as finally drawn
 	if (hand_prop && hand_prop->is_inside_tree()) {
 		hand_prop->set_visible(hand_prop_on);

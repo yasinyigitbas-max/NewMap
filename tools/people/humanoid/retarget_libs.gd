@@ -21,6 +21,11 @@ const CLAV_MIN_DEG := -5.0
 ## ... in the standing and moving libraries only: a reach (a vault's hands onto the rail, a climb, a carry) drops the
 ## collarbone for real - held up, his hands stopped 10-35 cm short of the rail
 const CLAV_LIBS := ["player_walk", "player_run", "player_idle", "ms", "yl", "step"]
+## ... and at most this far ABOVE level in the walks and runs (their starts and stops shrugged him 13-30 deg); the idles'
+## fidgets keep theirs (an arm stretch lifts the shoulder for real)
+const CLAV_MAX_DEG := 12.0
+const CLAV_MAX_LIBS := ["player_walk", "player_run", "ms", "step"]
+var clav_max_on := false
 var clav_on := false
 
 ## old bone -> his bone, old bone further along the limb (its rest direction lays his limb along the old one)
@@ -105,9 +110,12 @@ func _lift_clav(db: int, tw: Array[Quaternion], _pw: Quaternion) -> Quaternion:
 	var flat := Vector2(d.x, d.z).length()
 	var ang := atan2(d.y, flat)
 	var lo := deg_to_rad(CLAV_MIN_DEG)
-	if ang >= lo or flat < 1e-4: return tw[db]
+	var hi := deg_to_rad(CLAV_MAX_DEG)
+	if flat < 1e-4: return tw[db]
 	var axis := d.cross(Vector3.UP).normalized()
-	return (Quaternion(axis, lo - ang) * tw[db]).normalized()
+	if ang < lo: return (Quaternion(axis, lo - ang) * tw[db]).normalized()
+	if clav_max_on and ang > hi: return (Quaternion(axis, hi - ang) * tw[db]).normalized()
+	return tw[db]
 
 ## the old figure's bones in its figure, at time t
 func _src_globals(a: Animation, tracks: Dictionary, t: float) -> Array[Transform3D]:
@@ -176,7 +184,7 @@ func _init() -> void:
 		var src: String = SRC_DIR + "clips_" + (stem + "_" if stem != "" else "") + "male.res"
 		var lib: AnimationLibrary = load(src)
 		if lib == null: print("RETARGET missing ", src); continue
-		clav_on = CLAV_LIBS.has(stem)
+		clav_on = CLAV_LIBS.has(stem); clav_max_on = CLAV_MAX_LIBS.has(stem)
 		var out := AnimationLibrary.new()
 		var t0 := Time.get_ticks_msec()
 		for nm in lib.get_animation_list():
