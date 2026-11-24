@@ -389,7 +389,9 @@ void Motor::to_idle(float p_blend) {
 
 void Motor::to_loop(int p_i, float p_blend) {
 	const Clip &L = loops[p_i];
-	const double e = cur ? best_entry(*cur->d, t, *L.d, 0.0, L.d->len, &last_entry_cost) : 0.0;
+	// (THE FOOT PHASE, as Gears of War 4's loops: a cycle joins another where the same feet are down - weighted 5x the
+	// rest of the motor's matches; there, at the stance changes and the cover, it slid planted feet 30 cm)
+	const double e = cur ? best_entry(*cur->d, t, *L.d, 0.0, L.d->len, &last_entry_cost, (cur->d->loop && L.d->loop) ? 0.25f : 0.05f) : 0.0;
 	if (st == MOVE && p_i != loop_i) n_gait++;
 	loop_i = p_i; turn_k = 1.0f; loop_t = 0.0f;
 	rate = clampf(std::max(speed, 0.3f) / L.ground_v, 0.55f, 1.5f);

@@ -56,10 +56,10 @@ const ClipData *clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_skel, cons
 
 // How unlike two moments are (the feet relative to the hips and how they move, the hips' height; in each one's own
 // facing). 0 = the same pose and motion.
-float pose_cost(const Frame &a, const Frame &b);
+float pose_cost(const Frame &a, const Frame &b, float p_phase = 0.05f);
 
 // The moment of B in [lo, hi] most like A at ta (a loop wraps; step 1/30 s). r_cost: its cost.
-double best_entry(const ClipData &A, double ta, const ClipData &B, double lo, double hi, float *r_cost = nullptr);
+double best_entry(const ClipData &A, double ta, const ClipData &B, double lo, double hi, float *r_cost = nullptr, float p_phase = 0.05f);
 
 } // namespace mo
 } // namespace godot

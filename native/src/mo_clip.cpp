@@ -270,7 +270,7 @@ const mo::ClipData *mo::clip_data(const Ref<Animation> &p_anim, Skeleton3D *p_sk
 	return d;
 }
 
-float mo::pose_cost(const Frame &a, const Frame &b) {
+float mo::pose_cost(const Frame &a, const Frame &b, float p_phase) {
 	// each in its own facing: the feet relative to the hips, their speeds, the hips' height and speed
 	const Basis ra(Vector3(0, 1, 0), -a.face), rb(Vector3(0, 1, 0), -b.face);
 	float c = 0.0f;
@@ -278,19 +278,19 @@ float mo::pose_cost(const Frame &a, const Frame &b) {
 		c += 1.0f * (ra.xform(a.foot[s] - a.hips) - rb.xform(b.foot[s] - b.hips)).length_squared();
 		c += 0.02f * (ra.xform(a.foot_v[s]) - rb.xform(b.foot_v[s])).length_squared();
 		c += 0.15f * (ra.xform(a.hand[s] - a.hips) - rb.xform(b.hand[s] - b.hips)).length_squared();
-		if (a.down[s] != b.down[s]) c += 0.05f;
+		if (a.down[s] != b.down[s]) c += p_phase;   // (the feet down: 0.05, a walk / run cycle's hand-over 0.25 - Motor::to_loop)
 	}
 	c += 0.5f * (float)((a.hips.y - b.hips.y) * (a.hips.y - b.hips.y));
 	c += 0.02f * (ra.xform(a.hips_v) - rb.xform(b.hips_v)).length_squared();
 	return c;
 }
 
-double mo::best_entry(const ClipData &A, double ta, const ClipData &B, double lo, double hi, float *r_cost) {
+double mo::best_entry(const ClipData &A, double ta, const ClipData &B, double lo, double hi, float *r_cost, float p_phase) {
 	const Frame fa = A.lerp(ta);
 	double best_t = lo; float best = 1e30f;
 	lo = std::max(lo, 0.0); hi = std::min(hi, B.len);
 	for (double t = lo; t <= hi + 1e-6; t += 1.0 / FPS) {
-		const float c = pose_cost(fa, B.at(t));
+		const float c = pose_cost(fa, B.at(t), p_phase);
 		if (c < best) { best = c; best_t = t; }
 	}
 	if (r_cost) *r_cost = best;
