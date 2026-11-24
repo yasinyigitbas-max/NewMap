@@ -1,5 +1,6 @@
 // mo::Motor: see mo_motor.h.
 #include "mo_motor.h"
+#include "rig_names.h"
 
 #include "city_ped.h"
 #include "mo_inertial.h"
@@ -187,6 +188,14 @@ bool Motor::attach(CityPed *p_fig) {
 	anim = fig ? fig->anim_player() : nullptr;
 	Skeleton3D *sk = fig ? fig->skeleton() : nullptr;
 	if (!anim || !sk) { fig = nullptr; return false; }
+	{
+		const int p = rig::find(sk, "Bip01_Pelvis"), l = rig::find(sk, "Bip01_L_Thigh"), r = rig::find(sk, "Bip01_R_Thigh");
+		hips_lift = 0.0f;
+		if (p >= 0 && l >= 0 && r >= 0) {
+			const Transform3D X = sk->get_global_transform();
+			hips_lift = std::max(0.0f, (float)(X.xform(sk->get_bone_global_rest(p).origin).y - (X.xform(sk->get_bone_global_rest(l).origin).y + X.xform(sk->get_bone_global_rest(r).origin).y) * 0.5));
+		}
+	}
 	// festive's clip libraries (Yasin, 22 Nov: "take only clips from festive work")
 	fig->add_library("pwalk", "player_walk"); fig->add_library("prun", "player_run"); fig->add_library("pidle", "player_idle");
 	fig->add_library("ptrav", "player_trav"); fig->add_library("pact", "player_act");

@@ -68,14 +68,7 @@ void Motor::sit_start(const Intent &p_in) {
 	rp.ay_from = sit_ground;
 	// (the hip JOINTS 7 cm over the seat: on the old figure its pelvis bone sits at them; the player v3's (standard skeleton)
 	// sits 9.3 cm above them - "the pelvis 7 cm over" sat him 9 cm high, his feet 5.7 cm off the ground)
-	float pel_over = 0.0f;
-	if (Skeleton3D *sk = fig->skeleton()) {
-		const int p = rig::find(sk, "Bip01_Pelvis"), l = rig::find(sk, "Bip01_L_Thigh"), r = rig::find(sk, "Bip01_R_Thigh");
-		if (p >= 0 && l >= 0 && r >= 0) {
-			const Transform3D X = sk->get_global_transform();
-			pel_over = (float)(X.xform(sk->get_bone_global_rest(p).origin).y - (X.xform(sk->get_bone_global_rest(l).origin).y + X.xform(sk->get_bone_global_rest(r).origin).y) * 0.5);
-		}
-	}
+	const float pel_over = hips_lift;
 	rp.ay_to = (float)p_in.seat.y + SEAT_OVER + pel_over - (float)f1.hips.y;
 	rp.vy_t0 = t_down; rp.vy_t1 = std::max(t_sat, t_down + 0.2);
 	rp.a_from.y = rp.ay_from; rp.a_to.y = rp.ay_to;

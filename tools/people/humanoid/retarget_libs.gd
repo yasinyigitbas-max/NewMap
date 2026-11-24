@@ -18,6 +18,10 @@ const FPS := 30.0
 ## up to 18 deg below level, the old figure the same; on his broad shoulders it reads as a slump) CLEANED like mocap: his
 ## collarbone at most this far below level; the upper arm keeps its own direction in the world (only the shoulder line lifts)
 const CLAV_MIN_DEG := -5.0
+## ... in the standing and moving libraries only: a reach (a vault's hands onto the rail, a climb, a carry) drops the
+## collarbone for real - held up, his hands stopped 10-35 cm short of the rail
+const CLAV_LIBS := ["player_walk", "player_run", "player_idle", "ms", "yl", "step"]
+var clav_on := false
 
 ## old bone -> his bone, old bone further along the limb (its rest direction lays his limb along the old one)
 const PAIRS := [
@@ -145,7 +149,7 @@ func _clip(a: Animation) -> Animation:
 				var sb: int = map[db]
 				var turned := (_q(sx) * _q(g[sb])) * srest_w[sb].inverse()
 				tw[db] = (turned * lay[db] * drest_w[db]).normalized()
-				if db in clav: tw[db] = _lift_clav(db, tw, pw)
+				if clav_on and db in clav: tw[db] = _lift_clav(db, tw, pw)
 				o.rotation_track_insert_key(tr[db], t, (pw.inverse() * tw[db]).normalized())
 			else:
 				tw[db] = (pw * dsk.get_bone_rest(db).basis.get_rotation_quaternion()).normalized()
@@ -172,10 +176,15 @@ func _init() -> void:
 		var src: String = SRC_DIR + "clips_" + (stem + "_" if stem != "" else "") + "male.res"
 		var lib: AnimationLibrary = load(src)
 		if lib == null: print("RETARGET missing ", src); continue
+		clav_on = CLAV_LIBS.has(stem)
 		var out := AnimationLibrary.new()
 		var t0 := Time.get_ticks_msec()
 		for nm in lib.get_animation_list():
-			var o := _clip(lib.get_animation(nm)); o.compress(); out.add_animation(nm, o)
+			var o := _clip(lib.get_animation(nm))
+			# (NOT compressed by default: Animation.compress() put a 64 cm kick into his Running_Jump_Climb - a foot planted on
+			# the box thrown up and back; COMPRESS=1 for a size test - check the clips after)
+			if OS.get_environment("COMPRESS") != "": o.compress()
+			out.add_animation(nm, o)
 		var dst: String = OUT + "clips_" + (stem if stem != "" else "base") + ".res"
 		print("RETARGET %s: %d clips in %.1f s -> %s %s" % [src.get_file(), out.get_animation_list().size(), (Time.get_ticks_msec() - t0) / 1000.0, dst, ResourceSaver.save(out, dst, ResourceSaver.FLAG_COMPRESS) == OK])
 	quit()

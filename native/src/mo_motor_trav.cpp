@@ -112,7 +112,14 @@ bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_
 		const Frame &F = D.f[k];
 		if (F.hips_v.length() < (p_chain ? 0.0f : 0.3f)) continue;
 		for (int s = 0; s < 2; s++) {
-			if (F.hand[s].y < F.hips.y - 0.35f) continue;
+			if (F.hand[s].y < F.hips.y - hips_lift - 0.35f) continue;   // (from the hip joints: hips_lift)
+			{   // (a grip is a REACH: the hand 12 cm or more ahead of the hips the way he faces, or 30 cm over them - a running
+				// arm's still moment at its swing's end passed for the contact: his Running_Jump_Climb took 0.07 s, the hands
+				// never on the box and the body shoved 55 cm across it)
+				const Vector3 d = F.hand[s] - F.hips;
+				const float ahead = (float)(d.x * std::sin(F.face) + d.z * std::cos(F.face));
+				if (ahead < 0.12f && (float)F.hand[s].y < (float)F.hips.y - hips_lift + 0.30f) continue;
+			}
 			const float sp = (float)F.hand_v[s].length();
 			if (sp < best) { best = sp; kc = k; hc = s; }
 		}

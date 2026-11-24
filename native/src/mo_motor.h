@@ -272,6 +272,9 @@ private:
 	float carry_yaw = 0.0f; bool carry_yaw_ok = false;
 	Vector3 hc_s, hc_l, hc_v; bool hc_ok = false, carry_was_box = false;   // the box's centre, on a spring
 	float box_w = 0.42f;            // the box's width (between the palms), m: from the carry walk's hands
+	// (the figure's pelvis BONE over its hip joints, m: the old figure's sits at them (0), a standard-skeleton body's above
+	// them - the player v3 9.3 cm; a 'hips' measure from the clip's pelvis, less this, is the old figure's)
+	float hips_lift = 0.0f;
 	float box_d = 0.30f, belly = 0.14f;   // its depth; the belly in front of the hips' middle (m)
 	void load_carry();
 	void carry_step(float p_dt, const Intent &p_in, float p_d, bool p_want, Vector3 &r_vel);
