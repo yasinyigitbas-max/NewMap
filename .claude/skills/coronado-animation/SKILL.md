@@ -224,3 +224,13 @@ THE POLISH PLAN (one fix = one thing, each shown through the game camera, tests 
   flagged down travels 29 cm; body lifted 7 cm at entry: root_step's "lower foot over the clip floor" on his ankle);
   climbs (box 0.7/1.0 "leg 156 cm in the wall", wall pops 3.4-3.9 cm, 2.0 m "a move took it", 1.8 m running hands 32 cm
   off); ramps/stairs walking foot drag after a jog -> walk hand-over; then plan items 3-5.
+- 24 Nov night batch (build 12), all on his body, old figure unchanged: foot pin height from the body's own standing
+  ankle; a root clip's pulled foot re-plants in a step (step_alone); test lifted/sit ankles body-relative; the animation
+  libraries UNCOMPRESSED (Animation.compress() put a 64 cm kick in a climb - characters/hero_v3 is 118 MB now: check the
+  phone budget); collarbone clamp -5..+12 deg on walk/run (min only on the idles/yl, none on reaches); Motor::hips_lift
+  (pelvis bone over hip joints) for the hips-height rules; a climb's grip = the FIRST settled REACH (Climbing_Single: its
+  highest); his legs set back from walls (+11 braced, +10 Climbing_Single, -4 sprint); MoLimbs arm-out-of-body; THE LEAN
+  (lean_bank / lean_fwd, motor targets from speed x turn rate and acceleration); foot phase 0.25 in to_loop only.
+  OPEN: cover exit hips pop 3 cm (Cover_To_Stand_b's first frame); a walking foot dragged 7-12 cm on ramps right after a
+  lane's jog -> walk hand-over (the test teleports a running player); stairs down: the pin's height ease floats a foot
+  3-5 cm for 0.1 s; base run turn back hips_dv 1.58 (old 1.27); the 0.6 m step-off hand (Yasin's choice pending).
