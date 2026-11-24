@@ -221,7 +221,7 @@ bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_
 	// the body set back from it that much, the hands still on the edge by their IK)
 	// (a standard-skeleton body - the player v3: his thighs and shins are thicker, his knees went 11 cm into the wall at
 	// 0.16 - is set back the 11 cm more; the old figure's 0.16 as it was)
-	if (!p_vault && (&p_c == &c_braced || &p_c == &c_mid_run)) tr.delta += p_n * (0.16f + (hips_lift > 0.01f && &p_c == &c_braced ? 0.11f : 0.0f));
+	if (!p_vault && (&p_c == &c_braced || &p_c == &c_mid_run)) tr.delta += p_n * (0.16f + (hips_lift > 0.01f ? (&p_c == &c_braced ? 0.11f : -0.04f) : 0.0f));   // (the sprint up the wall: 4 cm nearer for him - at 0.16 his hands hung 7 cm off the edge)
 	if (!p_vault && &p_c == &c_mid && !p_chain) tr.delta += p_n * (0.06f + (hips_lift > 0.01f ? 0.10f : 0.0f));   // (+10 cm for the player v3: his feet went 9.9 cm into the wall on its footholds)   // (Climbing_Single: a knee 10 cm in at the mantle - 6 cm back enough once its rise was spread, 10 left the hands 8 cm short)
 	// the warp is all done by the first hand touch (still ramping as a hand came down on the rail, the body was too high
 	// for the arm: the hand hung 9-16 cm over the top)
