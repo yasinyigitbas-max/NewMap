@@ -214,7 +214,10 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 					// (standing: a step there, not a snap - a stop into the idle moved the clip's foot 27 cm in 0.1 s)
 					// (any time the other foot holds him: a step; else let go with its offset fading - never a snap: a stand-up
 					// and a cover's switch snapped a foot 30 cm)
-					if (down[1 - s] && step_t[1 - s] < 0.0f) { step_t[s] = 0.0f; step_from[s] = lock_w[s]; steps++; }
+					// (and with the other foot not planted too, as long as it is not stepping: a let-go slid the foot flat along the
+					// ground - into his cover, a hand-over 32 cm off - and the next pin snapped it; a lifted re-plant reads as the
+					// step a person takes)
+					if ((down[1 - s] || step_alone) && step_t[1 - s] < 0.0f) { step_t[s] = 0.0f; step_from[s] = lock_w[s]; steps++; }
 					else { locked[s] = false; rel_off[s] = lock_w[s] - anim_w; rel_t[s] = 0.0f; }
 				}
 			} else if (locked[s]) {   // the clip lifts it: the pin lets go, its offset fading

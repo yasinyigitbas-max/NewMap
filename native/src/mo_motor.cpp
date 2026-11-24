@@ -594,7 +594,9 @@ Vector3 Motor::step_clear(Host &p_host, const Vector3 &p_ankle, const Vector3 &p
 void Motor::ground_feet(Host &p_host) {
 	if (!limbs || !cur) return;
 	limbs->fwd_w = Vector3(std::sin(yaw), 0.0f, std::cos(yaw));
-	limbs->ground_y = draw_y;
+	// (the pin's height test is the old figure's - its ankle stands 10.5 cm over the floor; a body whose ankle stands higher
+	// (the player v3: 14.3 cm) is measured from that much higher, or a foot with its heel a little up was never pinned and slid)
+	limbs->ground_y = draw_y + std::max(0.0f, ankle_rest - 0.105f);
 	limbs->fit_on = st != TRAV && st != OFF;
 	if (!limbs->fit_on) return;
 	const Frame fr = cur->d->lerp(t);
@@ -722,7 +724,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 		const bool done = root_step(p_dt) || (st == SIT_OUT && t >= sit_up_at);
 		if (limbs && cur) {
 			const Frame fr = cur->d->lerp(t);
-			limbs->lock_on = true; limbs->may_step = st == STANCE;   // (getting up / down: a foot far off the clip's re-plants)
+			limbs->lock_on = true; limbs->may_step = st == STANCE; limbs->step_alone = true;   // (getting up / down: a foot far off the clip's re-plants)
 			limbs->drop_max = (st == SIT_IN || st == SIT_OUT) ? 0.0f : 0.35f;   // (sitting down / up: the hips on the seat, the legs reach - dropped for the feet, they went 11 cm into a 60 cm seat)
 			limbs->down[0] = fr.down[0]; limbs->down[1] = fr.down[1];
 			// OFF A LEDGE: the hand that reaches down as he goes over is put on the ledge's corner (Yasin, 24 Nov: "the hand
@@ -976,7 +978,7 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	// the feet the clip has down are pinned where they landed (MoLimbs)
 	if (limbs && cur) {
 		const Frame fr = cur->d->lerp(t);
-		limbs->lock_on = st != OFF;
+		limbs->lock_on = st != OFF; limbs->step_alone = false;
 		// (standing in the idle and its gestures: a foot is moved only when 12 cm off the clip's stance, not 4 - the idle's
 		// and gestures' stances differ by 4-7 cm and every idle began with a step "as if about to walk", Yasin 24 Nov)
 		limbs->drop_max = 0.35f;

@@ -12,6 +12,8 @@
 // Stand_To_Cover_a): each hand-over in cover turns the new clip onto the drawn hips (align_full) - the clip's motion
 // stays its own, only where it stands is fitted.
 #include "mo_motor.h"
+#include <godot_cpp/classes/os.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
 
 #include "city_ped.h"
 #include "mo_inertial.h"
@@ -73,6 +75,7 @@ void Motor::root_start(const Clip &p_c, double p_t0, float p_blend, float p_yaw,
 		rp.a_to.y = rp.a_from.y;
 	}
 	rp.t_warp = p_t0 + 0.7 * (p_c.d->len - p_t0);
+	if (OS::get_singleton()->get_environment("MO_WARP_TRACE") != "") UtilityFunctions::print("WARP t0 ", p_t0, " len ", p_c.d->len, " from ", rp.a_from, " to ", rp.a_to, " dist ", (rp.a_to - rp.a_from).length(), " drawn ", drawn, " f0hips ", f0.hips);
 	yaw = p_yaw; yaw0 = p_yaw; turn_k = 1.0f; rate = 1.0f;
 	align_full = false;
 	no_align = true;   // (its place and facing are the anchor's: no hand-over alignment)

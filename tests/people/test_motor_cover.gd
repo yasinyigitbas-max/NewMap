@@ -8,6 +8,7 @@ const Rig := preload("res://tests/people/rig.gd")
 ## in cover the body's distance to the wall and that it never goes past the wall's end, planted feet that do not slide,
 ## and the hips' rise and level speed (no pops).
 ## What it cannot see: where his back and hands are against the wall, the look - Yasin plays it.
+var ankle_stand := 0.10; var st_sum := 0.0; var st_n := 0
 var player: CharacterBody3D
 var sk: Skeleton3D
 var b_pel := -1; var b_ft := [-1, -1]
@@ -122,11 +123,16 @@ func _sample() -> void:
 		if g > 0.0: gap_min = minf(gap_min, g); gap_max = maxf(gap_max, g)
 		var p := player.global_position
 		x_min = minf(x_min, p.x - lane * 12.0); x_max = maxf(x_max, p.x - lane * 12.0)
+	if st == "idle" and t > 0.3 and t < 1.0 and st_n < 40:
+		st_sum += minf(snap_ft[0].y, snap_ft[1].y) - player.global_position.y; st_n += 1; ankle_stand = st_sum / st_n
 	for s in 2:
 		var down: bool = st != "off" and bool(ms.get(["down_l", "down_r"][s], false)) and not bool(ms.get(["step_l", "step_r"][s], false))
 		var a: Vector3 = snap_ft[s]
 		# (and on the ground as drawn, as test_motor_base.gd: a hand-over can hold a foot up while the clip has it down)
-		if down and a.y - player.global_position.y > 0.15: down = false
+		# (lifted: 5 cm over the body's own standing ankle - the old figure's stands at 10 cm, the player v3's at 14.3: a fixed
+		# 15 cm counted his swinging foot as planted)
+		if down and a.y - player.global_position.y > ankle_stand + 0.05: down = false
+		if trace and s == 0 and OS.get_environment("TRACEF0") != "": print("TRACEF0 lane %d t %.3f %s %s down %s a %s plant %s pull %.3f step %s ct %.3f locks %s" % [lane, t, st, ms.get("clip", ""), str(down), str(a.snapped(Vector3.ONE * 0.001)), str(plant[s]), float(ms.get("pull_l", 0)), str(ms.get("step_l", false)), float(ms.get("t", 0)), str(ms.get("locks", 0))])
 		if not down: plant[s] = null; continue
 		if plant[s] == null: plant[s] = a
 		var sl := Vector2(a.x - plant[s].x, a.z - plant[s].z).length()
