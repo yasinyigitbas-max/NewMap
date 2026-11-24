@@ -12,6 +12,8 @@
 //  - moves the body with the clip's hips (the capsule put there; the clip owns the motion), and hands over to the
 //    locomotion at its end, standing on the top or beyond.
 #include "mo_motor.h"
+#include <godot_cpp/classes/os.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
 
 #include "city_ped.h"
 #include "mo_inertial.h"
@@ -108,10 +110,23 @@ bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_
 	// THE CONTACT: the moment the hands are most still, up at the edge (over the hips' height less 0.35 m), while the
 	// body moves: its time, the hand, its place (figure frame)
 	int kc = -1, hc = 0; float best = 1e9f;
+	// (Climbing_Single goes hand over hand up the wall: its grip on the TOP is its highest - on his body the stillest
+	// hand came at 0.5 s, a hold half way up, and no start was ever near enough)
+	float hand_top = -1e9f;
+	if (&p_c == &c_mid) for (const Frame &F : D.f) hand_top = std::max(hand_top, (float)std::max(F.hand[0].y, F.hand[1].y));
+	auto reach_ok = [&](const Frame &F, int s) {
+		if (F.hips_v.length() < (p_chain ? 0.0f : 0.3f)) return false;
+		if ((float)F.hand[s].y < hand_top - 0.12f) return false;
+		if (F.hand[s].y < F.hips.y - hips_lift - 0.35f) return false;
+		const Vector3 d = F.hand[s] - F.hips;
+		const float ahead = (float)(d.x * std::sin(F.face) + d.z * std::cos(F.face));
+		return !(ahead < 0.12f && (float)F.hand[s].y < (float)F.hips.y - hips_lift + 0.30f);
+	};
 	for (int k = 0; k < n; k++) {
 		const Frame &F = D.f[k];
 		if (F.hips_v.length() < (p_chain ? 0.0f : 0.3f)) continue;
 		for (int s = 0; s < 2; s++) {
+			if (!reach_ok(F, s)) continue;
 			if (F.hand[s].y < F.hips.y - hips_lift - 0.35f) continue;   // (from the hip joints: hips_lift)
 			{   // (a grip is a REACH: the hand 12 cm or more ahead of the hips the way he faces, or 30 cm over them - a running
 				// arm's still moment at its swing's end passed for the contact: his Running_Jump_Climb took 0.07 s, the hands
@@ -125,6 +140,18 @@ bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_
 		}
 	}
 	if (kc < 0 || best > 1.0f) return false;
+	{   // (the FIRST time a reaching hand settles, not the stillest of all: his hands lie on the top longer while the body
+		// passes over them - the stillest came at 1.57 s of Sprint_To_Wall_Climb, the old figure's at 0.8, and the warp
+		// put his hands 32 cm off the edge)
+		// (not Climbing_Single: hand over hand up the wall, its grip on the top is its LAST reach - taken at the first, the
+		// 2 m wall found no start)
+		const float near = std::max(best * 1.5f, best + 0.25f);
+		for (int k = 0; k < kc && &p_c != &c_mid; k++) {
+			bool hit = false;
+			for (int s = 0; s < 2 && !hit; s++) if (reach_ok(D.f[k], s) && (float)D.f[k].hand_v[s].length() < near) { kc = k; hc = s; hit = true; }
+			if (hit) break;
+		}
+	}
 	const double tc = kc / FPS;
 	const Vector3 C = D.f[kc].hand[hc];
 	const float clip_top = (float)C.y - 0.05f;   // (the palm on the top: the wrist about 5 cm over it)
@@ -164,6 +191,7 @@ bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_
 		const float e = std::fabs(clip_dist - dist);
 		if (e < best_e) { best_e = e; t0 = k / FPS; }
 	}
+	if (OS::get_singleton()->get_environment("MO_TRAV_TRACE") != "") UtilityFunctions::print("TRAVSTART ", p_c.name, " dist ", dist, " best_e ", best_e, " t0 ", t0, " tc ", tc, " chain ", p_chain);
 	if (best_e > (&p_c == &c_mid && !p_chain ? 0.2f : 0.45f)) { tr = was; return false; }   // (Climbing_Single from the ground: begun only once he is where its own steps up start, its warp small)   // (too far yet, or too close to fit it: walking on, the old moves)
 	const Frame &F0 = D.f[(int)std::lround(t0 * FPS)];
 	tr.c = &p_c; tr.t0 = t0; tr.tc = tc; tr.yaw = yaw_m; tr.edge_p = edge; tr.edge_n = p_n; tr.top_y = p_top_y; tr.start_y = (float)p.y; tr.vault = p_vault;
@@ -191,8 +219,10 @@ bool Motor::trav_start(const Clip &p_c, const Vector3 &p_face, const Vector3 &p_
 	tr.delta = target - c_world;
 	// (the braced hang and the sprint up the wall: their knees bend into the wall - taken where it was thinner - 16-18 cm;
 	// the body set back from it that much, the hands still on the edge by their IK)
-	if (!p_vault && (&p_c == &c_braced || &p_c == &c_mid_run)) tr.delta += p_n * 0.16f;
-	if (!p_vault && &p_c == &c_mid && !p_chain) tr.delta += p_n * 0.06f;   // (Climbing_Single: a knee 10 cm in at the mantle - 6 cm back enough once its rise was spread, 10 left the hands 8 cm short)
+	// (a standard-skeleton body - the player v3: his thighs and shins are thicker, his knees went 11 cm into the wall at
+	// 0.16 - is set back the 11 cm more; the old figure's 0.16 as it was)
+	if (!p_vault && (&p_c == &c_braced || &p_c == &c_mid_run)) tr.delta += p_n * (0.16f + (hips_lift > 0.01f && &p_c == &c_braced ? 0.11f : 0.0f));
+	if (!p_vault && &p_c == &c_mid && !p_chain) tr.delta += p_n * (0.06f + (hips_lift > 0.01f ? 0.10f : 0.0f));   // (+10 cm for the player v3: his feet went 9.9 cm into the wall on its footholds)   // (Climbing_Single: a knee 10 cm in at the mantle - 6 cm back enough once its rise was spread, 10 left the hands 8 cm short)
 	// the warp is all done by the first hand touch (still ramping as a hand came down on the rail, the body was too high
 	// for the arm: the hand hung 9-16 cm over the top)
 	tr.tw = tc;
