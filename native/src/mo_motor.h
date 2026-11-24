@@ -116,6 +116,7 @@ public:
 	const char *state_name() const;
 	String clip_name() const { return cur ? String(cur->name) : String(); }
 	double clip_time() const { return t; }
+	Vector2 lean_now() const;   // (tests) the lean drawn: bank, pitch (rad)
 	bool foot_down(int p_side) const { return cur && cur->d->lerp(t).down[p_side & 1]; }   // the clip has that foot planted now
 	// tuning (Yasin's notes go here first)
 	float walk_turn_rate = 6.0f, run_turn_rate = 4.5f, idle_turn_rate = 5.0f, crouch_turn_rate = 2.5f, carry_turn_rate = 2.6f;   // rad/s while moving
@@ -275,6 +276,7 @@ private:
 	// (the figure's pelvis BONE over its hip joints, m: the old figure's sits at them (0), a standard-skeleton body's above
 	// them - the player v3 9.3 cm; a 'hips' measure from the clip's pelvis, less this, is the old figure's)
 	float hips_lift = 0.0f;
+	float lean_yaw0 = 0.0f, lean_speed0 = 0.0f; bool lean_ok = false;   // (the lean: last frame's facing and pace)
 	float box_d = 0.30f, belly = 0.14f;   // its depth; the belly in front of the hips' middle (m)
 	void load_carry();
 	void carry_step(float p_dt, const Intent &p_in, float p_d, bool p_want, Vector3 &r_vel);

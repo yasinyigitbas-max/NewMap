@@ -261,6 +261,29 @@ void MoLimbs::_process_modification_with_delta(double p_delta) {
 			sk->set_bone_global_pose(b_ft[s], Transform3D(Basis(q) * F.basis, F.origin));
 		}
 	}
+	// THE LEAN (a procedural layer over the take, as games lay one: Yasin, 24 Nov, the polish plan): into a turn by the
+	// sideways pull (speed x turn rate) and forward / back with the speed changing - the motor sets the targets, eased here on
+	// a critically damped spring, the bend spread over Spine1 and Spine2 about the way he faces (bank) and his side (pitch),
+	// never the lowest spine bone (on the old figure it carries the thighs: turned, the planted feet slid)
+	if (dt > 0.0f) {
+		const float w = 7.0f;
+		lean_bank_v += (w * w * (lean_bank_t - lean_bank) - 2.0f * w * lean_bank_v) * dt; lean_bank += lean_bank_v * dt;
+		lean_fwd_v += (w * w * (lean_fwd_t - lean_fwd) - 2.0f * w * lean_fwd_v) * dt; lean_fwd += lean_fwd_v * dt;
+	}
+	if ((std::fabs(lean_bank) > 1e-4f || std::fabs(lean_fwd) > 1e-4f) && b_spine[1] >= 0 && b_spine[2] >= 0 && fwd_w.length_squared() > 1e-8f) {
+		const Vector3 up_s = Gi.basis.xform(Vector3(0, 1, 0)).normalized();
+		Vector3 f_s = Gi.basis.xform(fwd_w); f_s -= up_s * f_s.dot(up_s);
+		if (f_s.length_squared() > 1e-10f) {
+			f_s.normalize();
+			const Vector3 left_s = up_s.cross(f_s).normalized();
+			const Basis part = Basis(f_s, lean_bank * 0.5f) * Basis(left_s, lean_fwd * 0.5f);
+			for (int k = 1; k < 3; k++) {
+				const int b = b_spine[k];
+				const Transform3D g = sk->get_bone_global_pose(b);
+				sk->set_bone_global_pose(b, Transform3D(part * g.basis, g.origin));
+			}
+		}
+	}
 	// A THING HELD: on the drawn hips, the hands on it
 	if (hold_kind != 0 && b_pel >= 0) {
 		const Vector3 pel = G.xform(sk->get_bone_global_pose(b_pel).origin);

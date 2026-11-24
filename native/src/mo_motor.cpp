@@ -57,6 +57,8 @@ int Motor::foot_steps() const { return limbs ? limbs->steps : 0; }
 bool Motor::foot_stepping(int s) const { return limbs && limbs->stepping(s); }
 int Motor::foot_locks() const { return limbs ? limbs->locks : 0; }
 
+Vector2 Motor::lean_now() const { return limbs ? Vector2(limbs->lean_bank, limbs->lean_fwd) : Vector2(); }
+
 Array Motor::dump(const String &p_clip) const {
 	Array out;
 	if (!anim || !anim->has_animation(p_clip)) return out;
@@ -988,6 +990,19 @@ void Motor::step(float p_dt, const Intent &p_in, Host &p_host) {
 	if (limbs && cur) {
 		const Frame fr = cur->d->lerp(t);
 		limbs->lock_on = st != OFF; limbs->step_alone = false;
+		// THE LEAN's targets: into the turn by the sideways pull (speed x turn rate / g, 0.7 of the angle a body leans to
+		// hold it, at most 14 deg), forward with speeding up and back with slowing (half the pull, -6 .. +8 deg); on foot only
+		if (p_dt > 0.0f) {
+			const bool on_foot = st == MOVE || st == START || st == STOP;
+			float bank = 0.0f, pitch = 0.0f;
+			if (lean_ok && on_foot) {
+				const float om = std::remainder(yaw - lean_yaw0, 6.2831853f) / p_dt, acc = (speed - lean_speed0) / p_dt;
+				bank = -std::max(-0.24f, std::min(0.24f, 0.7f * std::atan(speed * om / 9.81f)));
+				pitch = std::max(-0.10f, std::min(0.14f, 0.5f * acc / 9.81f));
+			}
+			limbs->lean_bank_t = bank; limbs->lean_fwd_t = pitch;
+			lean_yaw0 = yaw; lean_speed0 = speed; lean_ok = true;
+		}
 		// (standing in the idle and its gestures: a foot is moved only when 12 cm off the clip's stance, not 4 - the idle's
 		// and gestures' stances differ by 4-7 cm and every idle began with a step "as if about to walk", Yasin 24 Nov)
 		limbs->drop_max = 0.35f;

@@ -33,6 +33,7 @@ public:
 	bool down[2] = { false, false }; // the clip has the foot planted now
 	float ground_y = -1e9f;          // the ground the body stands on (world y): a foot is pinned only near it (a hand-over can
 	                                 // still hold a foot 25 cm up while the new clip has it down: pinned there, it was dragged)
+	float lean_bank_t = 0.0f, lean_fwd_t = 0.0f, lean_bank = 0.0f, lean_fwd = 0.0f, lean_bank_v = 0.0f, lean_fwd_v = 0.0f;   // THE LEAN (rad): into turns, with speed changes
 	int arms_out = 0;                // (tests) arm-out-of-the-body corrections made
 	bool step_alone = false;         // (root clips: a foot pulled off its pin re-plants in a step even with the other foot up)
 	float pin_h = 0.15f;             // the ankle at most this high over the ground to be pinned
