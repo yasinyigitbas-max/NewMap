@@ -1,6 +1,6 @@
 ## Test tool: plays one clip from a clip cache on player_v3 (raw clip + its root motion, no locomotion layers) and
 ## saves a strip of screenshots. Needs a display (xvfb-run) and opengl3.
-##   godot --path . --rendering-driver opengl3 -s tests/clip_view.gd -- <cache.bin> <clip> <out.png> [side|front|back] [frames]
+##   godot --path . --rendering-driver opengl3 -s tests/clip_view.gd -- <cache.bin> <clip> <out.png> [side|front|back] [frames] [wall_top wall_z0 wall_z1]
 extends SceneTree
 var sk: Skeleton3D; var body: Node3D; var cam: Camera3D
 var clip: Dictionary; var B: int; var f := 0; var shots := []; var times := []
@@ -19,6 +19,12 @@ func _init():
 	body.position = Vector3(-60, 0, 60)
 	sk = body.get_node("Armature/Skeleton3D")
 	cam = Camera3D.new(); world.add_child(cam); cam.current = true; cam.fov = 50
+	if a.size() > 7:
+		# optional test wall in the clip's own frame: top height, near face z, far face z
+		var top := float(a[5]); var z0 := float(a[6]); var z1 := float(a[7])
+		var mi := MeshInstance3D.new(); var bm := BoxMesh.new(); bm.size = Vector3(1.6, top, z1 - z0); mi.mesh = bm
+		var m := StandardMaterial3D.new(); m.albedo_color = Color(0.7, 0.35, 0.28); mi.material_override = m
+		mi.position = Vector3(-60, top * 0.5, 60 + (z0 + z1) * 0.5); world.add_child(mi)
 	var nf: int = clip.frames
 	for i in nshots: times.append(int(round(float(i) * (nf - 1) / max(nshots - 1, 1))))
 	process_frame.connect(_tick)

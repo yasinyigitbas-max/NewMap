@@ -53,3 +53,25 @@ exactly on the edge; plus the ground path. Scripts and pins kept outside the rep
 **Why**: a pin is met only on its own frame; the model still doesn't know the obstacle exists, so it doesn't keep hands
 on the edge or feet on the top between pins, and doesn't stop at the top. Denser pins (every few frames) would force it,
 but then the pins are the animation and the model adds little.
+
+## Round 3: key poses + Kimodo in-betweening, 16 samples, automatic scoring (25 Nov, ~$0.60)
+**Two facts found:**
+1. **A pin is a whole-body keyframe**: Kimodo matches every joint of the pinned pose exactly (0° off), hips included. So
+   the pinned poses decide the move. I built 4-5 key poses per move from study v2 6.1 / 6.2 with my own IK on Kimodo's
+   skeleton (hands on the edge, the press, a foot up, standing on top) and let Kimodo make the motion between them.
+2. **A period in the prompt starts a new segment** on this deployment: "1.5 meter" split the prompt in two and doubled the
+   clip; the second half kept "climbing" by itself. That broke the vault and climb of rounds 1 and 2 (the step-up had no
+   decimal point and was the good one). Heights are now written in words.
+
+**Scores (best of 16; hands = how far the hands slide on the edge between key poses; wall = deepest point inside the
+wall; knees = frames with a knee bent backward, signed as study v2 1.3):**
+| Move | Hands | Wall | Ends on top / lands | Knees | Looked at on the body |
+|---|---|---|---|---|---|
+| climb 1.5 m | 14 cm | 11 cm (toes / shins at the face) | yes, within 4 cm | 0 | **Believable**: walks in, crouches, jumps, hands on the edge, chest over, legs swing up, stands on top. |
+| mantle 0.8 m | 13 cm | 4 cm | yes, within 4 cm | 0 | **Good**: hands on top, hop, foot up, stands. Reads like a real low mantle. |
+| step vault 1.0 m | 10 cm | 14 cm | lands, but then jumps again | 1 | **Not usable**: crouches on top, drops back, then a big extra jump. |
+
+**What the layered system would still do to them** (normal work, study v2 10.7): pin the hands on the real edge with IK
+while they grip (removes the 13-14 cm slide), keep toes and shins out of the wall face, warp the height ±20 %, and run
+them through the v2 validator. The vault needs better key poses (the take-off, the hand, the foot on top, the landing,
+running on) and another round.
