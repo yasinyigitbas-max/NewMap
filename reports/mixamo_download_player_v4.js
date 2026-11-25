@@ -13,6 +13,8 @@
 //   4. Leave the tab open. Progress is printed in the console. When it ends it saves "mixamo_download_report.csv".
 //   To do only some batches, change BATCHES below (1 = walk/run/crouch/stairs, 2 = traversal, 3 = cover/doors/cars, 4 = the rest).
 //   To start again from nothing, run:  localStorage.removeItem('mxdl_done')
+//   When several clips share a name it picks by length if Mixamo reports one, never a clip with a prop (axe, rifle ...),
+//   and skips the clip (listed in the report) when it still cannot tell.
 (async () => {
   const BATCHES = [1, 2, 3, 4];
   const PAUSE_MS = 1500;          // wait between clips
@@ -447,6 +449,18 @@
     }
   };
 
+  const EXTRA = ['axe', 'rifle', 'pistol', 'gun', 'sword', 'shield', 'bow', 'spell', 'magic', 'torch', 'briefcase', 'box', 'bag', 'phone', 'zombie', 'ninja', 'boxing', 'drunk', 'injured', 'sad', 'happy', 'female', 'carrying', 'aiming', 'crouched', 'crouch', 'swagger', 'silly', 'goofy', 'mutant', 'orc', 'old'];
+  let toldKeys = false;
+  const lengthOf = det => {            // seconds, or null when Mixamo does not say
+    const d = det.details || {};
+    if (!toldKeys) { toldKeys = true; console.log('Mixamo clip details hold: ' + Object.keys(d).join(', ') + ' | motion: ' + Object.keys(d.gms_hash || {}).join(', ')); }
+    for (const o of [d, det, d.gms_hash || {}]) for (const key of Object.keys(o)) {
+      const v = Number(o[key]); if (!isFinite(v) || v <= 0) continue;
+      if (/^(duration|length|seconds|time)$/i.test(key)) return v > 200 ? v / 1000 : v;
+      if (/frame/i.test(key) && v > 1) return (v - 1) / 30;
+    }
+    return null;
+  };
   const done = new Set(JSON.parse(localStorage.getItem('mxdl_done') || '[]'));
   const report = [['n', 'save_as', 'searched', 'wanted_description', 'result', 'mixamo_name', 'mixamo_description']];
   const todo = CLIPS.filter(c => BATCHES.includes(c.b) && !done.has(c.save));
@@ -463,7 +477,22 @@
       let how = 'description';
       if (picks.length > 1) picks = picks.slice(0, 1);
       if (!picks.length && same.length === 1) { picks = same; how = 'only one with this name'; }
-      if (!picks.length && same.length > 1) { picks = same.slice(0, MAX_SAME_NAME); how = 'ALL ' + picks.length + ' with this name (sort later by length ' + c.len + ' s)'; }
+      if (!picks.length && same.length > 1) {
+        // several clips share the name: first try to tell them apart by length, as Mixamo reports it
+        const byLen = [];
+        for (const p of same.slice(0, 30)) {
+          try { const sec = lengthOf(await api('/products/' + p.id + '?similar=0&character_id=' + character)); if (sec !== null && Math.abs(sec - c.len) < 0.07) byLen.push(p); } catch (e) {}
+        }
+        if (byLen.length === 1) { picks = byLen; how = 'length ' + c.len + ' s'; }
+        else {
+          // then drop the ones that plainly are another clip: a prop or mood word that the wanted clip does not have
+          const want = norm(c.save + ' ' + c.d);
+          const pool = (byLen.length ? byLen : same).filter(p => !EXTRA.some(w => norm(p.description).split(' ').includes(w) && !want.split(' ').includes(w)));
+          if (pool.length === 1) { picks = pool; how = 'only plain one with this name'; }
+          else if (pool.length > 1 && pool.length <= MAX_SAME_NAME) { picks = pool; how = 'ALL ' + picks.length + ' plain ones with this name (sort later by length ' + c.len + ' s)'; }
+          else { console.warn(k + '/' + todo.length + ' SKIPPED, cannot tell which: ' + c.save + ' (' + same.length + ' clips named "' + c.q + '", wanted length ' + c.len + ' s)'); report.push([c.n, c.save, c.q, c.d, 'SKIPPED cannot tell which of ' + same.length, '', same.map(p => p.description).join(' / ')]); continue; }
+        }
+      }
       if (!picks.length) { console.warn(k + '/' + todo.length + ' NOT FOUND: ' + c.save + ' (searched "' + c.q + '")'); report.push([c.n, c.save, c.q, c.d, 'NOT FOUND', '', '']); continue; }
       for (let i = 0; i < picks.length; i++) {
         const p = picks[i];
