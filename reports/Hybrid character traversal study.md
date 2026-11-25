@@ -2,6 +2,8 @@
 
 The safest way to get Rockstar-style movement in Godot 4.7 with Jolt is to build four separate layers in a fixed order and prove each on a measured test course before starting the next: a physics body that owns position, animation clips that own how the body looks, procedural corrections (leg and arm IK, head look, lean) that fit the clips to the world, and a ragdoll that takes over only on impacts. The physics body has to be your own code, because Godot does not use Jolt's ready-made character controller: `CharacterBody3D.move_and_slide` is Godot's own routine, it has no stair stepping, and under Jolt it deliberately throws away some floor and wall contacts ([Godot source](https://raw.githubusercontent.com/godotengine/godot/master/scene/3d/physics/character_body_3d.cpp), [Jolt module source](https://raw.githubusercontent.com/godotengine/godot/master/modules/jolt_physics/spaces/jolt_query_collectors.h)). Mixamo clips have no root bone and no data about the obstacle they fit, so every clip must pass through a pipeline that adds a root bone and then be measured by you ([inspected Mixamo file](https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/models/fbx/mixamo.fbx)). Rockstar has never published how its capsule, climb detection or clip fitting work; what is public is the list of clips, which shows climbs authored at fixed heights (20, 80, 140, 180, 220, 295) with stand, walk and run entries ([GTA V clip name dump](https://raw.githubusercontent.com/DurtyFree/gta-v-data-dumps/master/animDictsCompact.json)). Human measurements give matching bands: the cheapest step to climb is about a quarter of leg length, coaches vault obstacles from knee to shoulder height and climb anything higher, and standing grip reach is about 1.2 times body height ([Warren](https://digitalcommons.lib.uconn.edu/dissertations/AAI8309263), [MovNat](https://movnat.com/definitive-guide-to-vaulting/), [US Army body survey](https://multisite.eos.ncsu.edu/www-ergocenter-ncsu-edu/wp-content/uploads/sites/18/2016/06/Anthropometric-Detailed-Data-Tables.pdf)). Euphoria-style self-balancing characters are out of reach for now: Godot exposes none of Jolt's ragdoll motor tools, and the people who built Euphoria say it took years. The build order and its pass or fail tests are in the last third of this report and matter as much as the design.
 
+**Update, 25 Nov 2026.** Part 3 is new: all 408 Mixamo clips in the shared folder were measured directly, which settles most of the Mixamo unknowns named below and shows which clips fit which height band and which are missing.
+
 **How to read this report.** A sentence followed by a link is a fact read from that page by the researchers. "Inferred" marks reasoning or arithmetic on top of sourced facts, by the note-takers or by me. "Unverified" marks something that could not be confirmed. Everything in the recommendation sections is my design advice built on those facts; none of it has been run in Godot, and the acceptance numbers I propose are targets, not sourced values. Nothing here comes from the existing game.
 
 ## Part 1. What was learned
@@ -74,7 +76,7 @@ Accessible walking surfaces stop at a 1 in 20 slope and ramps at 1 in 12 ([ADA c
 
 **Root motion tools.** Because there is no root bone, Blender add-ons exist to make one from the hip movement. mixamo_converter offers per-axis choices and an "On Ground" option that keeps the root on the ground unless the hips rise above their rest height ([README](https://raw.githubusercontent.com/enziop/mixamo_converter/master/README.md)). "Import Mixamo - Root Motion" batch-imports, strips the name prefix and creates root bones ([Blender extensions](https://extensions.blender.org/add-ons/import-mixamo-root-motion/)). A third, "Mixamo Root", was reported by one user as failing on recent Blender versions ([Godot forum](https://forum.godotengine.org/t/blender-addon-for-mixamo-root-motion-in-blender-4-5-godot-4-5/135760)).
 
-**The library.** The catalogue is behind a login and could not be opened, so **no clip or pack name is verified**. A public mirror holds 2,453 animation files ([Hugging Face listing](https://huggingface.co/datasets/jasongzy/Mixamo)), and a 2016 forum post says the library includes climbing, hanging and climb-to-stand clips with root motion ([Unreal forum](https://forums.unrealengine.com/t/advanced-climbing-system/51566/36)).
+**The library.** The catalogue is behind a login and could not be opened, so no clip or pack name could be verified from public sources. The project's own folder of 408 downloaded clips was measured afterwards; see Part 3. A public mirror holds 2,453 animation files ([Hugging Face listing](https://huggingface.co/datasets/jasongzy/Mixamo)), and a 2016 forum post says the library includes climbing, hanging and climb-to-stand clips with root motion ([Unreal forum](https://forums.unrealengine.com/t/advanced-climbing-system/51566/36)).
 
 **Licence.** Adobe says characters and animations may be used royalty-free in commercial games ([Adobe FAQ](https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html)). A community-forum licensing post lists the one thing not allowed: distributing the raw character or animation files, with team collaboration excepted ([Adobe community](https://community.adobe.com/questions-696/mixamo-faq-licensing-royalties-ownership-eula-and-tos-589400)). Inferred: raw Mixamo files belong in a private repository only. The binding Adobe terms were not read.
 
@@ -379,13 +381,198 @@ Suggested order, easiest and most used first:
 
 Cars come last because the human data for getting in and out could not be sourced, so that stage will rest on clip measurement alone. Phone testing of each stage follows the desktop pass.
 
+## Part 3. Your Mixamo clips, measured
+
+Added 25 Nov 2026, after the shared folder of clips arrived. Unlike Parts 1 and 2, this part is first-hand measurement: every one of the 408 files (356 loose, 52 in three packs) was downloaded and read directly, and the position of the hips, hands, feet and head was computed for every frame. The full table, one row per file, is in `research_notes/Hybrid character traversal study/clip_measurements/clip_measurements.csv`, next to the script that produced it. Nothing was played in Godot or Blender. The two game files in the folder (`NewMap_walk_test`, a `.dll`) were not opened.
+
+Checks on the method: every standing clip puts the feet at 0.00 m and the head top at 1.81 m, and the stair clips come out at two even steps. Hand heights below are wrist joints; the gripping palm is about 0.08 m further along. Clip names are the file names in the folder, some of which you have renamed.
+
+### The files are consistent, and that removes the largest unknown
+
+- **One skeleton, one body.** All 408 files have the 65-joint Mixamo skeleton with identical limb lengths (hip to ankle 0.889 m, shoulder to wrist 0.562 m). They were all downloaded against the same character, so they can share one import recipe.
+- **The character is 1.81 m to the top of the head**, with hips at 1.03 m. Part 2's bands were written for 1.76 m; the difference is 3 % and inside the tuning range.
+- **Format.** All are binary FBX 7.7, 30 frames a second, in centimetres, with bone-aligned joints. 401 are without skin; 7 carry a mesh (`Idle`, `Idle (1)`, `Standing Idle`, `Orc Idle`, `Idle To Sprint`, `Running (4)`, `Running (5)`).
+- **None is "in place".** Travel is in the hips in every moving clip, which is what the root-bone step in the pipeline needs.
+- **54 files are duplicates** of another file under a different name (`Walking` and `Walking (2)`, `Stop Walking` and `L_Stop_Walking`, the three `Falling To Landing` files, and so on). There are 354 distinct motions.
+
+### Walking and running: usable, but faster than a person and not lined up with each other
+
+| Clip | Loop length | Travel per loop | Speed | Head height |
+|---|---|---|---|---|
+| Old Man Walk | 1.27 s | 0.51 m | 0.40 m/s | 1.65 to 1.75 m |
+| Walking With Shopping Bag | 1.27 s | 1.34 m | 1.06 m/s | 1.75 to 1.78 m |
+| Walking (1) | 0.97 s | 1.62 m | 1.68 m/s | 1.76 to 1.80 m |
+| Walking | 1.03 s | 1.84 m | 1.79 m/s | 1.72 to 1.79 m |
+| Running (3) | 0.83 s | 2.14 m | 2.57 m/s | 1.69 to 1.80 m |
+| Slow Run | 0.73 s | 2.29 m | 3.13 m/s | 1.56 to 1.71 m |
+| standard run (Locomotion Pack) | 0.73 s | 3.24 m | 4.42 m/s | 1.54 to 1.64 m |
+| Running | 0.63 s | 3.75 m | 5.92 m/s | 1.69 to 1.77 m |
+| Sprint | 0.53 s | 3.29 m | 6.17 m/s | 1.52 to 1.64 m |
+
+- **Each loop is one full stride** (a left step and a right step).
+- **The main walk is a brisk walk.** At 1.79 m/s it is above the comfortable human range of 1.3 to 1.45 m/s in Part 1 and at the low end of maximum walking speed. Played at about 0.75 speed it gives 1.35 m/s. Its stride of 1.84 m is also longer than the 1.5 to 1.7 m of the human data.
+- **`Running` and `Sprint` are near-athlete speeds.** `Running (3)` and `Slow Run` sit in the human jogging range (2.5 to 3.5 m/s).
+- **The loops start on different feet.** `Walking` starts with the right foot forward, `Running`, `Slow Run` and `Sprint` with the left, `Running (1)` with the right. Blended as they are, walk and run would fight each other. Each clip needs a start offset in the table so that all loops begin on the same foot; this is a Stage 3 task.
+- **Turning arcs exist for one side only at a walk.** `Running Left Turn` and `Running Right Turn` curve 35.7 degrees per stride at 4.0 m/s. `Walking Left Turn` curves 36 degrees at 1.4 m/s; there is no walking right turn, so it must be mirrored.
+- **Strafing** exists only in the Locomotion Pack: walk strafe 1.73 m/s, run strafe 4.52 m/s, both sides.
+
+### Starts, stops and turns on the spot: a full set, with inexact angles
+
+| Clip | Length | Travel | Turn |
+|---|---|---|---|
+| Start Walking | 2.93 s | 1.99 m | |
+| Female Start Walking | 1.87 s | 1.74 m | |
+| Stop Walking | 3.00 s | 1.21 m | |
+| Female Stop Walking | 1.53 s | 1.51 m | |
+| Idle To Sprint | 0.80 s | 1.67 m | |
+| Run To Stop | 0.90 s | 0.81 m | |
+| Left Turn 90 | 0.93 s | none | 90.0 degrees |
+| Right Turn 90 | 0.93 s | none | 102.6 degrees |
+| Left Turn | 0.93 s | none | 122.6 degrees |
+| Right Turn | 1.00 s | 0.14 m | 95.5 degrees |
+| Walking Turn 180 | 1.00 s | 0.13 m | 180.0 degrees |
+| Running Turn 180 | 0.67 s | none | 180.0 degrees |
+| Running To Turn 180 | 2.27 s | 4.01 m | 188.4 degrees |
+
+- **`Start Walking` and `Stop Walking` are slow** (about 3 s each). The human data says walking speed is steady within about three steps and a walk stops in under two; the "Female" pair is closer to that.
+- **Turn clips do not turn exact amounts.** "Right Turn 90" turns 102.6 degrees. The turn in each clip must be scaled to the angle the game needs, the same way a climb is scaled to a height.
+- `Run To Stop Without climb` is a run that ends with both hands raised to 1.45 m, as if stopping against a wall. It is not a plain stop.
+
+### Crouch: the idle and the walk are at very different heights
+
+| Clip | Head height | Hips | Speed |
+|---|---|---|---|
+| Crouching Idle | 0.94 m | 0.50 m | |
+| Crouch cover idle | 1.28 m | 0.59 m | |
+| Sneaking Forward | 1.29 to 1.37 m | 0.80 m | 2.22 m/s |
+| crouched sneaking left / right (pack) | 1.33 to 1.38 m | 0.73 to 0.76 m | 1.06 to 1.13 m/s, sideways |
+| Crouched Walking | 1.35 to 1.46 m | 0.89 m | 1.42 m/s |
+| Standing To Crouched / Crouched To Standing | | | 0.63 s each |
+
+**There is no moving clip lower than 1.29 m.** `Crouched Walking` is a stoop, not a crouch, and is faster than a real crouch walk (Part 1: a 45 degree knee crouch halves walking speed). So the crouched body shape must be about 1.5 m tall, the Stage 6 test should use an overhang at about 1.5 m, not 1.2 m, and going under anything lower needs a clip that is not in the folder.
+
+### Stairs: two steps per clip, on steep stairs
+
+| Clip | Length | Up or down | Forward | Per step |
+|---|---|---|---|---|
+| Ascending Stairs | 1.37 s | up 0.49 m | 0.52 m | riser 0.245 m, tread 0.26 m |
+| Walking Up The Stairs | 1.20 s | up 0.50 m | 0.51 m | riser 0.25 m, tread 0.255 m |
+| Running Up Stairs | 0.60 s | up 0.48 m | 0.53 m | riser 0.24 m, tread 0.265 m |
+| Descending Stairs | 0.93 s | down 0.51 m | 0.47 m | riser 0.255 m, tread 0.235 m |
+
+These were captured on stairs with a riser of about 0.25 m, steeper than the 0.18 m of public stairs and above even the 0.22 m maximum for a UK private stair. On city stairs they will need the feet corrected by leg IK, or the simpler route in Part 2: play the normal walk on the stairs and let the foot IK of Stage 4 do the work. There is no running-down-stairs clip.
+
+### Going up: what each clip natively fits
+
+"Native height" is the height the feet end at above where they started, which is the obstacle the clip was captured on.
+
+| Clip | Length | Native height | Forward travel | What it is |
+|---|---|---|---|---|
+| Jumping (2) | 1.23 s | 0.62 m | 1.53 m | two-step approach and a jump onto a box; no hands |
+| Running Jump Climb | 2.17 s | 1.00 m | 2.29 m | run, jump, feet land on top at 0.8 s, stand up; no hand support |
+| Braced Hang To Crouch | 1.13 s | 1.70 m | 0.59 m | starts hanging with feet braced on the wall (wrists at 1.45 m), ends crouched on top |
+| Stand To Freehang | 1.70 s | hands to 2.29 m | 0.41 m | from standing, jump and catch a ledge; ends in the hang |
+| Hanging Idle | 2.33 s loop | hands at 2.29 m | | toes hang 0.28 m above the ground the clip assumes |
+| Climbing single | 3.83 s | 2.42 m | 0.41 m | from the hang, pull up to a crouch on top |
+| Sprint To Wall Climb | 1.80 s | 2.46 m | 3.33 m | 2 m run-up, hands hit the top at 0.67 s (wrists 2.44 m), on top by 1.6 s |
+| Climbing double | 3.83 s | 2.11 m | 4.14 m | 3 m run, then two ledges of about 1.05 m each |
+| Jump To Hang | 2.00 s | hands 1.2 m above take-off | 1.10 m | a jump across a gap ending in a hang |
+
+Set against the height bands of Part 2:
+
+| Band | Clip in the folder | Fit |
+|---|---|---|
+| up to 0.30 m, walk over | none needed | covered by the body and foot IK |
+| 0.30 to 0.50 m, high step | none | **missing** |
+| 0.50 to 1.10 m, climb on | Jumping (2) at 0.62 m, Running Jump Climb at 1.00 m | covered at both ends of the band, as jumps |
+| 0.50 to 1.10 m, vault over | Vault Over Box to Cover, Jumping Over Into Combat | **no clean vault**, see below |
+| 1.10 to 1.45 m, mantle | none | **missing**; nearest are Running Jump Climb stretched up or Braced Hang To Crouch stretched down |
+| 1.45 to 2.10 m, grab and climb | Braced Hang To Crouch at 1.70 m | the climb-up exists; **there is no clip from standing into the braced hang** |
+| 2.10 to 2.60 m, jump, grab, climb | Stand To Freehang, Hanging Idle, Climbing single (ledge about 2.3 to 2.4 m); Sprint To Wall Climb at 2.46 m | covered, from a stand and from a run |
+| 2.60 to 3.00 m, running wall-run | Sprint To Wall Climb stretched from 2.46 m | a stretch of up to 22 %, to be judged by eye |
+
+Three findings matter for the build:
+
+- **The hang chain joins up.** `Stand To Freehang` ends in exactly the pose `Hanging Idle` starts in (hips 1.32 m, wrists 2.29 m), and `Climbing single` starts within 0.08 m of it. That is a ready-made sequence for the 2.10 to 2.60 m band.
+- **`Climbing single` takes 3.83 s**, which is slow for a game; `Sprint To Wall Climb` reaches the same height in 1.8 s. Expect to play the slow one faster.
+- **The hands are not fixed in the climb clips.** In `Braced Hang To Crouch` the wrists rise from 1.45 m to 1.77 m during the part where the hands should be planted on the edge, and in `Climbing single` from 2.21 m to 2.46 m. So the start of each clip and its end disagree about where the ledge is by 0.15 to 0.25 m. Why is not known from the files. This confirms the fitting method in Part 2: the hands must be pinned to the measured ledge with arm IK from contact to release, and the body moved to suit, or they will visibly slide.
+
+**Vaults.** There is no clip of a plain hand vault over a thin obstacle. The two candidates:
+- `Vault Over Box to Cover` (3.53 s): runs 1.3 m, clears a box with the feet passing at about 1.0 m, then spins and drops into a crouch behind cover. Only its first 1.3 s is a vault.
+- `Jumping Over Into Combat` (4.17 s): stands for a second, then hurdles with the feet clearing 0.74 to 0.91 m and lands in a fighting stance. Only about 1.0 to 2.6 s is the jump.
+
+Either can be cut down, but a proper vault clip (one hand on the obstacle, from a run, landing into a run) should be added to the folder before Stage 10.
+
+### Going down: the landings are well covered, the hang-and-drop is not
+
+| Clip | Length | Drop | Forward | What it is |
+|---|---|---|---|---|
+| Climbing Down (2) | 3.43 s | 0.66 m | 0.72 m | steps down off a low ledge, slowly |
+| Jumping Down (1) | 2.30 s | 0.93 m | 2.01 m | jumps out and down, ends in a deep crouch (does not stand up) |
+| Falling To Landing | 1.07 s | 1.03 m | 0.08 m | feet touch at 0.27 s, standing by 0.9 s |
+| Jumping Down (2) | 3.07 s | 1.13 m | 1.57 m | steps off, lands, stands |
+| Jumping soft landing | 2.63 s | 1.16 m | 1.33 m | jump off with a soft landing |
+| Climbing Down | 3.13 s | 1.55 m | 0.32 m | turns round on the edge (130 degrees), lowers, ends standing |
+| Hard Landing | 2.50 s | 2.08 m | 1.03 m | feet touch at 0.6 s, hands on the ground, standing at 2.5 s |
+| hard landing (pack) | 2.00 s | 0.42 m | 0.17 m | the landing and recovery only |
+| falling to roll (pack) | 1.80 s | 0.42 m | 3.05 m | lands into a forward roll |
+| Falling Idle | 0.70 s loop | | | the in-air pose |
+
+These line up with Part 2's drop bands: about 1.0 m for the soft landing, about 2.0 m for the hard landing, a roll for a running drop, and an in-air loop to cover any height in between. **Missing:** a turn, hang and drop from a high ledge. `Climbing Down` is the closest, from 1.55 m. There is also no clip that goes from standing on top into the hang.
+
+### Jumps
+
+| Clip | Length | Forward | Hip rise | Notes |
+|---|---|---|---|---|
+| Jump | 2.17 s | none | 0.27 m | standing jump; dips to 0.75 m first |
+| Jumping (1) | 1.90 s | none | 0.62 m | a high tucked jump |
+| Running Jump | 0.90 s | 4.45 m | 0.47 m | one run stride with a leap of about 2.7 m in it; loops back into the run |
+| Jump (1) | 1.00 s | 4.18 m | 1.10 m | a very high leap, feet at 1.39 m |
+
+The standing `Jump` rises less than the 0.41 to 0.50 m average in Part 1, so it is a safe, unathletic jump. `Jump (1)` rises 1.10 m, which is beyond the human figures; treat it as stylised.
+
+### Cover, doors, cars, ladders, falls
+
+- **Cover.** A working set: `Cover Idle` (standing, head at 1.65 m), `Crouch cover idle` (head at 1.28 m), `stand to cover` in two variants (1.2 m approach, 111 and 133 degree turn), `cover to stand`, `left / right cover sneak` (1.34 m per loop at 1.18 m/s), `Crouch Cover To Cover` (2.07 m sideways in 1.57 s), `Crouch Cover Turn`, `Standing Cover Turn`, `Crouch Look Around Corner`, `Sneak off the cover`. One mismatch: in crouch cover the head is at 1.28 m, so behind the 0.8 to 1.1 m low cover of Part 2 the head shows by 0.2 m or more. Low cover for these clips needs to be about 1.3 m, or the pose lowered.
+- **Doors.** `Open Door Outwards` takes 4.1 s over 2.21 m with the wrist reaching 1.17 m at 2.2 s; `Opening Door Inwards` takes 6.4 s over 1.75 m with the wrist at 1.10 m at 4.2 s. Both are slower than the 2 to 3 s (push) and 4 s (pull) of Part 1. `Opening slide door` and `Opening locked` are on the spot.
+- **Cars.** `Entering Car` (5.47 s) walks 1.9 m, turns 97 degrees and sits with the hips at 0.88 m and the feet on a floor 0.29 m up. That is a tall seat, more van or truck than saloon; a normal car will need the sitting height brought down. `Exiting Car` (5.8 s) is the reverse. There is no bonnet slide.
+- **Ladders.** A full set: `Start Climbing Ladder` (feet to 0.99 m), `Climbing ladder slow` (1.17 m in 2.97 s), `Climbing Ladder fast` (0.50 m in 0.77 s), `Climbing To Top ladder` (up 1.63 m and off the top), `Climbing Down ladder` (1.26 m in 2.0 s).
+- **Falls and getting up**, for the ragdoll stages: falls (`Tripping`, `Stumble Backwards`, `Fall Flat`, `Falling Down on ass`, `Hit By Car`, `Shoulder Hit And Fall`, `Knocked Out`), standing reactions (`Shove Reaction`, `Hit Reaction`, `Hit To Body`, `Head Hit`, `Jogging Stumble`), lying loops (`Fallen Idle`, `Laying Idle`) and recoveries (`Getting Up` 2.7 s, `Standing Up` 1.67 s, `Push Up To Idle` 3.1 s from face down).
+
+### What is missing from the folder
+
+In build order, these are the clips to look for on Mixamo, or to do without:
+
+1. A walk in the 1.3 to 1.45 m/s range (or accept `Walking` slowed to 0.75).
+2. A high step up for 0.30 to 0.50 m.
+3. A plain hand vault from a run, and a step vault from a walk.
+4. A mantle for 1.10 to 1.45 m.
+5. Standing into a braced hang, for 1.45 to 2.10 m.
+6. From standing on top: turn, lower into a hang, and drop.
+7. Shimmy along a ledge, left and right.
+8. A real crouch walk with the head near 1.0 m.
+9. Balance walking on a narrow beam, a sideways wall-ledge sidle, and a sideways squeeze through a gap.
+10. Running down stairs.
+11. A bonnet slide.
+
+Items 2, 4 and 5 can be bridged for a first pass by stretching the nearest clip and judging the result by eye; items 3, 6, 7, 8 and 9 cannot.
+
+### What this changes in Part 2
+
+- **Mixamo pipeline, step 1** is already done in effect: all clips were taken against one body. Keep using that same character for every new download.
+- **Stage 0 test course:** add walls at the clips' native heights (0.62, 1.00, 1.70, 2.30 and 2.46 m) so each clip can first be tested unstretched, and build the test stairs twice: once at 0.18 m risers and once at 0.25 m.
+- **Stage 2 import proof:** the character should stand 1.81 m tall, and the walk and run should print 1.79 and 5.92 m/s (or 3.13 m/s for `Slow Run`). Use `Running Jump Climb` on a 1.00 m box as the climb clip that settles the vertical root question, since its feet land cleanly on top.
+- **Stage 3:** add a per-clip start offset so every loop begins on the same foot, and set the walk playback speed from the table.
+- **Stage 6:** crouched body about 1.5 m tall and a 1.5 m overhang, until a lower crouch walk is found.
+- **Stage 8 onward:** each traversal stage starts with its clip unstretched on the native-height wall, then is stretched across its band.
+
 ## What could not be verified
 
 **Human movement.** The usual running elbow angle and arm swing size in degrees; trunk lean in walking, running, speeding up and slowing down in degrees; full joint-angle curves with spread from a gait laboratory dataset; base finger knuckle limits, thumb base ranges, and shoulder inward and outward rotation; the classic body-segment length and mass table (Winter, Drillis and Contini), which returned errors; NASA's body-size and reach tables, whose host was blocked; standing sway size in millimetres; the size and timing of the weight shift before a first step; steps needed to stop from a jog. Several pages were blocked outright, including Physiopedia, PubMed and the standard gait textbooks.
 
 **City obstacles.** The official text of the US building code (only a summary was read); typical bonnet heights by car class, door sill and seat heights; heights of wheelie bins, dumpsters, park benches and typical garden fences; how people get into and out of cars (all papers blocked); sliding over or climbing onto a car; the largest obstacle depth that can be vaulted; shimmy speed, hang time norms, grip force by grip type; walking a round rail or pipe, and the effect of height above ground on balance; beam walking data for ordinary young adults (the figures are for older adults, dancers and novices); fracture or injury risk by drop height; deep-crouch, kneeling and prone body heights and crawl speeds; numeric trunk lean per degree of slope; the maximum walkable slope from the perception studies; the US Army's own manual text on cover and movement (blocked; a teaching text was used). The jump tables are a coaching site's own compilation, not a formal study. The height bands, drop bands and width bands in Part 2 are syntheses of cited figures, not measured thresholds.
 
-**Mixamo.** The live site could not be opened. So unverified: every clip and pack name; whether suitable vault, climb, hang, shimmy, stair, cover and landing clips exist and what obstacle sizes they were captured on; the full list of download formats and frame rates; what "In Place" removes exactly; the skeleton options without fingers and their joint counts; whether clips loop cleanly; what a "without skin" file's rest pose contains. The binding Adobe terms of use were not read; the licence reading rests on Adobe's FAQ and a community post whose author's status could not be confirmed. Neither Blender root-motion add-on was run.
+**Mixamo.** The live site could not be opened, so the catalogue beyond the project's own folder is unknown, including whether the missing clips listed in Part 3 exist there. Part 3 settles, by measurement, which clips are in the folder, their sizes, speeds and native obstacle heights, that they share one body and are not in place. Still unverified: the full list of download formats and frame rates; what "In Place" removes exactly; the skeleton options without fingers and their joint counts; why the hands drift in the climb clips; exact heel-strike times for the loops (only which foot leads was measured); how these clips behave once imported into Godot, since nothing was played there. The binding Adobe terms of use were not read; the licence reading rests on Adobe's FAQ and a community post whose author's status could not be confirmed. Neither Blender root-motion add-on was run.
 
 **Godot.** Nothing was run in an actual Godot build; every Godot fact is from documentation and source text. Specifically unknown: whether root motion taken from a scaled hip track comes back in metres; how vertical root motion should be handled for climbs; how skinned characters and skeleton modifiers behave under physics interpolation; whether `TwoBoneIK3D` orients the hand or foot to the target; the cost of large animation trees or many modifiers; whether the bone map auto-fills correctly for a Mixamo rig (expected from the matching rules and forum reports, not tested); the cause of the 2026 "arms clip through body" report. There is no official IK tutorial and no official Mixamo tutorial. How people implement warping in Godot has no cited source; the method in Part 2 is inferred from the API.
 
