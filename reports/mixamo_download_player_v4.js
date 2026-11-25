@@ -18,7 +18,7 @@
 (async () => {
   const BATCHES = [1, 2, 3, 4];
   const PAUSE_MS = 1500;          // wait between clips
-  const MAX_SAME_NAME = 12;       // when the clip cannot be told apart, download at most this many with the same name
+  const MAX_SAME_NAME = 3;        // when clips cannot be told apart: download them only if there are this many or fewer, else skip
   const CLIPS = [
     {"n": 1, "b": 1, "q": "Standing Idle", "d": "", "len": 6.0, "save": "Standing Idle", "nd": 1},
     {"n": 2, "b": 1, "q": "Idle", "d": "Standing Idle", "len": 8.33, "save": "Idle"},
