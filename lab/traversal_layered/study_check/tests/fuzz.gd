@@ -23,6 +23,7 @@ var snaps := {}
 var hitch_frames := 0
 var done := false
 var fps_run := 0
+var ticks := 0
 
 func _init():
 	for a in OS.get_cmdline_user_args():
@@ -34,6 +35,7 @@ func _init():
 	root.add_child(main)
 	p = main.get_node("Player")
 	process_frame.connect(_frame)
+	physics_frame.connect(_phys)
 
 func _plan(total: float) -> void:
 	var t0 := 0.0
@@ -131,16 +133,6 @@ func _frame():
 	t = chk.get_time()
 	if t >= float(args.seconds):
 		_finish(); return
-	var st := _stick(t)
-	var ang: float = st[0]; var sp: float = st[1]
-	var pos: Vector3 = p.global_position
-	var off := Vector3(pos.x - HOME.x, 0, pos.z - HOME.z)
-	if off.length() > HOME_R and sp > 0:
-		# steer home: turn the stick toward the centre, no teleports (they'd read as pops)
-		var home_ang := atan2(-off.x, -off.z)
-		var d := wrapf(home_ang - ang, -PI, PI)
-		ang += d * clamp((off.length() - HOME_R) / 10.0, 0.0, 1.0)
-	p.set_test_input(Vector2(sin(ang), cos(ang)), sp, true)
 	# hitches: a single 100-250 ms frame (time_scale for one frame)
 	Engine.time_scale = 1.0
 	if args.hitches == "1" and t >= hitch_next:
@@ -156,6 +148,22 @@ func _frame():
 			var c: Vector3 = d.com
 			d.com = [c.x, c.y, c.z]
 			snaps[k] = d
+
+func _phys():
+	# the stick, once per physics tick (60 Hz), from the tick count: the same input at any drawing frame rate
+	if not started or done: return
+	ticks += 1
+	var tt := ticks / float(Engine.physics_ticks_per_second)
+	var st := _stick(tt)
+	var ang: float = st[0]; var sp: float = st[1]
+	var pos: Vector3 = p.global_position
+	var off := Vector3(pos.x - HOME.x, 0, pos.z - HOME.z)
+	if off.length() > HOME_R and sp > 0:
+		# steer home: turn the stick toward the centre, no teleports (they'd read as pops)
+		var home_ang := atan2(-off.x, -off.z)
+		var d := wrapf(home_ang - ang, -PI, PI)
+		ang += d * clamp((off.length() - HOME_R) / 10.0, 0.0, 1.0)
+	p.set_test_input(Vector2(sin(ang), cos(ang)), sp, true)
 
 func _finish():
 	done = true

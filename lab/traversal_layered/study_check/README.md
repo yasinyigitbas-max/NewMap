@@ -31,9 +31,13 @@ tamper-evident, not tamper-proof: a session could still rewrite a hook script; `
   walk: knee twist up to 22 deg near straight (limit 5) and pops only at the loop seam; run: knee varus 9.4 (8), lumbar
   twist 21 (10), wrist 34 sideways, pops up to 9 deg at foot strike (30 fps keys, linear interpolation); slow run:
   ankle up 43-45 (40), fingers 96 (90). The study's limits are kept; the lab cleans the clips at build time.
-- Lab B's build as of 9f5ca0b91 (25 Nov evening), 2 min of free play at 60 fps: FAIL on 34 rules, among them
-  knee out of plane up to 37 deg (6,089 frames), ankle eversion up to 55 deg, foot twist 72, knee twist 76, trunk bend
-  57, the CoM accelerating sideways at up to 136 m/s2, feet hovering on 2,615 frames.
+- Lab B's code at faab9966b (25 Nov, 14:31; its locomotion is still the 9f5ca0b91 one), the whole gate on Yasin's PC:
+  quick 31 s, full 4 min 47 s, both FAIL. In 30 minutes of free play at 60 fps it breaks 35 rules, among them: knee out of
+  plane up to 39 deg, ankle rolled out up to 62 deg, foot twisted 60, knee twisted 76, trunk folded 59 deg beyond the
+  whole-body lean, the CoM accelerating sideways at up to 203 m/s2 (limit 8.85), feet hovering or sinking on thousands of
+  frames, turns at 640 deg/s where 92 is the limit. Frame-rate agreement: with the input fed per physics tick the
+  capsule is identical to the millimetre at 30, 60 and 144 fps, but the drawn pose differs by up to 35 deg: the pose
+  layer depends on the frame rate.
 
 ## What it can't see
 How the motion looks (frame strips beside reference footage, 9.4), skin problems (the waist pinching), feet crossing
