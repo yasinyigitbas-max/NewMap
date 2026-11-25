@@ -2,6 +2,8 @@
 #include "city_damage.h"
 #include "city_rooms.h"
 #include "el_sfx.h"
+#include <godot_cpp/classes/audio_server.hpp>
+#include <godot_cpp/classes/audio_stream_player3d.hpp>
 #include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/collision_object3d.hpp>
 #include <godot_cpp/classes/file_access.hpp>
@@ -19,6 +21,7 @@
 #include <godot_cpp/classes/shader_material.hpp>
 #include <godot_cpp/classes/sphere_shape3d.hpp>
 #include <godot_cpp/classes/texture2d.hpp>
+#include <godot_cpp/classes/time.hpp>
 #include <godot_cpp/classes/viewport.hpp>
 #include <godot_cpp/classes/window.hpp>
 #include <godot_cpp/classes/world3d.hpp>
@@ -317,6 +320,7 @@ Dictionary CityDamage::hit(const Vector3 &p_at, const Vector3 &p_normal, const V
 	Vector3 nrm = p_normal.length_squared() > 1e-6f ? p_normal.normalized() : Vector3(0, 1, 0);
 	Vector3 dir = p_dir.length_squared() > 1e-6f ? p_dir.normalized() : -nrm;
 	// the thing at the point: a short ray through it along the hit's direction (then against the normal)
+	Time *tm = Time::get_singleton(); uint64_t t0 = tm->get_ticks_usec();
 	Dictionary rh = ray(p_at - dir * 0.3f, p_at + dir * 0.3f, BULLET_MASK, p_source);
 	if (rh.is_empty()) rh = ray(p_at + nrm * 0.3f, p_at - nrm * 0.3f, BULLET_MASK, p_source);
 	int surf;
@@ -392,11 +396,16 @@ Dictionary CityDamage::hit(const Vector3 &p_at, const Vector3 &p_normal, const V
 			case EXPLOSION: if (surf != WATER && surf != FOLIAGE && surf != GLASS) { tile = MARK_CHIP_BIG; size = 0.8f + std::min(amount, 100.0f) * 0.01f; } break;
 			default: break;
 		}
+		cost_us[0] += tm->get_ticks_usec() - t0; t0 = tm->get_ticks_usec();
 		if (tile >= 0) add_mark(at, nrm, dir, tile, size, col ? (uint64_t)col->get_instance_id() : 0);
 		else r["state"] = String("none");
+		cost_us[1] += tm->get_ticks_usec() - t0;
 	} else r["state"] = String("none");
+	t0 = tm->get_ticks_usec();
 	burst(at, nrm, dir, surf, kind, amount);
+	cost_us[2] += tm->get_ticks_usec() - t0; t0 = tm->get_ticks_usec();
 	impact_sound(at, surf, kind, amount);
+	cost_us[3] += tm->get_ticks_usec() - t0;
 	return r;
 }
 
@@ -677,7 +686,25 @@ void CityDamage::impact_sound(const Vector3 &p_at, int s, int k, float p_amount)
 	if (k == CAR && s != METAL && s != CAR_BODY && s != WOOD && s != BARK) { base = "res://audio/sfx/car/car_bump_"; width = 1; db = -6.0f; }
 	if (!base) return;
 	db += std::min(p_amount * 0.15f, 6.0f) - 3.0f;
-	if (elsfx::play(this, String(base), std::min(db, 0.0f), 0.08f, to_local(p_at), 40.0f, 0, width)) sounds++;
+	// a pool of SND_POOL players used in turn (a new player per sound cost ~0.4 ms: 90 % of a shot, measured 25 Nov); when
+	// all of them started within the last 30 ms the sound is left out (a burst of hits is heard as a few, not hundreds)
+	int pk = 0;
+	for (int i = 1; i < SND_POOL; i++) if (snd_t[i] < snd_t[pk]) pk = i;
+	if (clock - snd_t[pk] < 0.03) { sounds_skipped++; return; }
+	const Ref<AudioStream> st = elsfx::pick(String(base), 0, width);
+	if (st.is_null()) return;
+	if (!snd[pk]) {
+		snd[pk] = memnew(AudioStreamPlayer3D);
+		snd[pk]->set_unit_size(4.8f); snd[pk]->set_max_distance(40.0f);
+		snd[pk]->set_bus(AudioServer::get_singleton()->get_bus_index("SFX") >= 0 ? StringName("SFX") : StringName("Master"));   // (el_sfx.h's bus)
+		add_child(snd[pk]);
+	}
+	AudioStreamPlayer3D *a = snd[pk];
+	a->stop();
+	a->set_stream(st); a->set_volume_db(std::min(db, 0.0f)); a->set_pitch_scale(0.92f + 0.16f * rnd());
+	a->set_position(to_local(p_at));
+	a->play();
+	snd_t[pk] = clock; sounds++;
 }
 
 // ---------------------------------------------------------------- every frame, and the test gun
@@ -715,7 +742,9 @@ void CityDamage::_process(double p_delta) {
 		if (k && !gun_key_was) dev_fire();
 		gun_key_was = k;
 	}
+	const uint64_t t0 = Time::get_singleton()->get_ticks_usec();
 	step_parts(p_delta);
+	if (!parts.empty()) cost_us[4] = Time::get_singleton()->get_ticks_usec() - t0;
 }
 
 Dictionary CityDamage::get_state() const {
@@ -725,8 +754,10 @@ Dictionary CityDamage::get_state() const {
 	d["hits"] = kinds; d["surfaces"] = surfs;
 	d["marks"] = mark_count; d["marks_total"] = marks_total; d["mark_draws"] = (mark_mmi && mark_mmi->is_visible()) ? 1 : 0;
 	d["particles"] = (int)parts.size(); d["particles_total"] = parts_total; d["particle_draws"] = parts.empty() ? 0 : 1;
-	d["sounds"] = sounds; d["openings_hit"] = openings_hit; d["shots"] = shots; d["testgun"] = testgun;
+	d["sounds"] = sounds; d["sounds_skipped"] = sounds_skipped; d["openings_hit"] = openings_hit; d["shots"] = shots; d["testgun"] = testgun;
 	d["last_surface"] = last_surface >= 0 ? String(SURF_NAME[last_surface]) : String(); d["last_target"] = last_target;
+	Dictionary c; c["find_us"] = (int64_t)cost_us[0]; c["mark_us"] = (int64_t)cost_us[1]; c["particles_us"] = (int64_t)cost_us[2]; c["sound_us"] = (int64_t)cost_us[3]; c["step_us_last"] = (int64_t)cost_us[4];
+	d["cost"] = c;
 	d["ground_map"] = gmap.empty() ? String("none") : (gmap_is_surface ? String("ground_surface") : String("ground_class"));
 	return d;
 }

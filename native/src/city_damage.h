@@ -68,6 +68,11 @@ private:
 	// counters for the tests and the rig
 	int hits_n[N_KINDS] = {}, surf_n[N_SURF] = {}, sounds = 0, openings_hit = 0, last_surface = -1;
 	String last_target;
+	static constexpr int SND_POOL = 8;
+	class AudioStreamPlayer3D *snd[SND_POOL] = {};
+	double snd_t[SND_POOL] = { -9, -9, -9, -9, -9, -9, -9, -9 };
+	int sounds_skipped = 0;
+	uint64_t cost_us[5] = {};   // the time spent (all hits so far): finding what was hit, marks, particles, sound; [4] the last particle step
 	// the test gun
 	int testgun = 0;    // 0 off, 1 on, 2 on and the crowd hears it
 	bool gun_key_was = false;
