@@ -3,6 +3,7 @@
 #pragma once
 
 #include "labmath.h"
+#include "move.h"
 
 #include <functional>
 
@@ -40,6 +41,12 @@ struct Targets {
 	int contact[2] = { 2, 2 }; // 0 swing, 1 heel pivot, 2 flat, 3 ball pivot
 	Vector3 contact_pt[2]; // the world point that must not move while in contact
 	float body_lean = 0; // radians, for the response metric
+	// hands on the world (traversal): weight 0 = the locomotion arm, 1 = pinned at hand_pos
+	float hand_w[2] = { 0, 0 };
+	Vector3 hand_pos[2], hand_fingers[2], hand_palm[2], hand_pole[2];
+	float grip[2] = { 0, 0 }; // 1 hook, -1 open palm push, 0.5 wrap, 0 rest curl
+	bool hand_contact[2] = { false, false }; // pinned (for the hand-on-edge metric)
+	int move = 0; // the move being played (MoveType), for tests
 };
 
 Targets lerp_targets(const Targets &a, const Targets &b, float t);
@@ -75,6 +82,7 @@ struct MotorInput {
 	Vector3 pos; // body origin (ground level under the capsule), world
 	Vector3 vel; // actual horizontal velocity after the move
 	Vector3 vel_des; // desired horizontal velocity
+	float vy = 0; // vertical velocity (air / landing)
 	Vector3 look_dir; // stick direction (world, flat); zero when the stick is idle
 	float dt = 1.0f / 60.0f;
 	bool grounded = true;
@@ -90,6 +98,18 @@ public:
 	Vector3 steer(const Vector3 &vel, const Vector3 &vel_des, float dt) const;
 	void step(const MotorInput &in);
 	const Targets &targets() const { return t; }
+	// traversal (step 6)
+	Move mv;
+	Obstacle armed;
+	bool move_active() const { return mv.type != MV_NONE; }
+	Vector3 move_origin; // the capsule's position while a move runs (the player puts it there)
+	bool move_launch = false; // a move just ended in the air: the player takes mv.launch as velocity
+	Vector3 launch_vel;
+	int moves_done[16] = {};
+	int refusals = 0;
+	const char *last_refusal = "";
+	bool fall_hurt_report = false; // a landing from > 3 m: the damage system's hit(FALL) is called by the player
+	float fall_height = 0;
 	// terrain limits on the requested speed (stairs: a tread per step; steep slopes: slower), from the last tick
 	float speed_cap = 1e9f;
 	float slope_mult = 1.0f;
@@ -163,6 +183,23 @@ private:
 	void foot_geom(int i, const Vector3 &ref, const Basis &Rflat, float pitch, int pivot, Vector3 &ankle, Basis &rot) const;
 	static constexpr float BALL_MAX = 45.0f * DEG; // toes bend up to ~45-55 deg before the foot rolls onto the tips
 	void start(const MotorInput &in);
+	// step 6
+	Obstacle probe_obstacle(const MotorInput &in, float x_face, bool is_drop);
+	void classify(Obstacle &O, float speed) const;
+	bool begin_move(const MotorInput &in, int takeoff_foot);
+	void build_move(const Obstacle &O, int i, const MotorInput &in);
+	void build_land(const MotorInput &in, float v_impact);
+	void run_move(const MotorInput &in);
+	void finish_move(const MotorInput &in, bool aborted);
+	void air_pose(const MotorInput &in);
+	FootPose foot_now(int i) const;
+	FootPose flat_foot(int i, const Vector3 &ground, float fyaw, float pitch = 0, int pivot = 2) const;
+	float stand_h() const { return d.ankle_h[0] + 0.985f * d.leg(0) - d.hip_off[0].y; }
+	bool in_air = false;
+	float air_time = 0, air_vy_min = 0, air_start_y = 0;
+	Targets blend_from;
+	float blend_t = 1, blend_T = 0.2f;
+	float wall_x = 1e9f; // where the profile met a wall (along prof.dir)
 	void scan(const MotorInput &in, const Vector3 &dir);
 	void choose_landing(int i, Vector3 &tgt, float yaw_td);
 	float posture_extra = 0, look_down = 0;
