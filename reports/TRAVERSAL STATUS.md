@@ -1,13 +1,13 @@
 # Traversal work: where we are (read this first after a break or a context compression)
 
-Last updated 25 Nov 2026, session "Traversal system research and design", branch `claude/intelligent-bardeen-errnbs`.
+Last updated 25 Nov 2026, session "Traversal system research and design". Merged to `main` on 25 Nov at Yasin's word ("merge the branch to main"); later work continues on branch `claude/intelligent-bardeen-errnbs`.
 
 ## What Yasin asked for
 A robust Rockstar-style traversal system for the game (Godot 4.7, Jolt, Mixamo clips), after five failed attempts. He asked for a study from real sources first. Two rules he set:
 - **Do not use or salvage the earlier human-movement study** (it was written from memory). It lives on other branches (for example `claude/festive-faraday-20ltx2`); do not read it.
 - **Do not be influenced by what is already in the game.** The old player code, the `lab/*` branches and the old animation skill were not read, on purpose.
 
-## What exists (all on this branch)
+## What exists (on main)
 | File | What |
 |---|---|
 | `reports/Hybrid character traversal study.md` | the report: Part 1 findings, Part 2 design and staged build order, Part 3 measurements of the clips and the character |
