@@ -23,3 +23,5 @@ Checks that the method is right: in every standing clip the feet come out at 0.0
 | skin, joints, ver | whether the file carries a mesh, its joint count, its FBX version |
 
 Hand heights are wrist joints; the gripping palm is about 0.08 m further along the hand.
+
+`catalogue_candidates.csv` holds the same measurements for 31 clips that are not in the folder, taken from a public copy of the Mixamo catalogue (https://huggingface.co/datasets/Linzhan/Mixamo-Animations-Characters). They are on a different body (hip to ankle 0.83 m, against 0.889 m for the folder's clips), so heights read about 7 % low.

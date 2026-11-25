@@ -470,7 +470,7 @@ These were captured on stairs with a riser of about 0.25 m, steeper than the 0.1
 |---|---|---|---|---|
 | Jumping (2) | 1.23 s | 0.62 m | 1.53 m | two-step approach and a jump onto a box; no hands |
 | Running Jump Climb | 2.17 s | 1.00 m | 2.29 m | run, jump, feet land on top at 0.8 s, stand up; no hand support |
-| Braced Hang To Crouch | 1.13 s | 1.70 m | 0.59 m | starts hanging with feet braced on the wall (wrists at 1.45 m), ends crouched on top |
+| Braced Hang To Crouch | 1.13 s | rises 1.5 m from the hang (see the correction below) | 0.59 m | starts hanging with feet braced on the wall, ends crouched on top |
 | Stand To Freehang | 1.70 s | hands to 2.29 m | 0.41 m | from standing, jump and catch a ledge; ends in the hang |
 | Hanging Idle | 2.33 s loop | hands at 2.29 m | | toes hang 0.28 m above the ground the clip assumes |
 | Climbing single | 3.83 s | 2.42 m | 0.41 m | from the hang, pull up to a crouch on top |
@@ -487,7 +487,7 @@ Set against the height bands of Part 2:
 | 0.50 to 1.10 m, climb on | Jumping (2) at 0.62 m, Running Jump Climb at 1.00 m | covered at both ends of the band, as jumps |
 | 0.50 to 1.10 m, vault over | Vault Over Box to Cover, Jumping Over Into Combat | **no clean vault**, see below |
 | 1.10 to 1.45 m, mantle | none | **missing**; nearest are Running Jump Climb stretched up or Braced Hang To Crouch stretched down |
-| 1.45 to 2.10 m, grab and climb | Braced Hang To Crouch at 1.70 m | the climb-up exists; **there is no clip from standing into the braced hang** |
+| 1.45 to 2.10 m, grab and climb | Braced Hang To Crouch | the climb-up exists; the clip from standing into the braced hang is on Mixamo but not in the folder |
 | 2.10 to 2.60 m, jump, grab, climb | Stand To Freehang, Hanging Idle, Climbing single (ledge about 2.3 to 2.4 m); Sprint To Wall Climb at 2.46 m | covered, from a stand and from a run |
 | 2.60 to 3.00 m, running wall-run | Sprint To Wall Climb stretched from 2.46 m | a stretch of up to 22 %, to be judged by eye |
 
@@ -541,7 +541,7 @@ The standing `Jump` rises less than the 0.41 to 0.50 m average in Part 1, so it 
 
 ### What is missing from the folder
 
-In build order, these are the clips to look for on Mixamo, or to do without:
+In build order, these are the clips the folder lacks. The next section checks each against the Mixamo catalogue.
 
 1. A walk in the 1.3 to 1.45 m/s range (or accept `Walking` slowed to 0.75).
 2. A high step up for 0.30 to 0.50 m.
@@ -555,12 +555,51 @@ In build order, these are the clips to look for on Mixamo, or to do without:
 10. Running down stairs.
 11. A bonnet slide.
 
-Items 2, 4 and 5 can be bridged for a first pass by stretching the nearest clip and judging the result by eye; items 3, 6, 7, 8 and 9 cannot.
+
+### The missing clips, checked against the Mixamo catalogue
+
+Added later on 25 Nov 2026. The Mixamo site itself needs a login that this session does not have, so the check was made against a public copy of the catalogue: a Hugging Face dataset that lists 2,446 Mixamo animations by name and description ([dataset index](https://huggingface.co/datasets/Linzhan/Mixamo-Animations-Characters/resolve/main/metadata.csv)). It is a third party's copy, so a name may differ slightly on the live site. Many Mixamo clips share one name ("Jumping", "Climbing", "Walking"), so the description is what identifies a clip; search Mixamo by the name and pick the one whose description matches.
+
+The candidate clips were also downloaded from that dataset and measured with the same script. They are on a different, shorter-legged body (hip to ankle 0.83 m against your 0.889 m), so the heights below are about 7 % lower than they will be on your character. Their rows are in `clip_measurements/catalogue_candidates.csv`.
+
+| # | Missing | On Mixamo? | Name on Mixamo: description | Measured on the catalogue body |
+|---|---|---|---|---|
+| 1 | Slower walk | yes | Walking: "Male Standard Walk" | 1.04 m/s, 1.23 s loop |
+| 2 | High step, 0.30 to 0.50 m | partly | Jumping: "Male Stepping Onto Platform" | steps (not jumps) onto 0.59 m in 1.37 s; nothing lower was found |
+| 3 | Hand vault | yes | Jumping: "Male Jumping Over An Obstacle With 1 Hand Planted" | 1.17 s at 4.2 m/s, feet clear 1.19 m |
+| 3 | Two-hand vault | yes | Jumping: "Male Jumping Over An Obstacle With 2 Hands Planted" | 1.2 s at 3.5 m/s, feet clear 1.38 m |
+| 3 | Vault from a walk | partly | Jumping: "Step Up To Jump Over Object" | 2.87 s, feet clear 1.0 m, turns 95 degrees at the end |
+| 4 | Mantle, 1.10 to 1.45 m | **no** | nothing found | |
+| 5 | Standing into braced hang | yes | Idle To Braced Hang: "Jump To A Braced Hang From Standing Idle" | 1.27 s, wrists to 2.27 m, feet braced at 0.96 m |
+| 6 | From on top, down into a hang | yes | Drop To Freehang: "Standing Drop To Freehang" | 2.4 s, turns round and lowers 2.04 m |
+| 6 | Let go and land | yes | Freehang Drop: "Freehang Drop To Standing" | 1.33 s, feet drop 0.4 to 0.5 m |
+| 6 | Let go from braced hang | yes | Braced Hang Drop: "Braced Hang Drop To Standing" | 1.67 s, feet drop 1.26 m |
+| 7 | Shimmy, braced | yes | Braced Hang Shimmy: "Left Braced Hang Shimmy" and "Right Braced Hang Shimmy" | 1.17 s, 0.57 m sideways per cycle |
+| 7 | Shimmy, free hang | yes | Left Shimmy / Right Shimmy: "Free Hanging Shimmy Left / Right" | 1.37 s, 0.37 m per cycle |
+| 7 | Switch between hangs | yes | Braced To Free Hang; Free Hang To Braced | about 1 s each |
+| 8 | Low crouch walk, head near 1.0 m | **no** | Crouch Walk Forward: "Walking Forward While Crouched" is the lowest found | head at 1.31 to 1.35 m, no lower than what you have |
+| 9 | Narrow-beam balance walk | **no** | nearest: Walking: "Male Careful Walk" | 0.83 m/s, an ordinary slow walk |
+| 9 | Losing balance on an edge | yes | Wobbling: "Wobbling On A Ledge"; Edge Slip: "Slipping Off An Edge Then Regaining Balance" | on the spot |
+| 9 | Wall-ledge sidle, gap squeeze | **no** | nothing found | |
+| 10 | Running down stairs | yes | Descending Stairs: "Running Down A Set Of Stairs" | 0.4 s, down 0.47 m |
+| 11 | Bonnet slide | **no** | only Running Slide: "Running To Slide And Back To Running", a slide along the ground | 6.4 m in 1.53 s |
+
+Also in the catalogue and useful: crouch walking left, right and backwards ("Crouch Walk Left / Right / Back"), crawling on hands and knees ("Crawling") for anything lower than the crouch, hops between hangs ("Braced Hang Hop Left / Right / Up", "Free Hang Hop Left / Right"), and "Freehang Climb: Freehang Climb To Standing" (3.87 s), which ends standing where your `Climbing single` ends crouched.
+
+What this means for the build:
+
+- **Seven of the eleven gaps can be filled from Mixamo:** the slower walk, the vaults, standing into the braced hang, the hang-and-drop, the shimmy, and running down stairs. Download them against the same character as the rest.
+- **Four cannot, and need another answer:**
+  - *Mantle (1.10 to 1.45 m):* stretch `Running Jump Climb` upward, or jump to a braced hang and climb, and judge by eye.
+  - *Low crouch walk:* keep the crouched body at about 1.5 m, and use the crawl for lower gaps if they matter.
+  - *Beam walk, sidle and squeeze:* build them from clips you have plus procedure: the careful walk with the feet narrowed and arms raised by IK for beams, and the strafe walk for sidling and squeezing.
+  - *Bonnet slide:* leave it out, or source it elsewhere.
+- **A correction to the table above.** `Braced Hang To Crouch` was listed with a native height of 1.70 m. Its numbers are measured from where the hang starts, not from the ground: the catalogue's entry clip puts the hands of a braced hang at about 2.3 to 2.4 m with the feet braced about 1.2 m below them. So this clip is not tied to 1.70 m. It suits any ledge high enough for the feet to be off the ground, roughly 1.6 m and up, and the height is set by how the character gets into the hang.
 
 ### What this changes in Part 2
 
 - **Mixamo pipeline, step 1** is already done in effect: all clips were taken against one body. Keep using that same character for every new download.
-- **Stage 0 test course:** add walls at the clips' native heights (0.62, 1.00, 1.70, 2.30 and 2.46 m) so each clip can first be tested unstretched, and build the test stairs twice: once at 0.18 m risers and once at 0.25 m.
+- **Stage 0 test course:** add walls at the clips' native heights (0.62, 1.00, 2.30 and 2.46 m) so each clip can first be tested unstretched, and build the test stairs twice: once at 0.18 m risers and once at 0.25 m.
 - **Stage 2 import proof:** the character should stand 1.81 m tall, and the walk and run should print 1.79 and 5.92 m/s (or 3.13 m/s for `Slow Run`). Use `Running Jump Climb` on a 1.00 m box as the climb clip that settles the vertical root question, since its feet land cleanly on top.
 - **Stage 3:** add a per-clip start offset so every loop begins on the same foot, and set the walk playback speed from the table.
 - **Stage 6:** crouched body about 1.5 m tall and a 1.5 m overhang, until a lower crouch walk is found.
@@ -572,7 +611,7 @@ Items 2, 4 and 5 can be bridged for a first pass by stretching the nearest clip 
 
 **City obstacles.** The official text of the US building code (only a summary was read); typical bonnet heights by car class, door sill and seat heights; heights of wheelie bins, dumpsters, park benches and typical garden fences; how people get into and out of cars (all papers blocked); sliding over or climbing onto a car; the largest obstacle depth that can be vaulted; shimmy speed, hang time norms, grip force by grip type; walking a round rail or pipe, and the effect of height above ground on balance; beam walking data for ordinary young adults (the figures are for older adults, dancers and novices); fracture or injury risk by drop height; deep-crouch, kneeling and prone body heights and crawl speeds; numeric trunk lean per degree of slope; the maximum walkable slope from the perception studies; the US Army's own manual text on cover and movement (blocked; a teaching text was used). The jump tables are a coaching site's own compilation, not a formal study. The height bands, drop bands and width bands in Part 2 are syntheses of cited figures, not measured thresholds.
 
-**Mixamo.** The live site could not be opened, so the catalogue beyond the project's own folder is unknown, including whether the missing clips listed in Part 3 exist there. Part 3 settles, by measurement, which clips are in the folder, their sizes, speeds and native obstacle heights, that they share one body and are not in place. Still unverified: the full list of download formats and frame rates; what "In Place" removes exactly; the skeleton options without fingers and their joint counts; why the hands drift in the climb clips; exact heel-strike times for the loops (only which foot leads was measured); how these clips behave once imported into Godot, since nothing was played there. The binding Adobe terms of use were not read; the licence reading rests on Adobe's FAQ and a community post whose author's status could not be confirmed. Neither Blender root-motion add-on was run.
+**Mixamo.** The live site could not be opened, so the catalogue was checked only through a third party's public copy of it (Part 3); names and availability on the live site may differ, and the candidate clips were measured on a different body from the project's. Part 3 settles, by measurement, which clips are in the folder, their sizes, speeds and native obstacle heights, that they share one body and are not in place. Still unverified: the full list of download formats and frame rates; what "In Place" removes exactly; the skeleton options without fingers and their joint counts; why the hands drift in the climb clips; exact heel-strike times for the loops (only which foot leads was measured); how these clips behave once imported into Godot, since nothing was played there. The binding Adobe terms of use were not read; the licence reading rests on Adobe's FAQ and a community post whose author's status could not be confirmed. Neither Blender root-motion add-on was run.
 
 **Godot.** Nothing was run in an actual Godot build; every Godot fact is from documentation and source text. Specifically unknown: whether root motion taken from a scaled hip track comes back in metres; how vertical root motion should be handled for climbs; how skinned characters and skeleton modifiers behave under physics interpolation; whether `TwoBoneIK3D` orients the hand or foot to the target; the cost of large animation trees or many modifiers; whether the bone map auto-fills correctly for a Mixamo rig (expected from the matching rules and forum reports, not tested); the cause of the 2026 "arms clip through body" report. There is no official IK tutorial and no official Mixamo tutorial. How people implement warping in Godot has no cited source; the method in Part 2 is inferred from the API.
 
