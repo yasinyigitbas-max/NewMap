@@ -52,6 +52,7 @@ private:
 	int UP[2] = {-1, -1}, LO[2] = {-1, -1}, FOOT[2] = {-1, -1}, TOE[2] = {-1, -1};
 	int FARM[2] = {-1, -1}, HAND[2] = {-1, -1};
 	float leg_len[2][2] = {{0, 0}, {0, 0}};
+	float leg_reach[2] = {0, 0}; // rest hip->ankle (skeleton units): the mesh's straight leg
 	float scale = 0.01f; // skeleton units -> metres
 	Pose work;
 

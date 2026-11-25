@@ -15,6 +15,16 @@ var cur: Dictionary
 var m: Dictionary
 var results := []
 var only := ""
+var hinge := {}
+var rest_knee := {}
+
+## signed knee (study v2 1.3): + normal, - backward; sign from geometry
+static func _knee_geom(hip: Vector3, knee: Vector3, ank: Vector3, ax: Vector3) -> float:
+	ax = ax.normalized()
+	var t := (knee - hip).normalized(); var s := (ank - knee).normalized()
+	var tp := (t - ax * t.dot(ax)).normalized(); var sp := (s - ax * s.dot(ax)).normalized()
+	var mag := rad_to_deg(acos(clamp(tp.dot(sp), -1.0, 1.0)))
+	return mag if (ank - knee).dot(t.cross(ax).normalized()) < 0 else -mag
 
 # scenarios: list of [time, dir_deg (0 = +Z, 90 = +X), speed]; the player starts facing +Z
 func scenarios() -> Array:
@@ -51,6 +61,13 @@ func _bones():
 			"LeftArm", "LeftForeArm", "LeftHand", "RightArm", "RightForeArm", "RightHand", "Head"]:
 		B[n] = sk.find_bone(n)
 	layer.modification_processed.connect(_measure)
+	# knee hinge per side (body left, perpendicular to the rest thigh, carried by the UpLeg) and the rest bone angle
+	for side in ["Left", "Right"]:
+		var g := sk.get_bone_global_rest(B[side + "UpLeg"])
+		var t := (sk.get_bone_global_rest(B[side + "Leg"]).origin - g.origin).normalized()
+		var ax := (Vector3(1, 0, 0) - t * t.dot(Vector3(1, 0, 0))).normalized()
+		hinge[side] = g.basis.orthonormalized().inverse() * ax
+		rest_knee[side] = _knee_geom(g.origin, sk.get_bone_global_rest(B[side + "Leg"]).origin, sk.get_bone_global_rest(B[side + "Foot"]).origin, g.basis.orthonormalized() * hinge[side])
 	if OS.get_environment("LAB_LAYERS") != "": layer.set_layers(int(OS.get_environment("LAB_LAYERS")))
 
 func _next():
@@ -160,16 +177,11 @@ func _measure():
 	# elbow 0-145
 	for side in ["Left", "Right"]:
 		var hip := _wpos(side + "UpLeg"); var knee := _wpos(side + "Leg"); var ank := _wpos(side + "Foot"); var toe := _wpos(side + "ToeBase")
-		var flex := 180.0 - rad_to_deg((hip - knee).angle_to(ank - knee))
+		var gx: Transform3D = sk.get_global_transform_interpolated()
+		var ax: Vector3 = gx.basis.orthonormalized() * (sk.get_bone_global_pose(B[side + "UpLeg"]).basis.orthonormalized() * hinge[side])
+		var flex: float = _knee_geom(hip, knee, ank, ax) - rest_knee[side]
 		if flex > 140.0: m.knee_over += 1
-		# backward: the knee must sit in front of the hip-ankle line, the way the toes point
-		var line := (ank - hip).normalized()
-		var off := (knee - hip) - line * (knee - hip).dot(line)
-		var fwd := Vector3(sin(p.get_yaw()), 0, cos(p.get_yaw()))
-		if flex > 8.0 and off.dot(fwd.normalized()) < -0.02:
-			m.knee_back += 1
-			if OS.get_environment("LAB_KNEE") != "" and m.knee_back < 6:
-				print("KNEE %s t=%.2f mode=%d flex=%.0f off=%s fwd=%s hip=%s knee=%s ank=%s c=%d" % [side, t, p.get_mode(), flex, str(off.snapped(Vector3.ONE*0.001)), str(fwd.snapped(Vector3.ONE*0.01)), str(hip.snapped(Vector3.ONE*0.001)), str(knee.snapped(Vector3.ONE*0.001)), str(ank.snapped(Vector3.ONE*0.001)), int(p.get_contact(0 if side == "Left" else 1))])
+		if flex < -5.0: m.knee_back += 1
 		var sh := _wpos(side + "Arm"); var el := _wpos(side + "ForeArm"); var wr := _wpos(side + "Hand")
 		var ef := 180.0 - rad_to_deg((sh - el).angle_to(wr - el))
 		if ef > 145.0: m.elbow += 1

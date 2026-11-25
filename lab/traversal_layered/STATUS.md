@@ -38,6 +38,25 @@ against it, the v2 section it breaks, and how I would fix it. **Nothing is fixed
 
 The Kimodo verdict (KIMODO_TEST.md, round 3) is therefore open again until #14 and #15 are fixed.
 
+**Correction to #14 (same evening):** the first audit tool that "measured 29° on every clip" never applied the pose (it ran
+before the engine updated the skeleton) and measured the rest pose. Rewritten with its own forward kinematics and a
+mutation test (v2 9.2: rest reads 0, +30 reads +30, -20 reads -20, both sides). Measured properly, the **old retargeter
+bent the mesh knee 16-19° backward in 25-30 frames** of the climb and mantle: the cause was real.
+
+### Fixed (25 Nov evening, Yasin's "go")
+| # | Fix | Result (measured on the body, `tests/clip_audit.gd`, mutation-tested) |
+|---|---|---|
+| 14 | Retargeter swings each limb **whole** (hip→ankle, shoulder→wrist, hand and fingers with the arm), keeping the body's own rest joint angles; leg ratio from the straight leg (hip→ankle). DECISIONS 1.2. | Backward knees: climb 0, Kimodo walk 0, Mixamo walk 0, Mixamo run 0, Kimodo run 1 frame at -5° (the limit). Old retargeter: 25-30 frames at -16 to -19°. |
+| 14b | Runtime leg IK: reach capped at the mesh's straight leg (rest hip→ankle), soft reach 99 % → 99.9 % (v2 10.3). | loco_test (now with the signed, rest-relative knee): 0 backward-knee frames in all 14 scenarios. |
+
+### Still open after this fix
+| # | Problem | Notes |
+|---|---|---|
+| 17 | **Waist pinches thin when the hips fold hard** (the jump of the climb; Yasin's "mid-section lost" is probably this too). Seen in both the old and new retargeter. | It's the mesh's skin weights at the waist (Meshy auto-rig), which bone checks can't see. Options: the v2 hip-flexion limit (125° with the knee bent) in the limiter; or better weights on the body in Blender (Yasin's asset). Not decided. |
+| 18 | The retarget change shifted the clips' measured speeds and exposed the old step 4 controller: the run reversal now flips pivot / loop 20 times; hips accelerations up to 8 cm/frame second difference. | That controller is what v2 says to rebuild (#1, #8); not patched. |
+| 19 | The mantle's second key pose (knee up, foot behind) folds the leg completely flat on one frame (my key pose, not the retargeter). | Redo that key pose in the next Kimodo round. |
+
+
 ### Why my checks passed a broken pose
 - The knee was the **unsigned** angle between thigh and shin, plus a "knee behind the hip-ankle line along the body's
   facing" test with my own thresholds (flex > 8°, 2 cm). Nothing measured hip rotation, varus or twist, so a thigh

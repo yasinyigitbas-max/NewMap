@@ -17,8 +17,8 @@ Contract: `LAB_BRIEF.md` (copy of `docs/locomotion/lab/LAB_BRIEF.md`). Study: `S
 | # | Decision | Study |
 |---|---|---|
 | 1.1 | player_v3 imported with Fix Silhouette OFF (brief trap). Its rig (Meshy, 54 bones, no toe end, no twist bones) is mapped by name to the humanoid profile; clips are mapped the same way. | 5.5, 6.3 |
-| 1.2 | Own retargeter, the same code for every clip: world-space rotation delta from the source rest, applied to a target *reference pose* in which limb bones (upper arm, forearm, thigh, shin) are swung to point the way the Mixamo T-pose points. Feet, spine, head keep the body's own rest (sole angle comes from the body, then foot IK). | 5.4, 6.3 (rest fixer, done consistently) |
-| 1.3 | Hips translation scaled by the hips-height ratio (body 1.00 m / clip ~1.0 m). | 5.4 ("scaled by the leg-length ratio"), 6.3 (normalize position tracks) |
+| 1.2 | Own retargeter, the same code for every clip: world-space rotation delta from the source rest, applied to a target *reference pose*. **Revised 25 Nov evening:** each limb is swung **whole** (hip→ankle; shoulder→wrist with the hand and fingers; the clavicle on its own) so the body keeps its own rest joint angles; the first version swung each bone and bent the mesh knee 16-19° backward (STATUS #14). Feet, spine, head keep the body's rest. | v2 1.2 (rest-relative), 12.4, 13.3 |
+| 1.3 | Motion scaled by the straight-leg ratio (rest hip→ankle, body / clip), the ankles kept at their standing height. | v2 12.4, 13.3 |
 | 1.4 | Root motion made at build time: hips' horizontal travel and yaw moved to a ground root; bob, sway, tilt stay on the hips. | 5.3 |
 | 1.5 | The root's direction comes from a 0.2 s smoothing (no sway), its progress along that direction from a 0.05 s one, so braking and pushing stay sharp and stops are not stretched. | 5.3, 4.1 |
 | 1.6 | The leg ratio and reference pose are taken per file: "with skin" files carry a different skeleton than "without skin" ones. | 5.2, 5.4 |

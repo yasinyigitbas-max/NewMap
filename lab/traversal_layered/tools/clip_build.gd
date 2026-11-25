@@ -17,10 +17,16 @@ const MIXAMO_TO_BODY := {
 const FINGERS := ["Thumb", "Index", "Middle", "Ring", "Pinky"]
 
 # Limb bones swung so the body's reference pose points like Mixamo's T-pose (DECISIONS 1.2). bone -> child.
-const SWING := {
-	"LeftShoulder": "LeftArm", "LeftArm": "LeftForeArm", "LeftForeArm": "LeftHand", "LeftHand": "LeftHandMiddle1",
-	"RightShoulder": "RightArm", "RightArm": "RightForeArm", "RightForeArm": "RightHand", "RightHand": "RightHandMiddle1",
-	"LeftUpLeg": "LeftLeg", "LeftLeg": "LeftFoot", "RightUpLeg": "RightLeg", "RightLeg": "RightFoot",
+# Limbs are swung WHOLE (one rotation per limb, from its root joint to its end joint), never bone by bone: player_v3's
+# knee and elbow bones are bent at rest (knee 29° / 16°, elbow ~18°) while the mesh limb is straight, so aligning each
+# bone with the source's bone would bend the mesh backward (STATUS #14). group: [from joint, to joint, members...]
+const LIMB_SWING := {
+	"LeftShoulder": ["LeftShoulder", "LeftArm", ["LeftShoulder"]],
+	"RightShoulder": ["RightShoulder", "RightArm", ["RightShoulder"]],
+	"LeftArm": ["LeftArm", "LeftHand", ["LeftArm", "LeftForeArm", "LeftHand", "LeftHand*"]],
+	"RightArm": ["RightArm", "RightHand", ["RightArm", "RightForeArm", "RightHand", "RightHand*"]],
+	"LeftLeg": ["LeftUpLeg", "LeftFoot", ["LeftUpLeg", "LeftLeg"]],
+	"RightLeg": ["RightUpLeg", "RightFoot", ["RightUpLeg", "RightLeg"]],
 }
 
 var body_skel: Skeleton3D          # player_v3's skeleton (not in a tree)
@@ -180,23 +186,25 @@ func setup_reference(s: Src) -> void:
 	var n := bones.size()
 	ref_rot.resize(n)
 	for i in n:
-		var q := rest_global_m[i].basis.get_rotation_quaternion()
-		var b := bones[i]
-		if SWING.has(b) and src_for[i] != "":
-			var ci := bone_idx(SWING[b])
-			var mc := src_for[ci]
-			if ci >= 0 and sr.has(src_for[i]) and sr.has(mc):
-				var dt := (rest_global_m[ci].origin - rest_global_m[i].origin).normalized()
-				var ds: Vector3 = (sr[mc].origin - sr[src_for[i]].origin).normalized()
-				q = Quaternion(dt, ds) * q
-		ref_rot[i] = q
-	# leg ratio from thigh + shin (DECISIONS 1.3)
+		ref_rot[i] = rest_global_m[i].basis.get_rotation_quaternion()
+	for g in LIMB_SWING:
+		var spec: Array = LIMB_SWING[g]
+		var a := bone_idx(spec[0]); var b := bone_idx(spec[1])
+		if a < 0 or b < 0 or not sr.has(spec[0]) or not sr.has(spec[1]): continue
+		var dt := (rest_global_m[b].origin - rest_global_m[a].origin).normalized()
+		var ds: Vector3 = (sr[spec[1]].origin - sr[spec[0]].origin).normalized()
+		var q := Quaternion(dt, ds)
+		for i in n:
+			var bn := bones[i]
+			for m in spec[2]:
+				var hit: bool = (bn == m) if not m.ends_with("*") else (bn.begins_with(m.trim_suffix("*")) and bn != m.trim_suffix("*"))
+				if hit: ref_rot[i] = (q * rest_global_m[i].basis.get_rotation_quaternion()).normalized()
+	# leg ratio from the straight leg, hip joint -> ankle at rest (the mesh's straight leg; DECISIONS 1.3)
 	var lt := 0.0
 	var ls := 0.0
 	for side in ["Left", "Right"]:
-		var u := bone_idx(side + "UpLeg"); var k := bone_idx(side + "Leg"); var f := bone_idx(side + "Foot")
-		lt += rest_global_m[u].origin.distance_to(rest_global_m[k].origin) + rest_global_m[k].origin.distance_to(rest_global_m[f].origin)
-		ls += sr[side + "UpLeg"].origin.distance_to(sr[side + "Leg"].origin) + sr[side + "Leg"].origin.distance_to(sr[side + "Foot"].origin)
+		lt += rest_global_m[bone_idx(side + "UpLeg")].origin.distance_to(rest_global_m[bone_idx(side + "Foot")].origin)
+		ls += sr[side + "UpLeg"].origin.distance_to(sr[side + "Foot"].origin)
 	leg_k = lt / ls
 	var at: float = (rest_global_m[bone_idx("LeftFoot")].origin.y + rest_global_m[bone_idx("RightFoot")].origin.y) * 0.5
 	# the clip's ankle height above its own floor (Kimodo's rest has the hips at 0, Mixamo's the toes at 0)

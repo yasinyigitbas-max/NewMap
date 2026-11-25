@@ -45,6 +45,9 @@ void PoseLayer::find_bones() {
 		HAND[s] = sk->find_bone(p + "Hand");
 		leg_len[s][0] = sk->get_bone_rest(LO[s]).origin.length();
 		leg_len[s][1] = sk->get_bone_rest(FOOT[s]).origin.length();
+		// the mesh's straight leg is the REST hip->ankle distance: player_v3's knee bones are bent at rest (29 / 16 deg)
+		// while the mesh leg is straight, so straightening the bones would bend the mesh knee backward (STATUS #14)
+		leg_reach[s] = sk->get_bone_global_rest(UP[s]).origin.distance_to(sk->get_bone_global_rest(FOOT[s]).origin);
 		foot_rest_h = sk->get_bone_global_rest(FOOT[s]).origin.y;
 		toe_rest_h = sk->get_bone_global_rest(TOE[s]).origin.y;
 	}
@@ -81,16 +84,16 @@ void PoseLayer::leg_ik(Skeleton3D *sk, int s, const Vector3 &target_in, const Ba
 	Transform3D gf = sk->get_bone_global_pose(FOOT[s]);
 	const Vector3 a = gu.origin;
 	const float l1 = leg_len[s][0], l2 = leg_len[s][1];
-	const float L = l1 + l2;
+	const float L = leg_reach[s]; // the mesh's straight leg, not l1 + l2
 	Vector3 to = target_in - a;
 	float d = to.length();
 	if (d < 1e-4f) return;
 	const Vector3 dir = to / d;
-	// soft IK: the last few % of reach approach full extension smoothly, never snap straight (study 4.x)
-	const float ds = 0.97f * L;
+	// soft reach (study v2 10.3): untouched up to 99 %, eased toward 99.9 %, never past straight
+	const float ds = 0.99f * L, dmax = 0.999f * L;
 	if (d > ds) {
 		if (d > L) ik_clamped++;
-		d = ds + (L - ds) * (1.0f - std::exp(-(d - ds) / (L - ds)));
+		d = ds + (dmax - ds) * (1.0f - std::exp(-(d - ds) / (dmax - ds)));
 	}
 	d = std::max(d, std::fabs(l1 - l2) + 1e-3f);
 	const Vector3 target = a + dir * d;
@@ -206,7 +209,7 @@ void PoseLayer::_process_modification_with_delta(double p_delta) {
 			if (locked[s]) {
 				const Vector3 hipw = skw.xform(sk->get_bone_global_pose(UP[s]).origin);
 				const Vector3 tgt(fw.x + corr[s].x, fw.y, fw.z + corr[s].y);
-				const float L = (leg_len[s][0] + leg_len[s][1]) * s_m;
+				const float L = leg_reach[s] * s_m;
 				if (hipw.distance_to(tgt) > L * 1.04f) {
 					locked[s] = false;
 					released[s] = 0.25f;
@@ -256,9 +259,8 @@ void PoseLayer::_process_modification_with_delta(double p_delta) {
 		float need = 0;
 		for (int s = 0; s < 2; s++) {
 			const Vector3 hipj = sk->get_bone_global_pose(UP[s]).origin;
-			const float L = leg_len[s][0] + leg_len[s][1];
 			const float d = hipj.distance_to(tgt_sk[s]);
-			need = std::max(need, d - 0.985f * L);
+			need = std::max(need, d - 0.99f * leg_reach[s]);
 		}
 		const float target_drop = std::clamp(need, 0.0f, 5.0f / scale * 0.01f); // skeleton units (5 cm)
 		spring_to(pelvis_drop, pelvis_drop_v, target_drop, 0.05f, dt);
