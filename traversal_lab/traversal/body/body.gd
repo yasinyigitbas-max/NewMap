@@ -43,6 +43,10 @@ const STEP_TIME_UP := 0.51
 const STEP_TIME_DOWN := 0.47
 const STEP_TIME_RUN_UP := 0.30
 const STEP_TIME_RUN_DOWN := 0.20
+# Landings: the study gives the forces (4.4 body weights from 0.45 m, 7.4 from 0.89 m) and that the peak comes 35 to
+# 91 ms after contact, but no time to recover. These follow his landing clips and are values to tune by eye.
+const LAND_HOLD_SOFT := 0.30    # NOT in the study
+const LAND_HOLD_HARD := 0.90    # NOT in the study (Hard Landing has 1.0 s left after the feet touch)
 const TREAD := 0.28             # a tread is at least 0.28 m (US accessible); used until the stairs have been measured
 const REVERSE_SPEED := 2.0      # NOT in the study: the speed he may carry into the turn-round; a value to tune by eye
 const RISE_SPEED := 2.4         # how fast the feet follow ground that rises (m/s): 4 cm a tick
@@ -85,6 +89,8 @@ var _ray_ok := false
 var _since_edge := 99.0
 var spot_total := 0.0           # the on-the-spot turn being made (radians, + = to his left); 0 = none
 var spot_left := 0.0            # how much of it is still to turn
+var spot_run := false           # it is the plant-and-turn out of a run
+var land_hold := 0.0            # seconds left of gathering himself after a landing, when the stick is not obeyed
 
 
 func _ready() -> void:
@@ -201,6 +207,9 @@ func _physics_process(dt: float) -> void:
 		stick = stick.normalized()
 	_wish = stick.rotated(Vector3.UP, float(s.get("yaw", 0.0))) * (RUN if bool(s.get("run", false)) else WALK)
 
+	if land_hold > 0.0:
+		land_hold -= dt
+		_wish = Vector3.ZERO
 	_find_stairs(dt)
 	if stairs != 0 and _wish.length() > 0.05:
 		_wish = _wish.limit_length(_stair_speed(_wish.length() > WALK + 0.1))
@@ -262,7 +271,7 @@ func _physics_process(dt: float) -> void:
 	velocity = Vector3(hvel.x, vy, hvel.z)
 	_update_ground(dt)
 
-	if hvel.length() > 0.2 and state == State.GROUND:
+	if hvel.length() > 0.2 and state == State.GROUND and spot_total == 0.0:
 		var want := atan2(-hvel.x, -hvel.z)
 		rotation.y = rotate_toward(rotation.y, want, TURN_SPEED * dt)
 
@@ -279,24 +288,39 @@ func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 		spot_total = 0.0
 		return v.normalized() * maxf(speed - brake * dt, 0.0) if speed > 0.0001 else Vector3.ZERO
 	var wdir := wish / want
+	var off := wrapf(atan2(-wdir.x, -wdir.z) - rotation.y, -PI, PI)
+	if spot_total != 0.0:
+		# turning on the spot, or the plant-and-turn that ends a brake from a run: he turns, and what speed he
+		# still has is shed
+		if absf(off) > deg_to_rad(SPOT_END_DEG):
+			var rate := TURN_RATE_RUN if spot_run else lerpf(TURN_RATE_WALK, TURN_RATE_RUN, fast)
+			rotation.y += signf(off) * minf(rate * dt, absf(off))
+			spot_left = wrapf(atan2(-wdir.x, -wdir.z) - rotation.y, -PI, PI)
+			return v.normalized() * maxf(speed - STOP_RUN * dt, 0.0) if speed > 0.0001 else Vector3.ZERO
+		spot_total = 0.0
+		if speed >= 0.3:
+			return v.normalized() * maxf(speed - STOP_RUN * dt, 0.0)
 	if speed < 0.3:
 		# from rest (or nearly): turn on the spot first if the way to go is far off his facing
-		var off := wrapf(atan2(-wdir.x, -wdir.z) - rotation.y, -PI, PI)
-		if spot_total == 0.0 and absf(off) > deg_to_rad(SPOT_START_DEG):
+		if absf(off) > deg_to_rad(SPOT_START_DEG):
 			spot_total = off
-		if spot_total != 0.0:
-			if absf(off) > deg_to_rad(SPOT_END_DEG):
-				rotation.y += signf(off) * minf(lerpf(TURN_RATE_WALK, TURN_RATE_RUN, fast) * dt, absf(off))
-				spot_left = wrapf(atan2(-wdir.x, -wdir.z) - rotation.y, -PI, PI)
-				return Vector3.ZERO
-			spot_total = 0.0
-		# from rest (or nearly): set off in the wanted direction
+			spot_left = off
+			spot_run = false
+			return Vector3.ZERO
+		# set off in the wanted direction
 		speed += (want - speed) * (1.0 - exp(-dt / lerpf(START_TIME_WALK, START_TIME_RUN, fast)))
 		return wdir * speed
 	var dir := v / speed
 	var ang := dir.angle_to(wdir)
-	if ang > deg_to_rad(REVERSE_ANGLE_DEG) and speed > REVERSE_SPEED:
-		return dir * maxf(speed - brake * dt, 0.0)
+	if ang > deg_to_rad(REVERSE_ANGLE_DEG):
+		if speed > REVERSE_SPEED:
+			return dir * maxf(speed - brake * dt, 0.0)
+		if want > WALK + 0.1:
+			# asked to run the other way: plant and turn round, as his Running Turn 180 clip does in 0.67 s
+			spot_total = off
+			spot_left = off
+			spot_run = true
+			return dir * speed
 	var turn := lerpf(TURN_RATE_WALK, TURN_RATE_RUN, fast) * dt
 	if ang > 0.0001:
 		var axis := dir.cross(wdir)
@@ -466,7 +490,11 @@ func _update_ground(dt: float) -> void:
 			move_and_collide(Vector3(0.0, ground_y - feet.y, 0.0))
 			vy = 0.0
 			state = State.STEEP if _is_steep(g) else State.GROUND
-			landed.emit(_air_peak - ground_y)
+			var drop := _air_peak - ground_y
+			# after a real drop he gathers himself before moving off (a jump on the level is run out of)
+			if not (from_jump and drop < 0.9):
+				land_hold = LAND_HOLD_HARD if drop >= 1.5 else (LAND_HOLD_SOFT if drop >= 0.35 else 0.0)
+			landed.emit(drop)
 			from_jump = false
 		else:
 			state = State.UNSUPPORTED if _touched else State.AIR

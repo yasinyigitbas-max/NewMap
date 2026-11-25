@@ -120,7 +120,7 @@ func _legs(rot: Array[Quaternion], hips: Vector3) -> Array:
 		var d := c * Transform3D(Basis(rot[toe[f]]), _origin[toe[f]])
 		# a stair clip puts its feet on its own stairs; take those stairs out, so its feet are on a flat floor like
 		# any other clip's and the real steps under him are what they are fitted to
-		if clip_slope != 0.0:
+		if clip_slope != 0.0 or clip_floor != 0.0:
 			# (the whole foot moves as one, by what its ball needs)
 			var off := clip_slope * (d.origin.z - hips.z) + clip_floor
 			c.origin.y -= off

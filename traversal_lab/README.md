@@ -79,11 +79,32 @@ Built early, out of order, because a bare capsule with no jump could not be judg
 - The head turns toward where he is asked to go, up to 30 degrees, shared between neck and head ("people turn head
   first"), at 100 degrees a second at most.
 - Measured (`tests/test_feet.gd`, the report's bar is 2 cm): planted feet drift 0.0 cm at a walk and at a run (4.0 cm
-  before); on flat ground the fitting changes nothing (0.0 mm); 10 degree ramp 1.6 cm, passes; **19 degree ramp
-  2.7 cm, just fails; stairs fail (up to 21 cm)**. The stairs cannot pass with a flat-ground walk: its step is 0.75 m
-  and a tread is 0.28 m. The study has stairs as their own movement at about half a second a step, and his
-  `Ascending Stairs`, `Descending Stairs`, `Running Up Stairs` and `Run Down Stairs` clips are downloaded: that is
-  the next piece.
+  before); on flat ground the fitting changes nothing (0.0 mm); 10 and 19 degree ramps 0.0 cm; walking up stairs
+  1.2 cm. **Running up stairs fails (toes 3.7 cm into a riser); walking down stairs fails (a foot held up to 10 to
+  17 cm high at times)**, see Stairs.
+
+### Stairs: their own gait
+- The study: "stairs are climbed at about half a second per step: 0.51 s up and 0.47 s down", and going up and going
+  down are different movements. The body finds stairs (level surfaces stepping the same way twice ahead of him; a
+  kerb is one step, a ramp is not level), measures the tread from the edges he crosses, and takes one step per
+  0.51 s up, 0.47 s down walking; running, his own clips' 0.30 s up and 0.20 s down. Measured: 0.51 s a step walking
+  up. That is 0.55 m/s along the ground, much slower than the 1.4 m/s it was.
+- The character plays `Ascending Stairs` / `Running Up Stairs` / `Descending Stairs` / `Run Down Stairs`, two steps a
+  loop, by where he is on the stairs, so each foot comes down mid-tread. The clip's own stairs (0.24 m risers) are
+  taken out of its feet and the real steps put in by the foot fitting.
+- **Mixamo's two going-down clips are damaged** (on X Bot and on him alike): the hips go down 0.5 m but no foot ever
+  goes below the floor, so the legs fold into a squat. Mixamo's fitting keeps feet above its floor. Here the hips are
+  held level, the feet put back and the legs rebuilt by the IK, which works but the feet barely lift between steps.
+  Proper going-down clips have to come from elsewhere (Kimodo is the obvious source).
+
+### Jump at a run, landings, turning round at a run
+- A jump at a run plays `Running Jump` (one stride with a leap in it) and runs on without stopping. Measured: a leap
+  of 2.33 m (the clip's own is about 2.7 m).
+- After a drop of 0.35 m or more the stick is not obeyed for 0.30 s (0.90 s from 1.5 m or more) while he gathers
+  himself. Those two times are not from the study.
+- Running, asked to run the other way: he brakes ("a sudden turn starts with a braking action like a rapid stop"),
+  plants and turns round with `Running Turn 180` (0.67 s, 270 degrees a second), and runs off. Measured: running
+  back at 2.5 m/s after 1.63 s, carried 1.77 m on (his `Running To Turn` clip: 2.27 s and 4.0 m).
 
 ### Starts, stops, turns on the spot (Stage 5)
 - The body keeps its own study-based speeds. The clips are played by distance (a start by how far he has gone, a stop
@@ -96,9 +117,8 @@ Built early, out of order, because a bare capsule with no jump could not be judg
   (study: 5 steps and 2.9 m flat out); feet move 0.3 to 0.5 cm once still; 180 on the spot 0.90 s walking (his clip:
   1.00 s), 0.60 s with run held; let go and press again mid-stop: no pop.
 
-Not done yet, and known: stairs (above); turning round at a run is still the body's brake-and-arc with the legs
-blending (`Running Turn 180` is baked but not used); starts at an angle under 60 degrees just curve; no running-jump
-clip (missing from the download); he can still steer during a landing.
+Not done yet, and known: going down stairs and running up them (above); starts at an angle under 60 degrees just
+curve; a walking turn-round is still an arc; no roll out of a running drop (`falling to roll` is downloaded).
 
 ## Stage 1: the body alone
 `traversal/body/body.gd`. A floating capsule: the capsule covers the body from 0.32 m above the feet to the top of

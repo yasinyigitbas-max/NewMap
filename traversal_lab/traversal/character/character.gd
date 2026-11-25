@@ -12,6 +12,11 @@ const FADE := 0.20              # seconds to blend from one kind of motion to th
 const JUMP_LOW := 0.50
 const JUMP_OFF := 0.80
 const JUMP_LAND := 1.30
+# the Running Jump clip: one run stride with a leap in it. It leaves the ground at 0.10 s and is down at 0.67 s
+# (a 2.7 m leap at the clip's 4.87 m/s); the body's own jump at 4.5 m/s is 2.7 m too
+const RUN_JUMP := "Running_Jump"
+const RUN_JUMP_OFF := 0.10
+const RUN_JUMP_LAND := 0.67
 const LAND_CONTACT := 0.27      # Falling To Landing: the feet touch at 0.27 s
 const HARD_CONTACT := 0.60      # Hard Landing: the feet touch at 0.60 s
 # Arms (Yasin, 25 Nov play-test: "his arms are almost sticking to his body, they need to open up a bit"). The clips
@@ -32,6 +37,8 @@ const STOP_WALK := "Female_Stop_Walking"        # 1.53 s, 1.49 m (the other, Sto
 const STOP_RUN := "Run_To_Stop"                 # 0.90 s, 0.80 m
 const TURN_90 := "Left_Turn_90"                 # 0.93 s, exactly 90 deg (Right Turn 90 turns 102.6: the mirror is used)
 const TURN_180_WALK := "Walking_Turn_180"       # 1.00 s, turns to his right
+const TURN_180_RUN := "Running_Turn_180"        # 0.67 s, turns to his right, from a running pose to a running pose:
+                                                # the plant-and-turn when he is asked to run the other way
 const RUN_FROM := 2.5           # above this speed the run clips are used (his jog loop is 2.53 m/s)
 # Stairs are their own movement (the study: "going up and going down are different movements"): his four stair clips,
 # two steps a loop, played by where he is on the stairs so that each foot comes down in the middle of a tread.
@@ -51,6 +58,10 @@ var _mode_t := 0.0
 var _land_clip := ""
 var _land_from := 0.0
 var _jump_from := JUMP_LOW
+var _jump_clip := "Jump"
+var _jump_off := JUMP_OFF
+var _jump_land := JUMP_LAND
+var _run_out := false           # running out of a turn-round: the legs keep at least a jog while the body picks up speed
 var _n := 0
 var _rot: Array[Quaternion] = []
 var _from: Array[Quaternion] = []
@@ -72,6 +83,7 @@ var _clip: Resource             # the start, stop or turn clip being played
 var _clip_t := 0.0
 var _gone := 0.0                # distance covered since a start began
 var _slope := 0.0               # the stair clip's own slope, faded in and out with the clip
+var _clamped := {}              # per stair clip: its feet were kept on Mixamo's floor (see _floor_clamped)
 var _floor := {}                # per stair clip: where its own stairs stand under the hips
 var _floor_now := 0.0
 var _reach := {}                # per stair clip: how far ahead of the hips the left foot comes down
@@ -133,7 +145,7 @@ func _make_mirrors() -> void:
 		var name := skel.get_bone_name(i)
 		var other := name.replace("Left", "#").replace("Right", "Left").replace("#", "Right")
 		pair.append(skel.find_bone(other) if other != name and skel.find_bone(other) >= 0 else i)
-	for name: String in [STOP_WALK, STOP_RUN, TURN_90, TURN_180_WALK]:
+	for name: String in [STOP_WALK, STOP_RUN, TURN_90, TURN_180_WALK, TURN_180_RUN]:
 		if clips.has(name):
 			clips[name + "~"] = clips[name].call(&"mirrored", parents, rest, pair)
 
@@ -149,14 +161,18 @@ func _find_skeleton(n: Node) -> Skeleton3D:
 
 
 func _on_jump_started(push: float) -> void:
-	_jump_from = JUMP_OFF - push
+	var running: bool = not bool(body.get(&"_jump_still")) and clips.has(RUN_JUMP)
+	_jump_clip = RUN_JUMP if running else "Jump"
+	_jump_off = RUN_JUMP_OFF if running else JUMP_OFF
+	_jump_land = RUN_JUMP_LAND if running else JUMP_LAND
+	_jump_from = _jump_off - push
 	_set_mode("jump")
 
 
 func _on_landed(drop: float) -> void:
 	if _mode == "jump" and drop < 0.9:
-		_land_clip = "Jump"
-		_land_from = JUMP_LAND
+		_land_clip = _jump_clip
+		_land_from = _jump_land
 	elif drop >= HARD_DROP:
 		_land_clip = "Hard_Landing"
 		_land_from = HARD_CONTACT
@@ -201,8 +217,10 @@ func _physics_process(dt: float) -> void:
 		var c: Resource = clips[_land_clip]
 		if in_air:
 			_set_mode("fall")
-		elif _land_from + _mode_t >= float(c.get(&"length")) - 0.05 or ((body.get(&"hvel") as Vector3).length() > 1.0 and _mode_t > 0.45):
+		elif _land_from + _mode_t >= float(c.get(&"length")) - 0.05 or ((body.get(&"hvel") as Vector3).length() > 1.0 and _mode_t > 0.45 and _land_clip != RUN_JUMP):
 			_set_mode("move")
+			# into the stride at the point nearest to how the legs are
+			_to_loop((body.get(&"hvel") as Vector3).length())
 
 	var rot: Array[Quaternion] = []
 	rot.resize(_n)
@@ -214,17 +232,17 @@ func _physics_process(dt: float) -> void:
 			var c: Resource = clips["Falling_Idle"]
 			hips = _clip_pose(c, fmod(_mode_t, float(c.get(&"length"))), rot)
 		"jump":
-			var c: Resource = clips["Jump"]
+			var c: Resource = clips[_jump_clip]
 			var t := _jump_from + _mode_t
 			if in_air:
 				# through the clip's time in the air at the pace of the body's own flight
 				var flight := 2.0 * sqrt(2.0 * 9.8 * 0.45) / 9.8
-				t = JUMP_OFF + (JUMP_LAND - JUMP_OFF) * clampf(float(body.get(&"air_time")) / flight, 0.0, 1.0)
+				t = _jump_off + (_jump_land - _jump_off) * clampf(float(body.get(&"air_time")) / flight, 0.0, 1.0)
 			else:
-				t = minf(t, JUMP_OFF)
+				t = minf(t, _jump_off)
 			hips = _clip_pose(c, t, rot)
 			# the clip's own rise is taken out: the body does the rising
-			hips.y = minf(hips.y, (c.call(&"hips_at", JUMP_OFF) as Vector3).y) if in_air else hips.y
+			hips.y = minf(hips.y, (c.call(&"hips_at", _jump_off) as Vector3).y) if in_air else hips.y
 		"land":
 			var c: Resource = clips[_land_clip]
 			hips = _clip_pose(c, minf(_land_from + _mode_t, float(c.get(&"length"))), rot)
@@ -262,15 +280,18 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 		_to_loop(speed)
 	elif spot != 0.0 and sub != "spot":
 		var big := absf(spot) > deg_to_rad(120.0)
-		var name: String = TURN_180_WALK if big else TURN_90
+		_run_out = bool(body.get(&"spot_run"))
+		var name: String = (TURN_180_RUN if _run_out else TURN_180_WALK) if big else TURN_90
 		# the 180 clip turns to his right, the 90 to his left: the mirror image for the other way
 		_begin(name if (spot < 0.0) == big else name + "~", "spot")
 	elif sub == "spot" and spot == 0.0:
-		if wish > 0.05:
+		if _run_out and wish > 0.05:
+			_to_loop(RUN_FROM)      # the clip ends in a running pose: straight into the run
+		elif wish > 0.05:
 			_begin(START_RUN if wish > RUN_FROM else START_WALK, "start")
 		else:
 			_to_loop(wish)
-	elif sub == "loop" and speed < 0.3 and wish > 0.05:
+	elif sub == "loop" and speed < 0.3 and wish > 0.05 and not _run_out:
 		_begin(START_RUN if wish > RUN_FROM else START_WALK, "start")
 	elif (sub == "loop" or sub == "start") and wish < 0.05 and speed > 0.3 and st == 0:
 		var name := STOP_RUN if speed > RUN_FROM else STOP_WALK
@@ -294,6 +315,10 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 		var hips_path: PackedVector3Array = c.get(&"hips")
 		var rise := hips_path[hips_path.size() - 1].y - hips_path[0].y
 		slope_now = rise / maxf((c.get(&"travel") as Vector3).length(), 0.01)
+		var floor_now := 0.0
+		var clamped := _floor_clamped(c, rise)
+		if not clamped:
+			floor_now = _stair_floor(c, slope_now, rise)
 		# steps climbed so far, counted from the edges he has crossed and how far he is past the last one
 		var along := (body.global_position - (body.get(&"stair_edge") as Vector3)).dot(body.get(&"stair_dir"))
 		var steps := float(int(body.get(&"stair_count"))) + clampf(along / tread, 0.0, 1.0)
@@ -305,8 +330,15 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 		for i in _n:
 			out[i] = c.call(&"rotation_at", i, t)
 		var h: Vector3 = c.call(&"hips_at", t)
-		_slope += (slope_now - _slope) * minf(dt / FADE, 1.0)
-		_floor_now += (_stair_floor(c, slope_now, rise) - _floor_now) * minf(dt / FADE, 1.0)
+		if clamped:
+			# see _floor_clamped: the feet of this clip stand on a flat floor that the hips sink toward. The hips
+			# are held level here, so the feet are put back by exactly what the hips were let down
+			slope_now = 0.0
+			_slope = 0.0
+			_floor_now = -rise * t / length
+		else:
+			_slope += (slope_now - _slope) * minf(dt / FADE, 1.0)
+			_floor_now += (floor_now - _floor_now) * minf(dt / FADE, 1.0)
 		feet.set(&"clip_slope", _slope)
 		feet.set(&"clip_floor", _floor_now)
 		return Vector3(h.x, h.y - rise * t / length, h.z)
@@ -347,7 +379,9 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 					var along := (_clip.get(&"travel") as Vector3).normalized()
 					h += along * (float(_clip.call(&"dist_at", _clip_t)) - _still_at)
 				return h
-	return _move_pose(speed, dt, out)
+	if _run_out and (speed > RUN_FROM or wish < 0.05 or sub != "loop"):
+		_run_out = sub == "spot"
+	return _move_pose(maxf(speed, RUN_FROM) if _run_out and sub == "loop" else speed, dt, out)
 
 
 ## How far ahead of the hips the left foot is when a stair clip brings it down (the clip's own measure).
@@ -362,28 +396,64 @@ func _stair_reach(c: Resource) -> float:
 	return _reach[c]
 
 
-## Where a stair clip's own stairs stand under the hips: with the stairs' slope taken out, the lowest the ball of
-## either foot goes through the loop is the floor.
+## Mixamo's two clips that walk DOWN stairs (Descending Stairs, Run Down Stairs) are damaged, on X Bot and on him
+## alike: the hips go down half a metre but no foot ever goes below the floor, so the legs fold into a squat by the
+## end (measured 26 Nov: hips 0.94 -> 0.43 m, feet 0.01 to 0.02 m throughout). Mixamo's fitting keeps feet above
+## its floor. What is left is usable: the hips' path, where the feet are along the ground, the upper body. For such
+## a clip the feet are taken as already standing on a flat floor and the legs are rebuilt by the leg IK.
+func _floor_clamped(c: Resource, rise: float) -> bool:
+	if rise > -0.2:
+		return false
+	if not _clamped.has(c):
+		var length := float(c.get(&"length"))
+		var pose: Array[Quaternion] = []
+		pose.resize(_n)
+		var lowest := 1e9
+		for k in 21:
+			var t := length * k / 20.0
+			for i in _n:
+				pose[i] = c.call(&"rotation_at", i, t)
+			var legs: Array = feet.call(&"_legs", pose, c.call(&"hips_at", t))
+			for f in 2:
+				lowest = minf(lowest, (legs[f][3] as Transform3D).origin.y)
+		_clamped[c] = lowest > -0.05
+	return _clamped[c]
+
+
+## Where a stair clip's own stairs stand under the hips: with the stairs' slope taken out, the height of the ball of
+## a foot over the frames in which the clip has that foot planted (not moving over the clip's own ground).
 func _stair_floor(c: Resource, slope: float, rise: float) -> float:
 	if not _floor.has(c):
 		var length := float(c.get(&"length"))
-		var lowest := 1e9
+		var travel: Vector3 = c.get(&"travel")
 		var pose: Array[Quaternion] = []
 		pose.resize(_n)
 		var was_slope: float = feet.get(&"clip_slope")
 		feet.set(&"clip_slope", 0.0)
-		for k in 40:
-			var t := length * k / 40.0
+		var flat := [[], []]
+		var world := [[], []]
+		var steps := 60
+		for k in steps + 1:
+			var t := length * k / steps
 			for i in _n:
 				pose[i] = c.call(&"rotation_at", i, t)
 			var h: Vector3 = c.call(&"hips_at", t)
-			h.y -= rise * t / length
 			var legs: Array = feet.call(&"_legs", pose, h)
 			for f in 2:
 				var toe: Vector3 = (legs[f][3] as Transform3D).origin
-				lowest = minf(lowest, toe.y - slope * (toe.z - h.z))
+				flat[f].append(toe.y - rise * t / length - slope * (toe.z - h.z))
+				world[f].append(toe + travel * (t / length))       # as the clip itself has it, travel and rise in
 		feet.set(&"clip_slope", was_slope)
-		_floor[c] = lowest - float(feet.get(&"_toe_rest"))
+		var sum := 0.0
+		var count := 0
+		var lowest := 1e9
+		for f in 2:
+			for k in steps:
+				lowest = minf(lowest, flat[f][k])
+				if ((world[f][k + 1] as Vector3) - (world[f][k] as Vector3)).length() / (length / steps) < 0.15:
+					sum += flat[f][k]
+					count += 1
+		_floor[c] = (sum / count if count > 0 else lowest) - float(feet.get(&"_toe_rest"))
 	return _floor[c]
 
 

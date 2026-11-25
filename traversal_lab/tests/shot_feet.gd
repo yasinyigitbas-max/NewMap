@@ -48,9 +48,10 @@ func _run() -> void:
 	var st := {}
 	for s: Dictionary in (lab.get(&"course") as Node3D).get(&"stations"):
 		st[s["label"]] = s
-	var r: Dictionary = st["ramp 19 deg"]
-	await play((r["start"] as Vector3) + Vector3(0.0, 0.0, -2.0), 90.0, [[3.5, 0.0, -1.0, 0.0, false]], [1.6, 1.9, 2.2, 2.5], "ramp19")
 	var s: Dictionary = st["stairs 0.18 / 0.28 m x 10"]
 	await play((s["start"] as Vector3) + Vector3(0.0, 0.0, -2.0), 90.0, [[5.0, 0.0, -1.0, 0.0, false]], [2.2, 2.45, 2.7, 2.95, 3.2], "stairs_up")
-	await play(Vector3(float(s["x"]), float(s["top"]), -3.0 - 2.8 - 0.8), 90.0, [[4.0, 0.0, 1.0, 0.0, false]], [2.3, 2.5, 2.7, 2.9, 3.1], "stairs_down")
+	await play(Vector3(float(s["x"]), float(s["top"]), -3.0 - 2.8 - 0.8), 90.0, [[5.0, 0.0, 1.0, 0.0, false]], [3.0, 3.25, 3.5, 3.75, 4.0], "stairs_down")
+	await play((s["start"] as Vector3) + Vector3(0.0, 0.0, -1.0), 90.0, [[2.2, 0.0, -1.0, 0.0, true]], [1.2, 1.35, 1.5, 1.65], "stairs_run")
+	var flat := Vector3(float(st["floor: one triangle mesh"]["x"]), 0.1, -5.0)
+	await play(flat, 90.0, [[1.6, 0.0, -1.0, 0.0, true], [1.4, 0.0, 1.0, 0.0, true]], [1.9, 2.1, 2.3, 2.5, 2.8], "runround")
 	quit(0)

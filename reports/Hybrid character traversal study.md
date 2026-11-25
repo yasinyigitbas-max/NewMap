@@ -785,6 +785,10 @@ So the statement in the instructions that re-downloaded clips would "drop in wit
 - **Stage 6:** crouched body about 1.5 m tall and a 1.5 m overhang, until a lower crouch walk is found.
 - **Stage 8 onward:** each traversal stage starts with its clip unstretched on the native-height wall, then is stretched across its band.
 
+### Added 26 Nov 2026: the stair clips that go down are damaged
+
+`Descending Stairs` and `Run Down Stairs`, as downloaded from Mixamo, cannot be used as they are, on X Bot or on player_v4. In both, the hips travel down half a metre over the clip (0.94 to 0.43 m on player_v4) while the lowest foot joint stays between 0.01 and 0.02 m the whole time, so the legs fold up into a squat by the last frame. `Ascending Stairs` and `Running Up Stairs` are fine: their feet climb 0.49 m with the hips. The likely cause, an inference from the numbers and not from any Mixamo document: Mixamo's fitting keeps feet from going below its floor, which only a clip that walks downward runs into. In the build the hips are held level, the feet put back and the legs rebuilt by IK; the feet then reach each step but hardly lift between steps. Clean going-down clips need another source.
+
 ## What could not be verified
 
 **Human movement.** The usual running elbow angle and arm swing size in degrees; trunk lean in walking, running, speeding up and slowing down in degrees; full joint-angle curves with spread from a gait laboratory dataset; base finger knuckle limits, thumb base ranges, and shoulder inward and outward rotation; the classic body-segment length and mass table (Winter, Drillis and Contini), which returned errors; NASA's body-size and reach tables, whose host was blocked; standing sway size in millimetres; the size and timing of the weight shift before a first step; steps needed to stop from a jog. Several pages were blocked outright, including Physiopedia, PubMed and the standard gait textbooks.

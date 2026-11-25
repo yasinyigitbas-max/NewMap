@@ -144,6 +144,64 @@ func test_spot(run: bool, deg: float) -> void:
 		["run" if run else "walk", int(deg), subs(rec), secs, steps * 0.55 + 0.1, moved, worst_jump(rec)])
 
 
+## Running, then asked to run the other way: brake, plant and turn (his Running Turn 180 clip), run off.
+func test_run_round() -> void:
+	var rec := await drive(centre + Vector3(0.0, 0.0, 5.0), [[1.6, 0.0, -1.0, 0.0, true], [2.2, 0.0, 1.0, 0.0, true]])
+	var from := int(1.6 * 60.0)
+	var back := -1
+	var far := 0.0
+	for i in range(from, rec.size()):
+		far = maxf(far, (rec[from]["p"] as Vector3).z - (rec[i]["p"] as Vector3).z)
+		if back < 0 and i > from + 5 and (rec[i]["p"] as Vector3).z - (rec[i - 1]["p"] as Vector3).z > 2.5 / 60.0:
+			back = i
+	var secs := (back - from) / 60.0
+	ok(subs(rec, from).contains("spot") and not subs(rec, from).contains("start") and back > 0 and secs <= 2.27 and far < 2.9,
+		"turn round at a run: shows %s; running back at 2.5 m/s after %.2f s (his Running To Turn clip: 2.27 s); carried %.2f m on (bar 2.9); biggest leg turn in a tick %.1f deg" %
+		[subs(rec, from), secs, far, worst_jump(rec, from)])
+
+
+## A jump at a run: the Running Jump clip, a leap of about 2.7 m, and back into the stride with no stop.
+func test_run_jump() -> void:
+	lab.call(&"place", centre + Vector3(0.0, 0.0, 5.5))
+	body.rotation.y = 0.0
+	for i in 40:
+		await physics_frame
+	tape.call(&"make", [[3.0, 0.0, -1.0, 0.0, true]])
+	for i in (tape.get(&"tape") as Array).size():
+		if i >= 90 and i < 96:
+			(tape.get(&"tape") as Array)[i]["jump"] = true
+	tape.call(&"replay")
+	var off := Vector3.ZERO
+	var down := Vector3.ZERO
+	var air := 0
+	var slowest := 99.0
+	var worst := 0.0
+	var last: Array[Quaternion] = []
+	var t := 0
+	while int(tape.get(&"mode")) == 2:
+		await physics_frame
+		t += 1
+		var in_air := int(body.get(&"state")) >= 2
+		if in_air:
+			if air == 0:
+				off = body.global_position
+			air += 1
+			down = body.global_position
+		if t > 100:
+			slowest = minf(slowest, (body.get(&"hvel") as Vector3).length())
+		var now: Array[Quaternion] = []
+		for b in legs:
+			now.append(skel.get_bone_pose_rotation(b))
+		if not last.is_empty() and t > 60:
+			for i in legs.size():
+				worst = maxf(worst, rad_to_deg(last[i].angle_to(now[i])))
+		last = now
+	var leap := Vector2(down.x - off.x, down.z - off.z).length()
+	ok(air > 20 and leap > 2.2 and leap < 3.2 and slowest > 3.5,
+		"jump at a run: in the air %.2f s, a leap of %.2f m (his Running Jump clip: about 2.7 m); never slower than %.1f m/s afterwards; biggest leg turn in a tick %.1f deg" %
+		[air / 60.0, leap, slowest, worst])
+
+
 func _run() -> void:
 	lab = (load("res://traversal/main.tscn") as PackedScene).instantiate()
 	root.add_child(lab)
@@ -169,5 +227,7 @@ func _run() -> void:
 	await test_spot(false, 180.0)
 	await test_spot(true, 180.0)
 	await test_spot(true, -130.0)
+	await test_run_round()
+	await test_run_jump()
 	print("RESULT " + ("PASS" if fails == 0 else "FAIL (%d)" % fails))
 	quit(1 if fails else 0)

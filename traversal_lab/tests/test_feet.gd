@@ -113,24 +113,32 @@ func slope(label: String, at: Vector3, secs: float, z_from: float, z_to: float, 
 	var knee := 99.0
 	var low := 0.0
 	var n := 0
-	for r: Dictionary in rec:
+	for i in range(6, rec.size() - 1):
+		var r: Dictionary = rec[i]
 		var z := (r["p"] as Vector3).z
 		if z > z_from or z < z_to or r["s"] != 0:
 			continue
 		low = minf(low, r["pelvis"])
 		for f in 2:
 			knee = minf(knee, r["knee"][f])
-			if not r["contact"][f]:
+			# settled: planted for the last tenth of a second and still planted on the next tick (a foot that is
+			# just coming down or lifting is on its way, not standing)
+			var settled: bool = rec[i + 1]["contact"][f]
+			for k in 7:
+				settled = settled and rec[i - k]["contact"][f]
+			if not settled:
 				continue
 			n += 1
 			var ball: Vector3 = r["ball"][f]
 			var ankle: Vector3 = r["ankle"][f]
-			var g := maxf(ground_under(ball), ground_under(ankle))
-			var gap := (ball.y - g) - float(r["clip_h"][f])      # the ball of the foot above its ground, against where the clip holds it above a flat floor
-			sunk = maxf(sunk, -gap)
-			floating = maxf(floating, gap)
+			# inside = below the ground that is under the ball itself; above = over the higher of the ground under
+			# the ball and under the ankle (a foot may overhang the edge of a step), against where the clip holds
+			# the ball above a flat floor
+			var under := ground_under(ball)
+			sunk = maxf(sunk, under - ball.y)
+			floating = maxf(floating, (ball.y - maxf(under, ground_under(ankle))) - float(r["clip_h"][f]))
 	ok(n > 12 and sunk < 0.02 and floating < 0.02 and knee > -0.005,
-		"%s: over %d planted-foot ticks the ball of the foot is at most %.1f cm lower and %.1f cm higher over its surface than the clip holds it over a flat floor (bar 2 cm); knees bend the right way (least %.1f cm); hips come down %.1f cm at most" %
+		"%s: over %d settled planted-foot ticks the ball of the foot is at most %.1f cm inside its surface and %.1f cm higher over it than the clip holds it over a flat floor (bar 2 cm); knees bend the right way (least %.1f cm); hips come down %.1f cm at most" %
 		[label, n, sunk * 100.0, floating * 100.0, knee * 100.0, -low * 100.0])
 
 
