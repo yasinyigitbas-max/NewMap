@@ -31,10 +31,18 @@ A robust Rockstar-style traversal system for the game (Godot 4.7, Jolt, Mixamo c
 - The clip lists by Drive file name were wrong for Mixamo (names with brackets are not Mixamo names). Use `reports/Mixamo clip list by name.md` and `reports/mixamo_download_player_v4.js`.
 - The Kimodo clips are still on X Bot; remake them on his skeleton once the rigged character file is available.
 
+## The build has started (25 Nov, evening)
+- Yasin's answers: **start fresh**, tied into the game later ("start fresh if you think we can easily tie it into the game when the time comes"); **he play-tests** ("whenever you need to have eyes on what you do, tell me").
+- Tie-in check: the current player is one `CharacterBody3D` class (`CityPlayer`, C++) with a small set of calls the game uses (move, jump, crouch, freeze, ride, knock, act ...). The new system will be given the same calls at integration. Only that interface was read, not how the old player works.
+- The work is in **`traversal_lab/`**, a self-contained Godot project (Jolt, 60 ticks), code under `traversal_lab/traversal/` = `res://traversal/`. See `traversal_lab/README.md` for how to run it, the keys and the stage table.
+- **Stage 0 is built** (62-station measured course, readout, input record / replay). `tests/test_stage0.gd` says RESULT PASS. It still needs Yasin's eyes once (labels readable, readout moves, replay repeats): the three checks are in the README.
+- **Next: Stage 1**, the body alone (floating capsule first, full-height capsule with a step sweep as the fallback), tested on the course.
+- In the cloud, Godot 4.7.2 is not installed: download the Linux build from the Godot GitHub releases; headless runs work with Jolt.
+
 ## Waiting on Yasin
 1. **The Mixamo rig of player_v4 and his clips** (PC job, `reports/Mixamo rig and re-download.md`). First batch of 35 clips is enough to start.
-2. **Fresh code or on top of the old player?** Recommended: a separate, self-contained scene and code until it passes its stages. Not answered yet.
-3. **Who watches the stage tests?** Yasin on the PC, or videos recorded in the cloud (not yet checked that Godot can render video here). Not answered yet.
+2. Fresh code or on top of the old player: answered, fresh (see above).
+3. Who watches the stage tests: answered, Yasin play-tests when told eyes are needed.
 
 ## Next steps, in order
 1. When the Mixamo-rigged `player_v4_mixamo.fbx` and the `player_v4` clip folder are in Drive: measure his skeleton and the clips (`measure_clips.py`), add to the report.

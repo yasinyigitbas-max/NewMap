@@ -1,0 +1,25 @@
+; Traversal lab: a self-contained project for building the player's movement and traversal, stage by stage.
+; Separate from the map project on purpose (Jolt at 60 ticks here; the map tools keep their own settings).
+; The code lives in res://traversal/ so it can be copied into the game at the same path.
+config_version=5
+
+[application]
+
+config/name="Coronado Traversal Lab"
+run/main_scene="res://traversal/main.tscn"
+config/features=PackedStringArray("4.7")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+common/physics_ticks_per_second=60
+common/physics_interpolation=false
+
+[rendering]
+
+renderer/rendering_method="mobile"
