@@ -24,6 +24,13 @@ A robust Rockstar-style traversal system for the game (Godot 4.7, Jolt, Mixamo c
 - **NPCs** keep the X Bot clip set and are retargeted in the game.
 - **Bonnet slide:** no clip exists (Mixamo has none, Kimodo failed); left out for now.
 
+## Update, later on 25 Nov
+- Mixamo rigged player_v4 on the PC; 366 clips for him are in the Drive folder `player_v4` (link: https://drive.google.com/drive/folders/1wXMD5l9UYaO05UKQDtkyItY7TRd22-1v). Measured: 272 of the 369 wanted clips are there and right; see `reports/player_v4 clips what arrived.md` and the report section "player_v4 rigged by Mixamo".
+- His Mixamo skeleton: 65 joints, hip to ankle 0.829 m, shoulder to wrist 0.465 m. A few clips slide; a travel scale of about 0.95 is to be tested at Stage 3.
+- Still missing for the build: `Running Right Turn`, `Start Walking`, `Crouching Idle` (batch 1), eight clips of batch 2, five of batch 3. The rigged character file (T-pose with skin) is not in Drive yet.
+- The clip lists by Drive file name were wrong for Mixamo (names with brackets are not Mixamo names). Use `reports/Mixamo clip list by name.md` and `reports/mixamo_download_player_v4.js`.
+- The Kimodo clips are still on X Bot; remake them on his skeleton once the rigged character file is available.
+
 ## Waiting on Yasin
 1. **The Mixamo rig of player_v4 and his clips** (PC job, `reports/Mixamo rig and re-download.md`). First batch of 35 clips is enough to start.
 2. **Fresh code or on top of the old player?** Recommended: a separate, self-contained scene and code until it passes its stages. Not answered yet.

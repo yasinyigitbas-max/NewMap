@@ -720,6 +720,62 @@ What to do with a body that is 15 % shorter in the limbs than the clips' body. T
 
 Route 1 is the recommendation. Whichever is chosen, the height bands that depend on reach should use this body's arm, not X Bot's.
 
+### player_v4 rigged by Mixamo: his clips, measured
+
+Measured 25 Nov 2026, after Mixamo rigged player_v4 and the clips were downloaded for him on the PC. 366 files were in the Drive folder `player_v4`; all were read. The rigged character file itself (T-pose, with skin) was not in the folder, so his skeleton is measured from the clips.
+
+**His skeleton on the Mixamo rig**
+
+| | Meshy rig of v4 | Mixamo rig of v4 | X Bot |
+|---|---|---|---|
+| Joints | 36, no real fingers | 65, full fingers | 65 |
+| Hip to ankle | 0.756 m | 0.829 m | 0.889 m |
+| Shoulder to wrist | 0.475 m | 0.465 m | 0.561 m |
+| Hips when standing | 0.985 m | 0.987 m | 1.032 m |
+
+All 366 files share this one skeleton, are without skin, and are 30 frames a second. The legs are now 7 % shorter than X Bot's instead of 15 %. The arms are unchanged at 17 % shorter: two riggers put his wrist in the same place, so that is his arm.
+
+**Which files are right**
+
+Each file was compared with the X Bot clip of the same name: same length, travel, rise and turn means the same motion. Of the 369 clips on the list, 272 are in the folder and right, and 97 are not there. The split by batch, the clips still to download and the files that needed renaming are in `reports/player_v4 clips what arrived.md`; `reports/sort_player_v4.ps1` renames the right files and moves the 94 unneeded ones (look-alikes downloaded when the script could not tell clips apart) into `_unused`. Their measurements are in `clip_measurements/player_v4_clips.csv`.
+
+For the build: batch 1 has 31 of 35, batch 2 has 25 of 33, batch 3 has 12 of 17. Missing from batch 1 are `Running Right Turn`, `Start Walking`, `Crouching Idle` and `Running Left Turn (2)`, which Mixamo does not have.
+
+**Do the clips fit him?**
+
+| Clip | X Bot: travel per loop, speed | player_v4: travel, speed | Planted-foot movement, X Bot (m/s) | Planted-foot movement, player_v4 (m/s) |
+|---|---|---|---|---|
+| Walking (4) | 1.34 m, 1.09 m/s | 1.32 m, 1.07 m/s | 0.04 | 0.12 |
+| Walking | 1.84 m, 1.79 m/s | 1.81 m, 1.76 m/s | 0.07 | 0.08 |
+| Slow Run | 2.29 m, 3.13 m/s | 2.26 m, 3.08 m/s | 0.23 | 0.71 |
+| Running (3) | 2.14 m, 2.57 m/s | 2.11 m, 2.53 m/s | 0.11 | 0.09 |
+| Running | 3.75 m, 5.92 m/s | 3.69 m, 5.82 m/s | 0.62 | 0.60 |
+| Sprint | 3.29 m, 6.17 m/s | 3.24 m, 6.07 m/s | 0.92 | 0.89 |
+| Walking Backwards | 1.36 m, 1.13 m/s | 1.34 m, 1.11 m/s | 0.52 | 0.86 |
+| Crouched Walking | 1.47 m, 1.42 m/s | 1.45 m, 1.40 m/s | 0.12 | 0.18 |
+| Sneaking Forward | 3.71 m, 2.22 m/s | 3.65 m, 2.19 m/s | 0.09 | 0.35 |
+| left strafe walking | 1.79 m, 1.73 m/s | 1.76 m, 1.70 m/s | 0.07 | 0.07 |
+| Ascending Stairs | 0.52 m, 0.38 m/s | 0.51 m, 0.38 m/s | 0.03 | 0.04 |
+| Female Start Walking | 1.74 m, 0.93 m/s | 1.71 m, 0.92 m/s | 0.04 | 0.05 |
+| Run To Stop | 0.81 m, 0.90 m/s | 0.80 m, 0.89 m/s | 0.13 | 0.36 |
+
+"Planted-foot movement" is how fast a toe moves along the ground while it is at its lowest, averaged over the clip; 0 would be a perfectly planted foot. It is a rough measure, good for comparing two versions of the same clip.
+
+- **Mixamo kept the travel.** Every clip moves him 98 to 99 % as far as it moved X Bot, although his legs are 93 % as long.
+- **Most clips are as clean as the originals:** both walks at their own speed, `Running (3)`, `Running`, `Sprint`, the strafe walk, the stairs and the start.
+- **Some slide more:** `Slow Run` (0.71 against 0.23), `Walking Backwards` (0.86 against 0.52), `Sneaking Forward` (0.35 against 0.09), `Run To Stop` (0.36 against 0.13) and `Walking (4)` (0.12 against 0.04).
+- **Nothing floats or sinks:** in every clip checked his lowest point is within 1 cm of the ground.
+- **The hang clips still agree with each other:** `Stand To Freehang` ends at the pose `Hanging Idle` holds, with wrists at 2.21 m and toes at 0.24 m (2.29 m and 0.28 m on X Bot). A full hang on him is 1.97 m from wrist to toe.
+
+So the statement in the instructions that re-downloaded clips would "drop in with nothing to correct" was too strong. They fit far better than the X Bot clips would, but a few sliding clips remain. The thing to test at Stage 3 is a travel scale of about 0.95 on the clips that slide; it has not been tested.
+
+**Numbers the build should now use (his body, not X Bot's)**
+
+- Standing: hips 0.99 m, top of head about 1.80 m.
+- Walk 1.07 m/s (`Walking (4)`) and 1.76 m/s (`Walking`); jog 2.53 m/s (`Running (3)`); run 5.82 m/s; sprint 6.07 m/s.
+- Hang: wrists 2.21 m above the ground the clip assumes, toes 0.24 m.
+- Arm 0.465 m: standing reach and the grab bands of Part 2 come down by about 10 cm compared with X Bot.
+
 ### What this changes in Part 2
 
 - **Mixamo pipeline, step 1** is already done in effect: all clips were taken against one body. Keep using that same character for every new download.
