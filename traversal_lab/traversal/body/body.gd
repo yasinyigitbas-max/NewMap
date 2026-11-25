@@ -1,0 +1,305 @@
+extends CharacterBody3D
+## Stage 1: the body alone. A floating capsule: the capsule covers the body from FLOAT above the feet to the top of
+## the head, and one short downward probe finds the ground, so kerbs and stair risers pass under the capsule.
+## The node's origin is the feet. This script owns where the character is; nothing else may move it.
+## (CharacterBody3D under Jolt has no stair stepping and unreliable floor flags, so neither is used here.)
+
+enum State { GROUND, STEEP, UNSUPPORTED, AIR }
+const STATE_NAMES := ["on ground", "too steep", "touching, unsupported", "in air"]
+
+const HEIGHT := 1.80            # feet to top of head
+const RADIUS := 0.25
+const FLOAT := 0.32             # capsule bottom above the feet; anything lower than this is stepped onto
+const STEP_DOWN := 0.30         # ground this far below the feet is still "ground" (stairs down, kerbs)
+const PROBE_R := 0.15
+const SLOPE_LIMIT_DEG := 28.0   # steeper ground cannot be stood on
+# Speeds and how they change come from the movement study (reports/Hybrid character traversal study.md, Part 1
+# "Turning, starting, stopping" and Part 3), not from feel. Each line says which finding it follows.
+const WALK := 1.4               # comfortable walking is 1.3 to 1.45 m/s
+const RUN := 4.5                # running was measured at 2.5 to 4.5 m/s
+const START_TIME_WALK := 0.24   # "about 90 % of its speed on the first step" (a step is about 0.55 s), steady by the third
+const START_TIME_RUN := 0.60    # NOT in the study (steps to reach a run were not found): a value to tune by eye
+const STOP_WALK := 2.3          # m/s2: "a walk stops in under two steps" -> from 1.4 m/s in 0.6 s
+const STOP_RUN := 6.2           # m/s2: "5 steps and 2.9 m" from a flat-out run (about 6 m/s)
+const TURN_ACC_WALK := 1.2      # m/s2 sideways: people lean 6.8 deg into a corner at normal walking speed; the
+                                # Walking Left Turn clip curves 36 deg per 1.2 s stride at 1.4 m/s
+const TURN_ACC_RUN := 3.2       # the Running Left / Right Turn clips curve 35.7 deg per 0.77 s stride at 4.0 m/s
+const REVERSE_ANGLE_DEG := 100.0  # asked to go nearly the opposite way: brake first, as people do, then go
+const RISE_SPEED := 2.4         # how fast the feet follow ground that rises (m/s): 4 cm a tick
+const SINK_SPEED := 3.0         # and ground that falls away
+const GRAVITY := 9.8
+const TERMINAL := 50.0
+const TURN_SPEED := 12.0        # radians a second
+
+var tape: Node
+var state: State = State.AIR
+var hvel := Vector3.ZERO        # horizontal velocity
+var vy := 0.0
+var ground_y := 0.0
+var ground_normal := Vector3.UP
+var _probe := SphereShape3D.new()
+var _wish := Vector3.ZERO
+var _touched := false
+var _wall := Vector3.ZERO          # the upright surface being leaned on, if any
+
+
+func _ready() -> void:
+	motion_mode = CharacterBody3D.MOTION_MODE_FLOATING
+	wall_min_slide_angle = 0.0
+	max_slides = 6
+	var shape := CapsuleShape3D.new()
+	shape.radius = RADIUS
+	shape.height = HEIGHT - FLOAT
+	var col := CollisionShape3D.new()
+	col.shape = shape
+	col.position.y = FLOAT + (HEIGHT - FLOAT) * 0.5
+	add_child(col)
+	# a flat underside: without it a block between FLOAT and waist height meets the capsule's round bottom and
+	# is ridden up. With it the block meets an upright side and is a wall.
+	var skirt_shape := CylinderShape3D.new()
+	skirt_shape.radius = RADIUS - 0.004
+	skirt_shape.height = RADIUS + 0.06
+	var skirt := CollisionShape3D.new()
+	skirt.shape = skirt_shape
+	skirt.position.y = FLOAT + skirt_shape.height * 0.5
+	add_child(skirt)
+	_probe.radius = PROBE_R
+	# a plain look for the lab: the capsule, thin legs so the float is visible, a nose
+	var mesh := CapsuleMesh.new()
+	mesh.radius = RADIUS
+	mesh.height = HEIGHT - FLOAT
+	var mi := MeshInstance3D.new()
+	mi.mesh = mesh
+	mi.position.y = col.position.y
+	add_child(mi)
+	var leg := MeshInstance3D.new()
+	var lm := CylinderMesh.new()
+	lm.top_radius = 0.06
+	lm.bottom_radius = 0.06
+	lm.height = FLOAT + 0.2
+	leg.mesh = lm
+	leg.position.y = (FLOAT + 0.2) * 0.5
+	add_child(leg)
+	var nose := MeshInstance3D.new()
+	var nm := BoxMesh.new()
+	nm.size = Vector3(0.08, 0.08, 0.3)
+	nose.mesh = nm
+	nose.position = Vector3(0, 1.6, -0.3)
+	add_child(nose)
+
+
+## Ground under a point: a small sphere cast straight down. Returns {hit, y, normal, point}.
+## `from_up` is how far above `feet` the cast starts (inside free space), `reach` how far below the feet it looks.
+func probe(feet: Vector3, from_up := FLOAT + RADIUS, reach := STEP_DOWN + 0.05) -> Dictionary:
+	var space := get_world_3d().direct_space_state
+	var q := PhysicsShapeQueryParameters3D.new()
+	q.shape = _probe
+	q.exclude = [get_rid()]
+	q.collision_mask = collision_mask
+	var start := feet + Vector3.UP * from_up
+	var length := from_up - PROBE_R + reach
+	q.transform = Transform3D(Basis.IDENTITY, start)
+	q.motion = Vector3.DOWN * length
+	var f := space.cast_motion(q)
+	if f.is_empty() or f[1] >= 1.0:
+		return {"hit": false}
+	var y := start.y - length * f[0] - PROBE_R
+	q.transform = Transform3D(Basis.IDENTITY, start + Vector3.DOWN * length * f[1])
+	q.motion = Vector3.ZERO
+	q.margin = 0.02
+	var r := space.get_rest_info(q)
+	var n: Vector3 = r.get("normal", Vector3.UP)
+	if r.has("point"):
+		# exact height from the contact itself: the cast's own answer is only good to about a millimetre and
+		# changes with the cast length, which made two replays of the same input differ
+		y = (r["point"] as Vector3).y + PROBE_R * (n.y - 1.0)
+	return {"hit": true, "y": y, "normal": n, "point": r.get("point", Vector3(feet.x, y, feet.z))}
+
+
+## Too steep to stand on? Only when the ground really is a slope: an edge of a step also gives a tilted normal,
+## so two more probes up and down the slope must agree with the plane.
+func _is_steep(g: Dictionary) -> bool:
+	var n: Vector3 = g["normal"]
+	var angle := acos(clampf(n.y, -1.0, 1.0))
+	if angle <= deg_to_rad(SLOPE_LIMIT_DEG):
+		return false
+	var down := Vector3(n.x, 0.0, n.z)
+	if down.length() < 0.001:
+		return false
+	down = down.normalized()
+	var rise := tan(angle) * 0.2
+	var feet := Vector3(global_position.x, float(g["y"]), global_position.z)
+	var lo := probe(feet + down * 0.2, FLOAT + RADIUS + rise, STEP_DOWN + rise + 0.1)
+	var hi := probe(feet - down * 0.2, FLOAT + RADIUS + rise, STEP_DOWN + rise + 0.1)
+	if not lo["hit"] or not hi["hit"]:
+		return false
+	return absf(float(lo["y"]) - (feet.y - rise)) < 0.05 and absf(float(hi["y"]) - (feet.y + rise)) < 0.05
+
+
+func _physics_process(dt: float) -> void:
+	var s: Dictionary = tape.call(&"sample") if tape else {}
+	var stick := Vector3(float(s.get("mx", 0.0)), 0.0, float(s.get("mz", 0.0)))
+	if stick.length() > 1.0:
+		stick = stick.normalized()
+	_wish = stick.rotated(Vector3.UP, float(s.get("yaw", 0.0))) * (RUN if bool(s.get("run", false)) else WALK)
+
+	match state:
+		State.GROUND:
+			# leaning on a wall: steer along it, so the speed does not flicker between pushing in and sliding
+			var wish := _wish
+			if _wall != Vector3.ZERO:
+				if test_move(global_transform, -_wall * 0.03):
+					if wish.dot(_wall) < 0.0:
+						wish = wish.slide(_wall)
+				else:
+					_wall = Vector3.ZERO
+			hvel = _steer(hvel, wish, dt)
+			_slow_for_rising_ground()
+			vy = 0.0
+			_move(hvel * dt, true)
+		State.STEEP:
+			# slide down the slope; the stick cannot hold or climb it, and no speed carries up it
+			var n := ground_normal
+			var along := (Vector3.DOWN - n * Vector3.DOWN.dot(n)) * GRAVITY
+			hvel += Vector3(along.x, 0.0, along.z) * dt
+			var uphill := -Vector3(n.x, 0.0, n.z).normalized()
+			var up_speed := hvel.dot(uphill)
+			if up_speed > 0.0:
+				hvel -= uphill * up_speed
+			vy = 0.0
+			_move(hvel * dt, true)
+		_:
+			# in the air: keep the speed, a little steering, gravity
+			hvel += (_wish - hvel) * (1.0 - exp(-dt / 1.5))
+			vy = maxf(vy - GRAVITY * dt, -TERMINAL)
+			_move(Vector3(hvel.x, vy, hvel.z) * dt, false)
+	velocity = Vector3(hvel.x, vy, hvel.z)
+	_update_ground(dt)
+
+	if hvel.length() > 0.2 and state == State.GROUND:
+		var want := atan2(-hvel.x, -hvel.z)
+		rotation.y = rotate_toward(rotation.y, want, TURN_SPEED * dt)
+
+
+## Speed and heading on the ground, as the study describes them: speed builds over the first steps and is shed at
+## a human braking rate; the path curves no faster than a person leans into a turn; a near-reversal brakes first.
+func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
+	var speed := v.length()
+	var want := wish.length()
+	var fast := clampf((maxf(speed, want) - WALK) / (RUN - WALK), 0.0, 1.0)
+	var brake := lerpf(STOP_WALK, STOP_RUN, clampf((speed - WALK) / (RUN - WALK), 0.0, 1.0))
+	if want < 0.05:
+		return v.normalized() * maxf(speed - brake * dt, 0.0) if speed > 0.0001 else Vector3.ZERO
+	var wdir := wish / want
+	if speed < 0.3:
+		# from rest (or nearly): set off in the wanted direction
+		speed += (want - speed) * (1.0 - exp(-dt / lerpf(START_TIME_WALK, START_TIME_RUN, fast)))
+		return wdir * speed
+	var dir := v / speed
+	var ang := dir.angle_to(wdir)
+	if ang > deg_to_rad(REVERSE_ANGLE_DEG):
+		return dir * maxf(speed - brake * dt, 0.0)
+	var turn := minf(lerpf(TURN_ACC_WALK, TURN_ACC_RUN, fast) / speed, 6.0) * dt
+	if ang > 0.0001:
+		var axis := dir.cross(wdir)
+		axis = Vector3.UP if axis.length() < 0.0001 else axis.normalized()
+		dir = dir.rotated(axis, minf(ang, turn)).normalized()
+	if want > speed:
+		speed += (want - speed) * (1.0 - exp(-dt / lerpf(START_TIME_WALK, START_TIME_RUN, fast)))
+	else:
+		speed = maxf(speed - brake * dt, want)
+	return dir * speed
+
+
+## Move and slide, done here and not with move_and_slide(): in floating mode that keeps the full speed along a
+## wall whatever the angle, and leaves the velocity unchanged. Here both the motion and the velocity lose exactly
+## the part that points into the wall. `flat` = on the ground: only the upright part of a surface counts.
+func _move(motion: Vector3, flat: bool) -> void:
+	_touched = false
+	for i in 4:
+		if motion.length() < 0.00001:
+			break
+		var c := move_and_collide(motion)
+		if c == null:
+			break
+		_touched = true
+		var n := c.get_normal()
+		if flat:
+			n = Vector3(n.x, 0.0, n.z)
+			if n.length() < 0.2:
+				break
+			n = n.normalized()
+			_wall = n
+		motion = c.get_remainder().slide(n)
+		if flat:
+			motion.y = 0.0
+		var v := Vector3(hvel.x, vy, hvel.z)
+		if v.dot(n) < 0.0:
+			v = v.slide(n)
+		hvel = Vector3(v.x, 0.0, v.z)
+		if not flat:
+			vy = v.y
+
+
+## The feet can only follow ground that rises at RISE_SPEED or falls at SINK_SPEED. On steep stairs that is slower
+## than a run, so slow down to what the feet can follow, as a person does.
+func _slow_for_rising_ground() -> void:
+	var speed := hvel.length()
+	if speed < 0.3:
+		return
+	var dir := hvel / speed
+	var g := probe(global_position + dir * 0.3, FLOAT + RADIUS + 0.3, STEP_DOWN + 0.05)
+	if not g["hit"]:
+		return
+	var rise := float(g["y"]) - maxf(ground_y, global_position.y)
+	var cap := 1000.0
+	if rise > 0.02 and rise <= FLOAT:
+		cap = RISE_SPEED * 0.9 / (rise / 0.3)
+	elif rise < -0.02:
+		# the same going down: stairs and kerbs, not a ledge (the probe would not have reached)
+		cap = SINK_SPEED * 0.9 / (-rise / 0.3)
+	if speed > cap:
+		hvel = dir * cap
+
+
+func _update_ground(dt: float) -> void:
+	var feet := global_position
+	if state == State.GROUND or state == State.STEEP:
+		var g := probe(feet)
+		if not g["hit"] or float(g["y"]) - feet.y > FLOAT - 0.005:
+			if not g["hit"]:
+				state = State.AIR
+				vy = 0.0
+			return
+		ground_y = float(g["y"])
+		ground_normal = g["normal"]
+		state = State.STEEP if _is_steep(g) else State.GROUND
+		var err := ground_y - feet.y
+		var dy := minf(err, RISE_SPEED * dt) if err > 0.0 else maxf(err, -SINK_SPEED * dt)
+		if absf(dy) > 0.00001:
+			move_and_collide(Vector3(0.0, dy, 0.0))
+	else:
+		var fall := maxf(0.02, -vy * dt + 0.01)
+		var g := probe(feet, FLOAT + RADIUS, fall)
+		if g["hit"] and vy <= 0.0 and feet.y - float(g["y"]) <= fall and float(g["y"]) - feet.y <= FLOAT - 0.005:
+			ground_y = float(g["y"])
+			ground_normal = g["normal"]
+			move_and_collide(Vector3(0.0, ground_y - feet.y, 0.0))
+			vy = 0.0
+			state = State.STEEP if _is_steep(g) else State.GROUND
+		else:
+			state = State.UNSUPPORTED if _touched else State.AIR
+
+
+func get_readout() -> Dictionary:
+	return {"state": STATE_NAMES[state], "speed": hvel.length(), "height": global_position.y,
+			"note": "ground %.3f m   slope %.0f deg" % [ground_y, rad_to_deg(acos(clampf(ground_normal.y, -1.0, 1.0)))]}
+
+
+## Put the body somewhere by hand (teleport, test set-up).
+func place(at: Vector3) -> void:
+	global_position = at
+	hvel = Vector3.ZERO
+	vy = 0.0
+	velocity = Vector3.ZERO
+	state = State.AIR

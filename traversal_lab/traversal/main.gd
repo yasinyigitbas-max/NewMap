@@ -5,6 +5,7 @@ const Course := preload("res://traversal/course/course.gd")
 const Readout := preload("res://traversal/debug/readout.gd")
 const Tape := preload("res://traversal/debug/input_tape.gd")
 const PlainBody := preload("res://traversal/debug/plain_body.gd")
+const Body := preload("res://traversal/body/body.gd")
 const TAPE_FILE := "user://tapes/last.json"
 
 var course: Node3D
@@ -55,19 +56,28 @@ func _ready() -> void:
 
 ## Which body the lab runs. Later stages swap this for the real one.
 func make_body() -> CharacterBody3D:
-	return PlainBody.new()
+	if "--plain" in OS.get_cmdline_user_args():
+		return PlainBody.new()
+	return Body.new()
 
 
 func go_to(i: int) -> void:
 	var st: Array = course.get(&"stations")
 	station = posmod(i, st.size())
 	var s: Dictionary = st[station]
-	body.global_position = s["start"]
-	body.velocity = Vector3.ZERO
+	place(s["start"])
 	body.rotation.y = 0.0
 	_yaw = 0.0
 	readout.set(&"station_label", "%d / %d   %s" % [station + 1, st.size(), s["label"]])
 	readout.call(&"reset_marks")
+
+
+func place(at: Vector3) -> void:
+	if body.has_method(&"place"):
+		body.call(&"place", at)
+	else:
+		body.global_position = at
+		body.velocity = Vector3.ZERO
 
 
 func _unhandled_input(ev: InputEvent) -> void:
@@ -82,8 +92,7 @@ func _unhandled_input(ev: InputEvent) -> void:
 			KEY_F5: tape.call(&"record_from", body.global_position)
 			KEY_F6: tape.call(&"stop")
 			KEY_F7:
-				body.global_position = tape.get(&"start")
-				body.velocity = Vector3.ZERO
+				place(tape.get(&"start"))
 				readout.call(&"reset_marks")
 				tape.call(&"replay")
 			KEY_F8: tape.call(&"save", TAPE_FILE)

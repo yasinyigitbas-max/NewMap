@@ -36,7 +36,10 @@ A robust Rockstar-style traversal system for the game (Godot 4.7, Jolt, Mixamo c
 - Tie-in check: the current player is one `CharacterBody3D` class (`CityPlayer`, C++) with a small set of calls the game uses (move, jump, crouch, freeze, ride, knock, act ...). The new system will be given the same calls at integration. Only that interface was read, not how the old player works.
 - The work is in **`traversal_lab/`**, a self-contained Godot project (Jolt, 60 ticks), code under `traversal_lab/traversal/` = `res://traversal/`. See `traversal_lab/README.md` for how to run it, the keys and the stage table.
 - **Stage 0 is built** (62-station measured course, readout, input record / replay). `tests/test_stage0.gd` says RESULT PASS. It still needs Yasin's eyes once (labels readable, readout moves, replay repeats): the three checks are in the README.
-- **Next: Stage 1**, the body alone (floating capsule first, full-height capsule with a step sweep as the fallback), tested on the course.
+- **Stage 1 is built and its automatic test passes** (`tests/test_stage1.gd`, 31 checks, with a ten-minute random walk): the floating capsule works under Jolt, so the fallback was not needed. It **needs Yasin's eyes** for the feel: the list is in `traversal_lab/README.md`, "Stage 1: what to look at".
+- **Standing rule from Yasin (25 Nov): "do not forget to remind yourself of the movement study and acting according to it at every step."** Before each stage re-read the relevant part of the report; every movement number in the code names the finding it follows, or is marked as not in the study. The README has the rule and a study-against-code table per stage.
+- The cloud can render the lab: `xvfb-run` with lavapipe, see `traversal_lab/tests/shot.gd`.
+- **Next: Stage 2**, import player_v4 (needs the rigged character file from Mixamo, T-pose with skin, which is not in Drive yet) and idle, walk, run; then `Running Jump Climb` on a 1.00 m box to settle upward travel.
 - In the cloud, Godot 4.7.2 is not installed: download the Linux build from the Godot GitHub releases; headless runs work with Jolt.
 
 ## Waiting on Yasin
