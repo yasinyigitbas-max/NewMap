@@ -19,7 +19,7 @@ func _ready() -> void:
 	_text.add_theme_color_override(&"font_outline_color", Color.BLACK)
 	_text.add_theme_constant_override(&"outline_size", 6)
 	add_child(_text)
-	_graph.position = Vector2(12, 250)
+	_graph.position = Vector2(12, 310)
 	_graph.size = Vector2(420, 140)
 	_graph.draw.connect(_draw_graph)
 	add_child(_graph)

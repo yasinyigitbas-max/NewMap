@@ -69,7 +69,7 @@ func _label(text: String, at: Vector3) -> Label3D:
 	l.font_size = 64
 	l.outline_size = 12
 	l.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	l.no_depth_test = true
+	l.no_depth_test = false
 	add_child(l)
 	return l
 
