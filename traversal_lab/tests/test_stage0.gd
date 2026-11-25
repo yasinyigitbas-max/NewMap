@@ -38,7 +38,7 @@ func _run() -> void:
 	var course: Node3D = lab.get(&"course")
 	var st: Array = course.get(&"stations")
 	var labels := course.find_children("*", "Label3D", true, false).size()
-	ok(st.size() == 62, "62 stations built (got %d)" % st.size())
+	ok(st.size() == 63, "63 stations built (got %d)" % st.size())
 	ok(labels == st.size(), "every station has its label (%d labels)" % labels)
 	var kinds := {}
 	var bad: Array[String] = []

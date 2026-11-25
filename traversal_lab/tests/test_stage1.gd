@@ -45,7 +45,7 @@ func drive(at: Vector3, segments: Array, until_y := -1000.0, until_below := fals
 	var rec: Array = []
 	while int(tape.get(&"mode")) == 2:
 		await physics_frame
-		rec.append({"p": body.global_position, "s": int(body.get(&"state")), "v": (body.get(&"hvel") as Vector3).length()})
+		rec.append({"p": body.global_position, "s": int(body.get(&"state")), "v": (body.get(&"hvel") as Vector3).length(), "t": int(body.get(&"terrain"))})
 		# stairs: the stick is let go when he arrives, however long the stairs took
 		if until_y > -999.0 and (body.global_position.y <= until_y if until_below else body.global_position.y >= until_y):
 			tape.call(&"stop")
@@ -173,14 +173,31 @@ func test_ramps() -> void:
 					hi = maxf(hi, r["v"])
 			ok(absf(last(rec).y - 1.5) < 0.02 and lo > sp * 0.97 and hi < sp * 1.03 and count_state(rec, GROUND) == rec.size(),
 					"ramp %d deg, %s: reaches the top (%.2f m); speed on the ramp %.2f to %.2f m/s (wanted %.2f); ticks not on ground %d" % [deg, "run" if run else "walk", last(rec).y, lo, hi, sp, rec.size() - count_state(rec, GROUND)])
+	# steep ground: 30 degrees is walked leaning in, 45 degrees is climbed on hands and feet, 60 cannot be stood on
 	for deg: int in [30, 45]:
 		var s := st("ramp %d deg" % deg)
-		var rec := await drive(s["start"], [[6.0, 0.0, -1.0, 0.0, true], [3.0, 0.0, 0.0, 0.0, false]])
-		var peak := 0.0
-		for r: Dictionary in rec:
-			peak = maxf(peak, (r["p"] as Vector3).y)
-		ok(peak < 0.5 and last(rec).y < 0.15 and count_state(rec, STEEP) > 0,
-				"ramp %d deg: cannot be climbed (highest %.2f m of 1.50), slides back to the ground (ends at %.2f m), state 'too steep' for %d ticks" % [deg, peak, last(rec).y, count_state(rec, STEEP)])
+		for run: bool in [false, true]:
+			var rec := await drive(s["start"], [[40.0, 0.0, -1.0, 0.0, run]], 1.5 - 0.002)
+			var lo := 99.0
+			var hi := 0.0
+			var kind := 0
+			for r: Dictionary in rec:
+				var y := (r["p"] as Vector3).y
+				if y > 0.9 and y < 1.3:     # the upper part: what speed he came in with is spent by then
+					lo = minf(lo, r["v"])
+					hi = maxf(hi, r["v"])
+					kind = maxi(kind, int(r["t"]))
+			var want := 1 if deg == 30 else 2
+			ok(absf(last(rec).y - 1.5) < 0.02 and kind == want and count_state(rec, STEEP) == 0 and hi - lo < 0.05,
+					"ramp %d deg, %s: reaches the top (%.2f m) %s at a steady %.2f m/s along the ground (%.2f m/s upward); never 'too steep'" % [
+					deg, "run" if run else "walk", last(rec).y, "leaning in" if kind == 1 else ("on hands and feet" if kind == 2 else "as on the flat"), hi, hi * tan(deg_to_rad(deg))])
+	var s60 := st("ramp 60 deg")
+	var rec60 := await drive(s60["start"], [[6.0, 0.0, -1.0, 0.0, true], [3.0, 0.0, 0.0, 0.0, false]])
+	var peak := 0.0
+	for r: Dictionary in rec60:
+		peak = maxf(peak, (r["p"] as Vector3).y)
+	ok(peak < 0.5 and last(rec60).y < 0.15 and count_state(rec60, STEEP) > 0,
+			"ramp 60 deg: cannot be climbed (highest %.2f m of 1.50), slides back to the ground (ends at %.2f m), state 'too steep' for %d ticks" % [peak, last(rec60).y, count_state(rec60, STEEP)])
 
 
 func test_walls() -> void:

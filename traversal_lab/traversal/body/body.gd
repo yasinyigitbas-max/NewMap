@@ -12,7 +12,18 @@ const RADIUS := 0.25
 const FLOAT := 0.32             # capsule bottom above the feet; anything lower than this is stepped onto
 const STEP_DOWN := 0.30         # ground this far below the feet is still "ground" (stairs down, kerbs)
 const PROBE_R := 0.15
-const SLOPE_LIMIT_DEG := 28.0   # steeper ground cannot be stood on
+# Steep ground (26 Nov, Yasin: "we should be able to climb even higher than 35-40 degrees, there are mountain
+# climbers and trekkers who do that all the time ... bend or hunch forward, raising the heels off the ground,
+# getting assistance by hands"). Three ways of going, by how steep the ground under him is; the figures and their
+# sources are in research_notes/.../steep_slopes.md and in the README's table.
+const SLOPE_WALK_DEG := 20.0    # up to here: ordinary walking and running (the steepest streets are 19 degrees)
+const SLOPE_HANDS_DEG := 35.0   # from here up: on hands and feet
+const SLOPE_LIMIT_DEG := 50.0   # steeper ground cannot be stood on: he slides
+# the most he asks of himself on steep ground, m/s along the ground: [walking, with run held]
+const STEEP_UP := [0.7, 1.1]
+const STEEP_DOWN := [0.8, 1.3]
+const HANDS_UP := [0.45, 0.7]
+const HANDS_DOWN := [0.4, 0.6]
 # Speeds and how they change come from the movement study (reports/Hybrid character traversal study.md, Part 1
 # "Turning, starting, stopping" and Part 3), not from feel. Each line says which finding it follows.
 const WALK := 1.4               # comfortable walking is 1.3 to 1.45 m/s
@@ -81,6 +92,9 @@ var _jump_held := false
 var _air_peak := 0.0
 var _jump_still := false
 var _look: Array[Node3D] = []
+var slope_deg := 0.0            # how steep the ground under him is
+var grade := 0.0                # its rise per metre the way he is going (+ = uphill)
+var terrain := 0                # 0 = ordinary ground, 1 = steep (leaning walk), 2 = very steep (hands and feet)
 var stairs := 0                 # +1 going up stairs, -1 going down, 0 not on stairs
 var stair_tread := TREAD        # the depth of a step, measured from the last two edges crossed
 var stair_edge := Vector3.ZERO  # where the last step edge was crossed
@@ -190,8 +204,8 @@ func _is_steep(g: Dictionary) -> bool:
 	# a stair edge: the surface straight under him is level, whatever the rounded probe says of its edge (stairs of
 	# 0.18 / 0.28 m lie along a 33 degree line, and taken a step at a time he would be held on them as "too steep")
 	var under := _ray_down(Vector3(global_position.x, float(g["y"]), global_position.z))
-	if not under.is_empty() and acos(clampf((under["normal"] as Vector3).y, -1.0, 1.0)) <= deg_to_rad(SLOPE_LIMIT_DEG):
-		return false
+	if not under.is_empty():
+		return acos(clampf((under["normal"] as Vector3).y, -1.0, 1.0)) > deg_to_rad(SLOPE_LIMIT_DEG)
 	down = down.normalized()
 	var rise := tan(angle) * 0.2
 	var feet := Vector3(global_position.x, float(g["y"]), global_position.z)
@@ -215,6 +229,8 @@ func _physics_process(dt: float) -> void:
 	_find_stairs(dt)
 	if stairs != 0 and _wish.length() > 0.05:
 		_wish = _wish.limit_length(_stair_speed(_wish.length() > WALK + 0.1))
+	elif terrain != 0 and _wish.length() > 0.05:
+		_wish = _wish.limit_length(_steep_speed(_wish.length() > WALK + 0.1))
 
 	# jump: a push-off first, then the body leaves the ground
 	var jump_now := bool(s.get("jump", false))
@@ -351,8 +367,12 @@ func _find_stairs(dt: float) -> void:
 	if state != State.GROUND or here.is_empty() or dir == Vector3.ZERO:
 		stairs = 0
 		_ray_ok = false
+		if state != State.GROUND or here.is_empty():
+			terrain = 0
+			slope_deg = 0.0
 		return
 	var y := (here["position"] as Vector3).y
+	_read_slope(here["normal"], dir)
 	_since_edge += speed * dt
 	if _ray_ok and absf(y - _ray_y) > 0.06 and (here["normal"] as Vector3).y > 0.98:
 		if _since_edge > 0.15 and _since_edge < 0.45 and stairs != 0:
@@ -389,6 +409,25 @@ func _find_stairs(dt: float) -> void:
 		stair_dir = dir
 	elif stairs != 0 and _since_edge > stair_tread * 1.3:
 		stairs = 0       # no edge for more than a step: the stairs have ended
+
+
+## How steep the ground straight under him is, and which way of going that calls for. (A ray, not the rounded
+## probe: the probe reads the edge of a stair as a slope.)
+func _read_slope(n: Vector3, dir: Vector3) -> void:
+	slope_deg = rad_to_deg(acos(clampf(n.y, -1.0, 1.0)))
+	grade = -(n.x * dir.x + n.z * dir.z) / maxf(n.y, 0.01)
+	# a degree of slack each way, so he does not flicker between two ways of going on the boundary
+	var up_one := 1.0 if terrain < 1 else -1.0
+	var up_two := 1.0 if terrain < 2 else -1.0
+	terrain = 2 if slope_deg > SLOPE_HANDS_DEG + up_two else (1 if slope_deg > SLOPE_WALK_DEG + up_one else 0)
+
+
+## The most he asks of himself on steep ground.
+func _steep_speed(run: bool) -> float:
+	var i := 1 if run else 0
+	if terrain == 2:
+		return float(HANDS_UP[i] if grade >= 0.0 else HANDS_DOWN[i])
+	return float(STEEP_UP[i] if grade >= 0.0 else STEEP_DOWN[i])
 
 
 ## The most he asks of himself on stairs: one step in the study's step time.
