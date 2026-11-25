@@ -588,6 +588,7 @@ Also in the catalogue and useful: crouch walking left, right and backwards ("Cro
 
 What this means for the build:
 
+- **Update:** these clips have since been downloaded and measured; see "The 18 extra Mixamo clips, measured" below.
 - **Seven of the eleven gaps can be filled from Mixamo:** the slower walk, the vaults, standing into the braced hang, the hang-and-drop, the shimmy, and running down stairs. Download them against the same character as the rest.
 - **Four cannot, and need another answer:**
   - *Mantle (1.10 to 1.45 m):* stretch `Running Jump Climb` upward, or jump to a braced hang and climb, and judge by eye.
@@ -626,6 +627,66 @@ What to know before using them:
 - **These files contain your character's mesh**, because Kimodo needs a skinned character to export. Treat them like raw Mixamo files and keep them out of a public repository.
 - **Licence:** Kimodo's code is Apache-2.0 and this model is under the NVIDIA Open Model licence, according to NVIDIA's project page ([Kimodo README](https://raw.githubusercontent.com/nv-tlabs/kimodo/main/README.md)), which calls its training data "commercially-friendly". The licence text itself was not read.
 - **Replicate credit:** the account has under $5 of credit, which limits it to 6 runs a minute. Each take took 4 to 7 seconds of compute.
+
+### The 18 extra Mixamo clips, measured
+
+Added later on 25 Nov 2026, after the clips from the download list were put in the shared folder. All 18 are on the same body as the rest (hip to ankle 0.889 m), without skin, 30 frames a second. Their rows are appended to `clip_measurements.csv` with the source `loose2`. `Crouch Walk` is the same motion as `Crouched Walking`, so 17 are new.
+
+| Clip | Length | Travel | Height | Notes |
+|---|---|---|---|---|
+| Walking (4) | 1.23 s loop | 1.34 m, 1.09 m/s | | the slower walk; with `Walking` at 1.79 m/s the two bracket a comfortable 1.3 to 1.45 m/s |
+| Vault 1 Hand | 1.17 s | 5.09 m at 4.37 m/s | feet clear 1.23 m | a running vault; this fills the vault gap |
+| Vault 2 Hands | 1.20 s | 4.33 m at 3.61 m/s | feet clear 1.43 m | |
+| Step Up Vault | 2.87 s | 4.44 m forward, 2.51 m to the right | feet clear 1.02 m | ends turned 95 degrees and well off to one side; only the first part is usable |
+| Step Onto Platform | 1.37 s | 1.16 m | feet end 0.61 m up | a step, not a jump; the nearest thing to the high step |
+| Jump To Braced Hang | 1.27 s | 0.19 m | wrists to 2.30 m, feet braced at 0.96 m | from standing into the braced hang |
+| Braced Hang Shimmy Left / Right | 1.17 s loop | 0.59 m sideways per loop | | clean loops |
+| Braced To Freehang | 0.93 s | | | ends in exactly the `Hanging Idle` pose |
+| Freehang To Braced | 1.13 s | | | the reverse |
+| Freehang Shimmy Left / Right | 1.37 / 1.40 s loop | 0.39 / 0.41 m per loop | | near-clean loops |
+| Freehang Climb | 3.87 s | 0.64 m | feet end 2.46 m up | hang to standing on top |
+| Drop To Freehang | 2.40 s | turns 225 degrees | starts with feet at 2.47 m | from standing on top, turn and lower into the hang |
+| Freehang Drop | 1.33 s | 0.46 m backward | feet drop 0.45 m | let go and land standing |
+| Braced Hang Drop | 1.67 s | 0.35 m backward | feet drop 1.27 m | let go from the braced hang and land |
+| Run Down Stairs | 0.40 s | 0.48 m | down 0.49 m | two steps of about 0.245 m, like the other stair clips |
+
+What this settles and what it adds:
+
+- **The vault, the hang-and-drop, the shimmies, the braced-hang entry, the slower walk and running down stairs are now covered.** With the Kimodo clips, the only gaps left are the bonnet slide and a native high step for 0.30 to 0.50 m.
+- **The free-hang clips agree with each other.** `Stand To Freehang`, `Drop To Freehang`, `Braced To Freehang` and the free-hang shimmies all sit at hips 1.32 m, toes 0.28 m, wrists about 2.28 m, the same as `Hanging Idle`.
+- **The braced-hang clips do not agree on height.** Each has the same pose but a different height above its own origin: hips at 1.37 m at the end of `Jump To Braced Hang`, 1.45 m in `Braced To Freehang`, 1.59 m in the shimmies and 1.68 m at the start of `Braced Hang Drop`. Played one after another as they are, the body would jump up or down by as much as 0.31 m. Each clip therefore needs its hand height recorded in the table, and the body placed so the hands sit on the ledge, not so the clip origins match.
+- **`Freehang Drop` starts 0.18 m higher than the hang it follows** (hips 1.50 m against 1.32 m), the same kind of mismatch.
+
+### The game's character: the Meshy model, and how far it is from the clips' body
+
+Checked on 25 Nov 2026. The model is `player_v3`, made with Meshy, on the branch `claude/cool-galileo-6y68se` (`assets/people/humanoid/player_v3.glb`, last changed 23 Nov). It was taken from git; nothing was downloaded from Meshy, because this session has no Meshy key (the project notes say the key is saved on a different environment, "NewMap"; this session runs on "Default"). Whether a newer model exists only on Meshy could not be checked. Only the skeleton and file facts were read; the model was not rendered or animated.
+
+The file: 15,614 triangles, one material, 54 joints, no animations. Joint names are Meshy's, close to Mixamo's without the prefix, with two differences that matter: the spine is named the other way up (`Spine02` is the lowest, `Spine` the highest), and there are three joints per finger and no toe-end joints.
+
+Every clip in the folder was made on Mixamo's stock X Bot. Rest-pose measurements of the two bodies:
+
+| | Meshy player_v3 (left / right) | X Bot, the clips' body | Difference |
+|---|---|---|---|
+| Top of head | 1.81 m (mesh top 1.83 m) | 1.81 m | same height |
+| Hips | 1.00 m | 1.03 m | 3 % lower |
+| Thigh | 0.380 / 0.383 m | 0.444 m | 14 % shorter |
+| Shin | 0.390 / 0.376 m | 0.445 m | 12 to 16 % shorter |
+| Hip to ankle | 0.770 / 0.759 m | 0.889 m | 13 to 15 % shorter |
+| Ankle joint height | 0.170 / 0.159 m | 0.092 m | 7 to 8 cm higher |
+| Toe joint height | 0.052 / 0.039 m | 0.002 m | 4 to 5 cm higher |
+| Shoulder to wrist | 0.475 / 0.489 m | 0.561 m | 13 to 15 % shorter |
+| Shoulder joints apart | 0.43 m | 0.39 m | 10 % wider |
+| Hip joints apart | 0.22 m | 0.26 m | 14 % narrower |
+
+What this means for the build:
+
+- **Same height, different joints.** The two bodies are the same height, but the Meshy rig has shorter leg and arm bones and makes up the leg length with an ankle joint 7 to 8 cm higher. A clip copies joint angles, so the same clip on this body takes strides about 13 % shorter and reaches about 8 cm less with each arm.
+- **Feet will slide unless travel is scaled.** If the body moves the distance the clip was made for, the feet cover 13 % less ground. Root travel has to be scaled by the leg ratio (about 0.86), which turns the 1.79 m/s walk into about 1.55 m/s. The clip table should store speeds for this body, not for X Bot.
+- **Hands will miss.** Shorter arms on wider shoulders mean hands arrive short of a ledge by up to about 8 cm. This is one more reason the hands must be placed by arm IK.
+- **The rig is not symmetric.** The left ankle joint sits 9 cm further back than the right (0.100 m against 0.012 m behind the body's centre line), the left shin is 1.4 cm longer than the right, and the right arm is 1.4 cm longer than the left. A mirrored clip will not look mirrored, and the two feet will plant differently.
+- **The ankle joint looks too high.** On X Bot it is 9 cm above the ground; here it is 16 to 17 cm. If that is where the rig put the joint and not where the model's ankle is, the foot will pivot from the wrong place, which shows as standing or running on the heels. This could not be confirmed without looking at the mesh.
+
+Recommendation: fix the skeleton before Stage 2. Make it symmetric (mirror one side's joints onto the other) and check the ankle and toe joints against the mesh. Every later test, starting with "a planted foot drifts less than 2 cm", is measured on this skeleton, so its faults would be chased as animation faults. Then record this body's own numbers (leg 0.77 m, arm 0.48 m, hips 1.00 m) in the clip table and scale the height bands of Part 2 by arm reach where they depend on it: the standing-grab limit drops by about 8 cm.
 
 ### What this changes in Part 2
 
