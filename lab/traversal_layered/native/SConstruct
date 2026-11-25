@@ -1,0 +1,12 @@
+#!/usr/bin/env python
+# Lab B native library. Build (from lab/traversal_layered/native):
+#   scons platform=linux  target=template_debug godot_cpp=<path to godot-cpp> -j4
+#   scons platform=windows use_mingw=yes target=template_debug godot_cpp=<path> -j4
+import os
+cpp = ARGUMENTS.get("godot_cpp", os.environ.get("GODOT_CPP", "/opt/lab/godot-cpp"))
+env = SConscript(os.path.join(cpp, "SConstruct"))
+env.Append(CPPPATH=["src/"])
+sources = Glob("src/*.cpp")
+suffix = env["suffix"]
+lib = env.SharedLibrary("bin/liblayered{}{}".format(suffix, env["SHLIBSUFFIX"]), source=sources)
+Default(lib)

@@ -54,5 +54,20 @@ Contract: `LAB_BRIEF.md` (copy of `docs/locomotion/lab/LAB_BRIEF.md`). Study: `S
 | 5.1 | Third person over the shoulder, ~3.4 m, eased, never cut. | brief |
 | 5.2 | Controls exactly as the brief (no extra buttons); traversal starts from movement. | brief, 8.5/2 |
 
+## 6. World contract (Yasin, 25 Nov; `WORLD_CONTRACT.md`, copied in)
+| # | Decision | Study / source |
+|---|---|---|
+| 6.1 | Layers: capsule on layer 2, collides with 1\|4\|8\|16\|32 (mask 61), never debris (64). | contract 1 |
+| 6.2 | Every ground / step / traversal probe uses mask 1\|4\|8 (= 13). Debris is never stood on, climbed or vaulted; an intact window or door is a wall, a broken one an opening. | contract 1, study 3.1 rules |
+| 6.3 | Probes are live every tick; nothing cached across frames, so `obstacle_changed(AABB)` needs no cache to clear today. If a cache is ever added it is dropped on that signal. | contract 3 |
+| 6.4 | The course gets a breakable bin stand-in (layer 3, becomes layer-7 debris when hit), a window and a door (layer 4) with tests. No punches or kicks in this lab yet; when added, their contact frame calls a stub `strike(from, to, radius, amount, kind, source)`. | contract 4 |
+
+## 7. Clip library facts that shape the design (measured 25 Nov on player_v3, leg ratio 0.86)
+| # | Fact / decision | Study |
+|---|---|---|
+| 7.1 | On this body the clips are slower than on Mixamo's: walk 1.30 m/s (normal walk, not brisk), runs 2.1 / 3.0 / 3.8 m/s. Run top speed 4.6 m/s = Running at rate 1.2 (the ±20 % edge). | 2.1, 2.2, 4.1 |
+| 7.2 | One walk start (right foot first) and one walk stop (left foot plants first): the other foot's versions are mirrors. | 2.3, 2.4, 4.2 |
+| 7.3 | Starts include ~0.6 s of standing before the weight shift: the start is entered ~0.2 s before the first foot lifts, never at frame 0. | 2.3, 8.3 (responsive) |
+
 ## Conflicts with the study
 (none yet)
