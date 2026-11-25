@@ -277,7 +277,11 @@ func build_clip(path: String, spec: Dictionary) -> Dictionary:
 	var mirror: bool = spec.get("mirror", false)
 	setup_reference(s)  # per file: "with skin" files carry another skeleton
 	var sr := src_globals(s, 0.0, mirror, true)
-	var nf := int(round(s.anim.length * FPS)) + 1
+	var nf_full := int(round(s.anim.length * FPS)) + 1
+	var fa: int = clampi(int(spec.get("a", 0)), 0, nf_full - 1)
+	var fb: int = int(spec.get("b", -1))
+	if fb < 0 or fb >= nf_full: fb = nf_full - 1
+	var nf := fb - fa + 1   # a cut: frames fa..fb of the source (30 fps)
 	var n := bones.size()
 	var H := bone_idx("Hips")
 	var frames_rot: Array = []
@@ -288,7 +292,7 @@ func build_clip(path: String, spec: Dictionary) -> Dictionary:
 	var fwd_local := rest_global_m[H].basis.get_rotation_quaternion().inverse() * Vector3(0, 0, 1)
 	var prev_yaw := 0.0
 	for f in nf:
-		var t: float = min(f / FPS, s.anim.length)
+		var t: float = min((f + fa) / FPS, s.anim.length)
 		var sg := src_globals(s, t, mirror)
 		var rt := retarget_frame(sg, sr)
 		frames_rot.append(rt[0]); frames_hips.append(rt[1])
@@ -344,7 +348,7 @@ func build_clip(path: String, spec: Dictionary) -> Dictionary:
 		var pos := fk_positions(grot, frames_hips[f])
 		lankle.append(pos[LF]); rankle.append(pos[RF]); ltoe.append(pos[LT]); rtoe.append(pos[RT])
 	var clip := {
-		"name": spec.name, "file": path.get_file(), "mirror": mirror, "loop": loop, "fps": FPS, "frames": nf,
+		"name": spec.name, "file": path.get_file(), "src_path": path, "src_a": fa, "mirror": mirror, "loop": loop, "fps": FPS, "frames": nf,
 		"bones": n, "rot": rot, "hips": hipsp, "root": root,
 	}
 	_measure(clip, lankle, rankle, ltoe, rtoe)

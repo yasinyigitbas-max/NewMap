@@ -123,12 +123,64 @@ void PoseCheck::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_model_error"), &PoseCheck::get_model_error);
 	ClassDB::bind_method(D_METHOD("get_com"), &PoseCheck::get_com);
 	ClassDB::bind_method(D_METHOD("get_sole_point", "side", "k"), &PoseCheck::get_sole_point);
+	ClassDB::bind_method(D_METHOD("set_fk_pose", "rot", "hips", "root", "frame"), &PoseCheck::set_fk_pose);
+	ClassDB::bind_method(D_METHOD("clear_fk_pose"), &PoseCheck::clear_fk_pose);
+	ClassDB::bind_method(D_METHOD("clip_lowest_soles", "rot", "hips", "root", "frames"), &PoseCheck::clip_lowest_soles);
 }
 
 Skeleton3D *PoseCheck::skel() const {
 	Skeleton3D *s = get_skeleton();
 	if (!s) s = Object::cast_to<Skeleton3D>(get_parent());
 	return s;
+}
+
+void PoseCheck::pose_W() {
+	if (fk_on) { W = W_fk; return; }
+	Skeleton3D *sk = skel();
+	if (!sk) return;
+	if (!is_inside_tree() || !active) sk->force_update_all_bone_transforms();
+	world_pose(model, sk, W);
+}
+
+void PoseCheck::set_fk_pose(const PackedFloat32Array &rot, const PackedFloat32Array &hips, const PackedFloat32Array &root, int f) {
+	ensure_model();
+	Skeleton3D *sk = skel();
+	if (!model.ok || !sk) return;
+	const int n = model.bone_count;
+	// the skeleton inside the body: Armature (0.01) x skeleton node
+	Transform3D in_body = sk->get_transform();
+	if (Node3D *a = Object::cast_to<Node3D>(sk->get_parent())) in_body = a->get_transform() * in_body;
+	const Transform3D rt(Basis(Vector3(0, 1, 0), root[f * 3 + 2]), Vector3(root[f * 3], 0, root[f * 3 + 1]));
+	std::vector<Transform3D> G(n);
+	W_fk.resize(n);
+	for (int i = 0; i < n; i++) {
+		const int o = (f * n + i) * 4;
+		const Quaternion q(rot[o], rot[o + 1], rot[o + 2], rot[o + 3]);
+		const int p = model.parent[i];
+		const Transform3D rl = p >= 0 ? model.rest_g[p].affine_inverse() * model.rest_g[i] : model.rest_g[i];
+		const Vector3 pos = i == 0 ? Vector3(hips[f * 3], hips[f * 3 + 1], hips[f * 3 + 2]) : rl.origin;
+		const Transform3D local(Basis(q), pos);
+		G[i] = p >= 0 ? G[p] * local : local;
+		Transform3D w = rt * in_body * G[i];
+		w.basis.orthonormalize();
+		W_fk[i] = w;
+	}
+	fk_on = true;
+}
+
+PackedVector3Array PoseCheck::clip_lowest_soles(const PackedFloat32Array &rot, const PackedFloat32Array &hips, const PackedFloat32Array &root, int frames) {
+	PackedVector3Array out;
+	for (int f = 0; f < frames; f++) {
+		set_fk_pose(rot, hips, root, f);
+		if (!fk_on) break;
+		W = W_fk;
+		Measures m;
+		measure(model, W.data(), m);
+		for (int s = 0; s < 2; s++)
+			for (int k = 0; k < SOLE_N; k++) out.push_back(m.sole_w[s][k]);
+	}
+	fk_on = false;
+	return out;
 }
 
 void PoseCheck::ensure_model() {
@@ -221,8 +273,7 @@ Dictionary PoseCheck::measure_now() {
 	ensure_model();
 	Skeleton3D *sk = skel();
 	if (!model.ok || !sk) return d;
-	sk->force_update_all_bone_transforms();
-	world_pose(model, sk, W);
+	pose_W();
 	Measures m;
 	measure(model, W.data(), m);
 	last = m;
@@ -275,8 +326,7 @@ PackedStringArray PoseCheck::check_static_now() {
 	ensure_model();
 	Skeleton3D *sk = skel();
 	if (!model.ok || !sk) return r;
-	sk->force_update_all_bone_transforms();
-	world_pose(model, sk, W);
+	pose_W();
 	Measures m;
 	measure(model, W.data(), m);
 	Contacts c;
@@ -296,7 +346,7 @@ PackedStringArray PoseCheck::check_static_now() {
 
 PackedStringArray PoseCheck::step_manual(double dt) {
 	fired_now.clear();
-	if (Skeleton3D *sk = skel()) sk->force_update_all_bone_transforms();
+
 	evaluate(dt);
 	PackedStringArray r;
 	for (auto &s : fired_now) r.push_back(String(s.c_str()));
@@ -354,7 +404,7 @@ void PoseCheck::evaluate(double dt) {
 	if (!model.ok || !sk) return;
 	t += dt;
 	frames++;
-	world_pose(model, sk, W);
+	pose_W();
 	Measures m;
 	measure(model, W.data(), m);
 	Contacts c;
@@ -405,7 +455,7 @@ void PoseCheck::evaluate(double dt) {
 	for (int s = 0; s < 2; s++) {
 		for (int p = 0; p < SOLE_N; p++) {
 			const Vector3 pt = m.sole_w[s][p];
-			if (c.pt[s][p]) {
+			if (c.pt[s][p] && in.planted[s]) { // a planted foot's point on the ground (a swing toe skimming it is not a slide)
 				if (!ep_on[s][p]) { ep_on[s][p] = true; ep_start[s][p] = pt; ep_max[s][p] = 0; ep_logged[s][p] = false; }
 				const Vector3 dlt = pt - ep_start[s][p];
 				const float slide = std::sqrt(dlt.x * dlt.x + dlt.z * dlt.z);
@@ -500,7 +550,7 @@ void PoseCheck::evaluate(double dt) {
 	// ---- time series, evaluated at the centre of a +-40 ms window (1.8) ----
 	Sample smp{t, m, c, in};
 	buf.push_back(smp);
-	const double half = std::max(0.04, 1.5 * dt);
+	const double half = std::max(0.04, 2.0 * dt); // +-40 ms, and at least 2 frames each side (a quadratic needs 4 neighbours)
 	while (!buf.empty() && buf.front().t < t - 2.2 * half - 1.0) buf.pop_front();
 	// centre = newest sample at least `half` old
 	int ci = -1;
@@ -616,7 +666,7 @@ void PoseCheck::evaluate(double dt) {
 		cop_w = cop;
 		const Vector3 L = C.m.com - cop;
 		const Vector3 A((float)ca[0], (float)(G + ca[1]), (float)ca[2]);
-		if (L.y > 0.3f && A.y > 0.5f) {
+		if (L.y > 0.3f && A.y > 0.5f && (C.c.any[0] != C.c.any[1])) { // per frame: with ONE foot in contact (3.2)
 			const float mis = std::acos(std::clamp(L.normalized().dot(A.normalized()), -1.0f, 1.0f)) * DEG;
 			if (mis > 10) hit("LEAN_MISMATCH", -1, mis, 10);
 		}

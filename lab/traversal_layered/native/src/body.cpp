@@ -293,6 +293,12 @@ bool BodyModel::init(Skeleton3D *sk) {
 		toe_dir0[s] = (tip - mid).normalized();
 	}
 	ok = true;
+	{
+		const Vector3 pc = (W[b.up[0]].origin + W[b.up[1]].origin) * 0.5f;
+		const Vector3 v = W[b.neck].origin - pc;
+		trunk_rest_fwd = std::atan2(v.z, v.y) * DEG;
+		trunk_rest_side = std::atan2(v.x, v.y) * DEG;
+	}
 	// the rig's own rest knee and elbow readings (player_v3's knee bones are bent while the mesh leg is straight):
 	// every angle is rest-relative (v2 1.2)
 	for (int s = 0; s < 2; s++) {
@@ -434,8 +440,11 @@ void measure(const BodyModel &m, const Transform3D *W, Measures &o) {
 			const Basis R = anat(m, W, b.farm[s]).transposed() * anat(m, W, b.hand[s]);
 			Quaternion sw;
 			float tw;
-			swing_twist(R.get_rotation_quaternion(), m.hand_dir0[s], sw, tw);
-			const Vector3 h0 = m.hand_dir0[s], h = sw.xform(h0);
+			Quaternion q = R.get_rotation_quaternion();
+			swing_twist(q, m.hand_dir0[s], sw, tw);
+			// the forearm's roll happens before the wrist: q = twist * swing', swing' in the rolled hand's own frame
+			const Quaternion sw2 = (Quaternion(m.hand_dir0[s], tw).inverse() * q).normalized();
+			const Vector3 h0 = m.hand_dir0[s], h = sw2.xform(h0);
 			const Vector3 palm(0, -1, 0), radial(0, 0, 1);
 			o.wrist_flex[s] = (std::atan2(h.dot(palm), h.dot(h0))) * DEG;  // + flexion (toward the palm)
 			o.wrist_dev[s] = (std::atan2(h.dot(radial), h.dot(h0))) * DEG; // + radial
@@ -462,8 +471,9 @@ void measure(const BodyModel &m, const Transform3D *W, Measures &o) {
 	// trunk lean (1.6)
 	{
 		const Vector3 v = o.neck_base - o.pelvis_c;
-		o.trunk_fwd = std::atan2(v.dot(o.pelvis_f), v.y) * DEG;
-		o.trunk_side = std::atan2(v.dot(o.pelvis_l), v.y) * DEG;
+		// against the rig's own upright stance: standing straight reads 0 (v2 Part 2: 0 is standing straight)
+		o.trunk_fwd = std::atan2(v.dot(o.pelvis_f), v.y) * DEG - m.trunk_rest_fwd;
+		o.trunk_side = std::atan2(v.dot(o.pelvis_l), v.y) * DEG - m.trunk_rest_side;
 	}
 	// centre of mass (1.6, de Leva)
 	{

@@ -73,6 +73,11 @@ public:
 	godot::String get_model_error() const { return model.error; }
 	godot::Vector3 get_com() const { return last.com; }
 	godot::Vector3 get_sole_point(int side, int k) const { return last.sole_w[side][k]; }
+	// clips without a scene: pose by forward kinematics from a clip-cache frame (fast path for tools and tests)
+	void set_fk_pose(const godot::PackedFloat32Array &rot, const godot::PackedFloat32Array &hips, const godot::PackedFloat32Array &root, int f);
+	void clear_fk_pose() { fk_on = false; }
+	godot::PackedVector3Array clip_lowest_soles(const godot::PackedFloat32Array &rot, const godot::PackedFloat32Array &hips,
+			const godot::PackedFloat32Array &root, int frames); // per frame: the 4 sole points of L, then R (world)
 
 protected:
 	static void _bind_methods();
@@ -80,6 +85,9 @@ protected:
 private:
 	bool active = true;
 	std::vector<godot::Transform3D> W;
+	bool fk_on = false;
+	std::vector<godot::Transform3D> W_fk;
+	void pose_W();
 	Measures last;
 	Contacts lastc;
 	int frames = 0;

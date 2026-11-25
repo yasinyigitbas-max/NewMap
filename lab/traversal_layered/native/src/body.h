@@ -47,6 +47,7 @@ struct BodyModel {
 	godot::Vector3 foot_F0[2], foot_U0[2];     // rest foot forward / sole up (anatomical)
 	godot::Vector3 toe_dir0[2];
 	float ankle_rest[2][3] = {{0, 0, 0}, {0, 0, 0}}; // dorsi, abd, roll of the rest foot in the shin frame
+	float trunk_rest_fwd = 0, trunk_rest_side = 0; // the rig's upright stance (neck base sits behind the hips)
 	float leg_reach[2] = {0, 0};               // rest hip -> ankle, metres (the mesh's straight leg)
 	float thigh_len[2] = {0, 0}, shin_len[2] = {0, 0};
 	// arms
