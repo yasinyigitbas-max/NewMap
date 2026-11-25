@@ -1,0 +1,23 @@
+{
+ "i2i.json": {
+  "id": "01a213d3-6cf7-7481-a43d-103c329f4fa6",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795628953864,
+  "consumed_credits": 6
+ },
+ "v4/image3d.json": {
+  "id": "01a213d3-e60a-75c9-8c9c-ff355bbb800c",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795628985064,
+  "consumed_credits": 30
+ },
+ "v4/rig.json": {
+  "id": "01a213d5-3335-7536-a336-cddc32624642",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795629072467,
+  "consumed_credits": 5
+ }
+}
