@@ -11,6 +11,8 @@ var frames := []
 var view := "side"
 var dist := 3.0
 var f := 0
+var start_at = null
+var start_yaw := 0.0
 
 func _init():
 	var a = OS.get_cmdline_user_args()
@@ -20,6 +22,10 @@ func _init():
 		for s in a[2].split(","): frames.append(int(s))
 	if a.size() > 3: view = a[3]
 	if a.size() > 4: dist = float(a[4])
+	if a.size() > 5:
+		var tp = a[5].split(",")
+		start_at = Vector3(float(tp[0]), float(tp[1]), float(tp[2]))
+		start_yaw = deg_to_rad(float(tp[3])) if tp.size() > 3 else 0.0
 	var m = load("res://main.tscn").instantiate()
 	root.add_child(m)
 	player = m.get_node("Player")
@@ -53,6 +59,8 @@ func stick_for(fr: int) -> Array:
 	return [Vector2.ZERO, false]
 
 func _process(_d) -> bool:
+	if f == 1 and start_at != null:
+		player.teleport(start_at, start_yaw)
 	if f == 1 and scenario == "rest":
 		var poser = player.find_children("*", "LabPoser", true, false)[0]
 		poser.active = false
@@ -84,6 +92,7 @@ func _process(_d) -> bool:
 		"front": cam.global_position = hips + Vector3(0, 0.0, dist)
 		"back": cam.global_position = hips + Vector3(0, 0.3, -dist)
 		"top": cam.global_position = hips + Vector3(0.01, dist, 0)
+		"high": cam.global_position = hips + Vector3(dist * 0.6, dist * 0.6, -dist * 0.5)
 		"low": cam.global_position = hips + Vector3(dist, -0.6, 0.0)
 		"follow": cam.global_position = hips + Vector3(dist * 0.7, 0.4, -dist * 0.7)
 	if view == "top":

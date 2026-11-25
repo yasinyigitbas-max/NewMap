@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://map_dc/coronado/terrain/textures/grass004/grass_albedo.jpg" id="1_5gfb5"]
+
+[resource]
+albedo_color = Color(0.85, 0.95, 0.8, 1)
+albedo_texture = ExtResource("1_5gfb5")
+roughness = 0.95
+texture_filter = 5

@@ -2,11 +2,13 @@
 #include "motor.h"
 
 #include <algorithm>
+bool dbg_on = false;
+#include <godot_cpp/variant/utility_functions.hpp>
 
 namespace lab {
 
 Targets lerp_targets(const Targets &a, const Targets &b, float t) {
-	Targets r = b;
+	Targets r = t < 0.5f ? a : b; // flags (planted, contact) from the nearer tick, so they match the drawn pose
 	r.hips_pos = a.hips_pos.lerp(b.hips_pos, t);
 	r.hips_rot = qslerp(a.hips_rot, b.hips_rot, t);
 	r.trunk_rot = qslerp(a.trunk_rot, b.trunk_rot, t);
@@ -65,6 +67,7 @@ void Motor::reset(const Vector3 &pos, float yaw_) {
 	lean_off = Vector3();
 	stopping = false;
 	steps_taken = 0;
+	edge_landings = 0;
 	step(MotorInput{ pos, Vector3(), Vector3(), Vector3(), 1.0f / 60.0f, true });
 }
 
@@ -77,9 +80,153 @@ float Motor::idle_yaw(int i, float yaw_) const { return yaw_ + (i == 0 ? 7.0f : 
 
 RayHit Motor::probe(const Vector3 &xz, float ref_y) const {
 	if (!ground) return RayHit{ true, Vector3(xz.x, ref_y, xz.z), UP };
-	RayHit h = ground(Vector3(xz.x, ref_y + 0.7f, xz.z), Vector3(xz.x, ref_y - 0.9f, xz.z));
+	RayHit h = ground(Vector3(xz.x, ref_y + 0.7f, xz.z), Vector3(xz.x, ref_y - 0.9f, xz.z), false);
 	if (!h.hit) h.pos = Vector3(xz.x, ref_y, xz.z);
 	return h;
+}
+
+float Profile::h_at(float x) const {
+	if (n <= 0) return origin.y;
+	float f = (x - X0) / DX;
+	int k = (int)std::floor(f + 0.5f);
+	k = k < 0 ? 0 : (k >= n ? n - 1 : k);
+	return h[k];
+}
+bool Profile::clear(float a, float b) const {
+	for (int e = 0; e < n_edges; e++)
+		if (edge_x[e] >= a && edge_x[e] <= b) return false;
+	return true;
+}
+float Profile::max_h(float a, float b) const {
+	if (n <= 0) return origin.y;
+	// only the samples whose centre lies inside [a, b] (rounding outward would read the level across an edge)
+	int ka = std::max(0, (int)std::ceil((a - X0) / DX - 1e-4f)), kb = std::min(n - 1, (int)std::floor((b - X0) / DX + 1e-4f));
+	if (ka > kb) return h_at(0.5f * (a + b));
+	float m = -1e9f;
+	for (int k = ka; k <= kb; k++) m = std::max(m, h[k]);
+	return m > -1e8f ? m : h_at(a);
+}
+
+// The ground ahead (2.8: people look at a kerb ~2 steps ahead; 4.4: detect 1.5-3 m ahead). Each sample's ray starts
+// 0.5 m above the last one, so stairs are followed up; a ray that starts inside something is a wall: the profile ends.
+void Motor::scan(const MotorInput &in, const Vector3 &dir) {
+	Profile &P = prof;
+	P.origin = in.pos;
+	P.dir = dir;
+	P.n = 0;
+	P.n_edges = 0;
+	P.stairs = false;
+	P.first_stair = 1e9f;
+	float prev = in.pos.y;
+	for (int k = 0; k < Profile::N; k++) {
+		Vector3 c = in.pos + dir * (Profile::X0 + k * Profile::DX);
+		float top = prev + 0.5f;
+		RayHit hit = ground ? ground(Vector3(c.x, top, c.z), Vector3(c.x, prev - 1.2f, c.z), true) : RayHit{ true, Vector3(c.x, in.pos.y, c.z), UP };
+		if (!hit.hit) {
+			P.h[k] = prev - 1.2f; // a drop deeper than 1.2 m: step 6
+		} else if (hit.pos.y > top - 0.005f) {
+			break; // a wall (or something taller than 0.5 m): step 6 decides what to do with it
+		} else {
+			P.h[k] = hit.pos.y;
+		}
+		prev = P.h[k];
+		P.n = k + 1;
+	}
+	float rise_sum = 0, run_sum = 0;
+	for (int k = 0; k + 1 < P.n; k++) {
+		float dh = P.h[k + 1] - P.h[k];
+		float x = Profile::X0 + (k + 0.5f) * Profile::DX;
+		if (std::fabs(dh) > 0.025f) {
+			// merge with an edge in the last sample (a steep face spanning two samples)
+			if (P.n_edges > 0 && x - P.edge_x[P.n_edges - 1] < 0.05f && (dh > 0) == (P.edge_rise[P.n_edges - 1] > 0)) {
+				P.edge_rise[P.n_edges - 1] += dh;
+			} else if (P.n_edges < 24) {
+				P.edge_x[P.n_edges] = x;
+				P.edge_rise[P.n_edges] = dh;
+				P.n_edges++;
+			}
+		} else if (x > 0.0f && x < 1.2f) {
+			rise_sum += dh;
+			run_sum += Profile::DX;
+		}
+	}
+	P.slope = run_sum > 0.2f ? std::atan(rise_sum / run_sum) : 0.0f;
+	// stairs (2.7): two or more edges the same way, 0.18-0.5 m apart, risers 8-26 cm
+	int first = -1;
+	for (int e = 0; e < P.n_edges; e++) {
+		if (P.edge_x[e] > -0.35f && std::fabs(P.edge_rise[e]) > 0.08f) {
+			first = e;
+			break;
+		}
+	}
+	if (first >= 0) {
+		int cnt = 1;
+		float sp = 0, rs = std::fabs(P.edge_rise[first]);
+		for (int e = first + 1; e < P.n_edges && cnt < 5; e++) {
+			float gap = P.edge_x[e] - P.edge_x[e - 1];
+			float r = P.edge_rise[e];
+			if (gap < 0.18f || gap > 0.5f || (r > 0) != (P.edge_rise[first] > 0) || std::fabs(r) < 0.08f || std::fabs(r) > 0.26f) break;
+			sp += gap;
+			rs += std::fabs(r);
+			cnt++;
+		}
+		if (cnt >= 2) {
+			P.stairs = true;
+			P.tread = sp / (cnt - 1);
+			P.riser = (P.edge_rise[first] > 0 ? 1.0f : -1.0f) * rs / cnt;
+			P.first_stair = P.edge_x[first];
+		}
+	}
+}
+
+// 2.8 / 4.4: no foot lands on an edge. The landing slides by up to 25 % of the step to the nearest spot where the
+// foot stands on one level (the whole sole; on stairs at least the ankle and the ball), preferring a spot from which
+// the next step is also clear, and sticking to the spot it chose before (no flicker).
+void Motor::choose_landing(int i, Vector3 &tgt, float yaw_td) {
+	const Profile &P = prof;
+	Foot &F = foot[i];
+	if (P.n_edges == 0 || P.n < 4) {
+		F.has_choice = false;
+		return;
+	}
+	float x_nom = P.x_of(tgt);
+	if (P.clear(x_nom - 0.7f, x_nom + 0.7f)) {
+		F.has_choice = false;
+		return;
+	}
+	float x_o = P.x_of(foot[1 - i].plant);
+	float L = std::max(0.2f, x_nom - x_o);
+	float hz = d.heel[i].z, bz = d.ball[i].z, tz = d.ball[i].z + d.toe_len[i];
+	float span = std::max(0.06f, 0.25f * L);
+	float best = 1e9f, best_x = x_nom;
+	for (float x = x_nom - span; x <= x_nom + span + 1e-4f; x += 0.01f) {
+		// the whole sole on one level; below a drop the heel lands well past the edge so the leg reaches down
+		// during the swing (2.8, 3.3), and the toes stay 3 cm off a riser ahead
+		bool full = P.clear(x + hz - 0.03f, x + tz + 0.03f);
+		// on stairs the heel or toes may hang over a LOWER level, never into a higher one (a riser, a kerb face)
+		bool part = P.clear(x - 0.03f, x + bz + 0.03f) && P.max_h(x + hz - 0.01f, x + tz + 0.02f) <= P.h_at(x) + 0.01f;
+		bool drop_ok = true;
+		for (int e = 0; e < P.n_edges; e++) {
+			float r = P.edge_rise[e];
+			float m = P.stairs ? 0.03f : 0.06f + 0.25f * -r;
+			if (r < -0.05f && P.edge_x[e] < x && P.edge_x[e] > x + hz - m) drop_ok = false;
+		}
+		if ((!full && !part) || !drop_ok) continue;
+		float xn = x + L;
+		bool next_ok = P.clear(xn - 0.03f, xn + bz + 0.03f) || xn > Profile::X0 + Profile::DX * P.n;
+		float sc = std::fabs(x - x_nom) + (full ? 0.0f : 0.06f) + (next_ok ? 0.0f : 0.03f);
+		if (F.has_choice) sc += 0.3f * std::fabs(x - F.choice_x);
+		if (sc < best) {
+			best = sc;
+			best_x = x;
+		}
+	}
+	if (best < 1e8f) {
+		tgt += P.dir * (best_x - x_nom);
+		F.choice_x = best_x;
+		F.has_choice = true;
+	}
+	(void)yaw_td;
 }
 
 // GTA V-like response (brief; study 8.3, 8.5): quick starts, stops in 1-2 walk steps / 2-4 run steps (2.3, 2.4).
@@ -153,11 +300,29 @@ void Motor::plan_swing(int i, const MotorInput &in, float T_rem, float T_st) {
 	float w_move = lerpf(0.10f, 0.06f, gait_w); // 2.1: 8-12 cm walking; narrower running
 	float w = stopping ? 0.20f : lerpf(0.20f, w_move, clampf(s_td / 0.8f, 0.0f, 1.0f));
 	Vector3 tgt = P_td + ahead + yaw_left(yaw_td) * (i == 0 ? 0.5f * w : -0.5f * w);
+	choose_landing(i, tgt, yaw_td);
 	RayHit h = probe(tgt, in.pos.y);
 	tgt.y = h.pos.y;
 	if (F.u > 0.75f) {
-		// late in the swing the foot is committed: the target may only drift (no snapping onto a new spot)
-		tgt = F.target + (tgt - F.target).limit_length(3.0f * in.dt);
+		// late in the swing the foot is committed: the spot may only drift (no snapping onto a new spot); its height
+		// is always the ground's at that spot
+		Vector3 dxz = flat(tgt - F.target).limit_length(3.0f * in.dt);
+		Vector3 t2 = F.target + dxz;
+		RayHit h2 = probe(t2, in.pos.y);
+		if (std::fabs(h2.pos.y - F.target.y) < 0.03f) { // drift on the same level only, never over an edge
+			t2.y = h2.pos.y;
+			tgt = t2;
+			h = h2;
+		} else {
+			tgt = F.target;
+			h.pos = F.target;
+			h.normal = F.target_normal;
+		}
+	}
+	if (dbg_on) {
+		String es;
+		for (int e = 0; e < prof.n_edges; e++) es += String::num(prof.edge_x[e], 2) + "/" + String::num(prof.edge_rise[e], 2) + " ";
+		UtilityFunctions::print("DBG foot ", i, " u ", String::num(F.u, 2), " tgt x ", String::num(prof.x_of(tgt), 3), " y ", String::num(tgt.y, 3), " choice ", F.has_choice, " ", String::num(F.choice_x, 3), " edges ", es);
 	}
 	F.target = tgt;
 	F.target_rel = tgt - P_td;
@@ -224,6 +389,46 @@ void Motor::step(const MotorInput &in) {
 	// head leads: aims at the stick direction at once (2.5 top-down order, 4.5)
 	float look_goal = stick ? yaw_of(look) : yaw;
 	look_yaw = approach_angle(look_yaw, look_goal, 0.05f, dt);
+
+	// the ground ahead, along the way the body goes
+	{
+		Vector3 dir = s > 0.2f ? vel / s : (s_des > 0.1f ? vd / s_des : yaw_fwd(yaw));
+		scan(in, dir);
+		const Profile &P = prof;
+		float a = P.slope / DEG;
+		// 2.6: up to 5 deg nothing changes; steeper slopes slow the walk (shorter steps)
+		slope_mult = 1.0f - 0.012f * std::max(0.0f, std::fabs(a) - 5.0f);
+		speed_cap = 1e9f;
+		if (P.stairs) {
+			// 2.7: one tread per step walking (~95 steps/min up, ~105 down), two treads running
+			bool running = s_des > 2.2f;
+			float cad = running ? 150.0f : (P.riser > 0 ? 95.0f : 105.0f);
+			float v_st = P.tread * (running ? 2.0f : 1.0f) * cad / 60.0f;
+			float k = smooth01((P.first_stair - 0.3f) / 1.5f);
+			speed_cap = lerpf(v_st, 1e3f, k);
+		} else {
+			// 2.8: a step over ~18-20 cm is an obvious bigger step: a pause in the rhythm
+			for (int e = 0; e < P.n_edges; e++) {
+				if (P.edge_x[e] > 0.0f && P.edge_x[e] < 1.2f && P.edge_rise[e] > 0.18f) speed_cap = std::min(speed_cap, 1.0f);
+			}
+		}
+		// posture: trunk forward uphill (~ the slope + a few deg) and on stairs up, eyes down on stairs down (2.6, 2.7)
+		float pe = 0, ld = 0;
+		if (s > 0.2f) {
+			pe = a > 0 ? (a * 0.8f + 3.0f * smooth01(a / 5.0f)) * DEG : a * 0.2f * DEG;
+			if (P.stairs && P.first_stair < 1.0f) {
+				if (P.riser > 0)
+					pe = std::max(pe, 12.0f * DEG);
+				else
+					ld = 22.0f * DEG;
+			}
+			for (int e = 0; e < P.n_edges; e++) {
+				if (P.edge_x[e] > 0.3f && P.edge_x[e] < 1.8f && std::fabs(P.edge_rise[e]) > 0.05f) ld = std::max(ld, 8.0f * DEG);
+			}
+		}
+		posture_extra = approach(posture_extra, pe, 0.25f, dt);
+		look_down = approach(look_down, ld, 0.2f, dt);
+	}
 
 	// gait choice (2.2: switch at 2.0-2.2 m/s, never held in the band)
 	float s_cad = std::max(s, 0.75f * s_des);
@@ -295,6 +500,12 @@ void Motor::step(const MotorInput &in) {
 					F.normal = F.target_normal;
 					F.clearance = 0;
 					F.u = 1;
+					F.has_choice = false;
+					{
+						// did the foot land across an edge? (heel / ankle / ball / toe at different heights)
+						float xa = prof.x_of(F.plant);
+						if (prof.n > 0 && !prof.clear(xa - 0.02f, xa + d.ball[i].z + 0.02f)) edge_landings++;
+					}
 					steps_taken++;
 					gait = want; // gait switches at a foot strike (DECISIONS 2.3)
 				}
@@ -333,9 +544,10 @@ void Motor::step(const MotorInput &in) {
 			float th = 0, toe = 0;
 			int pv = 2;
 			if (active) {
-				if (p < load_end && F.u >= 1.0f) {
-					th = -th_hs * (1.0f - smooth01(p / load_end));
-					pv = 1;
+				float le = F.land_pitch > 0 ? 0.15f : load_end; // toes first: the heel lowers as the knee brakes (2.7)
+				if (p < le && F.u >= 1.0f && std::fabs(F.land_pitch) > 1e-4f) {
+					th = F.land_pitch * (1.0f - smooth01(p / le));
+					pv = F.land_pitch < 0 ? 1 : 3;
 				} else if (p >= hr0 && p <= beta_cur + 0.02f) {
 					float x = clampf((p - hr0) / std::max(0.05f, beta_cur - hr0), 0.0f, 1.0f);
 					th = th_to * std::pow(x, 1.5f);
@@ -383,29 +595,68 @@ void Motor::step(const MotorInput &in) {
 			float T_sw = (1.0f - F.lift_beta) / freq_cur;
 			F.u = clampf((p - F.lift_beta) / (1.0f - F.lift_beta), 0.0f, 1.0f);
 			float T_rem = (1.0f - F.u) * T_sw;
+			F.t_rem = T_rem;
 			float T_st = beta_cur / freq_cur;
 			plan_swing(i, in, T_rem, T_st);
 			// the swing foot travels relative to the body (2.2: the foot's path is an oval about the hip, it lands under
 			// the knee), and is handed over to its world landing spot over the last 20 % of the swing
-			float sh = minjerk(F.u);
+			// 2.7 / 2.8 / 3.3: stepping down, the foot first reaches out past the edge, then lowers; stepping up, it rises
+			// first, then moves onto the step
+			float dy = F.target.y - F.lift.y;
+			float sh = dy < -0.05f ? minjerk(F.u / 0.8f) : minjerk(F.u);
+			float sv = dy > 0.05f ? smooth01(F.u / 0.6f) : (dy < -0.05f ? smooth01((F.u - 0.45f) / 0.55f) : minjerk(F.u));
 			Vector3 rel = F.lift_rel.lerp(F.target_rel, sh);
 			Vector3 body_path = in.pos + rel;
-			body_path.y = lerpf(F.lift.y, F.target.y, sh);
+			body_path.y = lerpf(F.lift.y, F.target.y, sv);
 			Vector3 world_path = F.lift.lerp(F.target, sh);
+			world_path.y = body_path.y;
 			F.ground_ref = body_path.lerp(world_path, smooth01((F.u - 0.8f) / 0.2f));
 			F.fyaw = F.lift_yaw + wrap_pi(F.target_yaw - F.lift_yaw) * sh;
 			float th;
+			// 2.7 / 3.3: stepping up lands flat (forefoot), stepping down lands toes first, level ground heel first
+			float rise_o = F.target.y - foot[1 - i].plant.y;
+			F.land_pitch = rise_o > 0.05f ? 0.0f : (rise_o < -0.05f ? 12.0f * DEG : -th_hs);
 			if (F.u < 0.45f)
 				th = F.lift_pitch * (1.0f - smooth01(F.u / 0.45f));
 			else
-				th = -th_hs * smooth01((F.u - 0.55f) / 0.45f);
+				th = F.land_pitch * smooth01((F.u - 0.55f) / 0.45f);
 			F.pitch = th;
 			F.toe = F.lift_toe * (1.0f - smooth01(F.u / 0.3f));
 			F.pivot = th >= 0 ? 3 : 1;
 			float rise = std::max(0.0f, F.target.y - F.lift.y);
-			F.clearance = c_mid * std::sin(PI_F * F.u) + c_early * std::sin(PI_F * clampf(F.u / 0.5f, 0, 1)) +
-					rise * 0.5f * std::sin(PI_F * F.u);
-			if (stopping && s < 0.3f) F.clearance *= 0.6f; // a small adjusting step
+			(void)rise;
+			float c_nom = c_mid * std::sin(PI_F * F.u) + c_early * std::sin(PI_F * clampf(F.u / 0.5f, 0, 1));
+			if (stopping && s < 0.3f) c_nom *= 0.6f; // a small adjusting step
+			// 2.7 / 2.8: each sole point (heel, ball, toe tip) clears the ground under it by 3-5 cm, and the toe also what
+			// is just ahead of it (a kerb face, the next nosing); the margin fades at lift-off and touchdown
+			float c_prev = F.clearance;
+			F.clearance = 0;
+			Vector3 a0;
+			Basis r0;
+			foot_pose(i, a0, r0);
+			Vector3 Av(0, d.ankle_h[i], 0);
+			float bz = d.ball[i].z, tz = d.ball[i].z + d.toe_len[i];
+			Vector3 pts[3] = { a0 + r0.xform(d.heel[i] - Av), a0 + r0.xform(Vector3(0, 0, bz) - Av), a0 + r0.xform(Vector3(0, 0, tz) - Av) };
+			float margin = 0.04f * std::min(1.0f, std::min(F.u / 0.15f, (1.0f - F.u) / 0.12f));
+			float need = 0;
+			for (int q = 0; q < 3; q++) {
+				float xq = prof.x_of(pts[q]);
+				float g = prof.max_h(xq - 0.02f, xq + 0.02f);
+				if (g > pts[q].y - 0.01f) need = std::max(need, g + margin - pts[q].y);
+			}
+			{
+				float xtip = prof.x_of(pts[2]);
+				float xt = prof.x_of(F.target);
+				float look = 0.10f + 0.25f * (1.0f - F.u);
+				float hi_x = std::min(xtip + look, xt + tz - 0.05f);
+				if (hi_x > xtip) {
+					float g = prof.max_h(xtip, hi_x);
+					if (g > pts[2].y - 0.01f) need = std::max(need, g + margin - pts[2].y);
+				}
+			}
+			float c = std::max(c_nom, need);
+			if (c > c_prev + 2.5f * dt && F.u > 0.02f) c = std::max(c_nom, c_prev + 2.5f * dt); // no snap up
+			F.clearance = std::max(c, 0.0f);
 		}
 	}
 
@@ -441,9 +692,23 @@ void Motor::step(const MotorInput &in) {
 
 	// ----- centre of mass path -----
 	Vector3 left = yaw_left(yaw), fwd = yaw_fwd(yaw);
-	float ground_y = 0.5f * (foot[0].ground_ref.y + foot[1].ground_ref.y);
-	if (foot[0].planted && !foot[1].planted) ground_y = foot[0].plant.y;
-	if (foot[1].planted && !foot[0].planted) ground_y = foot[1].plant.y;
+	// 2.7: the hips glide on the line between the support foot and where the next foot goes, not step by step
+	float ground_y;
+	{
+		Vector3 a, b;
+		if (foot[0].planted && foot[1].planted) {
+			a = foot[0].plant;
+			b = foot[1].plant;
+		} else {
+			int st = foot[0].planted ? 0 : 1;
+			a = foot[st].plant;
+			b = foot[1 - st].planted ? foot[1 - st].plant : foot[1 - st].target;
+		}
+		Vector3 ab = flat(b - a);
+		float l2 = ab.length_squared();
+		float tt = l2 > 0.0025f ? clampf(flat(in.pos + lean_off - a).dot(ab) / l2, 0.0f, 1.0f) : 0.5f;
+		ground_y = lerpf(a.y, b.y, tt);
+	}
 	float hip_drop = d.hip_off[0].y; // hip joint below the hips bone (negative)
 	float stand_hip = d.ankle_h[0] + 0.99f * d.leg(0);
 
@@ -477,6 +742,19 @@ void Motor::step(const MotorInput &in) {
 		float s_step = frac(phase * 2.0f);
 		float hr = cap - 0.055f - 0.5f * A * std::cos(2.0f * PI_F * (s_step - beta_cur));
 		h = lerpf(hw, hr, gait_w);
+	}
+	// a swinging foot near touchdown: the hips aim low enough to meet it where it will land (soft, through the spring)
+	for (int i = 0; i < 2; i++) {
+		const Foot &F = foot[i];
+		float u0 = lerpf(0.6f, 0.45f, gait_w);
+		if (F.planted || F.u < u0 || !active) continue;
+		Vector3 hip = in.pos + lean_off + hips_side.x + yaw_basis(yaw).xform(flat(d.hip_off[i])) + vel * F.t_rem;
+		Vector3 ank = F.target + UP * d.ankle_h[i];
+		float Lm = 0.985f * d.leg(i);
+		float dxz2 = flat(ank - hip).length_squared();
+		float ym = ank.y + std::sqrt(std::max(0.0f, Lm * Lm - dxz2)) - d.hip_off[i].y;
+		float w = smooth01((F.u - u0) / (1.0f - u0));
+		h = std::min(h, lerpf(std::max(h, ym), ym, w));
 	}
 	hips_y.step(h, 30.0f, dt);
 
@@ -512,13 +790,17 @@ void Motor::step(const MotorInput &in) {
 		float y_max = 1e9f;
 		for (int i = 0; i < 2; i++) {
 			float u0 = lerpf(0.8f, 0.55f, gait_w); // running: the hips settle over the whole late swing (no landing pop)
-			float wgt = foot[i].planted ? 1.0f : smooth01((foot[i].u - u0) / (1.0f - u0));
+			float wgt = foot[i].planted ? 1.0f : 0.0f;
+			(void)u0;
 			if (wgt <= 0.0f) continue;
 			Vector3 hip = t.hips_pos + Rp.xform(d.hip_off[i]);
-			Vector3 dv = ankles[i] - hip;
+			// a swinging foot counts where it will land (its ankle over the landing spot), so the hips settle before
+			Vector3 ank = foot[i].planted ? ankles[i] : foot[i].target + UP * d.ankle_h[i];
+			if (!foot[i].planted) hip += vel * foot[i].t_rem; // where the hips will be when it lands
+			Vector3 dv = ank - hip;
 			float Lm = 0.985f * d.leg(i); // inside the poser's soft-IK zone (98 %): the foot is always reached
 			float dxz2 = dv.x * dv.x + dv.z * dv.z;
-			float ym = ankles[i].y + std::sqrt(std::max(0.0f, Lm * Lm - dxz2)) - d.hip_off[i].y;
+			float ym = ank.y + std::sqrt(std::max(0.0f, Lm * Lm - dxz2)) - d.hip_off[i].y;
 			ym += (1.0f - wgt) * 0.3f;
 			y_max = std::min(y_max, ym);
 		}
@@ -543,9 +825,9 @@ void Motor::step(const MotorInput &in) {
 	float posture = lerpf(2.0f, 12.0f, gait_w) * DEG; // 2.2: trunk forward 5-15 deg running
 	breath += dt * 2.0f * PI_F / 4.0f;
 	float br = 0.6f * DEG * std::sin(breath);
-	Basis trunk = L * R_body * Basis(UP, -1.3f * yaw_osc) * Basis(Vector3(1, 0, 0), posture + br);
+	Basis trunk = L * R_body * Basis(UP, -1.3f * yaw_osc) * Basis(Vector3(1, 0, 0), posture + br + posture_extra);
 	t.trunk_rot = trunk.get_rotation_quaternion();
-	float look_pitch = active ? 5.0f * DEG : 0.0f;
+	float look_pitch = (active ? 5.0f * DEG : 0.0f) + look_down;
 	t.head_rot = (yaw_basis(look_yaw) * Basis(Vector3(1, 0, 0), look_pitch)).get_rotation_quaternion();
 	t.body_lean = lean;
 

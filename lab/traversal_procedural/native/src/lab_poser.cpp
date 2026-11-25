@@ -351,8 +351,10 @@ void LabPoser::_process_modification_with_delta(double p_delta) {
 		}
 	}
 
-	// metrics: hips pop relative to the body (4.6 item 5)
-	Vector3 hips_rel = T.hips_pos - player->get_global_transform_interpolated().origin;
+	// metrics: hips pop (4.6 item 5): the hips' move in the world this frame, minus the capsule's horizontal travel
+	// (the capsule's own vertical hop on a kerb is collision, not the body)
+	Vector3 body = player->get_global_transform_interpolated().origin;
+	Vector3 hips_rel = T.hips_pos - Vector3(body.x, 0, body.z);
 	if (have_last) {
 		float pop = hips_rel.distance_to(last_hips_rel) * 100.0f;
 		if (pop > metrics.hips_pop_max_cm) {

@@ -18,25 +18,25 @@ tonemap_mode = 2
 radius = 0.3
 height = 1.5
 
-[node name="Main" type="Node3D" unique_id=282238078]
+[node name="Main" type="Node3D" unique_id=1935463525]
 
-[node name="Course" type="Node3D" parent="." unique_id=751874554 instance=ExtResource("1_0xm2m")]
+[node name="Course" type="Node3D" parent="." unique_id=1283739518 instance=ExtResource("1_0xm2m")]
 
-[node name="@WorldEnvironment@656" type="WorldEnvironment" parent="." unique_id=148768250]
+[node name="@WorldEnvironment@651" type="WorldEnvironment" parent="." unique_id=312092393]
 environment = SubResource("Environment_7mycd")
 
-[node name="Sun" type="DirectionalLight3D" parent="." unique_id=945941570]
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=871207318]
 transform = Transform3D(0.81915206, 0.43938506, -0.36868784, 0, 0.64278764, 0.76604444, 0.57357645, -0.62750685, 0.5265408, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Player" type="LabPlayer" parent="." unique_id=1418870107]
+[node name="Player" type="LabPlayer" parent="." unique_id=107218537]
 camera_path = NodePath("../CameraRig")
 
-[node name="Capsule" type="CollisionShape3D" parent="Player" unique_id=711762801]
+[node name="Capsule" type="CollisionShape3D" parent="Player" unique_id=1180453110]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_272bh")
 
 [node name="Body" type="Node3D" parent="Player" unique_id=772748373 instance=ExtResource("2_h2yge")]
 
-[node name="CameraRig" type="LabCamera" parent="." unique_id=1412762783]
+[node name="CameraRig" type="LabCamera" parent="." unique_id=794429165]
 target_path = NodePath("../Player")

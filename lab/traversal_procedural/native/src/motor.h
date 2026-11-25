@@ -49,7 +49,27 @@ struct RayHit {
 	Vector3 pos;
 	Vector3 normal = UP;
 };
-using GroundFn = std::function<RayHit(const Vector3 &from, const Vector3 &to)>;
+// from_inside: a ray that starts inside a shape reports a hit at its start (used to find walls in the profile)
+using GroundFn = std::function<RayHit(const Vector3 &from, const Vector3 &to, bool from_inside)>;
+
+// The ground along the path, probed live every tick (WORLD_CONTRACT 3: nothing kept across frames).
+struct Profile {
+	static constexpr int N = 72;
+	static constexpr float DX = 0.04f;
+	static constexpr float X0 = -0.40f;
+	Vector3 origin, dir;
+	int n = 0; // valid samples (stops at a wall)
+	float h[N];
+	int n_edges = 0;
+	float edge_x[24], edge_rise[24];
+	float slope = 0; // radians, + uphill along dir, over the next 1.2 m
+	bool stairs = false;
+	float tread = 0, riser = 0, first_stair = 1e9f;
+	float x_of(const Vector3 &p) const { return (p - origin).dot(dir); }
+	float h_at(float x) const;
+	bool clear(float a, float b) const; // no edge between a and b
+	float max_h(float a, float b) const;
+};
 
 struct MotorInput {
 	Vector3 pos; // body origin (ground level under the capsule), world
@@ -70,6 +90,11 @@ public:
 	Vector3 steer(const Vector3 &vel, const Vector3 &vel_des, float dt) const;
 	void step(const MotorInput &in);
 	const Targets &targets() const { return t; }
+	// terrain limits on the requested speed (stairs: a tread per step; steep slopes: slower), from the last tick
+	float speed_cap = 1e9f;
+	float slope_mult = 1.0f;
+	Profile prof;
+	int edge_landings = 0; // touchdowns with the foot across an edge (the planner failed)
 
 	// state readable by the player / tests
 	float yaw = 0;
@@ -95,6 +120,10 @@ public:
 		float target_yaw = 0;
 		Vector3 target_normal = UP;
 		float prev_p = 0;
+		float t_rem = 0; // swing time left
+		float land_pitch = 0; // pitch at touchdown: < 0 heel strike, 0 flat (stepping up), > 0 toes first (down)
+		float choice_x = 0;
+		bool has_choice = false;
 		bool skip = false; // stayed down this stride (stopping, already in place)
 		float pitch = 0; // + heel up (toes down)
 		int pivot = 2; // 1 heel, 2 flat, 3 ball
@@ -134,6 +163,9 @@ private:
 	void foot_geom(int i, const Vector3 &ref, const Basis &Rflat, float pitch, int pivot, Vector3 &ankle, Basis &rot) const;
 	static constexpr float BALL_MAX = 45.0f * DEG; // toes bend up to ~45-55 deg before the foot rolls onto the tips
 	void start(const MotorInput &in);
+	void scan(const MotorInput &in, const Vector3 &dir);
+	void choose_landing(int i, Vector3 &tgt, float yaw_td);
+	float posture_extra = 0, look_down = 0;
 };
 
 } // namespace lab

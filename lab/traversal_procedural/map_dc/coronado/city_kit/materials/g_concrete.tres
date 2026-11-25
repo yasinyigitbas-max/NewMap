@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/roads/concrete034_color.jpg" id="1_3yy7l"]
+
+[resource]
+albedo_color = Color(0.74, 0.72, 0.69, 1)
+albedo_texture = ExtResource("1_3yy7l")
+roughness = 0.85
+texture_filter = 5

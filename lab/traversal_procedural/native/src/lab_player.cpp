@@ -14,6 +14,7 @@
 #include <godot_cpp/classes/physics_direct_space_state3d.hpp>
 #include <godot_cpp/classes/physics_ray_query_parameters3d.hpp>
 #include <godot_cpp/classes/time.hpp>
+#include <godot_cpp/classes/os.hpp>
 #include <godot_cpp/classes/viewport.hpp>
 #include <godot_cpp/classes/world3d.hpp>
 #include <godot_cpp/core/class_db.hpp>
@@ -125,7 +126,7 @@ void LabPlayer::_ready() {
 	}
 	if (!camera_path.is_empty()) camera = Object::cast_to<LabCamera>(get_node_or_null(camera_path));
 	motor.d = poser->dims();
-	motor.ground = [this](const Vector3 &a, const Vector3 &b) { return ray(a, b); };
+	motor.ground = [this](const Vector3 &a, const Vector3 &b, bool inside) { return ray(a, b, inside); };
 	float yaw0 = get_rotation().y;
 	set_rotation(Vector3());
 	motor.reset(get_global_position(), yaw0);
@@ -136,19 +137,22 @@ void LabPlayer::_ready() {
 void LabPlayer::teleport(const Vector3 &pos, float yaw) {
 	set_global_position(pos);
 	set_velocity(Vector3());
+	ground_f = pos.y;
+	vy = 0;
 	reset_physics_interpolation();
 	motor.reset(pos, yaw);
 	prev_t = cur_t = motor.targets();
 	if (camera) camera->snap();
 }
 
-RayHit LabPlayer::ray(const Vector3 &from, const Vector3 &to) const {
+RayHit LabPlayer::ray(const Vector3 &from, const Vector3 &to, bool from_inside) const {
 	RayHit r;
 	PhysicsDirectSpaceState3D *ss = get_world_3d()->get_direct_space_state();
 	if (!ss) return r;
 	TypedArray<RID> ex;
 	ex.push_back(get_rid());
 	Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(from, to, lab::PROBE_MASK, ex);
+	q->set_hit_from_inside(from_inside);
 	Dictionary d = ss->intersect_ray(q);
 	if (d.is_empty()) return r;
 	r.hit = true;
@@ -157,7 +161,9 @@ RayHit LabPlayer::ray(const Vector3 &from, const Vector3 &to) const {
 	return r;
 }
 
+extern bool dbg_on;
 void LabPlayer::set_scripted_input(const Vector2 &stick, bool run, bool enabled) {
+	dbg_on = OS::get_singleton()->get_environment("LABDBG") != "" && tick > 235 && tick < 260;
 	scripted = enabled;
 	script_stick = stick;
 	script_run = run;
@@ -249,6 +255,7 @@ void LabPlayer::_physics_process(double delta) {
 			speed = lerpf(3.0f, run_speed, clampf((m - 0.85f) / 0.14f, 0.0f, 1.0f));
 		}
 	}
+	speed = std::min(speed * motor.slope_mult, motor.speed_cap); // stairs, steep slopes (2.6, 2.7)
 	float cam_yaw = camera ? camera->get_yaw() : 0.0f;
 	Vector3 cf = yaw_fwd(cam_yaw), cr = -yaw_left(cam_yaw);
 	Vector3 dir = cf * stick.y + cr * stick.x;
@@ -258,10 +265,11 @@ void LabPlayer::_physics_process(double delta) {
 	Vector3 v = motor.steer(get_velocity(), vel_des, dt);
 	// floating capsule (7.4): held float_h above the ground by a ray, so small edges never touch it
 	Vector3 pos = get_global_position();
-	RayHit g = ray(pos + Vector3(0, 0.6f, 0), pos - Vector3(0, 0.6f, 0));
+	RayHit g = ray(pos + Vector3(0, 0.6f, 0), pos - Vector3(0, 0.6f, 0), false);
 	if (g.hit && pos.y - g.pos.y < 0.35f && vy <= 0.5f) {
 		grounded = true;
-		vy = clampf((g.pos.y - pos.y) * 15.0f, -6.0f, 6.0f);
+		ground_f = std::fabs(ground_f - g.pos.y) > 0.5f ? g.pos.y : approach(ground_f, g.pos.y, 0.08f, dt);
+		vy = clampf((ground_f - pos.y) * 15.0f, -6.0f, 6.0f);
 	} else {
 		grounded = false;
 		vy -= GRAV * dt;
@@ -364,6 +372,10 @@ Dictionary LabPlayer::get_metrics() const {
 	d["active"] = motor.active;
 	d["hips_y"] = cur_t.hips_pos.y - get_global_position().y;
 	d["planted_l"] = cur_t.planted[0];
+	d["edge_landings"] = motor.edge_landings;
+	d["stairs"] = motor.prof.stairs;
+	d["slope_deg"] = motor.prof.slope / DEG;
+	d["pos"] = get_global_position();
 	d["planted_r"] = cur_t.planted[1];
 	d["speed"] = flat(get_velocity()).length();
 	d["yaw"] = motor.yaw;

@@ -95,7 +95,6 @@ func ramp(name: String, deg: float, x: float, z: float, run := 6.0, w := 2.0, si
 	var length = run / cos(a)
 	var t = 0.3
 	var b = box(name, Vector3(w, t, length), Vector3(x, rise * 0.5 - t * 0.5 / cos(a), z + run * 0.5), Color(0.6, 0.62, 0.58), Vector3(-a, 0, 0))
-	box(name + "_fill", Vector3(w, max(rise - 0.05, 0.01), run * 0.5), Vector3(x, max(rise - 0.05, 0.01) * 0.5, z + run * 0.75), Color(0.5, 0.5, 0.5))
 	box(name + "_top", Vector3(w, rise, 2.0), Vector3(x, rise * 0.5, z + run + 1.0), Color(0.6, 0.62, 0.58))
 
 func fence(name: String, h: float, x: float, z: float, w := 3.0, thick := 0.05) -> void:
@@ -247,6 +246,30 @@ func _init():
 	pane.collision_layer = 8
 	label("window (layer 4), sill 0.9 m", Vector3(x, 2.8, 17))
 
+	# the real street (survey section 16): city-kit piece s_apt (15 cm kerbs, bench, bin), a porch house, a park bench
+	var street = Node3D.new()
+	street.name = "RealStreet"
+	street.position = Vector3(-60, 0, -20)
+	croot.add_child(street)
+	var piece = load("res://map_dc/coronado/city_kit/pieces/s_apt.scn").instantiate()
+	street.add_child(piece)
+	var kit = "res://assets/coronado_kit/"
+	var house = load(kit + "buildings/houses/ranch_porch/house_ranch_porch_near.glb").instantiate()
+	house.position = Vector3(-15.0, 0.15, 40.0)
+	house.rotation.y = PI * 0.5
+	street.add_child(house)
+	var hcol = col_body(kit + "buildings/houses/ranch_porch/house_ranch_porch_col.glb", "house_col")
+	hcol.position = house.position
+	hcol.rotation = house.rotation
+	street.add_child(hcol)
+	var bench = load(kit + "props/park/prop_park_bench_clean_near.glb").instantiate()
+	bench.position = Vector3(-7.5, 0.15, 30.0)
+	street.add_child(bench)
+	var bcol = col_body(kit + "props/park/prop_park_bench_col.glb", "bench_col")
+	bcol.position = bench.position
+	street.add_child(bcol)
+	label("REAL STREET: city kit s_apt (kerb 15 cm), porch house, bench", Vector3(-60, 3.0, -16))
+
 	for c in croot.get_children():
 		set_owner_rec(c, croot)
 	var ps = PackedScene.new()
@@ -255,8 +278,27 @@ func _init():
 	build_main()
 	quit()
 
+# collision from a kit *_col.glb: its shapes copied into one StaticBody3D (layer 1), without the helper mesh
+func col_body(path: String, nm: String) -> StaticBody3D:
+	var inst = load(path).instantiate()
+	var b = StaticBody3D.new()
+	b.name = nm
+	for cs in inst.find_children("*", "CollisionShape3D", true, false):
+		var n = CollisionShape3D.new()
+		n.shape = cs.shape
+		n.transform = inst.global_transform.affine_inverse() * cs.global_transform if cs.is_inside_tree() else cs.transform
+		var p = cs.get_parent()
+		while p != null and p != inst:
+			n.transform = p.transform * n.transform
+			p = p.get_parent()
+		b.add_child(n)
+	inst.free()
+	return b
+
 func set_owner_rec(n: Node, o: Node) -> void:
 	n.owner = o
+	if n.scene_file_path != "":
+		return # an instanced piece stays a reference to its file
 	for c in n.get_children():
 		set_owner_rec(c, o)
 

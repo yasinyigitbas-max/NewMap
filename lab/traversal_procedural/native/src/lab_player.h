@@ -55,6 +55,7 @@ private:
 	bool grounded = true;
 	float vy = 0;
 	float float_h = 0.25f;
+	float ground_f = 0;
 
 	// input
 	bool scripted = false;
@@ -80,7 +81,7 @@ private:
 
 	void setup_input_map();
 	Vector2 read_stick(bool &run) const;
-	lab::RayHit ray(const Vector3 &from, const Vector3 &to) const;
+	lab::RayHit ray(const Vector3 &from, const Vector3 &to, bool from_inside) const;
 	void track_response(const Vector2 &stick);
 };
 

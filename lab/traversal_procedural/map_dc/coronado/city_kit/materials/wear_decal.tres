@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://map_dc/coronado/city_kit/shaders/wear_decal.gdshader" id="1_8r0j4"]
+[ext_resource type="Texture2D" path="res://map_dc/coronado/streets/street_wear/wear_atlas.png" id="2_gyt26"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_8r0j4")
+shader_parameter/atlas = ExtResource("2_gyt26")
+shader_parameter/fade_from = 60.0
+shader_parameter/fade_to = 90.0
