@@ -41,7 +41,7 @@ Each must end with `RESULT PASS`. `--plain` after `--` runs the lab with the old
 |---|---|---|
 | 0 | the measured course (62 stations), the readout, record / replay | automatic test passes; needs Yasin's eyes once |
 | 1 | the body alone (capsule): kerbs, stairs, ramps, walls, ledges | automatic test passes; **needs Yasin's eyes** |
-| 2 | import player_v4 and three clips; one climb clip to settle upward travel | next |
+| 2-3 (first pass) | player_v4 on the body with idle, two walks, jog, run and a jump | built, seen in pictures; **needs Yasin's eyes**; no automatic test yet |
 
 ## Stage 0: what to look at
 The automatic test already measures every obstacle against its label and checks that a replay repeats exactly.
@@ -50,6 +50,24 @@ What it cannot see, and Yasin should check once by walking the course with `]`:
 2. The readout (top left) changes as you move: state, speed, height, and the green height graph.
 3. Record a short walk (F5, walk, F6), press F7 twice: the body takes the same path both times.
 
+
+## The character (first pass of Stages 2 and 3)
+Built early, out of order, because a bare capsule with no jump could not be judged (Yasin, 25 Nov).
+- `traversal/character/player_v4.scn`: Mixamo's rig of player_v4 (65 joints, full fingers), made by
+  `tools/build_character.gd` from the rigged FBX. The raw FBX and the raw clips stay in `assets_src/` (not in git).
+- `traversal/character/clips/*.res`: clips baked onto his skeleton by `tools/build_clips.gd`, a rotation per bone per
+  frame plus the hips' path. No Blender step and no root bone: the travel is taken out when the clip is sampled.
+- `traversal/character/character.gd` poses the skeleton. It only looks; the body alone decides where he is.
+- Moving: the two loops either side of the body's speed are blended at the same point of the stride, and the stride
+  advances by distance covered, so the feet keep pace with the ground. Clip speeds on him: slow walk 1.07 m/s, walk
+  1.76, jog 2.53, run 5.82.
+- Jump: a push-off first (0.30 s standing, as the study gives for the push-off of a standing jump; 0.10 s from a run,
+  the take-off time of the Running Jump clip), then the body rises 0.45 m (an average standing jump raises the body
+  0.41 to 0.50 m). The pose comes from the `Jump` clip; landings from `Falling To Landing` and `Hard Landing`.
+
+Not done yet, and known: no automatic test of foot sliding; no start, stop or turn clips (the body's speed changes
+but the legs just blend); no lean; no foot IK on stairs and slopes; no running-jump clip (missing from the download);
+he can still steer during a landing.
 
 ## Stage 1: the body alone
 `traversal/body/body.gd`. A floating capsule: the capsule covers the body from 0.32 m above the feet to the top of

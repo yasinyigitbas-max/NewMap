@@ -6,7 +6,7 @@ extends SceneTree
 ## are, and keeps the character's own stance where the clip is at rest.
 
 const ClipData := preload("res://traversal/character/clip_data.gd")
-const CHARACTER := "res://traversal/character/player_v4_standin.glb"
+const CHARACTER := "res://traversal/character/player_v4.scn"
 const SRC := "res://assets_src/clips"
 const OUT := "res://traversal/character/clips"
 const LOOPS := ["Standing_Idle", "Walking_4", "Walking", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking"]

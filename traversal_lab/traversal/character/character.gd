@@ -4,7 +4,7 @@ extends Node3D
 ## player_v4 retargeted onto it. To be replaced by Mixamo's own rigged file when it is available.
 
 const DIR := "res://traversal/character/clips/"
-const MODEL := "res://traversal/character/player_v4_standin.glb"
+const MODEL := "res://traversal/character/player_v4.scn"
 # the loops that make up moving on foot, slowest first (their speeds are read from the clips)
 const GAITS := ["Standing_Idle", "Walking_4", "Walking", "Running_3", "Running"]
 const FADE := 0.20              # seconds to blend from one kind of motion to the next
