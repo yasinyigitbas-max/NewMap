@@ -10,7 +10,7 @@ func _init():
 	cb.setup_body(load("res://body/player_v3.glb"))
 	var files := DirAccess.get_files_at(dir)
 	for f in files:
-		if not f.to_lower().ends_with(".fbx") or (filt != "" and f.find(filt) < 0): continue
+		if not (f.to_lower().ends_with(".fbx") or f.to_lower().ends_with(".glb")) or (filt != "" and f.find(filt) < 0): continue
 		var c := cb.build_clip(dir.path_join(f), {"name": f.get_basename(), "loop": false})
 		if c.is_empty(): print("FAIL ", f); continue
 		print(CB.summary(c))

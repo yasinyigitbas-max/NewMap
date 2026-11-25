@@ -81,6 +81,42 @@ Contract: `LAB_BRIEF.md` (copy of `docs/locomotion/lab/LAB_BRIEF.md`). Study: `S
 | 7.2 | One walk start (right foot first) and one walk stop (left foot plants first): the other foot's versions are mirrors. | 2.3, 2.4, 4.2 |
 | 7.3 | Starts include ~0.6 s of standing before the weight shift: the start is entered ~0.2 s before the first foot lifts, never at frame 0. | 2.3, 8.3 (responsive) |
 
+## Against study v2 (25 Nov evening; `STUDY.md` is now v2, the sections in the tables below are v1's)
+Each decision with its v2 section and whether it stands. "Breaks" decisions are listed in `STATUS.md` with their fix.
+| Decision | v2 section | Verdict |
+|---|---|---|
+| 0.1 Jolt, physics interpolation | 13.5, 14 | stands |
+| 0.2 C++ runtime | brief | stands |
+| 0.3 Mixamo never committed | 12, brief | stands |
+| 0.4 capsule authoritative, one system moves the body | 10.1 step 1 | stands, but the controller must obey Part 3 |
+| 1.1-1.6 retargeting | 1.0 (measure the runtime skeleton), 12, 13.3 | stands; the knee hinge and sole points must be captured on the body (1.1, 1.2) |
+| 2.1-2.3 clip measurement | 10.6, 10.7 | contacts must come from sole points (1.7) |
+| 3.1 capsule-led | 10.1 step 1, 3.4 | stands |
+| 3.2 speed bands | 4.1 (walk-run 2.0-2.2) | stands |
+| 3.3 rate ±20 %, then stride | 10.1 step 3, 10.6 | stands |
+| 3.4 phase-synced blends | 10.6 | stands |
+| 3.5 starts / stops by foot | 4.5, 4.6 | stands |
+| 3.6 inertialization | 10.5 | stands |
+| 3.7 turn rates 6 / 3.2 rad/s, start warp 7 rad/s | 3.3, 4.6 | **breaks** (STATUS #1, #7, #8) |
+| 3.8 layered idle | 4.6 | stands |
+| 3.9 stop ends with the second foot down | 4.6, 3.4 (`STOP_STEPS`) | stands; run stop must still have ≥ 2 contacts |
+| 3.10 speed caps | 3.4 | stands |
+| 3.11 start hand-over | 4.5 | stands |
+| 3.12 no input lock | 4.5 | stands |
+| 4.1 lean from acceleration, added to the clip's | 3.2, 10.1 step 4 | **breaks** (STATUS #2, #3) |
+| 4.2 head lead | 4.6, 2.4 | partly: head level not measured (STATUS #12) |
+| 4.3 foot IK, ankle 20° up | 10.3, 1.4, 2.1, 2.2 | **breaks** (STATUS #4, #5, #6) |
+| 4.4 forearm twist 50/50 | 6.11 | stands, unmeasured |
+| 4.5 foot lock heel → ball | 10.6, 1.7 | stands; add yaw (STATUS #7) |
+| 4.6 knee pole from the foot's yaw | 10.3 | **breaks** (STATUS #4) |
+| 4.7 pelvis drop | 10.1 step 6, 10.3 | stands |
+| 4.8 floor clamp | 1.7, 10.2 | stands; on sole points |
+| 4.9 forced foot release | 6.12 | **breaks** (STATUS #9) |
+| 4.10 accel lean only in the loop | 3.2 | replaced by one lean source |
+| 5.1-5.2 camera, controls | brief | stands |
+| 6.1-6.4 world contract | 6.12 (never on debris) | stands |
+| 7.1-7.3 clip facts | 4.1, 4.3 | stands |
+
 ## Conflicts with the study
 - **Walk stop takes ~1.6 s, the study says 1-2 steps.** The only walk stop clip (Mixamo "Stop Walking") makes a slow second
   step (0.9 s). Not faked; a crisp stop is in `CLIPS_WANTED.md`.

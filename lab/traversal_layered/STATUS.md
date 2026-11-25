@@ -1,4 +1,53 @@
-# Lab B (layered, GTA-style): status after step 4
+# Lab B (layered, GTA-style): status
+
+## 25 Nov, evening: Yasin judged the step 4 build terrible. Checked against study v2. Work stopped.
+
+Yasin saw a knee bent backward, an ankle rolled onto its side and a ~70° lean while running. My report said "backward
+knees 0, joints out 0". Both were true of my checks and false of the picture: my checks could not fail. `STUDY.md` is now
+version 2 (commit 542668d28 on `claude/festive-faraday-20ltx2`). Below, every problem I found by reading my own code
+against it, the v2 section it breaks, and how I would fix it. **Nothing is fixed yet: waiting for Yasin's word.**
+
+### What caused what Yasin saw
+| # | Problem in my build | Breaks (v2) | Fix I'd make |
+|---|---|---|---|
+| 1 | **Run turn rate 3.2 rad/s** (183°/s) at 4.6 m/s: a 1.44 m radius, needs a 56° lean. My code comment said "~3 m, 35°": wrong arithmetic. Walking turns at 6 rad/s (344°/s), far more than a step turn. | 3.3 (`TURN_RATE`), 0.1 rule 7, 8 #11 | Controller turn rate from the 20° lean column: ω = g·tan20°/v (0.77 rad/s at 4.6, 1.2 at 3.0), 30° only for 1-2 steps of a cut. Sharper changes become cuts on a foot plant (≤ 20-25° per plant at 4.6 m/s), 45-90° slows first, 135-180° brakes under 1.5 m/s then pivots. Walking: 30-60° per step, by step turns. |
+| 2 | **Lean stacks from four sources**: the clip's own lean, my side lean (up to 34°), my forward lean (up to 20°) and the turn itself; nothing measured the drawn body. The side lean came from the impossible turn rate of #1, so it sat at its cap. | 3.2 (`LEAN_MAX`, `TRUNK_LEAN`, `TRUNK_BEND`), 10.1 step 4 (one source), 10.2, 8 #11-13 | One lean source: measure the clip's own lean at its speed and add only the difference needed for the CoM acceleration (atan(a/g)); a final limiter on the trunk lean; the validator measures CoP→CoM and pelvis→neck on the final pose. |
+| 3 | **My lean tilts the hips about a point under them, then IK puts the feet back where the unleaned clip had them**: the legs absorb the tilt by bending sideways and twisting. With #1 this is where the backward knee and the rolled ankle come from. | 3.2, 10.1 (order), 8 #13 | Lean the whole body about the support point (the CoP), feet included, before foot IK; never tilt only the pelvis. |
+| 4 | **Knee pole from the foot's yaw** (clamped ±40° of the body's forward), placed in front of the *clip's* knee in skeleton space, not the pelvis frame. It ignores the hip rotation the clip asked for, and it doesn't follow a tilted pelvis. | 10.3, 1.2 ("never derive the hinge from the foot"), 8 #1 | Pole from the pelvis forward, turned by the clip's own hip rotation (±15°), the foot allowed ≤ 15° more and only in contact; hysteresis near the hip→ankle line. |
+| 5 | **Ankle limited on one axis only** (dorsiflexion, and with v1's wrong 20°). Roll (inversion / eversion) and twist were never limited or measured. The foot keeps the clip's orientation in skeleton space while the shin is leaned sideways, so the ankle rolls by the lean angle (34°+). | 1.4, 2.1 (`ANKLE_INVERSION/EVERSION`, `FOOT_TWIST`, `SOLE_ROLL`), 2.2 (knee-coupled 25-40°), 8 #4 | Foot against the shin limited on all three axes with v2's numbers; sole against the ground from heel and ball rays; heel lifts about the ball when the limit is reached. |
+| 6 | **Soft IK starts at 97 % of reach** (a 28° knee already) | 10.3 (leave alone to 99 %, ease to 99.9 %) | Change the curve; pelvis drop or foot lift beyond. |
+
+### Other places my build breaks v2
+| # | Problem | Breaks (v2) | Fix I'd make |
+|---|---|---|---|
+| 7 | **Feet spin flat**: when the capsule turns (loop turns, the 7 rad/s start warp, pivots) a locked foot keeps its position but turns with the body. | 4.6 (`FOOT_SPIN` 5°), 8 #10 | Lock the foot's yaw too; turn by steps, pivot only on the ball with the heel up. |
+| 8 | **Run reversal pivots straight from 4.2 m/s**, no braking first. | 3.3, 4.6 (brake under 1.5 m/s, plant, pivot), 8 #28 | Brake over 1-2 steps (lean back), then the pivot clip. |
+| 9 | **Forced foot release** (lifts a "planted" foot that is out of reach, no weight shift). | 6.12, 4.5, 8 #8 | Keep the leg reachable (controller and stride warping), not lift. |
+| 10 | **Slides 3-15 cm** (limit 1 cm, target 0.5), measured on bone origins, not on sole points. | 1.7, 7, 6.12 (`FOOT_SLIDE`) | Sole points; fix the speed and phase matching first. |
+| 11 | **No final limiter**, no validator in the modifier stack. | 9.1, 10.2 | A validator modifier last, a limiter before it, both from one measuring function. |
+| 12 | Head levelled only by half, roll not measured; head turn up to 69° with the chest still. | 2.4 (`HEAD_LEVEL`), 2.2 (eyes / chest) | Measure; head roll ≤ half the trunk lean. |
+| 13 | Spine, hip, shoulder, elbow, wrist and fingers never measured. | 2.1 | The validator measures every row of 2.1. |
+
+### Why my checks passed a broken pose
+- The knee was the **unsigned** angle between thigh and shin, plus a "knee behind the hip-ankle line along the body's
+  facing" test with my own thresholds (flex > 8°, 2 cm). Nothing measured hip rotation, varus or twist, so a thigh
+  twisted round, or a leg tilted by the lean, read as normal (v2 1.3, 1.5).
+- No ankle roll, twist or sole check at all (1.4).
+- "Hips pop" allowed 2 cm/frame (72 m/s²); v2 3.6 allows ~9 m/s² horizontal.
+- No lean, CoM or trunk measurement (1.6, 3.2).
+- Not one check was ever fed a broken pose (9.2 mutation tests), and only 14 scripted moves ran (9.3 fuzzer).
+- The camera in my screenshots was static and side-on, and I looked at straight runs, not hard turns. The worst case
+  (turning at a run) was never rendered.
+
+### How I'd rebuild, in v2's order (9.6, 10.1), if Yasin says go
+1. The validator first (9.1), with the mutation tests of 9.2, all of them made to fail on purpose.
+2. Then the controller (#1, #8), then one lean source (#2, #3), then the knee pole and the ankle (#4, #5, #6), then the
+   foot yaw (#7), then the limiter (#11).
+3. The fuzzer (9.3), and contact sheets beside reference footage (9.4), before Yasin plays it again.
+
+---
+
+## Earlier: status after step 4 (superseded by the v2 check above)
 
 25 Nov 2026. Branch `lab/layered`, folder `lab/traversal_layered/`. **Step 4 is ready to play.** I stopped here, as the
 brief says.

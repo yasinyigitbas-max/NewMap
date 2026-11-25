@@ -75,14 +75,38 @@ class Src:
 	var pos_tr: PackedInt32Array
 	var rot_tr: PackedInt32Array
 
+# NVIDIA Kimodo (SOMA 77-joint skeleton) -> Mixamo names, so both sources go through the same retargeter.
+# SOMA fingers have a metacarpal joint first (Index1): its Index2-4 are Mixamo's Index1-3.
+const SOMA_TO_MIXAMO := {
+	"Spine1": "Spine", "Spine2": "Spine1", "Chest": "Spine2", "Neck1": "Neck",
+	"LeftLeg": "LeftUpLeg", "LeftShin": "LeftLeg", "LeftToeEnd": "LeftToe_End",
+	"RightLeg": "RightUpLeg", "RightShin": "RightLeg", "RightToeEnd": "RightToe_End",
+}
+
 func _strip(n: String) -> String:
 	var i := n.find("_")
 	if n.begins_with("mixamorig") and i > 0: return n.substr(i + 1)
 	return n
 
+static func _soma_name(n: String) -> String:
+	if SOMA_TO_MIXAMO.has(n): return SOMA_TO_MIXAMO[n]
+	for side in ["Left", "Right"]:
+		for f in ["Index", "Middle", "Ring", "Pinky"]:
+			var b: String = side + "Hand" + f
+			if n.begins_with(b) and n.length() == b.length() + 1:
+				var k := int(n.substr(b.length()))
+				return b + str(k - 1) if k >= 2 else b + "_meta"
+	return n
+
 func load_src(path: String) -> Src:
-	var doc := FBXDocument.new()
-	var st := FBXState.new()
+	var doc: GLTFDocument
+	var st: GLTFState
+	if path.get_extension().to_lower() == "glb":
+		# Kimodo: joint nodes without a skin; read them as a skeleton
+		doc = GLTFDocument.new(); st = GLTFState.new()
+		st.import_as_skeleton_bones = true
+	else:
+		doc = FBXDocument.new(); st = FBXState.new()
 	if doc.append_from_file(path, st) != OK: return null
 	var root: Node = doc.generate_scene(st)
 	if root == null: return null
@@ -107,6 +131,7 @@ func load_src(path: String) -> Src:
 	s.names.resize(n); s.parent.resize(n); s.pos_tr.resize(n); s.rot_tr.resize(n)
 	for i in n:
 		s.names[i] = _strip(s.skel.get_bone_name(i))
+		if s.skel.find_bone("LeftShin") >= 0: s.names[i] = _soma_name(s.names[i])
 		s.parent[i] = s.skel.get_bone_parent(i)
 		s.rest.append(s.skel.get_bone_rest(i))
 		var p := NodePath(str(root.get_path_to(s.skel)) + ":" + s.skel.get_bone_name(i))
@@ -174,7 +199,12 @@ func setup_reference(s: Src) -> void:
 		ls += sr[side + "UpLeg"].origin.distance_to(sr[side + "Leg"].origin) + sr[side + "Leg"].origin.distance_to(sr[side + "Foot"].origin)
 	leg_k = lt / ls
 	var at: float = (rest_global_m[bone_idx("LeftFoot")].origin.y + rest_global_m[bone_idx("RightFoot")].origin.y) * 0.5
-	var as_: float = (sr["LeftFoot"].origin.y + sr["RightFoot"].origin.y) * 0.5
+	# the clip's ankle height above its own floor (Kimodo's rest has the hips at 0, Mixamo's the toes at 0)
+	var floor_y := INF
+	for nm in ["LeftToeBase", "RightToeBase", "LeftToe_End", "RightToe_End"]:
+		if sr.has(nm): floor_y = min(floor_y, sr[nm].origin.y)
+	if floor_y == INF: floor_y = 0.0
+	var as_: float = (sr["LeftFoot"].origin.y + sr["RightFoot"].origin.y) * 0.5 - floor_y
 	ankle_c = at - leg_k * as_
 	var h := bone_idx("Hips")
 	var mid := (rest_global_m[bone_idx("LeftUpLeg")].origin + rest_global_m[bone_idx("RightUpLeg")].origin) * 0.5
