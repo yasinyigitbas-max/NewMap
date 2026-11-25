@@ -6,7 +6,8 @@ references (Perry's gait analysis, AAOS joint ranges, stair and parkour studies)
 by about ±15 %.
 
 Part 1 is the body. Part 2 is everyday walking and running. Part 3 is the city's obstacles, by height. Part 4 is why
-animation usually looks wrong, and the techniques that fix it.
+animation usually looks wrong, and the techniques that fix it. Parts 5-8 (added the same day) are the tools and the
+references: Mixamo files, Godot's skeleton system, Jolt physics, and how Rockstar's GTA IV / V and RDR 1 / 2 do it.
 
 ---
 
@@ -421,3 +422,314 @@ A climb clip was recorded on one wall of one height. Fitting it to a different w
 | headroom < 1.3 m | ray up | crouch |
 | wall 0.8-1.2 m beside, crouched | | low cover |
 | door within 1.5 m ahead | | slow, reach, push through / pull and step round |
+
+---
+
+## Part 5 - Mixamo files
+
+Mixamo (Adobe, free) auto-rigs an uploaded mesh and retargets a library of mocap clips onto it. Its skeleton has
+become a de-facto standard: thousands of clips and asset-store characters use it.
+
+### 5.1 The skeleton
+
+About 65 bones with the fingers, **no root bone: `Hips` is the top**. Names carry a prefix: `mixamorig:` normally,
+`mixamorig1:`, `mixamorig2:` ... when the same account rigged several characters (a common cause of "the clip does not
+play on my character": the prefix differs). Godot cannot keep `:` in a bone path, so on import the names appear as
+`mixamorig_Hips` etc.
+
+```
+Hips
+├─ Spine ─ Spine1 ─ Spine2
+│                     ├─ Neck ─ Head ─ HeadTop_End          (LeftEye / RightEye on some characters)
+│                     ├─ LeftShoulder ─ LeftArm ─ LeftForeArm ─ LeftHand
+│                     │      └─ LeftHandThumb1-4, LeftHandIndex1-4, LeftHandMiddle1-4, LeftHandRing1-4, LeftHandPinky1-4
+│                     └─ RightShoulder ─ ... (mirror)
+├─ LeftUpLeg ─ LeftLeg ─ LeftFoot ─ LeftToeBase ─ LeftToe_End
+└─ RightUpLeg ─ ... (mirror)
+```
+
+Things it does **not** have: twist bones (forearm, upper arm, thigh), IK helper bones (hand / foot IK targets, a
+ground-level root), a jaw, prop bones. The forearm twist (1.2 rule 1) has to be made by the engine (Godot 4.6
+`BoneTwistDisperser3D`, 6.4) or by careful skin weights.
+
+### 5.2 The files
+
+- **FBX**, binary, **1 unit = 1 cm** (the file carries a 0.01 scale). After import check that the hips are at ~1 m,
+  not 100 m, and that the scale was applied to position tracks too.
+- **Rest pose: T-pose** (arms straight out sideways). Y is up, the character faces +Z. Each bone's local Y points
+  along the bone toward its child.
+- Download options: **With Skin** (mesh + skeleton + clip) or **Without Skin** (skeleton + clip only: use it for
+  every clip after the first); **Frames per second** (24 / 30 / 60; 30 by default); **Keyframe reduction** (none /
+  uniform / non-uniform: use none, reduction causes foot slide); **In Place** (for moving clips: removes the hips'
+  horizontal travel, keeps the bob).
+- Per-clip sliders on the site: **Character Arm-Space** (pushes the arms away from the body so they do not go through
+  a bulky mesh), **Overdrive** (speed), **Trim**, **Mirror**, and clip-specific ones (stride, height, energy).
+
+### 5.3 Root motion and Mixamo
+
+Because there is no root bone, **the travel is on `Hips`**. For root motion you make a root yourself:
+1. Export **without In Place**.
+2. Add a `Root` bone on the ground under the hips (in Blender; Godot's humanoid profile has a `Root`).
+3. Move each frame's horizontal hips travel and heading (yaw) to `Root`; leave the hips' up-down bob, tilt and sway on
+   `Hips`.
+
+In Place clips have no travel, so the game must guess the speed: that is where foot slide comes from. With In Place,
+measure the clip's real speed (a planted foot's travel per cycle) and store it with the clip.
+
+### 5.4 Known quirks
+
+- Mocap clips are cleaned, but many still **slide slightly**, and many have **feet a few cm into or above the floor**
+  (the auto-rig places the ankle by guesswork). Foot IK and foot lock (FootPlant) cover this.
+- The auto-rig guesses the knees, elbows and chin from the mesh; on stylised meshes the knees can point a little in.
+- Retargeting between different proportions changes the stride: a walk put on shorter legs takes the same steps with
+  shorter legs and slides. Root motion must be **scaled by the leg-length ratio** (Godot's "Normalize Position
+  Tracks", 6.3).
+- Many clips start and end on different feet or poses and do not loop cleanly: check the loop seam.
+
+### 5.5 The names side by side (Mixamo, Godot's humanoid profile, 3ds Max Biped)
+
+The player's figure uses **3ds Max Biped** names (`Bip01_*`, as in `native/src/hand_grip.cpp`). The three standards:
+
+| Mixamo | Godot `SkeletonProfileHumanoid` | 3ds Max Biped |
+|---|---|---|
+| (none) | `Root` | `Bip01` (the root, on the ground) |
+| `Hips` | `Hips` | `Bip01_Pelvis` |
+| `Spine`, `Spine1`, `Spine2` | `Spine`, `Chest`, `UpperChest` | `Bip01_Spine`, `Bip01_Spine1`, `Bip01_Spine2` |
+| `Neck`, `Head` | `Neck`, `Head` | `Bip01_Neck`, `Bip01_Head` |
+| `LeftShoulder` | `LeftShoulder` | `Bip01_L_Clavicle` |
+| `LeftArm` | `LeftUpperArm` | `Bip01_L_UpperArm` |
+| `LeftForeArm` | `LeftLowerArm` | `Bip01_L_Forearm` |
+| `LeftHand` | `LeftHand` | `Bip01_L_Hand` |
+| `LeftHandThumb1-3` | `LeftThumbMetacarpal`, `-Proximal`, `-Distal` | `Bip01_L_Finger0`, `Finger01`, `Finger02` |
+| `LeftHandIndex1-3` | `LeftIndexProximal`, `-Intermediate`, `-Distal` | `Bip01_L_Finger1`, `Finger11`, `Finger12` |
+| `LeftHandMiddle1-3` | `LeftMiddleProximal` ... | `Bip01_L_Finger2`, `Finger21`, `Finger22` |
+| `LeftHandRing1-3` / `LeftHandPinky1-3` | `LeftRing...` / `LeftLittle...` | `Finger3x` / `Finger4x` |
+| `LeftUpLeg` | `LeftUpperLeg` | `Bip01_L_Thigh` |
+| `LeftLeg` | `LeftLowerLeg` | `Bip01_L_Calf` |
+| `LeftFoot` | `LeftFoot` | `Bip01_L_Foot` |
+| `LeftToeBase` | `LeftToes` | `Bip01_L_Toe0` |
+
+Two Biped traps: in a default Biped the **clavicles hang from the neck**, and the **thighs hang from the first spine
+bone, not the pelvis**. Rotating `Bip01_Pelvis` then does not carry the legs, and code written for Mixamo (legs under
+the hips) moves the wrong bones. Check the player's hierarchy before writing any pelvis tilt or hips IK.
+
+---
+
+## Part 6 - Godot's skeleton system (4.4-4.6)
+
+### 6.1 The pieces
+
+| Node / resource | What it is |
+|---|---|
+| `Skeleton3D` | the bones: each has a **rest** (bind pose) and a **pose** (position, rotation, scale, local to its parent). `get_bone_pose*` is local; `get_bone_global_pose` is in the skeleton's space (times the node's `global_transform` for world). |
+| `Skin` / `MeshInstance3D.skin` | binds the mesh to the bones |
+| `BoneAttachment3D` | a node that follows (or drives) one bone: a prop in the hand, a camera on the head |
+| `AnimationMixer` (base of `AnimationPlayer`, `AnimationTree`) | plays clips onto the skeleton |
+| `AnimationTree` | the blend graph: `AnimationNodeStateMachine`, `BlendSpace1D` / `2D`, `BlendTree` with `OneShot`, `Transition`, `TimeScale`, `TimeSeek`, `Add2`, `Blend2` |
+| `SkeletonModifier3D` (4.4+) | a child of `Skeleton3D` that changes the pose **after the animation**: IK, look-at, springs, constraints, ragdoll. The player's `HandGrip` and `FootPlant` are these. |
+| `PhysicalBoneSimulator3D` + `PhysicalBone3D` | ragdoll: bones driven by physics bodies, blended by `influence` |
+
+### 6.2 One frame, in order
+
+1. The `AnimationMixer` advances and writes the clips' blended pose. Its `callback_mode_process` is **physics, idle or
+   manual**. For a `CharacterBody3D` moved in `_physics_process`, use physics (or manual, calling `advance(delta)` right
+   after moving the body) so the clip and the body move on the same tick.
+2. **Root motion**: with the mixer's `root_motion_track` set (e.g. `%GeneralSkeleton:Root`), that bone's movement is
+   **not** applied to the bone; it is handed over each tick (`get_root_motion_position()`,
+   `get_root_motion_rotation()`, and accumulators). You move the body by it (velocity = the rotated root delta / delta,
+   then `move_and_slide()`). Blended clips blend their root motion too.
+3. The skeleton's **modifiers** run one after another (in their order as children; each sees the pose the one before
+   left), each blended in by its `influence`. A modifier overrides `_process_modification_with_delta(delta)` and
+   applies its full result (the skeleton applies the influence; `delta` may be 0 just after init). The signal
+   `modification_processed` fires when one finishes: the moment to read the final pose.
+4. Skinning: the mesh is drawn.
+
+So a sensible modifier order for the player: foot plant / pelvis (legs and hips) → hand grip (arms; needs the hips
+final) → look-at (head; needs the chest final) → twist disperser and angular-velocity limit last.
+
+### 6.3 Importing and retargeting
+
+- Import dock, **Retarget > Bone Map**: create a `BoneMap` with `SkeletonProfileHumanoid`. Godot auto-maps common English
+  bone names (Mixamo maps by itself; Biped mostly, check the fingers and clavicles).
+- **Rename Bones** renames the skeleton to the profile's names (`Hips`, `LeftUpperLeg` ...). After that, **every clip
+  imported the same way plays on every character imported the same way**.
+- **Rest Fixer** makes the rests match Godot's reference: T-pose, facing +Z, Y up, +Y from a joint to its child, +X
+  rotation bends like the muscle contracting.
+  - **Overwrite Axis**: rewrites every bone's axes to that convention. The page calls it the most important option for
+    sharing clips; it breaks anything that relied on the original rest (bone rotations written in code).
+  - **Fix Silhouette**: turns an A-pose model into a T-pose rest (a filter for bones to leave; a height adjustment for
+    bent knees).
+  - **Normalize Position Tracks**: divides position tracks by the hips' height (`motion_scale`), so root motion fits a
+    taller or shorter body.
+  - **Remove Tracks**: drop position tracks of unimportant bones (mocap has noisy position keys on every bone, which
+    stretch limbs on another body); `Root` and `Hips` are kept.
+- At runtime (4.4+) `RetargetModifier3D` lets one animated skeleton drive differently shaped bodies.
+
+### 6.4 The modifier family (Godot's "Inverse kinematics returns to Godot 4.6" article and class reference)
+
+| Version | Modifier | Use for the player |
+|---|---|---|
+| 4.4 | `LookAtModifier3D` | head and eyes leading turns; looking at an edge or a person |
+| 4.4 | `RetargetModifier3D` | one clip skeleton for many bodies |
+| 4.5 | `SpringBoneSimulator3D` | hair, jacket, bag straps: secondary motion |
+| 4.5 | `BoneConstraint3D`: `AimModifier3D`, `CopyTransformModifier3D`, `ConvertTransformModifier3D` | e.g. a twist bone taking part of the hand's roll; in 4.6 it can target any `Node3D` |
+| 4.5 | `ModifierBoneTarget3D` | a node that sits on a bone after modification |
+| 4.6 | `TwoBoneIK3D` | legs and arms (always deterministic) |
+| 4.6 | `ChainIK3D` > `SplineIK3D` (deterministic); `IterateIK3D` > `FABRIK3D`, `CCDIK3D`, `JacobianIK3D` | spines, fingers round a pipe |
+| 4.6 | `BoneTwistDisperser3D` | spreads a child's twist up its parents: the forearm twist (1.2 rule 1) |
+| 4.6 | `LimitAngularVelocityModifier3D` | caps how fast bones may turn: removes IK pops |
+
+`SkeletonIK3D` (the old node) still exists, deprecated. `IterateIK3D` can carry its state between frames (smooth, but
+the pose depends on history) or be deterministic (same input, same pose; with few iterations it may not reach). The
+article suggests the angular-velocity limit to calm the jumps deterministic IK can make. The player's IK is hand-written
+C++ (`HandGrip::reach`, a two-bone reach), which is fine; the 4.6 nodes are the drop-in alternative.
+
+### 6.5 Other Godot pieces that matter for traversal
+
+- **Animation markers** (4.4+): named times inside a clip. Use them for foot contacts (`L_down`, `R_down`), hand
+  contacts (`hand_on_edge`) and warp windows (4.3).
+- **BlendSpace `sync`**: keeps the clips of a blend space running at zero weight so they stay in step. It syncs by
+  time, so the clips need **the same length and the same foot timing** (cut walk and run to one stride each, left foot
+  down at 0).
+- **Physics interpolation** (3D since 4.4): if physics ticks at 60 Hz and the screen draws at another rate, a body
+  moved in physics and a figure posed in idle shake against each other. `project.godot` does not set it.
+
+---
+
+## Part 7 - Jolt physics
+
+### 7.1 What it is
+
+Jolt (by Jorrit Rouwe, open source; used in Horizon Forbidden West and Death Stranding 2) is a multi-core rigid-body
+engine. Godot added it in 4.4 and made it the **default for new projects in 4.6**; existing projects keep their setting.
+
+**This project:** `project.godot` sets only `3d/physics_engine.android="Jolt Physics"`. **The phone runs Jolt; the PC
+runs the default engine (Godot Physics).** Every climb, kerb and step tested on the PC runs on a different collision
+engine from the phone. Margins and contact normals differ (7.3), so a threshold tuned on the PC can behave differently
+on the Redmi.
+
+### 7.2 How it works (the parts that matter to a character)
+
+- **Broad phase**: a tree of bounding boxes in layers (Godot maps its collision layers and masks onto it).
+- **Narrow phase**: GJK / EPA on **convex shapes with a convex radius**: boxes and cylinders are slightly rounded.
+- **Solver**: sequential impulses with position correction (the Baumgarte factor); bodies that stop fall asleep in
+  islands.
+- **Triangle meshes** (`ConcavePolygonShape3D`: the city's ground and buildings): a moving shape can catch on the inner
+  edge between two triangles ("ghost collisions"). Jolt has active-edge detection and an enhanced internal-edge removal
+  against it (7.3).
+- Jolt has its own character controllers, `Character` (a rigid body) and `CharacterVirtual` (a kinematic shape with
+  built-in stair walking and stick-to-floor). **Godot does not use them**: `CharacterBody3D` is Godot's own
+  `move_and_slide()` on shape casts. So in Godot **no engine walks stairs for you**: kerbs and steps are the game's job
+  (as CityPlayer does).
+
+### 7.3 Differences from Godot Physics that touch the player (Godot 4.6 "Using Jolt Physics")
+
+- **Collision margins**: Jolt shrinks the shape by the margin, then adds it back as a rounded shell: the size stays,
+  **the corners round off**. The margin is `Collision Margin Fraction` × the shape's smallest side, capped by the
+  shape's `margin`. The page warns margins can give odd normals in shape queries: a body touching a kerb's corner can
+  get a tilted normal.
+- **Ghost collisions**: `Collisions > Active Edge Threshold` and `Simulation > Use Enhanced Internal Edge Removal` (and
+  the same for queries and motion queries). They do not help between two separate bodies (a kerb mesh meeting a road
+  mesh).
+- **Ray casts**: `face_index` is always -1 unless `Queries > Enable Ray Cast Face Index` is on (about 25 % more memory
+  on triangle meshes). It matters if footstep sounds or surfaces are looked up by face.
+- **Kinematic bodies** do not touch static or other kinematic bodies unless `Simulation > Generate All Kinematic
+  Contacts` is on.
+- **Contact impulses** are estimates (exact only when the two bodies touch nothing else): do not judge how hard a hit
+  was from them.
+- `Area3D` does not see static bodies by default (`simulation/areas_detect_static_bodies`).
+- Physics on its own thread (`Run On Separate Thread`) is marked experimental; the phone rig uses it.
+
+### 7.4 The capsule and the kerb (geometry, any engine)
+
+`move_and_slide()` takes a contact as floor if its normal is within `floor_max_angle` (45° by default) of up. A capsule
+of radius r touching the top edge of a step of height h gets a normal tilted by acos((r − h) / r):
+
+| capsule radius | step 5 cm | step 10 cm | step 15 cm |
+|---|---|---|---|
+| 0.25 m | 37° (floor: rides up) | 53° (wall) | 66° (wall) |
+| 0.30 m | 34° (floor) | 48° (wall) | 60° (wall) |
+| 0.35 m | 31° (floor) | 44° (floor: rides up) | 55° (wall) |
+
+A 0.3 m capsule rides over edges up to about 9 cm by itself (with a bump as it rolls over the edge) and stops at a
+real kerb. So the step-up has to be the game's own (done), and it should decide alone: lift the body by the measured
+height, and keep the capsule's bottom off small edges. The common pattern is a "floating capsule": the capsule held a
+step-height above the ground by a ray or shape cast, so small edges never touch it. Other `CharacterBody3D` settings
+that matter: `floor_snap_length` (stays on the ground going down kerbs and slopes), `floor_constant_speed` (same speed
+up and down a slope), `floor_stop_on_slope`, `floor_block_on_wall`, `safe_margin` (0.001), `max_slides` (6).
+
+---
+
+## Part 8 - How Rockstar does it (GTA IV / V, RDR 1 / 2)
+
+Sources: Rockstar's interviews about Euphoria, the GDC listing of Mike Jones's talk "Filling Marston's Boots: Player
+Locomotion in Red Dead Redemption 2" (I found no slides or recording), what the games show, and what their modding
+scene knows. Rockstar has published little about its animation internals; points marked *observed* come from watching
+the games, not from Rockstar.
+
+### 8.1 The technology
+
+- **RAGE** (Rockstar Advanced Game Engine) runs all four games.
+- **Euphoria** (NaturalMotion): an "active ragdoll". The body is simulated as physics, and small controllers drive its
+  muscles: balance, a step to catch itself, arms out when falling, grabbing onto things, protecting the head. It is
+  blended with ordinary animation: a person walks on clips, is hit, Euphoria takes the body, a get-up clip takes it
+  back. GTA IV (2008) was its first big use; then RDR, GTA V, and RDR2, where Rockstar said it had "really evolved" it,
+  for people and animals.
+- **Animation data** (*from modding*): clips sit in "animation dictionaries"; walking styles are **clipsets** swapped
+  per person (`move_m@drunk@...`, `move_m@brave`, `move_f@...`), so one locomotion system plays many personalities;
+  blending runs in node networks ("MoVE" networks) that scripts drive.
+
+### 8.2 GTA IV (2008) and RDR (2010): weight first
+
+- *Observed:* heavy momentum: starts and stops take steps, turns at a run plant and pivot, the body leans into curves.
+  Weighty, sometimes sluggish.
+- Euphoria everywhere: stumbling down stairs when pushed, grabbing a car when hit, staggering when shot, drunk walking.
+- Rockstar's first **cover system** (IV): a button snaps to cover; blind fire; peek over or round; move along it.
+- *Observed:* climbing from one jump button: near a ledge it becomes a grab and pull-up, chosen by height. Ladders are
+  their own mode. Low fences are climbed rather than vaulted at speed.
+
+### 8.3 GTA V (2013): control first
+
+- *Observed:* less momentum than IV: quicker starts, tighter turns, sprint by tapping; Euphoria toned down. A
+  deliberate swap of realism for control.
+- *Observed:* context traversal from the jump button: a low obstacle is vaulted, a mid one climbed, a high one jumped
+  at and climbed if reachable, chosen by the measured height (the same idea as CityPlayer's height bands).
+- Jumping down: a landing stumble or roll from medium heights; above that a Euphoria fall.
+- A crouched stealth walk with its own clipset; per-character walking styles (Michael, Franklin, Trevor) by clipset.
+
+### 8.4 RDR2 (2018): realism first
+
+- *Observed:* Arthur's movement is **animation-led**: a step finishes before he turns, starts and stops pick the foot,
+  a 180° turn is a real pivot. Many players called it sluggish; that is the price of the weight.
+- Speed from the stick's lean plus tapping to run; a forced slow walk in camp; gaits change with terrain, and deep snow
+  and mud slow him and lift his knees.
+- *Observed:* feet and hips fitted to the ground everywhere (slopes, rocks, stairs) and **hands touching the world**
+  (pushing doors open while walking through, a hand on a horse).
+- People turn their heads to look at the player and at events.
+- Climbing is contextual (fences, rocks, wagon beds, onto horses); fence vaults with a hand on the rail; no free
+  climbing on walls.
+- Bumping in crowds is physical: people shoulder each other and react.
+
+### 8.5 What Coronado can take from them
+
+1. **Choose the feel on purpose**: GTA V's responsive or RDR2's weighty. A touch-controlled phone game leans GTA V:
+   commit to an animation only where it reads (a pivot, a climb) and keep starts and stops short (0.2-0.4 s).
+2. **One button, chosen by height** (all four games): what CityPlayer already does. Add the vault / climb-over split by
+   speed and the obstacle's depth (3.2).
+3. **Walking styles as data** (clipsets): a set of clips per personality, swapped per person, for the crowd and for the
+   player's states (tired, drunk, hurt).
+4. **Physics balance under clips** (Euphoria): the crowd's ped_body already catches shoves with steps (F6); the same
+   idea for the player on bumps and landings.
+5. **Hands and eyes on the world**: look-at, a hand on doors and walls, pinned grips; the details people remember.
+
+### Sources (parts 5-8)
+
+- [Inverse kinematics returns to Godot 4.6](https://godotengine.org/article/inverse-kinematics-returns-to-godot-4-6/)
+- [SkeletonModifier3D class reference (4.6)](https://docs.godotengine.org/en/4.6/classes/class_skeletonmodifier3d.html)
+- [Retargeting 3D skeletons (4.6)](https://docs.godotengine.org/en/4.6/tutorials/assets_pipeline/retargeting_3d_skeletons.html)
+- [Using Jolt Physics (4.6)](https://docs.godotengine.org/en/4.6/tutorials/physics/using_jolt_physics.html)
+- [Godot 4.6 release notes](https://godotengine.org/releases/4.6/)
+- [GDC: Learn the secrets of Red Dead Redemption 2's player locomotion](https://gdconf.com/news/learn-secrets-red-dead-redemption-2s-player-locomotion-gdc)
+- [Rockstar on Euphoria in RDR2 (wccftech)](https://wccftech.com/rockstar-euphoria-evolved-rdr2/)
+- [Euphoria (software), Wikipedia](https://en.wikipedia.org/wiki/Euphoria_(software))
+- [Mixamo bone naming (mocaponline guide)](https://mocaponline.com/blogs/mocap-news/skeleton-hierarchy-animation-guide)
