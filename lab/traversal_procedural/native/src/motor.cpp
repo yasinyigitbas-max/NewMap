@@ -2,8 +2,6 @@
 #include "motor.h"
 
 #include <algorithm>
-bool dbg_on = false;
-#include <godot_cpp/variant/utility_functions.hpp>
 
 namespace lab {
 
@@ -197,14 +195,15 @@ void Motor::choose_landing(int i, Vector3 &tgt, float yaw_td) {
 	float x_o = P.x_of(foot[1 - i].plant);
 	float L = std::max(0.2f, x_nom - x_o);
 	float hz = d.heel[i].z, bz = d.ball[i].z, tz = d.ball[i].z + d.toe_len[i];
-	float span = std::max(0.06f, 0.25f * L);
+	float span = std::max(0.06f, (P.stairs ? 0.45f : 0.25f) * L); // on stairs the step follows the tread
 	float best = 1e9f, best_x = x_nom;
 	for (float x = x_nom - span; x <= x_nom + span + 1e-4f; x += 0.01f) {
 		// the whole sole on one level; below a drop the heel lands well past the edge so the leg reaches down
 		// during the swing (2.8, 3.3), and the toes stay 3 cm off a riser ahead
 		bool full = P.clear(x + hz - 0.03f, x + tz + 0.03f);
-		// on stairs the heel or toes may hang over a LOWER level, never into a higher one (a riser, a kerb face)
-		bool part = P.clear(x - 0.03f, x + bz + 0.03f) && P.max_h(x + hz - 0.01f, x + tz + 0.02f) <= P.h_at(x) + 0.01f;
+		// stairs (2.7): the ball carries the foot; the heel or toes may hang over a LOWER level, never into a higher
+		// one (a riser, a kerb face)
+		bool part = P.clear(x + bz - 0.06f, x + bz + 0.03f) && P.max_h(x + hz - 0.01f, x + tz + 0.02f) <= P.h_at(x + bz) + 0.01f;
 		bool drop_ok = true;
 		for (int e = 0; e < P.n_edges; e++) {
 			float r = P.edge_rise[e];
@@ -216,6 +215,14 @@ void Motor::choose_landing(int i, Vector3 &tgt, float yaw_td) {
 		bool next_ok = P.clear(xn - 0.03f, xn + bz + 0.03f) || xn > Profile::X0 + Profile::DX * P.n;
 		float sc = std::fabs(x - x_nom) + (full ? 0.0f : 0.06f) + (next_ok ? 0.0f : 0.03f);
 		if (F.has_choice) sc += 0.3f * std::fabs(x - F.choice_x);
+		// stairs (2.7): one tread per step walking, two running - the landing one (two) risers from the other foot
+		if (P.stairs && std::fabs(P.riser) > 0.05f) {
+			float k = gait_w > 0.5f ? 2.0f : 1.0f;
+			float h_exp = foot[1 - i].plant.y + k * P.riser;
+			float h_land = P.h_at(x + bz);
+			bool level_exists = P.max_h(P.X0, P.X0 + P.DX * P.n) >= std::min(h_exp, foot[1 - i].plant.y) - 0.02f;
+			if (level_exists) sc += std::min(0.4f, 0.4f * std::fabs(h_land - h_exp) / std::fabs(P.riser));
+		}
 		if (sc < best) {
 			best = sc;
 			best_x = x;
@@ -301,7 +308,11 @@ void Motor::plan_swing(int i, const MotorInput &in, float T_rem, float T_st) {
 	float w = stopping ? 0.20f : lerpf(0.20f, w_move, clampf(s_td / 0.8f, 0.0f, 1.0f));
 	Vector3 tgt = P_td + ahead + yaw_left(yaw_td) * (i == 0 ? 0.5f * w : -0.5f * w);
 	choose_landing(i, tgt, yaw_td);
-	RayHit h = probe(tgt, in.pos.y);
+	// the foot stands at the height under its ball (on stairs the heel may hang over the step below)
+	Vector3 ball_pt = tgt + yaw_basis(yaw_td).xform(Vector3(0, 0, d.ball[i].z));
+	RayHit h = probe(ball_pt, in.pos.y);
+	RayHit ha = probe(tgt, in.pos.y);
+	if (ha.pos.y > h.pos.y) h = ha; // never sink the ankle into a higher level
 	tgt.y = h.pos.y;
 	if (F.u > 0.75f) {
 		// late in the swing the foot is committed: the spot may only drift (no snapping onto a new spot); its height
@@ -318,11 +329,6 @@ void Motor::plan_swing(int i, const MotorInput &in, float T_rem, float T_st) {
 			h.pos = F.target;
 			h.normal = F.target_normal;
 		}
-	}
-	if (dbg_on) {
-		String es;
-		for (int e = 0; e < prof.n_edges; e++) es += String::num(prof.edge_x[e], 2) + "/" + String::num(prof.edge_rise[e], 2) + " ";
-		UtilityFunctions::print("DBG foot ", i, " u ", String::num(F.u, 2), " tgt x ", String::num(prof.x_of(tgt), 3), " y ", String::num(tgt.y, 3), " choice ", F.has_choice, " ", String::num(F.choice_x, 3), " edges ", es);
 	}
 	F.target = tgt;
 	F.target_rel = tgt - P_td;
@@ -404,8 +410,8 @@ void Motor::step(const MotorInput &in) {
 			bool running = s_des > 2.2f;
 			float cad = running ? 150.0f : (P.riser > 0 ? 95.0f : 105.0f);
 			float v_st = P.tread * (running ? 2.0f : 1.0f) * cad / 60.0f;
-			float k = smooth01((P.first_stair - 0.3f) / 1.5f);
-			speed_cap = lerpf(v_st, 1e3f, k);
+			// slow down over the last metre so the first step lands on the first tread (4.4: adjust 2-3 steps out)
+			speed_cap = v_st + 1.2f * std::max(0.0f, P.first_stair - 0.35f);
 		} else {
 			// 2.8: a step over ~18-20 cm is an obvious bigger step: a pause in the rhythm
 			for (int e = 0; e < P.n_edges; e++) {
@@ -440,6 +446,8 @@ void Motor::step(const MotorInput &in) {
 	gait_w = approach(gait_w, (float)gait, 0.12f, dt);
 	float cad = lerpf(walk_cadence(std::min(s_cad, 2.2f)), run_cadence(std::max(s_cad, 2.5f)), gait_w);
 	beta_cur = lerpf(walk_beta(s_cad), run_beta(s_cad), gait_w);
+	// steep slopes: shorter, quicker steps (2.6) - the speed is already lower, the step rate rises a little
+	cad *= 1.0f + 0.25f * clampf((std::fabs(prof.slope) - 5.0f * DEG) / (20.0f * DEG), 0.0f, 1.0f);
 	freq_cur = cad / 120.0f; // strides per second
 	speed_s = s;
 
@@ -504,7 +512,7 @@ void Motor::step(const MotorInput &in) {
 					{
 						// did the foot land across an edge? (heel / ankle / ball / toe at different heights)
 						float xa = prof.x_of(F.plant);
-						if (prof.n > 0 && !prof.clear(xa - 0.02f, xa + d.ball[i].z + 0.02f)) edge_landings++;
+						if (prof.n > 0 && !prof.clear(xa + d.ball[i].z - 0.05f, xa + d.ball[i].z + 0.02f)) edge_landings++;
 					}
 					steps_taken++;
 					gait = want; // gait switches at a foot strike (DECISIONS 2.3)
@@ -614,8 +622,14 @@ void Motor::step(const MotorInput &in) {
 			F.fyaw = F.lift_yaw + wrap_pi(F.target_yaw - F.lift_yaw) * sh;
 			float th;
 			// 2.7 / 3.3: stepping up lands flat (forefoot), stepping down lands toes first, level ground heel first
+			// on a smooth slope (no edge between the feet): uphill lands flatter, downhill heel first (2.6)
 			float rise_o = F.target.y - foot[1 - i].plant.y;
-			F.land_pitch = rise_o > 0.05f ? 0.0f : (rise_o < -0.05f ? 12.0f * DEG : -th_hs);
+			float xo = prof.x_of(foot[1 - i].plant), xt2 = prof.x_of(F.target);
+			bool edge_between = !prof.clear(std::min(xo, xt2), std::max(xo, xt2));
+			if (edge_between)
+				F.land_pitch = rise_o > 0.05f ? 0.0f : (rise_o < -0.05f ? 12.0f * DEG : -th_hs);
+			else
+				F.land_pitch = prof.slope > 8.0f * DEG ? 0.0f : -th_hs;
 			if (F.u < 0.45f)
 				th = F.lift_pitch * (1.0f - smooth01(F.u / 0.45f));
 			else
@@ -655,7 +669,7 @@ void Motor::step(const MotorInput &in) {
 				}
 			}
 			float c = std::max(c_nom, need);
-			if (c > c_prev + 2.5f * dt && F.u > 0.02f) c = std::max(c_nom, c_prev + 2.5f * dt); // no snap up
+			if (c > c_prev + 2.5f * dt) c = std::max(std::min(c_nom, c_prev + 2.5f * dt), c_prev + 2.5f * dt); // no snap up
 			F.clearance = std::max(c, 0.0f);
 		}
 	}
@@ -783,27 +797,23 @@ void Motor::step(const MotorInput &in) {
 	t.hips_pos = G + L.xform(hips_nom - G);
 	lean_off = flat(t.hips_pos - hips_nom);
 
-	// pelvis follows the lower foot (2.6, 4.5): a planted leg is never asked to reach past 99.5 % of its length, so the
-	// foot never has to slide. The limit is fed back into the spring so releasing it is smooth.
+	// pelvis follows the lower foot (2.6, 4.5): a planted leg is kept within 97.5 % of its length, the hips lowering
+	// at most 1.8 cm a frame (4.6 item 5); past 99.5 % (out of the soft-IK zone) the limit is immediate so the foot
+	// never slides. The limit is fed back into the spring so releasing it is smooth.
 	{
 		Basis Rp = L * yaw_basis(yaw);
-		float y_max = 1e9f;
+		float y_soft = 1e9f, y_hard = 1e9f;
 		for (int i = 0; i < 2; i++) {
-			float u0 = lerpf(0.8f, 0.55f, gait_w); // running: the hips settle over the whole late swing (no landing pop)
-			float wgt = foot[i].planted ? 1.0f : 0.0f;
-			(void)u0;
-			if (wgt <= 0.0f) continue;
+			if (!foot[i].planted) continue;
 			Vector3 hip = t.hips_pos + Rp.xform(d.hip_off[i]);
-			// a swinging foot counts where it will land (its ankle over the landing spot), so the hips settle before
-			Vector3 ank = foot[i].planted ? ankles[i] : foot[i].target + UP * d.ankle_h[i];
-			if (!foot[i].planted) hip += vel * foot[i].t_rem; // where the hips will be when it lands
-			Vector3 dv = ank - hip;
-			float Lm = 0.985f * d.leg(i); // inside the poser's soft-IK zone (98 %): the foot is always reached
+			Vector3 dv = ankles[i] - hip;
 			float dxz2 = dv.x * dv.x + dv.z * dv.z;
-			float ym = ank.y + std::sqrt(std::max(0.0f, Lm * Lm - dxz2)) - d.hip_off[i].y;
-			ym += (1.0f - wgt) * 0.3f;
-			y_max = std::min(y_max, ym);
+			float L1 = 0.975f * d.leg(i), L2 = 0.995f * d.leg(i);
+			y_soft = std::min(y_soft, ankles[i].y + std::sqrt(std::max(0.0f, L1 * L1 - dxz2)) - d.hip_off[i].y);
+			y_hard = std::min(y_hard, ankles[i].y + std::sqrt(std::max(0.0f, L2 * L2 - dxz2)) - d.hip_off[i].y);
 		}
+		float y_max = std::max(y_soft, t.hips_pos.y - 0.018f);
+		y_max = std::min(y_max, y_hard);
 		if (t.hips_pos.y > y_max) {
 			float over = t.hips_pos.y - y_max;
 			hips_y.x -= over;

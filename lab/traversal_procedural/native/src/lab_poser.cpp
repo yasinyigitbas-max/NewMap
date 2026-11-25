@@ -217,6 +217,7 @@ void LabPoser::_process_modification_with_delta(double p_delta) {
 		Vector3 A = P(T.ankle[s]);
 		Vector3 pole = ib.xform(T.knee_pole[s]);
 		Vector3 knee, ank;
+		bool heel_lifted = false;
 		Vector3 r_u = rest_g[bl].origin - rest_g[bu].origin, r_l = rest_g[bf].origin - rest_g[bl].origin;
 		Vector3 rest_pole(0, 0, 1);
 		for (int it = 0; it < 3; it++) {
@@ -228,6 +229,7 @@ void LabPoser::_process_modification_with_delta(double p_delta) {
 			float dorsi = rest_ang - angle_between(shin_up, ffwd);
 			if (dorsi <= 20.0f * DEG + 1e-3f) break;
 			float extra = dorsi - 20.0f * DEG;
+			if (T.contact[s] != 1) heel_lifted = true;
 			Vector3 lat = Fc.xform(Vector3(1, 0, 0));
 			// on the heel (loading) the foot slaps flat about the heel (2.1); otherwise the heel lifts about the ball
 			Vector3 pv = T.contact[s] == 1 ? A + Fc.xform(Vector3(0, -dims_.ankle_h[s], dims_.heel[s].z))
@@ -272,14 +274,15 @@ void LabPoser::_process_modification_with_delta(double p_delta) {
 			if (T.contact[s] == 4)
 				pt = G[bt].origin + Basis(G[bt].basis).orthonormalized().xform(Vector3()) * 0 +
 						Dtoe_w[s].xform(Vector3(0, -dims_.ball[s].y, dims_.toe_len[s] * 0.85f));
-			else if (T.contact[s] == 3)
+			else if (T.contact[s] == 3 || (T.contact[s] == 2 && heel_lifted)) // the heel lifted: the ball holds
 				pt = ank + Fc.xform(Vector3(0, dims_.ball[s].y - dims_.ankle_h[s], dims_.ball[s].z));
 			else if (T.contact[s] == 1)
 				pt = ank + Fc.xform(Vector3(0, -dims_.ankle_h[s], dims_.heel[s].z));
 			else
 				pt = ank;
 			Vector3 pw = sk_w.xform(pt);
-			if (last_contact[s] != T.contact[s]) {
+			int kind = (T.contact[s] == 2 && heel_lifted) ? 3 : T.contact[s];
+			if (last_contact[s] != kind) {
 				contact_start[s] = pw;
 			} else {
 				float sl = pw.distance_to(contact_start[s]) * 100.0f;
@@ -290,7 +293,7 @@ void LabPoser::_process_modification_with_delta(double p_delta) {
 					metrics.slide_kind = T.contact[s];
 				}
 			}
-			last_contact[s] = T.contact[s];
+			last_contact[s] = kind;
 		} else {
 			last_contact[s] = -1;
 		}

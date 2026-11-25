@@ -157,8 +157,8 @@ func run_all():
 		await physics_frame
 		var m = player.get_metrics()
 		if abs(player.global_position.z - 30.0) < 0.6:
-			if m.contact_l == 2: max_ank = max(max_ank, m.ankle_l.y)
-			if m.contact_r == 2: max_ank = max(max_ank, m.ankle_r.y)
+			if m.contact_l == 1 or m.contact_l == 2: max_ank = max(max_ank, m.ankle_l.y)
+			if m.contact_r == 1 or m.contact_r == 2: max_ank = max(max_ank, m.ankle_r.y)
 	print("contract: debris ignored by probes: highest flat-planted ankle over the 12 cm slab %.3f m (on the ground ~0.16-0.17, on the slab ~0.29) -> %s" % [max_ank, "PASS" if max_ank < 0.2 else "FAIL"])
 
 	var worst_slide = 0.0

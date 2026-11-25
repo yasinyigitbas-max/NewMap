@@ -102,20 +102,25 @@ inline float smin(float a, float b, float k) {
 }
 
 // Critically damped spring for a scalar (value + velocity), natural frequency w.
+// (exact solution over one step: no overshoot and no big first-frame jump at high stiffness)
 struct Spring1 {
 	float x = 0, v = 0;
 	void step(float target, float w, float dt) {
-		float a = w * w * (target - x) - 2.0f * w * v;
-		v += a * dt;
-		x += v * dt;
+		float y = x - target;
+		float j = v + w * y;
+		float e = std::exp(-w * dt);
+		x = target + (y + j * dt) * e;
+		v = (v - w * j * dt) * e;
 	}
 };
 struct Spring3 {
 	Vector3 x, v;
 	void step(const Vector3 &target, float w, float dt) {
-		Vector3 a = (target - x) * (w * w) - v * (2.0f * w);
-		v += a * dt;
-		x += v * dt;
+		Vector3 y = x - target;
+		Vector3 j = v + y * w;
+		float e = std::exp(-w * dt);
+		x = target + (y + j * dt) * e;
+		v = (v - j * (w * dt)) * e;
 	}
 };
 

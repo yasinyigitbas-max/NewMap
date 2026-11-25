@@ -66,6 +66,8 @@ func item(name: String, from: Vector3, to: Vector3, run := false, limit_s := 30.
 		name, result, t / 60.0, m.slide_max_cm, m.hips_pop_max_cm, m.joint_violations, m.edge_landings, m.steps, low_hips]
 	if m.slide_max_cm > 1.0 or m.hips_pop_max_cm > 2.0:
 		line += " | (slide f%d foot %d kind %d; pop f%d)" % [m.slide_frame, m.slide_foot, m.slide_kind, m.pop_frame]
+	if m.joint_violations > 0:
+		line += " | (knee %d ankle %d hip %d elbow %d; max ankle up %.0f down %.0f hip ext %.0f)" % [m.knee_violations, m.ankle_violations, m.hip_violations, m.elbow_violations, m.ankle_up_max_deg, m.ankle_down_max_deg, m.hip_ext_max_deg]
 	if stair_frames > 0: line += " | stairs seen %.1f s" % (stair_frames / 60.0)
 	if slope_max > 2.0: line += " | slope %.0f deg" % slope_max
 	print(line)

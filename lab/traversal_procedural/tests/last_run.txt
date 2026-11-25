@@ -1,28 +1,27 @@
-LabPoser: left thigh 0.38 shin 0.39 ankle_h 0.17 ball_z 0.202 heel_z -0.006 toe 0.092 rest foot yaw 14.4 uarm 0.227 farm 0.248
-LabPoser: right thigh 0.383 shin 0.376 ankle_h 0.159 ball_z 0.113 heel_z -0.093 toe 0.092 rest foot yaw -27.4 uarm 0.243 farm 0.246
 idle 3 s               slide  0.00 cm | hips pop 0.03 cm/f | joints past range   0 (knee 0 ankle 0 hip 0 elbow 0) | latency     0 ms | bob_cm 0.02
-      max: knee 34 ankle up 6 down 2 hip flex 17 ext 0 elbow 16
-walk start + 4 s       slide  0.83 cm | hips pop 1.29 cm/f | joints past range   0 (knee 0 ankle 0 hip 0 elbow 0) | latency    83 ms | t_full_s 1.03 | steps_to_full 1 | bob_cm 5.93 | both_feet_off_frames 0 | cadence_spm 120.00 | step_m 0.70
-      max: knee 82 ankle up 20 down 38 hip flex 47 ext 20 elbow 33
-walk stop              slide  0.02 cm | hips pop 1.86 cm/f | joints past range   0 (knee 0 ankle 0 hip 0 elbow 0) | latency    17 ms | t_stop_s 0.38 | t_feet_set_s 0.78 | steps 2
-      max: knee 87 ankle up 20 down 11 hip flex 32 ext 5 elbow 30
-run start + 5 s        slide  0.82 cm | hips pop 5.33 cm/f | joints past range   2 (knee 0 ankle 0 hip 2 elbow 0) | latency    17 ms | t_full_s 1.10 | steps_to_full 3 | bob_cm 8.20 | both_down_frames 0 | flight_frames 50 | cadence_spm 180.00 | step_m 1.53
+      max: knee 37 ankle up 8 down 0 hip flex 19 ext 0 elbow 16
+walk start + 4 s       slide  0.83 cm | hips pop 1.27 cm/f | joints past range   0 (knee 0 ankle 0 hip 0 elbow 0) | latency   100 ms | t_full_s 1.03 | steps_to_full 1 | bob_cm 5.34 | both_feet_off_frames 0 | cadence_spm 120.00 | step_m 0.70
+      max: knee 85 ankle up 20 down 35 hip flex 48 ext 20 elbow 33
+walk stop              slide  0.02 cm | hips pop 1.77 cm/f | joints past range   0 (knee 0 ankle 0 hip 0 elbow 0) | latency    17 ms | t_stop_s 0.38 | t_feet_set_s 0.78 | steps 2
+      max: knee 87 ankle up 20 down 12 hip flex 33 ext 7 elbow 30
+run start + 5 s        slide  0.82 cm | hips pop 3.47 cm/f | joints past range   4 (knee 0 ankle 0 hip 4 elbow 0) | latency    17 ms | t_full_s 1.10 | steps_to_full 3 | bob_cm 7.39 | both_down_frames 0 | flight_frames 50 | cadence_spm 180.00 | step_m 1.53
       max: knee 124 ankle up 20 down 37 hip flex 72 ext 32 elbow 96
       (worst slide at frame 225 foot 1 contact 4; worst pop at frame 184)
-run stop               slide  0.43 cm | hips pop 1.65 cm/f | joints past range   0 (knee 0 ankle 0 hip 0 elbow 0) | latency    17 ms | t_stop_s 0.97 | t_feet_set_s 1.18 | steps 3
-      max: knee 113 ankle up 20 down 41 hip flex 47 ext 12 elbow 96
-walk turn 90 right     slide  2.35 cm | hips pop 3.11 cm/f | joints past range   8 (knee 0 ankle 8 hip 0 elbow 0) | latency    17 ms | t_turned_s 0.20
-      max: knee 88 ankle up 20 down 72 hip flex 51 ext 22 elbow 33
-      (worst slide at frame 21 foot 1 contact 4; worst pop at frame 8)
-run turn 180           slide  0.76 cm | hips pop 3.27 cm/f | joints past range   4 (knee 0 ankle 0 hip 4 elbow 0) | latency    17 ms | t_turned_s 1.13 | t_full_speed_back_s 2.02
-      max: knee 122 ankle up 20 down 34 hip flex 70 ext 34 elbow 96
-      (worst slide at frame 174 foot 1 contact 4; worst pop at frame 174)
-run circle 6 s         slide  0.78 cm | hips pop 3.60 cm/f | joints past range   0 (knee 0 ankle 0 hip 0 elbow 0) | latency     0 ms
-      max: knee 120 ankle up 20 down 33 hip flex 62 ext 29 elbow 96
+run stop               slide  0.75 cm | hips pop 1.65 cm/f | joints past range   0 (knee 0 ankle 0 hip 0 elbow 0) | latency    17 ms | t_stop_s 0.97 | t_feet_set_s 1.18 | steps 3
+      max: knee 113 ankle up 20 down 42 hip flex 48 ext 13 elbow 96
+walk turn 90 right     slide  0.82 cm | hips pop 3.03 cm/f | joints past range   7 (knee 0 ankle 7 hip 0 elbow 0) | latency    17 ms | t_turned_s 0.20
+      max: knee 88 ankle up 20 down 71 hip flex 53 ext 22 elbow 33
+      (worst slide at frame 106 foot 1 contact 4; worst pop at frame 9)
+run turn 180           slide  0.81 cm | hips pop 2.17 cm/f | joints past range   2 (knee 0 ankle 0 hip 2 elbow 0) | latency    17 ms | t_turned_s 1.13 | t_full_speed_back_s 2.02
+      max: knee 123 ankle up 20 down 33 hip flex 70 ext 34 elbow 96
+      (worst slide at frame 174 foot 1 contact 4; worst pop at frame 4)
+run circle 6 s         slide  0.80 cm | hips pop 2.81 cm/f | joints past range   1 (knee 0 ankle 0 hip 1 elbow 0) | latency     0 ms
+      max: knee 121 ankle up 20 down 33 hip flex 61 ext 31 elbow 96
       (worst slide at frame 235 foot 1 contact 4; worst pop at frame 27)
-analog walk 0.1-0.7    slide  0.83 cm | hips pop 1.24 cm/f | joints past range   0 (knee 0 ankle 0 hip 0 elbow 0) | latency   567 ms
-      max: knee 79 ankle up 20 down 40 hip flex 47 ext 9 elbow 33
-stop-go jitter         slide  0.36 cm | hips pop 1.83 cm/f | joints past range   0 (knee 0 ankle 0 hip 0 elbow 0) | latency    83 ms
-      max: knee 91 ankle up 20 down 38 hip flex 46 ext 8 elbow 33
-contract: debris ignored by probes: highest flat-planted ankle over the 12 cm slab 0.000 m (on the ground ~0.16-0.17, on the slab ~0.29) -> PASS
-SUMMARY worst slide 2.35 cm, worst hips pop 5.33 cm/frame, joints past range 14
+analog walk 0.1-0.7    slide  0.74 cm | hips pop 1.23 cm/f | joints past range   0 (knee 0 ankle 0 hip 0 elbow 0) | latency   567 ms
+      max: knee 83 ankle up 20 down 37 hip flex 46 ext 9 elbow 33
+stop-go jitter         slide  0.23 cm | hips pop 2.06 cm/f | joints past range   0 (knee 0 ankle 0 hip 0 elbow 0) | latency   100 ms
+      max: knee 91 ankle up 20 down 28 hip flex 48 ext 9 elbow 33
+      (worst slide at frame 158 foot 1 contact 4; worst pop at frame 128)
+contract: debris ignored by probes: highest flat-planted ankle over the 12 cm slab 0.178 m (on the ground ~0.16-0.17, on the slab ~0.29) -> PASS
+SUMMARY worst slide 0.83 cm, worst hips pop 3.47 cm/frame, joints past range 14

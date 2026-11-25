@@ -86,7 +86,33 @@ A decision with no section is marked **(no section: question it)**. Conflicts wi
 | 6.3 | The course has a breakable-bin stand-in (layer 3), a debris slab (layer 7), a window and a door leaf (layer 4). Test: walking over the debris slab, the feet stay on the ground (PASS). Window-as-wall and broken-window-as-opening are traversal tests, for step 6-7. | contract 4 |
 | 6.4 | No punches or kicks exist, so no `strike()` call yet. | contract 4 |
 
+## 7. Step 5: kerbs, steps, stairs, slopes (the same planner, no separate modes)
+
+| # | Decision | Follows |
+|---|---|---|
+| 7.1 | A live ground profile every tick: ~70 rays from 0.4 m behind to 2.4 m ahead along the path, each starting 0.5 m above the last sample (follows stairs up); a ray that starts inside something ends the profile (a wall: step 6). Edges = height jumps over 2.5 cm; slope fitted over the next 1.2 m; stairs = two or more same-way edges 0.18-0.5 m apart with 8-26 cm risers. Nothing is kept across frames. | 4.4 (look 1.5-3 m ahead), 2.8, WORLD_CONTRACT 3 |
+| 7.2 | Landing choice: each landing slides up to 25 % of the step (45 % on stairs) to the nearest spot where the sole is on one level, preferring a spot from which the next step is also clear, and sticking to its earlier choice. No foot ever lands across an edge or into a riser. | 2.8 ("no foot lands on the edge", adjust 2-3 steps out), 4.4 |
+| 7.3 | On stairs the **ball** carries the foot: the heel may hang over the step below going up, the toes over the step below going down, never into a higher level. The foot's height is read under the ball. One tread per step walking, two running. | 2.7 ("a third of the way onto the tread", "heel overhangs slightly") |
+| 7.4 | Below a drop the heel lands 6 cm + a quarter of the drop past the edge (3 cm on stairs). | 2.8 (down a kerb: the step is a little longer), 3.3 |
+| 7.5 | Swing clearance per sole point (heel, ball, toe tip): each clears the ground under it by 3-5 cm, and the toe also what is just ahead of it; the margin fades at lift-off and touchdown; on flat ground no extra margin (toe clearance 1-2 cm). | 2.7 (toe clears the nosing by 3-5 cm), 2.8 (foot raised 3-5 cm above the kerb), 2.1 |
+| 7.6 | Stepping down, the foot first reaches out past the edge, then lowers; stepping up, it rises first, then moves onto the step. | 2.8 ("the leading leg reaches down"), 2.7 (swing knee lifts 80-100°) |
+| 7.7 | Landing: up a step flat / forefoot, down a step toes first (the heel lowers as the knee brakes), level ground heel first; on a smooth slope uphill flatter, downhill heel first. | 2.7, 2.6, 3.3 (toes → heel → ankle → knee) |
+| 7.8 | The hips ride the line between the support foot and where the next foot goes, so on stairs they glide on the pitch instead of stepping. A swinging foot near touchdown pulls the hips' target down to meet it (soft); a planted leg keeps them within 97.5 % of its length, lowering at most 1.8 cm a frame, with an instant limit only past 99.5 %. | 2.7 ("a smooth line parallel to the stair pitch"), 4.5, 4.6 item 5 |
+| 7.9 | Speed: stairs at one tread per step (~95 steps/min up, ~105 down; 150 running), braking toward that pace over the last metre; a step over 18 cm slows him to 1 m/s ("a pause in rhythm"); slopes over 5° slow 1.2 % per degree, with a slightly quicker step (shorter steps). | 2.7, 2.8, 2.6 |
+| 7.10 | Posture: trunk forward uphill (≈ the slope × 0.8 + 3°) and 12° on stairs up; slightly back downhill; eyes down 22° on stairs down, 8° when an edge is 0.3-1.8 m ahead. | 2.6, 2.7, 2.8 (look at the kerb ~2 steps ahead), 4.5 |
+| 7.11 | The capsule's height follows the ground under it through a 0.08 s filter (the collision capsule floats 0.25 m up; steps over that are step 6's job). | 7.4 floating capsule |
+| 7.12 | Springs use the exact critically damped step (a stiff spring no longer jumps a quarter of the gap in one frame). | 4.6 item 5 |
+
+**Finding about the real city (for the map, not changed here):** the survey said collision stairs are coarse, and the
+real porch confirms it: its collision is a 0.20 m block and then the deck 0.30 m above it, while the picture shows three
+16.7 cm risers. A procedural (or any) foot system that probes the collision sees a 0.30 m step there, which is a "big
+step up" (3.1), not stairs. Dock, courthouse and dingbat stairs collide as 0.55-0.72 m blocks. Either the collision
+gets a box per step (or a ramp the feet can read the steps from the mesh), or these become climbs.
+
 ## Conflicts with the study
 - Walk bob 6.0 cm vs the study's 4-5 cm (±15 %). The pendulum geometry of this body (leg 0.77 m, 0.70 m steps) gives
   ~6 cm; lowering it further means bending the stance knee more than the study's ~5-15° at midstance. Kept the knee.
 - Run bob 10.6 cm vs 6-10 cm: just over, from the landing dip. To be tuned in polish (step 8).
+- Stairs walking speed: one tread per step at ~95 steps/min gives 0.44 m/s along the stair. That is what the study's
+  numbers give; it will feel slower than GTA V, where stairs barely slow the player. Kept the study; say if you want
+  him quicker on stairs (two treads at a time is a one-line choice).

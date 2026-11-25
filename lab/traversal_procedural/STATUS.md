@@ -1,6 +1,77 @@
-# Lab A (procedural): status after step 4
+# Lab A (procedural): status after step 5
 
-25 Nov 2026. Branch `lab/procedural`, folder `lab/traversal_procedural/`.
+25 Nov 2026. Branch `lab/procedural`, folder `lab/traversal_procedural/`. Step 4's report is below this one.
+
+## Step 5: kerbs, steps, stairs, slopes
+
+**How to try it**: open the project in Godot 4.7.2 and press Play (see "How to play it" below). On the course:
+kerbs and steps are the lane to the right of the start (x 8), stairs next to it (x 14), ramps after that (x 20), the
+side-slope at x 26. The **real street** (city-kit piece `s_apt` with 15 cm kerbs, the porch house, a bench) is at
+x -60: walk left from the start for ~60 m.
+
+### What works
+- **Kerbs and single steps** are walked over inside the stride. He looks at the kerb, places his steps so no foot
+  lands on the edge, lifts the swing foot 3-5 cm over it, lands flat on top. Stepping down, the foot reaches out past
+  the edge and then lowers, toes first. From 20 cm he slows ("an obvious bigger step").
+- **Stairs**: one tread per step walking, two running. Going up, the ball of the foot sits on the tread and the heel
+  hangs over the step below; the knee lifts high over each nosing; the trunk leans forward. Going down, toes first, the
+  heel lowers, eyes down. The hips glide on the stair pitch. He slows down before the first step, so the first step
+  lands on the first tread.
+- **Slopes**: up to 5° nothing changes. Steeper, the steps get shorter and quicker and he slows down. Uphill the trunk
+  leans into the slope, the feet land flatter and the heels lift on steep ground. Downhill the heel lands first. On the
+  side-slope each foot follows the ground and the lower leg bends more.
+- **The real city kerb** (15 cm, city-kit street): up, down, at a 40° angle and running across all work.
+
+### The numbers (`tests/test_terrain.gd`, output in `tests/last_terrain.txt`)
+32 course items: **31 done, 1 refused, 0 failed.**
+
+| Item | Slide | Hips pop per frame | Joints past range |
+|---|---|---|---|
+| kerbs 10-16 cm walking | 0.83 cm | 3.0-3.3 cm | 0 |
+| kerbs 10-16 cm running | 0.77 cm | 1.9-2.3 cm | 0-8 |
+| steps 20 / 24 cm walking | 0.8 cm | 6.4 / 7.8 cm | 0 / 2 |
+| steps 20 / 24 cm running | 2.6 cm | 3.3 / 3.9 cm | 4 / 10 |
+| stairs 17/28 up and down, walking | 0.82 cm | 3.6 cm | 0 |
+| stairs 17/28 up and down, running | 2.6 cm | 6.7 cm | 8 |
+| steep stairs 19/25, walking | 0.80 cm | 7.3 cm | 7 |
+| stoop 3 x 16.7 cm onto a porch | 0.83 cm | 3.5 cm | 1 |
+| ramps 5° / 10° / 15° up and down | 0.5-0.8 cm | 2.1-5.3 cm | 0 |
+| ramp 25° up / down | 3.0 / 2.2 cm | 5.6 / 9.8 cm | 0 / 24 |
+| ramp 15° up, running | 2.3 cm | 4.8 cm | 7 |
+| side-slope 10° | 0.83 cm | 1.5 cm | 0 |
+| real kerb (city kit): up, down, at 40°, running | 0.7-0.8 cm | 2.3-3.5 cm | 0-3 |
+| **real porch: refused** | | | |
+
+Flat ground after these changes (`tests/last_run.txt`): every case slides under 1 cm (worst 0.83). Walking pop is
+1.3 cm a frame (under the study's 2 cm), running up to 3.5 cm. Joints past range: 14 frames in all.
+
+### What does not work yet
+- **The real porch is refused.** Its collision is a 0.20 m block, then the deck 0.30 m above it. The picture shows three
+  16.7 cm steps. A 0.30 m step is a "big step up" (study 3.1), which comes with step 6. This is the survey's warning
+  about the city: **collision stairs are coarse** (porches, docks 0.55 m, courthouse 0.62 m, dingbat stairs 0.72 m
+  blocks). Feet that probe the world will treat them as climbs, not stairs. The fix belongs to the map (a collision
+  box per step). I did not touch the map. See `DECISIONS.md` section 7.
+- **Hips pop over 2 cm a frame** on the 20-24 cm steps (6-8 cm), the steep 19/25 stairs (7 cm), the 25° descent
+  (10 cm) and running on stairs (7 cm). Normal stairs, kerbs and ramps are at 2-5 cm. This is still above the study's
+  line.
+- **Joints past range** on the 25° descent (24 frames: the knee bends past 140° and the ankle points down past 50°).
+  The study (2.6) says people over ~30° turn sideways or use their hands; at 25° he still walks straight down.
+- **Slide over 1 cm** on the 25° ramp (3 cm), and when running over the 20-24 cm steps and on stairs (2.6 cm).
+- **Stairs feel slow**: one tread per step at the study's cadence is 0.44 m/s along the stair. That follows the study;
+  GTA V barely slows on stairs. It's your choice if he should take stairs faster.
+- **Drops deeper than the 24 cm step** (ledges, the deck lane) are step 6.
+
+### What a check cannot see
+- The **look**: I checked side views of a kerb, going up stairs and coming down. They look right to me: knee lift,
+  feet on treads, eyes down on the way down. I have not looked at every item. Please walk the course and the real
+  street yourself.
+- Skin against the step: a shoe may graze a nosing by a few mm (the clearance is checked at the heel, ball and toe
+  tip, not on the whole shoe).
+- Stairs that turn, or that are approached at an angle, are not on the course.
+
+---
+
+# Step 4 report (25 Nov)
 
 ## How to play it (Windows)
 1. Get the branch (`git fetch origin lab/procedural && git checkout lab/procedural`).

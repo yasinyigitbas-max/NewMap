@@ -161,9 +161,7 @@ RayHit LabPlayer::ray(const Vector3 &from, const Vector3 &to, bool from_inside) 
 	return r;
 }
 
-extern bool dbg_on;
 void LabPlayer::set_scripted_input(const Vector2 &stick, bool run, bool enabled) {
-	dbg_on = OS::get_singleton()->get_environment("LABDBG") != "" && tick > 235 && tick < 260;
 	scripted = enabled;
 	script_stick = stick;
 	script_run = run;
