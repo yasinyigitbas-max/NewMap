@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+# Lab A native library. godot-cpp is expected at $GODOT_CPP (default /opt/lab/godot-cpp), built against Godot 4.7.2's
+# extension_api.json (see native/BUILD.md).
+import os
+gcpp = os.environ.get("GODOT_CPP", "/opt/lab/godot-cpp")
+env = SConscript(os.path.join(gcpp, "SConstruct"))
+env.Append(CPPPATH=["src/"])
+sources = Glob("src/*.cpp")
+plat = env["platform"]
+if plat == "windows":
+    env.Append(LINKFLAGS=["-static-libgcc", "-static-libstdc++", "-static"])
+lib = env.SharedLibrary("../bin/liblabproc{}{}".format(env["suffix"], env["SHLIBSUFFIX"]), source=sources)
+Default(lib)

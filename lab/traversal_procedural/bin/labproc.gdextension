@@ -1,0 +1,8 @@
+[configuration]
+entry_symbol = "labproc_library_init"
+compatibility_minimum = "4.7"
+reloadable = false
+
+[libraries]
+linux.x86_64 = "res://bin/liblabproc.linux.template_debug.x86_64.so"
+windows.x86_64 = "res://bin/liblabproc.windows.template_debug.x86_64.dll"
