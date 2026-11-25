@@ -38,3 +38,18 @@ Mixamo clips (only a bone-name map added: `tools/clip_build.gd` `SOMA_TO_MIXAMO`
   pull-and-press (study v2 6.1) comes out right. Untested, so unknown.
 - **"Gap-free" is not guaranteed.** Some samples ignore the prompt, and the clips still need our measuring, cutting,
   warping and the v2 validator like any other source.
+
+## Round 2: heights in metres and pinned hands / feet (25 Nov, 3 runs x 4 samples, ~$0.15)
+Pins built in Kimodo's own pose format (checked: my forward kinematics matches its joints to 0.001 mm). Poses taken
+from earlier Kimodo frames (or built: arms up for the climb), turned to face the wall and moved so the hand / foot lands
+exactly on the edge; plus the ground path. Scripts and pins kept outside the repo with the outputs.
+
+| Test | Pins | Result |
+|---|---|---|
+| step vault, 1.0 m wall 0.3 m thick | left hand on top (frame 33), left foot on top (39), path | Pins hit exactly (0.0 cm). Between them the body does whatever it likes: a leap, a walk, a jump up to 2.4-2.7 m hip height, a crouch; 3 of 4 samples end standing 1.3-1.5 m up in the air. **Not usable.** |
+| climb, 1.5 m wall | both hands on the edge (38 and 70), left foot on top (105), path | Pins hit exactly. Hands drift 9-108 cm between the two hand pins (not held), and the body keeps climbing invisible things: hips reach 3.6-4.3 m. **Not usable.** |
+| step up, 0.4 m box | right foot on top (45), left foot (72), path | Pins hit (3 of 4 within 1 cm). A real big step up: knee lifts, weight goes over the front foot, he stands on top. Ends ~13 cm higher than the box. **Usable with a little fixing.** |
+
+**Why**: a pin is met only on its own frame; the model still doesn't know the obstacle exists, so it doesn't keep hands
+on the edge or feet on the top between pins, and doesn't stop at the top. Denser pins (every few frames) would force it,
+but then the pins are the animation and the model adds little.
