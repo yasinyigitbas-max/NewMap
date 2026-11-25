@@ -1,0 +1,12 @@
+# Mixamo files and anything derived from them: never committed (public repo, Mixamo terms)
+clips_raw/
+*.fbx
+*.FBX
+clip_cache/
+# Godot / build output
+.godot/
+native/build/
+*.o
+*.os
+*.obj
+.sconsign*.dblite
