@@ -1,7 +1,6 @@
 extends Node3D
 ## The character on the body: poses the skeleton from baked clips. It only looks; it never moves the body.
-## STAND-IN: the mesh and skeleton are Meshy's rig of player_v4 (no real fingers), with the clips Mixamo fitted to
-## player_v4 retargeted onto it. To be replaced by Mixamo's own rigged file when it is available.
+## The mesh and skeleton are Mixamo's rig of player_v4; the clips are the ones Mixamo fitted to him, baked.
 
 const DIR := "res://traversal/character/clips/"
 const MODEL := "res://traversal/character/player_v4.scn"
@@ -14,6 +13,14 @@ const JUMP_OFF := 0.80
 const JUMP_LAND := 1.30
 const LAND_CONTACT := 0.27      # Falling To Landing: the feet touch at 0.27 s
 const HARD_CONTACT := 0.60      # Hard Landing: the feet touch at 0.60 s
+# Arms (Yasin, 25 Nov play-test: "his arms are almost sticking to his body, they need to open up a bit"). The clips
+# were captured on a slim mannequin; his chest and upper arms are thicker, so each upper arm is swung out from the chest.
+var arm_open_deg := 9.0         # NOT in the study: set by eye on his body
+# Lean into a turn: tan(lean) = speed x turn rate / g, and no more than people were measured to lean: 6.8 deg at a
+# normal walk (4.4 slow, 12.7 fast), 13.6 deg on a sprinted curve.
+const LEAN_WALK_DEG := 6.8
+const LEAN_RUN_DEG := 13.0
+const LEAN_TIME := 0.15         # NOT in the study: how quickly the lean follows (seconds)
 const HARD_DROP := 1.5          # drops from this height use the hard landing (the soft clip was a 1.03 m drop, the hard one 2.08 m)
 
 var body: CharacterBody3D
@@ -34,12 +41,21 @@ var _from_hips := Vector3.ZERO
 var _fade := 1.0
 var _hips_i := 0
 var note := ""
+var lean := 0.0                 # radians, + = to his left
+var _pivot: Node3D
+var _last_dir := Vector3.ZERO
+var _arm := [-1, -1]            # left, right upper arm
+var _chest := -1
+var _chain: Array[int] = []     # hips ... chest, the bones above the shoulders
+var _chest_rest_inv := Quaternion.IDENTITY
 
 
 func _ready() -> void:
 	var model: Node3D = (load(MODEL) as PackedScene).instantiate()
 	model.rotation.y = PI      # the clips face +Z, the body faces -Z
-	add_child(model)
+	_pivot = Node3D.new()      # turns about the feet, for the lean
+	add_child(_pivot)
+	_pivot.add_child(model)
 	skel = _find_skeleton(model)
 	_n = skel.get_bone_count()
 	_hips_i = skel.find_bone("mixamorig_Hips")
@@ -52,6 +68,13 @@ func _ready() -> void:
 		_from.append(_rot[i])
 	_hips = skel.get_bone_rest(_hips_i).origin
 	_from_hips = _hips
+	_arm = [skel.find_bone("mixamorig_LeftArm"), skel.find_bone("mixamorig_RightArm")]
+	_chest = skel.find_bone("mixamorig_Spine2")
+	var b := _chest
+	while b >= 0:
+		_chain.push_front(b)
+		b = skel.get_bone_parent(b)
+	_chest_rest_inv = skel.get_bone_global_rest(_chest).basis.get_rotation_quaternion().inverse()
 	if body:
 		body.connect(&"jump_started", _on_jump_started)
 		body.connect(&"landed", _on_landed)
@@ -144,6 +167,8 @@ func _physics_process(dt: float) -> void:
 			hips = _clip_pose(c, minf(_land_from + _mode_t, float(c.get(&"length"))), rot)
 			hips.y = minf(hips.y, _stand_height())
 
+	_open_arms(rot)
+	_lean(dt, state == 0)
 	_fade = minf(_fade + dt / FADE, 1.0)
 	var k := _fade * _fade * (3.0 - 2.0 * _fade)
 	for i in _n:
@@ -152,6 +177,41 @@ func _physics_process(dt: float) -> void:
 	_hips = _from_hips.lerp(hips, k)
 	skel.set_bone_pose_position(_hips_i, _hips)
 	note = "%s  stride phase %.2f" % [_mode, phase]
+
+
+## Swing each upper arm out from the chest by `arm_open_deg`, about the chest's own front-to-back line, so it
+## follows the twist of the trunk. The forearm and hand go with it.
+func _open_arms(rot: Array[Quaternion]) -> void:
+	if arm_open_deg == 0.0 or _arm[0] < 0 or _arm[1] < 0:
+		return
+	var chest := Quaternion.IDENTITY
+	for b in _chain:
+		chest = chest * rot[b]
+	var fwd := (chest * _chest_rest_inv) * Vector3(0.0, 0.0, 1.0)
+	for side in 2:
+		var sh := skel.get_bone_parent(_arm[side])
+		var parent := chest * rot[sh]
+		var swing := Quaternion(fwd.normalized(), deg_to_rad(arm_open_deg) * (1.0 if side == 0 else -1.0))
+		rot[_arm[side]] = (parent.inverse() * swing * parent * rot[_arm[side]]).normalized()
+
+
+## Lean the whole figure about the feet into the turn the body is making.
+func _lean(dt: float, on_ground: bool) -> void:
+	var v: Vector3 = body.get(&"hvel")
+	var speed := v.length()
+	var want := 0.0
+	if on_ground and speed > 0.5:
+		var dir := v / speed
+		if _last_dir != Vector3.ZERO:
+			var rate := atan2(_last_dir.cross(dir).y, _last_dir.dot(dir)) / dt      # + = turning to his left
+			var fast := clampf((speed - 1.4) / (4.5 - 1.4), 0.0, 1.0)
+			var most := deg_to_rad(lerpf(LEAN_WALK_DEG, LEAN_RUN_DEG, fast)) * minf(speed / 1.4, 1.0)
+			want = clampf(atan(speed * rate / 9.8), -most, most)
+		_last_dir = dir
+	else:
+		_last_dir = Vector3.ZERO
+	lean += (want - lean) * (1.0 - exp(-dt / LEAN_TIME))
+	_pivot.rotation.z = lean
 
 
 func _stand_height() -> float:

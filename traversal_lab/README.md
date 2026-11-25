@@ -65,8 +65,13 @@ Built early, out of order, because a bare capsule with no jump could not be judg
   the take-off time of the Running Jump clip), then the body rises 0.45 m (an average standing jump raises the body
   0.41 to 0.50 m). The pose comes from the `Jump` clip; landings from `Falling To Landing` and `Hard Landing`.
 
+- Arms (Yasin's play-test, 25 Nov: "his arms are almost sticking to his body"): each upper arm is swung 9 degrees out
+  from the chest (`arm_open_deg`; set by eye, not from the study). The clips were captured on a slimmer body.
+- Lean: he leans into a turn by tan(lean) = speed x turn rate / g, capped at what was measured on people (6.8 degrees
+  at a normal walk, 13 at a run).
+
 Not done yet, and known: no automatic test of foot sliding; no start, stop or turn clips (the body's speed changes
-but the legs just blend); no lean; no foot IK on stairs and slopes; no running-jump clip (missing from the download);
+but the legs just blend); no foot IK on stairs and slopes; no running-jump clip (missing from the download);
 he can still steer during a landing.
 
 ## Stage 1: the body alone
@@ -83,7 +88,9 @@ in floating mode it keeps full speed along a wall), so the body slides by its ow
 | a walk reaches about 90 % of its speed on the first step, steady by the third | 90 % of walking speed after about 0.55 s |
 | a walk stops in under two steps | stops from a walk in 0.6 s |
 | stopping from a flat-out run: 5 steps, 2.9 m | brakes at 6.2 m/s2 from a run: 0.73 s and 1.6 m from 4.5 m/s |
-| people slow down and lean into curves (6.8 deg at normal walking speed); the turn clips curve 36 deg a stride | the path curves no faster than that: about 50 deg a second at a walk, 40 at a run |
+| a sharp turn is a step or spin turn of about 75 deg a step, made within one step; his Walking Turn 180 clip takes 1.00 s and Running Turn 180 0.67 s; over 300 deg a second is outside the data | the heading turns at 180 deg a second at a walk and 270 at a run (`tests/test_turn.gd`: a right angle in 0.47 s walking, 0.30 s running). The first version used the gentle-curve figure (36 deg a stride) for every turn, which Yasin found "very very slow" |
+| people slow to turn (0.96 m/s on a 1 m circle against 1.61 straight) and a sudden turn starts with braking | up to 40 % of the speed is given up in a right-angle turn; a turn-round at a run brakes to 2.0 m/s first (that 2.0 is not from the study) |
+| people lean into a corner by 4.4, 6.8 and 12.7 deg at slow, normal and fast walking; 13.6 deg on a sprinted curve | the figure leans about its feet, capped at 6.8 deg walking and 13 running |
 | people do not reverse at speed | asked to go nearly the opposite way, it brakes first |
 | kerbs 0.10 to 0.20 m, risers to 0.25 m are walked over; 0.30 m is the top of "walk over it" | anything up to 0.30 m is stepped onto, 0.35 m and above is a wall |
 | real streets reach 19 deg | walks 19 deg; ground steeper than 28 deg cannot be stood on (the 28 is NOT in the study) |
@@ -100,5 +107,5 @@ The automatic test checks heights, speeds, states and a ten-minute random walk. 
 4. **Walls** (22 onward): run into one head-on and at an angle. It should stop or slide along, with no shaking.
 5. **Ledges** (stations 15, 16): walk up the stairs and off the side of the top landing. It should fall at once
    and land without a bounce. Walking off a kerb should be a step down, not a fall.
-6. **Weight**: this is the main one. Starting takes about a step, stopping from a run takes a few strides, and it turns
-   in an arc, not on a pin. Say if that feels too heavy or too light; those three values are easy to change.
+6. **Weight**: this is the main one. Starting takes about a step, stopping from a run takes a few strides, and a
+   turn takes about a step (a turn-round at a run brakes first). Say if that feels too heavy or too light.

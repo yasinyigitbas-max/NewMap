@@ -47,6 +47,16 @@ func _run() -> void:
 	lab.set(&"_yaw", deg_to_rad(90.0))
 	lab.set(&"_pitch", deg_to_rad(-6.0))
 	lab.set(&"_dist", 3.6)
+	var yaw := 90.0
+	var arm := -1.0
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--yaw="):
+			yaw = float(a.split("=")[1])
+		if a.begins_with("--arm="):
+			arm = float(a.split("=")[1])
+	lab.set(&"_yaw", deg_to_rad(yaw))
+	if arm >= 0.0:
+		(lab.get(&"character") as Node).set(&"arm_open_deg", arm)
 	for i in 40:
 		await physics_frame
 	await snap("idle")

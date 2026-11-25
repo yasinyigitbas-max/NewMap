@@ -21,10 +21,18 @@ const START_TIME_WALK := 0.24   # "about 90 % of its speed on the first step" (a
 const START_TIME_RUN := 0.60    # NOT in the study (steps to reach a run were not found): a value to tune by eye
 const STOP_WALK := 2.3          # m/s2: "a walk stops in under two steps" -> from 1.4 m/s in 0.6 s
 const STOP_RUN := 6.2           # m/s2: "5 steps and 2.9 m" from a flat-out run (about 6 m/s)
-const TURN_ACC_WALK := 1.2      # m/s2 sideways: people lean 6.8 deg into a corner at normal walking speed; the
-                                # Walking Left Turn clip curves 36 deg per 1.2 s stride at 1.4 m/s
-const TURN_ACC_RUN := 3.2       # the Running Left / Right Turn clips curve 35.7 deg per 0.77 s stride at 4.0 m/s
-const REVERSE_ANGLE_DEG := 100.0  # asked to go nearly the opposite way: brake first, as people do, then go
+# Turning (changed 25 Nov after Yasin's play-test: "very very slow to turn"). The first version capped every turn
+# at the gentle arc of the Walking / Running Left Turn clips (36 deg a stride = 30 to 46 deg a second). That is how
+# people follow a curve, not how they turn a corner: the study's sharp turns are step and spin turns of about
+# 75 deg a step, done "within one step of the cue" and "without resetting the walking rhythm".
+const TURN_RATE_WALK := 3.14    # rad/s: his Walking Turn 180 clip turns 180 deg in 1.00 s; 75 deg a 0.6 s step = 125 deg/s
+const TURN_RATE_RUN := 4.7      # rad/s: his Running Turn 180 clip turns 180 deg in 0.67 s (270 deg/s, the top of the
+                                # 137 to 272 deg/s measured; over 300 deg/s is outside the data)
+const TURN_SLOW := 0.6          # people slow to turn: 0.96 m/s on a 1 m circle against 1.61 m/s straight
+const TURN_SLOW_ANGLE_DEG := 90.0   # the full slow-down applies from a right-angle turn up
+const REVERSE_ANGLE_DEG := 135.0  # asked to go nearly the opposite way at a run: "a sudden turn starts with a braking
+                                # action like a rapid stop" - brake to REVERSE_SPEED first, then turn round
+const REVERSE_SPEED := 2.0      # NOT in the study: the speed he may carry into the turn-round; a value to tune by eye
 const RISE_SPEED := 2.4         # how fast the feet follow ground that rises (m/s): 4 cm a tick
 const SINK_SPEED := 3.0         # and ground that falls away
 const GRAVITY := 9.8
@@ -228,7 +236,8 @@ func _physics_process(dt: float) -> void:
 
 
 ## Speed and heading on the ground, as the study describes them: speed builds over the first steps and is shed at
-## a human braking rate; the path curves no faster than a person leans into a turn; a near-reversal brakes first.
+## a human braking rate; the heading turns at the rate of a step turn and speed is given up in a sharp turn; a
+## near-reversal at a run brakes first.
 func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 	var speed := v.length()
 	var want := wish.length()
@@ -243,13 +252,15 @@ func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 		return wdir * speed
 	var dir := v / speed
 	var ang := dir.angle_to(wdir)
-	if ang > deg_to_rad(REVERSE_ANGLE_DEG):
+	if ang > deg_to_rad(REVERSE_ANGLE_DEG) and speed > REVERSE_SPEED:
 		return dir * maxf(speed - brake * dt, 0.0)
-	var turn := minf(lerpf(TURN_ACC_WALK, TURN_ACC_RUN, fast) / speed, 6.0) * dt
+	var turn := lerpf(TURN_RATE_WALK, TURN_RATE_RUN, fast) * dt
 	if ang > 0.0001:
 		var axis := dir.cross(wdir)
 		axis = Vector3.UP if axis.length() < 0.0001 else axis.normalized()
 		dir = dir.rotated(axis, minf(ang, turn)).normalized()
+	# the sharper the turn still to make, the more speed is given up for it
+	want *= lerpf(1.0, TURN_SLOW, clampf(ang / deg_to_rad(TURN_SLOW_ANGLE_DEG), 0.0, 1.0))
 	if want > speed:
 		speed += (want - speed) * (1.0 - exp(-dt / lerpf(START_TIME_WALK, START_TIME_RUN, fast)))
 	else:
