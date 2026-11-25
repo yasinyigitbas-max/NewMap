@@ -59,8 +59,18 @@ func _mark(c: Dictionary, kind: String) -> void:
 		"start":
 			var lift := _first_lift(c)
 			c["move_a"] = float(max(lift - 6, 0))   # weight shift ~0.2 s before the first foot lifts (study 2.3/1)
+			# hand over to the loop at the first strike where the start has (nearly) reached its walking speed, so the
+			# loop takes over without a jump in speed (study 4.2: leave a clip at a matching pose)
 			var after := strikes.filter(func(s): return s[0] > lift)
-			var ex = after[min(1, after.size() - 1)] if after.size() > 0 else [nf - 1, 0]
+			var vmax := 0.0
+			var vs := {}
+			for sk in after:
+				var f0: int = max(sk[0] - 4, 1)
+				var v: float = _root_dist(c, f0, sk[0]) / ((sk[0] - f0) / fps)
+				vs[sk[0]] = v; vmax = max(vmax, v)
+			var ex = after[after.size() - 1] if after.size() > 0 else [nf - 1, 0]
+			for sk in after:
+				if vs[sk[0]] >= 0.85 * vmax and sk != after[0]: ex = sk; break
 			c["exit_f"] = float(ex[0]); c["exit_phase"] = 0.0 if ex[1] == 0 else 0.5
 		"stop", "pivot":
 			if strikes.size() > 0:

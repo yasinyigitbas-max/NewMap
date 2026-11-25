@@ -44,10 +44,14 @@ void PoseLayer::find_bones() {
 		HAND[s] = sk->find_bone(p + "Hand");
 		leg_len[s][0] = sk->get_bone_rest(LO[s]).origin.length();
 		leg_len[s][1] = sk->get_bone_rest(FOOT[s]).origin.length();
+		foot_rest_h = sk->get_bone_global_rest(FOOT[s]).origin.y;
+		toe_rest_h = sk->get_bone_global_rest(TOE[s]).origin.y;
 	}
 	// skeleton units -> metres: the Armature node's scale (player_v3: 0.01)
 	Node3D *par = Object::cast_to<Node3D>(sk->get_parent());
 	scale = par ? par->get_transform().basis.get_scale().x : 0.01f;
+	foot_rest_h *= scale;
+	toe_rest_h *= scale;
 	ready_idx = H >= 0 && HEAD >= 0 && UP[0] >= 0 && UP[1] >= 0;
 }
 
@@ -65,7 +69,7 @@ static Quaternion arc(const Vector3 &a, const Vector3 &b) {
 	if (d < -0.9999f) {
 		Vector3 ax = an.cross(Vector3(1, 0, 0));
 		if (ax.length_squared() < 1e-6f) ax = an.cross(Vector3(0, 0, 1));
-		return Quaternion(ax.normalized(), (float)Math_PI);
+		return Quaternion(ax.normalized(), 3.14159265f);
 	}
 	return Quaternion(an, bn);
 }
@@ -186,41 +190,63 @@ void PoseLayer::_process_modification_with_delta(double p_delta) {
 			const float along = off.dot(vdir);
 			fw += vdir * (along * (in.stride_scale - 1.0f));
 		}
-		fw.y = in.ground_y[s] + clip_h;
-		// foot lock while the clip says the foot is down (study 4.1)
+		// never through the floor: heel and ball stay at or above their standing heights (study 4.6/3)
+		const float toe_h = sk->get_bone_global_pose(TOE[s]).origin.y * s_m;
+		const float lift = std::max(std::max(0.0f, foot_rest_h - clip_h), std::max(0.0f, toe_rest_h - toe_h));
+		fw.y = in.ground_y[s] + clip_h + lift;
+		// foot lock while the clip says the foot is down (study 4.1): a correction offset keeps the contact point still.
+		// The contact point is the heel (ankle) while it is down and moves to the ball (toe) as the heel lifts, so a
+		// heel-off pivots on the toes instead of dragging them (study 2.1 terminal stance).
+		Vector3 tw = skw.xform(sk->get_bone_global_pose(TOE[s]).origin) + (fw - skw.xform(gf.origin));
+		tw.y = fw.y;
+		const float heel_up = std::clamp((clip_h - foot_rest_h - 0.01f) / 0.04f, 0.0f, 1.0f);
 		if (layers & 2) {
 			if (in.contact[s]) {
-				if (!locked[s]) {
-					locked[s] = true;
-					lock_pos[s] = fw;
+				if (locked[s] && have_prev[s]) {
+					const Vector3 pp = prev_a[s].lerp(prev_t[s], heel_up);
+					const Vector3 pn = fw.lerp(tw, heel_up);
+					corr[s] -= Vector2(pn.x - pp.x, pn.z - pp.z);
+					const float cl = corr[s].length();
+					if (cl > 0.35f) corr[s] *= 0.35f / cl; // a spin or teleport: let it slip rather than stretch
 				}
-				Vector3 lp = lock_pos[s];
-				if (Vector2(lp.x - fw.x, lp.z - fw.z).length() > 0.30f) {
-					// too far from where the clip wants it (a spin, a teleport): let go
-					lock_pos[s] = fw;
-					lp = fw;
-				}
-				fw.x = lp.x;
-				fw.z = lp.z;
+				locked[s] = true;
 			} else {
-				if (locked[s]) {
-					locked[s] = false;
-					unlock_blend[s] = 1.0f;
-				}
-				if (unlock_blend[s] > 0) {
-					fw.x = fw.x + (lock_pos[s].x - fw.x) * unlock_blend[s];
-					fw.z = fw.z + (lock_pos[s].z - fw.z) * unlock_blend[s];
-					unlock_blend[s] = std::max(0.0f, unlock_blend[s] - dt / 0.12f);
-				}
+				locked[s] = false;
+				corr[s] *= std::exp(-dt / 0.08f); // ease back to the clip's own swing
 			}
+			prev_a[s] = fw;
+			prev_t[s] = tw;
+			have_prev[s] = true;
+			fw.x += corr[s].x;
+			fw.z += corr[s].y;
 		}
 		foot_world[s] = fw;
 		tgt_sk[s] = skw_inv.xform(fw);
-		// pole: in front of the knee along the foot's forward (knee over the toes)
+		// pole: in front of the knee, over the toes (study 1.2/3). Only the foot's yaw counts, clamped to +-40 deg of
+		// the body's forward: after toe-off the foot points down and back and must not swing the knee backward.
 		const Vector3 toe_dir = gf.basis.xform(sk->get_bone_rest(TOE[s]).origin).normalized();
-		Vector3 fwd_h(toe_dir.x, 0, toe_dir.z);
-		if (fwd_h.length_squared() < 1e-6f) fwd_h = Vector3(0, 0, 1);
-		pole_sk[s] = gk.origin + fwd_h.normalized() * (40.0f);
+		float fy = std::atan2(toe_dir.x, toe_dir.z);
+		if (std::fabs(fy) > 1.4f || Vector2(toe_dir.x, toe_dir.z).length() < 0.2f) fy = 0.0f;
+		fy = std::clamp(fy, -0.7f, 0.7f);
+		pole_sk[s] = gk.origin + Vector3(std::sin(fy), 0, std::cos(fy)) * 40.0f;
+	}
+
+	// pelvis drop: if a planted foot can't be reached, lower the hips a little (up to 5 cm, smoothed) rather than
+	// drag the foot or lock the knee straight (study 2.6 "the pelvis takes the lower foot's height", 4.1)
+	if (layers & 2) {
+		const Transform3D ghp = sk->get_bone_global_pose(H);
+		float need = 0;
+		for (int s = 0; s < 2; s++) {
+			const Vector3 hipj = sk->get_bone_global_pose(UP[s]).origin;
+			const float L = leg_len[s][0] + leg_len[s][1];
+			const float d = hipj.distance_to(tgt_sk[s]);
+			need = std::max(need, d - 0.985f * L);
+		}
+		const float target_drop = std::clamp(need, 0.0f, 5.0f / scale * 0.01f); // skeleton units (5 cm)
+		spring_to(pelvis_drop, pelvis_drop_v, target_drop, 0.05f, dt);
+		Transform3D gh2 = ghp;
+		gh2.origin.y -= pelvis_drop;
+		sk->set_bone_global_pose(H, gh2);
 	}
 
 	// 4. whole-body lean from the feet: atan(a/g) forward/back, atan(v^2/(g r)) into the turn (study 2.5, 4.5)
@@ -245,7 +271,7 @@ void PoseLayer::_process_modification_with_delta(double p_delta) {
 
 	// 6. head: leads the turn toward the stick (0.2-0.3 s ahead, study 2.5) and stays level (study 1.2/6)
 	if (layers & 4) {
-		float rel = std::remainder(in.head_yaw_target - in.body_yaw, (float)Math_TAU);
+		float rel = std::remainder(in.head_yaw_target - in.body_yaw, 6.28318531f);
 		rel = std::clamp(rel, -1.2f, 1.2f);
 		spring_to(head_yaw, head_yaw_v, rel, 0.05f, dt);
 		head_yaw_deg = (float)Math::rad_to_deg(head_yaw);

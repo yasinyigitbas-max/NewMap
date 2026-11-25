@@ -31,6 +31,7 @@ public:
 
 	// test harness
 	void set_test_input(godot::Vector2 dir_world, float speed, bool active);
+	void teleport(godot::Vector3 pos, float yaw);
 	int get_mode() const { return (int)loco.mode; }
 	godot::String get_clip() const { return godot::String(loco.clip_name); }
 	float get_speed() const { return loco.velocity.length(); }

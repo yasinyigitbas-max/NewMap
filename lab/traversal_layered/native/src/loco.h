@@ -54,6 +54,11 @@ private:
 	const Clip *run_pivot[2] = {}, *walk_pivot[2] = {}, *run_start_turn[2] = {};
 
 	Inertializer inert;
+	Pose stance;               // legs + hips held in idle after a stop (layered idle, DECISIONS 3.8)
+	bool has_stance = false;
+	std::vector<int> lower;    // bone indices of the hips and legs
+	void idle_pose(float t, Pose &out);
+	void capture_stance();
 	Pose src, src_old, tmp_a, tmp_b;
 
 	const Clip *cur = nullptr; // clip of a root-motion mode
@@ -75,7 +80,7 @@ private:
 	void enter_start(float dt, float ang, float want_speed);
 	void enter_stop(float dt);
 	void enter_pivot(float dt, float ang);
-	void root_motion_step(float dt, float steer_rate, float target_yaw);
+	void root_motion_step(float dt, float steer_rate, float target_yaw, float end_t);
 	static float wrap_pi(float a);
 };
 

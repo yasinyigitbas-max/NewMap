@@ -20,9 +20,9 @@ static const float START_STEER = 7.0f;  // rad/s: start orientation warp (spin o
 static const float RUN_GAIT = 2.3f;     // above this desired speed a start / stop / pivot uses the run clips (2.2)
 
 float Locomotion::wrap_pi(float a) {
-	a = std::fmod(a + (float)Math_PI, (float)Math_TAU);
-	if (a < 0) a += (float)Math_TAU;
-	return a - (float)Math_PI;
+	a = std::fmod(a + 3.14159265f, 6.28318531f);
+	if (a < 0) a += 6.28318531f;
+	return a - 3.14159265f;
 }
 
 static const Clip *get2(const ClipLibrary *lib, const char *n) {
@@ -55,6 +55,14 @@ bool Locomotion::init(const ClipLibrary *l) {
 	if (!idle || loops.count == 0) return false;
 	pose.resize(B);
 	pose_old.resize(B);
+	lower.clear();
+	for (int i = 0; i < B; i++) {
+		const std::string &n = lib->bone_names[i];
+		if (n == "Hips" || n.find("UpLeg") != std::string::npos || n.find("Leg") != std::string::npos ||
+				n.find("Foot") != std::string::npos || n.find("ToeBase") != std::string::npos) {
+			lower.push_back(i);
+		}
+	}
 	src.resize(B);
 	src_old.resize(B);
 	inert.reset(B);
@@ -63,6 +71,21 @@ bool Locomotion::init(const ClipLibrary *l) {
 	mode = Mode::IDLE;
 	clip_name = "idle";
 	return true;
+}
+
+// ---- layered idle: after a stop the legs keep the stop's last stance, the upper body plays the idle clip ----
+void Locomotion::idle_pose(float tt, Pose &out) {
+	idle->sample(tt, B, out);
+	if (!has_stance) return;
+	for (int i : lower) out.rot[i] = stance.rot[i];
+	out.hips = stance.hips;
+}
+
+void Locomotion::capture_stance() {
+	if (!cur) return;
+	stance.resize(B);
+	cur->sample(std::fmin(t, cur->length()), B, stance);
+	has_stance = true;
 }
 
 // ---- loops: phase-synced blend by speed (study 4.1, 6.5) ----
@@ -121,8 +144,8 @@ void Locomotion::sample_source(float dt_back) {
 	int dom;
 	switch (mode) {
 		case Mode::IDLE:
-			idle->sample(idle_t, B, src);
-			idle->sample(std::fmax(idle_t - dt_back, 0.0f), B, src_old);
+			idle_pose(idle_t, src);
+			idle_pose(std::fmax(idle_t - dt_back, 0.0f), src_old);
 			break;
 		case Mode::LOOP: {
 			loop_pose(phase, speed, src, dom);
@@ -138,6 +161,8 @@ void Locomotion::sample_source(float dt_back) {
 }
 
 void Locomotion::switch_to(Mode m, float dt) {
+	if (m == Mode::IDLE && mode != Mode::IDLE && mode != Mode::LOOP) capture_stance();
+	if (m != Mode::IDLE) has_stance = false;
 	mode = m;
 	sample_source(dt);
 	// the new source's pose relative to the capsule: the hips are expressed in each clip's root frame, so the offset
@@ -230,13 +255,13 @@ void Locomotion::enter_pivot(float dt, float ang) {
 }
 
 // ---- root-motion modes: the capsule follows the clip's root, steered toward the stick (orientation warping) ----
-void Locomotion::root_motion_step(float dt, float steer_rate, float target_yaw) {
+void Locomotion::root_motion_step(float dt, float steer_rate, float target_yaw, float end_t) {
 	const float t0 = t;
 	t = std::fmin(t + dt * rate, cur->length());
 	const RootSample a = cur->root_at(t0), b = cur->root_at(t);
 	if (steer_rate > 0) {
 		// where the clip will face at its end, if align stays: steer align so that equals the target
-		const float end_yaw = align + cur->root_at(cur->length()).yaw;
+		const float end_yaw = align + cur->root_at(end_t).yaw;
 		const float err = wrap_pi(target_yaw - end_yaw);
 		const float step = std::clamp(err, -steer_rate * dt, steer_rate * dt);
 		align += step;
@@ -288,12 +313,10 @@ void Locomotion::tick(float dt, Vector2 dir, float want) {
 				switch_to(Mode::IDLE, dt);
 				break;
 			}
-			root_motion_step(dt, START_STEER, desired_yaw);
+			root_motion_step(dt, START_STEER, desired_yaw, cur->exit_f / cur->fps);
 			if (t >= cur->exit_f / cur->fps || t >= cur->length()) {
 				phase = cur->exit_phase;
-				speed = std::fmax(speed, loops.clip[0]->speed * 0.8f);
-				const float s = speed;
-				velocity = Vector2(std::sin(yaw), std::cos(yaw)) * s;
+				velocity = Vector2(std::sin(yaw), std::cos(yaw)) * speed;
 				clip_name = "loop";
 				switch_to(Mode::LOOP, dt);
 			}
@@ -337,7 +360,7 @@ void Locomotion::tick(float dt, Vector2 dir, float want) {
 				}
 				break;
 			}
-			root_motion_step(dt, 0.0f, yaw);
+			root_motion_step(dt, 0.0f, yaw, cur->length());
 			if (t >= cur->still_f / cur->fps + 0.15f || t >= cur->length()) {
 				velocity = Vector2();
 				speed = 0;
@@ -348,14 +371,13 @@ void Locomotion::tick(float dt, Vector2 dir, float want) {
 			break;
 		}
 		case Mode::PIVOT: {
-			root_motion_step(dt, START_STEER * 0.6f, has_input ? desired_yaw : yaw);
+			root_motion_step(dt, START_STEER * 0.6f, has_input ? desired_yaw : yaw, cur->exit_f / cur->fps);
 			if (t >= cur->exit_f / cur->fps || t >= cur->length()) {
 				if (!has_input) {
 					enter_stop(dt);
 					break;
 				}
 				phase = cur->exit_phase;
-				speed = std::fmax(speed, 1.0f);
 				velocity = Vector2(std::sin(yaw), std::cos(yaw)) * speed;
 				clip_name = "loop";
 				switch_to(Mode::LOOP, dt);
@@ -368,7 +390,7 @@ void Locomotion::tick(float dt, Vector2 dir, float want) {
 	int dom = 0;
 	switch (mode) {
 		case Mode::IDLE:
-			idle->sample(idle_t, B, src);
+			idle_pose(idle_t, src);
 			contact[0] = contact[1] = true;
 			stride_scale = 1;
 			play_rate = 1;
@@ -407,9 +429,10 @@ void Locomotion::tick(float dt, Vector2 dir, float want) {
 	const Vector2 fwd(std::sin(yaw), std::cos(yaw));
 	const Vector2 side(fwd.y, -fwd.x);
 	const Vector2 a = (velocity - prev_vel) / dt;
-	accel_long = a.dot(fwd);
+	const float k = 1.0f - std::exp(-dt / 0.1f); // 0.1 s low-pass: the lean follows the push, not the tick noise
+	accel_long += (a.dot(fwd) - accel_long) * k;
 	const float yaw_rate = wrap_pi(yaw - prev_yaw) / dt;
-	accel_lat = velocity.length() * yaw_rate; // centripetal, positive = turning left (study 2.5)
+	accel_lat += (velocity.length() * yaw_rate - accel_lat) * k; // centripetal, + = turning left (study 2.5)
 	(void)side;
 }
 

@@ -38,10 +38,12 @@ public:
 	int get_ik_clamped() const { return ik_clamped; }
 	void set_layers(int mask) { layers = mask; }
 	int get_layers() const { return layers; }
+	void reset_lock() { for (int s = 0; s < 2; s++) { corr[s] = godot::Vector2(); have_prev[s] = false; locked[s] = false; } }
+
+	void _process_modification_with_delta(double p_delta) override;
 
 protected:
 	static void _bind_methods();
-	void _process_modification_with_delta(double p_delta) override;
 
 private:
 	bool ready_idx = false;
@@ -54,11 +56,15 @@ private:
 
 	// lock state
 	bool locked[2] = {false, false};
-	godot::Vector3 lock_pos[2];   // world
-	float unlock_blend[2] = {0, 0};
+	godot::Vector2 corr[2];       // foot-lock correction (world XZ, metres)
+	godot::Vector3 prev_a[2], prev_t[2];
+	bool have_prev[2] = {false, false};
+	float foot_rest_h = 0.17f;    // ankle height standing (metres)
+	float toe_rest_h = 0.05f;     // toe-ball height standing (metres)
 	godot::Vector3 foot_world[2];
 
 	// smoothed layers
+	float pelvis_drop = 0, pelvis_drop_v = 0;
 	float lean_f = 0, lean_s = 0, lean_fv = 0, lean_sv = 0;
 	float head_yaw = 0, head_yaw_v = 0;
 	float lean_total_deg = 0, head_yaw_deg = 0;
