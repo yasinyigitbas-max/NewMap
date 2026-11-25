@@ -11,6 +11,9 @@ ONLY the new map: hand-made, locked city-kit pieces, the kit assets they are bui
 4. Interiors: `.claude/skills/coronado-city-interiors/SKILL.md`.
 5. Before building, checking, fixing or reporting anything: `.claude/skills/coronado-super-builder/SKILL.md` (19 Nov:
    no generators, one fix = one thing changed, what each check cannot see, the outdoor and indoor audits, the land).
+6. Player movement, traversal, animation clips (Mixamo, Kimodo) or the player character (Meshy): read
+   `reports/TRAVERSAL STATUS.md` first (branch `claude/intelligent-bardeen-errnbs` until it is merged). It holds Yasin's
+   rules for that work, the decisions made, what is waiting on him and the next steps (25 Nov).
 
 ## The rules that matter most (Yasin)
 - Act as architect, road / city planner and exterior designer at once; every prop has a reason. Lively, worn, varied.
