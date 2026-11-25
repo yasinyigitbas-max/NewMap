@@ -37,6 +37,13 @@ const REVERSE_ANGLE_DEG := 135.0  # asked to go nearly the opposite way at a run
 # first, at the turn rates above; he sets off when within SPOT_END.
 const SPOT_START_DEG := 60.0    # NOT in the study: below this he just sets off and curves; a value to tune by eye
 const SPOT_END_DEG := 15.0      # NOT in the study
+# Stairs are their own movement: "stairs are climbed at about half a second per step: 0.51 s up and 0.47 s down".
+# The running figures are his own clips: Running Up Stairs takes 0.30 s a step, Run Down Stairs 0.20 s.
+const STEP_TIME_UP := 0.51
+const STEP_TIME_DOWN := 0.47
+const STEP_TIME_RUN_UP := 0.30
+const STEP_TIME_RUN_DOWN := 0.20
+const TREAD := 0.28             # a tread is at least 0.28 m (US accessible); used until the stairs have been measured
 const REVERSE_SPEED := 2.0      # NOT in the study: the speed he may carry into the turn-round; a value to tune by eye
 const RISE_SPEED := 2.4         # how fast the feet follow ground that rises (m/s): 4 cm a tick
 const SINK_SPEED := 3.0         # and ground that falls away
@@ -68,6 +75,14 @@ var _jump_held := false
 var _air_peak := 0.0
 var _jump_still := false
 var _look: Array[Node3D] = []
+var stairs := 0                 # +1 going up stairs, -1 going down, 0 not on stairs
+var stair_tread := TREAD        # the depth of a step, measured from the last two edges crossed
+var stair_edge := Vector3.ZERO  # where the last step edge was crossed
+var stair_dir := Vector3.ZERO   # the way along the stairs
+var stair_count := 0            # step edges crossed on these stairs
+var _ray_y := 0.0
+var _ray_ok := false
+var _since_edge := 99.0
 var spot_total := 0.0           # the on-the-spot turn being made (radians, + = to his left); 0 = none
 var spot_left := 0.0            # how much of it is still to turn
 
@@ -164,6 +179,11 @@ func _is_steep(g: Dictionary) -> bool:
 	var down := Vector3(n.x, 0.0, n.z)
 	if down.length() < 0.001:
 		return false
+	# a stair edge: the surface straight under him is level, whatever the rounded probe says of its edge (stairs of
+	# 0.18 / 0.28 m lie along a 33 degree line, and taken a step at a time he would be held on them as "too steep")
+	var under := _ray_down(Vector3(global_position.x, float(g["y"]), global_position.z))
+	if not under.is_empty() and acos(clampf((under["normal"] as Vector3).y, -1.0, 1.0)) <= deg_to_rad(SLOPE_LIMIT_DEG):
+		return false
 	down = down.normalized()
 	var rise := tan(angle) * 0.2
 	var feet := Vector3(global_position.x, float(g["y"]), global_position.z)
@@ -180,6 +200,10 @@ func _physics_process(dt: float) -> void:
 	if stick.length() > 1.0:
 		stick = stick.normalized()
 	_wish = stick.rotated(Vector3.UP, float(s.get("yaw", 0.0))) * (RUN if bool(s.get("run", false)) else WALK)
+
+	_find_stairs(dt)
+	if stairs != 0 and _wish.length() > 0.05:
+		_wish = _wish.limit_length(_stair_speed(_wish.length() > WALK + 0.1))
 
 	# jump: a push-off first, then the body leaves the ground
 	var jump_now := bool(s.get("jump", false))
@@ -285,6 +309,67 @@ func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 	else:
 		speed = maxf(speed - brake * dt, want)
 	return dir * speed
+
+
+func _ray_down(at: Vector3) -> Dictionary:
+	var q := PhysicsRayQueryParameters3D.create(at + Vector3(0.0, 0.6, 0.0), at - Vector3(0.0, 0.8, 0.0), collision_mask, [get_rid()])
+	return get_world_3d().direct_space_state.intersect_ray(q)
+
+
+## Is he on stairs? Three rays (under him, 0.35 m and 0.70 m ahead) on level surfaces at heights that step the same
+## way twice. A kerb is one step, not stairs; a ramp is not level. Step edges are noted as he crosses them.
+func _find_stairs(dt: float) -> void:
+	var speed := hvel.length()
+	var dir := hvel / speed if speed > 0.2 else (_wish.normalized() if _wish.length() > 0.05 else Vector3.ZERO)
+	var here := _ray_down(global_position)
+	if state != State.GROUND or here.is_empty() or dir == Vector3.ZERO:
+		stairs = 0
+		_ray_ok = false
+		return
+	var y := (here["position"] as Vector3).y
+	_since_edge += speed * dt
+	if _ray_ok and absf(y - _ray_y) > 0.06 and (here["normal"] as Vector3).y > 0.98:
+		if _since_edge > 0.15 and _since_edge < 0.45 and stairs != 0:
+			stair_tread = _since_edge
+		_since_edge = 0.0
+		stair_edge = global_position
+		stair_count += 1
+	_ray_y = y
+	_ray_ok = true
+	var a := _ray_down(global_position + dir * 0.35)
+	var b := _ray_down(global_position + dir * 0.70)
+	var way := 0
+	if not a.is_empty() and not b.is_empty() and (a["normal"] as Vector3).y > 0.98 and (b["normal"] as Vector3).y > 0.98:
+		var d1 := (a["position"] as Vector3).y - y
+		var d2 := (b["position"] as Vector3).y - (a["position"] as Vector3).y
+		if d1 > 0.08 and d2 > 0.08:
+			way = 1
+		elif d1 < -0.08 and d2 < -0.08:
+			way = -1
+	if way != 0:
+		if stairs != way:
+			stair_tread = TREAD
+			stair_count = 0
+			# where the first edge is: look ahead in small steps, once
+			stair_edge = global_position
+			var last_y := y
+			for i in range(1, 26):
+				var r := _ray_down(global_position + dir * (i * 0.02))
+				if not r.is_empty() and absf((r["position"] as Vector3).y - last_y) > 0.06:
+					stair_edge = global_position + dir * (i * 0.02 - TREAD)
+					break
+			_since_edge = (global_position - stair_edge).dot(dir)
+		stairs = way
+		stair_dir = dir
+	elif stairs != 0 and _since_edge > stair_tread * 1.3:
+		stairs = 0       # no edge for more than a step: the stairs have ended
+
+
+## The most he asks of himself on stairs: one step in the study's step time.
+func _stair_speed(run: bool) -> float:
+	if stairs > 0:
+		return stair_tread / (STEP_TIME_RUN_UP if run else STEP_TIME_UP)
+	return stair_tread / (STEP_TIME_RUN_DOWN if run else STEP_TIME_DOWN)
 
 
 ## How far he would still travel if the stick were let go now (the braking above, run forward).

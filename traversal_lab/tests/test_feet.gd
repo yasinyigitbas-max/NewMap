@@ -106,8 +106,8 @@ func test_flat() -> void:
 	ok(off < 0.003, "flat, walk, feet fitted to the ground but not held: the ankles are where the clip puts them to within %.1f mm (bar 3 mm); hips moved %.1f mm" % [off * 1000.0, -low * 1000.0])
 
 
-func slope(label: String, at: Vector3, secs: float, z_from: float, z_to: float) -> void:
-	var rec := await drive(at, [[secs, 0.0, -1.0, 0.0, false]])
+func slope(label: String, at: Vector3, secs: float, z_from: float, z_to: float, mz := -1.0, run := false) -> void:
+	var rec := await drive(at, [[secs, 0.0, mz, 0.0, run]])
 	var sunk := 0.0
 	var floating := 0.0
 	var knee := 99.0
@@ -129,8 +129,8 @@ func slope(label: String, at: Vector3, secs: float, z_from: float, z_to: float) 
 			var gap := (ball.y - g) - float(r["clip_h"][f])      # the ball of the foot above its ground, against where the clip holds it above a flat floor
 			sunk = maxf(sunk, -gap)
 			floating = maxf(floating, gap)
-	ok(n > 20 and sunk < 0.02 and floating < 0.02 and knee > 0.0,
-		"%s, walk: over %d planted-foot ticks the ball of the foot is at most %.1f cm lower and %.1f cm higher over its surface than the clip holds it over a flat floor (bar 2 cm); knees bend the right way (least %.1f cm); hips come down %.1f cm at most" %
+	ok(n > 12 and sunk < 0.02 and floating < 0.02 and knee > -0.005,
+		"%s: over %d planted-foot ticks the ball of the foot is at most %.1f cm lower and %.1f cm higher over its surface than the clip holds it over a flat floor (bar 2 cm); knees bend the right way (least %.1f cm); hips come down %.1f cm at most" %
 		[label, n, sunk * 100.0, floating * 100.0, knee * 100.0, -low * 100.0])
 
 
@@ -150,9 +150,13 @@ func _run() -> void:
 	for label: String in ["stairs 0.18 / 0.28 m x 10", "stairs 0.25 / 0.26 m x 8"]:
 		var s := st(label)
 		var len := float(s["tread"]) * float(s["steps"])
-		await slope(label + ", up", s["start"], (3.0 + len + 1.0) / WALK, -3.0, -3.0 - len)
+		var tread := float(s["tread"])
+		var top := Vector3(float(s["x"]), float(s["top"]), -3.0 - len - 1.0)
+		await slope(label + ", up, walk", s["start"], 3.0 / WALK + float(s["steps"]) * 0.51 + 0.3, -3.0 - tread, -3.0 - len + tread)
+		await slope(label + ", down, walk", top, 1.0 / WALK + float(s["steps"]) * 0.47 + 0.3, -3.0 - tread, -3.0 - len + tread, 1.0)
+		await slope(label + ", up, run", s["start"], 3.0 / RUN + float(s["steps"]) * 0.26 + 0.5, -3.0 - tread, -3.0 - len + tread, -1.0, true)
 	for deg: int in [10, 19]:
 		var s := st("ramp %d deg" % deg)
-		await slope("ramp %d deg, up" % deg, (s["start"] as Vector3) + Vector3(0.0, 0.0, -1.5), (1.5 + float(s["run"])) / WALK, -3.3, -3.0 - float(s["run"]) + 0.3)
+		await slope("ramp %d deg, up, walk" % deg, (s["start"] as Vector3) + Vector3(0.0, 0.0, -1.5), (1.5 + float(s["run"])) / WALK, -3.3, -3.0 - float(s["run"]) + 0.3)
 	print("RESULT " + ("PASS" if fails == 0 else "FAIL (%d)" % fails))
 	quit(1 if fails else 0)

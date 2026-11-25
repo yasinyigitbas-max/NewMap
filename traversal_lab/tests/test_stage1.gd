@@ -35,7 +35,7 @@ func st(label: String) -> Dictionary:
 
 
 ## Put the body at `at`, let it settle, play `segments` ([seconds, mx, mz, yaw_deg, run]) and return one record a tick.
-func drive(at: Vector3, segments: Array) -> Array:
+func drive(at: Vector3, segments: Array, until_y := -1000.0, until_below := false) -> Array:
 	lab.call(&"place", at)
 	body.rotation.y = 0.0
 	for i in 20:
@@ -46,6 +46,13 @@ func drive(at: Vector3, segments: Array) -> Array:
 	while int(tape.get(&"mode")) == 2:
 		await physics_frame
 		rec.append({"p": body.global_position, "s": int(body.get(&"state")), "v": (body.get(&"hvel") as Vector3).length()})
+		# stairs: the stick is let go when he arrives, however long the stairs took
+		if until_y > -999.0 and (body.global_position.y <= until_y if until_below else body.global_position.y >= until_y):
+			tape.call(&"stop")
+			for i in 90:
+				await physics_frame
+				rec.append({"p": body.global_position, "s": int(body.get(&"state")), "v": (body.get(&"hvel") as Vector3).length()})
+			break
 	return rec
 
 
@@ -93,17 +100,32 @@ func test_kerbs_and_stairs() -> void:
 		var dist := 3.0 + (float(s.get("tread", 0.0)) * float(s.get("steps", 0)) if s["kind"] == "stairs" else 0.0) + 1.5
 		for run: bool in [false, true]:
 			var t := dist / (RUN if run else WALK) + (1.3 if run else 0.7)
+			if s["kind"] == "stairs":
+				# stairs are taken a step at a time (0.51 s walking, 0.30 s running): allow for that
+				t = 3.9 / (RUN if run else WALK) + float(s["steps"]) * (0.30 if run else 0.51) * 1.05 + (1.0 if run else 0.6)
 			var segs: Array = [[t, 0.0, -1.0, 0.0, run]]
 			if run and s["kind"] == "kerb":
 				segs = [[1.5, 0.0, -1.0, 0.0, true], [1.5, 0.0, 0.0, 0.0, false]]     # a burst, then let go: stops on the kerb
-			var up := await drive(s["start"], segs)
+			var stairs: bool = s["kind"] == "stairs"
+			var up := await drive(s["start"], segs, float(s["top"]) - 0.002 if stairs else -1000.0)
 			var top_ok := absf(last(up).y - float(s["top"])) < 0.01
-			var down := await drive(last(up), [[t, 0.0, 1.0, 0.0, run]])
+			var down := await drive(last(up), [[t, 0.0, 1.0, 0.0, run]], 0.002 if stairs else -1000.0, true)
 			var back_ok := absf(last(down).y) < 0.01
 			var in_air := count_state(up, AIR) + count_state(up, 2)
+			var pace := ""
+			if s["kind"] == "stairs":
+				var a := -1
+				var b := -1
+				for i in up.size():
+					var y := (up[i]["p"] as Vector3).y
+					if a < 0 and y > float(s["top"]) * 0.2:
+						a = i
+					if b < 0 and y > float(s["top"]) * 0.8:
+						b = i
+				pace = "; %.2f s a step going up" % ((b - a) / 60.0 / (float(s["steps"]) * 0.6))
 			ok(top_ok and back_ok and max_step(up) <= 0.045 and max_step(down) <= 0.055 and in_air == 0,
-					"%s, %s: up to %.2f m and back; biggest height step %.1f cm up, %.1f cm down; ticks off the ground going up %d, coming down %d" % [
-					label, "run" if run else "walk", last(up).y, max_step(up) * 100.0, max_step(down) * 100.0, in_air, count_state(down, AIR)])
+					"%s, %s: up to %.2f m and back; biggest height step %.1f cm up, %.1f cm down; ticks off the ground going up %d, coming down %d%s" % [
+					label, "run" if run else "walk", last(up).y, max_step(up) * 100.0, max_step(down) * 100.0, in_air, count_state(down, AIR), pace])
 
 
 func test_steps() -> void:

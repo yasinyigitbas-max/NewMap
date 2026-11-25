@@ -33,6 +33,9 @@ const STOP_RUN := "Run_To_Stop"                 # 0.90 s, 0.80 m
 const TURN_90 := "Left_Turn_90"                 # 0.93 s, exactly 90 deg (Right Turn 90 turns 102.6: the mirror is used)
 const TURN_180_WALK := "Walking_Turn_180"       # 1.00 s, turns to his right
 const RUN_FROM := 2.5           # above this speed the run clips are used (his jog loop is 2.53 m/s)
+# Stairs are their own movement (the study: "going up and going down are different movements"): his four stair clips,
+# two steps a loop, played by where he is on the stairs so that each foot comes down in the middle of a tread.
+const STAIRS := {1: ["Ascending_Stairs", "Running_Up_Stairs"], -1: ["Descending_Stairs", "Run_Down_Stairs"]}
 # Head: "people turn head first", about 15 deg into a curve and 15 to 30 deg of lead; the trunk does not lead
 const LOOK_MOST_DEG := 30.0
 const LOOK_RATE_DEG := 100.0    # well under the 137 to 272 deg/s measured for deliberate turns
@@ -68,6 +71,10 @@ var sub := "loop"               # within moving on foot: loop, start, stop or sp
 var _clip: Resource             # the start, stop or turn clip being played
 var _clip_t := 0.0
 var _gone := 0.0                # distance covered since a start began
+var _slope := 0.0               # the stair clip's own slope, faded in and out with the clip
+var _floor := {}                # per stair clip: where its own stairs stand under the hips
+var _floor_now := 0.0
+var _reach := {}                # per stair clip: how far ahead of the hips the left foot comes down
 var _still_at := -1.0           # a stop: how far along the clip he was when the body came to rest
 var _legs_i: Array[int] = []
 var _neck := -1
@@ -246,8 +253,14 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 	var speed := (body.get(&"hvel") as Vector3).length()
 	var wish := (body.get(&"_wish") as Vector3).length()
 	var spot := float(body.get(&"spot_total"))
+	var st := int(body.get(&"stairs"))
 	# changes
-	if spot != 0.0 and sub != "spot":
+	if st != 0 and speed > 0.15 and (sub == "loop" or sub == "start"):
+		sub = "stairs"
+		_blend_from_here()
+	elif sub == "stairs" and (st == 0 or speed < 0.1):
+		_to_loop(speed)
+	elif spot != 0.0 and sub != "spot":
 		var big := absf(spot) > deg_to_rad(120.0)
 		var name: String = TURN_180_WALK if big else TURN_90
 		# the 180 clip turns to his right, the 90 to his left: the mirror image for the other way
@@ -259,7 +272,7 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 			_to_loop(wish)
 	elif sub == "loop" and speed < 0.3 and wish > 0.05:
 		_begin(START_RUN if wish > RUN_FROM else START_WALK, "start")
-	elif (sub == "loop" or sub == "start") and wish < 0.05 and speed > 0.3:
+	elif (sub == "loop" or sub == "start") and wish < 0.05 and speed > 0.3 and st == 0:
 		var name := STOP_RUN if speed > RUN_FROM else STOP_WALK
 		var c: Resource = clips[name]
 		var left := float(body.call(&"stop_distance"))
@@ -274,6 +287,34 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 	elif sub == "stop" and wish > 0.05:
 		_to_loop(maxf(speed, 1.0))
 	# the pose
+	var slope_now := 0.0
+	if sub == "stairs" and st != 0:
+		var tread := float(body.get(&"stair_tread"))
+		var c: Resource = clips[STAIRS[st][1 if wish > tread / 0.4 else 0]]
+		var hips_path: PackedVector3Array = c.get(&"hips")
+		var rise := hips_path[hips_path.size() - 1].y - hips_path[0].y
+		slope_now = rise / maxf((c.get(&"travel") as Vector3).length(), 0.01)
+		# steps climbed so far, counted from the edges he has crossed and how far he is past the last one
+		var along := (body.global_position - (body.get(&"stair_edge") as Vector3)).dot(body.get(&"stair_dir"))
+		var steps := float(int(body.get(&"stair_count"))) + clampf(along / tread, 0.0, 1.0)
+		# the left foot comes down `reach` ahead of him; that moment must find it over the middle of a tread
+		var length := float(c.get(&"length"))
+		var lands := 0.5 - _stair_reach(c) / tread
+		var cycle := float(c.get(&"phase_offset")) / length + (steps - lands) * 0.5
+		var t := fposmod(cycle, 1.0) * length
+		for i in _n:
+			out[i] = c.call(&"rotation_at", i, t)
+		var h: Vector3 = c.call(&"hips_at", t)
+		_slope += (slope_now - _slope) * minf(dt / FADE, 1.0)
+		_floor_now += (_stair_floor(c, slope_now, rise) - _floor_now) * minf(dt / FADE, 1.0)
+		feet.set(&"clip_slope", _slope)
+		feet.set(&"clip_floor", _floor_now)
+		return Vector3(h.x, h.y - rise * t / length, h.z)
+	_slope += (0.0 - _slope) * minf(dt / FADE, 1.0)
+	_floor_now += (0.0 - _floor_now) * minf(dt / FADE, 1.0)
+	if feet:
+		feet.set(&"clip_slope", _slope)
+		feet.set(&"clip_floor", _floor_now)
 	match sub:
 		"spot":
 			var done := 1.0 - absf(float(body.get(&"spot_left"))) / maxf(absf(spot), 0.001) if spot != 0.0 else 1.0
@@ -307,6 +348,43 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 					h += along * (float(_clip.call(&"dist_at", _clip_t)) - _still_at)
 				return h
 	return _move_pose(speed, dt, out)
+
+
+## How far ahead of the hips the left foot is when a stair clip brings it down (the clip's own measure).
+func _stair_reach(c: Resource) -> float:
+	if not _reach.has(c):
+		var t := float(c.get(&"phase_offset"))
+		var pose: Array[Quaternion] = []
+		for i in _n:
+			pose.append(c.call(&"rotation_at", i, t))
+		var legs: Array = feet.call(&"_legs", pose, Vector3(0.0, 1.0, 0.0))
+		_reach[c] = (legs[0][3] as Transform3D).origin.z
+	return _reach[c]
+
+
+## Where a stair clip's own stairs stand under the hips: with the stairs' slope taken out, the lowest the ball of
+## either foot goes through the loop is the floor.
+func _stair_floor(c: Resource, slope: float, rise: float) -> float:
+	if not _floor.has(c):
+		var length := float(c.get(&"length"))
+		var lowest := 1e9
+		var pose: Array[Quaternion] = []
+		pose.resize(_n)
+		var was_slope: float = feet.get(&"clip_slope")
+		feet.set(&"clip_slope", 0.0)
+		for k in 40:
+			var t := length * k / 40.0
+			for i in _n:
+				pose[i] = c.call(&"rotation_at", i, t)
+			var h: Vector3 = c.call(&"hips_at", t)
+			h.y -= rise * t / length
+			var legs: Array = feet.call(&"_legs", pose, h)
+			for f in 2:
+				var toe: Vector3 = (legs[f][3] as Transform3D).origin
+				lowest = minf(lowest, toe.y - slope * (toe.z - h.z))
+		feet.set(&"clip_slope", was_slope)
+		_floor[c] = lowest - float(feet.get(&"_toe_rest"))
+	return _floor[c]
 
 
 func _begin(name: String, kind: String) -> void:

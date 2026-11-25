@@ -14,9 +14,10 @@ const PIN_MOST := 0.10          # NOT in the study: a planted foot is let slide 
 const PIN_TURN_MOST := 0.70     # radians (40 deg): the same for a planted foot's twist while he turns on the spot
 const LET_GO := 0.10            # seconds for a lifted foot to return to the clip's own path
 const REACH := 0.45             # how far above or below the body's ground a foot will look for its own ground (m)
-const FOOT_TIME := 0.06         # seconds for a foot to follow a change of ground height (a stair edge)
+const FOOT_SPEED := 5.0         # m/s: how fast a foot follows a jump in the ground's height (a stair edge); a swinging
+                                # foot on a 19 degree street needs 1 m/s, so slopes are followed exactly
 const HIPS_TIME := 0.10         # seconds for the hips to come back up
-const HIPS_DOWN := 1.0           # m/s: how fast they may come down when a planted foot cannot reach its ground
+const HIPS_DOWN := 1.5           # m/s: how fast they may come down when a planted foot cannot reach its ground
                                 # (walking up a 19 degree street needs 0.5 m/s)
 const TILT_MOST := 0.35         # radians (20 deg): the ankle bends 10 deg up to 20 deg down in walking; streets reach 19 deg
 const STRAIGHT := 0.997         # the leg is never asked to be longer than this share of its length
@@ -30,6 +31,8 @@ var shin := [0, 0]
 var foot := [0, 0]
 var toe := [0, 0]
 var foot_goal := [Basis.IDENTITY, Basis.IDENTITY]      # skeleton space, read by foot_orient.gd
+var clip_slope := 0.0           # a stair clip climbs its own stairs: their rise per metre forward (0 for flat clips)
+var clip_floor := 0.0           # and how far above the hips' own floor those stairs stand under him
 var pinning := true
 var grounding := true
 var weight := 0.0               # 0 = the clip alone (in the air), 1 = feet fitted
@@ -58,6 +61,8 @@ var _pin_yaw := [0.0, 0.0]
 var _corr := [Vector3.ZERO, Vector3.ZERO]
 var _twist := [0.0, 0.0]
 var _lift := [0.0, 0.0]
+var _g := [0.0, 0.0]
+var _g_ok := false
 var _bend := [Vector3.ZERO, Vector3.ZERO]
 var _was := [Vector3.ZERO, Vector3.ZERO]
 var _was_ok := false
@@ -113,6 +118,13 @@ func _legs(rot: Array[Quaternion], hips: Vector3) -> Array:
 		var b := a * Transform3D(Basis(rot[shin[f]]), _origin[shin[f]])
 		var c := b * Transform3D(Basis(rot[foot[f]]), _origin[foot[f]])
 		var d := c * Transform3D(Basis(rot[toe[f]]), _origin[toe[f]])
+		# a stair clip puts its feet on its own stairs; take those stairs out, so its feet are on a flat floor like
+		# any other clip's and the real steps under him are what they are fitted to
+		if clip_slope != 0.0:
+			# (the whole foot moves as one, by what its ball needs)
+			var off := clip_slope * (d.origin.z - hips.z) + clip_floor
+			c.origin.y -= off
+			d.origin.y -= off
 		out.append([a, b, c, d])
 	return out
 
@@ -170,24 +182,28 @@ func solve(rot: Array[Quaternion], hips: Vector3, dt: float, on_ground: bool) ->
 		ankle = ball + turn * (ankle - (ball - _corr[f]))
 		basis = turn * basis
 		# (2) the ground under this foot
-		var want_lift := 0.0
+		# the height of the ground under the foot is followed in the world, not against the body: a foot standing
+		# on a step must not be dragged up as the body rises to the next one
+		var want_g := feet_y
 		var normal := Vector3.UP
 		if grounding and on_ground:
 			var ga := _ground(ankle, feet_y)
 			var gb := _ground(ball, feet_y)
 			if not ga.is_empty():
-				var g := (ga["position"] as Vector3).y
+				want_g = (ga["position"] as Vector3).y
 				normal = ga["normal"]
 				# on a slope the tilt of the foot puts the ball on the ground; only ground under the ball that is
 				# higher than the slope (the next stair) lifts the whole foot
 				if not gb.is_empty() and normal.y > 0.3:
-					var on_plane := g - (normal.x * (ball.x - ankle.x) + normal.z * (ball.z - ankle.z)) / normal.y
-					g += maxf((gb["position"] as Vector3).y - on_plane, 0.0)
-				want_lift = clampf(g - feet_y, -REACH, REACH)
-				ground_at[f] = g
+					var on_plane := want_g - (normal.x * (ball.x - ankle.x) + normal.z * (ball.z - ankle.z)) / normal.y
+					want_g += maxf((gb["position"] as Vector3).y - on_plane, 0.0)
 			elif not gb.is_empty():
-				want_lift = clampf((gb["position"] as Vector3).y - feet_y, -REACH, REACH)
-		_lift[f] += (want_lift - _lift[f]) * (1.0 - exp(-dt / FOOT_TIME))
+				want_g = (gb["position"] as Vector3).y
+			ground_at[f] = want_g
+		if not _g_ok or not on_ground:
+			_g[f] = want_g
+		_g[f] = move_toward(_g[f], want_g, FOOT_SPEED * dt)
+		_lift[f] = clampf(_g[f] - feet_y, -REACH, REACH)
 		ankle.y += _lift[f]
 		# tilt the foot to the ground, the more the nearer it is to the ground
 		var near := clampf(1.0 - ((legs[f][3] as Transform3D).origin.y - _toe_rest) / 0.10, 0.0, 1.0)
@@ -211,6 +227,7 @@ func solve(rot: Array[Quaternion], hips: Vector3, dt: float, on_ground: bool) ->
 		_bend[f] = (s.basis * bend).normalized()
 		_pole[f].position = (legs[f][1] as Transform3D).origin + bend.normalized() * 0.6
 	_was_ok = true
+	_g_ok = true
 	want_pelvis = maxf(want_pelvis, -HIPS_MOST) if on_ground else 0.0
 	if want_pelvis < pelvis:
 		pelvis = maxf(want_pelvis, pelvis - HIPS_DOWN * dt)
