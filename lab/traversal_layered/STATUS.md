@@ -54,7 +54,10 @@ bent the mesh knee 16-19° backward in 25-30 frames** of the climb and mantle: t
 |---|---|---|
 | 17 | **Waist pinches thin when the hips fold hard** (the jump of the climb; Yasin's "mid-section lost" is probably this too). Seen in both the old and new retargeter. | It's the mesh's skin weights at the waist (Meshy auto-rig), which bone checks can't see. Options: the v2 hip-flexion limit (125° with the knee bent) in the limiter; or better weights on the body in Blender (Yasin's asset). Not decided. |
 | 18 | The retarget change shifted the clips' measured speeds and exposed the old step 4 controller: the run reversal now flips pivot / loop 20 times; hips accelerations up to 8 cm/frame second difference. | That controller is what v2 says to rebuild (#1, #8); not patched. |
-| 19 | The mantle's second key pose (knee up, foot behind) folds the leg completely flat on one frame (my key pose, not the retargeter). | Redo that key pose in the next Kimodo round. |
+| 19 | The mantle's second key pose (knee up, foot behind) folds the leg completely flat on one frame (my key pose, not the retargeter). | Fixed: the key-pose builder now refuses poses past the hip-rotation / hip-flexion limits or inside the wall. |
+| 20 | **First audit tool never applied the pose** (it measured the rest pose; the "29° on every clip" was the rest angle). | Fixed: own forward kinematics + mutation test. |
+| 21 | **Knees measured against the thigh's own hinge miss a twisted thigh** (Yasin's second screenshot: knees pointing back with a "normal" bend). | Fixed in the audit: hip rotation (v2 1.5) and the knee seen from the pelvis are measured too. |
+| 22 | Retargeted climbs / mantles put the thighs 11-30 cm into the wall even when the source is clear (legs scaled 0.84, arms not). | Needs the traversal layer (v2 10.7, 6.12) on the body; step 6. |
 
 
 ### Why my checks passed a broken pose

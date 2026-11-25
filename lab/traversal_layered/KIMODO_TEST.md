@@ -82,3 +82,30 @@ Both come from my side, not Kimodo's: my retargeter bends player_v3's mesh knee 
 straight (STATUS #14), and the retargeted motion is scaled by the leg ratio so it no longer meets the wall I drew
 (STATUS #15). My scores were measured on Kimodo's skeleton, not on the body (STATUS #16). **The round 3 verdict
 ("believable", "good") is withdrawn** until the retargeter is fixed and the clips are re-checked on the body.
+
+## Round 3, redone after Yasin's review (25 Nov, late evening, ~$1.20 more)
+Yasin saw backward knees and a lost mid-section. Measured on the body (`tests/clip_audit.gd`, now with its own forward
+kinematics and a mutation test), the causes were, in order found:
+1. **My retargeter** swung each leg bone separately and bent the mesh knee 16-19° backward (fixed: limbs swung whole;
+   STATUS #14).
+2. **My key poses**: thighs twisted round 116-171° (knee pointing back) and hips folded 167-180° (the waist mesh
+   collapses). The key-pose builder now refuses any pose past the study's hip rotation (in 40° / out 50°) and hip
+   flexion (125°) and any body volume inside the wall (capsules, 3 cm), before a run is paid for.
+3. **My first audit tool never applied the pose** (it measured the rest pose); rewritten.
+
+**Result of the redone round (16 samples each, judged on the body):**
+| Move | Samples with 0 frames past the joint limits | Body inside the wall (best sample) | Looked at |
+|---|---|---|---|
+| climb 1.5 m | 6 of 16 | **24 cm** (a thigh, frame 69) | believable climb, but the knees go into the wall face as the legs come up |
+| mantle 0.8 m | 6 of 16 | **11 cm** (a thigh, frame 53) | good mantle, thighs into the wall during the hop |
+| step vault 1.0 m | left out: its key poses didn't pass the gates | | |
+
+**Why the wall can't be fixed by picking samples:** the key poses are clear of the wall on Kimodo's skeleton, but
+retargeting scales the legs and hips (0.84) and not the arms, so with the hands on the edge the body sits closer to the
+wall than in the source. Keeping the body out of the wall has to happen after retargeting, in the layered system's
+traversal layer (study v2 10.7 warping + 6.12 contacts, with the v2 validator): hands pinned on the real edge, the body
+moved back and the knees kept off the wall face. That is step 6 work.
+
+**Answer to "is there hope for Kimodo clips":** for locomotion and gestures, yes. For climbs and mantles, yes as base
+motion, but only together with the traversal layer that fits them to the wall on the body; they are not usable raw.
+The vault needs more work.

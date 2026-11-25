@@ -19,6 +19,26 @@ func _init():
 	body.position = Vector3(-60, 0, 60)
 	sk = body.get_node("Armature/Skeleton3D")
 	cam = Camera3D.new(); world.add_child(cam); cam.current = true; cam.fov = 50
+	if a.size() > 5 and a[5].begins_with("grip:"):
+		# wall placed from the body's own hands while they grip (frames a..b): top under the palms, face just in front
+		var g0 := int(a[5].get_slice(":", 1)); var g1 := int(a[5].get_slice(":", 2)); var depth := float(a[5].get_slice(":", 3))
+		var hsum := Vector3(); var cnt := 0
+		var rotg: PackedFloat32Array = clip.rot; var hipg: PackedFloat32Array = clip.hips; var rtg: PackedFloat32Array = clip.root
+		var hb := sk.find_bone("LeftHand"); var hb2 := sk.find_bone("RightHand")
+		for gf in range(g0, g1 + 1):
+			for i in B:
+				var o: int = (gf * B + i) * 4
+				sk.set_bone_pose_rotation(i, Quaternion(rotg[o], rotg[o + 1], rotg[o + 2], rotg[o + 3]))
+			sk.set_bone_pose_position(0, Vector3(hipg[gf * 3], hipg[gf * 3 + 1], hipg[gf * 3 + 2]))
+			var X := Transform3D(Basis(Vector3.UP, rtg[gf * 3 + 2]), Vector3(rtg[gf * 3], 0, rtg[gf * 3 + 1]))
+			for hbi in [hb, hb2]:
+				hsum += X * (_fk_pos(hbi) * 0.01); cnt += 1
+		var hm := hsum / cnt
+		var top := hm.y - 0.04; var z0 := hm.z - 0.12
+		var mi := MeshInstance3D.new(); var bm := BoxMesh.new(); bm.size = Vector3(1.6, top, depth); mi.mesh = bm
+		var m := StandardMaterial3D.new(); m.albedo_color = Color(0.7, 0.35, 0.28); mi.material_override = m
+		mi.position = Vector3(-60, top * 0.5, 60 + z0 + depth * 0.5); world.add_child(mi)
+		print("wall from the hands: top %.2f m, face at %.2f m" % [top, z0])
 	if a.size() > 7:
 		# optional test wall in the clip's own frame: top height, near face z, far face z
 		var top := float(a[5]); var z0 := float(a[6]); var z1 := float(a[7])
@@ -38,13 +58,24 @@ func _tick():
 	sk.set_bone_pose_position(0, Vector3(hips[f * 3], hips[f * 3 + 1], hips[f * 3 + 2]))
 	body.position = Vector3(-60 + rt[f * 3], 0, 60 + rt[f * 3 + 1])
 	body.rotation = Vector3(0, rt[f * 3 + 2], 0)
-	var c := body.position + Vector3(0, 0.95, 0)
-	var off := Vector3(3.2, 0.3, 0) if view == "side" else (Vector3(0, 0.3, 3.2) if view == "front" else Vector3(0, 0.6, -3.2))
+	var c := body.position + Vector3(0, 1.2, 0)
+	var off := Vector3(4.2, 0.6, 0) if view == "side" else (Vector3(0, 0.3, 3.2) if view == "front" else Vector3(0, 0.6, -3.2))
 	cam.look_at_from_position(c + off, c)
 	if f in times:
 		await RenderingServer.frame_post_draw
 		shots.append(root.get_texture().get_image())
 	f += 1
+func _fk_pos(bi: int) -> Vector3:
+	var p := Vector3(); var q := Quaternion(); var chain := []
+	var c := bi
+	while c >= 0: chain.push_front(c); c = sk.get_bone_parent(c)
+	for i in chain:
+		if sk.get_bone_parent(i) < 0: p = sk.get_bone_pose_position(i); q = sk.get_bone_pose_rotation(i)
+		else:
+			p = p + q * sk.get_bone_rest(i).origin
+			q = q * sk.get_bone_pose_rotation(i)
+	return p
+
 func _save():
 	if shots.is_empty(): return
 	var w: int = 360; var h: int = 480
