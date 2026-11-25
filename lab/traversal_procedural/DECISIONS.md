@@ -60,5 +60,33 @@ A decision with no section is marked **(no section: question it)**. Conflicts wi
 | 4.1 | PC: W A S D / left stick, analogue walk to run by stick push (deadzone 0.2, walk 0.7-1.5 m/s up to 0.75, run 3.0-4.6 m/s from 0.85); keyboard W = walk 1.4, Shift = run 4.6. Touch: left half floating stick (80 px full), right half look, double taps = crouch (left) / jump (right). | brief controls, 2.1, 2.2 |
 | 4.2 | Camera third person behind the shoulder, ~3.4 m, eased, never cut, pulled in by walls. | brief camera |
 
+## 5. Learned while tuning step 4 (each found by a test number or a trace, then checked against the study)
+
+| # | Decision | Follows |
+|---|---|---|
+| 5.1 | The rig's toe bones sit at different places on the two feet (left ball 14 cm ahead of the ankle bone, right 10 cm; the right ankle bone is mid-foot). The foot rolls over the **anatomical ball, 72 % of the sole from the heel**, measured on the mesh, not over the toe bone. On the right foot the toes may move ~1-2 cm at full heel lift (the mesh bends at its bone, not at the ball). | 1.1 toes, 2.1 terminal stance |
+| 5.2 | Push-off in two stages: roll over the ball with the toes flat up to 45°, then over the **toe tips** with the toes held bent (toe-off). Without it the trailing leg could not reach and the pelvis was dragged down 8 cm. | 2.1 (pre-swing, toes bend ~55°) |
+| 5.3 | Heel lift is geometric: a trailing foot lifts its heel as far as the leg needs to stay within 97.5 % of its length (knee soft), never later than that. Only a foot **behind** the hip does this. | 2.1 ("body falls forward over the ball"), 1.2 rule 4 |
+| 5.4 | The pelvis never asks a planted leg for more than 98.5 % of its length (inside the soft-IK zone), and the limit is fed back into the pelvis spring so releasing it does not pop. | 4.5 "pelvis follows the lower foot", 4.6 item 1 and 5 |
+| 5.5 | Midstance knee ~15° (pelvis cap at 99 % leg), heel strike knee nearly straight. Walk bob measures 6 cm at 1.4 m/s. | 2.1 (study 4-5 cm: 1 cm over; see conflicts) |
+| 5.6 | The swing foot moves **relative to the body** (an oval about the hip) and is handed to its world landing spot over the last 20 % of the swing. A world-space path made the running foot overshoot 0.6 m ahead with a straight knee. | 2.2 "foot lands under the knee", 1.1 knee in swing |
+| 5.7 | Footsteps are planned under the **leaning body**, not under the capsule; when stopping, under the capsule (where he will stand). | 2.5 lean from the feet, 2.4 |
+| 5.8 | Lean: a critically damped spring on atan(a/g), at most 16° and at most ~57°/s, so the hips never move more than ~2 cm a frame from it. | 2.5 (3 m/s² ≈ 17°), 4.5 (0.1-0.2 s), 4.6 item 5 |
+| 5.9 | On the heel (loading), an ankle past 20° up is solved by the foot slapping flat about the heel, not by lifting the heel. | 2.1 loading, 1.2 rule 4 |
+| 5.10 | Walk start 1.3 m/s² (full 1.4 m/s in ~1 s), run start 4 m/s² (4.6 m/s in 1.1 s, 3 steps), walk stop 3 m/s² (2 steps), run stop up to 7 m/s² (3 steps). | 2.3, 2.4, brief (responsive) |
+| 5.11 | Relaxed arms hang 7° forward and 10° out from the body line; the swing is about that. | 2.1 arms |
+| 5.12 | A planted foot past its stance share always lifts (the share changes with speed); a foot that stayed down to finish a stop is marked and skipped for that stride only. Found by the analog-stick test (a foot was left behind). | 2.1 timing |
+
+## 6. World contract (WORLD_CONTRACT.md, 25 Nov, relayed from Yasin by the game's session; the file is on the brief branch)
+
+| # | Decision | Follows |
+|---|---|---|
+| 6.1 | Layers as in the contract: capsule on layer 2, colliding with 1, 3, 4, 5, 6 (not debris). Every probe (ground, foot, camera) uses mask 1, 3, 4 (never debris). | contract 1 |
+| 6.2 | Probes are live every tick; nothing is cached across frames yet, so `obstacle_changed` has nothing to drop. When traversal caches edges (step 6) it must listen to it. | contract 3 |
+| 6.3 | The course has a breakable-bin stand-in (layer 3), a debris slab (layer 7), a window and a door leaf (layer 4). Test: walking over the debris slab, the feet stay on the ground (PASS). Window-as-wall and broken-window-as-opening are traversal tests, for step 6-7. | contract 4 |
+| 6.4 | No punches or kicks exist, so no `strike()` call yet. | contract 4 |
+
 ## Conflicts with the study
-- none yet.
+- Walk bob 6.0 cm vs the study's 4-5 cm (±15 %). The pendulum geometry of this body (leg 0.77 m, 0.70 m steps) gives
+  ~6 cm; lowering it further means bending the stance knee more than the study's ~5-15° at midstance. Kept the knee.
+- Run bob 10.6 cm vs 6-10 cm: just over, from the landing dip. To be tuned in polish (step 8).

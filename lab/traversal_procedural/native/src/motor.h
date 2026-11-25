@@ -85,6 +85,8 @@ public:
 		float fyaw = 0;
 		Vector3 normal = UP;
 		Vector3 lift;
+		Vector3 lift_rel;
+		Vector3 target_rel;
 		float lift_yaw = 0;
 		float lift_beta = 0.6f;
 		float lift_pitch = 0;
@@ -93,6 +95,7 @@ public:
 		float target_yaw = 0;
 		Vector3 target_normal = UP;
 		float prev_p = 0;
+		bool skip = false; // stayed down this stride (stopping, already in place)
 		float pitch = 0; // + heel up (toes down)
 		int pivot = 2; // 1 heel, 2 flat, 3 ball
 		float toe = 0;
@@ -109,6 +112,7 @@ private:
 	Spring1 hips_y;
 	Spring3 hips_side;
 	Spring3 lean_s;
+	Vector3 lean_off; // horizontal shift of the hips by the lean
 	float idle_time = 0;
 	float idle_w_phase = 0;
 	float beta_cur = 0.6f, freq_cur = 1.0f;

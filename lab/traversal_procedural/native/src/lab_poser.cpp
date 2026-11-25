@@ -220,7 +220,7 @@ void LabPoser::_process_modification_with_delta(double p_delta) {
 		Vector3 r_u = rest_g[bl].origin - rest_g[bu].origin, r_l = rest_g[bf].origin - rest_g[bl].origin;
 		Vector3 rest_pole(0, 0, 1);
 		for (int it = 0; it < 3; it++) {
-			solve_two_bone(H, A, dims_.thigh[s], dims_.shin[s], pole, knee, ank, 0.97f);
+			solve_two_bone(H, A, dims_.thigh[s], dims_.shin[s], pole, knee, ank, 0.985f);
 			// ankle limit (1.2 rule 4): dorsiflexion past 20 deg lifts the heel about the ball
 			Vector3 shin_up = (knee - ank).normalized();
 			Vector3 ffwd = Fc.xform(Vector3(0, 0, 1));
@@ -229,10 +229,12 @@ void LabPoser::_process_modification_with_delta(double p_delta) {
 			if (dorsi <= 20.0f * DEG + 1e-3f) break;
 			float extra = dorsi - 20.0f * DEG;
 			Vector3 lat = Fc.xform(Vector3(1, 0, 0));
-			Vector3 ballc = A + Fc.xform(Vector3(0, dims_.ball[s].y - dims_.ankle_h[s], dims_.ball[s].z));
+			// on the heel (loading) the foot slaps flat about the heel (2.1); otherwise the heel lifts about the ball
+			Vector3 pv = T.contact[s] == 1 ? A + Fc.xform(Vector3(0, -dims_.ankle_h[s], dims_.heel[s].z))
+										   : A + Fc.xform(Vector3(0, dims_.ball[s].y - dims_.ankle_h[s], dims_.ball[s].z));
 			Basis R(lat, extra);
 			Fc = R * Fc;
-			A = ballc + R.xform(A - ballc);
+			A = pv + R.xform(A - pv);
 		}
 		Basis du = frame_delta(r_u, rest_pole, knee - H, pole);
 		Basis dl = frame_delta(r_l, rest_pole, ank - knee, pole);

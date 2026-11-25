@@ -20,9 +20,9 @@ func frames(n: int, stick := Vector2.ZERO, run := false) -> Array:
 		out.append(mt)
 	return out
 
-func fresh() -> void:
+func fresh(z := -2.0) -> void:
 	player.set_scripted_input(Vector2.ZERO, false, true)
-	player.teleport(Vector3(0, 0, -2), 0.0)
+	player.teleport(Vector3(0, 0, z), 0.0)
 	for i in 30:
 		await physics_frame
 	player.reset_metrics()
@@ -126,8 +126,8 @@ func run_all():
 	var t_back = time_to(s, func(x): return x.speed > 0.9 * runv and abs(wrapf(x.yaw - PI, -PI, PI)) < deg_to_rad(10))
 	report("run turn 180", {"t_turned_s": t_turn, "t_full_speed_back_s": t_back})
 
-	await fresh()
-	s = await frames(600, Vector2(0, 1), true)
+	await fresh(-62.0) # open ground behind the start: no obstacle within the circle
+	s = await frames(240, Vector2(0, 1), true)
 	player.reset_metrics()
 	var circle := []
 	for i in 360:
@@ -148,6 +148,17 @@ func run_all():
 		await frames(25, Vector2(0, 1), k % 2 == 1)
 		await frames(20)
 	report("stop-go jitter", {})
+
+	# world contract: debris (layer 7) is never ground. Walk over the slab at z 30: the feet stay at ground level.
+	await fresh(26.0)
+	var max_ank = 0.0
+	for i in 200:
+		player.set_scripted_input(Vector2(0, 1), false, true)
+		await physics_frame
+		var m = player.get_metrics()
+		if abs(player.global_position.z - 30.0) < 0.5:
+			max_ank = max(max_ank, min(m.ankle_l.y, m.ankle_r.y))
+	print("contract: debris ignored by probes: lowest ankle over the slab %.3f m (ground ankle ~0.16-0.17) -> %s" % [max_ank, "PASS" if max_ank < 0.2 else "FAIL"])
 
 	var worst_slide = 0.0
 	var worst_pop = 0.0

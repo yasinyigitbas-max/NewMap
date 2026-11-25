@@ -226,6 +226,27 @@ func _init():
 		box("doorwall_r_%d" % int(dz), Vector3(2.0, 2.4, 0.2), Vector3(x + 1.45, 1.2, dz), Color(0.7, 0.66, 0.6))
 		box("doorhead_%d" % int(dz), Vector3(0.9, 0.3, 0.2), Vector3(x, 2.25, dz), Color(0.7, 0.66, 0.6))
 
+	# WORLD_CONTRACT.md 4: a breakable bin stand-in (layer 3), a window and a door (layer 4), debris (layer 7)
+	x = 2.5
+	label("contract: bin (layer 3), debris (layer 7) on the path", Vector3(x, 2.2, 20))
+	var bin = box("bin_breakable", Vector3(0.5, 1.03, 0.5), Vector3(x, 0.515, 22), Color(0.15, 0.35, 0.18))
+	bin.collision_layer = 4
+	bin.collision_mask = 1 | 4 | 16
+	var deb = box("debris_slab", Vector3(0.6, 0.12, 0.5), Vector3(0, 0.06, 30), Color(0.3, 0.3, 0.3))
+	deb.collision_layer = 64
+	deb.collision_mask = 1 | 4 | 16
+	x = 44.0
+	for dz in [6.0, 12.0]:
+		var leaf = box("door_leaf_%d" % int(dz), Vector3(0.9, 2.1, 0.05), Vector3(x, 1.05, dz), Color(0.45, 0.3, 0.2))
+		leaf.collision_layer = 8
+	box("window_wall_l", Vector3(2.0, 2.4, 0.2), Vector3(x - 1.45, 1.2, 18), Color(0.7, 0.66, 0.6))
+	box("window_wall_r", Vector3(2.0, 2.4, 0.2), Vector3(x + 1.45, 1.2, 18), Color(0.7, 0.66, 0.6))
+	box("window_sill", Vector3(0.9, 0.9, 0.2), Vector3(x, 0.45, 18), Color(0.7, 0.66, 0.6))
+	box("window_head", Vector3(0.9, 0.3, 0.2), Vector3(x, 2.25, 18), Color(0.7, 0.66, 0.6))
+	var pane = box("window_pane", Vector3(0.9, 1.05, 0.02), Vector3(x, 1.425, 18), Color(0.6, 0.8, 0.9, 1.0))
+	pane.collision_layer = 8
+	label("window (layer 4), sill 0.9 m", Vector3(x, 2.8, 17))
+
 	for c in croot.get_children():
 		set_owner_rec(c, croot)
 	var ps = PackedScene.new()

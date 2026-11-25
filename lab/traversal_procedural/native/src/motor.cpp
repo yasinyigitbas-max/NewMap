@@ -60,6 +60,11 @@ void Motor::reset(const Vector3 &pos, float yaw_) {
 	hips_y.v = 0;
 	hips_side.x = Vector3();
 	hips_side.v = Vector3();
+	lean_s.x = Vector3();
+	lean_s.v = Vector3();
+	lean_off = Vector3();
+	stopping = false;
+	steps_taken = 0;
 	step(MotorInput{ pos, Vector3(), Vector3(), Vector3(), 1.0f / 60.0f, true });
 }
 
@@ -83,7 +88,7 @@ Vector3 Motor::steer(const Vector3 &vel, const Vector3 &vel_des, float dt) const
 	float s = v.length();
 	Vector3 dv = vd - v;
 	if (dv.length_squared() < 1e-8f) return vd;
-	float a_acc = vd.length() > 2.2f ? 4.0f : 1.6f; // walk full speed in 2-3 steps (2.3), run 4.6 m/s in 3-5 steps
+	float a_acc = vd.length() > 2.2f ? 4.0f : 1.3f; // walk full speed in 2-3 steps (2.3), run 4.6 m/s in 3-5 steps
 	float a_brk = lerpf(3.0f, 7.0f, clampf(s / 4.6f, 0.0f, 1.0f)); // stop: walk 1-2 steps, run 2-4 steps
 	float a_turn = 8.0f; // sideways: lean atan(8/9.81) ~ 39 deg max at the tightest turn (2.5)
 	Vector3 out;
@@ -137,9 +142,10 @@ void Motor::plan_swing(int i, const MotorInput &in, float T_rem, float T_st) {
 	Vector3 v_td = v + (vd - v).limit_length(4.0f * T_rem);
 	if (stopping) v_td = v + (vd - v).limit_length(lerpf(3.0f, 7.0f, clampf(v.length() / 4.6f, 0, 1)) * T_rem);
 	if (v.dot(v_td) < 0) v_td = Vector3(); // braking through zero: plan to stop first (2.5 pivot)
-	Vector3 P_td = in.pos + (v + v_td) * 0.5f * T_rem;
+	// under the leaning body, not the capsule (2.5); when stopping, under the capsule where the body will stand
+	Vector3 P_td = in.pos + (stopping ? Vector3() : lean_off) + (v + v_td) * 0.5f * T_rem;
 	// 2.1 / 2.2: the body passes over the foot in its stance; running lands closer under the body (no overstriding).
-	float k_ahead = lerpf(0.33f, 0.38f, gait_w);
+	float k_ahead = lerpf(0.33f, 0.28f, gait_w); // 2.2: running lands under the knee, close under the body
 	Vector3 ahead = v_td * (T_st * k_ahead);
 	float yaw_td = yaw + clampf(wrap_pi(look_yaw - yaw), -9.0f * T_rem, 9.0f * T_rem);
 	if (v_td.length() > 0.6f) yaw_td = yaw_of(v_td);
@@ -154,6 +160,7 @@ void Motor::plan_swing(int i, const MotorInput &in, float T_rem, float T_st) {
 		tgt = F.target + (tgt - F.target).limit_length(3.0f * in.dt);
 	}
 	F.target = tgt;
+	F.target_rel = tgt - P_td;
 	F.target_normal = h.normal;
 	F.target_yaw = yaw_td + (i == 0 ? 7.0f : -7.0f) * DEG * clampf(s_td < 3.0f ? 1.0f : 0.5f, 0, 1);
 }
@@ -251,20 +258,24 @@ void Motor::step(const MotorInput &in) {
 			float p = local_p(i);
 			float prev = F.prev_p;
 			if (F.planted) {
-				bool crossed = (prev < beta_cur && p >= beta_cur) || (prev > p && p >= beta_cur);
+				if (prev > p) F.skip = false; // a new stride
+				// any planted foot past its stance share lifts (beta moves with speed, so "crossing" it is not enough)
+				bool crossed = p >= beta_cur && !F.skip;
 				// catch step (DECISIONS 3.7): the leg can no longer reach or is twisted under the body
-				Vector3 hip = in.pos + yaw_basis(yaw).xform(flat(d.hip_off[i]));
+				Vector3 hip = in.pos + lean_off + yaw_basis(yaw).xform(flat(d.hip_off[i]));
 				float reach = flat(F.plant - hip).length();
 				bool twisted = std::fabs(wrap_pi(F.fyaw - yaw)) > 75.0f * DEG;
-				if (!crossed && O.planted && p > 0.15f && p < beta_cur && (reach > 0.75f * d.leg(i) || twisted)) crossed = true;
+				if (!crossed && O.planted && p > 0.15f && (reach > 0.75f * d.leg(i) || twisted)) crossed = true;
 				if (crossed) {
 					bool near_spot = F.plant.distance_to(idle_spot(i, in.pos, yaw)) < 0.08f &&
 							std::fabs(wrap_pi(F.fyaw - idle_yaw(i, yaw))) < 12.0f * DEG;
 					if (stopping && s < 0.3f && near_spot) {
 						adjust_done++;
+						F.skip = true;
 					} else {
 						F.planted = false;
 						F.lift = F.plant;
+						F.lift_rel = F.plant - in.pos;
 						F.lift_yaw = F.fyaw;
 						F.lift_beta = std::min(p, 0.95f);
 						F.lift_pitch = F.pitch;
@@ -312,7 +323,7 @@ void Motor::step(const MotorInput &in) {
 	float load_end = lerpf(0.10f, 0.05f, gait_w);
 	float hr0 = lerpf(0.30f * beta_cur / 0.6f, 0.5f * beta_cur, gait_w);
 	float c_mid = lerpf(0.02f, 0.06f, gait_w); // 2.1: toe clears by 1-2 cm at mid-swing walking
-	float c_early = lerpf(0.10f, 0.12f + 0.22f * clampf((s - 2.5f) / 2.1f, 0, 1), gait_w) * std::max(sc, 0.4f);
+	float c_early = lerpf(0.10f, 0.12f + 0.12f * clampf((s - 2.5f) / 2.1f, 0, 1), gait_w) * std::max(sc, 0.4f);
 	for (int i = 0; i < 2; i++) {
 		Foot &F = foot[i];
 		float p = local_p(i);
@@ -335,7 +346,7 @@ void Motor::step(const MotorInput &in) {
 			// 2.1 terminal stance: the body falls forward over the ball, so the heel lifts as far as the leg needs to keep
 			// its knee soft (leg <= 96 % of its length from the hip), up to the toes' range (1.1: toes bend 55-70 deg).
 			if (active && pv != 1 && p > load_end) {
-				Vector3 hip = in.pos + hips_side.x + yaw_basis(yaw).xform(flat(d.hip_off[i]));
+				Vector3 hip = in.pos + lean_off + hips_side.x + yaw_basis(yaw).xform(flat(d.hip_off[i]));
 				hip.y = hips_y.x + d.hip_off[i].y;
 				float Lm = 0.975f * d.leg(i);
 				Basis Rflat = align_up(F.normal) * yaw_basis(F.fyaw);
@@ -345,7 +356,8 @@ void Motor::step(const MotorInput &in) {
 					foot_geom(i, F.plant, Rflat, a, 3, an, rr);
 					return an;
 				};
-				if (ankle_at(std::max(th, 0.0f)).distance_to(hip) > Lm) {
+				bool behind = (F.plant - hip).dot(yaw_fwd(yaw)) < 0.0f; // only a trailing foot rolls onto its toes
+				if (behind && ankle_at(std::max(th, 0.0f)).distance_to(hip) > Lm) {
 					float lo = std::max(th, 0.0f), hi = 70.0f * DEG;
 					for (int k = 0; k < 12; k++) {
 						float mid = 0.5f * (lo + hi);
@@ -359,8 +371,13 @@ void Motor::step(const MotorInput &in) {
 					toe = std::min(th, BALL_MAX);
 				}
 			}
+			float th_geo = th;
 			F.pitch = approach(F.pitch, th, 0.025f, dt);
 			F.toe = approach(F.toe, toe, 0.025f, dt);
+			if (pv == 3 && th_geo > F.pitch) { // the heel lift the leg needs is never late (no reach shortfall)
+				F.pitch = th_geo;
+				F.toe = std::max(F.toe, std::min(th_geo, BALL_MAX));
+			}
 			F.pivot = F.pitch < -0.002f ? 1 : (F.pitch > 0.002f ? 3 : 2);
 		} else {
 			float T_sw = (1.0f - F.lift_beta) / freq_cur;
@@ -368,11 +385,14 @@ void Motor::step(const MotorInput &in) {
 			float T_rem = (1.0f - F.u) * T_sw;
 			float T_st = beta_cur / freq_cur;
 			plan_swing(i, in, T_rem, T_st);
-			// the swing leg comes through quickly after toe-off (2.1: knee flexes to 60-65 deg, thigh swings forward at
-			// once), so the foot's path starts faster than a symmetric S
-			float u1 = 1.0f - F.u;
-			float sh = 0.6f * minjerk(F.u) + 0.4f * (1.0f - u1 * u1);
-			F.ground_ref = F.lift.lerp(F.target, sh);
+			// the swing foot travels relative to the body (2.2: the foot's path is an oval about the hip, it lands under
+			// the knee), and is handed over to its world landing spot over the last 20 % of the swing
+			float sh = minjerk(F.u);
+			Vector3 rel = F.lift_rel.lerp(F.target_rel, sh);
+			Vector3 body_path = in.pos + rel;
+			body_path.y = lerpf(F.lift.y, F.target.y, sh);
+			Vector3 world_path = F.lift.lerp(F.target, sh);
+			F.ground_ref = body_path.lerp(world_path, smooth01((F.u - 0.8f) / 0.2f));
 			F.fyaw = F.lift_yaw + wrap_pi(F.target_yaw - F.lift_yaw) * sh;
 			float th;
 			if (F.u < 0.45f)
@@ -443,9 +463,9 @@ void Motor::step(const MotorInput &in) {
 		float hw = 1e9f;
 		for (int i = 0; i < 2; i++) {
 			if (!foot[i].planted && foot[i].u < 0.9f) continue;
-			Vector3 hip = in.pos + hips_side.x + yaw_basis(yaw).xform(flat(d.hip_off[i]));
+			Vector3 hip = in.pos + lean_off + hips_side.x + yaw_basis(yaw).xform(flat(d.hip_off[i]));
 			float dx = flat(ankles[i] - hip).length();
-			float L = 0.997f * d.leg(i); // heel strike: knee ~5 deg (2.1)
+			float L = 0.985f * d.leg(i); // heel strike: knee nearly straight (2.1)
 			float hy = ankles[i].y + std::sqrt(std::max(0.0f, L * L - dx * dx)) - hip_drop;
 			hw = hw > 1e8f ? hy : smin(hw, hy, 0.025f);
 		}
@@ -453,7 +473,7 @@ void Motor::step(const MotorInput &in) {
 		if (hw > 1e8f) hw = cap;
 		hw = std::min(hw, cap);
 		// run: spring-mass, lowest at midstance (2.2), 6-10 cm
-		float A = clampf(0.06f + 0.03f * (s - 2.5f) / 2.1f, 0.06f, 0.09f);
+		float A = clampf(0.05f + 0.02f * (s - 2.5f) / 2.1f, 0.05f, 0.07f); // 2.2: 6-10 cm incl. the landing dip
 		float s_step = frac(phase * 2.0f);
 		float hr = cap - 0.055f - 0.5f * A * std::cos(2.0f * PI_F * (s_step - beta_cur));
 		h = lerpf(hw, hr, gait_w);
@@ -463,8 +483,17 @@ void Motor::step(const MotorInput &in) {
 	// lean from the feet (2.5, 4.5): atan(a/g) toward the acceleration (forward, braking and turning in one)
 	// the lean vector (tan of the tilt) rides a critically damped spring, ~0.2 s to settle (4.5: 0.1-0.2 s)
 	Vector3 tilt_t = flat(accel_f) / GRAV;
-	tilt_t = tilt_t.limit_length(std::tan(22.0f * DEG));
-	lean_s.step(tilt_t, 11.0f, dt);
+	tilt_t = tilt_t.limit_length(std::tan(16.0f * DEG)); // 2.5: a 3 m/s^2 push-off is ~17 deg
+	{
+		Vector3 before = lean_s.x;
+		lean_s.step(tilt_t, 11.0f, dt);
+		Vector3 dl = lean_s.x - before;
+		float mx = 1.0f * dt; // at most ~57 deg/s: the hips move < 2 cm per frame from the lean (4.6 item 5)
+		if (dl.length() > mx) {
+			lean_s.x = before + dl.normalized() * mx;
+			lean_s.v = dl.normalized() * (mx / dt);
+		}
+	}
 	Vector3 a_h = flat(lean_s.x);
 	float a_len = a_h.length();
 	float lean = std::atan(a_len);
@@ -474,6 +503,7 @@ void Motor::step(const MotorInput &in) {
 	Vector3 hips_nom(in.pos.x, hips_y.x, in.pos.z);
 	hips_nom += hips_side.x;
 	t.hips_pos = G + L.xform(hips_nom - G);
+	lean_off = flat(t.hips_pos - hips_nom);
 
 	// pelvis follows the lower foot (2.6, 4.5): a planted leg is never asked to reach past 99.5 % of its length, so the
 	// foot never has to slide. The limit is fed back into the spring so releasing it is smooth.
@@ -481,11 +511,12 @@ void Motor::step(const MotorInput &in) {
 		Basis Rp = L * yaw_basis(yaw);
 		float y_max = 1e9f;
 		for (int i = 0; i < 2; i++) {
-			float wgt = foot[i].planted ? 1.0f : smooth01((foot[i].u - 0.8f) / 0.2f);
+			float u0 = lerpf(0.8f, 0.55f, gait_w); // running: the hips settle over the whole late swing (no landing pop)
+			float wgt = foot[i].planted ? 1.0f : smooth01((foot[i].u - u0) / (1.0f - u0));
 			if (wgt <= 0.0f) continue;
 			Vector3 hip = t.hips_pos + Rp.xform(d.hip_off[i]);
 			Vector3 dv = ankles[i] - hip;
-			float Lm = 0.995f * d.leg(i);
+			float Lm = 0.985f * d.leg(i); // inside the poser's soft-IK zone (98 %): the foot is always reached
 			float dxz2 = dv.x * dv.x + dv.z * dv.z;
 			float ym = ankles[i].y + std::sqrt(std::max(0.0f, Lm * Lm - dxz2)) - d.hip_off[i].y;
 			ym += (1.0f - wgt) * 0.3f;
@@ -542,13 +573,14 @@ void Motor::step(const MotorInput &in) {
 	float lag = 0.03f;
 	for (int i = 0; i < 2; i++) {
 		float sgn = i == 0 ? -1.0f : 1.0f;
-		float al = sgn * A_arm * std::cos(2.0f * PI_F * (phase - lag));
-		float fw = A_arm > 1e-4f ? std::max(0.0f, al / A_arm) : 0.0f;
+		// relaxed arms hang a little forward and out of the body line; the swing is about that (2.1)
+		float al = 7.0f * DEG + sgn * A_arm * std::cos(2.0f * PI_F * (phase - lag));
+		float fw = A_arm > 1e-4f ? std::max(0.0f, (al - 7.0f * DEG) / A_arm) : 0.0f;
 		float e_w = (12.0f + 14.0f * fw + 6.0f * clampf(s / 1.35f, 0, 1)) * DEG;
 		float e_r = (82.0f + 12.0f * fw) * DEG;
 		float e = lerpf(e_w, e_r, gait_w);
 		if (!active) e = (10.0f + 1.0f * std::sin(breath)) * DEG;
-		float abd = lerpf(7.0f, 12.0f, gait_w) * DEG * (i == 0 ? 1.0f : -1.0f);
+		float abd = lerpf(10.0f, 12.0f, gait_w) * DEG * (i == 0 ? -1.0f : 1.0f); // away from the body
 		Vector3 u = Basis(fwd, -abd).xform(Basis(left, -al).xform(-UP));
 		Vector3 v = Basis(fwd, -abd * 0.5f).xform(Basis(left, -(al + e)).xform(-UP));
 		float inward = lerpf(4.0f, 12.0f, gait_w) * DEG * (i == 0 ? -1.0f : 1.0f);

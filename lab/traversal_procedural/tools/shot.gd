@@ -58,6 +58,23 @@ func _process(_d) -> bool:
 		poser.active = false
 		var sk = poser.get_parent()
 		sk.reset_bone_poses()
+	if view == "game":
+		# real input through the input map, seen through the game's own camera rig
+		cam.current = false
+		cam_rig.set_process(true)
+		cam_rig.get_child(0).current = true
+		if f == 20: Input.action_press("kb_forward")
+		if f == 140: Input.action_press("run")
+		if f == 200: Input.action_press("kb_left")
+		if f == 260:
+			Input.action_release("kb_forward")
+			Input.action_release("kb_left")
+			Input.action_release("run")
+		var last2 = frames.max() if frames.size() > 0 else 2
+		if frames.has(f - 2):
+			root.get_viewport().get_texture().get_image().save_png("%s_%04d.png" % [prefix, f - 2])
+		f += 1
+		return f > last2 + 3
 	cam.current = true
 	var s = stick_for(f)
 	player.set_scripted_input(s[0], s[1], true)
