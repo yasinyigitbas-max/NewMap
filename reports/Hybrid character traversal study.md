@@ -686,7 +686,39 @@ What this means for the build:
 - **The rig is not symmetric.** The left ankle joint sits 9 cm further back than the right (0.100 m against 0.012 m behind the body's centre line), the left shin is 1.4 cm longer than the right, and the right arm is 1.4 cm longer than the left. A mirrored clip will not look mirrored, and the two feet will plant differently.
 - **The ankle joint looks too high.** On X Bot it is 9 cm above the ground; here it is 16 to 17 cm. If that is where the rig put the joint and not where the model's ankle is, the foot will pivot from the wrong place, which shows as standing or running on the heels. This could not be confirmed without looking at the mesh.
 
-Recommendation: fix the skeleton before Stage 2. Make it symmetric (mirror one side's joints onto the other) and check the ankle and toe joints against the mesh. Every later test, starting with "a planted foot drifts less than 2 cm", is measured on this skeleton, so its faults would be chased as animation faults. Then record this body's own numbers (leg 0.77 m, arm 0.48 m, hips 1.00 m) in the clip table and scale the height bands of Part 2 by arm reach where they depend on it: the standing-grab limit drops by about 8 cm.
+(Later the same day this was tested by remaking the character on Meshy; see the next section, which replaces this recommendation.) Recommendation at the time: fix the skeleton before Stage 2. Make it symmetric (mirror one side's joints onto the other) and check the ankle and toe joints against the mesh. Every later test, starting with "a planted foot drifts less than 2 cm", is measured on this skeleton, so its faults would be chased as animation faults. Then record this body's own numbers (leg 0.77 m, arm 0.48 m, hips 1.00 m) in the clip table and scale the height bands of Part 2 by arm reach where they depend on it: the standing-grab limit drops by about 8 cm.
+
+### A remake on Meshy does not change the skeleton's proportions
+
+Tried on 25 Nov 2026, at Yasin's request, with the Meshy key saved on this session's environment. 46 credits were used.
+
+Two things were made:
+
+- **player_v3 rigged again by Meshy on its Mixamo skeleton** (Meshy's rigging now offers a `skeleton_template` of `mixamo`): the same mesh, new joints.
+- **player_v4, a new character:** the concept picture redrawn by Meshy's image editor (same man, flat thin-soled shoes, straight trousers, arms out), turned into a 3D model in a T-pose, 15,587 triangles, rigged on the Mixamo skeleton, 1.81 m tall.
+
+| | v3, first rig (left / right) | v3, Mixamo rig | v4, new character | X Bot, the clips' body |
+|---|---|---|---|---|
+| Hip to ankle | 0.770 / 0.759 m | 0.742 / 0.744 m | 0.756 / 0.756 m | 0.889 m |
+| Hip joint height | 0.906 m | 0.897 m | 0.889 m | 0.960 m |
+| Ankle joint height | 0.170 / 0.159 m | 0.160 / 0.156 m | 0.139 / 0.139 m | 0.092 m |
+| Ankle behind the centre line | 0.100 / 0.012 m | 0.037 / 0.037 m | 0.050 / 0.050 m | |
+| Shoulder to wrist | 0.475 / 0.489 m | 0.458 / 0.474 m | 0.473 / 0.477 m | 0.561 m |
+| Joints | 54 | 36 | 36 | 65 |
+
+What this shows:
+
+- **The proportions barely moved.** Two different meshes and two different rig types all come out with legs about 0.75 m and arms about 0.47 m, 15 % shorter than X Bot. So an earlier statement in this report, that the body was fine and only the joints were misplaced, was wrong in part: this is simply where Meshy's rigger puts hip, ankle and wrist joints on a clothed character of this height. Generating him again will give the same numbers.
+- **What the new rigs do fix is the lopsidedness.** Both are symmetric: the two ankles sit at the same depth, and on v4 the two legs and the two arms match to within 4 mm. v4's flat shoes also bring the ankle joint down 2 to 3 cm.
+- **The Mixamo-skeleton rigs have no real fingers.** Asked for fingers, Meshy returned one chain of four joints per hand (named as the middle finger) plus one end bone. The whole hand bends as one piece. The 54-joint v3 file has three joints for each finger, added afterwards in the project.
+- **The joint names match the clips exactly** (`mixamorig:Hips` and so on), so the bone map is automatic.
+
+What to do with a body that is 15 % shorter in the limbs than the clips' body. Two routes:
+
+1. **Have Mixamo rig him and re-download the clips for him** (needs the Mixamo login, so the PC). Upload the unrigged v4 mesh to Mixamo. Mixamo fits its own 65-joint skeleton with fingers to the mesh, and every clip downloaded for that character is fitted to his proportions by Mixamo. This is the only route where clips drop in with nothing to correct. Only the clips the build uses need downloading again, about 40, not all 426.
+2. **Keep a Meshy rig and correct in the game.** Use v4 (symmetric, Mixamo names). Scale the body's travel by the leg ratio, 0.85, so feet do not slide, and let arm IK cover the 8 to 9 cm of missing reach. It is one number for every clip, because the mismatch is uniform, but hands and feet depend on IK from the first stage.
+
+Route 1 is the recommendation. Whichever is chosen, the height bands that depend on reach should use this body's arm, not X Bot's.
 
 ### What this changes in Part 2
 
