@@ -71,6 +71,10 @@ void LabPlayer::_ready() {
 	}
 	cam = Object::cast_to<LabCamera>(get_node_or_null(camera_path));
 	if (FileAccess::file_exists("user://clip_cache/clips.bin")) load_clips("user://clip_cache/clips.bin");
+	{
+		const Vector3 f = get_global_transform().basis.get_column(2);
+		loco.yaw = std::atan2(f.x, f.z);
+	}
 	set_physics_process(true);
 	set_process_input(true);
 }

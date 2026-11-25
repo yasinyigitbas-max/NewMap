@@ -81,7 +81,7 @@ func _init():
 	var van := mat("van", Color(0.85, 0.85, 0.82))
 	var green := mat("planter", Color(0.35, 0.45, 0.3))
 
-	box("Ground", Vector3(160, 1, 160), Vector3(0, -0.5, 0), grey)
+	box("Ground", Vector3(400, 1, 400), Vector3(0, -0.5, 0), grey)
 
 	# Row A (z 14..): kerbs and single steps (study 2.8, 3.1)
 	var x := -26.0

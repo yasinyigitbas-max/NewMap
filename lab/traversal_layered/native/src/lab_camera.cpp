@@ -73,6 +73,9 @@ void LabCamera::_process(double delta) {
 	if (!have_pivot) {
 		pivot = want;
 		have_pivot = true;
+		// start behind the player, looking where he faces
+		const Vector3 f = t->get_global_transform().basis.get_column(2);
+		yaw = std::atan2(f.x, f.z) + 3.14159265f;
 	}
 	// eased follow (never cut): critically damped toward the target
 	for (int k = 0; k < 3; k++) {
