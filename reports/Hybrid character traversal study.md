@@ -2,7 +2,7 @@
 
 The safest way to get Rockstar-style movement in Godot 4.7 with Jolt is to build four separate layers in a fixed order and prove each on a measured test course before starting the next: a physics body that owns position, animation clips that own how the body looks, procedural corrections (leg and arm IK, head look, lean) that fit the clips to the world, and a ragdoll that takes over only on impacts. The physics body has to be your own code, because Godot does not use Jolt's ready-made character controller: `CharacterBody3D.move_and_slide` is Godot's own routine, it has no stair stepping, and under Jolt it deliberately throws away some floor and wall contacts ([Godot source](https://raw.githubusercontent.com/godotengine/godot/master/scene/3d/physics/character_body_3d.cpp), [Jolt module source](https://raw.githubusercontent.com/godotengine/godot/master/modules/jolt_physics/spaces/jolt_query_collectors.h)). Mixamo clips have no root bone and no data about the obstacle they fit, so every clip must pass through a pipeline that adds a root bone and then be measured by you ([inspected Mixamo file](https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/models/fbx/mixamo.fbx)). Rockstar has never published how its capsule, climb detection or clip fitting work; what is public is the list of clips, which shows climbs authored at fixed heights (20, 80, 140, 180, 220, 295) with stand, walk and run entries ([GTA V clip name dump](https://raw.githubusercontent.com/DurtyFree/gta-v-data-dumps/master/animDictsCompact.json)). Human measurements give matching bands: the cheapest step to climb is about a quarter of leg length, coaches vault obstacles from knee to shoulder height and climb anything higher, and standing grip reach is about 1.2 times body height ([Warren](https://digitalcommons.lib.uconn.edu/dissertations/AAI8309263), [MovNat](https://movnat.com/definitive-guide-to-vaulting/), [US Army body survey](https://multisite.eos.ncsu.edu/www-ergocenter-ncsu-edu/wp-content/uploads/sites/18/2016/06/Anthropometric-Detailed-Data-Tables.pdf)). Euphoria-style self-balancing characters are out of reach for now: Godot exposes none of Jolt's ragdoll motor tools, and the people who built Euphoria say it took years. The build order and its pass or fail tests are in the last third of this report and matter as much as the design.
 
-**Update, 25 Nov 2026.** Part 3 is new: all 408 Mixamo clips in the shared folder were measured directly, which settles most of the Mixamo unknowns named below and shows which clips fit which height band and which are missing.
+**Update, 25 Nov 2026.** Part 3 also now covers the check of the missing clips against the Mixamo catalogue and seven clips generated with Kimodo for the gaps Mixamo cannot fill. Part 3 is new: all 408 Mixamo clips in the shared folder were measured directly, which settles most of the Mixamo unknowns named below and shows which clips fit which height band and which are missing.
 
 **How to read this report.** A sentence followed by a link is a fact read from that page by the researchers. "Inferred" marks reasoning or arithmetic on top of sourced facts, by the note-takers or by me. "Unverified" marks something that could not be confirmed. Everything in the recommendation sections is my design advice built on those facts; none of it has been run in Godot, and the acceptance numbers I propose are targets, not sourced values. Nothing here comes from the existing game.
 
@@ -595,6 +595,37 @@ What this means for the build:
   - *Beam walk, sidle and squeeze:* build them from clips you have plus procedure: the careful walk with the feet narrowed and arms raised by IK for beams, and the strafe walk for sidling and squeezing.
   - *Bonnet slide:* leave it out, or source it elsewhere.
 - **A correction.** The first version of this part gave `Braced Hang To Crouch` a native height of 1.70 m. That was a misreading: its numbers are measured from where the hang starts, not from the ground: the catalogue's entry clip puts the hands of a braced hang at about 2.3 to 2.4 m with the feet braced about 1.2 m below them. So this clip is not tied to 1.70 m. It suits any ledge high enough for the feet to be off the ground, roughly 1.6 m and up, and the height is set by how the character gets into the hang.
+
+### The four gaps Mixamo cannot fill, generated with Kimodo
+
+Added later on 25 Nov 2026. Kimodo is NVIDIA's text-to-motion model; it was run through Replicate (`sprited/kimodo`, an unofficial deployment, model `Kimodo-SOMA-RP-v1.1`). You type a sentence and it returns a motion. It can export onto a Mixamo skeleton, so one of your own files with a mesh (`Standing Idle.fbx`) was uploaded to Replicate as the target character; that file stays on Replicate for 24 hours.
+
+24 takes were generated and measured with the same script as everything else. Seven were kept. They are on your exact skeleton (same 65 joints, same limb lengths), 30 frames a second.
+
+| File | Length | Travel | Height | What it is |
+|---|---|---|---|---|
+| KM Crouch Walk Low | 3.97 s | 3.87 m forward, 0.98 m/s | head 1.12 to 1.26 m | a deep crouch walk, about 0.2 m lower than Mixamo's lowest |
+| KM Mantle 0.82m | 4.97 s | 1.23 m forward | feet end 0.83 m up | hands up, jump, tuck onto a ledge, stand |
+| KM Mantle 0.96m | 4.97 s | 0.90 m forward | feet end 0.96 m up | the same, a little higher |
+| KM Mantle 1.16m | 4.97 s | 2.23 m forward | feet end 1.17 m up | the highest take; the only one inside the 1.10 to 1.45 m band |
+| KM Beam Walk | 4.97 s | 4.50 m forward, 0.91 m/s | | slow walk, arms held out to the sides |
+| KM Ledge Sidle Left | 3.97 s | 3.25 m to the left, 0.82 m/s | | upright side-steps with the arms spread low |
+| KM Gap Squeeze Right | 3.97 s | 4.89 m to the right, 1.25 m/s | head 1.59 to 1.65 m | hunched side-steps with the arms in |
+
+Their full rows, with the sentence used for each, are in `clip_measurements/kimodo_clips.csv`.
+
+What to know before using them:
+
+- **The bonnet slide failed.** Five takes with two different sentences all produced a run with a hop (the hips never drop to sitting height). Kimodo did not produce a slide, so that gap stays open.
+- **Kimodo's FBX export had two faults, both repaired in these files.** It kept the uploaded character's own idle animation on a second layer, and it placed the hips wrongly: the body floated 0.84 to 1.12 m above the ground and planted feet slid up to 0.4 m. The repair removes the extra layer and rebuilds the hip path from Kimodo's own motion data, scaled to your leg length. After it, planted feet stay in place and the lowest joint sits on the ground. The two tools are `clean_kimodo.py` and `fix_kimodo.py` in `clip_measurements/`, for any later takes.
+- **The files load in ufbx**, the FBX reader Godot uses. They have not been imported into Godot or played there.
+- **They are not loops.** The crouch walk, beam walk, sidle and squeeze are 4 to 5 second walks, not a single clean stride. One stride has to be cut out of each and its ends matched before it can loop.
+- **The crouch walk wanders** 0.29 m sideways over its 3.9 m and its feet are less firmly planted than a Mixamo walk (by the same measure: 0.42 m/s of foot movement while planted, against 0.07 for `Walking` and 0.15 for `Crouched Walking`). Foot IK will be needed.
+- **The mantles are 5 seconds long** with about a second of standing at each end, and the model had no real ledge: the hands reach up and the body arrives on top, but the hands were never fixed to an edge. Pin them with arm IK as for the Mixamo climbs, and trim the ends.
+- **The beam walk stands about 0.15 m above the ground** for part of the clip, as if the model stepped onto a low beam.
+- **These files contain your character's mesh**, because Kimodo needs a skinned character to export. Treat them like raw Mixamo files and keep them out of a public repository.
+- **Licence:** Kimodo's code is Apache-2.0 and this model is under the NVIDIA Open Model licence, according to NVIDIA's project page ([Kimodo README](https://raw.githubusercontent.com/nv-tlabs/kimodo/main/README.md)), which calls its training data "commercially-friendly". The licence text itself was not read.
+- **Replicate credit:** the account has under $5 of credit, which limits it to 6 runs a minute. Each take took 4 to 7 seconds of compute.
 
 ### What this changes in Part 2
 

@@ -25,3 +25,5 @@ Checks that the method is right: in every standing clip the feet come out at 0.0
 Hand heights are wrist joints; the gripping palm is about 0.08 m further along the hand.
 
 `catalogue_candidates.csv` holds the same measurements for 31 clips that are not in the folder, taken from a public copy of the Mixamo catalogue (https://huggingface.co/datasets/Linzhan/Mixamo-Animations-Characters). They are on a different body (hip to ankle 0.83 m, against 0.889 m for the folder's clips), so heights read about 7 % low.
+
+`kimodo_clips.csv` holds the measurements of the seven clips generated with Kimodo (through Replicate) for the gaps Mixamo cannot fill, with the sentence used for each. `clean_kimodo.py` removes the leftover animation layer from a Kimodo Mixamo-FBX export; `fix_kimodo.py` then rebuilds its hip path from the matching `.npz` so the feet sit on the ground and stop sliding. Run them in that order: `python3 -I clean_kimodo.py in.fbx clean.fbx`, then `python3 -I fix_kimodo.py clean.fbx in.npz out.fbx`. `fbxrw.py` is the FBX reader/writer they use.
