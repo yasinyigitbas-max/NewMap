@@ -156,7 +156,9 @@ func _hits() -> void:
 
 func _pool() -> void:
 	var before: int = int((dmg.call(&"get_state") as Dictionary).marks_total)
+	var t0 := Time.get_ticks_usec()
 	for i in 300: dmg.call(&"shoot", Vector3(-5.5 + (i % 30) * 0.25, 0.4 + (i / 30) * 0.45, 3), Vector3(0, 0, -1), 50.0, 10.0, null)
+	print("DMG   cost: 300 shots (ray, surface, mark, particles, sound) took %.2f ms on this machine: %.3f ms a shot" % [(Time.get_ticks_usec() - t0) / 1000.0, (Time.get_ticks_usec() - t0) / 300000.0])
 	var st: Dictionary = dmg.call(&"get_state")
 	_check(int(st.marks) == 256, "the pool holds 256 marks (%d)" % int(st.marks))
 	_check(int(st.marks_total) == before + 300, "every shot made one (%d)" % (int(st.marks_total) - before))
