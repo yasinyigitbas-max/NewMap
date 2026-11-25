@@ -61,7 +61,22 @@ signal prop_broken(String target_id, Vector3 at, int kind);
   as a wall and walks or climbs through a broken one.
 - On the contact frame of punches and kicks (if the lab has them), call a stub `strike(...)` with this signature.
 
-## 5. What the damage session doesn't touch
+## 5. Damage follows real-world logic (Yasin, 25 Nov: "it should follow logic, we shouldn't be able to break off a hydrant by kicking it")
+Each prop kind's table says **which kinds of harm can do what**, by its material, weight and how it is fixed down. A
+source that can't really break it only leaves marks.
+- **Bolted or heavy metal** (hydrants, bollards, lamp posts, parking meters, mailbox posts, traffic-light poles, big
+  bins fixed down): punches, kicks and bullets only mark them (a dent or chip, sparks, a clang). Only a **car** above a
+  speed threshold, scaled by the prop's mass and anchoring, knocks them over or breaks them off.
+  - A broken-off **hydrant sprays water**: a column out of the stump, a puddle that spreads, and the sound, until it
+    is put back.
+- **Light or loose** (cones, loose bins, newsboxes, sign boards, chairs, crates): kicks can knock them over; a car
+  throws them.
+- **Brittle** (glass, ceramic, thin plastic, wooden slats): bullets and repeated hits can break them.
+- **Trees:** big trees never break. Small trees and palms bend or snap only from cars.
+- **People's strength is human:** a kick is roughly 1-2 kN on contact, not a car. The damage session writes the
+  thresholds in its table, with the reason for each, and Yasin reviews it.
+
+## 6. What the damage session doesn't touch
 The player, people, animation and traversal code (`city_player*`, `city_ped*`, `mo_*`, `hand_grip*`, `foot_*` and the
 like). To test melee before a lab system arrives, it may add **one marked, temporary line** at the existing punch's
 contact that calls `strike()`, and nothing more.
