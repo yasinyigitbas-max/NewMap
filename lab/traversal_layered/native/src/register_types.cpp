@@ -3,6 +3,7 @@
 #include "lab_camera.h"
 #include "lab_player.h"
 #include "pose_layer.h"
+#include "pose_check.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/class_db.hpp>
@@ -17,6 +18,7 @@ static void init_module(ModuleInitializationLevel level) {
 	GDREGISTER_CLASS(lab::PoseLayer);
 	GDREGISTER_CLASS(lab::LabCamera);
 	GDREGISTER_CLASS(lab::LabPlayer);
+	GDREGISTER_CLASS(lab::PoseCheck);
 }
 
 static void uninit_module(ModuleInitializationLevel level) {}

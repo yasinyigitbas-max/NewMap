@@ -128,3 +128,19 @@ Each decision with its v2 section and whether it stands. "Breaks" decisions are 
   stance doesn't fit our speed. Better clips (stops, pivots per foot) would remove most of it.
 - **Starts warp a straight start up to 120°** by spinning on the stance foot; the study's medium turns are a step turn or a
   spin turn (2.5), so this is the spin turn, but a real start-turn clip would also shift the weight first.
+
+## 8. The v2 rebuild (26 Nov: Yasin, "build one new version with every clip you have from kimodo and completely guided by the study")
+Built in the study's own order (9.6, 10.1): the validator first, then clips, controller, layers, limiter, fuzzer.
+| # | Decision | Study |
+|---|---|---|
+| 8.1 | One C++ measuring module (`native/src/body.*`) for the validator, the limiter and the clip audit, on world-space bone transforms (skeleton global x bone global, interpolated when on, bases orthonormalised, metres). | 0.1/1-2, 1.0, 1.5 |
+| 8.2 | Anatomical frames: the skeleton's axes at rest (player_v3 faces +Z, left = +X, checked at load), carried by every bone; every angle is rest-relative, so the rig's bent rest knees (29 / 16 deg bones, straight mesh) read 0. | 1.0, 1.2 |
+| 8.3 | Knee: signed by geometry (ankle behind the hip-knee line, seen from the thigh's own forward = cross(thigh, hinge)), hinge perpendicular to the rest thigh, carried by UpLeg; varus and twist against it. | 1.2, 1.3 |
+| 8.4 | Ankle: yaw about the shin's long axis, pitch above the plane normal to it, roll of the sole normal about the foot's forward against the shin's vertical plane (an Euler split; a swing-twist split read a pure twist as 30 deg of roll and was replaced after its mutation test failed). | 1.4 |
+| 8.5 | Sole points from the mesh: vertices skinned > 60 % to Foot / ToeBase, the lowest 1.5 cm layer: heel = rearmost, balls = most medial / lateral within 2 cm of the toe joint, toe tip = foremost; heel carried by Foot, the rest by ToeBase. | 1.1, 1.7 |
+| 8.6 | Elbow hinge = perpendicular to the rest upper arm and the body's forward (the palm side of a T-pose with palms down), not from the rest bend (player_v3's 18 deg rest elbow bend is upward, not a flexion). Checked on running clips: must read +70..+110. | 1.2 |
+| 8.7 | Centre of pressure: each foot's contact points (heel, balls, heel+balls); two feet weighted by 1 / (horizontal distance to the CoM + 5 cm). An estimate, as 1.6 allows; it is why the per-frame lean check has 10 deg. **(approximation: question it)** | 1.6, 3.2 |
+| 8.8 | Time rules evaluated at the centre of a +-40 ms window (at least +-1.5 frames) with a least-squares quadratic; discontinuity = the centre sample against a fit through its neighbours (centre excluded). A step closes at a new foot contact, or after 0.6 s of one stance (so standing still is judged too). | 1.8, 3.2 |
+| 8.9 | Contacts by rays from 0.5 m above each sole point, mask 1\|4\|8; normals steeper than 30 deg ignored for the foot's ground normal (risers). | 1.7, 10.4 |
+| 8.10 | Mutation tests (`tests/mutation_test.gd`): 357 cases, each rule and each axis on both sides, in the rest, A-pose, T-pose, random root yaw, random root tilt and random hip rotation. Extra rules that a test pose itself causes (a foot lifted while marked planted, a tilt sinking the toes) are listed per case as allowed; single-joint cases allow nothing else. | 9.2 |
+| 8.11 | Body bones are shorter than v2 1.0's sanity range (thigh 0.38 m, shin 0.37 m, hip height 0.91 m): a warning, not a stop. It is Yasin's body. **(conflict: noted)** | 1.0 |
