@@ -21,7 +21,7 @@ const HIPS_DOWN := 1.5           # m/s: how fast they may come down when a plant
                                 # (walking up a 19 degree street needs 0.5 m/s)
 const TILT_MOST := 0.35         # radians (20 deg): the ankle bends 10 deg up to 20 deg down in walking; streets reach 19 deg
 const STRAIGHT := 0.997         # the leg is never asked to be longer than this share of its length
-const HIPS_MOST := 0.15         # NOT in the study: the most the hips come down for a foot to reach (m)
+const HIPS_MOST := 0.25         # NOT in the study: the most the hips come down for a foot to reach (m)
 
 var skel: Skeleton3D
 var body: CharacterBody3D

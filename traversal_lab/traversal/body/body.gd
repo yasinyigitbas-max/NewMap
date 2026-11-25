@@ -38,11 +38,13 @@ const REVERSE_ANGLE_DEG := 135.0  # asked to go nearly the opposite way at a run
 const SPOT_START_DEG := 60.0    # NOT in the study: below this he just sets off and curves; a value to tune by eye
 const SPOT_END_DEG := 15.0      # NOT in the study
 # Stairs are their own movement: "stairs are climbed at about half a second per step: 0.51 s up and 0.47 s down".
-# The running figures are his own clips: Running Up Stairs takes 0.30 s a step, Run Down Stairs 0.20 s.
+# The study has nothing on running stairs (its notes: "two-steps-at-a-time mechanics, running on stairs: not
+# found"), so the running figures are OURS, set 26 Nov at Yasin's word ("we need to set them ourselves as many
+# players will run them"). The Kimodo running clips take 0.33 s a step both ways; these are a little quicker.
 const STEP_TIME_UP := 0.51
 const STEP_TIME_DOWN := 0.47
-const STEP_TIME_RUN_UP := 0.30
-const STEP_TIME_RUN_DOWN := 0.20
+const STEP_TIME_RUN_UP := 0.28      # NOT in the study: 1.0 m/s along 0.28 m treads; a value to tune by feel
+const STEP_TIME_RUN_DOWN := 0.22    # NOT in the study: 1.3 m/s; a value to tune by feel
 # Landings: the study gives the forces (4.4 body weights from 0.45 m, 7.4 from 0.89 m) and that the peak comes 35 to
 # 91 ms after contact, but no time to recover. These follow his landing clips and are values to tune by eye.
 const LAND_HOLD_SOFT := 0.30    # NOT in the study

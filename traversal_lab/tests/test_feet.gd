@@ -124,7 +124,7 @@ func slope(label: String, at: Vector3, secs: float, z_from: float, z_to: float, 
 			# settled: planted for the last tenth of a second and still planted on the next tick (a foot that is
 			# just coming down or lifting is on its way, not standing)
 			var settled: bool = rec[i + 1]["contact"][f]
-			for k in 7:
+			for k in (3 if run else 7):     # a running foot is down for a sixth of a second in all
 				settled = settled and rec[i - k]["contact"][f]
 			if not settled:
 				continue
@@ -163,6 +163,7 @@ func _run() -> void:
 		await slope(label + ", up, walk", s["start"], 3.0 / WALK + float(s["steps"]) * 0.51 + 0.3, -3.0 - tread, -3.0 - len + tread)
 		await slope(label + ", down, walk", top, 1.0 / WALK + float(s["steps"]) * 0.47 + 0.3, -3.0 - tread, -3.0 - len + tread, 1.0)
 		await slope(label + ", up, run", s["start"], 3.0 / RUN + float(s["steps"]) * 0.26 + 0.5, -3.0 - tread, -3.0 - len + tread, -1.0, true)
+		await slope(label + ", down, run", top, 1.0 / RUN + float(s["steps"]) * 0.22 + 1.2, -3.0 - tread, -3.0 - len + tread, 1.0, true)
 	for deg: int in [10, 19]:
 		var s := st("ramp %d deg" % deg)
 		await slope("ramp %d deg, up, walk" % deg, (s["start"] as Vector3) + Vector3(0.0, 0.0, -1.5), (1.5 + float(s["run"])) / WALK, -3.3, -3.0 - float(s["run"]) + 0.3)

@@ -52,6 +52,5 @@ func _run() -> void:
 	await play((s["start"] as Vector3) + Vector3(0.0, 0.0, -2.0), 90.0, [[5.0, 0.0, -1.0, 0.0, false]], [2.2, 2.45, 2.7, 2.95, 3.2], "stairs_up")
 	await play(Vector3(float(s["x"]), float(s["top"]), -3.0 - 2.8 - 0.8), 90.0, [[5.0, 0.0, 1.0, 0.0, false]], [3.0, 3.25, 3.5, 3.75, 4.0], "stairs_down")
 	await play((s["start"] as Vector3) + Vector3(0.0, 0.0, -1.0), 90.0, [[2.2, 0.0, -1.0, 0.0, true]], [1.2, 1.35, 1.5, 1.65], "stairs_run")
-	var flat := Vector3(float(st["floor: one triangle mesh"]["x"]), 0.1, -5.0)
-	await play(flat, 90.0, [[1.6, 0.0, -1.0, 0.0, true], [1.4, 0.0, 1.0, 0.0, true]], [1.9, 2.1, 2.3, 2.5, 2.8], "runround")
+	await play(Vector3(float(s["x"]), float(s["top"]), -3.0 - 2.8 - 0.8), 90.0, [[3.2, 0.0, 1.0, 0.0, true]], [2.2, 2.35, 2.5, 2.65, 2.8], "stairs_rundown")
 	quit(0)

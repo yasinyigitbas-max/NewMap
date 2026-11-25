@@ -80,8 +80,9 @@ Built early, out of order, because a bare capsule with no jump could not be judg
   first"), at 100 degrees a second at most.
 - Measured (`tests/test_feet.gd`, the report's bar is 2 cm): planted feet drift 0.0 cm at a walk and at a run (4.0 cm
   before); on flat ground the fitting changes nothing (0.0 mm); 10 and 19 degree ramps 0.0 cm; walking up stairs
-  1.2 cm. **Running up stairs fails (toes 3.7 cm into a riser); walking down stairs fails (a foot held up to 10 to
-  17 cm high at times)**, see Stairs.
+  1.3 cm, walking down 1.6 cm, running up 0.0 to 0.3 cm. **Running down stairs fails (a foot held about 9 cm high
+  at times); walking down the steep 0.25 / 0.26 m stairs fails (17 cm)**; those stairs are steeper than any
+  building code in the study allows.
 
 ### Stairs: their own gait
 - The study: "stairs are climbed at about half a second per step: 0.51 s up and 0.47 s down", and going up and going
@@ -89,13 +90,15 @@ Built early, out of order, because a bare capsule with no jump could not be judg
   kerb is one step, a ramp is not level), measures the tread from the edges he crosses, and takes one step per
   0.51 s up, 0.47 s down walking; running, his own clips' 0.30 s up and 0.20 s down. Measured: 0.51 s a step walking
   up. That is 0.55 m/s along the ground, much slower than the 1.4 m/s it was.
-- The character plays `Ascending Stairs` / `Running Up Stairs` / `Descending Stairs` / `Run Down Stairs`, two steps a
-  loop, by where he is on the stairs, so each foot comes down mid-tread. The clip's own stairs (0.24 m risers) are
-  taken out of its feet and the real steps put in by the foot fitting.
+- **Running on stairs is not in the study** (its notes: "two-steps-at-a-time mechanics, running on stairs: not
+  found"), so those figures are ours, set at Yasin's word on 26 Nov: 0.28 s a step up (1.0 m/s on 0.28 m treads),
+  0.22 s a step down (1.3 m/s). They are in `body.gd` (`STEP_TIME_RUN_UP`, `STEP_TIME_RUN_DOWN`) to tune by feel.
+- Clips, two steps a loop, played by where he is on the stairs so each foot comes down mid-tread: walking up is
+  Mixamo's `Ascending Stairs`; walking down, running up and running down were made with Kimodo (26 Nov), one stride
+  cut from each and its end eased into its start. The clip's own stairs are taken out from under its feet and the
+  real steps put in by the foot fitting. Kimodo gave one step at a time for running up even when asked for two.
 - **Mixamo's two going-down clips are damaged** (on X Bot and on him alike): the hips go down 0.5 m but no foot ever
-  goes below the floor, so the legs fold into a squat. Mixamo's fitting keeps feet above its floor. Here the hips are
-  held level, the feet put back and the legs rebuilt by the IK, which works but the feet barely lift between steps.
-  Proper going-down clips have to come from elsewhere (Kimodo is the obvious source).
+  goes below the floor, so the legs fold into a squat. They are no longer used.
 
 ### Jump at a run, landings, turning round at a run
 - A jump at a run plays `Running Jump` (one stride with a leap in it) and runs on without stopping. Measured: a leap

@@ -9,7 +9,10 @@ const ClipData := preload("res://traversal/character/clip_data.gd")
 const CHARACTER := "res://traversal/character/player_v4.scn"
 const SRC := "res://assets_src/clips"
 const OUT := "res://traversal/character/clips"
-const LOOPS := ["Standing_Idle", "Walking_4", "Walking", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Descending_Stairs", "Running_Up_Stairs", "Run_Down_Stairs", "Crouching_Idle"]
+# Generated (Kimodo) clips are a few seconds of movement, not a loop: one stride is cut out of each, from the
+# moment the left foot comes down to the next time it does, and its end is eased into its start.
+const CUTS := {"KM_Stairs_Walk_Down": [0.67, 1.53], "KM_Stairs_Run_Up": [0.67, 1.33], "KM_Stairs_Run_Down": [1.27, 1.93]}
+const LOOPS := ["Standing_Idle", "Walking_4", "Walking", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
 
 
 func _skeleton(n: Node) -> Skeleton3D:
@@ -144,6 +147,38 @@ func _bake(name: String, src: Skeleton3D, tgt: Skeleton3D, names: PackedStringAr
 		# how far forward of the hips the left foot is (for lining loops up): from the source skeleton
 		var sf := sg[src.find_bone("mixamorig_LeftFoot")].origin
 		foot_fwd.append(sf.z - hp.z)
+		if name.begins_with("KM_") and OS.get_cmdline_user_args().has("--table") and f % 2 == 0:
+			var rf := sg[src.find_bone("mixamorig_RightFoot")].origin
+			print("    %s %.2f hips z %.2f y %.2f | L fwd %.2f y %.2f | R fwd %.2f y %.2f" % [name.substr(10), time, hp.z, hp.y, sf.z - hp.z, sf.y, rf.z - hp.z, rf.y])
+	if name.begins_with("KM_"):
+		# for cutting a loop out of a generated clip: when each foot is furthest forward, and where the hips are then
+		var line := ""
+		for f in range(1, frames - 1):
+			if foot_fwd[f] > foot_fwd[f - 1] and foot_fwd[f] >= foot_fwd[f + 1] and foot_fwd[f] > 0.05:
+				line += "  L %.2f s (hips z %.2f y %.2f)" % [f / fps, hips[f].z, hips[f].y]
+		print("    left foot furthest forward at:" + line)
+	if CUTS.has(name):
+		var f0 := int(round(float(CUTS[name][0]) * fps))
+		var f1 := int(round(float(CUTS[name][1]) * fps))
+		rot = rot.slice(f0 * nb * 4, (f1 + 1) * nb * 4)
+		hips = hips.slice(f0, f1 + 1)
+		yaw = yaw.slice(f0, f1 + 1)
+		foot_fwd = foot_fwd.slice(f0, f1 + 1)
+		frames = f1 - f0 + 1
+		cd.set(&"frames", frames)
+		# ease the last frames into the first pose, so the loop closes
+		var ease := 6
+		for b in nb:
+			var e := ((frames - 1) * nb + b) * 4
+			var gap := Quaternion(rot[e], rot[e + 1], rot[e + 2], rot[e + 3]).inverse() * Quaternion(rot[b * 4], rot[b * 4 + 1], rot[b * 4 + 2], rot[b * 4 + 3])
+			for k in range(1, ease + 1):
+				var f := frames - 1 - ease + k
+				var o := (f * nb + b) * 4
+				var q := (Quaternion(rot[o], rot[o + 1], rot[o + 2], rot[o + 3]) * Quaternion.IDENTITY.slerp(gap, float(k) / ease)).normalized()
+				rot[o] = q.x
+				rot[o + 1] = q.y
+				rot[o + 2] = q.z
+				rot[o + 3] = q.w
 	cd.set(&"rot", rot)
 	cd.set(&"hips", hips)
 	var y0 := yaw[0]
@@ -151,14 +186,14 @@ func _bake(name: String, src: Skeleton3D, tgt: Skeleton3D, names: PackedStringAr
 		yaw[f] -= y0
 	cd.set(&"yaw", yaw)
 	var tv := Vector3(hips[frames - 1].x - hips[0].x, 0.0, hips[frames - 1].z - hips[0].z)
-	var is_loop := name in LOOPS
+	var is_loop := name in LOOPS or CUTS.has(name)
 	cd.set(&"loop", is_loop)
 	cd.set(&"travel", tv)
-	cd.set(&"speed", tv.length() / maxf(anim.length, 0.001))
+	cd.set(&"speed", tv.length() / maxf(float(frames - 1) / fps, 0.001))
 	if is_loop:
 		var best := 0
 		for f in frames:
 			if foot_fwd[f] > foot_fwd[best]:
 				best = f
-		cd.set(&"phase_offset", best / fps)
+		cd.set(&"phase_offset", 0.0 if CUTS.has(name) else best / fps)
 	return cd

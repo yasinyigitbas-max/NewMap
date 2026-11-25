@@ -42,7 +42,9 @@ const TURN_180_RUN := "Running_Turn_180"        # 0.67 s, turns to his right, fr
 const RUN_FROM := 2.5           # above this speed the run clips are used (his jog loop is 2.53 m/s)
 # Stairs are their own movement (the study: "going up and going down are different movements"): his four stair clips,
 # two steps a loop, played by where he is on the stairs so that each foot comes down in the middle of a tread.
-const STAIRS := {1: ["Ascending_Stairs", "Running_Up_Stairs"], -1: ["Descending_Stairs", "Run_Down_Stairs"]}
+# Going up at a walk is Mixamo's Ascending Stairs. The other three were made with Kimodo (26 Nov, at Yasin's word):
+# Mixamo's two going-down clips are damaged (see _floor_clamped) and its Running Up Stairs was replaced with them.
+const STAIRS := {1: ["Ascending_Stairs", "KM_Stairs_Run_Up"], -1: ["KM_Stairs_Walk_Down", "KM_Stairs_Run_Down"]}
 # Head: "people turn head first", about 15 deg into a curve and 15 to 30 deg of lead; the trunk does not lead
 const LOOK_MOST_DEG := 30.0
 const LOOK_RATE_DEG := 100.0    # well under the 137 to 272 deg/s measured for deliberate turns
@@ -84,6 +86,7 @@ var _clip_t := 0.0
 var _gone := 0.0                # distance covered since a start began
 var _slope := 0.0               # the stair clip's own slope, faded in and out with the clip
 var _clamped := {}              # per stair clip: its feet were kept on Mixamo's floor (see _floor_clamped)
+var _ride := {}                 # per stair clip: how far its hips ride above a standing man's
 var _floor := {}                # per stair clip: where its own stairs stand under the hips
 var _floor_now := 0.0
 var _reach := {}                # per stair clip: how far ahead of the hips the left foot comes down
@@ -340,8 +343,11 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 			_slope += (slope_now - _slope) * minf(dt / FADE, 1.0)
 			_floor_now += (floor_now - _floor_now) * minf(dt / FADE, 1.0)
 		feet.set(&"clip_slope", _slope)
-		feet.set(&"clip_floor", _floor_now)
-		return Vector3(h.x, h.y - rise * t / length, h.z)
+		var ride: float = 0.0 if clamped else _ride.get(c, 0.0)
+		feet.set(&"clip_floor", _floor_now if clamped else _floor_now - ride * (_floor_now / floor_now if absf(floor_now) > 0.001 else 1.0))
+		# the hips stand over the clip's own stairs, not over a floor at zero: they are let down (or up) onto the body's
+		# ground, and the feet, which hang from them, come with them (a clamped clip's hips are already over its flat floor)
+		return Vector3(h.x, h.y - rise * t / length - ride, h.z)
 	_slope += (0.0 - _slope) * minf(dt / FADE, 1.0)
 	_floor_now += (0.0 - _floor_now) * minf(dt / FADE, 1.0)
 	if feet:
@@ -408,15 +414,18 @@ func _floor_clamped(c: Resource, rise: float) -> bool:
 		var length := float(c.get(&"length"))
 		var pose: Array[Quaternion] = []
 		pose.resize(_n)
-		var lowest := 1e9
+		# the lower of the two feet, through the clip: on real stairs going down it ends half a metre lower
+		var low_min := 1e9
+		var low_max := -1e9
 		for k in 21:
 			var t := length * k / 20.0
 			for i in _n:
 				pose[i] = c.call(&"rotation_at", i, t)
 			var legs: Array = feet.call(&"_legs", pose, c.call(&"hips_at", t))
-			for f in 2:
-				lowest = minf(lowest, (legs[f][3] as Transform3D).origin.y)
-		_clamped[c] = lowest > -0.05
+			var lower := minf((legs[0][3] as Transform3D).origin.y, (legs[1][3] as Transform3D).origin.y)
+			low_min = minf(low_min, lower)
+			low_max = maxf(low_max, lower)
+		_clamped[c] = low_max - low_min < 0.1
 	return _clamped[c]
 
 
@@ -450,10 +459,24 @@ func _stair_floor(c: Resource, slope: float, rise: float) -> float:
 		for f in 2:
 			for k in steps:
 				lowest = minf(lowest, flat[f][k])
-				if ((world[f][k + 1] as Vector3) - (world[f][k] as Vector3)).length() / (length / steps) < 0.15:
+				if ((world[f][k + 1] as Vector3) - (world[f][k] as Vector3)).length() / (length / steps) < 0.4:
 					sum += flat[f][k]
 					count += 1
 		_floor[c] = (sum / count if count > 0 else lowest) - float(feet.get(&"_toe_rest"))
+		# and how far the clip's hips, with their climb taken out, ride above a standing man's: a clip cut from
+		# the middle of a flight starts wherever it had got to
+		var mean := 0.0
+		for k in steps:
+			var t := length * k / steps
+			mean += (c.call(&"hips_at", t) as Vector3).y - rise * t / length
+		_ride[c] = mean / steps - _stand_height() * 0.97
+		if OS.get_cmdline_user_args().has("--dbg"):
+			print("stair clip %s: slope %.2f rise %.2f floor %.3f from %d planted frames, lowest %.3f" % [c.get(&"source"), slope, rise, _floor[c], count, lowest])
+			for f in 2:
+				var line := ""
+				for k in range(0, steps, 4):
+					line += " %.2f/%.2f" % [flat[f][k], ((world[f][k + 1] as Vector3) - (world[f][k] as Vector3)).length() / (length / steps)]
+				print("   foot %d flat height / speed:%s" % [f, line])
 	return _floor[c]
 
 
