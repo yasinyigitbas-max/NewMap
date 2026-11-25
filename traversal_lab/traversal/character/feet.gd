@@ -14,6 +14,8 @@ const PIN_MOST := 0.10          # NOT in the study: a planted foot is let slide 
 const PIN_TURN_MOST := 0.70     # radians (40 deg): the same for a planted foot's twist while he turns on the spot
 const LET_GO := 0.10            # seconds for a lifted foot to return to the clip's own path
 const REACH := 0.45             # how far above or below the body's ground a foot will look for its own ground (m)
+const EDGE_REACH := 0.12         # NOT in the study: how far before and behind a moving foot a step edge is felt (m)
+const STAND_TIME := 0.12         # NOT in the study: seconds for a foot to settle from "on its way" to "standing"
 const FOOT_SPEED := 5.0         # m/s: how fast a foot follows a jump in the ground's height (a stair edge); a swinging
                                 # foot on a 19 degree street needs 1 m/s, so slopes are followed exactly
 const HIPS_TIME := 0.10         # seconds for the hips to come back up
@@ -33,6 +35,7 @@ var toe := [0, 0]
 var foot_goal := [Basis.IDENTITY, Basis.IDENTITY]      # skeleton space, read by foot_orient.gd
 var clip_slope := 0.0           # a stair clip climbs its own stairs: their rise per metre forward (0 for flat clips)
 var clip_floor := 0.0           # and how far above the hips' own floor those stairs stand under him
+var narrow := 1.0               # the share of the clip's sideways foot spread that is kept (1 = as the clip)
 var pinning := true
 var grounding := true
 var weight := 0.0               # 0 = the clip alone (in the air), 1 = feet fitted
@@ -63,7 +66,9 @@ var _twist := [0.0, 0.0]
 var _lift := [0.0, 0.0]
 var _g := [0.0, 0.0]
 var _g_ok := false
+var _stand := [1.0, 1.0]         # 0 = a foot on its way, 1 = a foot standing
 var _bend := [Vector3.ZERO, Vector3.ZERO]
+var _aim := [Vector3.ZERO, Vector3.ZERO]
 var _was := [Vector3.ZERO, Vector3.ZERO]
 var _was_ok := false
 
@@ -118,6 +123,13 @@ func _legs(rot: Array[Quaternion], hips: Vector3) -> Array:
 		var b := a * Transform3D(Basis(rot[shin[f]]), _origin[shin[f]])
 		var c := b * Transform3D(Basis(rot[foot[f]]), _origin[foot[f]])
 		var d := c * Transform3D(Basis(rot[toe[f]]), _origin[toe[f]])
+		# His feet land far apart sideways (Yasin, 26 Nov: "legs are too spread apart"; measured 0.32 m between
+		# the ankles at a walk, where people were measured at 0.08 to 0.10 m). It comes from his T-pose, whose legs
+		# splay, and every clip inherits it. The feet are brought in toward the line under the hips.
+		if narrow != 1.0:
+			var pull := (c.origin.x - hips.x) * (narrow - 1.0)
+			c.origin.x += pull
+			d.origin.x += pull
 		# a stair clip puts its feet on its own stairs; take those stairs out, so its feet are on a flat floor like
 		# any other clip's and the real steps under him are what they are fitted to
 		if clip_slope != 0.0 or clip_floor != 0.0:
@@ -200,6 +212,38 @@ func solve(rot: Array[Quaternion], hips: Vector3, dt: float, on_ground: bool) ->
 			elif not gb.is_empty():
 				want_g = (gb["position"] as Vector3).y
 			ground_at[f] = want_g
+			# A foot in the air passing a step edge would have its ground jump a whole step under it and be
+			# snapped there (Yasin, 26 Nov: stairs "very jittery"; measured: feet and knees jolting at 300 to
+			# 500 m/s2 on stairs against under 60 on the flat). So a moving foot goes by the ground averaged over
+			# a hand's width before and behind it along its way, which turns an edge into a short rise; a planted
+			# foot goes by the ground it stands on. Between the two it eases.
+			var way := Vector3((body.get(&"hvel") as Vector3).x, 0.0, (body.get(&"hvel") as Vector3).z)
+			if way.length() > 0.05:
+				way = way.normalized()
+				var smooth := want_g
+				var back := _ground(ankle - way * EDGE_REACH, feet_y)
+				var fore := _ground(ankle + way * EDGE_REACH, feet_y)
+				if not back.is_empty() and not fore.is_empty() and (back["normal"] as Vector3).y > 0.98 and (fore["normal"] as Vector3).y > 0.98:
+					var y0 := (back["position"] as Vector3).y
+					var y1 := (fore["position"] as Vector3).y
+					if absf(y1 - y0) > 0.04:
+						# a step edge lies between: find where (halving the gap five times, to 6 mm), and let the
+						# height run from one level to the other across the whole width
+						var lo := -EDGE_REACH
+						var hi := EDGE_REACH
+						for i in 5:
+							var mid := (lo + hi) * 0.5
+							var r := _ground(ankle + way * mid, feet_y)
+							if not r.is_empty() and absf((r["position"] as Vector3).y - y0) < absf((r["position"] as Vector3).y - y1):
+								lo = mid
+							else:
+								hi = mid
+						var edge := (lo + hi) * 0.5          # where the edge is, against the foot (- = behind)
+						var share := clampf((EDGE_REACH - edge) / (2.0 * EDGE_REACH), 0.0, 1.0)
+						smooth = lerpf(y0, y1, share * share * (3.0 - 2.0 * share))
+				_stand[f] = move_toward(_stand[f], 1.0 if contact[f] else 0.0, dt / STAND_TIME)
+				var k: float = _stand[f] * _stand[f] * (3.0 - 2.0 * _stand[f])
+				want_g = lerpf(smooth, want_g, k)
 		if not _g_ok or not on_ground:
 			_g[f] = want_g
 		_g[f] = move_toward(_g[f], want_g, FOOT_SPEED * dt)
@@ -216,7 +260,9 @@ func solve(rot: Array[Quaternion], hips: Vector3, dt: float, on_ground: bool) ->
 		# (3) can the leg reach it? If not the hips come down
 		var hip: Vector3 = s * (legs[f][0] as Transform3D).origin
 		var flat_gap := Vector2(ankle.x - hip.x, ankle.z - hip.z).length()
-		var most: float = _leg_len[f] * STRAIGHT
+		# (on stairs a little more bend is kept: a leg at full stretch throws its knee about for the smallest
+		# change in reach, which showed as knees jolting on the way down)
+		var most: float = _leg_len[f] * (STRAIGHT if clip_slope == 0.0 else 0.965)
 		# (on stairs the foot coming down counts too, so the hips go down with it and not in a jerk when it lands)
 		if flat_gap < most and (contact[f] or clip_slope != 0.0):
 			want_pelvis = minf(want_pelvis, sqrt(most * most - flat_gap * flat_gap) - (hip.y - ankle.y))
@@ -225,8 +271,12 @@ func solve(rot: Array[Quaternion], hips: Vector3, dt: float, on_ground: bool) ->
 		var bend: Vector3 = (legs[f][1] as Transform3D).origin - mid
 		if bend.length() < 0.01:
 			bend = (legs[f][0] as Transform3D).basis * Vector3(0.0, 0.0, 1.0)
-		_bend[f] = (s.basis * bend).normalized()
-		_pole[f].position = (legs[f][1] as Transform3D).origin + bend.normalized() * 0.6
+		# the way the knee points is eased from tick to tick (in the skeleton's own space): on a nearly straight leg
+		# the clip's knee direction swings about, and the knee with it
+		var aim := bend.normalized()
+		_aim[f] = aim if (_aim[f] as Vector3) == Vector3.ZERO else (_aim[f] as Vector3).lerp(aim, 1.0 - exp(-dt / 0.06)).normalized()
+		_bend[f] = (s.basis * (_aim[f] as Vector3)).normalized()
+		_pole[f].position = (legs[f][1] as Transform3D).origin + (_aim[f] as Vector3) * 0.6
 	_was_ok = true
 	_g_ok = true
 	want_pelvis = maxf(want_pelvis, -HIPS_MOST) if on_ground else 0.0

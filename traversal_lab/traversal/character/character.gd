@@ -57,6 +57,8 @@ const HANDS := {true: "KM_Crawl_Fwd", false: "KM_Crawl_Back"}
 # balance itself"): Kimodo takes of stepping and of running off a ledge. [clip, leaves the edge, feet touch down]
 const DROP_WALK := ["KM_Ledge_Walk_Off", 2.10, 2.62]
 const DROP_RUN := ["KM_Ledge_Run_Off", 1.92, 2.72]
+const STANCE := 0.5             # the share of his sideways foot spread kept: 0.32 m becomes 0.16 m at a walk, 0.27 m
+                                # becomes 0.14 m at a run (people: 0.08 to 0.10 m; his thighs are thicker than most)
 # Head: "people turn head first", about 15 deg into a curve and 15 to 30 deg of lead; the trunk does not lead
 const LOOK_MOST_DEG := 30.0
 const LOOK_RATE_DEG := 100.0    # well under the 137 to 272 deg/s measured for deliberate turns
@@ -99,6 +101,8 @@ var _gone := 0.0                # distance covered since a start began
 var _slope := 0.0               # the stair clip's own slope, faded in and out with the clip
 var _clamped := {}              # per stair clip: its feet were kept on Mixamo's floor (see _floor_clamped)
 var _steep_phase := 0.0
+var _stair_phase := 0.0
+var _stair_on := false
 var _pitch := 0.0               # the whole figure tipped to the slope, on hands and feet (radians)
 var _hands := false
 var _drop: Array = []           # the ledge clip in use while falling, as DROP_WALK / DROP_RUN
@@ -111,6 +115,8 @@ var _legs_i: Array[int] = []
 var _neck := -1
 var _head := -1
 var _look := 0.0
+var foot_narrow := true
+var _narrow := 1.0
 var foot_pin := true            # planted feet held in place
 var foot_ground := true         # feet fitted to the ground under them
 
@@ -309,6 +315,10 @@ func _physics_process(dt: float) -> void:
 	_hips = _from_hips.lerp(hips, k)
 	var drop := 0.0
 	if feet:
+		# on his feet (not crawling, not in the air) the stance is narrowed; eased so it never snaps
+		var want_narrow := STANCE if (_mode == "move" and sub != "hands") else 1.0
+		_narrow += (want_narrow - _narrow) * (1.0 - exp(-dt / 0.2))
+		feet.set(&"narrow", _narrow if foot_narrow else 1.0)
 		feet.set(&"pinning", foot_pin)
 		feet.set(&"grounding", foot_ground and absf(_pitch) < 0.1)
 		drop = feet.call(&"solve", _rot, _hips, dt, state == 0)
@@ -375,8 +385,19 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 		var length := float(c.get(&"length"))
 		var lands := 0.5 - _stair_reach(c) / tread
 		var cycle := float(c.get(&"phase_offset")) / length + (steps - lands) * 0.5
-		var t := fposmod(cycle, 1.0) * length
+		# the stride runs on by the ground covered and is only drawn toward that place, a little each tick: tied
+		# to it outright, it jumped a few hundredths of a stride at every step edge (the measured tread is never
+		# exact), which showed as a twitch through the whole body
+		_stair_phase += speed * dt / (2.0 * tread)
+		var behind := wrapf(cycle - _stair_phase, -0.5, 0.5)
+		if not _stair_on or absf(behind) > 0.25:
+			_stair_phase = cycle
+		else:
+			_stair_phase += behind * minf(dt * 3.0, 1.0)
+		_stair_on = true
+		var t := fposmod(_stair_phase, 1.0) * length
 		return _slope_clip_pose(c, t, out, dt)
+	_stair_on = false
 	var terr := int(body.get(&"terrain"))
 	if (sub == "steep" or sub == "hands") and terr != 0:
 		# steep ground: the stride goes by the ground covered (along the slope when he is tipped to it)

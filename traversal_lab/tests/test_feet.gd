@@ -94,8 +94,10 @@ func test_flat() -> void:
 		ok(d[1] >= 2 and d[0] < 0.02, "flat, %s: over %d foot plants the ball of the foot drifts %.1f cm at most (bar 2 cm)" % ["run" if run else "walk", d[1], d[0] * 100.0])
 	# fitting to the ground alone (planted feet not held) must leave the clip as it is on flat ground
 	character.set(&"foot_pin", false)
+	character.set(&"foot_narrow", false)
 	var rec := await drive(c, [[4.0, 0.0, -1.0, 0.0, false]])
 	character.set(&"foot_pin", true)
+	character.set(&"foot_narrow", true)
 	var off := 0.0
 	for i in range(30, rec.size()):
 		for f in 2:
@@ -103,7 +105,7 @@ func test_flat() -> void:
 	var low := 0.0
 	for r: Dictionary in rec:
 		low = minf(low, r["pelvis"])
-	ok(off < 0.003, "flat, walk, feet fitted to the ground but not held: the ankles are where the clip puts them to within %.1f mm (bar 3 mm); hips moved %.1f mm" % [off * 1000.0, -low * 1000.0])
+	ok(off < 0.003, "flat, walk, feet fitted to the ground but not held or brought in: the ankles are where the clip puts them to within %.1f mm (bar 3 mm); hips moved %.1f mm" % [off * 1000.0, -low * 1000.0])
 
 
 func slope(label: String, at: Vector3, secs: float, z_from: float, z_to: float, mz := -1.0, run := false) -> void:
