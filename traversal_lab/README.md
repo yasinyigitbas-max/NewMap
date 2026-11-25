@@ -70,7 +70,11 @@ Built early, out of order, because a bare capsule with no jump could not be judg
 - Lean: he leans into a turn by tan(lean) = speed x turn rate / g, capped at what was measured on people (6.8 degrees
   at a normal walk, 13 at a run).
 
-Not done yet, and known: no automatic test of foot sliding; no start, stop or turn clips (the body's speed changes
+Foot sliding, measured (`tests/test_feet.gd`, bar 2 cm): run 1.9 cm, passes; **walk 4.0 cm, fails**. The walk at
+1.4 m/s is a blend of two walk clips with different stride timing; to be closed by pinning planted feet with leg IK
+(Stage 4).
+
+Not done yet, and known: no start, stop or turn clips (the body's speed changes
 but the legs just blend); no foot IK on stairs and slopes; no running-jump clip (missing from the download);
 he can still steer during a landing.
 
