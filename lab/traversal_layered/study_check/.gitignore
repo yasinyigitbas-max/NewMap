@@ -1,0 +1,6 @@
+results/
+native/build/
+native/bin/*.so
+*.os
+*.o
+.sconsign*.dblite

@@ -1,0 +1,9 @@
+#!/usr/bin/env python
+# STUDY CHECK (LOCKED) native library. Built by study_check/check.sh:
+#   scons platform=linux target=template_debug godot_cpp=<path to godot-cpp> -j4
+import os
+cpp = ARGUMENTS.get("godot_cpp", os.environ.get("GODOT_CPP", "/opt/lab/godot-cpp"))
+env = SConscript(os.path.join(cpp, "SConstruct"))
+env.Append(CPPPATH=["src/"])
+lib = env.SharedLibrary("bin/libstudycheck{}{}".format(env["suffix"], env["SHLIBSUFFIX"]), source=Glob("src/*.cpp"))
+Default(lib)

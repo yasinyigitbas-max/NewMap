@@ -1,3 +1,6 @@
+> **Traversal lab sessions (lab/layered, lab/layered-wip): this file's city-kit tasks are not yours.** Your rules are
+> `lab/traversal_layered/study_check/RULES.md` (printed by the SessionStart hook) and the study `lab/traversal_layered/STUDY.md`.
+
 # Coronado city kit (the new map)
 
 The new map of Coronado for the game, separated from the game repo (yasinyigitbas-max/coronado-source) on 18 Nov at

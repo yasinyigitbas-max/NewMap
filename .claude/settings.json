@@ -7,11 +7,33 @@
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "compact",
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$CLAUDE_PROJECT_DIR\" && echo '=== AUTO-REMINDER after context compression: Yasin asked to re-read the job board, rules, budgets and skill before continuing ===' && cat map_dc/coronado/city_kit/JOB_BOARD.md && echo && sed -n '/^## Yasin/,$p' .claude/skills/coronado-city-kit/SKILL.md"
+            "command": "bash \"$CLAUDE_PROJECT_DIR/lab/traversal_layered/study_check/hooks/session_start.sh\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Edit|Write|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/lab/traversal_layered/study_check/hooks/pre_tool.sh\"",
+            "timeout": 2400
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/lab/traversal_layered/study_check/hooks/stop.sh\"",
+            "timeout": 60
           }
         ]
       }
