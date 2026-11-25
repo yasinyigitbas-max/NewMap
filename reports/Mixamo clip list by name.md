@@ -17,7 +17,7 @@ The **Sure?** column: `yes` means the name is unique or the clip was matched by 
 | 4 | Walking | Walking With A Swagger | 1.03 s | Walking | yes |
 | 5 | Slow Run | Slow Run Forward | 0.73 s | Slow Run | yes |
 | 6 | Running | Male Weighted Run | 0.83 s | Running (3) | yes |
-| 7 | Running | Running Leaning Back Or Forth | 0.70 s | Running | yes |
+| 7 | Running | Running Leaning Back Or Forth | 0.63 s | Running | yes |
 | 8 | Sprint | Standard Sprint | 0.53 s | Sprint | yes |
 | 9 | Walking Backwards | the one with no description | 1.20 s | Walking Backwards | by length |
 | 10 | Walking Left Turn | Turning Left While Walking | 1.20 s | Walking Left Turn | yes |
@@ -53,7 +53,7 @@ The **Sure?** column: `yes` means the name is unique or the clip was matched by 
 |---|---|---|---|---|---|
 | 36 | Falling Idle | Mid-Air Falling Idle | 0.70 s | Falling Idle | yes |
 | 37 | Falling To Landing | Landing From Falling Idle | 1.07 s | Falling To Landing | yes |
-| 38 | Hard Landing | Mid-Air Falling To A Hard Landing | 2.00 s | Hard Landing | yes |
+| 38 | Hard Landing | Mid-Air Falling To A Hard Landing | 2.50 s | Hard Landing | yes |
 | 39 | Falling To Roll | Mid-Air Falling Into A Roll Game Blend | 1.80 s | falling to roll | by length |
 | 40 | Jumping Down | Jumping Down Over A Railing | 3.07 s | Jumping Down (2) | yes |
 | 41 | Jump | Jumping In Place | 2.17 s | Jump | by length |
@@ -230,7 +230,7 @@ The **Sure?** column: `yes` means the name is unique or the clip was matched by 
 | 202 | Knocked Out | Knocked Out Falling To Stomach | 5.60 s | Knocked Out | by length |
 | 203 | Knocked Out | Knocked Out Falling To Back | 4.93 s | Knocked Out (1) | by length |
 | 204 | Laying Idle | Laying On Back Looking Around | 12.50 s | Laying Idle | by length |
-| 205 | Left Turn | Female Ninja Left Turn In Place or Standing Left Turn or Standing Left Turn Sans Rotation | 1.03 s | Left Turn | check length |
+| 205 | Left Turn | Female Ninja Left Turn In Place or Standing Left Turn or Standing Left Turn Sans Rotation | 0.93 s | Left Turn | check length |
 | 206 | Left Turn W_Briefcase | not in the catalogue copy; search by this name | 2.20 s | Left Turn W_Briefcase | unsure |
 | 207 | Light Hit To Head | Receiving A Light Hit From A Right Punch or Receiving A Light Hit From A Straight Punch | 0.83 s | Light Hit To Head | check length |
 | 208 | Look Behind Run | Running While Looking Behind | 0.77 s | Look Behind Run | yes |
@@ -266,7 +266,7 @@ The **Sure?** column: `yes` means the name is unique or the clip was matched by 
 | 238 | Reloading | one of 2 clips with this name; pick by length | 3.67 s | Reloading | check length |
 | 239 | Restrain | Block And Restraining A Larger Person | 7.57 s | Restrain | yes |
 | 240 | Rifle Start Run | Starting To Run With A Aimed Rifle | 1.73 s | Rifle Start Run | yes |
-| 241 | Right Turn | Standing Right Turn or Standing Right Turn Sans Rotation or Turning Right | 1.03 s | Right Turn | check length |
+| 241 | Right Turn | Standing Right Turn or Standing Right Turn Sans Rotation or Turning Right | 1.00 s | Right Turn | check length |
 | 242 | Right Turn W_ Briefcase | not in the catalogue copy; search by this name | 2.13 s | Right Turn W_ Briefcase | unsure |
 | 243 | Rolling | not in the catalogue copy; search by this name | 2.53 s | Rolling | unsure |
 | 244 | Run Look Back | Running Looking Back | 2.23 s | Run Look Back | yes |
