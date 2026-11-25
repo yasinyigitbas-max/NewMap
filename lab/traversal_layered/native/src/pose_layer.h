@@ -69,6 +69,7 @@ private:
 
 	// smoothed layers
 	float pelvis_drop = 0, pelvis_drop_v = 0;
+	float acc_f = 0, acc_fv = 0, acc_s = 0, acc_sv = 0; // smoothed acceleration lean
 	float lean_f = 0, lean_s = 0, lean_fv = 0, lean_sv = 0;
 	float head_yaw = 0, head_yaw_v = 0;
 	float lean_total_deg = 0, head_yaw_deg = 0;

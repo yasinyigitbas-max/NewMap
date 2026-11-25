@@ -13,8 +13,8 @@ namespace lab {
 static const float WALK_ACCEL = 2.5f;   // m/s^2 inside the loop (2.3: walk speed in 2-3 steps)
 static const float RUN_ACCEL = 4.5f;    // run speed in 3-5 steps (2.3)
 static const float DECEL = 5.0f;        // loop slowing (2.4)
-static const float TURN_WALK = 6.0f;    // rad/s: small turns inside the step (2.5); GTA-tight (8.3)
-static const float TURN_RUN = 3.2f;     // rad/s at 4.6 m/s: ~3 m radius, lean ~35 deg max (2.5)
+static const float TURN_WALK = 2.5f;    // rad/s walking: 30-60 deg per step (study v2 3.3, 4.6)
+static const float TURN_LEAN = 0.364f;  // tan(20 deg): a sustained curve never needs more than 20 deg of lean (v2 3.3)
 static const float PIVOT_ANGLE = 2.36f; // 135 deg: above it a run/walk does a pivot (2.5)
 static const float START_STEER = 7.0f;  // rad/s: start orientation warp (spin on the stance foot, 2.5)
 static const float RUN_GAIT = 2.3f;     // above this desired speed a start / stop / pivot uses the run clips (2.2)
@@ -242,6 +242,7 @@ void Locomotion::enter_pivot(float dt, float ang) {
 	// the clip that turns the asked way (clip 0 turns right = negative yaw)
 	const Clip *c = pc[(ang < 0) == (pc[0]->turn < 0) ? 0 : 1];
 	cur = c;
+	pivot_cool = 1.0f; // no new pivot for a second after this one
 	speed_cap = std::fmax(speed, 1.0f);
 	float tt = c->entry_foot >= 0 ? time_to_strike(c->entry_foot) : 0.0f;
 	const float pre = std::fmax(c->entry_f, 0.0f) / c->fps;
@@ -334,10 +335,13 @@ void Locomotion::tick(float dt, Vector2 dir, float want) {
 				enter_stop(dt);
 				break;
 			}
-			if (std::fabs(ang) > PIVOT_ANGLE && speed > 1.0f) {
+			pivot_cool -= dt;
+			if (std::fabs(ang) > PIVOT_ANGLE && speed > 1.0f && pivot_cool <= 0.0f) {
 				enter_pivot(dt, ang);
 				break;
 			}
+			// a big change of direction at a run slows down first, then turns (v2 3.3: 45-90 deg at a run)
+			if (speed > 2.5f && std::fabs(ang) > 0.8f) want = std::min(want, 1.6f); // brake to ~1.5 m/s, then turn (v2 3.3)
 			// speed toward the stick
 			const float acc = want > RUN_GAIT ? RUN_ACCEL : WALK_ACCEL;
 			if (speed < want) speed = std::fmin(want, speed + acc * dt);
@@ -345,7 +349,8 @@ void Locomotion::tick(float dt, Vector2 dir, float want) {
 			// the 1.8-2.2 m/s band is crossed, never held (study 2.2)
 			if (want > 2.2f && speed > 1.8f && speed < 2.2f) speed = std::fmin(2.2f, speed + acc * dt);
 			// direction: turn inside the steps, rate falls with speed
-			const float tr = TURN_WALK + (TURN_RUN - TURN_WALK) * std::clamp((speed - 1.5f) / 3.0f, 0.0f, 1.0f);
+			// turn rate limited by the lean a body can hold: w = g tan(20 deg) / v (v2 3.3: 49 deg/s at 4.2 m/s)
+			const float tr = std::min(TURN_WALK, 9.81f * TURN_LEAN / std::max(speed, 0.1f));
 			const float step = std::clamp(ang, -tr * dt, tr * dt);
 			yaw = wrap_pi(yaw + step);
 			velocity = Vector2(std::sin(yaw), std::cos(yaw)) * speed;

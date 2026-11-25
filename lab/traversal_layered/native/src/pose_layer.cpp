@@ -269,19 +269,30 @@ void PoseLayer::_process_modification_with_delta(double p_delta) {
 		sk->set_bone_global_pose(H, gh2);
 	}
 
-	// 4. whole-body lean from the feet: atan(a/g) forward/back, atan(v^2/(g r)) into the turn (study 2.5, 4.5)
+	// 4. whole-body lean from the feet, ONE source (study v2 3.2, 10.1 step 4): measure the lean the clip already has
+	// (pelvis centre -> neck base, skeleton space: +Y up, +Z forward, +X left), add only what the acceleration needs,
+	// and keep the total inside the trunk limits (sideways 25, forward 30, back 15). If the clip alone leans too far,
+	// the body is leaned back to the limit.
 	if (layers & 1) {
-		const float tf = in.lean_enabled ? std::atan(std::clamp(in.accel_long, -8.0f, 8.0f) / G) * 0.6f : 0.0f;
-		const float ts = std::atan(std::clamp(in.accel_lat, -9.0f, 9.0f) / G);
-		spring_to(lean_f, lean_fv, std::clamp(tf, -0.35f, 0.35f), 0.06f, dt);
-		spring_to(lean_s, lean_sv, std::clamp(ts, -0.6f, 0.6f), 0.06f, dt);
+		const Vector3 pc0 = (sk->get_bone_global_pose(UP[0]).origin + sk->get_bone_global_pose(UP[1]).origin) * 0.5f;
+		const Vector3 tr0 = (sk->get_bone_global_pose(NECK).origin - pc0).normalized();
+		const float clip_f = std::atan2(tr0.z, tr0.y), clip_s = std::atan2(tr0.x, tr0.y);
+		const float tf = in.lean_enabled ? std::atan(std::clamp(in.accel_long, -6.0f, 6.0f) / G) : 0.0f;
+		const float ts = std::atan(std::clamp(in.accel_lat, -6.0f, 6.0f) / G);
+		const float D = 3.14159265f / 180.0f;
+		// only the acceleration lean is smoothed; the limit is applied every frame with no lag (the clip's trunk rocks
+		// ~5 deg per step, and a smoothed limit overshoots it)
+		spring_to(acc_f, acc_fv, tf, 0.06f, dt);
+		spring_to(acc_s, acc_sv, ts, 0.06f, dt);
+		lean_f = std::clamp(clip_f + acc_f, -15.0f * D, 28.0f * D) - clip_f;
+		lean_s = std::clamp(clip_s + acc_s, -23.0f * D, 23.0f * D) - clip_s;
 		const Quaternion q = Quaternion(Vector3(0, 0, 1), -lean_s) * Quaternion(Vector3(1, 0, 0), lean_f);
 		Transform3D gh = sk->get_bone_global_pose(H);
 		const Vector3 pivot(gh.origin.x, 0, gh.origin.z);
 		gh.origin = pivot + q.xform(gh.origin - pivot);
 		gh.basis = Basis(q) * gh.basis;
 		sk->set_bone_global_pose(H, gh);
-		lean_total_deg = (float)Math::rad_to_deg(std::sqrt(lean_f * lean_f + lean_s * lean_s));
+		lean_total_deg = (float)Math::rad_to_deg(std::sqrt((clip_f + lean_f) * (clip_f + lean_f) + (clip_s + lean_s) * (clip_s + lean_s)));
 	}
 
 	// 5. legs to the targets

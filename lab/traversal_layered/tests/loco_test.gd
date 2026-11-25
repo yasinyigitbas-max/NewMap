@@ -41,6 +41,8 @@ func scenarios() -> Array:
 		{"name": "walk, reverse 180", "steps": [[0.3, 0, 1.55], [2.5, 180, 1.55], [4.5, 180, 0]], "len": 6.5, "target": 1.55},
 		{"name": "run, 90 turn right", "steps": [[0.3, 0, 4.2], [2.5, -90, 4.2], [4.5, -90, 0]], "len": 6.5, "target": 4.2},
 		{"name": "run circle (stick sweeps)", "steps": [[0.3, 0, 4.2], [1.5, "sweep", 4.2], [5.5, "hold", 0]], "len": 7.5, "target": 4.2},
+		{"name": "run, camera spinning 90 deg/s", "steps": [[0.3, 0, 4.2], [1.5, "spin90", 4.2], [6.0, "hold", 0]], "len": 7.5, "target": 4.2},
+		{"name": "run, camera spinning 180 deg/s", "steps": [[0.3, 0, 4.2], [1.5, "spin180", 4.2], [6.0, "hold", 0]], "len": 7.5, "target": 4.2},
 		{"name": "tap: start then release at once", "steps": [[0.3, 0, 1.55], [0.45, 0, 0]], "len": 2.5, "target": 1.55},
 		{"name": "stop then go again", "steps": [[0.3, 0, 1.55], [2.5, 0, 0], [2.75, 0, 1.55], [4.5, 0, 0]], "len": 6.5, "target": 1.55},
 	]
@@ -82,7 +84,7 @@ func _next():
 	m = {"slide_max": 0.0, "slide_sum": 0.0, "slides": 0, "pop_max": 0.0, "joint_bad": 0, "knee_back": 0, "ankle_up": 0,
 		"knee_over": 0, "elbow": 0, "latency": -1.0, "t_full": -1.0, "t_stop": -1.0, "prev_h": null, "prev_dh": null,
 		"lock": [null, null], "go_t": -1.0, "rel_t": -1.0, "base_head": null, "base_hips": null, "base_speed": 0.0,
-		"switch0": p.get_switches(), "rel0": layer.get_releases(), "max_speed": 0.0, "mode_seq": [], "slide_at": "", "pop_at": ""}
+		"trunk_side": 0.0, "trunk_fwd": 0.0, "lean_over": {}, "switch0": p.get_switches(), "rel0": layer.get_releases(), "max_speed": 0.0, "mode_seq": [], "slide_at": "", "pop_at": ""}
 
 func _tick():
 	if sk == null:
@@ -103,7 +105,9 @@ func _tick():
 			sp = s[2]; last_change = s[0]
 			if s[1] is String:
 				if s[1] == "sweep": dir = rad_to_deg((t - s[0]) * 1.4)
-				else: dir = rad_to_deg((5.5 - 1.5) * 1.4)
+				elif s[1] == "spin90": dir = (t - s[0]) * 90.0
+				elif s[1] == "spin180": dir = (t - s[0]) * 180.0
+				else: dir = dir
 			else: dir = s[1]
 	var d := Vector2(sin(deg_to_rad(dir)), cos(deg_to_rad(dir)))
 	p.set_test_input(d, sp, true)
@@ -186,6 +190,15 @@ func _measure():
 		var ef := 180.0 - rad_to_deg((sh - el).angle_to(wr - el))
 		if ef > 145.0: m.elbow += 1
 	m.joint_bad = m.knee_over + m.knee_back + m.elbow
+	var pc := (_wpos("LeftUpLeg") + _wpos("RightUpLeg")) * 0.5
+	var nk := sk.get_global_transform_interpolated() * sk.get_bone_global_pose(sk.find_bone("neck")).origin
+	var tr := (nk - pc).normalized()
+	var fwd2 := Vector3(sin(p.get_yaw()), 0, cos(p.get_yaw())); var side2 := Vector3(fwd2.z, 0, -fwd2.x)
+	var lean_side := rad_to_deg(atan2(abs(tr.dot(side2)), tr.y)); var lean_fwd := rad_to_deg(atan2(tr.dot(fwd2), tr.y))
+	m.trunk_side = max(m.trunk_side, lean_side); m.trunk_fwd = max(m.trunk_fwd, lean_fwd)
+	if lean_fwd > 30.0 or lean_side > 25.0:
+		var mn: String = ["idle", "start", "loop", "stop", "pivot"][p.get_mode()]
+		m.lean_over[mn] = m.lean_over.get(mn, 0) + 1
 
 func _finish():
 	var modes := ["idle", "start", "loop", "stop", "pivot"]
@@ -194,12 +207,13 @@ func _finish():
 	results.append({"name": cur.name, "slide": m.slide_max, "pop": m.pop_max, "joints": m.joint_bad,
 		"knee_back": m.knee_back, "knee_over": m.knee_over, "elbow": m.elbow,
 		"latency": m.latency * 1000.0 if m.latency >= 0 else -1.0, "t_full": m.t_full, "t_stop": m.t_stop,
-		"vmax": m.max_speed, "slide_at": m.slide_at, "pop_at": m.pop_at, "switches": p.get_switches() - m.switch0, "releases": layer.get_releases() - m.rel0, "seq": " > ".join(seq)})
+		"vmax": m.max_speed, "trunk_side": m.trunk_side, "trunk_fwd": m.trunk_fwd, "lean_over": m.lean_over, "slide_at": m.slide_at, "pop_at": m.pop_at, "switches": p.get_switches() - m.switch0, "releases": layer.get_releases() - m.rel0, "seq": " > ".join(seq)})
 
 func _report():
 	print("\n=== Lab B locomotion numbers (60 fps, player_v3) ===")
 	print("%-34s %7s %7s %6s %8s %7s %7s %6s %4s  %s" % ["scenario", "slide", "hipPop", "joints", "latency", "tFull", "tStop", "vmax", "sw", "modes"])
 	for r in results:
 		print("%-34s %6.1fc %6.1fc %6d %6.0fms %6.2fs %6.2fs %6.2f %4d  %s" % [r.name, r.slide, r.pop, r.joints, r.latency, r.t_full, r.t_stop, r.vmax, r.switches, r.seq])
+		print("      trunk lean on the drawn body: sideways max %.0f deg, forward max %.0f deg (v2 3.2 HARD: sideways 25, forward 30); frames over, by state: %s" % [r.trunk_side, r.trunk_fwd, str(r.lean_over)])
 		print("      worst slide at %s, worst pop at %s, feet lifted early (out of reach) %d" % [r.slide_at, r.pop_at, r.releases])
 		if r.joints > 0: print("      joints: knee backward %d, knee > 140 %d, elbow > 145 %d (frames)" % [r.knee_back, r.knee_over, r.elbow])

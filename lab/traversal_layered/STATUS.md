@@ -49,6 +49,17 @@ bent the mesh knee 16-19° backward in 25-30 frames** of the climb and mantle: t
 | 14 | Retargeter swings each limb **whole** (hip→ankle, shoulder→wrist, hand and fingers with the arm), keeping the body's own rest joint angles; leg ratio from the straight leg (hip→ankle). DECISIONS 1.2. | Backward knees: climb 0, Kimodo walk 0, Mixamo walk 0, Mixamo run 0, Kimodo run 1 frame at -5° (the limit). Old retargeter: 25-30 frames at -16 to -19°. |
 | 14b | Runtime leg IK: reach capped at the mesh's straight leg (rest hip→ankle), soft reach 99 % → 99.9 % (v2 10.3). | loco_test (now with the signed, rest-relative knee): 0 backward-knee frames in all 14 scenarios. |
 
+### Fixed later the same evening (Yasin: "still leaning almost 70 degrees when running")
+| # | Fix | Result (loco_test, trunk lean measured on the drawn body, pelvis centre -> neck, v2 1.6) |
+|---|---|---|
+| 1 | Turn rate from the 20° lean column: w = g tan20 / v (49°/s at 4.2 m/s), walking 2.5 rad/s; a big turn at a run brakes to ~1.6 m/s first; no new pivot within 1 s of the last (v2 3.3) | camera spinning 90 and 180°/s while running: no pivot spam (8 switches, was 198) |
+| 2 | One lean source: the clip's own trunk lean is measured, only the acceleration's difference is added, and the total is held inside the trunk limits every frame (v2 3.2, 10.1 step 4) | was: sideways 36°, forward 46° (together ~60°). Now: sideways max 24°, forward max 30° in all 16 scenarios |
+
+**This is still not a study-v2 build.** Not checked yet and probably wrong: ankle roll / twist and the sole (1.4, 2.1),
+feet spinning flat (4.6), CoM accelerations (3.6), head level (2.4), spine shares and arms, foot slide at the sole
+points (1.7), stop steps (3.4), the fuzzer (9.3). Recommendation: no more patches; the rebuild in v2's order with the
+checker first.
+
 ### Still open after this fix
 | # | Problem | Notes |
 |---|---|---|
