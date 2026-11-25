@@ -11,7 +11,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$CLAUDE_PROJECT_DIR\" && echo '=== AUTO-REMINDER after context compression: Yasin asked to re-read the job board, rules, budgets and skill before continuing ===' && cat map_dc/coronado/city_kit/JOB_BOARD.md && echo && sed -n '/^## Yasin/,$p' .claude/skills/coronado-city-kit/SKILL.md"
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && echo '=== AUTO-REMINDER after context compression: Yasin asked to re-read the job board, rules, budgets and skill before continuing ===' && cat map_dc/coronado/city_kit/JOB_BOARD.md && echo && sed -n '/^## Yasin/,$p' .claude/skills/coronado-city-kit/SKILL.md; if [ -f 'reports/TRAVERSAL STATUS.md' ]; then echo; echo '=== Traversal / player movement / animation clips / player character work: the status file (Yasin, 25 Nov) ==='; cat 'reports/TRAVERSAL STATUS.md'; fi"
           }
         ]
       }
