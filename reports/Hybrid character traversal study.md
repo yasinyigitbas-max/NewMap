@@ -594,7 +594,7 @@ What this means for the build:
   - *Low crouch walk:* keep the crouched body at about 1.5 m, and use the crawl for lower gaps if they matter.
   - *Beam walk, sidle and squeeze:* build them from clips you have plus procedure: the careful walk with the feet narrowed and arms raised by IK for beams, and the strafe walk for sidling and squeezing.
   - *Bonnet slide:* leave it out, or source it elsewhere.
-- **A correction to the table above.** `Braced Hang To Crouch` was listed with a native height of 1.70 m. Its numbers are measured from where the hang starts, not from the ground: the catalogue's entry clip puts the hands of a braced hang at about 2.3 to 2.4 m with the feet braced about 1.2 m below them. So this clip is not tied to 1.70 m. It suits any ledge high enough for the feet to be off the ground, roughly 1.6 m and up, and the height is set by how the character gets into the hang.
+- **A correction.** The first version of this part gave `Braced Hang To Crouch` a native height of 1.70 m. That was a misreading: its numbers are measured from where the hang starts, not from the ground: the catalogue's entry clip puts the hands of a braced hang at about 2.3 to 2.4 m with the feet braced about 1.2 m below them. So this clip is not tied to 1.70 m. It suits any ledge high enough for the feet to be off the ground, roughly 1.6 m and up, and the height is set by how the character gets into the hang.
 
 ### What this changes in Part 2
 
