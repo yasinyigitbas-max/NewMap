@@ -217,7 +217,8 @@ func solve(rot: Array[Quaternion], hips: Vector3, dt: float, on_ground: bool) ->
 		var hip: Vector3 = s * (legs[f][0] as Transform3D).origin
 		var flat_gap := Vector2(ankle.x - hip.x, ankle.z - hip.z).length()
 		var most: float = _leg_len[f] * STRAIGHT
-		if flat_gap < most and contact[f]:
+		# (on stairs the foot coming down counts too, so the hips go down with it and not in a jerk when it lands)
+		if flat_gap < most and (contact[f] or clip_slope != 0.0):
 			want_pelvis = minf(want_pelvis, sqrt(most * most - flat_gap * flat_gap) - (hip.y - ankle.y))
 		# the knee keeps the side the clip bent it to
 		var mid: Vector3 = ((legs[f][0] as Transform3D).origin + (legs[f][2] as Transform3D).origin) * 0.5
@@ -229,7 +230,10 @@ func solve(rot: Array[Quaternion], hips: Vector3, dt: float, on_ground: bool) ->
 	_was_ok = true
 	_g_ok = true
 	want_pelvis = maxf(want_pelvis, -HIPS_MOST) if on_ground else 0.0
-	if want_pelvis < pelvis:
+	if want_pelvis < pelvis and clip_slope != 0.0:
+		# on stairs the hips ease down to each step rather than follow the foot's reach to the centimetre
+		pelvis += (want_pelvis - pelvis) * (1.0 - exp(-dt / 0.07))
+	elif want_pelvis < pelvis:
 		pelvis = maxf(want_pelvis, pelvis - HIPS_DOWN * dt)
 	else:
 		pelvis += (want_pelvis - pelvis) * (1.0 - exp(-dt / HIPS_TIME))

@@ -14,16 +14,19 @@ const STEP_DOWN := 0.30         # ground this far below the feet is still "groun
 const PROBE_R := 0.15
 # Steep ground (26 Nov, Yasin: "we should be able to climb even higher than 35-40 degrees, there are mountain
 # climbers and trekkers who do that all the time ... bend or hunch forward, raising the heels off the ground,
-# getting assistance by hands"). Three ways of going, by how steep the ground under him is; the figures and their
-# sources are in research_notes/.../steep_slopes.md and in the README's table.
-const SLOPE_WALK_DEG := 20.0    # up to here: ordinary walking and running (the steepest streets are 19 degrees)
-const SLOPE_HANDS_DEG := 35.0   # from here up: on hands and feet
-const SLOPE_LIMIT_DEG := 50.0   # steeper ground cannot be stood on: he slides
-# the most he asks of himself on steep ground, m/s along the ground: [walking, with run held]
-const STEEP_UP := [0.7, 1.1]
-const STEEP_DOWN := [0.8, 1.3]
-const HANDS_UP := [0.45, 0.7]
-const HANDS_DOWN := [0.4, 0.6]
+# getting assistance by hands"). Sourced notes: research_notes/Hybrid character traversal study/steep_slopes.md.
+const SLOPE_WALK_DEG := 20.0    # up to here the ordinary clips serve (the steepest streets are 19 degrees)
+const SLOPE_HANDS_DEG := 35.0   # from here up: on hands and feet. NO source gives this angle; it is reasoned from
+                                # shoe grip on dry concrete running out at 31 to 40 deg, an ankle that could not bend
+                                # past 24 deg, and a 37 deg ski-jump race described as run "on all four"
+const SLOPE_LIMIT_DEG := 50.0   # steeper ground cannot be stood on: climbing rubber on granite holds to 44 to 50 deg
+# Going uphill, what limits a person is how fast they gain height, whatever the slope:
+const CLIMB_WALK := 0.35        # m/s of height: the steady rate in the treadmill study of 9 to 39 deg slopes
+                                # (0.70 m/s along a 30 deg belt)
+const CLIMB_RUN := 1.0          # m/s of height: a fast run up 30 deg was measured at 2.06 m/s along the slope
+                                # (the best racers hold 0.6 m/s for half an hour)
+const CLIMB_HANDS_RUN := 0.6    # on hands and feet with run held: the racers' rate; NOT measured for crawling
+const DOWN_EASE := 16.0 / 30.0  # "walking down a slope of 30 degrees was done at the same speed as walking up 16"
 # Speeds and how they change come from the movement study (reports/Hybrid character traversal study.md, Part 1
 # "Turning, starting, stopping" and Part 3), not from feel. Each line says which finding it follows.
 const WALK := 1.4               # comfortable walking is 1.3 to 1.45 m/s
@@ -94,11 +97,13 @@ var _jump_still := false
 var _look: Array[Node3D] = []
 var slope_deg := 0.0            # how steep the ground under him is
 var grade := 0.0                # its rise per metre the way he is going (+ = uphill)
+var face_in := false            # he is coming down very steep ground backwards, facing the slope
 var terrain := 0                # 0 = ordinary ground, 1 = steep (leaning walk), 2 = very steep (hands and feet)
 var stairs := 0                 # +1 going up stairs, -1 going down, 0 not on stairs
 var stair_tread := TREAD        # the depth of a step, measured from the last two edges crossed
 var stair_edge := Vector3.ZERO  # where the last step edge was crossed
 var stair_dir := Vector3.ZERO   # the way along the stairs
+var stair_riser := 0.0           # the height of a step, from the last edge crossed (0 = not yet known)
 var stair_count := 0            # step edges crossed on these stairs
 var _ray_y := 0.0
 var _ray_ok := false
@@ -229,8 +234,10 @@ func _physics_process(dt: float) -> void:
 	_find_stairs(dt)
 	if stairs != 0 and _wish.length() > 0.05:
 		_wish = _wish.limit_length(_stair_speed(_wish.length() > WALK + 0.1))
-	elif terrain != 0 and _wish.length() > 0.05:
-		_wish = _wish.limit_length(_steep_speed(_wish.length() > WALK + 0.1))
+	elif state == State.GROUND and _wish.length() > 0.05:
+		_wish = _wish.limit_length(_slope_speed(_wish.length() > WALK + 0.1))
+	# very steep ground is come down facing it ("face inwards for steep slopes, but otherwise face out")
+	face_in = terrain == 2 and grade < -0.3
 
 	# jump: a push-off first, then the body leaves the ground
 	var jump_now := bool(s.get("jump", false))
@@ -290,7 +297,7 @@ func _physics_process(dt: float) -> void:
 	_update_ground(dt)
 
 	if hvel.length() > 0.2 and state == State.GROUND and spot_total == 0.0:
-		var want := atan2(-hvel.x, -hvel.z)
+		var want := atan2(hvel.x, hvel.z) if face_in else atan2(-hvel.x, -hvel.z)
 		rotation.y = rotate_toward(rotation.y, want, TURN_SPEED * dt)
 
 
@@ -380,6 +387,7 @@ func _find_stairs(dt: float) -> void:
 		_since_edge = 0.0
 		stair_edge = global_position
 		stair_count += 1
+		stair_riser = absf(y - _ray_y)
 	_ray_y = y
 	_ray_ok = true
 	var a := _ray_down(global_position + dir * 0.35)
@@ -392,6 +400,9 @@ func _find_stairs(dt: float) -> void:
 			way = 1
 		elif d1 < -0.08 and d2 < -0.08:
 			way = -1
+		if way != 0 and stairs != way:
+			# a first guess at the height of a step, until an edge has been crossed
+			stair_riser = absf(d1) if absf(d1) < 0.3 else absf(d1) * 0.5
 	if way != 0:
 		if stairs != way:
 			stair_tread = TREAD
@@ -422,12 +433,17 @@ func _read_slope(n: Vector3, dir: Vector3) -> void:
 	terrain = 2 if slope_deg > SLOPE_HANDS_DEG + up_two else (1 if slope_deg > SLOPE_WALK_DEG + up_one else 0)
 
 
-## The most he asks of himself on steep ground.
-func _steep_speed(run: bool) -> float:
-	var i := 1 if run else 0
-	if terrain == 2:
-		return float(HANDS_UP[i] if grade >= 0.0 else HANDS_DOWN[i])
-	return float(STEEP_UP[i] if grade >= 0.0 else STEEP_DOWN[i])
+## The most he asks of himself on sloping ground (m/s along the level): his rate of climb over the slope's rise.
+## Downhill a slope counts as one about half as steep; on hands and feet he comes down facing the slope, no faster
+## than he goes up.
+func _slope_speed(run: bool) -> float:
+	var hands := terrain == 2
+	var angle := atan(absf(grade))
+	if grade < 0.0 and not hands:
+		angle *= DOWN_EASE
+	if angle < 0.02:
+		return 1000.0
+	return (CLIMB_WALK if not run else (CLIMB_HANDS_RUN if hands else CLIMB_RUN)) / tan(angle)
 
 
 ## The most he asks of himself on stairs: one step in the study's step time.
@@ -517,7 +533,24 @@ func _update_ground(dt: float) -> void:
 		ground_normal = g["normal"]
 		state = State.STEEP if _is_steep(g) else State.GROUND
 		var err := ground_y - feet.y
-		var dy := minf(err, RISE_SPEED * dt) if err > 0.0 else maxf(err, -SINK_SPEED * dt)
+		if stairs < 0:
+			# going down stairs the leading foot comes down a step ahead of him: his height goes by the step his
+			# foot is reaching for, so the hips are already down when it lands (they used to drop late, in a jerk)
+			var ahead := _ray_down(feet + stair_dir * 0.22)
+			if not ahead.is_empty():
+				var lower := (ahead["position"] as Vector3).y
+				if lower < ground_y and ground_y - lower < 0.3:
+					err = lower - feet.y
+		var up := RISE_SPEED
+		var down := SINK_SPEED
+		if stairs != 0 and stair_riser > 0.0:
+			# on stairs his height follows the flight, not each step: a little faster than the flight rises under
+			# him at his pace, so a step's height is spread over the whole step instead of taken in a hop (Yasin,
+			# 26 Nov: stairs at a walk were "very jittery")
+			var follow := maxf(hvel.length() * stair_riser / stair_tread * 1.5, 0.25)
+			up = minf(up, follow)
+			down = minf(down, follow)
+		var dy := minf(err, up * dt) if err > 0.0 else maxf(err, -down * dt)
 		if absf(dy) > 0.00001:
 			move_and_collide(Vector3(0.0, dy, 0.0))
 	else:

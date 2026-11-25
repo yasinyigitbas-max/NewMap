@@ -4,7 +4,7 @@ extends Node3D
 ## `stations` lists them for the readout, the teleport keys and the tests.
 
 const LANE := 4.0                      # metres between station centres
-const GROUND_SIZE := Vector3(260.0, 1.0, 120.0)
+const GROUND_SIZE := Vector3(280.0, 1.0, 120.0)
 
 var stations: Array[Dictionary] = []   # {id, kind, label, start, top, size, pos, ...}
 var _x := 0.0

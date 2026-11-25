@@ -65,6 +65,8 @@ func check(run: bool, turn_deg: float, least: float, most: float, why: String) -
 		overshoot = maxf(overshoot, ((rec[i]["p"] as Vector3) - p0).dot(Vector3(0.0, 0.0, -1.0)))
 		if rec[i]["s"] != 0:
 			off += 1
+			if off == 1 and OS.get_cmdline_user_args().has("--dbg"):
+				print("   first tick not on ground: tick %d state %d at %s" % [i, rec[i]["s"], str(rec[i]["p"])])
 		if done < 0:
 			# leaning toward the side he is turning to
 			lean_in = maxf(lean_in, (rec[i]["up"] as Vector3).dot(Vector3(-signf(turn_deg), 0.0, 0.0)))
@@ -90,11 +92,11 @@ func _run() -> void:
 	for s: Dictionary in (lab.get(&"course") as Node3D).get(&"stations"):
 		if s["label"] == "floor: one triangle mesh":
 			centre = Vector3(float(s["x"]), 0.1, -9.0)
-	# a right angle: no faster than 300 deg/s (outside the measured data), done within two steps
-	await check(false, 90.0, 0.30, 1.10, "two 0.55 s steps at most")
-	await check(false, -90.0, 0.30, 1.10, "two 0.55 s steps at most")
-	await check(true, 90.0, 0.30, 0.77, "two 0.385 s steps at most")
-	await check(true, -90.0, 0.30, 0.77, "two 0.385 s steps at most")
+	# a right angle (counted done within 5 degrees, so 85 degrees): no faster than 300 deg/s = 0.28 s, done within two steps
+	await check(false, 90.0, 0.28, 1.10, "two 0.55 s steps at most")
+	await check(false, -90.0, 0.28, 1.10, "two 0.55 s steps at most")
+	await check(true, 90.0, 0.28, 0.77, "two 0.385 s steps at most")
+	await check(true, -90.0, 0.28, 0.77, "two 0.385 s steps at most")
 	# a turn-round: his Walking Turn 180 clip takes 1.00 s; on the spot it is 3 to 4 steps
 	await check(false, 180.0, 0.60, 2.20, "1.00 s clip, 4 steps at most")
 	# at a run: brake first (a rapid stop), then round; the Running To Turn clip takes 2.27 s and carries 4.0 m

@@ -44,7 +44,19 @@ const RUN_FROM := 2.5           # above this speed the run clips are used (his j
 # two steps a loop, played by where he is on the stairs so that each foot comes down in the middle of a tread.
 # Going up at a walk is Mixamo's Ascending Stairs. The other three were made with Kimodo (26 Nov, at Yasin's word):
 # Mixamo's two going-down clips are damaged (see _floor_clamped) and its Running Up Stairs was replaced with them.
+# A second round of Kimodo takes (walk up, walk down, run up) was tried on 26 Nov and measured worse at the feet
+# than these (their strides do not match a 0.28 m tread), so these stay.
 const STAIRS := {1: ["Ascending_Stairs", "KM_Stairs_Run_Up"], -1: ["KM_Stairs_Walk_Down", "KM_Stairs_Run_Down"]}
+# Steep ground (26 Nov; research_notes/.../steep_slopes.md). All four clips were made with Kimodo from that research:
+# up a steep slope "short steps, trunk tilted forward, weight over the feet"; down "straight down, knees bent, back
+# straight, the whole sole placed, short steps"; on very steep ground hands and feet, "the footfall of a lower limb
+# usually followed that of the same-side upper limb"; and very steep ground is come down facing it.
+const STEEP := {true: "KM_Steep_Walk_Up", false: "KM_Steep_Walk_Down"}
+const HANDS := {true: "KM_Crawl_Fwd", false: "KM_Crawl_Back"}
+# Walking or running off an edge (Yasin, 26 Nov: "looks stuck and frozen on air before landing, no limbs move to
+# balance itself"): Kimodo takes of stepping and of running off a ledge. [clip, leaves the edge, feet touch down]
+const DROP_WALK := ["KM_Ledge_Walk_Off", 2.10, 2.62]
+const DROP_RUN := ["KM_Ledge_Run_Off", 1.92, 2.72]
 # Head: "people turn head first", about 15 deg into a curve and 15 to 30 deg of lead; the trunk does not lead
 const LOOK_MOST_DEG := 30.0
 const LOOK_RATE_DEG := 100.0    # well under the 137 to 272 deg/s measured for deliberate turns
@@ -86,6 +98,10 @@ var _clip_t := 0.0
 var _gone := 0.0                # distance covered since a start began
 var _slope := 0.0               # the stair clip's own slope, faded in and out with the clip
 var _clamped := {}              # per stair clip: its feet were kept on Mixamo's floor (see _floor_clamped)
+var _steep_phase := 0.0
+var _pitch := 0.0               # the whole figure tipped to the slope, on hands and feet (radians)
+var _hands := false
+var _drop: Array = []           # the ledge clip in use while falling, as DROP_WALK / DROP_RUN
 var _ride := {}                 # per stair clip: how far its hips ride above a standing man's
 var _floor := {}                # per stair clip: where its own stairs stand under the hips
 var _floor_now := 0.0
@@ -179,6 +195,10 @@ func _on_landed(drop: float) -> void:
 	elif drop >= HARD_DROP:
 		_land_clip = "Hard_Landing"
 		_land_from = HARD_CONTACT
+	elif _mode == "fall" and not _drop.is_empty() and drop >= 0.35:
+		# the same clip carries on from where its feet touch down
+		_land_clip = _drop[0]
+		_land_from = float(_drop[2])
 	elif drop >= 0.35:
 		_land_clip = "Falling_To_Landing"
 		_land_from = LAND_CONTACT
@@ -211,6 +231,12 @@ func _physics_process(dt: float) -> void:
 	var in_air := state >= 2
 	_mode_t += dt
 	if _mode == "" or (_mode == "move" and in_air) or (_mode == "jump" and in_air and _mode_t > 0.9):
+		# off an edge on foot: the step-off or run-off clip; out of a long jump: the falling loop
+		_drop = []
+		if _mode == "move" and in_air:
+			_drop = DROP_RUN if (body.get(&"hvel") as Vector3).length() > RUN_FROM else DROP_WALK
+			if not clips.has(_drop[0]):
+				_drop = []
 		_set_mode("fall" if in_air else "move")
 	elif _mode == "fall" and not in_air:
 		_set_mode("move")
@@ -232,8 +258,16 @@ func _physics_process(dt: float) -> void:
 		"move":
 			hips = _on_foot(dt, rot)
 		"fall":
-			var c: Resource = clips["Falling_Idle"]
-			hips = _clip_pose(c, fmod(_mode_t, float(c.get(&"length"))), rot)
+			var window := (float(_drop[2]) - float(_drop[1])) if not _drop.is_empty() else 0.0
+			if not _drop.is_empty() and _mode_t < window - 0.04:
+				hips = _drop_pose(clips[_drop[0]], float(_drop[1]) + _mode_t, rot)
+			else:
+				# a longer fall than the clip has: the falling loop takes over
+				if not _drop.is_empty():
+					_drop = []
+					_blend_from_here()
+				var c: Resource = clips["Falling_Idle"]
+				hips = _clip_pose(c, fmod(_mode_t, float(c.get(&"length"))), rot)
 		"jump":
 			var c: Resource = clips[_jump_clip]
 			var t := _jump_from + _mode_t
@@ -248,12 +282,25 @@ func _physics_process(dt: float) -> void:
 			hips.y = minf(hips.y, (c.call(&"hips_at", _jump_off) as Vector3).y) if in_air else hips.y
 		"land":
 			var c: Resource = clips[_land_clip]
-			hips = _clip_pose(c, minf(_land_from + _mode_t, float(c.get(&"length"))), rot)
+			if _land_clip.begins_with("KM_Ledge"):
+				hips = _drop_pose(c, minf(_land_from + _mode_t, float(c.get(&"length"))), rot)
+			else:
+				hips = _clip_pose(c, minf(_land_from + _mode_t, float(c.get(&"length"))), rot)
 			hips.y = minf(hips.y, _stand_height())
 
 	_open_arms(rot)
 	_look_ahead(rot, dt, state == 0)
 	_lean(dt, state == 0)
+	# on hands and feet the whole figure is tipped to the slope he faces: a crawl on a slope is a crawl on the flat,
+	# tipped (the feet and the hands then meet the slope as they met the floor)
+	_hands = _mode == "move" and sub == "hands" and state == 0
+	var tip := 0.0
+	if _hands:
+		var n: Vector3 = body.get(&"ground_normal")
+		var f := -body.global_transform.basis.z
+		tip = atan(-(n.x * f.x + n.z * f.z) / maxf(n.y, 0.01))
+	_pitch += (tip - _pitch) * (1.0 - exp(-dt / 0.15))
+	_pivot.rotation.x = _pitch
 	_fade = minf(_fade + dt / FADE, 1.0)
 	var k := _fade * _fade * (3.0 - 2.0 * _fade)
 	for i in _n:
@@ -263,7 +310,7 @@ func _physics_process(dt: float) -> void:
 	var drop := 0.0
 	if feet:
 		feet.set(&"pinning", foot_pin)
-		feet.set(&"grounding", foot_ground)
+		feet.set(&"grounding", foot_ground and absf(_pitch) < 0.1)
 		drop = feet.call(&"solve", _rot, _hips, dt, state == 0)
 	skel.set_bone_pose_position(_hips_i, _hips + Vector3(0.0, drop, 0.0))
 	note = "%s%s  stride phase %.2f" % [_mode, (" / " + sub) if _mode == "move" else "", phase]
@@ -276,9 +323,16 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 	var spot := float(body.get(&"spot_total"))
 	var st := int(body.get(&"stairs"))
 	# changes
+	var ground_kind := int(body.get(&"terrain")) if st == 0 else 0
+	var steep_sub: String = ["", "steep", "hands"][ground_kind]
 	if st != 0 and speed > 0.15 and (sub == "loop" or sub == "start"):
 		sub = "stairs"
 		_blend_from_here()
+	elif ground_kind != 0 and speed > 0.1 and sub != steep_sub and sub in ["loop", "start", "stop", "steep", "hands"]:
+		sub = steep_sub
+		_blend_from_here()
+	elif (sub == "steep" or sub == "hands") and ground_kind == 0:
+		_to_loop(speed)
 	elif sub == "stairs" and (st == 0 or speed < 0.1):
 		_to_loop(speed)
 	elif spot != 0.0 and sub != "spot":
@@ -294,9 +348,9 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 			_begin(START_RUN if wish > RUN_FROM else START_WALK, "start")
 		else:
 			_to_loop(wish)
-	elif sub == "loop" and speed < 0.3 and wish > 0.05 and not _run_out:
+	elif sub == "loop" and speed < 0.3 and wish > 0.05 and not _run_out and ground_kind == 0:
 		_begin(START_RUN if wish > RUN_FROM else START_WALK, "start")
-	elif (sub == "loop" or sub == "start") and wish < 0.05 and speed > 0.3 and st == 0:
+	elif (sub == "loop" or sub == "start") and wish < 0.05 and speed > 0.3 and st == 0 and ground_kind == 0:
 		var name := STOP_RUN if speed > RUN_FROM else STOP_WALK
 		var c: Resource = clips[name]
 		var left := float(body.call(&"stop_distance"))
@@ -311,17 +365,9 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 	elif sub == "stop" and wish > 0.05:
 		_to_loop(maxf(speed, 1.0))
 	# the pose
-	var slope_now := 0.0
 	if sub == "stairs" and st != 0:
 		var tread := float(body.get(&"stair_tread"))
 		var c: Resource = clips[STAIRS[st][1 if wish > tread / 0.4 else 0]]
-		var hips_path: PackedVector3Array = c.get(&"hips")
-		var rise := hips_path[hips_path.size() - 1].y - hips_path[0].y
-		slope_now = rise / maxf((c.get(&"travel") as Vector3).length(), 0.01)
-		var floor_now := 0.0
-		var clamped := _floor_clamped(c, rise)
-		if not clamped:
-			floor_now = _stair_floor(c, slope_now, rise)
 		# steps climbed so far, counted from the edges he has crossed and how far he is past the last one
 		var along := (body.global_position - (body.get(&"stair_edge") as Vector3)).dot(body.get(&"stair_dir"))
 		var steps := float(int(body.get(&"stair_count"))) + clampf(along / tread, 0.0, 1.0)
@@ -330,24 +376,16 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 		var lands := 0.5 - _stair_reach(c) / tread
 		var cycle := float(c.get(&"phase_offset")) / length + (steps - lands) * 0.5
 		var t := fposmod(cycle, 1.0) * length
-		for i in _n:
-			out[i] = c.call(&"rotation_at", i, t)
-		var h: Vector3 = c.call(&"hips_at", t)
-		if clamped:
-			# see _floor_clamped: the feet of this clip stand on a flat floor that the hips sink toward. The hips
-			# are held level here, so the feet are put back by exactly what the hips were let down
-			slope_now = 0.0
-			_slope = 0.0
-			_floor_now = -rise * t / length
-		else:
-			_slope += (slope_now - _slope) * minf(dt / FADE, 1.0)
-			_floor_now += (floor_now - _floor_now) * minf(dt / FADE, 1.0)
-		feet.set(&"clip_slope", _slope)
-		var ride: float = 0.0 if clamped else _ride.get(c, 0.0)
-		feet.set(&"clip_floor", _floor_now if clamped else _floor_now - ride * (_floor_now / floor_now if absf(floor_now) > 0.001 else 1.0))
-		# the hips stand over the clip's own stairs, not over a floor at zero: they are let down (or up) onto the body's
-		# ground, and the feet, which hang from them, come with them (a clamped clip's hips are already over its flat floor)
-		return Vector3(h.x, h.y - rise * t / length - ride, h.z)
+		return _slope_clip_pose(c, t, out, dt)
+	var terr := int(body.get(&"terrain"))
+	if (sub == "steep" or sub == "hands") and terr != 0:
+		# steep ground: the stride goes by the ground covered (along the slope when he is tipped to it)
+		var grade := float(body.get(&"grade"))
+		var up: bool = grade >= 0.0 if sub == "steep" else not bool(body.get(&"face_in"))
+		var c: Resource = clips[(STEEP if sub == "steep" else HANDS)[up]]
+		var covered := speed * dt / (cos(atan(absf(grade))) if sub == "hands" else 1.0)
+		_steep_phase = fposmod(_steep_phase + covered / maxf((c.get(&"travel") as Vector3).length(), 0.1), 1.0)
+		return _slope_clip_pose(c, _steep_phase * float(c.get(&"length")), out, dt)
 	_slope += (0.0 - _slope) * minf(dt / FADE, 1.0)
 	_floor_now += (0.0 - _floor_now) * minf(dt / FADE, 1.0)
 	if feet:
@@ -388,6 +426,44 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 	if _run_out and (speed > RUN_FROM or wish < 0.05 or sub != "loop"):
 		_run_out = sub == "spot"
 	return _move_pose(maxf(speed, RUN_FROM) if _run_out and sub == "loop" else speed, dt, out)
+
+
+## Pose of a clip that goes up or down its own slope or stairs (or a flat one): the clip's climb is taken out of the
+## hips, and its slope out from under its feet, so that the real ground under him is what the feet are fitted to.
+func _slope_clip_pose(c: Resource, t: float, out: Array[Quaternion], dt: float) -> Vector3:
+	var hips_path: PackedVector3Array = c.get(&"hips")
+	var length := float(c.get(&"length"))
+	var rise := hips_path[hips_path.size() - 1].y - hips_path[0].y
+	for i in _n:
+		out[i] = c.call(&"rotation_at", i, t)
+	var h: Vector3 = c.call(&"hips_at", t)
+	if absf(rise) < 0.06:
+		# a clip made on the flat: nothing to take out
+		_slope += (0.0 - _slope) * minf(dt / FADE, 1.0)
+		_floor_now += (0.0 - _floor_now) * minf(dt / FADE, 1.0)
+		feet.set(&"clip_slope", _slope)
+		feet.set(&"clip_floor", _floor_now)
+		return Vector3(h.x, h.y - rise * t / length, h.z)
+	var slope_now := rise / maxf((c.get(&"travel") as Vector3).length(), 0.01)
+	var floor_now := 0.0
+	var clamped := _floor_clamped(c, rise)
+	if not clamped:
+		floor_now = _stair_floor(c, slope_now, rise)
+	if clamped:
+		# see _floor_clamped: the feet of this clip stand on a flat floor that the hips sink toward. The hips
+		# are held level here, so the feet are put back by exactly what the hips were let down
+		slope_now = 0.0
+		_slope = 0.0
+		_floor_now = -rise * t / length
+	else:
+		_slope += (slope_now - _slope) * minf(dt / FADE, 1.0)
+		_floor_now += (floor_now - _floor_now) * minf(dt / FADE, 1.0)
+	feet.set(&"clip_slope", _slope)
+	var ride: float = 0.0 if clamped else _ride.get(c, 0.0)
+	feet.set(&"clip_floor", _floor_now if clamped else _floor_now - ride * (_floor_now / floor_now if absf(floor_now) > 0.001 else 1.0))
+	# the hips stand over the clip's own slope, not over a floor at zero: they are let down (or up) onto the body's
+	# ground, and the feet, which hang from them, come with them
+	return Vector3(h.x, h.y - rise * t / length - ride, h.z)
 
 
 ## How far ahead of the hips the left foot is when a stair clip brings it down (the clip's own measure).
@@ -584,6 +660,20 @@ func _lean(dt: float, on_ground: bool) -> void:
 		_last_dir = Vector3.ZERO
 	lean += (want - lean) * (1.0 - exp(-dt / LEAN_TIME))
 	_pivot.rotation.z = lean
+
+
+## Pose of a ledge clip (step off, fall, land), on the spot: the body does the travelling and the falling, so the
+## clip's hips keep only their height above its own landing ground.
+func _drop_pose(c: Resource, t: float, out: Array[Quaternion]) -> Vector3:
+	for i in _n:
+		out[i] = c.call(&"rotation_at", i, t)
+	var path: PackedVector3Array = c.get(&"hips")
+	var at := clampf(t * float(c.get(&"fps")), 0.0, float(path.size() - 1))
+	var i0 := mini(int(at), path.size() - 2)
+	var y := lerpf(path[i0].y, path[i0 + 1].y, at - float(i0))
+	# the clip ends standing on its landing ground: heights are taken from there
+	var end_y := path[path.size() - 1].y
+	return Vector3(0.0, minf(y - end_y + _stand_height(), _stand_height()), 0.0)
 
 
 func _stand_height() -> float:

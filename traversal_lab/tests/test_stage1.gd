@@ -162,13 +162,14 @@ func test_ramps() -> void:
 	for deg: int in [5, 10, 19]:
 		var s := st("ramp %d deg" % deg)
 		for run: bool in [false, true]:
-			var sp := RUN if run else WALK
-			var rec := await drive((s["start"] as Vector3) + Vector3(0.0, 0.0, 12.0), [[(15.0 + float(s["run"]) + 1.2) / sp + (0.55 if run else 0.2), 0.0, -1.0, 0.0, run]])
+			# uphill he gains height at 0.35 m/s walking and 1.0 m/s running at most (the steep-ground research)
+			var sp := minf(RUN if run else WALK, (1.0 if run else 0.35) / tan(deg_to_rad(float(deg))))
+			var rec := await drive((s["start"] as Vector3) + Vector3(0.0, 0.0, 12.0), [[60.0, 0.0, -1.0, 0.0, run]], 1.5 - 0.002)
 			var lo := 99.0
 			var hi := 0.0
 			for r: Dictionary in rec:
-				var z := (r["p"] as Vector3).z
-				if z < -3.5 and z > -3.0 - float(s["run"]) + 0.5:
+				var y := (r["p"] as Vector3).y
+				if y > 0.9 and y < 1.3:     # the upper part: what speed he came in with is spent by then
 					lo = minf(lo, r["v"])
 					hi = maxf(hi, r["v"])
 			ok(absf(last(rec).y - 1.5) < 0.02 and lo > sp * 0.97 and hi < sp * 1.03 and count_state(rec, GROUND) == rec.size(),

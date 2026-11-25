@@ -11,7 +11,8 @@ const SRC := "res://assets_src/clips"
 const OUT := "res://traversal/character/clips"
 # Generated (Kimodo) clips are a few seconds of movement, not a loop: one stride is cut out of each, from the
 # moment the left foot comes down to the next time it does, and its end is eased into its start.
-const CUTS := {"KM_Stairs_Walk_Down": [0.67, 1.53], "KM_Stairs_Run_Up": [0.67, 1.33], "KM_Stairs_Run_Down": [1.27, 1.93]}
+const CUTS := {"KM_Stairs_Walk_Down": [0.67, 1.53], "KM_Stairs_Run_Up": [0.67, 1.33], "KM_Stairs_Run_Down": [1.27, 1.93],
+		"KM_Steep_Walk_Up": [1.80, 2.53], "KM_Steep_Walk_Down": [2.53, 3.20], "KM_Crawl_Fwd": [1.13, 1.93], "KM_Crawl_Back": [2.13, 3.47]}
 const LOOPS := ["Standing_Idle", "Walking_4", "Walking", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
 
 
@@ -149,7 +150,7 @@ func _bake(name: String, src: Skeleton3D, tgt: Skeleton3D, names: PackedStringAr
 		foot_fwd.append(sf.z - hp.z)
 		if name.begins_with("KM_") and OS.get_cmdline_user_args().has("--table") and f % 2 == 0:
 			var rf := sg[src.find_bone("mixamorig_RightFoot")].origin
-			print("    %s %.2f hips z %.2f y %.2f | L fwd %.2f y %.2f | R fwd %.2f y %.2f" % [name.substr(10), time, hp.z, hp.y, sf.z - hp.z, sf.y, rf.z - hp.z, rf.y])
+			print("    %s %.2f hips z %.2f y %.2f | L fwd %.2f y %.2f | R fwd %.2f y %.2f" % [name.substr(3), time, hp.z, hp.y, sf.z - hp.z, sf.y, rf.z - hp.z, rf.y])
 	if name.begins_with("KM_"):
 		# for cutting a loop out of a generated clip: when each foot is furthest forward, and where the hips are then
 		var line := ""

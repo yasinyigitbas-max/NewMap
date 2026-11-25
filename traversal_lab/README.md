@@ -100,6 +100,37 @@ Built early, out of order, because a bare capsule with no jump could not be judg
 - **Mixamo's two going-down clips are damaged** (on X Bot and on him alike): the hips go down 0.5 m but no foot ever
   goes below the floor, so the legs fold into a squat. They are no longer used.
 
+### Steep ground (26 Nov)
+Yasin: "we should be able to climb even higher than 35-40 degrees, there are mountain climbers and trekkers who do
+that all the time". Researched first (`research_notes/Hybrid character traversal study/steep_slopes.md`), then the
+clips were ordered from Kimodo with prompts written from it.
+
+| What the research says | What the build does |
+|---|---|
+| uphill, what limits a person is the rate of gaining height: 0.35 m/s steady on 9 to 39 degree treadmills (0.70 m/s along a 30 degree belt); a fast run up 30 degrees was 2.06 m/s along the slope; the best racers hold 0.6 m/s of height for half an hour | uphill speed = rate of climb over the slope's rise: 0.35 m/s of height walking, 1.0 running. On the course: 19 degrees 1.02 / 2.90 m/s, 30 degrees 0.61 / 1.73 m/s |
+| "walking down a slope of 30 degrees was done at the same speed as walking up a slope of 16 degrees" | downhill a slope counts as one 16/30 as steep |
+| NO source gives the angle at which hands come into use. Shoe grip on dry concrete runs out at 31 to 40 degrees; one measured ankle could not bend past 24; a 37 degree ski-jump race is described as run "on all four" | hands and feet from 35 degrees: a reasoned figure, not a sourced one |
+| climbing rubber on granite holds to 44 to 50 degrees | ground over 50 degrees cannot be stood on (he slides); the course has a 60 degree ramp to prove it |
+| on hands and feet "the footfall of a lower limb usually followed that of the same-side upper limb"; comfortable at about 0.83 m/s on the flat, tested at 0.56 m/s on a 35 degree incline | Kimodo crawl clips made to that description; 0.35 m/s of height, 0.6 with run held (the 0.6 is not measured for crawling) |
+| "face inwards for steep slopes, but otherwise face out" | over 35 degrees he comes down backwards, facing the slope |
+
+- 20 to 35 degrees: `KM_Steep_Walk_Up` / `KM_Steep_Walk_Down`, feet fitted to the slope as elsewhere.
+- 35 to 50 degrees: `KM_Crawl_Fwd` / `KM_Crawl_Back`, the whole figure tipped to the slope he faces (a crawl on a slope
+  is a crawl on the flat, tipped). The feet are held where planted; the hands have no IK yet, so on a flat ramp they
+  meet the surface only as well as the clip's did.
+- Not done: sideways traverse and zig-zag on steep ground; hands on uneven steep ground; a slide down ground over 50.
+
+### Walking or running off an edge
+Yasin: "looks stuck and frozen on air before landing, no limbs move to balance itself". The Mixamo falling loop
+barely moves. Now `KM_Ledge_Walk_Off` / `KM_Ledge_Run_Off` (Kimodo): the clip's own time in the air plays while he
+falls and its landing carries on from where the feet touch; a fall longer than the clip has goes to the old loop.
+
+### Stairs at a walk were jittery
+Measured: his whole body took each step's height in a hop of 4 to 5 cm a tick and then stood level. Now his height
+follows the flight (and, going down, the step his foot is reaching for). Biggest tick-to-tick jolt of the hips: going
+up 1.7 cm (was 2.8), going down 1.6 cm (was 3.2). A second round of Kimodo stair clips was tried and measured worse
+at the feet than the ones in use (their strides do not fit a 0.28 m tread), so the clips were not changed.
+
 ### Jump at a run, landings, turning round at a run
 - A jump at a run plays `Running Jump` (one stride with a leap in it) and runs on without stopping. Measured: a leap
   of 2.33 m (the clip's own is about 2.7 m).
