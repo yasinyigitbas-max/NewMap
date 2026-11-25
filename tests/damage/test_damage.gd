@@ -9,6 +9,9 @@ extends SceneTree
 var dmg: Node3D
 var cam: Camera3D
 var frame := 0
+var t_pool := -1.0
+var clock := 0.0
+var draws_on := 0
 var fails := 0
 var shots_dir := ""
 var changed := 0
@@ -23,7 +26,7 @@ func _check(ok: bool, what: String) -> void:
 func _box_body(parent: Node, nm: String, size: Vector3, at: Vector3, layer := 1) -> StaticBody3D:
 	var b := StaticBody3D.new(); b.name = nm; b.collision_layer = layer; b.collision_mask = 0
 	var cs := CollisionShape3D.new(); var bx := BoxShape3D.new(); bx.size = size; cs.shape = bx; b.add_child(cs)
-	parent.add_child(b); b.global_position = at
+	b.position = at; parent.add_child(b)
 	var mi := MeshInstance3D.new(); var bm := BoxMesh.new(); bm.size = size; mi.mesh = bm; b.add_child(mi)
 	return b
 
@@ -41,7 +44,7 @@ func _initialize() -> void:
 	env.environment.background_color = Color(0.55, 0.7, 0.9); env.environment.ambient_light_color = Color(0.6, 0.6, 0.65); env.environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	w.add_child(env)
 	var sun := DirectionalLight3D.new(); sun.rotation_degrees = Vector3(-50, 30, 0); w.add_child(sun)
-	cam = Camera3D.new(); w.add_child(cam); cam.current = true; cam.position = Vector3(0, 1.6, 4.0); cam.look_at(Vector3(0, 1.4, -5))
+	cam = Camera3D.new(); w.add_child(cam); cam.current = true; cam.look_at_from_position(Vector3(0, 1.6, 4.0), Vector3(0, 1.4, -5))
 	# the buildings: a brick one and a stucco one, as the bake makes them ("col" under a node with the kit's meta)
 	var bn := Node3D.new(); bn.name = "Buildings"; w.add_child(bn)
 	var b1 := Node3D.new(); b1.name = "p12__urb_brick_row_3"; b1.set_meta(&"kit", "res://assets/coronado_kit/buildings/urban/urb_brick_row.tscn"); bn.add_child(b1)
@@ -66,10 +69,10 @@ func _initialize() -> void:
 	# a car (layer 5) and a person (layer 6)
 	car = RigidBody3D.new(); car.name = "TestCar"; car.collision_layer = 16; car.freeze = true; w.add_child(car)
 	var ccs := CollisionShape3D.new(); var cb := BoxShape3D.new(); cb.size = Vector3(1.8, 1.45, 4.4); ccs.shape = cb; ccs.position = Vector3(0, 0.725, 0); car.add_child(ccs)
-	car.global_position = Vector3(-8, 0, 0)
+	car.position = Vector3(-8, 0, 0)
 	person = CharacterBody3D.new(); person.name = "TestPerson"; person.collision_layer = 32; w.add_child(person)
 	var pcs := CollisionShape3D.new(); var cap := CapsuleShape3D.new(); cap.radius = 0.3; cap.height = 1.8; pcs.shape = cap; pcs.position = Vector3(0, 0.9, 0); person.add_child(pcs)
-	person.global_position = Vector3(10, 0, 0)
+	person.position = Vector3(10, 0, 0)
 	dmg = ClassDB.instantiate(&"CityDamage"); dmg.name = "Damage"; w.add_child(dmg)
 	dmg.connect(&"obstacle_changed", func(_b: AABB) -> void: changed += 1)
 
@@ -86,15 +89,22 @@ func _shot(nm: String) -> void:
 	var img := root.get_texture().get_image()
 	if img: img.save_png(shots_dir.path_join(nm + ".png")); print("DMG   picture %s" % shots_dir.path_join(nm + ".png"))
 
-func _process(_dt: float) -> bool:
-	frame += 1
+func _process(dt: float) -> bool:
+	frame += 1; clock += dt
 	if frame == 3: _surfaces()
 	elif frame == 4: _hits()
 	elif frame == 6: _shot("01_holes_brick_stucco")
-	elif frame == 7: _pool()
-	elif frame == 10: _shot("02_full_pool")
-	elif frame == 200: _parts_gone()
-	elif frame > 201:
+	elif frame == 7: _pool(); t_pool = clock
+	elif frame == 10: _shot("02_full_pool"); draws_on = RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME); (dmg.get_node(^"Marks") as Node3D).visible = false
+	elif frame == 13:
+		var off := RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)
+		(dmg.get_node(^"Marks") as Node3D).visible = true
+		if DisplayServer.get_name() != "headless": _check(draws_on - off == 1, "measured: 256 marks on screen cost %d draw call(s) (%d with, %d without)" % [draws_on - off, draws_on, off])
+		else: print("DMG   (headless: draw calls not measured)")
+	elif frame == 14: _pane()
+	elif frame == 17: _shot("03_pane_holes")
+	elif frame > 17 and clock - t_pool > 3.5:
+		_parts_gone()
 		print("DMG   state %s" % str(dmg.call(&"get_state")))
 		print("DMG   RESULT %s (%d failed)" % ["PASS" if fails == 0 else "FAIL", fails])
 		quit(1 if fails else 0)
@@ -163,3 +173,16 @@ func _pool() -> void:
 func _parts_gone() -> void:
 	var st: Dictionary = dmg.call(&"get_state")
 	_check(int(st.particles) == 0 and int(st.particle_draws) == 0, "three seconds on: no particle left, no particle draw")
+
+func _pane() -> void:
+	# the rooms' glass shader with three bullet holes and the crack star (as CityRooms.hit_opening sets them on a pane)
+	var sh := load("res://tools/city/rooms/builtin/builtin_glass.gdshader") as Shader
+	var mi := MeshInstance3D.new(); var q := QuadMesh.new(); q.size = Vector2(2.0, 1.0); mi.mesh = q
+	var m := ShaderMaterial.new(); m.shader = sh; mi.material_override = m
+	root.get_node(^"World").add_child(mi); mi.position = Vector3(20, 1.5, 0)
+	var back := MeshInstance3D.new(); var bm := BoxMesh.new(); bm.size = Vector3(3, 2, 0.1); back.mesh = bm; root.get_node(^"World").add_child(back); back.position = Vector3(20, 1.5, -2)
+	mi.set_instance_shader_parameter(&"holes0", Vector4(0.3, 0.4, 0.55, 0.6))
+	mi.set_instance_shader_parameter(&"holes1", Vector4(0.72, 0.35, -9, -9))
+	mi.set_instance_shader_parameter(&"hole_n", 3.0)
+	cam.look_at_from_position(Vector3(20, 1.5, 1.6), Vector3(20, 1.5, 0))
+	_check(sh != null, "the glass shader with holes loads")

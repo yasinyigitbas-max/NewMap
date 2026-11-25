@@ -52,7 +52,7 @@ public:
 	enum { SPR_PUFF = 0, SPR_CHIP, SPR_SPARK, SPR_SPLINTER, SPR_LEAF, SPR_SHARD, SPR_DROP, SPR_CLOD };
 
 private:
-	struct Mark { Transform3D xf; int tile = 0; float born = 0.0f; uint64_t target = 0; bool live = false; };
+	struct Mark { Transform3D xf; int tile = 0; float alpha = 1.0f, born = 0.0f; uint64_t target = 0; bool live = false; };
 	std::vector<Mark> marks;
 	int mark_head = 0, mark_count = 0, marks_total = 0;
 	struct Part { Vector3 p, v; float life = 0.0f, age = 0.0f, size = 0.1f, spin = 0.0f, grav = 1.0f, drag = 0.0f, glow = 0.0f; Color col; int tile = 0; };

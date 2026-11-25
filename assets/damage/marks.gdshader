@@ -22,4 +22,9 @@ void vertex() {
 void fragment() {
 	vec3 m = texture(sheet, v_uv).rgb;
 	ALBEDO = mix(vec3(1.0), m, v_a);
+#if CURRENT_RENDERER == RENDERER_MOBILE
+	// the Mobile renderer keeps its colour buffer at half (its luminance multiplier, for range in 10 bits) and halves what
+	// a shader writes: a multiply would halve the wall under the whole quad. Doubled back, white leaves it as it was.
+	ALBEDO *= 2.0;
+#endif
 }

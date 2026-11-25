@@ -68,7 +68,7 @@ int CityDamage::surface_from_name(const String &p_name) {
 
 // a kit building's or a prop's name -> what it is made of. Order matters: the first word found wins.
 int CityDamage::surface_from_words(const String &p_words, int p_default) {
-	const String w = p_words.to_lower();
+	const String w = p_words.to_lower().replace("street", "strt");   // ("street_lamp" is no tree)
 	struct R { const char *word; int s; };
 	static const R RULES[] = {
 		// props: living things first (a "tree_planter" is a tree), then glass and the light stuff
@@ -241,7 +241,11 @@ int CityDamage::surface_id_at(const Dictionary &p_hit) {
 		const Array t = col->get_meta("surf");
 		if (shape >= 0 && shape < t.size()) {
 			const String sn = t[shape];
-			if (!sn.is_empty()) { const int s = surface_from_name(sn); if (s >= 0) return s; }
+			if (!sn.is_empty()) {   // (a surface's name, or the bake's words: a prop's names and its scene's file)
+				int s = surface_from_name(sn);
+				if (s < 0) s = surface_from_words(sn, -1);
+				if (s >= 0) return s;
+			}
 		}
 	}
 	CollisionObject3D *co = Object::cast_to<CollisionObject3D>(col);
@@ -471,7 +475,7 @@ void CityDamage::add_mark(const Vector3 &p_at, const Vector3 &p_n, const Vector3
 	const float sz = p_size * (0.85f + 0.3f * rnd());
 	Mark &m = marks[mark_head];
 	m.xf = Transform3D(Basis(along * sz, side * sz, n), p_at + n * MARK_LIFT);   // (columns: x, y, z)
-	m.tile = p_tile; m.born = (float)clock; m.target = p_target; m.live = true;
+	m.tile = p_tile; m.born = (float)clock; m.target = p_target; m.live = true; m.alpha = 1.0f;
 	const int i = mark_head;
 	mark_head = (mark_head + 1) % MAX_MARKS;
 	mark_count = std::min(mark_count + 1, (int)MAX_MARKS);
@@ -501,6 +505,7 @@ void CityDamage::refade() {
 		const int i = (oldest + rank) % MAX_MARKS;
 		if (!marks[i].live) continue;
 		const float a = (float)(r + 1) / (float)(FADE_MARKS + 1);
+		marks[i].alpha = a;
 		mark_mm->set_instance_custom_data(i, Color((float)marks[i].tile, a, 0.0f, 0.0f));
 	}
 }
@@ -531,7 +536,7 @@ Array CityDamage::marks_near(const Vector3 &p_at, double p_radius) const {
 		const Mark &m = marks[i];
 		if (!m.live || m.xf.origin.distance_to(p_at) > p_radius) continue;
 		Dictionary d; d["at"] = m.xf.origin; d["tile"] = m.tile; d["size"] = m.xf.basis.get_column(0).length();
-		d["alpha"] = (float)(double)mark_mm->get_instance_custom_data(i).g;
+		d["alpha"] = m.alpha;
 		d["normal"] = m.xf.basis.get_column(2);
 		out.push_back(d);
 	}
