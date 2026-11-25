@@ -65,7 +65,7 @@ func _next():
 	m = {"slide_max": 0.0, "slide_sum": 0.0, "slides": 0, "pop_max": 0.0, "joint_bad": 0, "knee_back": 0, "ankle_up": 0,
 		"knee_over": 0, "elbow": 0, "latency": -1.0, "t_full": -1.0, "t_stop": -1.0, "prev_h": null, "prev_dh": null,
 		"lock": [null, null], "go_t": -1.0, "rel_t": -1.0, "base_head": null, "base_hips": null, "base_speed": 0.0,
-		"switch0": p.get_switches(), "max_speed": 0.0, "mode_seq": [], "slide_at": "", "pop_at": ""}
+		"switch0": p.get_switches(), "rel0": layer.get_releases(), "max_speed": 0.0, "mode_seq": [], "slide_at": "", "pop_at": ""}
 
 func _tick():
 	if sk == null:
@@ -125,7 +125,7 @@ func _measure():
 		var gy: float = p.global_position.y
 		var heel_up := ank.y - gy > 0.17 + 0.03  # ankle above its standing height (0.17 m on player_v3)
 		var pt := toe if heel_up else ank
-		if p.get_contact(s):
+		if p.get_contact(s) and layer.get_foot_locked(s):
 			if m.lock[s] == null: m.lock[s] = [pt, heel_up, 0.0]
 			else:
 				var prev: Array = m.lock[s]
@@ -146,7 +146,7 @@ func _measure():
 				m.pop_max = pop; m.pop_at = "%.2fs %s" % [t, ["idle", "start", "loop", "stop", "pivot"][p.get_mode()]]
 		m.prev_dh = dh
 	m.prev_h = h
-	if OS.get_environment("LAB_FEET") != "" and abs(t - float(OS.get_environment("LAB_FEET"))) < 0.25:
+	if OS.get_environment("LAB_FEET") != "" and abs(t - float(OS.get_environment("LAB_FEET"))) < float(OS.get_environment("LAB_WIN") if OS.get_environment("LAB_WIN") != "" else "0.25"):
 		var st := "%.3f m=%d " % [t, p.get_mode()]
 		for s2 in 2:
 			var sd := "Left" if s2 == 0 else "Right"
@@ -182,12 +182,12 @@ func _finish():
 	results.append({"name": cur.name, "slide": m.slide_max, "pop": m.pop_max, "joints": m.joint_bad,
 		"knee_back": m.knee_back, "knee_over": m.knee_over, "elbow": m.elbow,
 		"latency": m.latency * 1000.0 if m.latency >= 0 else -1.0, "t_full": m.t_full, "t_stop": m.t_stop,
-		"vmax": m.max_speed, "slide_at": m.slide_at, "pop_at": m.pop_at, "switches": p.get_switches() - m.switch0, "seq": " > ".join(seq)})
+		"vmax": m.max_speed, "slide_at": m.slide_at, "pop_at": m.pop_at, "switches": p.get_switches() - m.switch0, "releases": layer.get_releases() - m.rel0, "seq": " > ".join(seq)})
 
 func _report():
 	print("\n=== Lab B locomotion numbers (60 fps, player_v3) ===")
 	print("%-34s %7s %7s %6s %8s %7s %7s %6s %4s  %s" % ["scenario", "slide", "hipPop", "joints", "latency", "tFull", "tStop", "vmax", "sw", "modes"])
 	for r in results:
 		print("%-34s %6.1fc %6.1fc %6d %6.0fms %6.2fs %6.2fs %6.2f %4d  %s" % [r.name, r.slide, r.pop, r.joints, r.latency, r.t_full, r.t_stop, r.vmax, r.switches, r.seq])
-		print("      worst slide at %s, worst pop at %s" % [r.slide_at, r.pop_at])
+		print("      worst slide at %s, worst pop at %s, feet lifted early (out of reach) %d" % [r.slide_at, r.pop_at, r.releases])
 		if r.joints > 0: print("      joints: knee backward %d, knee > 140 %d, elbow > 145 %d (frames)" % [r.knee_back, r.knee_over, r.elbow])

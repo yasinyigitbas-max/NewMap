@@ -20,6 +20,7 @@ void PoseLayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_lean_deg"), &PoseLayer::get_lean_deg);
 	ClassDB::bind_method(D_METHOD("get_head_yaw_deg"), &PoseLayer::get_head_yaw_deg);
 	ClassDB::bind_method(D_METHOD("get_ik_clamped"), &PoseLayer::get_ik_clamped);
+	ClassDB::bind_method(D_METHOD("get_releases"), &PoseLayer::get_releases);
 	ClassDB::bind_method(D_METHOD("set_layers", "mask"), &PoseLayer::set_layers);
 	ClassDB::bind_method(D_METHOD("get_layers"), &PoseLayer::get_layers);
 }
@@ -201,7 +202,24 @@ void PoseLayer::_process_modification_with_delta(double p_delta) {
 		tw.y = fw.y;
 		const float heel_up = std::clamp((clip_h - foot_rest_h - 0.01f) / 0.04f, 0.0f, 1.0f);
 		if (layers & 2) {
-			if (in.contact[s]) {
+			// out of reach: a person lifts that foot rather than drag it (forced release with a small lift)
+			if (locked[s]) {
+				const Vector3 hipw = skw.xform(sk->get_bone_global_pose(UP[s]).origin);
+				const Vector3 tgt(fw.x + corr[s].x, fw.y, fw.z + corr[s].y);
+				const float L = (leg_len[s][0] + leg_len[s][1]) * s_m;
+				if (hipw.distance_to(tgt) > L * 1.04f) {
+					locked[s] = false;
+					released[s] = 0.25f;
+					releases++;
+				}
+			}
+			const bool contact = in.contact[s] && released[s] <= 0;
+			if (released[s] > 0) {
+				const float u = 1.0f - released[s] / 0.25f;
+				fw.y += 0.05f * std::sin(3.14159265f * u);
+				released[s] -= dt;
+			}
+			if (contact) {
 				if (locked[s] && have_prev[s]) {
 					const Vector3 pp = prev_a[s].lerp(prev_t[s], heel_up);
 					const Vector3 pn = fw.lerp(tw, heel_up);

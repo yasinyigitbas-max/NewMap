@@ -65,7 +65,9 @@ private:
 	float t = 0;               // its time
 	float rate = 1;            // its playback rate
 	float align = 0;           // world yaw minus clip root yaw (root frame alignment)
-	float motion_scale = 1;    // root-motion scale (stride warping on starts/stops)
+	float motion_scale = 1;
+	bool stop_swung = false;   // stop: the second foot has lifted
+	float speed_cap = 10;      // root-motion modes: max capsule speed    // root-motion scale (stride warping on starts/stops)
 	float idle_t = 0;
 	float speed = 0;           // capsule speed (m/s)
 	godot::Vector2 prev_vel;

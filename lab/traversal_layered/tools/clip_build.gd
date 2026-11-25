@@ -263,8 +263,22 @@ func build_clip(path: String, spec: Dictionary) -> Dictionary:
 	# root = smoothed hips ground track and heading (study 5.3); loops keep their linear trend (cyclic smoothing)
 	var sig := FPS * 0.2
 	var syaw := _gauss_smooth(yaw, sig, loop)
-	var sx := _gauss_smooth(rx, sig, loop)
-	var sz := _gauss_smooth(rz, sig, loop)
+	var hx := _gauss_smooth(rx, sig, loop)
+	var hz := _gauss_smooth(rz, sig, loop)
+	# keep the forward progress sharp (braking and pushing stay where they are), smooth only the sideways sway:
+	# the heavy path gives the direction, a light (0.05 s) smoothing gives the progress along it
+	var lx := _gauss_smooth(rx, FPS * 0.05, loop)
+	var lz := _gauss_smooth(rz, FPS * 0.05, loop)
+	var sx := PackedFloat32Array(); sx.resize(nf)
+	var sz := PackedFloat32Array(); sz.resize(nf)
+	for f in nf:
+		var a: int = max(f - 1, 0); var b: int = min(f + 1, nf - 1)
+		var tg := Vector2(hx[b] - hx[a], hz[b] - hz[a])
+		var pt := Vector2(hx[f], hz[f])
+		if tg.length() > 1e-4:
+			tg = tg.normalized()
+			pt += tg * tg.dot(Vector2(lx[f], lz[f]) - pt)
+		sx[f] = pt.x; sz[f] = pt.y
 	if spec.get("root_lock_yaw", false):
 		for f in nf: syaw[f] = 0.0
 	var rot := PackedFloat32Array(); rot.resize(nf * n * 4)

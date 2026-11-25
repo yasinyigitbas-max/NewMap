@@ -184,6 +184,7 @@ void Locomotion::enter_start(float dt, float ang, float want_speed) {
 	}
 	if (!c) return;
 	cur = c;
+	speed_cap = std::fmax(want_speed * 1.1f, 1.0f);
 	t = std::fmax(c->move_a, 0.0f) / c->fps;
 	rate = 1;
 	align = yaw - c->root_at(t).yaw;
@@ -220,13 +221,15 @@ void Locomotion::enter_stop(float dt) {
 	}
 	if (!pick) pick = pairc[0];
 	cur = pick;
+	stop_swung = false;
+	speed_cap = std::fmax(speed, 0.5f);
 	t = 0;
 	rate = pick_rate;
 	// root speed of the clip near its entry, to scale its travel to our speed (stride warping, study 4.1)
 	const float te = std::fmax(pick->entry_f / pick->fps, 0.05f);
 	const RootSample r0 = pick->root_at(te - 0.05f), r1 = pick->root_at(te);
 	const float vclip = std::hypot(r1.x - r0.x, r1.z - r0.z) / 0.05f;
-	motion_scale = vclip > 0.2f ? std::clamp(speed / vclip, 0.6f, 1.4f) : 1.0f;
+	motion_scale = vclip > 0.2f ? std::clamp(speed / vclip, 0.75f, 1.25f) : 1.0f; // +-25 % (study 4.1, brief)
 	align = yaw - pick->root_at(t).yaw;
 	clip_name = pick->name.c_str();
 	switch_to(Mode::STOP, dt);
@@ -239,6 +242,7 @@ void Locomotion::enter_pivot(float dt, float ang) {
 	// the clip that turns the asked way (clip 0 turns right = negative yaw)
 	const Clip *c = pc[(ang < 0) == (pc[0]->turn < 0) ? 0 : 1];
 	cur = c;
+	speed_cap = std::fmax(speed, 1.0f);
 	float tt = c->entry_foot >= 0 ? time_to_strike(c->entry_foot) : 0.0f;
 	const float pre = std::fmax(c->entry_f, 0.0f) / c->fps;
 	if (mode == Mode::IDLE) {
@@ -272,6 +276,9 @@ void Locomotion::root_motion_step(float dt, float steer_rate, float target_yaw, 
 	const float wx = dx * c + dz * s;
 	const float wz = -dx * s + dz * c;
 	velocity = Vector2(wx, wz) * (motion_scale / dt);
+	// a clip's root may spike (sharp progress): never faster than the speed we came in with / were asked for
+	const float vl = velocity.length();
+	if (vl > speed_cap && vl > 1e-4f) velocity *= speed_cap / vl;
 	yaw = wrap_pi(align + b.yaw);
 	speed = velocity.length();
 }
@@ -361,7 +368,12 @@ void Locomotion::tick(float dt, Vector2 dir, float want) {
 				break;
 			}
 			root_motion_step(dt, 0.0f, yaw, cur->length());
-			if (t >= cur->still_f / cur->fps + 0.15f || t >= cur->length()) {
+			// after the entry strike: normal rate; done once the second foot has come down alongside (study 2.4)
+			if (t > cur->entry_f / cur->fps) rate += (1.0f - rate) * std::min(1.0f, dt * 8.0f);
+			const bool both = cur->contact_at(0, t) && cur->contact_at(1, t);
+			if (t > cur->entry_f / cur->fps + 0.15f && !both) stop_swung = true;
+			const bool settled = stop_swung && both && speed < 0.35f;
+			if (settled || t >= cur->still_f / cur->fps + 0.15f || t >= cur->length()) {
 				velocity = Vector2();
 				speed = 0;
 				idle_t = 0;

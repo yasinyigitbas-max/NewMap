@@ -61,7 +61,7 @@ func _on_done(result, code, _h, _b):
 	_next(it[2])
 
 func _build(raw: String):
-	_say("Retargeting and measuring the clips onto player_v3 (first run only, about a minute)...")
+	_say("Retargeting and measuring the clips onto player_v3 (first run only, a few seconds)...")
 	await get_tree().process_frame
 	await get_tree().process_frame
 	var cc := CC.new()

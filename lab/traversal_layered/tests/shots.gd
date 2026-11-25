@@ -22,10 +22,12 @@ func _tick():
 		"run": sp = 4.2 if t > 0.5 else 0.0
 		"side":
 			sp = 1.55 if t > 0.5 else 0.0
+		"runside":
+			sp = 4.2 if t > 0.3 and t < 2.4 else 0.0
 	p.set_test_input(dir, sp, true)
-	cam.set_view_yaw(PI + (0.0 if scen != "side" else PI * 0.5))
+	cam.set_view_yaw(PI + (0.0 if not scen.ends_with("side") else PI * 0.5))
 	frame += 1
-	var times := [0.3, 1.0, 1.5, 2.0, 2.5, 3.0]
+	var times := [0.3, 1.0, 1.5, 2.0, 2.5, 3.0] if scen != "runside" else [1.2, 1.3, 1.4, 2.5, 2.6, 2.75]
 	for st in times:
 		if abs(t - st) < 0.5 / 60.0:
 			await process_frame

@@ -36,6 +36,7 @@ public:
 	float get_lean_deg() const { return lean_total_deg; }
 	float get_head_yaw_deg() const { return head_yaw_deg; }
 	int get_ik_clamped() const { return ik_clamped; }
+	int get_releases() const { return releases; }
 	void set_layers(int mask) { layers = mask; }
 	int get_layers() const { return layers; }
 	void reset_lock() { for (int s = 0; s < 2; s++) { corr[s] = godot::Vector2(); have_prev[s] = false; locked[s] = false; } }
@@ -61,6 +62,8 @@ private:
 	bool have_prev[2] = {false, false};
 	float foot_rest_h = 0.17f;    // ankle height standing (metres)
 	float toe_rest_h = 0.05f;     // toe-ball height standing (metres)
+	float released[2] = {0, 0};   // forced release timer (s)
+	int releases = 0;
 	godot::Vector3 foot_world[2];
 
 	// smoothed layers

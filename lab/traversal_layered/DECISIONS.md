@@ -20,6 +20,8 @@ Contract: `LAB_BRIEF.md` (copy of `docs/locomotion/lab/LAB_BRIEF.md`). Study: `S
 | 1.2 | Own retargeter, the same code for every clip: world-space rotation delta from the source rest, applied to a target *reference pose* in which limb bones (upper arm, forearm, thigh, shin) are swung to point the way the Mixamo T-pose points. Feet, spine, head keep the body's own rest (sole angle comes from the body, then foot IK). | 5.4, 6.3 (rest fixer, done consistently) |
 | 1.3 | Hips translation scaled by the hips-height ratio (body 1.00 m / clip ~1.0 m). | 5.4 ("scaled by the leg-length ratio"), 6.3 (normalize position tracks) |
 | 1.4 | Root motion made at build time: hips' horizontal travel and yaw moved to a ground root; bob, sway, tilt stay on the hips. | 5.3 |
+| 1.5 | The root's direction comes from a 0.2 s smoothing (no sway), its progress along that direction from a 0.05 s one, so braking and pushing stay sharp and stops are not stretched. | 5.3, 4.1 |
+| 1.6 | The leg ratio and reference pose are taken per file: "with skin" files carry a different skeleton than "without skin" ones. | 5.2, 5.4 |
 
 ## 2. Clip measurement (at build time, stored with each clip)
 | # | Decision | Study |
@@ -37,7 +39,12 @@ Contract: `LAB_BRIEF.md` (copy of `docs/locomotion/lab/LAB_BRIEF.md`). Study: `S
 | 3.4 | Phase-synced blending between walk and run loops (one shared normalized foot phase). | 4.1, 6.5 |
 | 3.5 | Starts, stops and pivots chosen by the current foot phase; where only one foot's clip exists, the mirrored clip covers the other foot. | 2.3, 2.4, 2.5, 4.2 |
 | 3.6 | Every switch is inertialized (offset + velocity decayed over ~0.2 s), never crossfaded. | 4.2 |
-| 3.7 | Small turns (< 45°) are carried inside the steps by orientation; 45-135° by turn clips; 180° by the pivot clips. | 2.5 |
+| 3.7 | Small turns are carried inside the steps (turn rate 6 rad/s walking, 3.2 at a run); over 135° a pivot clip (the one that turns the asked way, timed to its planting foot); starts up to 120° off are a straight start warped by spinning on the stance foot (7 rad/s), from a run 60°+ the turning run start. | 2.5, 8.3 |
+| 3.8 | Layered idle: after a stop or pivot the legs and hips keep that clip's final stance and only the upper body plays the idle clip, so the planted feet never slide to the idle clip's stance. | 4.2 (leave a clip at a matching pose), 4.1 |
+| 3.9 | A stop is over when the second foot has come down alongside (then idle, inertialized); after its entry strike it plays at rate 1. | 2.4 |
+| 3.10 | In root-motion modes the capsule never goes faster than the speed it came in with (stops, pivots) or 1.1 x the asked speed (starts): some clips' roots spike. | 4.1 |
+| 3.11 | Starts hand over to the loop at the first strike after which the start's root speed is >= 85 % of its top speed; the loop keeps the capsule's speed (no jump). | 4.2 |
+| 3.12 | No input lock: releasing during a start's weight shift goes straight back to idle; during a start, to a stop; pushing during a stop goes back into the loop on the foot that is down. | brief (responsive), 8.3 |
 
 ## 4. Procedural layers
 | # | Decision | Study |
@@ -46,7 +53,12 @@ Contract: `LAB_BRIEF.md` (copy of `docs/locomotion/lab/LAB_BRIEF.md`). Study: `S
 | 4.2 | Head leads turns by 0.2-0.3 s and stays level (counter-rotates trunk sway). | 1.2/6, 2.5, 4.5 |
 | 4.3 | Foot IK: knee pole over the second toe, soft IK at full reach, ankle limited to 20° up / 50° down, heel lifts past the limit. | 1.2/3, 1.2/4, 4.x |
 | 4.4 | Forearm twist shared forearm/hand (the body has no twist bones). | 1.2/1, 5.1 |
-| 4.5 | Foot lock while a foot is in a clip contact window. | 4.1 |
+| 4.5 | Foot lock while a foot is in a clip contact window, as a correction offset that keeps the contact point still: the heel while it is down, moving to the ball as the heel lifts. | 4.1, 2.1 |
+| 4.6 | Knee pole = the foot's yaw only, clamped to +-40° of the body's forward (after toe-off the foot points down and back and flipped the knee backward). | 1.2/3 |
+| 4.7 | Pelvis drop up to 5 cm (smoothed) when a planted foot is out of reach. | 2.6, 4.1 |
+| 4.8 | Heel and ball never go under their standing heights above the ground probe. | 4.6/3 |
+| 4.9 | A locked foot that goes more than 4 % past the leg's reach is let go with a 5 cm lift (0.25 s) instead of dragged. **(see conflicts)** | 4.1 |
+| 4.10 | The acceleration lean is used only in the loop (starts and stops have their own lean in the clip); the turn lean everywhere. | 2.5, 4.5 |
 
 ## 5. Camera and controls
 | # | Decision | Study |
@@ -65,9 +77,18 @@ Contract: `LAB_BRIEF.md` (copy of `docs/locomotion/lab/LAB_BRIEF.md`). Study: `S
 ## 7. Clip library facts that shape the design (measured 25 Nov on player_v3, leg ratio 0.86)
 | # | Fact / decision | Study |
 |---|---|---|
-| 7.1 | On this body the clips are slower than on Mixamo's: walk 1.30 m/s (normal walk, not brisk), runs 2.1 / 3.0 / 3.8 m/s. Run top speed 4.6 m/s = Running at rate 1.2 (the ±20 % edge). | 2.1, 2.2, 4.1 |
+| 7.1 | On this body (leg chain 0.86 of Mixamo's) the clips are slower: walk 1.54 m/s (brisk), jog 2.69, run 3.80, fast run 5.09. Keyboard walk 1.55, stick walk 1.0-1.55, run 2.7-4.2, Shift 4.6. | 2.1, 2.2, 4.1 |
 | 7.2 | One walk start (right foot first) and one walk stop (left foot plants first): the other foot's versions are mirrors. | 2.3, 2.4, 4.2 |
 | 7.3 | Starts include ~0.6 s of standing before the weight shift: the start is entered ~0.2 s before the first foot lifts, never at frame 0. | 2.3, 8.3 (responsive) |
 
 ## Conflicts with the study
-(none yet)
+- **Walk stop takes ~1.6 s, the study says 1-2 steps.** The only walk stop clip (Mixamo "Stop Walking") makes a slow second
+  step (0.9 s). Not faked; a crisp stop is in `CLIPS_WANTED.md`.
+- **Knee over 140° in the run's swing** (7-11 frames per run): it is in the Mixamo run itself (layers off: same count).
+  Study 1.1 gives 140° as the full range. Left as it is until a limit layer is added for swing (it would change the clip's
+  look).
+- **4.9 (forced release)** lifts a foot the clip still marks as planted, with no weight shift: the study lists "re-plant
+  steps with no weight shift" as a mistake. It happens 2-8 times per scenario, in stops and pivots, when the clip's
+  stance doesn't fit our speed. Better clips (stops, pivots per foot) would remove most of it.
+- **Starts warp a straight start up to 120°** by spinning on the stance foot; the study's medium turns are a step turn or a
+  spin turn (2.5), so this is the spin turn, but a real start-turn clip would also shift the weight first.
