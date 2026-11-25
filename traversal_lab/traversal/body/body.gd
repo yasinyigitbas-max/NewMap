@@ -30,6 +30,13 @@ const SINK_SPEED := 3.0         # and ground that falls away
 const GRAVITY := 9.8
 const TERMINAL := 50.0
 const TURN_SPEED := 12.0        # radians a second
+const JUMP_RISE := 0.45         # an average standing jump raises the body 0.41 to 0.50 m
+const JUMP_PUSH_STAND := 0.30   # the push-off of a standing jump takes 0.30 s (the slower dip before it is left out)
+const JUMP_PUSH_RUN := 0.10     # from a run the take-off comes off the stride: the Running Jump clip leaves at 0.10 s
+
+signal jump_started(push_time: float)
+signal jumped
+signal landed(drop: float)
 
 var tape: Node
 var state: State = State.AIR
@@ -41,6 +48,13 @@ var _probe := SphereShape3D.new()
 var _wish := Vector3.ZERO
 var _touched := false
 var _wall := Vector3.ZERO          # the upright surface being leaned on, if any
+var jump_timer := 0.0           # > 0 while pushing off for a jump
+var air_time := 0.0
+var from_jump := false          # this time in the air began with a jump
+var _jump_held := false
+var _air_peak := 0.0
+var _jump_still := false
+var _look: Array[Node3D] = []
 
 
 func _ready() -> void:
@@ -72,6 +86,7 @@ func _ready() -> void:
 	mi.mesh = mesh
 	mi.position.y = col.position.y
 	add_child(mi)
+	_look.append(mi)
 	var leg := MeshInstance3D.new()
 	var lm := CylinderMesh.new()
 	lm.top_radius = 0.06
@@ -80,12 +95,20 @@ func _ready() -> void:
 	leg.mesh = lm
 	leg.position.y = (FLOAT + 0.2) * 0.5
 	add_child(leg)
+	_look.append(leg)
 	var nose := MeshInstance3D.new()
 	var nm := BoxMesh.new()
 	nm.size = Vector3(0.08, 0.08, 0.3)
 	nose.mesh = nm
 	nose.position = Vector3(0, 1.6, -0.3)
 	add_child(nose)
+	_look.append(nose)
+
+
+## Show or hide the plain capsule look (hidden when the character is on the body).
+func show_capsule(on: bool) -> void:
+	for n in _look:
+		n.visible = on
 
 
 ## Ground under a point: a small sphere cast straight down. Returns {hit, y, normal, point}.
@@ -142,6 +165,29 @@ func _physics_process(dt: float) -> void:
 	if stick.length() > 1.0:
 		stick = stick.normalized()
 	_wish = stick.rotated(Vector3.UP, float(s.get("yaw", 0.0))) * (RUN if bool(s.get("run", false)) else WALK)
+
+	# jump: a push-off first, then the body leaves the ground
+	var jump_now := bool(s.get("jump", false))
+	if state == State.GROUND and jump_now and not _jump_held and jump_timer <= 0.0:
+		_jump_still = hvel.length() < 2.0
+		jump_timer = JUMP_PUSH_STAND if _jump_still else JUMP_PUSH_RUN
+		jump_started.emit(jump_timer)
+	_jump_held = jump_now
+	if jump_timer > 0.0:
+		if state != State.GROUND:
+			jump_timer = 0.0
+		else:
+			if _jump_still:
+				_wish = Vector3.ZERO
+			jump_timer -= dt
+			if jump_timer <= 0.0:
+				jump_timer = 0.0
+				state = State.AIR
+				vy = sqrt(2.0 * GRAVITY * JUMP_RISE)
+				from_jump = true
+				air_time = 0.0
+				_air_peak = global_position.y
+				jumped.emit()
 
 	match state:
 		State.GROUND:
@@ -270,6 +316,9 @@ func _update_ground(dt: float) -> void:
 			if not g["hit"]:
 				state = State.AIR
 				vy = 0.0
+				from_jump = false
+				air_time = 0.0
+				_air_peak = feet.y
 			return
 		ground_y = float(g["y"])
 		ground_normal = g["normal"]
@@ -279,6 +328,8 @@ func _update_ground(dt: float) -> void:
 		if absf(dy) > 0.00001:
 			move_and_collide(Vector3(0.0, dy, 0.0))
 	else:
+		air_time += dt
+		_air_peak = maxf(_air_peak, feet.y)
 		var fall := maxf(0.02, -vy * dt + 0.01)
 		var g := probe(feet, FLOAT + RADIUS, fall)
 		if g["hit"] and vy <= 0.0 and feet.y - float(g["y"]) <= fall and float(g["y"]) - feet.y <= FLOAT - 0.005:
@@ -287,6 +338,8 @@ func _update_ground(dt: float) -> void:
 			move_and_collide(Vector3(0.0, ground_y - feet.y, 0.0))
 			vy = 0.0
 			state = State.STEEP if _is_steep(g) else State.GROUND
+			landed.emit(_air_peak - ground_y)
+			from_jump = false
 		else:
 			state = State.UNSUPPORTED if _touched else State.AIR
 
@@ -302,4 +355,8 @@ func place(at: Vector3) -> void:
 	hvel = Vector3.ZERO
 	vy = 0.0
 	velocity = Vector3.ZERO
+	jump_timer = 0.0
+	from_jump = false
+	air_time = 0.0
+	_air_peak = at.y
 	state = State.AIR

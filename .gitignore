@@ -27,3 +27,6 @@ __pycache__/
 
 # Mixamo downloads: the source of characters/rocketbox/clips_mx_*.res (tools/people/make_mixamo.gd); 218 MB, kept out of git
 characters/mixamo/*.fbx
+
+# Traversal lab: raw Mixamo clips and source models (not for git; the built character and clips are)
+traversal_lab/assets_src/

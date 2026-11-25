@@ -6,10 +6,12 @@ const Readout := preload("res://traversal/debug/readout.gd")
 const Tape := preload("res://traversal/debug/input_tape.gd")
 const PlainBody := preload("res://traversal/debug/plain_body.gd")
 const Body := preload("res://traversal/body/body.gd")
+const Character := preload("res://traversal/character/character.gd")
 const TAPE_FILE := "user://tapes/last.json"
 
 var course: Node3D
 var body: CharacterBody3D
+var character: Node3D
 var tape: Node
 var readout: CanvasLayer
 var cam: Camera3D
@@ -42,6 +44,12 @@ func _ready() -> void:
 	body.name = "Body"
 	body.set(&"tape", tape)
 	add_child(body)
+	if body.has_method(&"show_capsule") and not ("--capsule" in OS.get_cmdline_user_args()):
+		character = Character.new()
+		character.name = "Character"
+		character.set(&"body", body)
+		body.add_child(character)
+		body.call(&"show_capsule", false)
 	cam = Camera3D.new()
 	cam.fov = 65.0
 	add_child(cam)
