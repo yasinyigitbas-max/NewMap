@@ -1,0 +1,9 @@
+.godot/
+native/**/*.o
+native/**/*.os
+native/**/*.obj
+native/.sconsign*.dblite
+native/godot-cpp/
+mixamo_cache/
+*.fbx
+*.FBX

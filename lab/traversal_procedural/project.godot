@@ -1,0 +1,14 @@
+; Lab A (procedural traversal). Its own Godot project: the game never loads it.
+config_version=5
+
+[application]
+config/name="Traversal Lab A - Procedural"
+config/features=PackedStringArray("4.7")
+
+[physics]
+3d/physics_engine="Jolt Physics"
+common/physics_ticks_per_second=60
+common/physics_interpolation=true
+
+[rendering]
+renderer/rendering_method="forward_plus"
