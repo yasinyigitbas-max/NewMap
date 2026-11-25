@@ -28,6 +28,16 @@ against it, the v2 section it breaks, and how I would fix it. **Nothing is fixed
 | 12 | Head levelled only by half, roll not measured; head turn up to 69° with the chest still. | 2.4 (`HEAD_LEVEL`), 2.2 (eyes / chest) | Measure; head roll ≤ half the trunk lean. |
 | 13 | Spine, hip, shoulder, elbow, wrist and fingers never measured. | 2.1 | The validator measures every row of 2.1. |
 
+
+### Found later the same evening (Yasin's screenshots of the Kimodo climb and mantle)
+| # | Problem | Breaks (v2) | Fix I'd make |
+|---|---|---|---|
+| 14 | **The retargeter puts a backward knee into every clip.** player_v3's mesh leg is straight at rest, but its knee bone sits ~10 cm in front of the leg's line (bones at 29° left, 16° right). Decision 1.2 swings the thigh and shin bones to point like the source's, so a straight source leg makes the **mesh** knee ~29° backward while the bones look fine. Measured on the body (`tests/clip_audit.gd`): the straightest knee reads 29° in every clip. Very likely also the backward knee in the step 4 build. | 1.2 (rest-relative, hinge from geometry), 1.3, 2.1 `KNEE_FLEX_MIN`, 8 #1 | Legs keep the body's rest in the retarget reference pose (no swing): a straight source leg gives a straight mesh leg. Knees measured relative to the body's rest; a straight leg must read ~0°. |
+| 15 | **Retargeted traversal clips don't touch the wall.** The retarget scales the motion by the leg ratio (0.89), so the climb's hands land 1.65 m high and 1.09 m ahead instead of on the 1.5 m edge 1.32 m ahead; the body passed 34-56 cm through the wall I drew. My wall check used joint points with a 3 cm margin, not the body's volume. | 10.7 (warp to the real edge), 2.4 / 6.12 (capsules, `WORLD_INTERSECT`) | Fit traversal clips to the edge after retargeting (motion warping in windows, ±20 %); check body capsules against the world on the drawn body. |
+| 16 | **My Kimodo scores were measured on Kimodo's skeleton, not on the body**, and I judged small strips by eye. | 0.1 rule 1 (measure the final pose) | Score clips only after retargeting, on the body, with `tests/clip_audit.gd` (to be grown into the v2 validator). |
+
+The Kimodo verdict (KIMODO_TEST.md, round 3) is therefore open again until #14 and #15 are fixed.
+
 ### Why my checks passed a broken pose
 - The knee was the **unsigned** angle between thigh and shin, plus a "knee behind the hip-ankle line along the body's
   facing" test with my own thresholds (flex > 8°, 2 cm). Nothing measured hip rotation, varus or twist, so a thigh

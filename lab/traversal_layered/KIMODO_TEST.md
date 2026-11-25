@@ -75,3 +75,10 @@ wall; knees = frames with a knee bent backward, signed as study v2 1.3):**
 while they grip (removes the 13-14 cm slide), keep toes and shins out of the wall face, warp the height ±20 %, and run
 them through the v2 validator. The vault needs better key poses (the take-off, the hand, the foot on top, the landing,
 running on) and another round.
+
+## Correction (same evening)
+Yasin's screenshots showed the mid-section going through the wall and a backward knee in the round 3 climb and mantle.
+Both come from my side, not Kimodo's: my retargeter bends player_v3's mesh knee ~29° backward whenever the source leg is
+straight (STATUS #14), and the retargeted motion is scaled by the leg ratio so it no longer meets the wall I drew
+(STATUS #15). My scores were measured on Kimodo's skeleton, not on the body (STATUS #16). **The round 3 verdict
+("believable", "good") is withdrawn** until the retargeter is fixed and the clips are re-checked on the body.
