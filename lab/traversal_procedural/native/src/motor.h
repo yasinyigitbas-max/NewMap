@@ -82,10 +82,10 @@ struct MotorInput {
 	Vector3 pos; // body origin (ground level under the capsule), world
 	Vector3 vel; // actual horizontal velocity after the move
 	Vector3 vel_des; // desired horizontal velocity
-	float vy = 0; // vertical velocity (air / landing)
 	Vector3 look_dir; // stick direction (world, flat); zero when the stick is idle
 	float dt = 1.0f / 60.0f;
 	bool grounded = true;
+	float vy = 0; // vertical velocity (air / landing)
 };
 
 class Motor {
