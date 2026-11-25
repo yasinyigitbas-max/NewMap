@@ -2,6 +2,7 @@
 #include "city_stream.h"
 #include "perf_marks.h"
 #include "city_breakables.h"
+#include "city_damage.h"
 #include "city_skyline.h"
 #include "city_rooms.h"
 #include <godot_cpp/classes/camera3d.hpp>
@@ -75,6 +76,7 @@ void CityStream::_ready() {
 	set_tiers(tiers, tier_band, arrive_s);
 	if (rooms) { CityRooms *rr = memnew(CityRooms); rr->set_name("Rooms"); add_child(rr); rr->set_stream(this); }   // B14
 	if (breakables) { CityBreakables *bk = memnew(CityBreakables); bk->set_name("Breakables"); add_child(bk); bk->set_stream(this); }   // B9
+	if (damage && !CityDamage::the) { CityDamage *dm = memnew(CityDamage); dm->set_name("Damage"); add_child(dm); }   // damage option B (docs/damage)
 	set_process(true);
 }
 
@@ -285,6 +287,9 @@ void CityStream::make_body(Body &e) {
 		body->shape_owner_set_transform(ow, it[1]);
 		body->shape_owner_add_shape(ow, col_shape(it[0]));
 	}
+	// what each shape is made of (the bake's per-shape table, docs/damage: CityDamage::surface_at reads it by shape index)
+	if (mk->has_meta("surf")) body->set_meta("surf", mk->get_meta("surf"));
+	if (mk->has_meta("surface")) body->set_meta("surface", mk->get_meta("surface"));
 	e.parent->add_child(body);
 	memdelete(mk); e.marker = nullptr;
 }
@@ -690,6 +695,7 @@ void CityStream::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("cell_node", "key"), &CityStream::cell_node);
 	ClassDB::bind_method(D_METHOD("set_rooms", "v"), &CityStream::set_rooms); ClassDB::bind_method(D_METHOD("get_rooms"), &CityStream::get_rooms); ADD_PROPERTY(PropertyInfo(Variant::BOOL, "rooms"), "set_rooms", "get_rooms");
 	ClassDB::bind_method(D_METHOD("set_skyline", "v"), &CityStream::set_skyline); ClassDB::bind_method(D_METHOD("get_skyline"), &CityStream::get_skyline); ADD_PROPERTY(PropertyInfo(Variant::BOOL, "skyline"), "set_skyline", "get_skyline");
+	ClassDB::bind_method(D_METHOD("set_damage", "v"), &CityStream::set_damage); ClassDB::bind_method(D_METHOD("get_damage"), &CityStream::get_damage); ADD_PROPERTY(PropertyInfo(Variant::BOOL, "damage"), "set_damage", "get_damage");
 	ClassDB::bind_method(D_METHOD("set_breakables", "v"), &CityStream::set_breakables); ClassDB::bind_method(D_METHOD("get_breakables"), &CityStream::get_breakables); ADD_PROPERTY(PropertyInfo(Variant::BOOL, "breakables"), "set_breakables", "get_breakables");
 	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "cells", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "", "get_cells");
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR3, "focus", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "", "get_focus");

@@ -61,6 +61,15 @@ setup() {
       GCLIB=$GODOT_CPP/bin/libgodot-cpp.android.template_release.arm64.a
       OUT=$NATIVE/bin/lib$NAME.android.arm64.so
       SCONS_ARGS="platform=android arch=arm64 target=template_release ndk_version=$NDK_VERSION" ;;
+    linux)
+      # a cloud session (Linux, no Windows tools): the system g++, godot-cpp's linux template_debug library. For tests
+      # in the cloud only (docs/damage/STATUS.md): GODOT_CPP=/path/to/godot-cpp bash native/build.sh linux
+      CXX=${LINUX_CXX:-$(command -v g++)}; OBJ=lo
+      CFLAGS="-std=c++17 -fno-exceptions -fPIC -fvisibility=hidden -O2 -DLINUXBSD_ENABLED -DUNIX_ENABLED -DTHREADS_ENABLED -DHOT_RELOAD_ENABLED -DDEBUG_ENABLED -DNDEBUG -DGDEXTENSION"
+      LFLAGS="-shared -fvisibility=hidden -static-libgcc -static-libstdc++ -s"
+      GCLIB=$GODOT_CPP/bin/libgodot-cpp.linux.template_debug.x86_64.a
+      OUT=$NATIVE/bin/lib$NAME.linux.x86_64.so
+      SCONS_ARGS="platform=linux arch=x86_64 target=template_debug" ;;
     *) die "unknown target $1" ;;
   esac
 }
@@ -123,8 +132,8 @@ finish() {
 
 case ${1:-all} in
   all) build windows; build android; finish ;;
-  windows|android) build "$1"; finish ;;
+  windows|android|linux) build "$1"; finish ;;
   clean) rm -rf "$NATIVE/build" "$NATIVE/bin" "$NATIVE/$NAME.gdextension" "$NATIVE/$NAME.gdextension.uid"; echo "NATIVE_BUILD cleaned" ;;
   status) echo "godot-cpp: $GODOT_CPP ($(cd "$GODOT_CPP" 2>/dev/null && git rev-parse --short HEAD))"; ls -la "$GODOT_CPP/bin" "$NATIVE/bin" 2>/dev/null; echo "mingw: $MINGW"; echo "ndk: $NDK_BIN" ;;
-  *) echo "usage: build.sh [all|windows|android|clean|status]" ;;
+  *) echo "usage: build.sh [all|windows|android|linux|clean|status]" ;;
 esac
