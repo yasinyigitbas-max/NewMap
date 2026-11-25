@@ -80,7 +80,7 @@ The automatic test checks heights, speeds, states and a ten-minute random walk. 
 2. **Single steps** (stations 4 to 14): it climbs up to 0.30 m and is stopped dead by 0.35 m and higher.
 3. **Ramps** (17 to 21): 5, 10 and 19 degrees are walked at a steady speed; on 30 and 45 it cannot climb and slides back.
 4. **Walls** (22 onward): run into one head-on and at an angle. It should stop or slide along, with no shaking.
-5. **Ledges**: stand on a deep wall (use `]` then walk up the stairs is not possible yet, so run the test instead),
-   or walk off the top of the stairs' landing sideways: it should fall and land without a bounce.
+5. **Ledges** (stations 15, 16): walk up the stairs and off the side of the top landing. It should fall at once
+   and land without a bounce. Walking off a kerb should be a step down, not a fall.
 6. **Weight**: this is the main one. Starting takes about a step, stopping from a run takes a few strides, and it turns
    in an arc, not on a pin. Say if that feels too heavy or too light; those three values are easy to change.
