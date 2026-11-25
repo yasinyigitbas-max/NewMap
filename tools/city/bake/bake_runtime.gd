@@ -575,10 +575,16 @@ func _col_marker(nm: String, layer: int, mask: int) -> Node3D:
 	m.set_meta(&"col", []); m.set_meta(&"layer", layer); m.set_meta(&"mask", mask); m.set_meta(&"w", 0)
 	return m
 
-func _col_add(m: Node3D, src: Shape3D, xf: Transform3D) -> void:
+func _col_add(m: Node3D, src: Shape3D, xf: Transform3D, surf := "") -> void:
 	var cd := _lib_shape(src)
 	if cd == null: return
 	(m.get_meta(&"col") as Array).append([cd, xf]); m.set_meta(&"w", int(m.get_meta(&"w")) + int(cd.call(&"weight")))
+	# damage: what each shape is made of, in step with "col" (only on bodies that hold a named prop; CityStream copies it)
+	if surf != "" or m.has_meta(&"surf"):
+		if not m.has_meta(&"surf"):
+			var pad := []; pad.resize((m.get_meta(&"col") as Array).size() - 1); pad.fill("")
+			m.set_meta(&"surf", pad)
+		(m.get_meta(&"surf") as Array).append(surf)
 
 ## What kind of material a mesh is drawn with, as far as the renderer cares: the shader, the textures, the on / off
 ## and choice settings, and the vertex layout. Colours and strengths do not count.
@@ -1094,6 +1100,31 @@ func _ground_class(img: Image, x0: float, z0: float, wx: float, wz: float) -> vo
 	j.store_string(JSON.stringify({"x0": x0, "z0": z0, "texel": GC_TEXEL, "w": w, "h": h, "classes": ["hard", "grass", "sand", "dirt"], "count": count})); j.close()
 	look.save_png(out + "far/ground_class.png")
 	stat["ground_class"] = count
+	_ground_surface(img, x0, z0, wx, wz)
+
+## damage (25 Nov, docs/damage): what the ground is made of for hit marks, dust and sounds, at the picture's own texel
+## (finer than the footsteps' 2.5 m: a pavement is 1.4-1.6 m wide). One byte a texel, CityDamage's surface numbers:
+## 3 asphalt (dark grey), 0 concrete (light grey: pavements, kerbs, plazas), 4 stone (light warm: travertine), 12 grass,
+## 13 dirt, 14 sand. far/ground_surface.bin + .json (x0, z0, texel, w, h). The phone export lists both files.
+func _ground_surface(img: Image, x0: float, z0: float, wx: float, wz: float) -> void:
+	var w := img.get_width(); var h := img.get_height()
+	var bytes := PackedByteArray(); bytes.resize(w * h)
+	var count := {}
+	for y in h:
+		for x in w:
+			var c := img.get_pixel(x, y)
+			var mx := maxf(c.r, maxf(c.g, c.b)); var mn := minf(c.r, minf(c.g, c.b))
+			var sat := 0.0 if mx < 0.001 else (mx - mn) / mx
+			var k := 0
+			if c.g > c.r * 1.04 and c.g > c.b * 1.08 and sat > 0.12: k = 12
+			elif c.r >= c.g and c.g >= c.b and sat > 0.14 and mx > 0.52: k = 14 if sat > 0.22 else 4
+			elif c.r >= c.g and c.g >= c.b and sat > 0.2 and mx <= 0.52: k = 13
+			elif mx < 0.36: k = 3
+			bytes[y * w + x] = k; count[k] = int(count.get(k, 0)) + 1
+	var f := FileAccess.open(out + "far/ground_surface.bin", FileAccess.WRITE); f.store_buffer(bytes); f.close()
+	var j := FileAccess.open(out + "far/ground_surface.json", FileAccess.WRITE)
+	j.store_string(JSON.stringify({"x0": x0, "z0": z0, "texel": wx / float(w), "w": w, "h": h, "count": count})); j.close()
+	stat["ground_surface"] = count
 
 # ---------------------------------------------------------------- B15: collision for what the kit's col shell leaves out
 ## Yasin, 20 Nov: "stairs around or columns under buildings dont have colliders, add them". A kit building's collision is
@@ -1281,7 +1312,20 @@ func _body(body: StaticBody3D) -> void:
 				if not _cell(c).has("brkcol"): _cell(c)["brkcol"] = []
 				_cell(c).brkcol.append([(s.shape as ConvexPolygonShape3D).points, s.global_transform]); stat["brk_cols"] = int(stat.get("brk_cols", 0)) + 1
 				continue
-		_cell(c).col.append([s.shape, s.global_transform, body.collision_layer, body.collision_mask]); stat.shapes += 1
+		_cell(c).col.append([s.shape, s.global_transform, body.collision_layer, body.collision_mask, _surf_words(body)]); stat.shapes += 1
+
+## damage (25 Nov, docs/damage): the words a prop's collider is named by (its body, the nodes above it, its scene's file),
+## kept per shape in the body's meta "surf"; the game's CityDamage turns them into a surface (surface_from_words: a pole
+## is metal, a bench wood, a tree's trunk bark ...). Ground trimeshes get "" (the ground's own map says what it is).
+func _surf_words(body: Node) -> String:
+	var words := String(body.name)
+	var n: Node = body.get_parent()
+	for i in 3:
+		if n == null: break
+		words += " " + String(n.name)
+		if n.scene_file_path != "": words += " " + n.scene_file_path.get_file().get_basename()
+		n = n.get_parent()
+	return words.to_lower().replace("@", "")
 
 func _props(mmi: MultiMeshInstance3D) -> void:
 	var mm := mmi.multimesh
@@ -1604,7 +1648,7 @@ func _build_cell(c: Vector2i) -> Dictionary:
 		while bodies.has(bk) and (((bodies[bk] as Node).get_meta(&"col") as Array).size() >= 24 or (st2 > 0 and int(body_tris.get(bodies[bk], 0)) + st2 > COL_BODY_TRIS)): bk[4] += 1
 		if not bodies.has(bk):
 			var body2 := _col_marker("col_%d" % bodies.size(), int(cs2[2]), int(cs2[3])); body2.position = co; root.add_child(body2); bodies[bk] = body2
-		_col_add(bodies[bk], cs2[0], Transform3D(Basis(), -(bodies[bk] as Node3D).position) * (cs2[1] as Transform3D))
+		_col_add(bodies[bk], cs2[0], Transform3D(Basis(), -(bodies[bk] as Node3D).position) * (cs2[1] as Transform3D), String(cs2[4]) if cs2.size() > 4 else "")
 		body_tris[bodies[bk]] = int(body_tris.get(bodies[bk], 0)) + st2
 	# night: every lamp of the cell as a halo at its head and a pool on the ground (two draws, drawn only at night),
 	# and as a light anchor [x, y, z, reach, r, g, b, kind (0 street, 1 porch), ground y] for the real lights
