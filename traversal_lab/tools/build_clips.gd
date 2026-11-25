@@ -1,5 +1,5 @@
 extends SceneTree
-## Bake the Mixamo clips in assets_src/clips onto the character's skeleton (traversal/character/player_v4_standin.glb).
+## Bake the Mixamo clips in assets_src/clips onto the character's skeleton (traversal/character/player_v4.scn).
 ## Run:  godot --headless --path traversal_lab -s res://tools/build_clips.gd
 ## Each clip is retargeted in model space: how far each Mixamo bone has turned from its own T-pose is applied to the
 ## same-named bone of the character from the character's T-pose. That works whatever the two skeletons' bone axes
@@ -47,8 +47,8 @@ func _initialize() -> void:
 		var anim := _player(scene).get_animation(_player(scene).get_animation_list()[0])
 		var cd := _bake(file.get_basename(), src, tgt, names, anim)
 		ResourceSaver.save(cd, "%s/%s.res" % [OUT, file.get_basename()], ResourceSaver.FLAG_COMPRESS)
-		summary[file.get_basename()] = {"length": cd.length, "loop": cd.loop, "speed": cd.speed, "travel": [cd.travel.x, cd.travel.z], "phase_offset": cd.phase_offset}
-		print("%-24s %5.2f s  travel %5.2f m  speed %4.2f m/s  loop %s  left foot forward at %.2f s" % [file.get_basename(), cd.length, cd.travel.length(), cd.speed, str(cd.loop), cd.phase_offset])
+		summary[file.get_basename()] = {"length": cd.length, "loop": cd.loop, "speed": cd.speed, "travel": [cd.travel.x, cd.travel.z], "phase_offset": cd.phase_offset, "turn_deg": rad_to_deg((cd.get(&"yaw") as PackedFloat32Array)[cd.frames - 1])}
+		print("%-24s %5.2f s  travel %5.2f m  speed %4.2f m/s  loop %s  left foot forward at %.2f s  turns %.1f deg" % [file.get_basename(), cd.length, cd.travel.length(), cd.speed, str(cd.loop), cd.phase_offset, rad_to_deg((cd.get(&"yaw") as PackedFloat32Array)[cd.frames - 1])])
 		scene.free()
 	var f := FileAccess.open(OUT + "/clips.json", FileAccess.WRITE)
 	f.store_string(JSON.stringify(summary, "  "))
@@ -99,6 +99,7 @@ func _bake(name: String, src: Skeleton3D, tgt: Skeleton3D, names: PackedStringAr
 	t_global.resize(nb)
 	var lf := tgt.find_bone("mixamorig_LeftFoot")
 	var foot_fwd := PackedFloat32Array()
+	var yaw := PackedFloat32Array()
 	for f in frames:
 		var time := minf(f / fps, anim.length)
 		src.reset_bone_poses()
@@ -133,11 +134,22 @@ func _bake(name: String, src: Skeleton3D, tgt: Skeleton3D, names: PackedStringAr
 			rot[o + 3] = q.w
 		var hp := sg[s_hips].origin
 		hips[f] = t_hips_rest + (hp - s_hips_rest) * scale
+		# how far the hips have turned since the first frame, counted on through half turns
+		var hf := (sg[s_hips].basis.orthonormalized() * s_rest[s_hips].inverse()) * Vector3(0.0, 0.0, 1.0)
+		var ang := atan2(hf.x, hf.z)
+		if f == 0:
+			yaw.append(ang)
+		else:
+			yaw.append(yaw[f - 1] + wrapf(ang - yaw[f - 1], -PI, PI))
 		# how far forward of the hips the left foot is (for lining loops up): from the source skeleton
 		var sf := sg[src.find_bone("mixamorig_LeftFoot")].origin
 		foot_fwd.append(sf.z - hp.z)
 	cd.set(&"rot", rot)
 	cd.set(&"hips", hips)
+	var y0 := yaw[0]
+	for f in frames:
+		yaw[f] -= y0
+	cd.set(&"yaw", yaw)
 	var tv := Vector3(hips[frames - 1].x - hips[0].x, 0.0, hips[frames - 1].z - hips[0].z)
 	var is_loop := name in LOOPS
 	cd.set(&"loop", is_loop)

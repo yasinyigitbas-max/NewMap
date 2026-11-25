@@ -70,13 +70,35 @@ Built early, out of order, because a bare capsule with no jump could not be judg
 - Lean: he leans into a turn by tan(lean) = speed x turn rate / g, capped at what was measured on people (6.8 degrees
   at a normal walk, 13 at a run).
 
-Foot sliding, measured (`tests/test_feet.gd`, bar 2 cm): run 1.9 cm, passes; **walk 4.0 cm, fails**. The walk at
-1.4 m/s is a blend of two walk clips with different stride timing; to be closed by pinning planted feet with leg IK
-(Stage 4).
+### Feet (Stage 4): `traversal/character/feet.gd`
+- A foot the clip has on the ground (low, and not travelling over the ground) is held where it was planted until the
+  clip lifts it. It is let slide only once it is 10 cm from where the clip wants it.
+- Each foot is raised or lowered to the ground under it and tilted to it (at most 20 degrees: the ankle's range in
+  walking, and the steepest streets are 19). The hips come down only as far as a planted foot needs to reach.
+- The legs are solved by Godot's `TwoBoneIK3D`, as the study recommends, with the knee pointed the way the clip had it.
+- The head turns toward where he is asked to go, up to 30 degrees, shared between neck and head ("people turn head
+  first"), at 100 degrees a second at most.
+- Measured (`tests/test_feet.gd`, the report's bar is 2 cm): planted feet drift 0.0 cm at a walk and at a run (4.0 cm
+  before); on flat ground the fitting changes nothing (0.0 mm); 10 degree ramp 1.6 cm, passes; **19 degree ramp
+  2.7 cm, just fails; stairs fail (up to 21 cm)**. The stairs cannot pass with a flat-ground walk: its step is 0.75 m
+  and a tread is 0.28 m. The study has stairs as their own movement at about half a second a step, and his
+  `Ascending Stairs`, `Descending Stairs`, `Running Up Stairs` and `Run Down Stairs` clips are downloaded: that is
+  the next piece.
 
-Not done yet, and known: no start, stop or turn clips (the body's speed changes
-but the legs just blend); no foot IK on stairs and slopes; no running-jump clip (missing from the download);
-he can still steer during a landing.
+### Starts, stops, turns on the spot (Stage 5)
+- The body keeps its own study-based speeds. The clips are played by distance (a start by how far he has gone, a stop
+  by how far he still has to go) and a turn by angle, so the feet keep pace with the body.
+- Clips: `Female Start Walking`, `Idle To Sprint`, `Female Stop Walking`, `Run To Stop`, `Left Turn 90`,
+  `Walking Turn 180`; mirror images are made in code for the other foot and the other way round.
+- From rest, a direction more than 60 degrees off his facing is turned to on the spot first (180 deg/s walking,
+  270 running), then he sets off. The 60 is not from the study.
+- Measured (`tests/test_starts.gd`): walk stop 0.58 s and 0.39 m (study: under two steps); run stop 1.32 s and 2.20 m
+  (study: 5 steps and 2.9 m flat out); feet move 0.3 to 0.5 cm once still; 180 on the spot 0.90 s walking (his clip:
+  1.00 s), 0.60 s with run held; let go and press again mid-stop: no pop.
+
+Not done yet, and known: stairs (above); turning round at a run is still the body's brake-and-arc with the legs
+blending (`Running Turn 180` is baked but not used); starts at an angle under 60 degrees just curve; no running-jump
+clip (missing from the download); he can still steer during a landing.
 
 ## Stage 1: the body alone
 `traversal/body/body.gd`. A floating capsule: the capsule covers the body from 0.32 m above the feet to the top of

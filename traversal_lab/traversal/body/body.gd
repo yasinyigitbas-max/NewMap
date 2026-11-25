@@ -32,6 +32,11 @@ const TURN_SLOW := 0.6          # people slow to turn: 0.96 m/s on a 1 m circle 
 const TURN_SLOW_ANGLE_DEG := 90.0   # the full slow-down applies from a right-angle turn up
 const REVERSE_ANGLE_DEG := 135.0  # asked to go nearly the opposite way at a run: "a sudden turn starts with a braking
                                 # action like a rapid stop" - brake to REVERSE_SPEED first, then turn round
+# Turning on the spot before setting off (Stage 5): "turning 180 degrees on the spot takes about 3 to 4 steps", and
+# his turn clips do it without travelling. From rest, a direction more than SPOT_START off his facing is turned to
+# first, at the turn rates above; he sets off when within SPOT_END.
+const SPOT_START_DEG := 60.0    # NOT in the study: below this he just sets off and curves; a value to tune by eye
+const SPOT_END_DEG := 15.0      # NOT in the study
 const REVERSE_SPEED := 2.0      # NOT in the study: the speed he may carry into the turn-round; a value to tune by eye
 const RISE_SPEED := 2.4         # how fast the feet follow ground that rises (m/s): 4 cm a tick
 const SINK_SPEED := 3.0         # and ground that falls away
@@ -63,6 +68,8 @@ var _jump_held := false
 var _air_peak := 0.0
 var _jump_still := false
 var _look: Array[Node3D] = []
+var spot_total := 0.0           # the on-the-spot turn being made (radians, + = to his left); 0 = none
+var spot_left := 0.0            # how much of it is still to turn
 
 
 func _ready() -> void:
@@ -223,6 +230,7 @@ func _physics_process(dt: float) -> void:
 			vy = 0.0
 			_move(hvel * dt, true)
 		_:
+			spot_total = 0.0
 			# in the air: keep the speed, a little steering, gravity
 			hvel += (_wish - hvel) * (1.0 - exp(-dt / 1.5))
 			vy = maxf(vy - GRAVITY * dt, -TERMINAL)
@@ -244,9 +252,20 @@ func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 	var fast := clampf((maxf(speed, want) - WALK) / (RUN - WALK), 0.0, 1.0)
 	var brake := lerpf(STOP_WALK, STOP_RUN, clampf((speed - WALK) / (RUN - WALK), 0.0, 1.0))
 	if want < 0.05:
+		spot_total = 0.0
 		return v.normalized() * maxf(speed - brake * dt, 0.0) if speed > 0.0001 else Vector3.ZERO
 	var wdir := wish / want
 	if speed < 0.3:
+		# from rest (or nearly): turn on the spot first if the way to go is far off his facing
+		var off := wrapf(atan2(-wdir.x, -wdir.z) - rotation.y, -PI, PI)
+		if spot_total == 0.0 and absf(off) > deg_to_rad(SPOT_START_DEG):
+			spot_total = off
+		if spot_total != 0.0:
+			if absf(off) > deg_to_rad(SPOT_END_DEG):
+				rotation.y += signf(off) * minf(lerpf(TURN_RATE_WALK, TURN_RATE_RUN, fast) * dt, absf(off))
+				spot_left = wrapf(atan2(-wdir.x, -wdir.z) - rotation.y, -PI, PI)
+				return Vector3.ZERO
+			spot_total = 0.0
 		# from rest (or nearly): set off in the wanted direction
 		speed += (want - speed) * (1.0 - exp(-dt / lerpf(START_TIME_WALK, START_TIME_RUN, fast)))
 		return wdir * speed
@@ -266,6 +285,19 @@ func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 	else:
 		speed = maxf(speed - brake * dt, want)
 	return dir * speed
+
+
+## How far he would still travel if the stick were let go now (the braking above, run forward).
+func stop_distance() -> float:
+	var speed := hvel.length()
+	var d := 0.0
+	var dt := 1.0 / float(Engine.physics_ticks_per_second)
+	for i in 600:
+		if speed <= 0.0:
+			break
+		speed = maxf(speed - lerpf(STOP_WALK, STOP_RUN, clampf((speed - WALK) / (RUN - WALK), 0.0, 1.0)) * dt, 0.0)
+		d += speed * dt
+	return d
 
 
 ## Move and slide, done here and not with move_and_slide(): in floating mode that keeps the full speed along a
