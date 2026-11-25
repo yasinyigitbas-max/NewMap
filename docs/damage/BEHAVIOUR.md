@@ -1,6 +1,6 @@
 # Damage: what each thing does when hit (draft for Yasin, 25 Nov 2026)
 
-Yasin's rule (25 Nov, contract section 5 on the locomotion branch): **damage follows real-world logic.** "We shouldn't be
+Yasin's rule (25 Nov, contract section 5): **damage follows real-world logic.** "We shouldn't be
 able to break off a hydrant by kicking it." Broken hydrants spray water. Human strength stays human.
 
 Stage A (built now) gives **every surface marks, dust, sparks and sound**, and windows and doors their states. Nothing
