@@ -4,7 +4,7 @@ extends RefCounted
 
 const CB := preload("res://tools/clip_build.gd")
 const SET := preload("res://tools/clip_set.gd")
-const VERSION := 3
+const VERSION := 4  # 4: limbs swung whole (knee fix), straight-leg ratio
 
 var log_lines: PackedStringArray = []
 
