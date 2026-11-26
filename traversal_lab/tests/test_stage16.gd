@@ -91,6 +91,43 @@ func go_at(s: Dictionary, back: float, run: bool, flip := -1.0) -> Dictionary:
 	return out
 
 
+## From the top of block `a` sideways onto the next block `b`.
+func go_side(a: Dictionary, b: Dictionary, run: bool) -> Dictionary:
+	var way := signf(float(b["x"]) - float(a["x"]))
+	var z := (a["probe"] as Vector3).z
+	lab.call(&"place", Vector3(float(a["x"]) - way * 0.9, float(a["top"]), z))
+	body.rotation.y = -PI * 0.5 * way
+	for i in 30:
+		await physics_frame
+	var samples := []
+	for i in 420:
+		samples.append({"mx": way, "mz": 0.0, "yaw": 0.0, "run": run, "jump": false, "crouch": false, "act": false})
+	tape.set(&"tape", samples)
+	tape.call(&"replay")
+	var before := int(trav.get(&"plays"))
+	var out := {"plan": {}, "lowest": INF, "over": false, "at": Vector3.ZERO}
+	var t := 0
+	var on_b := 0
+	while int(tape.get(&"mode")) == 2 and t < 400:
+		await physics_frame
+		t += 1
+		if int(trav.get(&"plays")) > before and (out["plan"] as Dictionary).is_empty():
+			out["plan"] = (trav.get(&"_plan") as Dictionary).duplicate()
+		var p := body.global_position
+		out["lowest"] = minf(float(out["lowest"]), p.y)
+		out["at"] = p
+		if absf(p.x - float(b["x"])) < 1.2 and int(body.get(&"state")) == 0 and not bool(body.call(&"in_move")) and absf(p.y - float(b["top"])) < 0.05:
+			on_b += 1
+			if on_b >= 6:
+				out["over"] = true
+				break
+		if p.y < 0.05 and absf(p.x - float(a["x"])) > 1.6 and absf(p.x - float(b["x"])) > 1.6:
+			break               # on the ground between them
+	tape.call(&"stop")
+	out["refused"] = String(trav.get(&"refused"))
+	return out
+
+
 func _run() -> void:
 	lab = (load("res://traversal/main.tscn") as PackedScene).instantiate()
 	root.add_child(lab)
@@ -174,6 +211,30 @@ func _run() -> void:
 			bad = "he is not on the far side, on the ground"
 		ok(bad == "", "%s, %s: he jumps for the far edge, catches it and climbs up: on the far side on the ground (at his lowest %.2f m under its top)%s" % [
 				s["label"], c[1], 1.0 - float(r["lowest"]), "" if bad == "" else " -- " + bad])
+	# Between neighbouring blocks of the course, sideways (Yasin, 26 Nov: "the jumps between the first blocks dont
+	# trigger ... AND HE KEEPS FALLING DIRECTLY WHEN WALKING"): a metre of gap between each pair, the far block a
+	# little higher or lower, the gap between the first ones only as deep as they are high.
+	var by_label := {}
+	for q: Dictionary in stations:
+		by_label[String(q["label"])] = q
+	for pair: Array in [["step 0.10 m", "step 0.15 m"], ["step 0.25 m", "step 0.30 m"], ["step 0.55 m", "step 0.60 m"], ["step 0.60 m", "step 0.55 m"],
+			["deep wall 1.00 m", "deep wall 1.10 m"], ["deep wall 1.10 m", "deep wall 1.40 m"], ["deep wall 1.40 m", "deep wall 1.10 m"],
+			["deep wall 1.40 m", "deep wall 1.80 m"], ["deep wall 2.20 m", "deep wall 1.80 m"]]:
+		if not by_label.has(pair[0]) or not by_label.has(pair[1]):
+			ok(false, "no such blocks: %s, %s" % pair)
+			continue
+		var a: Dictionary = by_label[pair[0]]
+		var b: Dictionary = by_label[pair[1]]
+		for run: bool in [false, true]:
+			var r := await go_side(a, b, run)
+			var lower := minf(float(a["top"]), float(b["top"]))
+			var bad := ""
+			if not bool(r["over"]):
+				bad = "he is not on the far block, on the ground (he is at %s; %s)" % [r["at"], r["refused"]]
+			elif float(r["lowest"]) < lower - 0.80:
+				bad = "he went down %.2f m under the lower block" % (lower - float(r["lowest"]))
+			ok(bad == "", "from %s to %s, %s: he gets across onto it (%s; at his lowest %.2f m against the lower of the two)%s" % [pair[0], pair[1], "at a run" if run else "at a walk",
+					String((r["plan"] as Dictionary).get("key", "no move")), float(r["lowest"]) - lower, "" if bad == "" else " -- " + bad])
 	# cancelling: the stick reversed a moment into the jump from a walk changes nothing
 	for s: Dictionary in [gaps[1], gaps[gaps.size() - 1]]:
 		var a := await go_at(s, 2.0, false)

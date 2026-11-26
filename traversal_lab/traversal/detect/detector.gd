@@ -130,6 +130,22 @@ func measure(dir: Vector3, from_y := INF, gap_most := GAP_MOST) -> Dictionary:
 	return rec
 
 
+## Only the edge ahead of him (where his ground ends, and what is beyond it), whatever stands beyond. For the moves
+## across a gap whose far side is higher than his: `measure` reports that far side, as something that stands up, and
+## not the gap before it.
+func measure_edge(dir: Vector3, gap_most := GAP_MOST, step := STEP_DOWN, far_down := STEP_DOWN) -> Dictionary:
+	_space = body.get_world_3d().direct_space_state
+	dir = Vector3(dir.x, 0.0, dir.z)
+	if dir.length() < 0.001:
+		return {}
+	dir = dir.normalized()
+	var feet := body.global_position
+	var ground := float(body.get(&"_stood_y")) if int(body.get(&"state")) == 0 else feet.y
+	if absf(ground - feet.y) > STEP_DOWN:
+		ground = feet.y
+	return _edge(feet + OFF, ground, dir, gap_most, step, far_down)
+
+
 # ------------------------------------------------------------------------------------------------ something that stands up
 
 func _wall(col: Vector3, ground: float, dir: Vector3) -> Dictionary:
@@ -285,8 +301,8 @@ func _follow(start: Vector3, way: Vector3, top_y: float, most: float, step: floa
 
 ## Where the ground under a line ahead of him stops: the distance along `way` from `from` (a free point over the
 ## ground), or -1 if it goes on to `most`, or -2 if the way is shut.
-func _ground_end(from: Vector3, way: Vector3, ground: float, most: float, first: float) -> float:
-	var reach := (from.y - ground) + STEP_DOWN + 0.02
+func _ground_end(from: Vector3, way: Vector3, ground: float, most: float, first: float, step := STEP_DOWN) -> float:
+	var reach := (from.y - ground) + step + 0.02
 	var good := 0.0
 	var s := first
 	var at := from
@@ -313,9 +329,11 @@ func _ground_end(from: Vector3, way: Vector3, ground: float, most: float, first:
 	return -1.0
 
 
-func _edge(col: Vector3, ground: float, dir: Vector3, gap_most := GAP_MOST) -> Dictionary:
+## `step`: ground this far below his is still his ground (the body's own figure, unless a move asks to see shallower
+## edges); `far_down`: a far side this far below his still counts as a far side.
+func _edge(col: Vector3, ground: float, dir: Vector3, gap_most := GAP_MOST, step := STEP_DOWN, far_down := STEP_DOWN) -> Dictionary:
 	var from := col + Vector3.UP * 0.4
-	var end := _ground_end(from, dir, ground, REACH, 0.1)
+	var end := _ground_end(from, dir, ground, REACH, 0.1, step)
 	if end < 0.0:
 		return {}
 	# which way the edge runs: the same search a little to each side
@@ -324,8 +342,8 @@ func _edge(col: Vector3, ground: float, dir: Vector3, gap_most := GAP_MOST) -> D
 	var a := INF
 	var b := INF
 	if _sweep(from, side * 0.2) < 0.0 and _sweep(from, -side * 0.2) < 0.0:
-		a = _ground_end(from + side * 0.2, dir, ground, REACH + 0.5, 0.1)
-		b = _ground_end(from - side * 0.2, dir, ground, REACH + 0.5, 0.1)
+		a = _ground_end(from + side * 0.2, dir, ground, REACH + 0.5, 0.1, step)
+		b = _ground_end(from - side * 0.2, dir, ground, REACH + 0.5, 0.1, step)
 	if a != INF and a >= 0.0 and b >= 0.0:
 		var along := ((from + side * 0.2 + dir * a) - (from - side * 0.2 + dir * b)).normalized()
 		m = along.cross(Vector3.UP).normalized()
@@ -340,7 +358,7 @@ func _edge(col: Vector3, ground: float, dir: Vector3, gap_most := GAP_MOST) -> D
 	var by := _down(out, 0.4 + DROP_MOST)
 	rec["drop"] = INF if is_nan(by) else ground - by
 	# the far side: the first ground at about his own level, looked for straight across
-	var reach := 0.4 + STEP_DOWN + 0.02
+	var reach := 0.4 + far_down + 0.02
 	var s := 0.1
 	var at := out
 	var last_open := 0.0
