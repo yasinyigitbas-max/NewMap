@@ -263,6 +263,28 @@
     ],
     "turn_deg": 1.2714512399421
   },
+  "KM_Slope_Up_Start": {
+    "length": 1.5,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 0.460601011912028,
+    "travel": [
+      -0.122931115329266,
+      0.679877042770386
+    ],
+    "turn_deg": -0.442860421119062
+  },
+  "KM_Slope_Up_Stop": {
+    "length": 2.9,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 0.16641627097952,
+    "travel": [
+      -0.135766312479973,
+      0.463116824626923
+    ],
+    "turn_deg": 11.5688113454012
+  },
   "KM_Stairs_Run_Down": {
     "length": 0.666666666666667,
     "loop": true,

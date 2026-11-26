@@ -28,7 +28,10 @@ const TRIMS := {"KM_Slope_Down_Start": [0.60, 2.33], "KM_Slope_Down_Stop": [4.57
 		"KM_Stop_Walk": [0.0, 2.50], "KM_Walk_To_Run": [0.40, 3.60], "KM_Run_To_Walk": [0.0, 1.30],
 		# a man's start from standing (Yasin, 26 Nov: "dont use female start stop, this is a male character"): from
 		# standing to the end of its second step
-		"KM_Start_Walk": [0.0, 2.00]}
+		"KM_Start_Walk": [0.0, 2.00],
+		# setting off up, and coming to rest on, very steep ground: Kimodo takes of 26 Nov in Yasin's own wording for
+		# the climb. The start climbs from its first frame; the stop take was made on the flat (it slows and stands).
+		"KM_Slope_Up_Start": [0.0, 1.50], "KM_Slope_Up_Stop": [2.00, 4.90]}
 const LOOPS := ["Standing_Idle", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
 
 

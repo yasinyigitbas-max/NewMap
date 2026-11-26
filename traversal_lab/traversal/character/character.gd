@@ -67,7 +67,21 @@ const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling
 		"steep_up": "KM_Climb_Hard", "steep_down": "KMY_Down_Hands_Balance_Long",
 		"start_walk": "KM_Start_Walk", "start_run": "Idle_To_Sprint",
 		"stop_walk": "KM_Stop_Walk", "stop_walk_m": "KM_Stop_Walk_M",
-		"steep_down_start": "KM_Slope_Down_Start", "steep_down_stop": "KM_Slope_Down_Stop"}
+		"steep_down_start": "KM_Slope_Down_Start", "steep_down_stop": "KM_Slope_Down_Stop",
+		"steep_up_start": "KM_Slope_Up_Start", "steep_up_stop": "KM_Slope_Up_Stop",
+		"walk_to_run": "KM_Walk_To_Run", "walk_to_run_m": "KM_Walk_To_Run_M",
+		"run_to_walk": "KM_Run_To_Walk", "run_to_walk_m": "KM_Run_To_Walk_M",
+		"turn_90": "Left_Turn_90", "turn_90_m": "Left_Turn_90_M",
+		"turn_180_walk": "Walking_Turn_180", "turn_180_walk_m": "Walking_Turn_180_M",
+		"turn_180_run": "Running_Turn_180", "turn_180_run_m": "Running_Turn_180_M"}
+# Changes of gait and turns on the spot (Yasin, 26 Nov: "i want all of them, include all of them in the next build").
+# Walk to run and run to walk: Kimodo takes of 26 Nov (GTA V's movement set has "walk-to-run and run-to-walk changes
+# by foot": the study). Turns on the spot: Left Turn 90, Walking Turn 180 and, for the plant-and-turn out of a run,
+# Running Turn 180, each with its mirror image for the other way (the study, Part 3). The body does the turning and
+# sets the pace, as everywhere; the clips are shown by how far it has got.
+const CHANGE_PACE := [0.8, 1.3]   # NOT in the study: a change-of-gait clip is taken up where its own pace is within these shares of his
+const TURN_PACE := [0.6, 1.5]     # NOT in the study: a turn clip runs at between these shares of its own pace
+const TURN_BIG_DEG := 120.0     # NOT in the study: a turn on the spot of more than this is shown with the 180 clip, less with the 90
 # Starting and stopping on the very steep ground, going down (Yasin, 26 Nov: "start slope climb stop slope climb
 # needed. fit what we have into here"): the first 1.7 s and the last 1.9 s of his own long downhill take, whose
 # middle is the loop: he eases off from standing, and comes to rest. Played as the flat starts and stops are, by the
@@ -160,10 +174,18 @@ var _arms: SkeletonModifier3D
 var _sub := ""                  # "" (the loops), "start" or "stop": a start or stop clip is showing
 var _sub_in := ""               # which input of the tree it is
 var _let_go_at := -1.0
+var _slope_in := "steep_down_start"
 var _slope_sub := ""            # on the steep ground going down: "" (the loop), "start" or "stop"
 var _stop_from := 0.0           # where in the stop clip it was taken up, and how far he then had left to go
 var _stop_left := 0.0
 var _gone := 0.0                # metres covered since the start began
+var _yaw := {}                  # input -> radians its clip has turned, tick by tick
+var _fastest := {}              # input -> the fastest its clip goes (m/s)
+var _change_from := 0.0         # metres into a change-of-gait clip at which it was taken up
+var _slowing := false           # he has been asked to walk while running, and no clip has been taken up for it yet
+var _wish_was := 0.0            # the pace asked for last tick
+var _lead_last := 0.0           # how far the left ankle was ahead last tick, and whether that is growing
+var _lead_rising := false
 var _dist := {}                 # input -> metres its clip has covered, tick by tick (from its root's own travel)
 var hands: SkeletonModifier3D
 var _slope := 0.0               # the showing stair clip's own slope, eased in and out with it
@@ -199,7 +221,20 @@ func _ready() -> void:
 		_length[n] = a.length
 		var t := a.find_track(NodePath("%s:Root" % SKEL), Animation.TYPE_POSITION_3D)
 		_stride[n] = (a.position_track_interpolate(t, a.length) - a.position_track_interpolate(t, 0.0)).length()
-	for key: String in ["start_walk", "start_run", "stop_walk", "stop_walk_m", "steep_down_start", "steep_down_stop"]:
+	for key: String in ["turn_90", "turn_90_m", "turn_180_walk", "turn_180_walk_m", "turn_180_run", "turn_180_run_m"]:
+		var a := _lib.get_animation(ACTS[key])
+		var t := a.find_track(NodePath("%s:Root" % SKEL), Animation.TYPE_ROTATION_3D)
+		var table := PackedFloat32Array()
+		var turned := 0.0
+		var last := 0.0
+		for i in int(a.length * 60.0) + 1:
+			var q := a.rotation_track_interpolate(t, i / 60.0)
+			var yaw := wrapf(2.0 * atan2(q.y, q.w), -PI, PI)
+			turned += wrapf(yaw - last, -PI, PI)
+			last = yaw
+			table.append(turned)
+		_yaw[key] = table
+	for key: String in ["start_walk", "start_run", "stop_walk", "stop_walk_m", "steep_down_start", "steep_down_stop", "steep_up_start", "steep_up_stop", "walk_to_run", "walk_to_run_m", "run_to_walk", "run_to_walk_m"]:
 		var a := _lib.get_animation(ACTS[key])
 		var t := a.find_track(NodePath("%s:Root" % SKEL), Animation.TYPE_POSITION_3D)
 		var table := PackedFloat32Array()
@@ -207,6 +242,11 @@ func _ready() -> void:
 		for i in int(a.length * 60.0) + 1:
 			table.append(maxf(a.position_track_interpolate(t, i / 60.0).distance_to(from), table[i - 1] if i > 0 else 0.0))
 		_dist[key] = table
+		# (and the fastest the clip itself goes, over a fifth of a second)
+		var top := 0.0
+		for i in range(12, table.size()):
+			top = maxf(top, (table[i] - table[i - 12]) / 0.2)
+		_fastest[key] = top
 	# the standing jump's lowest moment, from the clip: its dip ends there and its push begins
 	var ja := _lib.get_animation(String(JUMP["clip"]))
 	var jt := ja.find_track(NodePath("%s:mixamorig_Hips" % SKEL), Animation.TYPE_POSITION_3D)
@@ -445,22 +485,47 @@ func _physics_process(dt: float) -> void:
 	_mode_t += dt
 	_settled += dt
 	_measure(dt)
+	var lead := _lead_now()
+	_lead_rising = lead > _lead_last
+	_lead_last = lead
 	match _mode:
 		"ground":
 			var st := int(body.get(&"stairs"))
 			var wish := (body.get(&"_wish") as Vector3).length()
 			var plain := not in_air and st == 0 and int(body.get(&"terrain")) == 0
 			# (the pace he was at when the stick was let go: a stop from a run is not a stop from a walk)
+			if _wish_was > RUN_FROM and wish > 0.05 and wish <= SWITCH:
+				_slowing = true
+			elif wish > SWITCH or wish < 0.05 or speed <= SWITCH or _sub != "":
+				_slowing = false
 			if wish > 0.05:
 				_let_go_at = -1.0
 			elif _let_go_at < 0.0:
 				_let_go_at = speed
 			if _sub != "" and not plain:
 				_sub = ""
-			if _sub != "":
+			if _sub == "turn":
+				_turn(dt, wish)
+			elif _sub == "change":
+				_change(dt, speed, wish)
+			elif _sub != "":
 				_start_or_stop(dt, speed, wish)
 			elif plain and _act == "ground" and not _stair_on and not _steep_on:
-				if speed < 0.3 and wish > 0.05 and _moving < 0.5:
+				var spot := float(body.get(&"spot_total"))
+				if spot != 0.0:
+					# a turn on the spot: the clip for its size, or the one out of a run; of that clip and its mirror
+					# image, the one that turns the way he is turning
+					var kind := "turn_180_run" if bool(body.get(&"spot_run")) else ("turn_180_walk" if absf(spot) > deg_to_rad(TURN_BIG_DEG) else "turn_90")
+					var base: PackedFloat32Array = _yaw[kind]
+					_sub = "turn"
+					_sub_in = kind if (base[base.size() - 1] > 0.0) == (spot > 0.0) else kind + "_m"
+					_show(_sub_in, 0.0)
+				elif _moving >= 1.0 and _wish_was <= SWITCH and wish > RUN_FROM and speed > 1.0 and speed < SWITCH + 0.3:
+					_begin_change("walk_to_run", speed)
+				elif _moving >= 1.0 and _slowing and speed > SWITCH:
+					# (asked to walk while running: taken up as soon as he has slowed to a pace the clip has)
+					_begin_change("run_to_walk", speed)
+				elif speed < 0.3 and wish > 0.05 and _moving < 0.5:
 					_sub = "start"
 					_sub_in = "start_run" if wish > RUN_FROM else "start_walk"
 					_gone = 0.0
@@ -500,12 +565,13 @@ func _physics_process(dt: float) -> void:
 				_stairs(dt, st, speed)
 			elif not in_air and int(body.get(&"terrain")) == 2 and speed > 0.1 and _steep_ahead():
 				_stair_on = false
-				if _steep_on and not _steep_up and wish < 0.05 and _slope_sub == "" and _act == "steep_down":
-					# let go on the way down: his take's own coming to rest
+				if _steep_on and wish < 0.05 and _slope_sub == "" and (_act == "steep_down" or _act == "steep_up"):
+					# let go: the coming to rest for the way he was going (down: the end of his own take)
 					_slope_sub = "stop"
+					_slope_in = "steep_up_stop" if _steep_up else "steep_down_stop"
 					# (taken up where the clip has as far left to go as he has)
-					var stop_table: PackedFloat32Array = _dist["steep_down_stop"]
-					_show("steep_down_stop", _time_for("steep_down_stop", stop_table[stop_table.size() - 1] - float(body.call(&"stop_distance"))))
+					var stop_table: PackedFloat32Array = _dist[_slope_in]
+					_show(_slope_in, _time_for(_slope_in, stop_table[stop_table.size() - 1] - float(body.call(&"stop_distance"))))
 				else:
 					_steep(dt, speed)
 			elif _stair_on or _steep_on:
@@ -528,6 +594,7 @@ func _physics_process(dt: float) -> void:
 				_drop = DROP_RUN if speed > RUN_FROM else DROP_WALK
 				_set_mode("fall")
 				_show("drop_run" if speed > RUN_FROM else "drop_walk", float(_drop["leaves"]))
+			_wish_was = wish
 		"jump":
 			_jump_e += dt
 			if in_air:
@@ -699,11 +766,103 @@ func _time_for(input: String, d: float) -> float:
 	return (table.size() - 1) / 60.0
 
 
-## Back to the loops, on the foot he has forward (the left furthest forward is where every loop begins).
+## Back to the loops, at the point of the stride his legs are at: the same foot forward, by the same amount, and
+## going the same way (the study: "Which foot is forward at start and end | to chain clips without a stutter step").
+## Until 26 Nov the loops were only set to the left or the right foot's furthest point, and a start clip handed over
+## to a walk whose legs were somewhere else (Yasin: "walk start doesnt blend in well with walk animation").
 func _to_loops() -> void:
 	_sub = ""
-	tree.set(&"parameters/gait_seek/seek_request", 0.0 if _lead_now() > 0.0 else 0.5)
+	var speed := (body.get(&"hvel") as Vector3).length()
+	var loop: PackedFloat32Array = _lib.get_animation(WALK if speed < SWITCH else JOG).get_meta(&"lead", PackedFloat32Array())
+	var now := _lead_now()
+	var at := 0.0 if now > 0.0 else 0.5
+	if loop.size() > 2:
+		var best := INF
+		for i in loop.size() - 1:
+			if (loop[i + 1] > loop[i]) != _lead_rising:
+				continue
+			var gap := absf(loop[i] - now)
+			if gap < best:
+				best = gap
+				at = float(i) / float(loop.size() - 1)
+	tree.set(&"parameters/gait_seek/seek_request", at)
 	_show("ground", 0.0)
+
+
+## The moment a turning clip has turned through `angle` (radians, by size).
+func _time_for_yaw(input: String, angle: float) -> float:
+	var table: PackedFloat32Array = _yaw[input]
+	for i in table.size():
+		if absf(table[i]) >= angle:
+			return i / 60.0
+	return (table.size() - 1) / 60.0
+
+
+## A turn on the spot (or the plant-and-turn out of a run): the body turns; the clip that turns the same way is shown
+## at the share of its own turn that the body has made of his. (The study: "Turn clips do not turn exact amounts ...
+## The turn in each clip must be scaled to the angle the game needs".)
+func _turn(dt: float, wish: float) -> void:
+	var total := float(body.get(&"spot_total"))
+	if total == 0.0:
+		# the body has finished turning: what is left of the clip is let go, and he sets off (or stands)
+		_to_loops()
+		return
+	var table: PackedFloat32Array = _yaw[_sub_in]
+	var done := 1.0 - absf(float(body.get(&"spot_left"))) / maxf(absf(total), 0.001)
+	# (never run on faster or slower than these shares of its own pace: a clip does not turn evenly, and followed
+	# exactly it raced through its slow parts, and the head with it: 684 degrees a second in the audit)
+	var want := _time_for_yaw(_sub_in, absf(table[table.size() - 1]) * clampf(done, 0.0, 1.0))
+	_act_t = clampf(want, _act_t + dt * TURN_PACE[0], _act_t + dt * TURN_PACE[1])
+	_seek()
+
+
+## A change of gait, walk to run or run to walk: moved on by the ground the body covers, from the point of the clip
+## that goes at his pace.
+func _change(dt: float, speed: float, wish: float) -> void:
+	var a := _lib.get_animation(ACTS[_sub_in])
+	var to_run := _sub_in.begins_with("walk_to_run")
+	_gone += speed * dt
+	_act_t = maxf(_act_t, _time_for(_sub_in, _change_from + _gone))
+	var over: bool = (speed > float(_fastest[_sub_in])) if to_run else (speed < SWITCH)
+	var called_off: bool = wish < 0.05 or (to_run and wish <= SWITCH) or (not to_run and wish > RUN_FROM)
+	if _act_t >= a.length - 0.1 or over or called_off:
+		_to_loops()
+	else:
+		_seek()
+
+
+## Take up a change-of-gait clip: where the clip itself goes at his pace, and of the clip and its mirror image the
+## one with the same foot forward there as he has now.
+func _begin_change(kind: String, speed: float) -> void:
+	var table: PackedFloat32Array = _dist[kind]
+	var lead_clip: PackedFloat32Array = _lib.get_animation(ACTS[kind]).get_meta(&"lead", PackedFloat32Array())
+	# among the moments at which the clip goes at about his pace: the one, in the clip or its mirror image, at which
+	# its legs are where his are and going the same way (so no foot comes down twice running)
+	var now := _lead_now()
+	var at := -1
+	var mirror := false
+	var best := INF
+	for i in range(6, table.size() - 6, 2):
+		var own := (table[i + 6] - table[i - 6]) / 0.2
+		if own < speed * CHANGE_PACE[0] or own > speed * CHANGE_PACE[1]:
+			continue
+		var f := mini(int(i / 2.0), lead_clip.size() - 2)
+		for m: bool in [false, true]:
+			var here := -lead_clip[f] if m else lead_clip[f]
+			var next := -lead_clip[f + 1] if m else lead_clip[f + 1]
+			if (next > here) != _lead_rising:
+				continue
+			if absf(here - now) < best:
+				best = absf(here - now)
+				at = i
+				mirror = m
+	if at < 0:
+		return      # the clip never goes at his pace: the loops carry the change, as before
+	_sub = "change"
+	_sub_in = kind + "_m" if mirror else kind
+	_change_from = table[at]
+	_gone = 0.0
+	_show(_sub_in, at / 60.0)
 
 
 ## A start or a stop clip, moved on by the ground the body covers.
@@ -743,12 +902,12 @@ func _start_or_stop(dt: float, speed: float, wish: float) -> void:
 
 ## Coming to rest on the steep ground: the stop of his take runs to its end as he covers what he has left.
 func _slope_stop(dt: float, speed: float) -> void:
-	var table: PackedFloat32Array = _dist["steep_down_stop"]
+	var table: PackedFloat32Array = _dist[_slope_in]
 	if speed > 0.05:
-		_act_t = maxf(_act_t, _time_for("steep_down_stop", table[table.size() - 1] - float(body.call(&"stop_distance"))))
+		_act_t = maxf(_act_t, _time_for(_slope_in, table[table.size() - 1] - float(body.call(&"stop_distance"))))
 	else:
 		_act_t += dt
-	if _act_t >= _clip_length("steep_down_stop") - 0.02:
+	if _act_t >= _clip_length(_slope_in) - 0.02:
 		_slope_sub = ""
 		_steep_on = false
 		_show("ground", 0.0)
@@ -779,19 +938,20 @@ func _steep(dt: float, speed: float) -> void:
 		_steep_up = grade > 0.0
 	# from standing, going down: the take's own start, by the ground he covers; then its loop from its beginning,
 	# which is where the start leaves off
-	if not _steep_on and not _steep_up and speed < 0.4:
+	if not _steep_on and speed < 0.4:
 		_slope_sub = "start"
+		_slope_in = "steep_up_start" if _steep_up else "steep_down_start"
 		_gone = 0.0
 		_steep_on = true
-		_show("steep_down_start", 0.0)
+		_show(_slope_in, 0.0)
 		return
 	if _slope_sub == "start":
-		if _steep_up:
+		if _steep_up != (_slope_in == "steep_up_start"):
 			_slope_sub = ""
 		else:
 			_gone += speed * dt
-			_act_t = maxf(_act_t, _time_for("steep_down_start", _gone))
-			if _act_t >= _clip_length("steep_down_start") - 0.05:
+			_act_t = maxf(_act_t, _time_for(_slope_in, _gone))
+			if _act_t >= _clip_length(_slope_in) - 0.05:
 				_slope_sub = ""
 				_steep_phase = 0.0
 			else:

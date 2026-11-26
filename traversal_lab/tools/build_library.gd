@@ -20,7 +20,8 @@ const MIRRORED := ["Female_Stop_Walking", "Run_To_Stop", "Left_Turn_90", "Walkin
 		"KM_Stop_Walk", "KM_Walk_To_Run", "KM_Run_To_Walk"]
 # Starts, stops and changes of gait are chosen "by which foot is forward" (the study, Stage 5): for these clips how far
 # the left ankle is ahead of the right, frame by frame, is noted on the animation ("lead", metres).
-const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Stop_Walk", "KM_Slope_Down_Start", "KM_Slope_Down_Stop", "KM_Start_Walk"]
+const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Stop_Walk", "KM_Slope_Down_Start", "KM_Slope_Down_Stop", "KM_Start_Walk",
+		"KM_Walk", "KM_Run", "KM_Slope_Up_Start", "KM_Slope_Up_Stop"]
 const TURN_LEAST_DEG := 20.0        # a clip that turns less than this is not a turning clip: its root does not turn
 # In the air the body does the rising and the falling (the study: the body "alone decides where the character is"), so
 # the clip's own rise is taken out: between leaving the ground and landing the hips keep at most their take-off height.
@@ -44,7 +45,7 @@ const LEDGE := ["KM_Ledge_Walk_Off", "KM_Ledge_Run_Off"]
 const STAIRS := ["Ascending_Stairs", "KM_Stairs_Run_Up_D", "KM_Stairs_Walk_Down", "KM_Stairs_Run_Down"]
 # Steep ground (outside the study, kept at Yasin's word): his own two Kimodo takes, which climb and descend their own
 # slopes. Treated as the stair clips are: the climb out of the hips, the slope of the take's own ground noted.
-const SLOPES := ["KM_Climb_Hard", "KMY_Down_Hands_Balance_Long", "KM_Slope_Down_Start", "KM_Slope_Down_Stop"]
+const SLOPES := ["KM_Climb_Hard", "KMY_Down_Hands_Balance_Long", "KM_Slope_Down_Start", "KM_Slope_Down_Stop", "KM_Slope_Up_Start", "KM_Slope_Up_Stop"]
 # (The walk take in use since 26 Nov, Kimodo walk_b_s1, meets the study's pelvis tilt, side drop,
 # rotation and sway as it is; only its rise and fall, 6.2 cm, is brought into the study's 2.7 to 4.8 cm.)
 # A take edited a little to meet the study's joint lines (Yasin, 26 Nov: "why dont you spend any effort on making the
@@ -66,6 +67,10 @@ const FIT := {"KM_Walk": {"pelvis": 7.7, "knee": [20.0, 0.7], "ankle": [1.0, 0.8
 		# Measured on the blend before the edits: knee 123.6 degrees in swing (the study: 94 to 119), ankle 27.5
 		# toes-down (23.2), hip extension 13.3 (11.8), each arm forward with the opposite leg 78 % of the time (90 or
 		# more). After: 114.4, 22.2, 12.7, 96 %. Both get the same edits.
+		# Turns on the spot: the body turns at 180 degrees a second (270 out of a run) and the clips' heads swing
+		# ahead of it; together the head peaked at 684 degrees a second in the audit, the study: "the head peaking
+		# at 137 to 272 degrees a second". The head's and neck's own turning is kept at this share.
+		"Walking_Turn_180": {"head": 0.3}, "Left_Turn_90": {"head": 0.3}, "Running_Turn_180": {"head": 0.3},
 		"KM_Run": {"pelvis": -1.6, "knee": [60.0, 0.85], "ankle": [1.0, 0.8], "arms": 0.15},
 		"Running": {"pelvis": -1.6, "knee": [60.0, 0.85], "ankle": [1.0, 0.8], "arms": 0.15}}
 const FOOT_UP_SIGN := 1.0       # which way round the foot bone's side-to-side line counts as toes up (found by trying both)
@@ -107,6 +112,8 @@ func _initialize() -> void:
 		lib.add_animation(n, made)
 		if MIRRORED.has(n):
 			var other := _animation(c.call(&"mirrored", parents, rest, pair), n, stand.y)
+			if FIT.has(n):
+				_fit(other, FIT[n], sk, n)
 			if LEADS.has(n):
 				other.set_meta(&"lead", _lead(other, sk))
 			lib.add_animation(n + "_M", other)
@@ -232,7 +239,7 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 
 ## Small edits to a take's joint curves (see FIT). Every edit is made to the bone's own turn from its standing pose.
 func _fit(a: Animation, how: Dictionary, sk: Skeleton3D, clip: String) -> void:
-	var fit := {"pelvis": 0.0, "knee": [20.0, 1.0], "ankle": [1.0, 1.0], "toe": 1.0, "arms": 0.0}
+	var fit := {"pelvis": 0.0, "knee": [20.0, 1.0], "ankle": [1.0, 1.0], "toe": 1.0, "arms": 0.0, "head": 1.0, "trunk": 1.0}
 	fit.merge(how.duplicate(true), true)
 	for arg in OS.get_cmdline_user_args():       # for trying figures: -- --fit=KM_Walk/pelvis:6,knee:20:0.8,ankle:0.6:0.8,toe:1.2
 		if arg.begins_with("--fit=%s/" % clip):
@@ -258,6 +265,18 @@ func _fit(a: Animation, how: Dictionary, sk: Skeleton3D, clip: String) -> void:
 			if arm:
 				for k in a.track_get_key_count(t):
 					a.track_set_key_value(t, k, was.rotation_track_interpolate(t, fposmod(a.track_get_key_time(t, k) - a.length * float(fit["arms"]), a.length)))
+	# the neck's and the head's own turning kept at a share (a turn clip whose head whips round ahead of the body)
+	for group: Array in [["head", ["Neck", "Head"]], ["trunk", ["Spine", "Spine1", "Spine2"]]]:
+		if float(fit[group[0]]) == 1.0:
+			continue
+		for bone: String in group[1]:
+			var ht: int = tr.call(bone)
+			var hr: Quaternion = rest.call(bone)
+			for k in a.track_get_key_count(ht):
+				var rel := (hr.inverse() * (a.track_get_key_value(ht, k) as Quaternion)).normalized()
+				if rel.w < 0.0:
+					rel = -rel
+				a.track_set_key_value(ht, k, (hr * Quaternion.IDENTITY.slerp(rel, float(fit[group[0]]))).normalized())
 	var hips_t: int = tr.call("Hips")
 	var back := deg_to_rad(float(fit["pelvis"]))
 	for k in a.track_get_key_count(hips_t):
