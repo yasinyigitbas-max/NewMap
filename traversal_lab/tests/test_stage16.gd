@@ -121,8 +121,9 @@ func go_side(a: Dictionary, b: Dictionary, run: bool) -> Dictionary:
 			if on_b >= 6:
 				out["over"] = true
 				break
-		if p.y < 0.05 and absf(p.x - float(a["x"])) > 1.6 and absf(p.x - float(b["x"])) > 1.6:
-			break               # on the ground between them
+		# (on the ground between them: he fell in. Not for the low blocks: there he walks through the gap, as he is to)
+		if float(a["top"]) > 0.30 and p.y < 0.05 and absf(p.x - float(a["x"])) > 1.6 and absf(p.x - float(b["x"])) > 1.6:
+			break
 	tape.call(&"stop")
 	out["refused"] = String(trav.get(&"refused"))
 	return out
@@ -229,7 +230,12 @@ func _run() -> void:
 			var r := await go_side(a, b, run)
 			var lower := minf(float(a["top"]), float(b["top"]))
 			var bad := ""
-			if not bool(r["over"]):
+			# (between the low blocks the gap is shallow: no jump there. Yasin, 26 Nov: "let him just walk longer steps,
+			# only if necessary, and just keep running if running thru shallow gaps")
+			var k := String((r["plan"] as Dictionary).get("key", ""))
+			if float(a["top"]) <= 0.30 and k in ["gap_jump", "gap_run", "gap_catch"]:
+				bad = "a jump was begun over a shallow gap ('%s')" % k
+			elif not bool(r["over"]):
 				bad = "he is not on the far block, on the ground (he is at %s; %s)" % [r["at"], r["refused"]]
 			elif float(r["lowest"]) < lower - 0.80:
 				bad = "he went down %.2f m under the lower block" % (lower - float(r["lowest"]))

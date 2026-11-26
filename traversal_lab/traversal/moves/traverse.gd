@@ -1676,6 +1676,13 @@ func _try_gap(v: Vector3, dir: Vector3, rec: Dictionary, running: bool) -> bool:
 		return false
 	var gap := float(rec["gap"])
 	var landing := float(rec["landing"])             # the far side against his own ground: + = higher
+	# A shallow gap (no deeper than what he walks down and up by himself, 0.30 m) is not jumped. Yasin, 26 Nov: "let
+	# him just walk longer steps, only if necessary, and just keep running if running thru shallow gaps". At a run
+	# nothing is begun; at a walk a longer step across it where one step spans it, else he walks through it.
+	var shallow := float(rec.get("drop", INF)) <= float(UP_BAND[0]) + MEASURED_WITHIN and landing <= float(UP_BAND[0]) + MEASURED_WITHIN
+	if shallow and (running or gap > STEP_ACROSS * LEG + MEASURED_WITHIN):
+		refused = ""
+		return false
 	var here := (rec["edge"] as Vector3 - body.global_position).dot(m)
 	var rad := float(body.get(&"RADIUS"))
 	if running:
