@@ -109,6 +109,8 @@ var _own_mean := 0.0            # where the stride has the chest over the feet, 
 var _stair_phase := 0.0         # strides along the stairs (two steps a stride)
 var _stair_on := false
 var _slope := 0.0               # the showing stair clip's own slope, eased in and out with it
+var _hips_fit := 0.0
+var _foot_len := 0.0            # from the ankle to the ball of the foot, along the ground (from the skeleton)
 var _jump_low := 0.5            # the Jump clip: the moment its hips are lowest (found from the clip itself)
 
 
@@ -120,6 +122,7 @@ func _ready() -> void:
 	_pivot.add_child(model)
 	skel = model.get_node(SKEL)
 	_chest_i = skel.find_bone("mixamorig_Spine2")
+	_foot_len = skel.get_bone_global_rest(skel.find_bone("mixamorig_LeftToeBase")).origin.z - skel.get_bone_global_rest(skel.find_bone("mixamorig_LeftFoot")).origin.z
 	# The study, Timing: "`AnimationTree.callback_mode_process` and `Skeleton3D.modifier_callback_mode_process` both
 	# set to physics, so clips, IK and queries all see the same moment."
 	skel.modifier_callback_mode_process = Skeleton3D.MODIFIER_CALLBACK_MODE_PROCESS_PHYSICS
@@ -413,6 +416,30 @@ func _physics_process(dt: float) -> void:
 		var want_slope := float(_lib.get_animation(ACTS[_act]).get_meta(&"slope", 0.0)) if (_stair_on and ACTS.has(_act)) else 0.0
 		_slope += (want_slope - _slope) * minf(dt / FADE, 1.0)
 		feet.set(&"clip_slope", _slope)
+		# A stair clip was made on its own stairs (Mixamo's rise 0.245 m a step, the city's 0.18: the study, Part 3).
+		# Its hips stand right over its own steps; over shallower or steeper ones they are out by the difference of
+		# the two slopes over the distance from the hips to the ball of the foot where the clip's leg is at its
+		# longest (noted on the clip, "pivot"), so that leg is left as long as the clip has it and no longer.
+		var riser := float(body.get(&"stair_riser"))
+		var on_stairs := _stair_on and riser > 0.0 and ACTS.has(_act)
+		var want_fit := 0.0
+		if on_stairs:
+			var a := _lib.get_animation(ACTS[_act])
+			var real := signf(float(int(body.get(&"stairs")))) * riser / float(body.get(&"stair_tread"))
+			want_fit = -(want_slope - real) * float(a.get_meta(&"pivot", 0.0))
+			# where each foot next comes down: the left at the clip's own moment for it, the right half a stride on
+			var tread := float(body.get(&"stair_tread"))
+			var dir: Vector3 = body.get(&"stair_dir")
+			var down := _phase_offset(ACTS[_act]) / a.length
+			var lands: Array[Vector3] = []
+			for f in 2:
+				var to_go := fposmod(down + 0.5 * f - _stair_phase, 1.0)
+				lands.append(body.global_position + dir * (to_go * 2.0 * tread + float(a.get_meta(&"reach", 0.0))))
+			feet.set(&"land_at", lands)
+			feet.set(&"stride_dir", dir)
+		feet.set(&"stride_fit", on_stairs)
+		_hips_fit += (want_fit - _hips_fit) * minf(dt / FADE, 1.0)
+		feet.set(&"hips_fit", _hips_fit)
 		# the fitting fades out in the air and back in on the ground; the three modifiers go together
 		var w := float(feet.get(&"weight"))
 		_leg_ik.influence = w
@@ -429,8 +456,14 @@ func _stairs(dt: float, st: int, speed: float) -> void:
 	# steps taken so far, from the edges he has crossed and how far he is past the last one
 	var along := (body.global_position - (body.get(&"stair_edge") as Vector3)).dot(body.get(&"stair_dir"))
 	var steps := float(int(body.get(&"stair_count"))) + clampf(along / tread, 0.0, 1.0)
-	# the left foot comes down `reach` ahead of him: that moment must find it over the middle of a tread
+	# the left foot comes down `reach` ahead of him: that moment must find it over the middle of a tread. Going up
+	# that is the ball of the foot (the heel may hang off the back of the step). Going down the whole foot has to
+	# be on the tread, clear of the step above it, so there it is the middle of the foot, between ankle and ball,
+	# that comes down mid-tread (with the ball mid-tread the heel stood inside the step above, and the foot was
+	# thrown up onto that step: measured 26 Nov, 17 cm in one tick).
 	var lands := 0.5 - float(a.get_meta(&"reach", 0.0)) / tread
+	if st < 0:
+		lands += 0.5 * _foot_len / tread
 	var cycle := _phase_offset(ACTS[input]) / a.length + (steps - lands) * 0.5
 	# the stride runs on by the ground covered and is only drawn toward that place (tied to it outright it jumped
 	# at every step edge, because a measured tread is never exact)

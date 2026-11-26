@@ -211,18 +211,28 @@ func _stairs(a: Animation, c: Resource, sk: Skeleton3D) -> void:
 	var toe := [sk.find_bone("mixamorig_LeftToeBase"), sk.find_bone("mixamorig_RightToeBase")]
 	var toe_rest := sk.get_bone_global_rest(toe[0]).origin.y
 	var balls := [[], []]
+	var legs := [[], []]            # hip joint to ankle, how long the leg is in each frame
 	var side := ["Left", "Right"]
 	for f in frames:
 		var time := float(f) / fps
 		for k in 2:
 			# down the leg by hand: hips, thigh, shin, foot, ball of the foot
 			var x := Transform3D(Basis(_rot(a, "mixamorig_Hips", time)), a.position_track_interpolate(t_hips, time))
+			var joint := Vector3.ZERO
+			var ankle := Vector3.ZERO
 			for bn: String in ["UpLeg", "Leg", "Foot", "ToeBase"]:
 				var name := "mixamorig_%s%s" % [side[k], bn]
 				x = x * Transform3D(Basis(_rot(a, name, time)), sk.get_bone_rest(sk.find_bone(name)).origin)
+				if bn == "UpLeg":
+					joint = x.origin
+				elif bn == "Foot":
+					ankle = x.origin
 			balls[k].append(x.origin)
+			legs[k].append(joint.distance_to(ankle))
 	var sum := 0.0
 	var count := 0
+	var longest := 0.0
+	var pivot := 0.0
 	for k in 2:
 		for f in frames - 1:
 			# over the clip's own ground the foot moves by its move in this frame plus the travel and the climb
@@ -230,14 +240,23 @@ func _stairs(a: Animation, c: Resource, sk: Skeleton3D) -> void:
 			if step.length() * fps < 0.4:
 				sum += (balls[k][f] as Vector3).y - slope * (balls[k][f] as Vector3).z - toe_rest
 				count += 1
+				# where the standing leg is at its longest: how far ahead of the hips the ball of that foot is then
+				longest = maxf(longest, legs[k][f])
 	var floor_y := sum / count if count > 0 else 0.0
+	# (the leg stays at its longest for many frames: the pivot is the earliest of them in the step, the foot furthest ahead)
+	for k in 2:
+		for f in frames - 1:
+			var step: Vector3 = (balls[k][f + 1] as Vector3) - (balls[k][f] as Vector3) + Vector3(0.0, rise, total) / float(frames - 1)
+			if step.length() * fps < 0.4 and float(legs[k][f]) > longest - 0.002:
+				pivot = maxf(pivot, (balls[k][f] as Vector3).z - (a.track_get_key_value(t_hips, f) as Vector3).z)
 	for f in frames:
 		var p: Vector3 = a.track_get_key_value(t_hips, f)
 		a.track_set_key_value(t_hips, f, Vector3(p.x, p.y - floor_y, p.z))
 	var at := int(round(fposmod(float(c.get(&"phase_offset")), a.length) * fps))
 	a.set_meta(&"slope", slope)
+	a.set_meta(&"pivot", pivot)
 	a.set_meta(&"reach", (balls[0][mini(at, frames - 1)] as Vector3).z)
-	print("   stairs %s: rises %.2f m over %.2f m (slope %.2f), its stairs stood %.3f m off the hips' floor (%d planted frames), left foot comes down %.2f m ahead" % [c.get(&"source"), rise, total, slope, floor_y, count, float(a.get_meta(&"reach"))])
+	print("   stairs %s: rises %.2f m over %.2f m (slope %.2f), its stairs stood %.3f m off the hips' floor (%d planted frames), left foot comes down %.2f m ahead, its standing leg is longest (%.3f m) with the ball of the foot %.2f m ahead" % [c.get(&"source"), rise, total, slope, floor_y, count, float(a.get_meta(&"reach")), longest, pivot])
 
 
 func _rot(a: Animation, bone: String, time: float) -> Quaternion:

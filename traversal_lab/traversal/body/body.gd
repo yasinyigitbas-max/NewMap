@@ -598,13 +598,16 @@ func _update_ground(dt: float) -> void:
 		state = State.STEEP if _is_steep(g) else State.GROUND
 		var err := ground_y - feet.y
 		if stairs < 0:
-			# going down stairs the leading foot comes down a step ahead of him: his height goes by the step his
-			# foot is reaching for, so the hips are already down when it lands (they used to drop late, in a jerk)
-			var ahead := _ray_down(feet + stair_dir * 0.22)
+			# Going down stairs his height goes down the even line of the flight: by the end of a tread he is as
+			# low as the next one, so there is no drop as he crosses the edge. (Until 26 Nov it went by one ray
+			# 0.22 m ahead of him. Over the last few centimetres of a tread that ray already sees the step after
+			# the next, two risers down, which was refused as a ledge: he was drawn back UP about 5 cm at every
+			# step. Measured tick by tick, 26 Nov; Yasin: "looks like systems are fighting over control".)
+			var ahead := _ray_down(feet + stair_dir * stair_tread)
 			if not ahead.is_empty():
-				var lower := (ahead["position"] as Vector3).y
-				if lower < ground_y and ground_y - lower < 0.3:
-					err = lower - feet.y
+				var drop := ground_y - (ahead["position"] as Vector3).y
+				if drop > 0.02 and drop < 0.3:
+					err = ground_y - drop * clampf(_since_edge / stair_tread, 0.0, 1.0) - feet.y
 		var up := RISE_SPEED
 		var down := SINK_SPEED
 		if stairs != 0 and stair_riser > 0.0:

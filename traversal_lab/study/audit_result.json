@@ -23,7 +23,6 @@
     "turn.head_first",
     "turn.head_lead_time",
     "turn.head_angle",
-    "stairs.up_hip",
     "stairs.up_ankle",
     "stairs.down_hip",
     "stairs.down_ankle",
@@ -48,8 +47,8 @@
     "feet.ramp10_up": 1.162,
     "feet.ramp19_down": 1.341,
     "feet.ramp19_up": 0.99,
-    "feet.stairs_down": 11.767,
-    "feet.stairs_up": 1.219,
+    "feet.stairs_down": 2.53,
+    "feet.stairs_up": 0.893,
     "gait.no_double_step": 1.0,
     "gait.switch": 2.1,
     "jump.dip": 0.133,
@@ -108,11 +107,11 @@
     "spot.order": 0.0,
     "spot.steps": 0.0,
     "spot.steps_stage": 0.0,
-    "stairs.down_ankle": 41.84,
-    "stairs.down_hip": 40.215,
+    "stairs.down_ankle": 27.363,
+    "stairs.down_hip": 33.655,
     "stairs.down_time": 0.475,
-    "stairs.up_ankle": 24.352,
-    "stairs.up_hip": 69.503,
+    "stairs.up_ankle": 23.885,
+    "stairs.up_hip": 63.652,
     "stairs.up_time": 0.511,
     "stand.never_still": 1.0,
     "stand.sway_freq": 0.178,
@@ -169,5 +168,5 @@
     "x.steep45_up_feet",
     "x.steep45_down_feet"
   ],
-  "tree": "8e008914955ac62455901e683f9d77859bf36291a21e36b08418105e06dc0261"
+  "tree": "d91350957a0d91644f0ec8b4bb350d5771b0921db1090ec87019f48862802484"
 }

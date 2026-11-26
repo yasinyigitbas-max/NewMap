@@ -26,6 +26,7 @@ const TILT_MOST := 0.35         # radians (20 deg): the foot tilts to the ground
 const NEAR := 0.10              # OURS: the tilt fades out as the foot rises this far off the ground (m)
 const STRAIGHT := 0.995         # the leg is never asked to be longer than this share of its length: the study's
                                 # "never let the target be further than the limb's length minus a small margin"
+const SAME_STEP := 0.10         # OURS: a foothold foreseen this near the last one foreseen is the same step (m)
 const WEIGHT_TIME := 0.12       # NOT in the study: seconds to fade the fitting in on landing and out on leaving the ground
 
 var body: CharacterBody3D
@@ -34,6 +35,12 @@ var pole: Array[Node3D] = []        # which way each knee points
 var goal := [Basis.IDENTITY, Basis.IDENTITY]       # each foot's wanted orientation, skeleton space: read by foot_orient.gd
 var weight := 0.0               # 0 = the clip alone (in the air), 1 = feet fitted
 var clip_slope := 0.0           # a stair clip stands on its own stairs: their rise per metre forward (0 for a flat clip)
+# On stairs (set by character.gd, which knows the stride): where the ball of each foot will next come down, so a
+# swinging foot can be carried evenly from the step it left to the step it is going to.
+var stride_fit := false
+var stride_dir := Vector3.ZERO
+var land_at: Array[Vector3] = [Vector3.ZERO, Vector3.ZERO]
+var hips_fit := 0.0             # the hips' height put right for a clip made on steeper or shallower ground (m; see character.gd)
 var pinning := true
 var grounding := true
 
@@ -53,6 +60,15 @@ var _was_ok := false
 var _g := [0.0, 0.0]
 var _g_ok := false
 var _pelvis := 0.0
+var _swing := [0.0, 0.0]        # 0 = the foot goes by the ground under it, 1 = by the line from step to step
+var _hold_p := [Vector3.ZERO, Vector3.ZERO]     # where the ball of the foot stands (while planted), and its ground
+var _hold_g := [0.0, 0.0]
+var _from_p := [Vector3.ZERO, Vector3.ZERO]     # the foothold it last left
+var _from_g := [0.0, 0.0]
+var _to_p := [Vector3.ZERO, Vector3.ZERO]       # the foothold it is going to
+var _to_g := [0.0, 0.0]
+var _bound := [false, false]    # the swinging foot has a foothold to go to
+var _ride := 0.0                # how far the body's own height is off the line through his footholds (m)
 
 
 func bind(sk: Skeleton3D) -> void:
@@ -119,6 +135,7 @@ func _process_modification_with_delta(dt: float) -> void:
 			_corr[f] = c
 		else:
 			_corr[f] = (_corr[f] as Vector3) * (1.0 - let_go)
+		var was_planted: bool = _planted[f]
 		_planted[f] = planted
 		ball += _corr[f]
 		ankle += _corr[f]
@@ -140,7 +157,40 @@ func _process_modification_with_delta(dt: float) -> void:
 		if not _g_ok or not on_ground:
 			_g[f] = want_g
 		_g[f] = move_toward(_g[f], want_g, FOOT_SPEED * dt)
-		var lift := clampf(float(_g[f]) - feet_y, -REACH, REACH) - clip_slope * ball_t.origin.z
+		# A foot swinging across stairs passes over step edges, where the ground under it jumps a riser at once:
+		# followed, that threw the foot (and the knee) up or down a riser in a tick or two, twice in every swing
+		# (measured 26 Nov: 7 to 10 cm in a tick; Yasin: "knees and steps jump"). While it swings, its ground is
+		# instead the even line from the foothold it left to the one it is going to; it comes back to the ground
+		# really under it as it is planted there, where the two agree.
+		var flat_ball := Vector3(ball.x, 0.0, ball.z)
+		if planted:
+			_hold_p[f] = flat_ball
+			_hold_g[f] = _g[f]
+		elif stride_fit and on_ground:
+			# the foothold it is going to is fixed as it lifts off, and after that only put right by a little: the
+			# stride's own count moves on to the step after as this one is due, a moment before the foot is down
+			var next := Vector3(land_at[f].x, 0.0, land_at[f].z)
+			if was_planted:
+				_from_p[f] = _hold_p[f]
+				_from_g[f] = _hold_g[f]
+				_to_p[f] = next
+				_bound[f] = true
+			elif _bound[f] and next.distance_to(_to_p[f]) < SAME_STEP:
+				_to_p[f] = next
+			if _bound[f]:
+				var at: Vector3 = _to_p[f]
+				var q := PhysicsRayQueryParameters3D.create(Vector3(at.x, feet_y + 2.0 * REACH, at.z), Vector3(at.x, feet_y - 2.0 * REACH, at.z), body.collision_mask, [body.get_rid()])
+				var gl := body.get_world_3d().direct_space_state.intersect_ray(q)
+				_to_g[f] = (gl["position"] as Vector3).y if not gl.is_empty() else float(_from_g[f])
+		if not stride_fit or not on_ground:
+			_bound[f] = false
+		_swing[f] = move_toward(_swing[f], 1.0 if (_bound[f] and not planted) else 0.0, dt / LET_GO)
+		var ground_f: float = _g[f]
+		if float(_swing[f]) > 0.0:
+			var span: Vector3 = (_to_p[f] as Vector3) - (_from_p[f] as Vector3)
+			var u := clampf((flat_ball - (_from_p[f] as Vector3)).dot(span) / maxf(span.length_squared(), 0.0025), 0.0, 1.0)
+			ground_f = lerpf(ground_f, lerpf(_from_g[f], _to_g[f], u), _swing[f])
+		var lift := clampf(ground_f - feet_y, -REACH, REACH) - clip_slope * ball_t.origin.z
 		# tilt the foot to the ground, about the ball of the foot, the more the nearer it is to the ground
 		var near := clampf(1.0 - (ball_h - _toe_rest) / NEAR, 0.0, 1.0)
 		var axis := Vector3.UP.cross(normal)
@@ -173,7 +223,23 @@ func _process_modification_with_delta(dt: float) -> void:
 			want_pelvis = minf(want_pelvis, sqrt(most * most - flat_gap * flat_gap) - (hip.y - (ankle_goal[f] as Vector3).y))
 	_was_ok = true
 	_g_ok = true
-	want_pelvis = maxf(want_pelvis, -HIPS_MOST) if on_ground else 0.0
+	# On stairs the hips go by the even line through his footholds, not by the body's own height, which takes each
+	# step in a ramp and a rest; and by `hips_fit`. Never higher than a planted foot can reach.
+	var off := 0.0
+	if stride_fit and on_ground:
+		var p := [Vector3.ZERO, Vector3.ZERO]
+		var g := [0.0, 0.0]
+		for f in 2:
+			p[f] = _to_p[f] if (not _planted[f] and _bound[f]) else _hold_p[f]
+			g[f] = _to_g[f] if (not _planted[f] and _bound[f]) else _hold_g[f]
+		# (measured along the way he is going: the feet stand apart sideways too. The body is often behind both
+		# footholds: the line is carried on past them, up to a stride either way)
+		var span := ((p[1] as Vector3) - (p[0] as Vector3)).dot(stride_dir)
+		var here := Vector3(body.global_position.x, 0.0, body.global_position.z)
+		var u := clampf((here - (p[0] as Vector3)).dot(stride_dir) / span, -2.0, 3.0) if absf(span) > 0.05 else 0.5
+		off = feet_y - lerpf(g[0], g[1], u)
+	_ride += (off - _ride) * (1.0 - exp(-dt / HIPS_TIME))
+	want_pelvis = maxf(minf(want_pelvis, hips_fit - _ride), -HIPS_MOST) if on_ground else 0.0
 	if want_pelvis < _pelvis:
 		_pelvis = maxf(want_pelvis, _pelvis - HIPS_DOWN * dt)
 	else:
