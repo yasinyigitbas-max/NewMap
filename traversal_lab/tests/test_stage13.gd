@@ -250,8 +250,10 @@ func _run() -> void:
 		else:
 			var want: Vector3 = plan["end"]
 			var end: Vector3 = r["end"]
-			if thin and (absf((r["down"] as Vector3).y) > 0.02 or (r["down"] as Vector3).z > -3.0 - float(s["depth"]) - 0.2):
-				bad = "did not come down on the ground beyond it (he is at height %.2f, %.2f m past its near face)" % [(r["down"] as Vector3).y, -3.0 - (r["down"] as Vector3).z]
+			# (the stick is at rest here, so on something thin he stays on its top, standing: Yasin, 26 Nov, "he couldnt
+			# walk on teh walls, only on beams"; with the stick held he goes on over, the rows above)
+			if thin and (absf(end.y - h) > 0.02 or int(r["end_state"]) != 0 or absf(end.z - (-3.0 - float(s["depth"]) * 0.5)) > 0.05):
+				bad = "is not standing on the middle of its top (at height %.2f, %.2f m past its near face, state %d)" % [end.y, -3.0 - end.z, int(r["end_state"])]
 			elif not thin and (Vector2(end.x - want.x, end.z - want.z).length() > END_WITHIN or absf(end.y - h) > 0.01):
 				bad = "ended %.2f m from where planned, at height %.3f" % [Vector2(end.x - want.x, end.z - want.z).length(), end.y]
 			elif not thin and int(r["end_state"]) != 0:
@@ -263,7 +265,7 @@ func _run() -> void:
 			elif not thin and float(r["feet"]) > FEET_WITHIN:
 				bad = "a foot %.1f cm off the top as he is handed back" % (float(r["feet"]) * 100.0)
 		ok(bad == "", "%s, a jump on the spot 0.40 m from it, the stick at rest: grabbed from the jump and climbed, both hands on it (wrists within %.1f cm for %d ticks), no knee or foot in the wall (%.1f cm), %s%s" % [
-				s["label"], float(r["hand"]) * 100.0, int(r["held"]), float(r["in_wall"]) * 100.0, "off its far side and down on the ground beyond" if thin else "ends on top where measured", "" if bad == "" else " -- " + bad])
+				s["label"], float(r["hand"]) * 100.0, int(r["held"]), float(r["in_wall"]) * 100.0, "stays standing on the middle of its top" if thin else "ends on top where measured", "" if bad == "" else " -- " + bad])
 	for s: Dictionary in [inside[0], inside[inside.size() / 2], inside[inside.size() - 1]]:
 		var a := await go_at(s, 2.6, false)
 		var b := await go_at(s, 2.6, false, float(a["move_from"]) + 0.3)

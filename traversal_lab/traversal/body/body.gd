@@ -112,7 +112,8 @@ const CROUCH_SPEED := 1.46 * 0.5 * 1.1    # 0.80 m/s
 const NARROW_SPEED := 0.75          # the middle of the study's 0.7 to 0.8 m/s
 const NARROW_SPEED_LEAST := 0.40    # NOT in the study (it gives no pace for under 0.10 m, only "slow"): mine
 const STEP_HEIGHT_FOR_NARROW := 0.25    # NOT in the study, mine: ground this far below his is not his surface
-const NARROW_SIDE := [0.12, 0.045]   # NOT in the study, mine: no ground this far to BOTH sides of him = under 0.25 m wide, under 0.10 m wide
+const NARROW_SIDE := [0.115, 0.04]
+const NARROW_STAY := 0.04          # NOT in the study, mine: see _narrow_now   # NOT in the study, mine: no ground this far to BOTH sides of him = under 0.25 m wide, under 0.10 m wide
 const CROUCH_HEIGHT := 1.15         # feet to the top of the crouched body: under the course's 1.2 m overhang. His
                                     # crouch takes hold the top of the head under this (measured, see character.gd)
 const STAND_ROOM := 0.03            # NOT in the study: the standing shape is tried this much thinner than it is, so
@@ -175,6 +176,7 @@ var move_hand: Array = []       # a move that puts a hand on something: [0 left 
 var move_soft := 0.0            # 0..1: how much less than the clip he folds on landing
 var _wish_was_moving := false
 var narrow := 0                 # he is on something narrow: 0 = no, 1 = under 0.25 m wide, 2 = under 0.10 m
+var stick_held := false         # the stick is off its rest (read by the moves that end differently when it is let go)
 var run_asked := false          # the run key is held (he may still be held to a slower pace, on something narrow)
 var crouched := false           # he is crouched: the smaller capsule, half walking speed, no run, no jump
 var _col: CollisionShape3D
@@ -344,8 +346,12 @@ func _narrow_now() -> int:
 	side = Vector3(side.x, 0.0, side.z).normalized()
 	var out := 0
 	for k in 2:
+		# (once he is taken as on something narrow he stays so until there is ground a little further out than it took
+		# to begin: at one distance, a surface of just that width flickered between the two walks as he drifted a
+		# centimetre. Yasin, 26 Nov: "the beam animation is extremely juttery")
+		var reach := float(NARROW_SIDE[k]) + (NARROW_STAY if narrow > k else 0.0)
 		for way: float in [1.0, -1.0]:
-			var hit := _ray_down(global_position + side * (way * float(NARROW_SIDE[k])))
+			var hit := _ray_down(global_position + side * (way * reach))
 			if not hit.is_empty() and (hit["position"] as Vector3).y > global_position.y - STEP_HEIGHT_FOR_NARROW:
 				return out
 		out = k + 1
@@ -398,6 +404,7 @@ func _physics_process(dt: float) -> void:
 	var s: Dictionary = tape.call(&"sample") if tape else {}
 	if move_path.is_valid():
 		# (the stick is read and not obeyed: "cancelling is impossible mid-move")
+		stick_held = Vector2(float(s.get("mx", 0.0)), float(s.get("mz", 0.0))).length() > 0.2
 		_run_move(dt)
 		return
 	var stick := Vector3(float(s.get("mx", 0.0)), 0.0, float(s.get("mz", 0.0)))
@@ -413,6 +420,7 @@ func _physics_process(dt: float) -> void:
 	elif crouched and (not want_low or narrow > 0) and can_stand():
 		_set_crouched(false)
 	run_asked = bool(s.get("run", false))
+	stick_held = stick.length() > 0.2
 	_wish = stick.rotated(Vector3.UP, float(s.get("yaw", 0.0))) * (CROUCH_SPEED if crouched else (RUN if bool(s.get("run", false)) else WALK))
 	# on something narrow he goes no faster than the study's pace for it, whatever is asked
 	if narrow > 0 and _wish.length() > (NARROW_SPEED if narrow == 1 else NARROW_SPEED_LEAST):

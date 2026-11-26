@@ -266,6 +266,8 @@ const GAP_ON := 0.15                # NOT in the study, mine: ... and comes down
 # (the study: "Push Up To Idle 3.1 s from face down"): from lying face down, the same way round, to standing.
 # He is turned to the side that has room for him first, since he goes over forward.
 const BALANCE_AFTER := 10.0         # his word: seconds without moving
+const HARD_FALL_FROM := 3.1         # his word: from lower than this he lands hard on his feet; from this height, the fall
+const BALANCE_OUT := 0.70           # NOT in the study, mine: how far to the side he comes down on his feet (m)
 const BALANCE := {"input": "balance_fall", "res": "res://traversal/character/clips/Falling_From_Losing_Balance.res",
 		"from": 2.60,               # NOT in the study, mine: taken up here: 1.6 s of wobbling, then the fall
 		"over": 4.20, "end": 6.60, "high": 1.13,
@@ -1172,6 +1174,20 @@ func _over(t: float) -> Dictionary:
 		if not p.has("a_done"):
 			p["a_done"] = true
 			p["from"] = body.global_position        # the step off begins where the climb has brought him
+			# On top of it: with the stick let go he stays there, standing on it (a wall top is walked like a beam,
+			# stage 17); with it still held he goes on over, as before. Yasin, 26 Nov: "he couldnt walk on teh
+			# walls, only on beams".
+			p["stay"] = not bool(body.get(&"stick_held"))
+		if bool(p["stay"]):
+			var cs := minf(from_t + t, float(MANTLE["exit"]))
+			var mid_s: Vector3 = p["mid"]
+			var here_s := Vector3(mid_s.x, _climb_y(p, cs, t), mid_s.z)
+			var done_s := cs >= float(MANTLE["exit"])
+			var out_s := {"done": done_s, "pos": mid_s if done_s else here_s, "clip_t": cs, "clip": String(OVER["input"]), "air": false,
+					"free": false, "base": (float(p["ground"]) + float(p["top"]) - here_s.y), "yaw": float(p["yaw1"])}
+			if done_s:
+				out_s["exit"] = Vector3.ZERO
+			return out_s
 		var r := _step_off(t - (top_t - from_t))
 		r["clip"] = String(MOVES["walk"]["input"])
 		return r
@@ -1430,7 +1446,9 @@ func _try_grab(wish: Vector3, rec: Dictionary, air := false) -> bool:
 	if not thin and float(rec["depth"]) < inward + float(body.get(&"RADIUS")):
 		refused = "the top is not deep enough"
 		return false
-	var end := feet + m * (here + inward)
+	# (onto something thin he ends on the middle of its top: off the middle he was not on it as on something narrow)
+	var onto := float(rec["depth"]) * 0.5 if thin else inward
+	var end := feet + m * (here + onto)
 	end.y = ground + top
 	if not thin and not bool(detector.call(&"_fits", end, float(body.get(&"CROUCH_HEIGHT")))):
 		refused = "no room where he would end"
@@ -1448,7 +1466,7 @@ func _try_grab(wish: Vector3, rec: Dictionary, air := false) -> bool:
 	var on_top := feet + m * (here + WRIST_IN)
 	on_top.y = ground + top + WRIST_OVER
 	_plan = {"key": "grab", "from": Vector3(feet.x, ground, feet.z), "hang": hang, "end": end, "top": top, "ground": ground, "m": m,
-			"yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z), "exit_speed": run_v, "run_d": run_d if run_v > 0.0 else 0.0, "hand": 2,
+			"yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z), "exit_speed": run_v, "run_d": run_d if run_v > 0.0 else 0.0, "hand": 2, "onto_more": onto - inward,
 			# the body's height in the hang: his wrists on the top
 			"hang_y": ground + top + WRIST_OVER - float(GRAB["wrist"]) + float(GRAB["jump_by"]),
 			"from_t": float(GRAB["off"]) + 0.08 if air else 0.0,
@@ -1493,13 +1511,15 @@ func _grab(t: float) -> Dictionary:
 		var out_by := by + WRIST_OVER - float(GRAB["climb_wrist"])      # how far the clip's own start and end disagree about its ledge
 		var run_d := float(p.get("run_d", 0.0))
 		var gather := clampf((ct - float(RUN_OUT["grab"][0])) / (float(RUN_OUT["grab"][1]) - float(RUN_OUT["grab"][0])), 0.0, 1.0)
-		var pos := hang + m * (_at(_g_fwd2, ct) + run_d * gather * gather)
+		var pos := hang + m * (_at(_g_fwd2, ct) + run_d * gather * gather + float(p.get("onto_more", 0.0)) * smoothstep(float(GRAB["feet_on"]), float(GRAB["exit"]), ct))
 		pos.y = ground + float(p["top"]) - (by - out_by) * (1.0 - rise)
 		# (from when his feet come down on the top they are fitted to it, as in the mantle)
 		var feet_down := ct >= float(GRAB["feet_on"])
 		out.merge({"pos": pos, "clip_t": ct, "clip": String(GRAB["climb"]), "free": not feet_down, "base": (ground + float(p["top"]) - pos.y) if feet_down else 0.0}, true)
 		hold = clampf((float(GRAB["feet_on"]) - ct) / HAND_FADE + 1.0, 0.0, 1.0)
-		if ct >= float(GRAB["exit"]) and bool(p.get("over", false)):
+		if ct >= float(GRAB["exit"]) and bool(p.get("over", false)) and not p.has("stay"):
+			p["stay"] = not bool(body.get(&"stick_held"))       # (as the climb over: let go of the stick, he stays on top)
+		if ct >= float(GRAB["exit"]) and bool(p.get("over", false)) and not bool(p["stay"]):
 			# something thin: the step off its far side (the first part of the stage 8 take), then the fall is the body's
 			var mv: Dictionary = MOVES["walk"]
 			var span := float(mv["leaves"]) - float(mv["from"])
@@ -1843,6 +1863,24 @@ func _try_balance_fall() -> bool:
 	var face := -body.global_transform.basis.z
 	face = Vector3(face.x, 0.0, face.z).normalized()
 	var last := _b_xz[_b_xz.size() - 1]
+	# from under 3.1 m: off the side onto his feet, a hard landing 0.7 m out (found first, as it needs less room)
+	for way: float in [1.0, -1.0]:
+		var m0 := face.cross(Vector3.UP).normalized() * way
+		var e0 := feet + m0 * BALANCE_OUT
+		var g0: Dictionary = body.get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(e0 + Vector3(0.0, 0.5, 0.0), e0 - Vector3(0.0, 6.0, 0.0), body.collision_mask, [body.get_rid()]))
+		if g0.is_empty():
+			continue
+		var gy0 := (g0["position"] as Vector3).y
+		if gy0 > feet.y - 0.05 or feet.y - gy0 >= HARD_FALL_FROM or not bool(detector.call(&"_fits", Vector3(e0.x, gy0, e0.z), float(body.get(&"HEIGHT")))):
+			continue
+		refused = ""
+		_plan = {"key": "balance_land", "on_feet": true, "from": feet, "end": Vector3(e0.x, gy0, e0.z), "m": m0, "top_y": feet.y, "land_y": gy0,
+				"yaw0": body.rotation.y, "yaw1": atan2(-m0.x, -m0.z), "exit_speed": 0.0}
+		plays += 1
+		record = {}
+		_up_record = {}
+		body.call(&"begin_move", _balance_fall, String(BALANCE["input"]))
+		return true
 	# to the side that has ground and room where he would lie (he goes over forward, so he is turned to it first);
 	# the take goes 3.4 m on: where there is no room for that, less far
 	for reach: float in [1.0, 0.8, 0.65]:
@@ -1881,6 +1919,29 @@ func _balance_fall(t: float) -> Dictionary:
 	var from_t := float(BALANCE["from"])
 	var fall_len := float(BALANCE["end"]) - from_t
 	var m: Vector3 = p["m"]
+	if bool(p.get("on_feet", false)):
+		# From under 3.1 m he does not go down on his face: he wobbles, drops off the side and lands hard on his feet
+		# (Yasin, 26 Nov: "make him hard land instead of a hard fall when falling from lower than 3.1 meters and if
+		# above hard fall"). The wobble of the same take, then his own hard landing take, the body falling for as
+		# long as the height takes.
+		var wob := float(BALANCE["over"]) - from_t
+		if t < wob:
+			return {"done": false, "pos": p["from"], "clip_t": from_t + t, "air": false, "free": true,
+					"yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), smoothstep(0.0, 1.0, t))}
+		var tau := t - wob
+		var drop_h := float(p["top_y"]) - float(p["land_y"])
+		var t_air := sqrt(2.0 * drop_h / float(body.get(&"GRAVITY")))
+		var pos := (p["from"] as Vector3).lerp(p["end"], smoothstep(0.0, maxf(t_air, 0.25), tau))
+		pos.y = maxf(float(p["land_y"]), float(p["top_y"]) - 0.5 * float(body.get(&"GRAVITY")) * tau * tau)
+		var down := tau >= t_air
+		var ct := maxf(float(LAND_HARD["touch"]) - (t_air - tau), 0.0) if not down else minf(float(LAND_HARD["touch"]) + (tau - t_air), float(LAND_HARD["exit"]))
+		var fin := down and ct >= float(LAND_HARD["exit"])
+		var o := {"done": fin, "pos": pos, "clip": String(LAND_HARD["input"]), "clip_t": ct, "air": not down, "free": not down, "landed": down,
+				"landing": "heavy", "yaw": float(p["yaw1"])}
+		if fin:
+			o["pos"] = p["end"]
+			o["exit"] = Vector3.ZERO
+		return o
 	if t < fall_len:
 		# wobbling, turned to the side he will go over; then over and down: forward by the take's own travel, down by
 		# the take's share of its fall, set to the height that is really there
