@@ -95,9 +95,11 @@ const HEAD_OVER_JOINT := 0.23   # the top of his head above his head joint: stan
 const CHANGE_PACE := [0.8, 1.3]   # NOT in the study: a change-of-gait clip is taken up where its own pace is within these shares of his
 const TURN_PACE := [0.6, 1.5]     # NOT in the study: a turn clip runs at between these shares of its own pace
 const TURN_BIG_DEG := 120.0     # NOT in the study: a turn on the spot of more than this is shown with the 180 clip, less with the 90
-# The 180 on the spot from standing is a Kimodo take of a man turning round in steps (Yasin, 26 Nov: "THERE WASNT ANY
-# STANDING 180 TURNS, ADD THEM"). Mixamo's Walking Turn 180, used until then, spins round in one second on the balls
-# of the feet; the study: "Turning 180 degrees on the spot takes about 3 to 4 steps".
+# The 180 on the spot from standing: Mixamo's Walking Turn 180, which spins round in one second on the balls of the
+# feet. DEPARTS FROM THE STUDY AT YASIN'S WORD. The study: "Turning 180 degrees on the spot takes about 3 to 4 steps".
+# A Kimodo take that turns round in steps over 1.8 s was put in for it on 26 Nov (trav31); he, the same day:
+# "character doesnt turn around without stepping to some direction and slowly arching back, it should turn around
+# without taking any steps". The stepped take is still in the library (turn_180_step), not used.
 # Starting and stopping on the very steep ground, going down (Yasin, 26 Nov: "start slope climb stop slope climb
 # needed. fit what we have into here"): the first 1.7 s and the last 1.9 s of his own long downhill take, whose
 # middle is the loop: he eases off from standing, and comes to rest. Played as the flat starts and stops are, by the
@@ -536,7 +538,10 @@ func _physics_process(dt: float) -> void:
 					var back := _sub == "crouch"
 					_sub = "crouch"
 					_sub_in = "crouch_down" if low else "crouch_up"
-					_low_w = 1.0 if low else 0.0
+					# (the set he is leaving stays under the clip until the clip is done. Changed at once, as it was until
+					# 26 Nov, the clip was faded in from the other set: going down he dropped, came back up and went
+					# down again. Yasin: "both standing still to crouch and crouching to standng are broken".)
+					_low_w = 0.0 if low else 1.0
 					# (turned round half way: the other clip from as far through as this one had left)
 					_show(_sub_in, clampf(_clip_length(_sub_in) - _act_t, 0.0, _clip_length(_sub_in) - 0.1) if back else 0.0)
 				elif _sub != "" or (ACTS.has(_act) and not _stair_on and not _steep_on):
@@ -558,6 +563,8 @@ func _physics_process(dt: float) -> void:
 			if _sub == "crouch":
 				_act_t += dt
 				if _act_t >= _clip_length(_sub_in) - 0.05 or speed > 0.3 or in_air:
+					if _act_t >= _clip_length(_sub_in) - 0.05:
+						_low_w = 1.0 if low else 0.0
 					_sub = ""
 					_show("ground", 0.0)
 				else:
@@ -573,7 +580,7 @@ func _physics_process(dt: float) -> void:
 				if spot != 0.0:
 					# a turn on the spot: the clip for its size, or the one out of a run; of that clip and its mirror
 					# image, the one that turns the way he is turning
-					var kind := "turn_180_run" if bool(body.get(&"spot_run")) else ("turn_180_step" if absf(spot) > deg_to_rad(TURN_BIG_DEG) else "turn_90")
+					var kind := "turn_180_run" if bool(body.get(&"spot_run")) else ("turn_180_walk" if absf(spot) > deg_to_rad(TURN_BIG_DEG) else "turn_90")
 					var base: PackedFloat32Array = _yaw[kind]
 					_sub = "turn"
 					_sub_in = kind if (base[base.size() - 1] > 0.0) == (spot > 0.0) else kind + "_m"
@@ -868,6 +875,10 @@ func _turn(dt: float, wish: float) -> void:
 	var total := float(body.get(&"spot_total"))
 	if total == 0.0:
 		# the body has finished turning: what is left of the clip is let go, and he sets off (or stands)
+		if _sub_in.begins_with("turn_180_run"):
+			# out of the plant-and-turn he is running: the run loop, not the start from standing (Yasin, 26 Nov:
+			# "dont play start running after 180 running turn, just continue the running animation")
+			_moving = 1.0
 		_to_loops()
 		return
 	var table: PackedFloat32Array = _yaw[_sub_in]

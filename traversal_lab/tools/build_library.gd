@@ -82,6 +82,9 @@ const FIT := {"KM_Walk": {"pelvis": 7.7, "knee": [20.0, 0.7], "ankle": [1.0, 0.8
 		# face: the share of the hips' turn to the side that is kept. lean: the share of the hips' tip forward that
 		# is kept (the trunk comes up with them; the thighs are turned back by as much, so the legs stay).
 		"Idle_To_Sprint": {"level": 1.0, "face": 0.0, "lean": 0.6}, "KM_Stop_Walk": {"level": 1.0},
+		# Yasin, 26 Nov: "walking to start run is still nodding the head". Measured: in the walk-to-run take the head
+		# tips 43 degrees down.
+		"KM_Walk_To_Run": {"level": 1.0},
 		"KM_Run": {"pelvis": -1.6, "knee": [60.0, 0.85], "ankle": [1.0, 0.8], "arms": 0.15},
 		"Running": {"pelvis": -1.6, "knee": [60.0, 0.85], "ankle": [1.0, 0.8], "arms": 0.15}}
 const FOOT_UP_SIGN := 1.0       # which way round the foot bone's side-to-side line counts as toes up (found by trying both)

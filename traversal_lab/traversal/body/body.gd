@@ -68,7 +68,9 @@ const SPOT_END_DEG := 15.0      # NOT in the study
 # and "Young adults take 115 to 120 steps a minute": three and a half steps at 117.5 a minute are 1.79 s for the 180
 # degrees. (Putting the two figures together is OURS. Until 26 Nov he spun round at the walking turn rate, 180
 # degrees in one second, with no steps: Yasin, "THERE WASNT ANY STANDING 180 TURNS".)
-const SPOT_RATE := PI / (3.5 * 60.0 / 117.5)    # rad/s
+const SPOT_RATE := PI / (3.5 * 60.0 / 117.5)    # rad/s. NOT USED since Yasin's word of 26 Nov (see character.gd,
+                                                # TURN_BIG_DEG): he turns at the walking turn rate again, with no steps
+const RUN_OUT := 2.5            # m/s: the speed he comes out of the plant-and-turn at
 # Stairs are their own movement: "stairs are climbed at about half a second per step: 0.51 s up and 0.47 s down".
 # The study has nothing on running stairs (its notes: "two-steps-at-a-time mechanics, running on stairs: not
 # found"), so the running figures are OURS, set 26 Nov at Yasin's word ("we need to set them ourselves as many
@@ -418,11 +420,17 @@ func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 		# turning on the spot, or the plant-and-turn that ends a brake from a run: he turns, and what speed he
 		# still has is shed
 		if absf(off) > deg_to_rad(SPOT_END_DEG):
-			var rate := TURN_RATE_RUN if spot_run else SPOT_RATE
+			var rate := TURN_RATE_RUN if spot_run else lerpf(TURN_RATE_WALK, TURN_RATE_RUN, fast)
 			rotation.y += signf(off) * minf(rate * dt, absf(off))
 			spot_left = wrapf(atan2(-wdir.x, -wdir.z) - rotation.y, -PI, PI)
 			return v.normalized() * maxf(speed - STOP_RUN * dt, 0.0) if speed > 0.0001 else Vector3.ZERO
 		spot_total = 0.0
+		if spot_run and want > WALK + 0.1:
+			# out of the plant-and-turn he is running again, the new way (Yasin, 26 Nov: "dont play start running
+			# after 180 running turn, just continue the running animation"): he comes out at the slowest running
+			# the study measured ("Runners on a treadmill at 2.5, 3.5 and 4.5 m/s") and builds up from there
+			spot_run = false
+			return wdir * RUN_OUT
 		if speed >= 0.3:
 			# (he has planted and turned: what is left of the old way's speed ends here. Left in, it turned him back
 			# toward the old way for a tick and the turn began again.)

@@ -10,6 +10,7 @@
     "spot.steps",
     "spot.steps_stage",
     "spot.order",
+    "spot.head_peak",
     "turn.head_first",
     "turn.head_lead_time",
     "stairs.up_ankle",
@@ -58,14 +59,14 @@
     "limit.low_fwd": 41.797,
     "limit.low_side": 20.28,
     "limit.low_turn": 28.779,
-    "limit.mid_back": 1.943,
+    "limit.mid_back": 4.541,
     "limit.mid_fwd": 34.213,
     "limit.mid_side": 18.349,
-    "limit.mid_turn": 13.393,
+    "limit.mid_turn": 16.641,
     "limit.neck_back": 59.652,
     "limit.neck_fwd": 26.101,
-    "limit.neck_side": 15.662,
-    "limit.neck_turn": 64.473,
+    "limit.neck_side": 14.752,
+    "limit.neck_turn": 29.385,
     "limit.shoulder": 138.052,
     "look.behind": 1.0,
     "look.head_most": 9.381,
@@ -89,10 +90,10 @@
     "slope.down_trunk": 1.0,
     "slope.up_legs": 1.0,
     "slope.up_trunk": 1.0,
-    "spot.head_peak": 250.63,
+    "spot.head_peak": 402.276,
     "spot.order": 0.0,
-    "spot.steps": 1.0,
-    "spot.steps_stage": 1.0,
+    "spot.steps": 0.0,
+    "spot.steps_stage": 0.0,
     "stairs.down_ankle": 27.422,
     "stairs.down_hip": 33.662,
     "stairs.down_time": 0.475,
@@ -152,5 +153,5 @@
   "outside_off": [
     "x.steep45_up_feet"
   ],
-  "tree": "07b2ce2b988b4b3ec5a0d9b6a502e541559fc8e00ce482f1be3e5a7bb9c5b848"
+  "tree": "bb64368ac534b65a7c26c197ebeba9844f720a2652f12608f7b2255e22350eb8"
 }

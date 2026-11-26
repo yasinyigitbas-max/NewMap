@@ -17,7 +17,7 @@ var tape: Node
 var stations: Array
 
 
-const TURN_ROUND_MORE := 0.8    # seconds: see test_kerbs_and_stairs
+const TURN_ROUND_MORE := 0.0    # seconds: see test_kerbs_and_stairs. Back to nothing: the turn takes 1.0 s again
 
 func ok(cond: bool, what: String) -> void:
 	if not cond:
