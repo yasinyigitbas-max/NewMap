@@ -634,7 +634,7 @@ func _gait_for(v: float) -> Vector2:
 	var lo := SWITCH - SWITCH_BAND
 	var hi := SWITCH + SWITCH_BAND
 	if v <= lo:
-		return Vector2(0.0, maxf(float(_stride[WALK]), WALK_STRIDE) / float(_length[WALK]))
+		return Vector2(0.0, WALK_STRIDE / float(_length[WALK]))
 	if v < hi:
 		var w := (v - lo) / (hi - lo)
 		return Vector2(w, lerpf(_stride[WALK], _stride[JOG], w) / lerpf(_length[WALK], _length[JOG], w))

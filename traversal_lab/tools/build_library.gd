@@ -41,7 +41,21 @@ const STAIRS := ["Ascending_Stairs", "KM_Stairs_Run_Up_D", "KM_Stairs_Walk_Down"
 # Steep ground (outside the study, kept at Yasin's word): his own two Kimodo takes, which climb and descend their own
 # slopes. Treated as the stair clips are: the climb out of the hips, the slope of the take's own ground noted.
 const SLOPES := ["KM_Climb_Hard", "KMY_Down_Hands_Balance_Long"]
-const HIPS := {"KM_Walk": [3.0 / 6.15, 8.5 / 12.0, 12.0 / 8.2, 4.2 / 5.1, 4.6 / 6.4]}
+# (The walk take in use since 26 Nov, Kimodo walk_b_s1, meets the study's pelvis tilt, side drop,
+# rotation and sway as it is; only its rise and fall, 6.2 cm, is brought into the study's 2.7 to 4.8 cm.)
+# A take edited a little to meet the study's joint lines (Yasin, 26 Nov: "why dont you spend any effort on making the
+# clips fit into the rules by editing the clips a bit"). Each figure is study figure against what the audit measured
+# on the take; see _fit.
+#   pelvis: degrees the pelvis is tipped back, the trunk and legs left where they were
+#   knee: [from, share]: knee bend beyond `from` degrees is kept at this share
+#   ankle: [toes-up share, toes-down share] of the foot's own bend at the ankle
+#   toe: share of the toes' bend
+# KM_Walk (Kimodo take walk_b_s1), measured by the audit before these edits: hip flexion 35.2 and extension 4.6
+# degrees (the study: 25 and 10), knee 52.9 at toe-off and 67.2 in swing (40 and 60), ankle 25.9 toes-down (20), big
+# toe 31.1 (at least 35). After them: 27.4 and 14.3; 43.0 and 54.9; 19.8; 37.1.
+const FIT := {"KM_Walk": {"pelvis": 7.7, "knee": [20.0, 0.7], "ankle": [1.0, 0.8], "toe": 1.2}}
+const FOOT_UP_SIGN := 1.0       # which way round the foot bone's side-to-side line counts as toes up (found by trying both)
+const HIPS := {"KM_Walk": [1.0, 1.0, 1.0, 4.2 / 6.2, 1.0]}
 
 
 func _initialize() -> void:
@@ -69,6 +83,8 @@ func _initialize() -> void:
 	for n in names:
 		var c: Resource = load(DIR + n + ".res")
 		var made := _animation(c, n, stand.y)
+		if FIT.has(n) and not OS.get_cmdline_user_args().has("--raw-hips"):
+			_fit(made, FIT[n], sk)
 		if STAIRS.has(n) or SLOPES.has(n):
 			_stairs(made, c, sk)
 		lib.add_animation(n, made)
@@ -182,6 +198,65 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 					q = (lean_q * turn * (was * Quaternion(Vector3.UP, yw)).inverse() * q).normalized()
 			a.rotation_track_insert_key(tracks[b], time, q)
 	return a
+
+
+## Small edits to a take's joint curves (see FIT). Every edit is made to the bone's own turn from its standing pose.
+func _fit(a: Animation, how: Dictionary, sk: Skeleton3D) -> void:
+	var fit := how.duplicate(true)
+	for arg in OS.get_cmdline_user_args():       # for trying figures: -- --fit=pelvis:6,knee:20:0.8,ankle:0.6:0.8,toe:1.2
+		if arg.begins_with("--fit="):
+			for part in arg.trim_prefix("--fit=").split(","):
+				var v := part.split(":")
+				if v.size() == 2:
+					fit[v[0]] = float(v[1])
+				elif v.size() == 3:
+					fit[v[0]] = [float(v[1]), float(v[2])]
+	var tr := func(bone: String) -> int: return a.find_track(NodePath("%s:mixamorig_%s" % [SKEL, bone]), Animation.TYPE_ROTATION_3D)
+	var rest := func(bone: String) -> Quaternion: return sk.get_bone_rest(sk.find_bone("mixamorig_" + bone)).basis.get_rotation_quaternion()
+	var hips_t: int = tr.call("Hips")
+	var back := deg_to_rad(float(fit["pelvis"]))
+	for k in a.track_get_key_count(hips_t):
+		var time := a.track_get_key_time(hips_t, k)
+		var q: Quaternion = a.track_get_key_value(hips_t, k)
+		if back != 0.0:
+			# tipped back about its own side-to-side line; what hangs from it (spine, both thighs) is turned the
+			# other way by as much, so the trunk and the legs stay where the take has them
+			var side_axis := (Quaternion(Vector3.UP, _yaw_of(q)) * Vector3(1.0, 0.0, 0.0)).normalized()
+			var q2 := (Quaternion(side_axis, -back) * q).normalized()
+			a.track_set_key_value(hips_t, k, q2)
+			for child: String in ["Spine", "LeftUpLeg", "RightUpLeg"]:
+				var ct: int = tr.call(child)
+				var kk := a.track_find_key(ct, time, Animation.FIND_MODE_APPROX)
+				a.track_set_key_value(ct, kk, (q2.inverse() * q * (a.track_get_key_value(ct, kk) as Quaternion)).normalized())
+	for side: String in ["Left", "Right"]:
+		var knee: Array = fit["knee"]
+		var kt: int = tr.call(side + "Leg")
+		var kr: Quaternion = rest.call(side + "Leg")
+		for k in a.track_get_key_count(kt):
+			var rel := (kr.inverse() * (a.track_get_key_value(kt, k) as Quaternion)).normalized()
+			var bend := rad_to_deg(2.0 * acos(clampf(absf(rel.w), 0.0, 1.0)))
+			if bend > float(knee[0]) and float(knee[1]) != 1.0:
+				var want := float(knee[0]) + (bend - float(knee[0])) * float(knee[1])
+				a.track_set_key_value(kt, k, (kr * Quaternion.IDENTITY.slerp(rel, want / bend)).normalized())
+		var ankle: Array = fit["ankle"]
+		var ft: int = tr.call(side + "Foot")
+		var fr: Quaternion = rest.call(side + "Foot")
+		for k in a.track_get_key_count(ft):
+			var rel := (fr.inverse() * (a.track_get_key_value(ft, k) as Quaternion)).normalized()
+			if rel.w < 0.0:
+				rel = -rel
+			# toes up or toes down: which way the foot is turned about its own side-to-side line
+			var share := float(ankle[0]) if rel.x * FOOT_UP_SIGN > 0.0 else float(ankle[1])
+			if share != 1.0:
+				a.track_set_key_value(ft, k, (fr * Quaternion.IDENTITY.slerp(rel, share)).normalized())
+		var tt: int = tr.call(side + "ToeBase")
+		var trr: Quaternion = rest.call(side + "ToeBase")
+		if float(fit["toe"]) != 1.0:
+			for k in a.track_get_key_count(tt):
+				var rel := (trr.inverse() * (a.track_get_key_value(tt, k) as Quaternion)).normalized()
+				if rel.w < 0.0:
+					rel = -rel
+				a.track_set_key_value(tt, k, (trr * Quaternion.IDENTITY.slerp(rel, float(fit["toe"]))).normalized())
 
 
 ## How far a rotation turns about the upright (radians).
