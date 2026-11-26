@@ -193,6 +193,12 @@ const WRIST_IN := 0.02              # NOT in the study, mine: how far in from th
 const GRIP_OUT := 0.10              # NOT in the study, mine: how far out from the face the wrist is in the hang (m)
 const GRIP_TURN := [0.10, 0.40]     # NOT in the study, mine: the hands come in onto the top between these moments of the climb
 const GRAB_NEAR := 0.60             # NOT in the study: it is begun from within this of the wall's face (m)
+# At a run the climbs do not end standing: he is handed back running, at the pace he came in at (Yasin, 26 Nov: "do
+# the running alternatives too ... most of the players will run from start to end in the game"; the study has
+# Rockstar's climbs end in "a shared pose on top of the ledge that branches to stand, walk, run"). The take is left
+# as his feet are down on the top, and over the last part of it the body is brought up to that pace.
+const RUN_OUT := {"mantle": [2.00, 2.50],       # NOT in the study, mine: of the mantle's take: he gathers pace from, and is handed back at (s)
+		"grab": [0.85, 1.10]}                   # ... and of the climb from the hang
 const OVER_BACK := 0.48             # NOT in the study, found in the lab: he sinks for the jump this far from the wall's face
                                     # (nearer, his knees were in the wall). The study: "slide and turn the body over a
                                     # short fixed time so it starts at the clip's native distance from the wall"
@@ -1069,13 +1075,20 @@ func _try_mantle(v: Vector3, wish: Vector3, rec: Dictionary, air_ct := -1.0) -> 
 	if air_ct < 0.0 and not moving and here < OVER_BACK and not bool(detector.call(&"_fits", back, float(body.get(&"HEIGHT")))):
 		refused = "no room behind him to jump up from"
 		return false
+	# at a run, where the top has room for it: out at a run
+	var run_v := v.length() if (air_ct < 0.0 and wish.length() > float(body.get(&"WALK")) + 0.1 and v.length() > RUN_FROM) else 0.0
+	var run_d := run_v * (float(RUN_OUT["mantle"][1]) - float(RUN_OUT["mantle"][0])) * 0.5
+	if run_v > 0.0 and (float(rec["depth"]) < inward + run_d + float(body.get(&"RADIUS")) + 0.5 or not bool(detector.call(&"_fits", end + m * run_d, float(body.get(&"HEIGHT"))))):
+		run_v = 0.0
+	if run_v > 0.0:
+		end += m * run_d
 	refused = ""
 	var left := Vector3.UP.cross(m).normalized()
 	var on_top := feet + m * (here + 0.04)                      # 4 cm in from its edge
 	on_top.y = ground + top + PALM
 	_plan = {"key": "mantle", "moving": moving, "a_from": Vector3(feet.x, ground, feet.z), "a_back": back, "a_yaw0": body.rotation.y,
 			"end": end, "top": top, "ground": ground, "m": m, "yaw1": atan2(-m.x, -m.z), "here": here, "from_t": from_t,
-			"exit_speed": 0.0, "hand": 2, "hands_on": hands_on,
+			"exit_speed": run_v, "run_d": run_d if run_v > 0.0 else 0.0, "hand": 2, "hands_on": hands_on,
 			"hands_at": [on_top + left * float(OVER["hand_side"]), on_top - left * float(OVER["hand_side"])]}
 	if air_ct >= 0.0:
 		_plan.merge({"air": true, "y_from": feet.y})
@@ -1090,10 +1103,11 @@ func _mantle(t: float) -> Dictionary:
 	var p := _plan
 	var m: Vector3 = p["m"]
 	var from_t := float(p["from_t"])
-	var exit_t := float(MANTLE["exit"])
+	var run_d := float(p.get("run_d", 0.0))
+	var exit_t := float(RUN_OUT["mantle"][1]) if run_d > 0.0 else float(MANTLE["exit"])
 	var ct := minf(from_t + t, exit_t)
 	var a: Vector3 = p["a_from"]
-	var end: Vector3 = p["end"]
+	var end: Vector3 = (p["end"] as Vector3) - m * run_d       # where the take itself brings him
 	var pos: Vector3
 	var on := float(p["hands_on"])
 	var back: Vector3 = p["a_back"]
@@ -1105,7 +1119,14 @@ func _mantle(t: float) -> Dictionary:
 		back = a.lerp(back, smoothstep(0.0, 0.2, t))
 	# up there, then in over the top once his knees and feet are above it (as the climb over)
 	pos = back.lerp(end, smoothstep(float(MANTLE["across"][0]), float(MANTLE["across"][1]), ct))
+	if run_d > 0.0:
+		var gather := clampf((ct - float(RUN_OUT["mantle"][0])) / (float(RUN_OUT["mantle"][1]) - float(RUN_OUT["mantle"][0])), 0.0, 1.0)
+		pos += m * (run_d * gather * gather)
 	pos.y = _climb_y(p, ct, t)
+	if run_d > 0.0:
+		# (left before he has stood up: the body is brought the rest of the way to the top as he gathers pace)
+		var g2 := clampf((ct - float(RUN_OUT["mantle"][0])) / (float(RUN_OUT["mantle"][1]) - float(RUN_OUT["mantle"][0])), 0.0, 1.0)
+		pos.y = lerpf(pos.y, float(p["ground"]) + float(p["top"]), g2 * g2)
 	var hold := clampf(minf((ct - on) / HAND_FADE + 1.0, (float(OVER["hands_off"]) - ct) / HAND_FADE + 1.0), 0.0, 1.0)
 	hold = hold * hold * (3.0 - 2.0 * hold)
 	var out := {"done": ct >= exit_t, "pos": pos, "clip_t": ct, "air": false,
@@ -1113,8 +1134,8 @@ func _mantle(t: float) -> Dictionary:
 			"yaw": lerp_angle(float(p["a_yaw0"]), float(p["yaw1"]), clampf(t / 0.2, 0.0, 1.0)),
 			"hand": [[0, (p["hands_at"] as Array)[0], hold], [1, (p["hands_at"] as Array)[1], hold]]}
 	if ct >= exit_t:
-		out["pos"] = end
-		out["exit"] = Vector3.ZERO
+		out["pos"] = p["end"]
+		out["exit"] = m * float(p["exit_speed"])
 	return out
 
 
@@ -1239,12 +1260,20 @@ func _try_grab(wish: Vector3, rec: Dictionary, air := false) -> bool:
 	if not thin and not bool(detector.call(&"_fits", end, float(body.get(&"CROUCH_HEIGHT")))):
 		refused = "no room where he would end"
 		return false
+	var v_in: Vector3 = body.get(&"hvel")
+	var w_in: Vector3 = body.get(&"_wish")
+	var run_v := v_in.length() if (not air and not thin and w_in.length() > float(body.get(&"WALK")) + 0.1 and v_in.length() > RUN_FROM) else 0.0
+	var run_d := run_v * (float(RUN_OUT["grab"][1]) - float(RUN_OUT["grab"][0])) * 0.5
+	if run_v > 0.0 and (float(rec["depth"]) < inward + run_d + float(body.get(&"RADIUS")) + 0.5 or not bool(detector.call(&"_fits", end + m * run_d, float(body.get(&"HEIGHT"))))):
+		run_v = 0.0
+	if run_v > 0.0:
+		end += m * run_d
 	refused = ""
 	var left := Vector3.UP.cross(m).normalized()
 	var on_top := feet + m * (here + WRIST_IN)
 	on_top.y = ground + top + WRIST_OVER
 	_plan = {"key": "grab", "from": Vector3(feet.x, ground, feet.z), "hang": hang, "end": end, "top": top, "ground": ground, "m": m,
-			"yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z), "exit_speed": 0.0, "hand": 2,
+			"yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z), "exit_speed": run_v, "run_d": run_d if run_v > 0.0 else 0.0, "hand": 2,
 			# the body's height in the hang: his wrists on the top
 			"hang_y": ground + top + WRIST_OVER - float(GRAB["wrist"]) + float(GRAB["jump_by"]),
 			"from_t": float(GRAB["off"]) + 0.08 if air else 0.0,
@@ -1287,7 +1316,9 @@ func _grab(t: float) -> Dictionary:
 		var rise := _at(_g_rise2, ct)
 		var by := float(GRAB["climb_by"])
 		var out_by := by + WRIST_OVER - float(GRAB["climb_wrist"])      # how far the clip's own start and end disagree about its ledge
-		var pos := hang + m * _at(_g_fwd2, ct)
+		var run_d := float(p.get("run_d", 0.0))
+		var gather := clampf((ct - float(RUN_OUT["grab"][0])) / (float(RUN_OUT["grab"][1]) - float(RUN_OUT["grab"][0])), 0.0, 1.0)
+		var pos := hang + m * (_at(_g_fwd2, ct) + run_d * gather * gather)
 		pos.y = ground + float(p["top"]) - (by - out_by) * (1.0 - rise)
 		# (from when his feet come down on the top they are fitted to it, as in the mantle)
 		var feet_down := ct >= float(GRAB["feet_on"])
@@ -1306,7 +1337,7 @@ func _grab(t: float) -> Dictionary:
 			out["done"] = true
 			out["air"] = false
 			out["pos"] = p["end"]
-			out["exit"] = Vector3.ZERO
+			out["exit"] = m * float(p["exit_speed"])
 	hold = hold * hold * (3.0 - 2.0 * hold)
 	var grip: Vector3 = -m * ((GRIP_OUT + WRIST_IN) * (1.0 - (smoothstep(float(GRIP_TURN[0]), float(GRIP_TURN[1]), t - t1) if t >= t1 else 0.0)))
 	out["hand"] = [[0, (p["hands_at"] as Array)[0] + grip, hold, true], [1, (p["hands_at"] as Array)[1] + grip, hold, true]]
