@@ -25,7 +25,7 @@ const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint",
 		"KM_Walk", "KM_Run", "KM_Slope_Up_Start", "KM_Slope_Up_Stop", "KM_Start_Run"]
 # A vault ends a stride on, with the hips turned as a running stride turns them (31 degrees in Vault 1 Hand): that is
 # not a turn of his path, and its root does not turn.
-const STRAIGHT_ON := ["Vault_1_Hand", "KM_Climb_Up", "Jump_To_Braced_Hang", "Braced_Hang_To_Crouch"]
+const STRAIGHT_ON := ["Vault_1_Hand", "KM_Climb_Up", "Jump_To_Braced_Hang", "Braced_Hang_To_Crouch", "Sprint_To_Wall_Climb"]
 const TURN_LEAST_DEG := 20.0        # a clip that turns less than this is not a turning clip: its root does not turn
 # In the air the body does the rising and the falling (the study: the body "alone decides where the character is"), so
 # the clip's own rise is taken out: between leaving the ground and landing the hips keep at most their take-off height.
@@ -44,7 +44,8 @@ const LEDGE := ["KM_Ledge_Walk_Off", "KM_Ledge_Run_Off", "KM_Land_Roll"]
 # Stage 13, the grab and climb: two clips that do not start standing on the ground or do not end standing, so the
 # rise taken out of each is given here, measured on him (see traverse.gd GRAB): the jump to the braced hang gives the
 # body 0.70 m (its hips end where the climb's begin), the climb from the hang 1.63 m (where the balls of its feet end: he ends crouched on them).
-const RISE_BY := {"Jump_To_Braced_Hang": 0.70, "Braced_Hang_To_Crouch": 1.63}
+const RISE_BY := {"Jump_To_Braced_Hang": 0.70, "Braced_Hang_To_Crouch": 1.63,
+		"Sprint_To_Wall_Climb": 2.40}       # the running wall climb: where its feet end, measured on him
 # The walk's hips, brought to the study: "The pelvis moves only a few degrees at normal walking speed: about 3 degrees
 # of tilt, 8.5 of side drop and 12 of rotation in total range", and the body "rises and falls 2.7 to 4.8 cm in walking
 # ... side-to-side sway shrinks from 7.0 to 3.9 cm as speed rises". Measured on him, this take had 6.2 degrees of tilt,

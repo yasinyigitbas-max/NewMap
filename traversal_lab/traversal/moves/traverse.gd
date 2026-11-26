@@ -199,6 +199,19 @@ const GRAB_NEAR := 0.60             # NOT in the study: it is begun from within 
 # as his feet are down on the top, and over the last part of it the body is brought up to that pace.
 const RUN_OUT := {"mantle": [2.00, 2.50],       # NOT in the study, mine: of the mantle's take: he gathers pace from, and is handed back at (s)
 		"grab": [0.85, 1.10]}                   # ... and of the climb from the hang
+# The running wall climb (the study: "2.60 to 3.00 m | running wall-run only"; "Sprint To Wall Climb | 2.46 m | 2 m
+# run-up, hands hit the top at 0.67 s, on top by 1.6 s"; for 2.10 to 2.60 m "covered, from a stand and from a run";
+# Yasin, 26 Nov: "do the running alternatives too"). His own Mixamo clip, measured on him: he runs in at 4.7 m/s,
+# plants his left foot 1.42 m from the face at 0.3 s, puts his right foot on the wall 1.0 m up at 0.45 s, both hands
+# on the top (2.41 m) at 0.65 s, feet over it from 1.3 s, crouched on top (2.40 m) by 1.5 s.
+const WALLRUN_BAND := [2.10, 3.00]  # the study's two bands for it together: more than the first, up to the second (m)
+const WALLRUN := {"input": "wallrun", "res": "res://traversal/character/clips/Sprint_To_Wall_Climb.res",
+		"from_most": 0.38,          # taken up no later than this: his left foot is planted for the kick then
+		"face": 3.20,               # where the take's wall face is (m along): his toe on it (found in the lab)
+		"kick": 0.40, "hands_on": 0.65, "hands_off": 1.30, "exit": 1.80,
+		"high": 2.40,               # the take's own wall, and the rise taken out of it in the library (RISE_BY)
+		"hand_side": 0.30, "grip_out": 0.15, "grip_turn": [0.95, 1.30],
+		"run_out": [1.45, 1.80]}    # NOT in the study, mine: he gathers pace over this part of it, to be handed back running
 const OVER_BACK := 0.48             # NOT in the study, found in the lab: he sinks for the jump this far from the wall's face
                                     # (nearer, his knees were in the wall). The study: "slide and turn the body over a
                                     # short fixed time so it starts at the clip's native distance from the wall"
@@ -254,6 +267,8 @@ var _o_rise := PackedFloat32Array()
 var _g_rise1 := PackedFloat32Array()
 var _g_rise2 := PackedFloat32Array()
 var _g_fwd2 := PackedFloat32Array()
+var _w_fwd := PackedFloat32Array()
+var _w_rise := PackedFloat32Array()
 var _o_high := 0.0              # the height the climb take goes up, on him
 
 
@@ -299,6 +314,10 @@ func _ready() -> void:
 	_g_rise2 = ClipData.rise_of(g2)
 	for f in g2.size():
 		_g_fwd2.append(g2[f].z - g2[0].z)
+	var wh: PackedVector3Array = (load(String(WALLRUN["res"])) as Resource).get(&"hips")
+	_w_rise = ClipData.rise_of(wh)
+	for f in wh.size():
+		_w_fwd.append(wh[f].z - wh[0].z)
 	var tc: Resource = load(String(TUCK["res"]))
 	var t_hips: PackedVector3Array = tc.get(&"hips")
 	for f in t_hips.size():
@@ -549,6 +568,13 @@ func _try_step_up(v: Vector3, wish: Vector3) -> bool:
 		return false                                            # the body walks onto it by itself
 	if top > float(ON_BAND[1]) + MEASURED_WITHIN and top <= float(MANTLE_BAND[1]) + MEASURED_WITHIN and not bool(rec["thin"]):
 		return _try_mantle(v, wish, rec)
+	# at a run at something deep and high: the running wall climb, from its own run in
+	if not bool(rec["thin"]) and top > float(WALLRUN_BAND[0]) + MEASURED_WITHIN and top <= float(WALLRUN_BAND[1]) + MEASURED_WITHIN \
+			and wish.length() > float(body.get(&"WALK")) + 0.1 and v.length() > RUN_FROM:
+		if _try_wallrun(v, wish, rec):
+			return true
+		if refused == "coming up to the wall climb":
+			return false
 	if top > float(VAULT_BAND[1] if bool(rec["thin"]) else MANTLE_BAND[1]) + MEASURED_WITHIN and top <= float(HIGH_BAND[1]) + MEASURED_WITHIN:
 		return _try_grab(wish, rec)                             # stages 13 and 14 (thin: up, and off its far side)
 	if top > float(ON_BAND[1]) + MEASURED_WITHIN:
@@ -1341,4 +1367,83 @@ func _grab(t: float) -> Dictionary:
 	hold = hold * hold * (3.0 - 2.0 * hold)
 	var grip: Vector3 = -m * ((GRIP_OUT + WRIST_IN) * (1.0 - (smoothstep(float(GRIP_TURN[0]), float(GRIP_TURN[1]), t - t1) if t >= t1 else 0.0)))
 	out["hand"] = [[0, (p["hands_at"] as Array)[0] + grip, hold, true], [1, (p["hands_at"] as Array)[1] + grip, hold, true]]
+	return out
+
+
+# -------------------------------------------------------------------------------------------- the running wall climb
+
+func _try_wallrun(v: Vector3, wish: Vector3, rec: Dictionary) -> bool:
+	var top := float(rec["top"])
+	if bool(rec["blocked"]) or not bool(rec["stand_room"]):
+		return false
+	var m: Vector3 = -(rec["normal"] as Vector3)
+	if rad_to_deg(wish.normalized().angle_to(m)) > MOST_OFF_DEG:
+		return false
+	var here := (rec["edge"] as Vector3 - body.global_position).dot(m)
+	var face := float(WALLRUN["face"])
+	# taken up where the take is as far from its wall as he is from his, and no later than its last step
+	var least := face - _at(_w_fwd, float(WALLRUN["from_most"]))
+	if here > face - _at(_w_fwd, 0.0) + v.length() * EARLY:
+		refused = "coming up to the wall climb"
+		return false
+	if here < least - 0.15:
+		return false                                            # too near for it already: the grab and climb will take it
+	var from_t := 0.0
+	while from_t < float(WALLRUN["from_most"]) and face - _at(_w_fwd, from_t) > here:
+		from_t += 1.0 / 60.0
+	var exit_t := float(WALLRUN["exit"])
+	var inward := _at(_w_fwd, exit_t) - face
+	var feet := body.global_position
+	var ground := float(rec["ground"])
+	var end := feet + m * (here + inward)
+	end.y = ground + top
+	var run_v := v.length()
+	var run_d := run_v * (float(WALLRUN["run_out"][1]) - float(WALLRUN["run_out"][0])) * 0.5
+	if float(rec["depth"]) < inward + run_d + float(body.get(&"RADIUS")) + 0.5 or not bool(detector.call(&"_fits", end + m * run_d, float(body.get(&"HEIGHT")))):
+		run_v = 0.0
+		run_d = 0.0
+		if float(rec["depth"]) < inward + float(body.get(&"RADIUS")) or not bool(detector.call(&"_fits", end, float(body.get(&"CROUCH_HEIGHT")))):
+			return false
+	refused = ""
+	var left := Vector3.UP.cross(m).normalized()
+	var on_top := feet + m * (here + WRIST_IN)
+	on_top.y = ground + top + WRIST_OVER
+	_plan = {"key": "wallrun", "from": Vector3(feet.x, ground, feet.z), "end": end + m * run_d, "top": top, "ground": ground, "m": m,
+			"yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z), "exit_speed": run_v, "run_d": run_d, "hand": 2, "from_t": from_t,
+			# (the little he is out by as it begins is taken up over the run in)
+			"stretch": (here + inward) / maxf(_at(_w_fwd, exit_t) - _at(_w_fwd, from_t), 0.01),
+			"hands_at": [on_top + left * float(WALLRUN["hand_side"]), on_top - left * float(WALLRUN["hand_side"])]}
+	plays += 1
+	_up_record = {}
+	record = {}
+	body.call(&"begin_move", _wallrun, String(WALLRUN["input"]))
+	return true
+
+
+func _wallrun(t: float) -> Dictionary:
+	var p := _plan
+	var m: Vector3 = p["m"]
+	var from_t := float(p["from_t"])
+	var exit_t := float(WALLRUN["exit"])
+	var ct := minf(from_t + t, exit_t)
+	var top := float(p["top"])
+	var high := float(WALLRUN["high"])
+	var rise := _at(_w_rise, ct)
+	var run_d := float(p["run_d"])
+	var gather := clampf((ct - float(WALLRUN["run_out"][0])) / (float(WALLRUN["run_out"][1]) - float(WALLRUN["run_out"][0])), 0.0, 1.0)
+	var pos := (p["from"] as Vector3) + m * ((_at(_w_fwd, ct) - _at(_w_fwd, from_t)) * float(p["stretch"]) + run_d * gather * gather)
+	# up: by the take's share of the height until his foot is on the wall; by the time his hands come down he is
+	# as far under the top as the take is under its own (so the hands are on the top whatever its height)
+	pos.y = float(p["ground"]) + lerpf(top * rise, top - high * (1.0 - rise), smoothstep(float(WALLRUN["kick"]), float(WALLRUN["hands_on"]), ct))
+	var hold := clampf(minf((ct - float(WALLRUN["hands_on"])) / HAND_FADE + 1.0, (float(WALLRUN["hands_off"]) - ct) / HAND_FADE + 1.0), 0.0, 1.0)
+	hold = hold * hold * (3.0 - 2.0 * hold)
+	var turn: Array = WALLRUN["grip_turn"]
+	var grip: Vector3 = -m * ((float(WALLRUN["grip_out"]) + WRIST_IN) * (1.0 - smoothstep(float(turn[0]), float(turn[1]), ct)))
+	var out := {"done": ct >= exit_t, "pos": pos, "clip_t": ct, "air": ct >= float(WALLRUN["kick"]) and ct < float(WALLRUN["hands_off"]), "free": true,
+			"yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), clampf(t / 0.15, 0.0, 1.0)),
+			"hand": [[0, (p["hands_at"] as Array)[0] + grip, hold, true], [1, (p["hands_at"] as Array)[1] + grip, hold, true]]}
+	if ct >= exit_t:
+		out["air"] = false
+		out["pos"] = p["end"]
+		out["exit"] = m * float(p["exit_speed"])
 	return out

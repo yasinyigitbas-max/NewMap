@@ -193,6 +193,10 @@ func _run() -> void:
 			var should := String(s["kind"]) in ["wall_deep", "wall_thin"] and h > (float((trav.get(&"VAULT_BAND") as Array)[1]) if thin else float(band[0])) + 0.001 and h <= float(band[1]) + adds + 0.001
 			var r := await go_at(s, float(how[1]), bool(how[2]), -1.0, int(how[3]))
 			var key := String((r["plan"] as Dictionary).get("key", ""))
+			# at a run at something deep of 2.10 to 3.00 m: the running wall climb
+			var wall_run := bool(how[2]) and not thin and String(s["kind"]) == "wall_deep" and h > float((trav.get(&"WALLRUN_BAND") as Array)[0]) + 0.001 and h <= float((trav.get(&"WALLRUN_BAND") as Array)[1]) + 0.001
+			var want_key := "wallrun" if wall_run else "grab"
+			should = should or wall_run
 			if not should:
 				ok(key != "grab", "%s, %s: not this move's, the grab and climb is not played (%s)" % [s["label"], how[0],
 						("taken by the move '%s'" % key) if key != "" else "he is stopped: " + String(r["refused"])])
@@ -201,8 +205,8 @@ func _run() -> void:
 				inside.append(s)
 			var plan: Dictionary = r["plan"]
 			var bad := ""
-			if key != "grab":
-				bad = "did not play (%s%s)" % [r["refused"], (", the move '%s' did" % key) if key != "" else ""]
+			if key != want_key:
+				bad = "the %s did not play (%s%s)" % [want_key, r["refused"], (", the move '%s' did" % key) if key != "" else ""]
 			else:
 				var want: Vector3 = plan["end"]
 				var end: Vector3 = r["end"]
@@ -228,8 +232,8 @@ func _run() -> void:
 					bad = "a knee or a foot %.0f cm inside the wall" % (float(r["in_wall"]) * 100.0)
 				elif float(r["feet"]) > FEET_WITHIN:
 					bad = "a foot %.1f cm off the top as he is handed back" % (float(r["feet"]) * 100.0)
-			ok(bad == "", "%s, %s: grabs the top and climbs up: both hands on it (wrists within %.1f cm for %d ticks), no knee or foot in the wall (%.1f cm), %s (foot %.1f cm off the top)%s" % [
-					s["label"], how[0], float(r["hand"]) * 100.0, int(r["held"]), float(r["in_wall"]) * 100.0, "steps off its far side and comes down on the ground beyond" if thin else "ends on top where measured, at rest", float(r["feet"]) * 100.0, "" if bad == "" else " -- " + bad])
+			ok(bad == "", "%s, %s: " % [s["label"], how[0]] + ("runs up it and climbs" if wall_run else "grabs the top and climbs up") + ": both hands on it (wrists within %.1f cm for %d ticks), no knee or foot in the wall (%.1f cm), %s (foot %.1f cm off the top)%s" % [
+					float(r["hand"]) * 100.0, int(r["held"]), float(r["in_wall"]) * 100.0, "steps off its far side and comes down on the ground beyond" if thin else "ends on top where measured, at rest", float(r["feet"]) * 100.0, "" if bad == "" else " -- " + bad])
 	# A jump on the spot near the wall, the stick at rest (Yasin, 26 Nov: "nothing happens when we jump near from
 	# standing still to 2.20 walls and above, fix it until 3m"): begun from the jump, to 3.0 m.
 	for s: Dictionary in order:

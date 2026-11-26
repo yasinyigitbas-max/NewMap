@@ -648,6 +648,17 @@
     ],
     "turn_deg": -0.00000170754729250319
   },
+  "Sprint_To_Wall_Climb": {
+    "length": 1.8,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 1.81232651074727,
+    "travel": [
+      -0.0106462556868792,
+      3.26217031478882
+    ],
+    "turn_deg": 19.7343357953236
+  },
   "Standing_Idle": {
     "length": 6.0,
     "loop": true,
