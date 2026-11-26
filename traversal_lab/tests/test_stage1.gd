@@ -6,7 +6,8 @@ extends SceneTree
 const GROUND := 0
 const STEEP := 1
 const AIR := 3
-const WALK := 1.4
+const WALK := 1.45          # the body's own walking speed (body.gd WALK; it was 1.4 until 26 Nov, when the body's was
+                            # brought to the study's "1.27 to 1.46 m/s" together with its cadence and stride)
 const RUN := 4.5
 
 var fails := 0
