@@ -153,3 +153,22 @@ A robust Rockstar-style traversal system for the game (Godot 4.7, Jolt, Mixamo c
   - the standing sway frequency (Mixamo `Standing_Idle` sways at 0.18 Hz, the study 0.33).
 - Kimodo: the character file uploaded to Replicate (the `CH` link in `tools/kimodo/batch.py`) expires 26 Nov 17:15
   UTC; after that Yasin's `character.fbx` must be uploaded again. The raw clips are not in the cloud container.
+
+## 26 Nov, end of this session: where it stands (trav15) and what is next
+
+- Audit: **43 of 114 study lines fail** (61 at the start of the day's honest count). `test_stage0` and `test_stage1` pass.
+- Done: the study gate; the body in charge; Stage 3 on the AnimationTree; Stage 4's feet (foot_place.gd, leg IK).
+- A slip to remember: the trav14 message claimed a stage 1 pass before the run had been read; it had failed 3 lines
+  on a stale constant in the test. Corrected in the next commit. Never write a result before reading the output.
+- NEXT, in the study's order:
+  1. Stage 4, rest: the head leading a turn (LookAtModifier3D on neck and head, at most 15 degrees, under 137 deg/s),
+     which by the study's figure means the body starts turning about 0.26 s AFTER the stick while the head goes
+     first: a change Yasin will feel, tell him before or as it goes in; the pop filter; stairs as their own gait in
+     the tree (the stair clips are in the library, played by where he is on the stairs, as character_v1 did);
+     the 10 degree ramp going down (a resting foot 3.2 cm above it).
+  2. Stage 5: start, stop and turn-on-the-spot clips as inputs of the tree (they are in the library, with mirrors).
+  3. The clips: no walk in hand meets the study (see the trav14 notes above). Options to put to Yasin: audition new
+     Kimodo walks through the audit; or reshape the best take's joint curves to the study's figures at the bake.
+     Same for the run (knee 130 against 94 to 119, bob 6.2 cm against 8 to 9.5) and the idle (sway 0.18 Hz against 0.33).
+  4. Not built: arm IK, forearm twist disperser, steep-ground takes in the new tree, a Windows exe of the rebuild
+     (the export templates are not in this container).
