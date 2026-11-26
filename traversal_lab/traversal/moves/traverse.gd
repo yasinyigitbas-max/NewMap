@@ -89,28 +89,43 @@ const RUN_UP_ARC := 0.25        # NOT in the study: how far the arc rises over a
 const VAULT := {"input": "vault", "res": "res://traversal/character/clips/Vault_1_Hand.res",
 		"from": 0.20, "off": 0.33, "hand_on": 0.47, "hand_off": 0.65, "down": 0.90, "exit": 1.13,
 		"at": 2.36, "high": 0.88, "hand_side": 0.25, "speed": 4.3, "hips_off": 1.12, "hips_top": 1.32}
-const VAULT_BAND := [0.50, 1.10]    # the study's band: more than the first, up to the second (m)
+# The band. The study's table has the vault from 0.50 to 1.10 m and a mantle from there to 1.45 m; its sources have
+# "shoulder height (1.44 m) is the vault limit". Yasin, 26 Nov: "i think we should be able vault over walls up to 1.4
+# meter and then the climb over or mantles should start". So a THIN obstacle is vaulted up to 1.40 m; something DEEP
+# is still climbed onto only up to 1.10 m, and from there up it is the mantle (stage 12, not built).
+const VAULT_BAND := [0.50, 1.40]
 const VAULT_PACE := [0.75, 1.1]     # NOT in the study: the clip is played at between these shares of its own pace, to go at his
 const LIFT_EARLY := 0.07            # NOT in the study: the body's rise to a higher obstacle (or fall to a lower) is made over
                                     # this long each side of his take-off (s); made later, his leading foot met a higher wall
 const CLEAR_MORE := 0.06            # NOT in the study: see _vault
-# Stage 11, a thin obstacle from standing or at a walk. The study has a step vault here; no clip of one exists
-# (his Step Up Vault, measured, is not one; eleven Kimodo takes asked for one in several wordings do not go over
-# anything). What there is: a Kimodo take in Yasin's own words and seed ("vaulting over a wall. landing on the other
-# side", 26 Nov; he: "near to what we need"), made again on his character. Measured on him: from standing he sinks
-# (hips 0.82 m at 0.67 s), leaves the ground at 0.85 s, goes over with his legs tucked (ankles 0.86 to 1.07 m high
-# where they cross, 0.4 to 0.55 m along), is down at 1.65 s 0.84 m along, and stands again by 2.4 s. His hands stay
-# above 1.2 m: they do NOT come down on the obstacle, so no hand is held on it.
+# Stage 11, a thin obstacle from standing or at a walk. The study has a step vault here; no clip of one exists (his
+# Step Up Vault, measured, is not one; a dozen Kimodo takes asked for one in several wordings do not go over
+# anything). What there is, at Yasin's word of 26 Nov: two Kimodo takes in his own words and seed, made again on his
+# character. "this new vault looks very bad. hands dont make any contact with the wall at all. use this [the jump] for
+# short walls when standing still to jump on the other side. use that one you have for walls above 1m and make sure
+# hand makes contact."
+# For walls up to 1.0 m: "jump over obstacle when standing still". Measured on him: he sinks (hips 0.71 m at 0.67 s),
+# leaves the ground at 0.87 s, tucks (ankles 1.03 to 1.13 m at 1.07 to 1.20 s), is down at 1.55 s and standing by
+# 2.3 s. It jumps almost on the spot (0.3 m), so the body carries him across the obstacle while he is in the air.
+const JUMP := {"input": "vault_jump", "res": "res://traversal/character/clips/KM_Jump_Over.res",
+		"from": 0.30, "off": 0.87, "top": 1.15, "down": 1.55, "exit": 2.30,
+		"high": 0.65}               # NOT in the study: the height its tucked feet clear as it is (found in the lab)
+# NOT USED NOW (Yasin, 26 Nov, of this take over a 1.10 m wall: "they do at the very start, but then the character
+# just levitates"): kept until a take with the hands truly on the top exists. It was:
+# For walls over 1.0 m: "vaulting over a wall. landing on the other side". Measured on him: at 0.67 s, sunk, both
+# wrists are forward and down at 0.90 m, 0.35 to 0.41 m along (where the obstacle's near edge is taken to be); he
+# leaves the ground at 0.85 s, legs tucked (ankles 0.86 to 1.07 m where they cross), down at 1.65 s 0.84 m along,
+# standing by 2.4 s. Both hands are held on the measured top from as they come forward until he has left the ground.
 const TUCK := {"input": "vault_tuck", "res": "res://traversal/character/clips/KM_Vault_Stand.res",
 		"from": 0.30, "off": 0.85, "top": 1.25, "down": 1.65, "exit": 2.40,
-		"at": 0.47,                 # NOT in the study: where the take's obstacle is taken to be (m along): under his ankles
-                                    # as they cross
-		"high": 0.50}               # NOT in the study: the height the take clears as it is, with every joint of both feet
-                                    # (measured in the lab: 6 cm clear of a 0.50 m wall, 6 cm short of a 0.62 m one)
-const TUCK_MOST := 0.80             # NOT in the study: the highest thin obstacle taken this way. Over more than the
-                                    # take clears he is carried higher, here by up to 0.30 m and CLEAR_MORE; the study
-                                    # has a standing jump raise the body 0.41 to 0.50 m, so not further than this
-const VAULT_SLOW := 0.6             # NOT in the study: the pace of the one-hand vault at a walk (the stand-in over 0.80 m)
+		"hands_on": 0.60, "hands_off": 0.84, "hand_side": 0.24,     # (held until he leaves the ground: carried up
+                                    # after that, the top of a 1.10 m wall was 16 cm beyond the reach of his wrists)
+		"at": 0.47,                 # NOT in the study: where the take's obstacle is taken to be (m along)
+		"high": 0.50}               # NOT in the study: the height the take clears as it is (found in the lab)
+const JUMP_MOST := 1.0              # his word: the jump "for short walls", the vault with the hands "for walls above 1m"
+const VAULT_SLOW := 0.6             # NOT in the study: the pace of the one-hand vault at a walk (over 1.0 m)
+const BEYOND := 0.45                # NOT in the study: how far past the middle of the obstacle the jump sets him down (m):
+                                    # his own radius, half a thin wall, and a hand's breadth
 const PALM := 0.08                  # the study, Part 3: "the gripping palm is about 0.08 m further along" than the wrist
 const HAND_FADE := 0.12             # NOT in the study: seconds over which the hand's hold comes in and goes out
 const LAND_LEVEL := 0.10            # NOT in the study: the ground beyond is taken as level with his if within this (m)
@@ -154,6 +169,7 @@ var _up_record: Dictionary = {}
 var _v_fwd := PackedFloat32Array()
 var _v_hips := PackedFloat32Array()
 var _t_fwd := PackedFloat32Array()
+var _j_fwd := PackedFloat32Array()
 
 
 func _ready() -> void:
@@ -182,6 +198,10 @@ func _ready() -> void:
 		_c_rise[key] = ClipData.rise_of(up_hips)
 		_c_high[key] = up_hips[up_hips.size() - 1].y - up_hips[0].y
 	body.connect(&"landed", _on_landed)
+	var jc: Resource = load(String(JUMP["res"]))
+	var j_hips: PackedVector3Array = jc.get(&"hips")
+	for f in j_hips.size():
+		_j_fwd.append(j_hips[f].z - j_hips[0].z)
 	var tc: Resource = load(String(TUCK["res"]))
 	var t_hips: PackedVector3Array = tc.get(&"hips")
 	for f in t_hips.size():
@@ -592,10 +612,12 @@ func _try_vault(v: Vector3, wish: Vector3, rec: Dictionary) -> bool:
 	var speed := v.length()
 	# Stage 11, a thin obstacle met at a walk or from standing: the standing vault (see TUCK), not this one.
 	var slow := wish.length() <= float(body.get(&"WALK")) + 0.1 or speed <= RUN_FROM
-	if slow and top <= TUCK_MOST + MEASURED_WITHIN:
-		return _try_tuck(v, wish, rec)
-	# (higher than that, at a walk: the one-hand vault at its slowest, from its own run in, as a stand-in; from
-	# standing against it there is no move: it would take hands, and there is no clip)
+	if slow and top <= JUMP_MOST + MEASURED_WITHIN:
+		return _try_tuck(v, wish, rec, true)
+	# (higher than that, at a walk: the one-hand vault at its slowest, from its own run in, the one move here in
+	# which a hand truly bears on the top. The Kimodo vault from standing is NOT used above 1.0 m: its hands do not
+	# come down, and carried over a higher wall he floated with his hands 16 cm and more above the top. Yasin, 26 Nov:
+	# "they do at the very start, but then the character just levitates".)
 	var m: Vector3 = -(rec["normal"] as Vector3)
 	if rad_to_deg(wish.normalized().angle_to(m)) > MOST_OFF_DEG:
 		refused = "not heading at it"
@@ -704,8 +726,9 @@ func _vault(t: float) -> Dictionary:
 	return out
 
 
-## The vault from standing or at a walk: over a thin obstacle with the legs tucked, to a stand on the other side.
-func _try_tuck(v: Vector3, wish: Vector3, rec: Dictionary) -> bool:
+## A thin obstacle from standing or at a walk. `low` = up to 1.0 m: the jump over it; higher: the vault with both
+## hands on its top.
+func _try_tuck(v: Vector3, wish: Vector3, rec: Dictionary, low: bool) -> bool:
 	var top := float(rec["top"])
 	var m: Vector3 = -(rec["normal"] as Vector3)
 	if rad_to_deg(wish.normalized().angle_to(m)) > MOST_OFF_DEG:
@@ -714,55 +737,80 @@ func _try_tuck(v: Vector3, wish: Vector3, rec: Dictionary) -> bool:
 	if not rec.has("landing") or absf(float(rec["landing"])) > LAND_LEVEL or not bool(rec.get("landing_ok", false)):
 		refused = "the ground beyond it is not level with his, or has no room"
 		return false
+	var mv: Dictionary = JUMP if low else TUCK
+	var fwd: PackedFloat32Array = _j_fwd if low else _t_fwd
 	var depth := float(rec["depth"])
 	var to_mid := (rec["edge"] as Vector3 - body.global_position).dot(m) + depth * 0.5
-	# the take is taken up where it is as far from its obstacle as he is from his
-	var from_t := float(TUCK["from"])
-	if float(TUCK["at"]) - _at(_t_fwd, from_t) < to_mid - 0.05:
-		refused = "coming up to the vault"
+	# it is begun within a step of the obstacle (the vault: where the take is as far from its own as he is from his)
+	var from_t := float(mv["from"])
+	var reach := 0.75 if low else float(mv["at"]) - _at(fwd, from_t) + 0.05
+	if to_mid > reach:
+		refused = "coming up to it"
 		return false
-	while from_t < float(TUCK["off"]) - 0.25 and float(TUCK["at"]) - _at(_t_fwd, from_t) > to_mid:
-		from_t += 1.0 / 60.0
+	if not low:
+		while from_t < float(mv["hands_on"]) - 0.1 and float(mv["at"]) - _at(fwd, from_t) > to_mid:
+			from_t += 1.0 / 60.0
 	var feet := body.global_position
 	var ground := float(rec["ground"])
 	var mid := feet + m * to_mid
 	mid.y = ground
-	var end := mid + m * (_at(_t_fwd, float(TUCK["exit"])) - float(TUCK["at"]))
+	var end := mid + m * (BEYOND if low else _at(fwd, float(mv["exit"])) - float(mv["at"]))
 	var g: Dictionary = body.call(&"probe", end)
 	if not bool(g["hit"]) or absf(float(g["y"]) - ground) > LAND_LEVEL or not bool(detector.call(&"_fits", Vector3(end.x, float(g["y"]), end.z), float(body.get(&"HEIGHT")))):
 		refused = "no level, free ground to land on"
 		return false
 	refused = ""
-	_plan = {"key": "vault_tuck", "from": Vector3(feet.x, ground, feet.z), "mid": mid, "end": Vector3(end.x, ground, end.z), "m": m,
-			"yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z), "top": top, "to_mid": to_mid, "from_t": from_t, "hand": -1, "exit_speed": 0.0}
+	var left := Vector3.UP.cross(m).normalized()
+	var on_top := Vector3(mid.x, ground + top + PALM, mid.z) - m * (depth * 0.5 - 0.04)       # 4 cm in from its near edge
+	_plan = {"key": "vault_jump" if low else "vault_tuck", "low": low, "from": Vector3(feet.x, ground, feet.z), "mid": mid,
+			"end": Vector3(end.x, ground, end.z), "m": m, "yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z), "top": top,
+			"to_mid": to_mid, "from_t": from_t, "hand": -1 if low else 2, "exit_speed": 0.0,
+			"hands_at": [on_top + left * float(TUCK["hand_side"]), on_top - left * float(TUCK["hand_side"])]}
 	plays += 1
 	_up_record = {}
 	record = {}
-	body.call(&"begin_move", _tuck, String(TUCK["input"]))
+	body.call(&"begin_move", _tuck, String(mv["input"]))
 	return true
 
 
 func _tuck(t: float) -> Dictionary:
 	var p := _plan
+	var low: bool = p["low"]
+	var mv: Dictionary = JUMP if low else TUCK
+	var fwd: PackedFloat32Array = _j_fwd if low else _t_fwd
 	var m: Vector3 = p["m"]
 	var from_t := float(p["from_t"])
-	var exit_t := float(TUCK["exit"])
+	var exit_t := float(mv["exit"])
 	var ct := minf(from_t + t, exit_t)
-	var z := _at(_t_fwd, ct) - float(TUCK["at"])
-	var out_by := float(p["to_mid"]) - (float(TUCK["at"]) - _at(_t_fwd, from_t))
-	if z < 0.0:
-		z -= out_by * clampf(z / minf(_at(_t_fwd, from_t) - float(TUCK["at"]), -0.01), 0.0, 1.0)
-	var pos := (p["mid"] as Vector3) + m * z
-	var air := ct >= float(TUCK["off"]) and ct < float(TUCK["down"])
+	var air := ct >= float(mv["off"]) and ct < float(mv["down"])
+	var pos: Vector3
+	if low:
+		# the jump: he stays where he is until he leaves the ground, and is carried across while he is in the air,
+		# so that he is over the middle of the obstacle at the top of the jump, when his feet are tucked highest
+		# (carried across evenly, from standing against it his feet were already coming down as they crossed)
+		if ct <= float(mv["top"]):
+			pos = (p["from"] as Vector3).lerp(p["mid"], clampf((ct - float(mv["off"])) / (float(mv["top"]) - float(mv["off"])), 0.0, 1.0))
+		else:
+			pos = (p["mid"] as Vector3).lerp(p["end"], clampf((ct - float(mv["top"])) / (float(mv["down"]) - float(mv["top"])), 0.0, 1.0))
+	else:
+		var z := _at(fwd, ct) - float(mv["at"])
+		var out_by := float(p["to_mid"]) - (float(mv["at"]) - _at(fwd, from_t))
+		if z < 0.0:
+			z -= out_by * clampf(z / minf(_at(fwd, from_t) - float(mv["at"]), -0.01), 0.0, 1.0)
+		pos = (p["mid"] as Vector3) + m * z
 	# over an obstacle higher than the take clears by itself he is carried that much higher, and CLEAR_MORE more,
 	# up as he leaves the ground and down again before he lands; over a lower one the take is left as it is
-	var more := maxf(float(p["top"]) - float(TUCK["high"]), 0.0)
+	var more := maxf(float(p["top"]) - float(mv["high"]), 0.0)
 	if more > 0.0:
 		more += CLEAR_MORE
 	if air:
-		pos.y += more * minf(smoothstep(float(TUCK["off"]), float(TUCK["off"]) + 0.2, ct), 1.0 - smoothstep(float(TUCK["top"]) + 0.1, float(TUCK["down"]), ct))
+		pos.y += more * minf(smoothstep(float(mv["off"]), float(mv["off"]) + 0.12, ct), 1.0 - smoothstep(float(mv["top"]) + 0.2, float(mv["down"]), ct))
 	var out := {"done": ct >= exit_t, "pos": pos, "clip_t": ct, "air": air, "free": air,
 			"yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), clampf(t / 0.2, 0.0, 1.0))}
+	if not low:
+		var hold := clampf(minf((ct - float(mv["hands_on"])) / HAND_FADE + 1.0, (float(mv["hands_off"]) - ct) / HAND_FADE + 1.0), 0.0, 1.0)
+		hold = hold * hold * (3.0 - 2.0 * hold)
+		out["hand"] = [[0, (p["hands_at"] as Array)[0], hold], [1, (p["hands_at"] as Array)[1], hold]]
 	if ct >= exit_t:
 		out["pos"] = p["end"]
 		out["exit"] = Vector3.ZERO

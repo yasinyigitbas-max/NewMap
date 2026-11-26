@@ -63,7 +63,7 @@ const HARD_DROP := 1.0          # soft landing; 1.0 to 2.0 m, a heavy landing"
 # the inputs of the tree's Transition node, and the clip each one plays under its own TimeSeek
 const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling_To_Landing", "land_heavy": "Hard_Landing",
 		"drop_walk": "KM_Ledge_Walk_Off", "drop_run": "KM_Ledge_Run_Off", "drop_roll": "KM_Land_Roll", "step_up": "KM_Step_Up", "step_up_m": "KM_Step_Up_M", "vault": "Vault_1_Hand", "vault_m": "Vault_1_Hand_M",
-		"vault_tuck": "KM_Vault_Stand", "step_on": "Step_Onto_Platform", "step_on_m": "Step_Onto_Platform_M", "jump_on": "Running_Jump_Climb", "jump_on_m": "Running_Jump_Climb_M",
+		"vault_tuck": "KM_Vault_Stand", "vault_jump": "KM_Jump_Over", "step_on": "Step_Onto_Platform", "step_on_m": "Step_Onto_Platform_M", "jump_on": "Running_Jump_Climb", "jump_on_m": "Running_Jump_Climb_M",
 		"stairs_up_walk": "Ascending_Stairs", "stairs_up_run": "KM_Stairs_Run_Up_D",
 		"stairs_down_walk": "KM_Stairs_Walk_Down", "stairs_down_run": "KM_Stairs_Run_Down",
 		"steep_up": "KM_Climb_Hard", "steep_down": "KMY_Down_Hands_Balance_Long",
@@ -843,9 +843,11 @@ func _physics_process(dt: float) -> void:
 		# a move that puts a hand on something: [which hand (0 left, 1 right), where its wrist goes, how much]
 		var mh: Array = body.get(&"move_hand") if bool(body.call(&"in_move")) else []
 		var w := [0.0, 0.0]
-		if mh.size() == 3:
-			w[int(mh[0])] = float(mh[2])
-			(hands.get(&"hold_at") as Array)[int(mh[0])] = mh[1]
+		# (one hand as [which, where, how much], or both as a list of two of those)
+		var held: Array = [mh] if (mh.size() == 3 and not (mh[0] is Array)) else mh
+		for one: Array in held:
+			w[int(one[0])] = float(one[2])
+			(hands.get(&"hold_at") as Array)[int(one[0])] = one[1]
 		hands.set(&"hold_w", w)
 		hands.set(&"on", _steep_on and ACTS.has(_act))
 		if _steep_on and ACTS.has(_act):

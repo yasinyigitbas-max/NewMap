@@ -56,7 +56,7 @@ func go_at(s: Dictionary, run: bool, flip := -1.0, near := false) -> Dictionary:
 	var was_in := false
 	var t := 0
 	var after := -1
-	var last_turn := Basis()
+	var last_turn: Array = [Basis(), Basis()]
 	while int(tape.get(&"mode")) == 2:
 		await physics_frame
 		await process_frame
@@ -68,17 +68,25 @@ func go_at(s: Dictionary, run: bool, flip := -1.0, near := false) -> Dictionary:
 			out["move_from"] = t / 60.0
 		if inm and final.size() == 6:
 			var mh: Array = body.get(&"move_hand")
-			# while the hand is fully held: how far the wrist is from where it is to be
-			if mh.size() == 3 and float(mh[2]) >= 1.0:
-				out["hand"] = maxf(float(out["hand"]), (final[4 + int(mh[0])] as Vector3).distance_to(mh[1]))
+			# (one hand as [which, where, how much], or both as a list of two of those)
+			var held: Array = [mh] if (mh.size() == 3 and not (mh[0] is Array)) else mh
+			# while a hand is fully held: how far its wrist is from where it is to be, and how far the hand itself
+			# has turned since the tick before
+			var any := false
+			for one: Array in held:
+				if float(one[2]) < 1.0:
+					continue
+				any = true
+				var hi := int(one[0])
+				out["hand"] = maxf(float(out["hand"]), (final[4 + hi] as Vector3).distance_to(one[1]))
+				var now: Basis = hand_turn[hi]
+				if last_turn[hi] != Basis():
+					out["rock"] = maxf(float(out["rock"]), rad_to_deg(Quaternion(last_turn[hi] as Basis).angle_to(Quaternion(now))))
+				last_turn[hi] = now
+			if any:
 				out["held"] = int(out["held"]) + 1
-				# ... and how far the hand itself has turned since the tick before
-				var now: Basis = hand_turn[int(mh[0])]
-				if last_turn != Basis():
-					out["rock"] = maxf(float(out["rock"]), rad_to_deg(Quaternion(last_turn).angle_to(Quaternion(now))))
-				last_turn = now
 			else:
-				last_turn = Basis()
+				last_turn = [Basis(), Basis()]
 			# the lowest any foot joint goes over the obstacle's top while he is over it
 			var plan: Dictionary = out["plan"]
 			# (a foot joint counts while it is itself over the obstacle: within its thickness, and the length of
@@ -144,12 +152,14 @@ func _run() -> void:
 				continue
 			var h := float(s["top"])
 			var should := String(s["kind"]) == "wall_thin" and h >= float(band[0]) - 0.001 and h <= float(band[1]) + 0.001
-			# at a walk or from standing: the standing vault up to its own most, the slowed one-hand vault above it
-			# at a walk, and from standing against one higher than that there is no move (held to: not played)
-			var tuck_most := float(trav.get(&"TUCK_MOST")) + 0.001
-			var want_key := "vault" if (run or h > tuck_most) else "vault_tuck"
-			if bool(way[2]) and h > tuck_most:
-				should = false
+			# at a walk or from standing: the jump over it up to 1.0 m, the vault with both hands on its top above
+			var want_key := "vault" if run else ("vault_jump" if h <= float(trav.get(&"JUMP_MOST")) + 0.001 else "vault")
+			if should and bool(way[2]) and want_key == "vault":
+				# from standing against a wall over 1.0 m there is no move yet: it takes a clip with the hands on the top
+				var r0 := await go_at(s, run, -1.0, true)
+				var k0 := String((r0["plan"] as Dictionary).get("key", ""))
+				ok(k0 == "", "%s, from standing against it: no move yet (%s)" % [s["label"], ("the move '%s' played" % k0) if k0 != "" else "stopped: " + String(r0["refused"])])
+				continue
 			var r := await go_at(s, run, -1.0, bool(way[2]))
 			var key := String((r["plan"] as Dictionary).get("key", ""))
 			if not should:
@@ -178,7 +188,7 @@ func _run() -> void:
 						bad = "a foot %.1f cm under the top as he goes over" % (-float(r["low"]) * 100.0)
 				elif float(r["rock"]) > HAND_ROCK:
 					bad = "the held hand turns %.1f degrees in a tick" % float(r["rock"])
-				elif int(plan["hand"]) != int(way[1]):
+				elif run and int(plan["hand"]) != int(way[1]):
 					bad = "the wrong hand"
 				elif int(r["held"]) == 0 or float(r["hand"]) > HAND_WITHIN:
 					bad = "the wrist up to %.1f cm from its place on the top while held (%d ticks)" % [float(r["hand"]) * 100.0, int(r["held"])]
