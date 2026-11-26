@@ -30,3 +30,6 @@ characters/mixamo/*.fbx
 
 # Traversal lab: raw Mixamo clips and source models (not for git; the built character and clips are)
 traversal_lab/assets_src/
+
+# Traversal lab: exported builds (sent to Yasin, not kept in git)
+traversal_lab/out/
