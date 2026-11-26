@@ -192,6 +192,8 @@ const WRIST_IN := 0.02              # NOT in the study, mine: how far in from th
 # the chest clears the edge").
 const GRIP_OUT := 0.10              # NOT in the study, mine: how far out from the face the wrist is in the hang (m)
 const GRIP_TURN := [0.10, 0.40]     # NOT in the study, mine: the hands come in onto the top between these moments of the climb
+const STAND_UP := [0.10, 1.30]      # NOT in the study, mine: the part of the crouch-to-stand take played after the grab and climb (s)
+const STAND_UP_TIME := 0.60         # NOT in the study, mine: ... in this long (twice the take's own pace)
 const GRAB_NEAR := 0.60             # NOT in the study: it is begun from within this of the wall's face (m)
 # At a run the climbs do not end standing: he is handed back running, at the pace he came in at (Yasin, 26 Nov: "do
 # the running alternatives too ... most of the players will run from start to end in the game"; the study has
@@ -1359,6 +1361,14 @@ func _grab(t: float) -> Dictionary:
 			if u >= 1.0:
 				out["done"] = true
 				out["exit"] = m * ((_at(_fwd["walk"], float(mv["leaves"])) - _at(_fwd["walk"], float(mv["from"]))) / span)
+		elif ct >= float(GRAB["exit"]) and float(p.get("run_d", 0.0)) <= 0.0:
+			# ended crouched and not at a run: he stands up with the clip for it (his own crouch-to-stand take, at
+			# twice its pace), not by a blend back to standing
+			var u := clampf((t - t1 - float(GRAB["exit"])) / STAND_UP_TIME, 0.0, 1.0)
+			out.merge({"pos": p["end"], "clip": "crouch_up", "clip_t": lerpf(float(STAND_UP[0]), float(STAND_UP[1]), u), "air": false, "free": false, "landed": true, "base": 0.0}, true)
+			if u >= 1.0:
+				out["done"] = true
+				out["exit"] = Vector3.ZERO
 		elif ct >= float(GRAB["exit"]):
 			out["done"] = true
 			out["air"] = false
