@@ -139,6 +139,15 @@ const OVER := {"input": "climb_up", "res": "res://traversal/character/clips/KM_C
 # (hands_off: as his feet come down on the top. Yasin, 26 Nov: "hands are still very far off the wall once the
 # character gets raised, lift them off the wall once legs touch down". His arms are too short to keep them there
 # while he rises upright, so the trunk bends over them: hand_place.gd, within the study's "Lower back | 65 forward".)
+# Stage 12, the mantle (the study: "1.10 to 1.45 m | two-hand mantle with a small jump"; "Mantle (1.10 to 1.45 m):
+# stretch `Running Jump Climb` upward, or jump to a braced hang and climb, and judge by eye"; its own Kimodo mantles
+# "had no real ledge ... Pin them with arm IK"). The take is the climb of the climb over (KM_Climb_Up, onto 1.30 m,
+# inside the band), played to its end: standing on top at 2.90 s.
+const MANTLE_BAND := [1.10, 1.45]   # the study's band: more than the first, up to the second (m)
+const MANTLE := {"exit": 2.90,
+		"edge": 2.38,               # NOT in the study, found in the lab: where the take's edge is taken to be (m along); nearer,
+                                    # his knees were in the wall as he came up
+		"across": [1.38, 1.90]}     # NOT in the study, found in the lab: he is carried in over the top between these moments
 const OVER_BACK := 0.48             # NOT in the study, found in the lab: he sinks for the jump this far from the wall's face
                                     # (nearer, his knees were in the wall). The study: "slide and turn the body over a
                                     # short fixed time so it starts at the clip's native distance from the wall"
@@ -474,6 +483,8 @@ func _try_step_up(v: Vector3, wish: Vector3) -> bool:
 		return true
 	if top <= float(UP_BAND[0]) + MEASURED_WITHIN:
 		return false                                            # the body walks onto it by itself
+	if top > float(ON_BAND[1]) + MEASURED_WITHIN and top <= float(MANTLE_BAND[1]) + MEASURED_WITHIN and not bool(rec["thin"]):
+		return _try_mantle(v, wish, rec)
 	if top > float(ON_BAND[1]) + MEASURED_WITHIN:
 		refused = "too high to step or climb onto (%.2f m)" % top
 		return false
@@ -924,3 +935,103 @@ func _over(t: float) -> Dictionary:
 	return {"done": false, "pos": pos, "clip_t": ct, "clip": String(OVER["input"]), "air": false,
 			"yaw": lerp_angle(float(p["a_yaw0"]), float(p["yaw1"]), clampf(t / 0.2, 0.0, 1.0)),
 			"hand": [[0, (p["hands_at"] as Array)[0], hold], [1, (p["hands_at"] as Array)[1], hold]]}
+
+
+# ------------------------------------------------------------------------------------------------ stage 12: the mantle
+
+## Something deep of 1.10 to 1.45 m with room to stand on it: both hands on its top, up onto it, standing.
+func _try_mantle(v: Vector3, wish: Vector3, rec: Dictionary) -> bool:
+	var top := float(rec["top"])
+	if bool(rec["blocked"]) or not bool(rec["stand_room"]):
+		refused = "no room to stand on top"
+		return false
+	var m: Vector3 = -(rec["normal"] as Vector3)
+	if rad_to_deg(wish.normalized().angle_to(m)) > MOST_OFF_DEG:
+		refused = "not heading at it"
+		return false
+	var here := (rec["edge"] as Vector3 - body.global_position).dot(m)
+	var moving := v.length() > 0.5
+	var exit_t := float(MANTLE["exit"])
+	var edge_at := float(MANTLE["edge"])
+	var from_t := float(OVER["from"])
+	var hands_on := float(OVER["hands_on"])
+	if moving and here > OVER_NEAR:
+		# come at on the move: the take from its own run in, taken up where it is as far from its edge as he is
+		# from his. (Nearer than it is as it pushes off, he walks on up to the wall and it is made as from standing.)
+		if here > edge_at - _at(_o_fwd, 0.0) + v.length() * EARLY:
+			refused = "coming up to the mantle"
+			return false
+		if here < edge_at - _at(_o_fwd, from_t) - 0.05:
+			refused = "coming up to it"
+			return false
+		from_t = 0.0
+		while from_t < float(OVER["from"]) and edge_at - _at(_o_fwd, from_t) > here:
+			from_t += 1.0 / 60.0
+		# the hands come down on the top when he is near enough to it for his arms
+		hands_on = from_t
+		while hands_on < float(OVER["hands_off"]) and here - (_at(_o_fwd, hands_on) - _at(_o_fwd, from_t)) > OVER_BACK + 0.02:
+			hands_on += 1.0 / 60.0
+	elif moving:
+		moving = false
+	elif here > OVER_NEAR:
+		refused = "coming up to it"
+		return false
+	var inward := _at(_o_fwd, exit_t) - edge_at
+	if float(rec["depth"]) < inward + float(body.get(&"RADIUS")):
+		refused = "the top is not deep enough to stand on"
+		return false
+	var feet := body.global_position
+	var ground := float(rec["ground"])
+	var end := feet + m * (here + inward)
+	end.y = ground + top
+	if not bool(detector.call(&"_fits", end, float(body.get(&"HEIGHT")))):
+		refused = "no room where he would end"
+		return false
+	var back := Vector3(feet.x, ground, feet.z) + m * (here - OVER_BACK)
+	if not moving and here < OVER_BACK and not bool(detector.call(&"_fits", back, float(body.get(&"HEIGHT")))):
+		refused = "no room behind him to jump up from"
+		return false
+	refused = ""
+	var left := Vector3.UP.cross(m).normalized()
+	var on_top := feet + m * (here + 0.04)                      # 4 cm in from its edge
+	on_top.y = ground + top + PALM
+	_plan = {"key": "mantle", "moving": moving, "a_from": Vector3(feet.x, ground, feet.z), "a_back": back, "a_yaw0": body.rotation.y,
+			"end": end, "top": top, "ground": ground, "m": m, "yaw1": atan2(-m.x, -m.z), "here": here, "from_t": from_t,
+			"exit_speed": 0.0, "hand": 2, "hands_on": hands_on,
+			"hands_at": [on_top + left * float(OVER["hand_side"]), on_top - left * float(OVER["hand_side"])]}
+	plays += 1
+	_up_record = {}
+	record = {}
+	body.call(&"begin_move", _mantle, String(OVER["input"]))
+	return true
+
+
+func _mantle(t: float) -> Dictionary:
+	var p := _plan
+	var m: Vector3 = p["m"]
+	var from_t := float(p["from_t"])
+	var exit_t := float(MANTLE["exit"])
+	var ct := minf(from_t + t, exit_t)
+	var a: Vector3 = p["a_from"]
+	var end: Vector3 = p["end"]
+	var pos: Vector3
+	var on := float(p["hands_on"])
+	var back: Vector3 = p["a_back"]
+	if bool(p["moving"]):
+		# the take's own travel, as far as the place the rise is finished from (OVER_BACK from the face)
+		back = a + m * minf(_at(_o_fwd, ct) - _at(_o_fwd, from_t), float(p["here"]) - OVER_BACK)
+	else:
+		# from standing against it: back to where the jump is made from
+		back = a.lerp(back, smoothstep(0.0, 0.2, t))
+	# up there, then in over the top once his knees and feet are above it (as the climb over)
+	pos = back.lerp(end, smoothstep(float(MANTLE["across"][0]), float(MANTLE["across"][1]), ct))
+	pos.y = float(p["ground"]) + float(p["top"]) * _at(_o_rise, ct)
+	var hold := clampf(minf((ct - on) / HAND_FADE + 1.0, (float(OVER["hands_off"]) - ct) / HAND_FADE + 1.0), 0.0, 1.0)
+	hold = hold * hold * (3.0 - 2.0 * hold)
+	var out := {"done": ct >= exit_t, "pos": pos, "clip_t": ct, "air": false,
+			"yaw": lerp_angle(float(p["a_yaw0"]), float(p["yaw1"]), clampf(t / 0.2, 0.0, 1.0)),
+			"hand": [[0, (p["hands_at"] as Array)[0], hold], [1, (p["hands_at"] as Array)[1], hold]]}
+	if ct >= exit_t:
+		out["pos"] = end
+		out["exit"] = Vector3.ZERO
+	return out

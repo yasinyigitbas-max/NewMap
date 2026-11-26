@@ -32,7 +32,7 @@ var reach := [0.0, 0.0]         # for the readout and the audit: how far each ar
 # Both hands held on a top he is climbing onto (the climb over): his arms are too short to keep them there as he
 # rises unless he bends over them, as a person does. The study's limit for it: "Lower back | 65 forward".
 const BEND_MOST_DEG := 65.0
-const BEND_RATE_DEG := 300.0    # NOT in the study: how fast the bend comes and goes (degrees a second)
+const BEND_RATE_DEG := 600.0    # NOT in the study: how fast the bend comes and goes (degrees a second)
 var bend_deg := 0.0             # how far the trunk is bent forward for the held hands (for the readout and the tests)
 var _spine := -1
 var _upper := [-1, -1]

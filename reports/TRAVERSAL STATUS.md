@@ -211,3 +211,18 @@ on the hands go on things: arm IK to the measured edge ("hands rest on the edge 
 **Open, known, not fixed:** the 26 audit lines; a stop from a walk ends feet together; the uphill stop take was
 made on the flat; the study's last foot 14 cm back from a kerb is not built; the cost of detection on a phone is not
 measured; triangle-mesh colliders are not tried with the detector (the course is boxes).
+
+## After trav52, 26 Nov 2026 (stages 10 to 12 built; read this after the checkpoint above)
+
+- **Stage 10, vault (thin, 0.50 to 1.40 m at Yasin's word):** at a run the one-hand vault (`Vault_1_Hand`, mirrored by
+  the foot forward); at a walk over 1.0 m the same vault slowed. Up to 1.0 m from standing or a walk: his Kimodo jump
+  (`KM_Jump_Over`, no hands). From standing against a thin wall of 1.0 to 1.40 m: the climb over (`KM_Climb_Up`, then
+  the step off of stage 8), his fallback ("vault over vault").
+- **Stage 11, climb on (deep, 0.50 to 1.10 m):** `Step_Onto_Platform` to 0.80 m, `Running_Jump_Climb` above.
+- **Stage 12, mantle (deep, 1.10 to 1.45 m):** `KM_Climb_Up` (onto 1.30 m), both hands held on the top until his feet
+  come down on it; the trunk bends over the hands (hand_place.gd, at most the study's 65 degrees). On the move the
+  hands are on the top for only about 0.13 s. `tests/test_stage12.gd`.
+- **Found, not looked into:** with a 65th station in the course the stage 1 random walk took another path and failed:
+  the body 0.30 m under the ground on the one-mesh floor (x 236, z -5), and 12 s pressed into the 0.4 m passage. The
+  station was taken out again (the native wall is built inside the stage 12 test), so the stage 1 test is as it was.
+- **Next in the study's order:** stage 13, standing grab and climb up (1.45 to 2.10 m).
