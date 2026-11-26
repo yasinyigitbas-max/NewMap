@@ -17,6 +17,9 @@ const MODEL := "res://traversal/character/player_v4_rooted.scn"
 const OUT := "res://traversal/character/library.res"
 const SKEL := "Skeleton3D"
 const MIRRORED := ["Female_Stop_Walking", "Run_To_Stop", "Left_Turn_90", "Walking_Turn_180", "Running_Turn_180", "Female_Start_Walking", "Idle_To_Sprint"]
+# Starts, stops and changes of gait are chosen "by which foot is forward" (the study, Stage 5): for these clips how far
+# the left ankle is ahead of the right, frame by frame, is noted on the animation ("lead", metres).
+const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Climb_Start", "KM_Climb_Stop"]
 const TURN_LEAST_DEG := 20.0        # a clip that turns less than this is not a turning clip: its root does not turn
 # In the air the body does the rising and the falling (the study: the body "alone decides where the character is"), so
 # the clip's own rise is taken out: between leaving the ground and landing the hips keep at most their take-off height.
@@ -94,9 +97,14 @@ func _initialize() -> void:
 			_fit(made, FIT[n], sk, n)
 		if STAIRS.has(n) or SLOPES.has(n):
 			_stairs(made, c, sk)
+		if LEADS.has(n):
+			made.set_meta(&"lead", _lead(made, sk))
 		lib.add_animation(n, made)
 		if MIRRORED.has(n):
-			lib.add_animation(n + "_M", _animation(c.call(&"mirrored", parents, rest, pair), n, stand.y))
+			var other := _animation(c.call(&"mirrored", parents, rest, pair), n, stand.y)
+			if LEADS.has(n):
+				other.set_meta(&"lead", _lead(other, sk))
+			lib.add_animation(n + "_M", other)
 	# The study: "`deterministic` is on by default, so include a RESET animation": the pose every blend starts from
 	var reset := Animation.new()
 	reset.length = 0.001
@@ -167,6 +175,7 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 			var u0 := float(f) / float(frames - 1)
 			var l0 := aim * (Vector3(hips[f].x, 0.0, hips[f].z) - start - dir * (total * u0))
 			mean_pos += Vector3(l0.x, hips[f].y, l0.z) / (frames - 1)
+	var furthest := 0.0
 	for f in frames:
 		var time := float(f) / fps
 		var u := float(f) / float(maxi(frames - 1, 1))
@@ -174,6 +183,12 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 		var root_pos := Vector3.ZERO
 		if total >= 0.02:
 			root_pos = dir * (total * u) if loop else dir * rel.dot(dir)
+			if LEADS.has(name):
+				# a start or a stop: the root only ever goes forward. Where the hips rock back as he comes to
+				# rest, that stays in the hips, over feet that do not move (taken by the root, it slid the planted
+				# feet forward 2.5 cm after a stop: the audit's stop.walk_slide).
+				furthest = maxf(furthest, rel.dot(dir))
+				root_pos = dir * furthest
 		var root_rot := Quaternion(Vector3.UP, yaw[f]) if turning else Quaternion.IDENTITY
 		var local := root_rot.inverse() * (aim * (rel - root_pos))
 		var y := hips[f].y
@@ -282,6 +297,24 @@ func _fit(a: Animation, how: Dictionary, sk: Skeleton3D, clip: String) -> void:
 				if rel.w < 0.0:
 					rel = -rel
 				a.track_set_key_value(tt, k, (trr * Quaternion.IDENTITY.slerp(rel, float(fit["toe"]))).normalized())
+
+
+## How far the left ankle is ahead of the right through a clip (metres, one figure a frame).
+func _lead(a: Animation, sk: Skeleton3D) -> PackedFloat32Array:
+	var out := PackedFloat32Array()
+	var t_hips := a.find_track(NodePath("%s:mixamorig_Hips" % SKEL), Animation.TYPE_POSITION_3D)
+	var frames := int(round(a.length / a.step)) + 1
+	for f in frames:
+		var time := f * a.step
+		var z := [0.0, 0.0]
+		for k in 2:
+			var x := Transform3D(Basis(_rot(a, "mixamorig_Hips", time)), a.position_track_interpolate(t_hips, time))
+			for bn: String in ["UpLeg", "Leg", "Foot"]:
+				var name := "mixamorig_%s%s" % [["Left", "Right"][k], bn]
+				x = x * Transform3D(Basis(_rot(a, name, time)), sk.get_bone_rest(sk.find_bone(name)).origin)
+			z[k] = x.origin.z
+		out.append(z[0] - z[1])
+	return out
 
 
 ## How far a rotation turns about the upright (radians).

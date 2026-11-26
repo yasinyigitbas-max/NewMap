@@ -64,7 +64,22 @@ const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling
 		"drop_walk": "KM_Ledge_Walk_Off", "drop_run": "KM_Ledge_Run_Off",
 		"stairs_up_walk": "Ascending_Stairs", "stairs_up_run": "KM_Stairs_Run_Up_D",
 		"stairs_down_walk": "KM_Stairs_Walk_Down", "stairs_down_run": "KM_Stairs_Run_Down",
-		"steep_up": "KM_Climb_Hard", "steep_down": "KMY_Down_Hands_Balance_Long"}
+		"steep_up": "KM_Climb_Hard", "steep_down": "KMY_Down_Hands_Balance_Long",
+		"start_walk": "Female_Start_Walking", "start_run": "Idle_To_Sprint",
+		"stop_walk": "Female_Stop_Walking", "stop_walk_m": "Female_Stop_Walking_M"}
+# Stage 5, starts and stops (Yasin, 26 Nov: "start walk, stop walk, start run ... needed. fit what we have into
+# here"). The study: "Build: start, stop and turn-on-the-spot clips, chosen by direction and by which foot is
+# forward." The body keeps its own speeds ("It alone decides where the character is"); a start is played by how far
+# he has gone and a stop by how far he still has to go, so the feet keep to the ground he really covers.
+# The clips (the study, Part 3): Female Start Walking 1.87 s / 1.71 m and Female Stop Walking 1.53 s / 1.49 m ("Start
+# Walking and Stop Walking are slow (about 3 s each) ... the "Female" pair is closer to that"); Idle To Sprint.
+# Only on ordinary ground: stairs and steep ground have their own clips.
+# The stop clip is NOT in use (26 Nov): Female Stop Walking brings the rear foot up beside the front one, and the
+# study has a walk stop "with the front leg stiffened and the rear foot left planted"; tried, it also slid the planted
+# feet 2.5 to 3 cm (1.5 without it; the study's bar is 2). A walk still stops as it did: the loop fading to standing.
+const STOP_CLIP := false
+const START_OVER := 1.35        # NOT in the study: a start is left for the loop once the body outruns the clip's
+const START_OVER_MORE := 0.3    # own end speed by this share, plus this (m/s)
 # Very steep ground (the body's "hands" band, over 35 degrees: the 45 degree ramp; OUTSIDE the study, kept at Yasin's
 # word, "Keep it, body in charge"). Yasin, 26 Nov: "steep slope up and down are supposed to use these animations,
 # open their hands to the sides just a bit in both", and then "no these clips were only for 45 degrees". Between 20
@@ -133,6 +148,13 @@ var _steep_up := true
 var _steep_phase := 0.0         # strides along the take
 var _steep_w := 0.0             # 0..1: a steep take is showing (for the arms)
 var _arms: SkeletonModifier3D
+var _sub := ""                  # "" (the loops), "start" or "stop": a start or stop clip is showing
+var _sub_in := ""               # which input of the tree it is
+var _let_go_at := -1.0
+var _stop_from := 0.0           # where in the stop clip it was taken up, and how far he then had left to go
+var _stop_left := 0.0
+var _gone := 0.0                # metres covered since the start began
+var _dist := {}                 # input -> metres its clip has covered, tick by tick (from its root's own travel)
 var hands: SkeletonModifier3D
 var _slope := 0.0               # the showing stair clip's own slope, eased in and out with it
 var _hips_fit := 0.0
@@ -167,6 +189,14 @@ func _ready() -> void:
 		_length[n] = a.length
 		var t := a.find_track(NodePath("%s:Root" % SKEL), Animation.TYPE_POSITION_3D)
 		_stride[n] = (a.position_track_interpolate(t, a.length) - a.position_track_interpolate(t, 0.0)).length()
+	for key: String in ["start_walk", "start_run", "stop_walk", "stop_walk_m"]:
+		var a := _lib.get_animation(ACTS[key])
+		var t := a.find_track(NodePath("%s:Root" % SKEL), Animation.TYPE_POSITION_3D)
+		var table := PackedFloat32Array()
+		var from := a.position_track_interpolate(t, 0.0)
+		for i in int(a.length * 60.0) + 1:
+			table.append(maxf(a.position_track_interpolate(t, i / 60.0).distance_to(from), table[i - 1] if i > 0 else 0.0))
+		_dist[key] = table
 	# the standing jump's lowest moment, from the clip: its dip ends there and its push begins
 	var ja := _lib.get_animation(String(JUMP["clip"]))
 	var jt := ja.find_track(NodePath("%s:mixamorig_Hips" % SKEL), Animation.TYPE_POSITION_3D)
@@ -285,9 +315,14 @@ func _make_tree() -> AnimationNodeBlendTree:
 		var node := AnimationNodeAnimation.new()
 		node.animation = n
 		node.use_custom_timeline = true
-		node.timeline_length = _length[n]
-		node.stretch_time_scale = false
-		node.start_offset = _phase_offset(n)
+		# Every loop is laid on a timeline one second long (one stride a second at scale 1), so that one moment of
+		# the timeline is the same point of the stride in all three. With each loop on its own length, setting the
+		# stride to a given foot (coming off the stairs, out of a start) set the three loops to three different
+		# points of their strides, and the run, a blend of two of them, came apart. (Yasin, 26 Nov, after trav22,
+		# the first build that set the stride: running "somehow broke".)
+		node.timeline_length = 1.0
+		node.stretch_time_scale = true
+		node.start_offset = _phase_offset(n) / float(_length[n])     # in timeline time: a share of the stride
 		node.loop_mode = Animation.LOOP_LINEAR
 		gait.add_blend_point(node, at, -1, n)
 		at += 1.0
@@ -403,7 +438,52 @@ func _physics_process(dt: float) -> void:
 	match _mode:
 		"ground":
 			var st := int(body.get(&"stairs"))
-			if not in_air and st != 0 and speed > 0.15:
+			var wish := (body.get(&"_wish") as Vector3).length()
+			var plain := not in_air and st == 0 and int(body.get(&"terrain")) == 0
+			# (the pace he was at when the stick was let go: a stop from a run is not a stop from a walk)
+			if wish > 0.05:
+				_let_go_at = -1.0
+			elif _let_go_at < 0.0:
+				_let_go_at = speed
+			if _sub != "" and not plain:
+				_sub = ""
+			if _sub != "":
+				_start_or_stop(dt, speed, wish)
+			elif plain and _act == "ground" and not _stair_on and not _steep_on:
+				if speed < 0.3 and wish > 0.05 and _moving < 0.5:
+					_sub = "start"
+					_sub_in = "start_run" if wish > RUN_FROM else "start_walk"
+					_gone = 0.0
+					_show(_sub_in, 0.0)
+				elif STOP_CLIP and wish < 0.05 and speed > 0.3 and _let_go_at <= RUN_FROM and _moving >= 1.0:
+					# a stop from a walk: when what he still has to cover fits in the clip, the clip or its mirror
+					# image, whichever has the same foot forward as he has now
+					var total: float = _dist["stop_walk"][_dist["stop_walk"].size() - 1]
+					var left := float(body.call(&"stop_distance"))
+					if left <= total:
+						# Taken up where the clip's feet are as far apart as his are now (among the moments from
+						# which the clip still has at least his stopping distance to go), so the feet are not
+						# pulled to a new spacing as it comes in; from there it runs to its end as he covers
+						# what he has left. (Taken up by distance alone, the planted feet slid 2.5 cm.)
+						var lead_clip: PackedFloat32Array = _lib.get_animation(ACTS["stop_walk"]).get_meta(&"lead", PackedFloat32Array())
+						var now := _lead_now()
+						var latest := _time_for("stop_walk", total - left)
+						var t := latest
+						var best := INF
+						for i in int(latest * 30.0) + 1:
+							var gap := absf(absf(lead_clip[mini(i, lead_clip.size() - 1)]) - absf(now))
+							if gap <= best:
+								best = gap
+								t = i / 30.0
+						var clip_left: bool = lead_clip[mini(int(t * 30.0), lead_clip.size() - 1)] > 0.0
+						_sub = "stop"
+						_sub_in = "stop_walk" if clip_left == (now > 0.0) else "stop_walk_m"
+						_stop_from = t
+						_stop_left = maxf(left, 0.01)
+						_show(_sub_in, t)
+			if _sub != "":
+				pass
+			elif not in_air and st != 0 and speed > 0.15:
 				_steep_on = false
 				_stairs(dt, st, speed)
 			elif not in_air and int(body.get(&"terrain")) == 2 and speed > 0.1 and _steep_ahead():
@@ -416,11 +496,12 @@ func _physics_process(dt: float) -> void:
 					# and stepped again. Yasin, 26 Nov: "we take 1 more step after finishing the stairs".)
 					var a := _lib.get_animation(ACTS[_act])
 					var since_left := fposmod(_stair_phase - _phase_offset(ACTS[_act]) / a.length, 1.0)
-					tree.set(&"parameters/gait_seek/seek_request", since_left * float(_length[WALK]))
+					tree.set(&"parameters/gait_seek/seek_request", since_left)
 				_stair_on = false
 				_steep_on = false
 				_show("ground", 0.0)
 			if in_air:
+				_sub = ""
 				_stair_on = false
 				_steep_on = false
 				# off an edge on foot: the step-off or run-off clip while its own fall lasts
@@ -584,6 +665,59 @@ func _stairs(dt: float, st: int, speed: float) -> void:
 	_show(input, fposmod(_stair_phase, 1.0) * a.length)
 
 
+## How far the left ankle is ahead of the right in the pose the tree has just made (metres).
+func _lead_now() -> float:
+	return skel.get_bone_global_pose(_foot_i[0]).origin.z - skel.get_bone_global_pose(_foot_i[1]).origin.z
+
+
+## The moment a start or stop clip has covered `d` metres.
+func _time_for(input: String, d: float) -> float:
+	var table: PackedFloat32Array = _dist[input]
+	for i in table.size():
+		if table[i] >= d:
+			return i / 60.0
+	return (table.size() - 1) / 60.0
+
+
+## Back to the loops, on the foot he has forward (the left furthest forward is where every loop begins).
+func _to_loops() -> void:
+	_sub = ""
+	tree.set(&"parameters/gait_seek/seek_request", 0.0 if _lead_now() > 0.0 else 0.5)
+	_show("ground", 0.0)
+
+
+## A start or a stop clip, moved on by the ground the body covers.
+func _start_or_stop(dt: float, speed: float, wish: float) -> void:
+	var a := _lib.get_animation(ACTS[_sub_in])
+	var table: PackedFloat32Array = _dist[_sub_in]
+	if _sub == "start":
+		if wish < 0.05:
+			_to_loops()         # let go again: the loops (and from them the standing pose) take over
+			return
+		_gone += speed * dt
+		_act_t = maxf(_act_t, _time_for(_sub_in, _gone))
+		var n := table.size()
+		var end_speed := (table[n - 1] - table[maxi(n - 13, 0)]) / 0.2
+		if _act_t >= a.length - 0.12 or speed > end_speed * START_OVER + START_OVER_MORE:
+			_to_loops()
+		else:
+			_seek()
+	else:
+		if wish > 0.05:
+			_to_loops()         # pressed again mid-stop: back into the stride on the foot he has forward
+			return
+		if speed > 0.05:
+			var done := 1.0 - float(body.call(&"stop_distance")) / _stop_left
+			_act_t = maxf(_act_t, lerpf(_stop_from, _time_for(_sub_in, table[table.size() - 1]), clampf(done, 0.0, 1.0)))
+		else:
+			_act_t += dt        # the body is at rest: the clip settles him over his feet
+		if _act_t >= a.length - 0.02:
+			_sub = ""
+			_show("ground", 0.0)
+		else:
+			_seek()
+
+
 ## Is the ground one walking step ahead of him still very steep? (A ray down, where that step would land.)
 func _steep_ahead() -> bool:
 	var v: Vector3 = body.get(&"hvel")
@@ -625,7 +759,9 @@ func _ground(dt: float, speed: float) -> void:
 	# (while the walk's stride is being lengthened the root's own travel is short of the ground covered by design)
 	var natural := _measured if (_measured > 0.0 and g.x > 0.0) else _natural
 	_scale = clampf(maxf(speed, 0.3) / maxf(natural, 0.05), SCALE_LEAST, SCALE_MOST)
-	tree.set(&"parameters/gait_speed/scale", _scale)
+	# (the tree's own scale is in strides a second: the pace over the blend's own stride time)
+	var own_time: float = lerpf(_length[WALK], _length[JOG], g.x) if g.x <= 1.0 else lerpf(_length[JOG], _length[RUN], g.x - 1.0)
+	tree.set(&"parameters/gait_speed/scale", _scale / own_time)
 
 
 ## Where on the gait blend (0 = walk, 1 = jog, 2 = run) the body's speed belongs, and the speed that blend covers
