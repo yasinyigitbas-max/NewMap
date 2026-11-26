@@ -29,6 +29,12 @@ var ik: Array[SkeletonModifier3D] = []
 var hips_down := 0.0            # how far the hips must come down for a reaching hand to get there (m): read by foot_place.gd
 var reach := [0.0, 0.0]         # for the readout and the audit: how far each arm's reach is on (0..1)
 
+# Both hands held on a top he is climbing onto (the climb over): his arms are too short to keep them there as he
+# rises unless he bends over them, as a person does. The study's limit for it: "Lower back | 65 forward".
+const BEND_MOST_DEG := 65.0
+const BEND_RATE_DEG := 300.0    # NOT in the study: how fast the bend comes and goes (degrees a second)
+var bend_deg := 0.0             # how far the trunk is bent forward for the held hands (for the readout and the tests)
+var _spine := -1
 var _upper := [-1, -1]
 var _fore := [-1, -1]
 var _hand := [-1, -1]
@@ -42,6 +48,7 @@ func bind(sk: Skeleton3D) -> void:
 		_fore[f] = sk.find_bone("mixamorig_%sForeArm" % side[f])
 		_hand[f] = sk.find_bone("mixamorig_%sHand" % side[f])
 		_len[f] = sk.get_bone_rest(_fore[f]).origin.length() + sk.get_bone_rest(_hand[f]).origin.length()
+	_spine = sk.find_bone("mixamorig_Spine")
 
 
 func _process_modification_with_delta(dt: float) -> void:
@@ -50,6 +57,28 @@ func _process_modification_with_delta(dt: float) -> void:
 		return
 	var xf := sk.global_transform
 	var inv := xf.affine_inverse()
+	# both hands held: bend the trunk forward just far enough for both arms to reach, before the arms are solved
+	var want_bend := 0.0
+	if _spine >= 0 and float(hold_w[0]) > 0.0 and float(hold_w[1]) > 0.0:
+		var pivot := sk.get_bone_global_pose(_spine).origin
+		var best := INF
+		for d in range(0, int(BEND_MOST_DEG) + 1, 1):
+			var rot := Basis(Vector3.RIGHT, deg_to_rad(float(d)))
+			var short_by := 0.0
+			for f in 2:
+				var sh := pivot + rot * (sk.get_bone_global_pose(_upper[f]).origin - pivot)
+				short_by = maxf(short_by, sh.distance_to(inv * (hold_at[f] as Vector3)) - float(_len[f]) * STRAIGHT)
+			if short_by < best - 0.001:
+				best = short_by
+				want_bend = float(d)
+			if short_by <= 0.0:
+				break
+		want_bend *= minf(float(hold_w[0]), float(hold_w[1]))
+	bend_deg = move_toward(bend_deg, want_bend, BEND_RATE_DEG * dt)
+	if _spine >= 0 and bend_deg > 0.01:
+		var g := sk.get_bone_global_pose(_spine)
+		g.basis = Basis(Vector3.RIGHT, deg_to_rad(bend_deg)) * g.basis
+		sk.set_bone_global_pose(_spine, g)
 	var grounded := int(body.get(&"state")) == 0
 	var short := -1.0           # the most any reaching arm is short of its ground (m; below 0 = none is)
 	var reaching := false

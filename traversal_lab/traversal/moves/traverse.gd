@@ -135,11 +135,10 @@ const BEYOND := 0.45                # NOT in the study: how far past the middle 
 # the height of the top, feet on top and nearly upright by 2.3 s, standing by 2.6 s, 1.30 m up. It is taken up at
 # 0.85 s, as he pushes off: its run in is not played (begun earlier, standing at the wall, its stride was in the wall).
 const OVER := {"input": "climb_up", "res": "res://traversal/character/clips/KM_Climb_Up.res",
-		"from": 0.85, "hands_on": 0.85, "top": 2.30, "hand_side": 0.24}
-const OVER_REACH := 1.03            # NOT in the study, measured in the lab: his wrists reach the top while his feet are at least
-                                    # this far under it; higher than that his arms are too short and the hands let go. So over
-                                    # a 1.40 m wall they bear on it for about 0.1 s, and over a 1.10 m wall NOT AT ALL
-const OVER_REACH_FADE := 0.10       # NOT in the study: ... over this much more rise (m)
+		"from": 0.85, "hands_on": 0.85, "hands_off": 1.45, "top": 2.30, "hand_side": 0.24}
+# (hands_off: as his feet come down on the top. Yasin, 26 Nov: "hands are still very far off the wall once the
+# character gets raised, lift them off the wall once legs touch down". His arms are too short to keep them there
+# while he rises upright, so the trunk bends over them: hand_place.gd, within the study's "Lower back | 65 forward".)
 const OVER_BACK := 0.48             # NOT in the study, found in the lab: he sinks for the jump this far from the wall's face
                                     # (nearer, his knees were in the wall). The study: "slide and turn the body over a
                                     # short fixed time so it starts at the clip's native distance from the wall"
@@ -920,8 +919,7 @@ func _over(t: float) -> Dictionary:
 	var mid: Vector3 = p["mid"]
 	var pos := Vector3(lerpf(a.x, mid.x, u), float(p["ground"]) + float(p["top"]) * up, lerpf(a.z, mid.z, u))
 	# both hands on the top from as he sinks for the jump until he has risen past the reach of his arms
-	var under := float(p["top"]) * (1.0 - up)
-	var hold := clampf(minf((ct - float(OVER["hands_on"])) / HAND_FADE + 1.0, (under - OVER_REACH) / OVER_REACH_FADE + 1.0), 0.0, 1.0)
+	var hold := clampf(minf((ct - float(OVER["hands_on"])) / HAND_FADE + 1.0, (float(OVER["hands_off"]) - ct) / HAND_FADE + 1.0), 0.0, 1.0)
 	hold = hold * hold * (3.0 - 2.0 * hold)
 	return {"done": false, "pos": pos, "clip_t": ct, "clip": String(OVER["input"]), "air": false,
 			"yaw": lerp_angle(float(p["a_yaw0"]), float(p["yaw1"]), clampf(t / 0.2, 0.0, 1.0)),
