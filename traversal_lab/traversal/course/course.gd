@@ -38,6 +38,8 @@ func _ready() -> void:
 		_overhang(c)
 	_floor_pieces()
 	_floor_one_mesh()
+	# Stage 7 ("a wall with no headroom above it is reported as blocked"): added last, so no other station moves
+	_wall_under_roof(1.00, 0.60)
 
 
 # ---------------------------------------------------------------- building blocks
@@ -133,6 +135,15 @@ func _wall(h: float, depth: float) -> void:
 	_station(kind, "%s %.2f m" % ["thin wall" if depth < 1.0 else "deep wall", h], {"top": h,
 			"depth": depth, "edge_z": -3.0, "label_y": maxf(h + 0.8, 2.2),
 			"probe": Vector3(x, 0.0, -3.0 - depth * 0.5)})
+
+
+## A deep wall with a roof slab `clear` above its top: nobody fits on it.
+func _wall_under_roof(h: float, clear: float) -> void:
+	var x := _x
+	_box(Vector3(x, h * 0.5, -3.0 - 1.25), Vector3(3.0, h, 2.5))
+	_box(Vector3(x, h + clear + 0.1, -3.0 - 1.25), Vector3(3.0, 0.2, 2.5))
+	_station("wall_roofed", "deep wall %.2f m, roof %.2f m above it" % [h, clear], {"top": h, "depth": 2.5, "clear": clear,
+			"edge_z": -3.0, "label_y": h + clear + 1.0, "probe": Vector3(x, 0.0, -4.25)})
 
 
 func _gap(w: float) -> void:

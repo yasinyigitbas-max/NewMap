@@ -38,7 +38,7 @@ func _run() -> void:
 	var course: Node3D = lab.get(&"course")
 	var st: Array = course.get(&"stations")
 	var labels := course.find_children("*", "Label3D", true, false).size()
-	ok(st.size() == 63, "63 stations built (got %d)" % st.size())
+	ok(st.size() == 64, "64 stations built (got %d)" % st.size())      # 63 until the roofed wall of stage 7
 	ok(labels == st.size(), "every station has its label (%d labels)" % labels)
 	var kinds := {}
 	var bad: Array[String] = []
@@ -52,6 +52,14 @@ func _run() -> void:
 			var w := (r["position"] as Vector3).x - (l["position"] as Vector3).x if l and r else -1.0
 			if absf(w - float(s["width"])) > 0.005:
 				bad.append("%s measures %.3f" % [s["label"], w])
+		elif k == "wall_roofed":
+			# measured from the side, under its roof: the wall's own top, and the gap up to the roof
+			var up := ray(Vector3(p.x, float(s["top"]) + 0.02, p.z), Vector3(p.x, 5.0, p.z))
+			var down := ray(Vector3(p.x, float(s["top"]) + 0.02, p.z), Vector3(p.x, -1.0, p.z))
+			var c := float((up["position"] as Vector3).y) - float(s["top"]) if up else -1.0
+			var t := float((down["position"] as Vector3).y) if down else -1.0
+			if absf(c - float(s["clear"])) > 0.005 or absf(t - float(s["top"])) > 0.005:
+				bad.append("%s measures top %.3f, roof %.3f above it" % [s["label"], t, c])
 		elif k == "overhang":
 			var u := ray(Vector3(p.x, 0.05, p.z), Vector3(p.x, 5.0, p.z))
 			var c := float((u["position"] as Vector3).y) if u else -1.0
