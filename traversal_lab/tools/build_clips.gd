@@ -12,10 +12,12 @@ const OUT := "res://traversal/character/clips"
 # Generated (Kimodo) clips are a few seconds of movement, not a loop: one stride is cut out of each, from the
 # moment the left foot comes down to the next time it does, and its end is eased into its start.
 const CUTS := {"KM_Stairs_Walk_Down": [0.67, 1.53], "KM_Stairs_Run_Up": [0.67, 1.33], "KM_Stairs_Run_Down": [1.27, 1.93],
-		"KM_Slope_Up_45": [2.33, 3.13], "KM_Slope_Down_45": [2.47, 3.13],
-		"KM_Slope_Up_30": [2.07, 2.87], "KM_Stairs_Run_Up_D": [1.13, 1.80],
-		"KM_Steep_Walk_Down": [2.53, 3.20]}
-const LOOPS := ["Standing_Idle", "Walking_4", "Walking", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
+		"KM_Slope_Down_30": [3.20, 3.93], "KM_Slope_Down_Run": [2.47, 2.93], "KM_Stairs_Run_Up_D": [1.13, 1.80],
+		# one take, two of its strides: the 1.00 m stride it takes where its hill is 28 degrees, and the 0.91 m
+		# stride where it is 37 degrees (the longest strides any climbing take made at those slopes)
+		"KM_Climb": [1.60, 2.13], "KM_Climb_Steep": [3.27, 4.07]}
+const AUTO_CUT := ["KM_Walk", "KM_Run"]
+const LOOPS := ["Standing_Idle", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
 
 
 func _skeleton(n: Node) -> Skeleton3D:
@@ -84,6 +86,32 @@ func _bake(name: String, src: Skeleton3D, tgt: Skeleton3D, names: PackedStringAr
 	var t_rest: Array[Basis] = []
 	for b in nb:
 		t_rest.append(tgt.get_bone_global_rest(b).basis.orthonormalized())
+	# His T-pose is not a true T-pose in the legs: the thighs splay out (hip joints 0.21 m apart, ankles 0.36 m) and
+	# the feet turn out. Every clip is a set of turns FROM a T-pose with the legs straight down and the feet pointing
+	# ahead, so on him every clip came out bow-legged, feet apart and toes out (Yasin, 26 Nov: "legs are too spread
+	# apart", then "knees are bent outwards", "feet pointing outwards too much"). Here each leg bone's T-pose is
+	# first turned so that it points where a true T-pose has it: thigh and shin straight down, foot and toe in the
+	# plane that runs fore and aft.
+	for side: String in ["Left", "Right"]:
+		for part: String in ["UpLeg", "Leg", "Foot", "ToeBase"]:
+			var b := tgt.find_bone("mixamorig_%s%s" % [side, part])
+			var child := -1
+			for k in tgt.get_bone_children(b):
+				child = k
+			if b < 0 or child < 0:
+				continue
+			var now := (tgt.get_bone_global_rest(child).origin - tgt.get_bone_global_rest(b).origin).normalized()
+			var want := Vector3(0.0, now.y, now.z).normalized()
+			if part in ["UpLeg", "Leg"]:
+				# straight down, and in by what brings the ankles to the study's step width: people's feet land
+				# 0.08 to 0.10 m apart, and his hip joints are 0.21 m apart
+				var hip_x := absf(tgt.get_bone_global_rest(tgt.find_bone("mixamorig_%sUpLeg" % side)).origin.x)
+				var leg_len := tgt.get_bone_global_rest(tgt.find_bone("mixamorig_%sUpLeg" % side)).origin.y - tgt.get_bone_global_rest(tgt.find_bone("mixamorig_%sFoot" % side)).origin.y
+				var inward := atan2(hip_x - 0.07, leg_len)
+				want = Vector3(-sin(inward) * signf(tgt.get_bone_global_rest(b).origin.x), -cos(inward), 0.0)
+			var axis := now.cross(want)
+			if axis.length() > 0.0001:
+				t_rest[b] = Basis(axis.normalized(), now.angle_to(want)) * t_rest[b]
 	var s_hips := src.find_bone("mixamorig_Hips")
 	var t_hips := tgt.find_bone("mixamorig_Hips")
 	var leg := func(s: Skeleton3D) -> float:
@@ -160,9 +188,24 @@ func _bake(name: String, src: Skeleton3D, tgt: Skeleton3D, names: PackedStringAr
 			if foot_fwd[f] > foot_fwd[f - 1] and foot_fwd[f] >= foot_fwd[f + 1] and foot_fwd[f] > 0.05:
 				line += "  L %.2f s (hips z %.2f y %.2f)" % [f / fps, hips[f].z, hips[f].y]
 		print("    left foot furthest forward at:" + line)
-	if CUTS.has(name):
-		var f0 := int(round(float(CUTS[name][0]) * fps))
-		var f1 := int(round(float(CUTS[name][1]) * fps))
+	var cut: Array = CUTS.get(name, [])
+	if name in AUTO_CUT:
+		# one stride from the middle of the clip: between two moments the left foot is furthest forward
+		var peaks: Array[int] = []
+		for f in range(2, frames - 2):
+			if foot_fwd[f] > foot_fwd[f - 1] and foot_fwd[f] >= foot_fwd[f + 1] and foot_fwd[f] > foot_fwd[f - 2] and foot_fwd[f] > 0.0:
+				if peaks.is_empty() or f - peaks[peaks.size() - 1] > 8:
+					peaks.append(f)
+		var best := -1
+		for i in peaks.size() - 1:
+			if best < 0 or absf((peaks[i] + peaks[i + 1]) * 0.5 - frames * 0.5) < absf((peaks[best] + peaks[best + 1]) * 0.5 - frames * 0.5):
+				best = i
+		if best >= 0:
+			cut = [peaks[best] / fps, peaks[best + 1] / fps]
+			print("    %s: stride cut at %.2f to %.2f s" % [name, cut[0], cut[1]])
+	if not cut.is_empty():
+		var f0 := int(round(float(cut[0]) * fps))
+		var f1 := int(round(float(cut[1]) * fps))
 		rot = rot.slice(f0 * nb * 4, (f1 + 1) * nb * 4)
 		hips = hips.slice(f0, f1 + 1)
 		yaw = yaw.slice(f0, f1 + 1)
@@ -189,7 +232,7 @@ func _bake(name: String, src: Skeleton3D, tgt: Skeleton3D, names: PackedStringAr
 		yaw[f] -= y0
 	cd.set(&"yaw", yaw)
 	var tv := Vector3(hips[frames - 1].x - hips[0].x, 0.0, hips[frames - 1].z - hips[0].z)
-	var is_loop := name in LOOPS or CUTS.has(name)
+	var is_loop := name in LOOPS or not cut.is_empty()
 	cd.set(&"loop", is_loop)
 	cd.set(&"travel", tv)
 	cd.set(&"speed", tv.length() / maxf(float(frames - 1) / fps, 0.001))
@@ -198,5 +241,5 @@ func _bake(name: String, src: Skeleton3D, tgt: Skeleton3D, names: PackedStringAr
 		for f in frames:
 			if foot_fwd[f] > foot_fwd[best]:
 				best = f
-		cd.set(&"phase_offset", 0.0 if CUTS.has(name) else best / fps)
+		cd.set(&"phase_offset", 0.0 if not cut.is_empty() else best / fps)
 	return cd

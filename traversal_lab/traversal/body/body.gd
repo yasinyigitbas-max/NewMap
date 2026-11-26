@@ -63,6 +63,7 @@ const STEP_TIME_RUN_DOWN := 0.22    # NOT in the study: 1.3 m/s; a value to tune
 # 91 ms after contact, but no time to recover. These follow his landing clips and are values to tune by eye.
 const LAND_HOLD_SOFT := 0.30    # NOT in the study
 const LAND_HOLD_HARD := 0.90    # NOT in the study (Hard Landing has 1.0 s left after the feet touch)
+const HARD_DROP := 1.0          # the study: a drop of 1.0 to 2.0 m is "a heavy landing"
 const TREAD := 0.28             # a tread is at least 0.28 m (US accessible); used until the stairs have been measured
 const REVERSE_SPEED := 2.0      # NOT in the study: the speed he may carry into the turn-round; a value to tune by eye
 const RISE_SPEED := 2.4         # how fast the feet follow ground that rises (m/s): 4 cm a tick
@@ -235,7 +236,15 @@ func _physics_process(dt: float) -> void:
 	if stairs != 0 and _wish.length() > 0.05:
 		_wish = _wish.limit_length(_stair_speed(_wish.length() > WALK + 0.1))
 	elif state == State.GROUND and _wish.length() > 0.05:
-		_wish = _wish.limit_length(_slope_speed(_wish.length() > WALK + 0.1))
+		var running := _wish.length() > WALK + 0.1
+		# A gentle downhill carries him along (Yasin, 26 Nov: "going down hill doesn't reward any speed"). Tobler's
+		# hiking function, fitted to real walking: speed = 6 e^(-3.5 |slope + 0.05|) km/h, which peaks at 6 km/h on
+		# a 2.9 degree descent against 5 km/h on the flat, and is back to flat speed at a 5.7 degree descent.
+		if grade < 0.0:
+			var gain := exp(-3.5 * absf(grade + 0.05)) / exp(-3.5 * 0.05)
+			if gain > 1.0:
+				_wish *= gain
+		_wish = _wish.limit_length(_slope_speed(running))
 	# The mountaineering sources say "face inwards for steep slopes, but otherwise face out". That was built and
 	# Yasin turned it down with the crawl (26 Nov: "we look like a small baby on both up and down"): he comes down
 	# facing out, crouched, a hand back on the slope.
@@ -420,8 +429,13 @@ func _find_stairs(dt: float) -> void:
 			_since_edge = (global_position - stair_edge).dot(dir)
 		stairs = way
 		stair_dir = dir
-	elif stairs != 0 and _since_edge > stair_tread * 1.3:
-		stairs = 0       # no edge for more than a step: the stairs have ended
+	elif stairs != 0:
+		# the stairs have ended when the ground ahead is level with the ground he is on (he has crossed the last
+		# edge), or when no edge has come for more than a step. (Waiting a whole step after the top, as it did at
+		# first, had him still climbing on the landing: Yasin, 26 Nov.)
+		var level_ahead := not a.is_empty() and absf((a["position"] as Vector3).y - y) < 0.03
+		if (level_ahead and _since_edge > 0.06) or _since_edge > stair_tread * 1.3:
+			stairs = 0
 
 
 ## How steep the ground straight under him is, and which way of going that calls for. (A ray, not the rounded
@@ -568,7 +582,7 @@ func _update_ground(dt: float) -> void:
 			var drop := _air_peak - ground_y
 			# after a real drop he gathers himself before moving off (a jump on the level is run out of)
 			if not (from_jump and drop < 0.9):
-				land_hold = LAND_HOLD_HARD if drop >= 1.5 else (LAND_HOLD_SOFT if drop >= 0.35 else 0.0)
+				land_hold = LAND_HOLD_HARD if drop >= HARD_DROP else (LAND_HOLD_SOFT if drop >= 0.35 else 0.0)
 			landed.emit(drop)
 			from_jump = false
 		else:

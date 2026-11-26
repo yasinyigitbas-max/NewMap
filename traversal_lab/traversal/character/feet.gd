@@ -166,7 +166,8 @@ func solve(rot: Array[Quaternion], hips: Vector3, dt: float, on_ground: bool) ->
 		var over_ground := (Vector2(ball.x - (_was[f] as Vector3).x, ball.z - (_was[f] as Vector3).z).length() / dt) if _was_ok else 0.0
 		_was[f] = ball
 		var pace := (body.get(&"hvel") as Vector3).length()
-		var slow := over_ground < (maxf(0.9, pace * PLANT_SPEED * 1.8) if contact[f] else maxf(0.5, pace * PLANT_SPEED))
+		# (a planted foot is let go only when it clearly moves off: a generated clip's standing foot can creep)
+		var slow := over_ground < (maxf(1.2, pace * 1.1) if contact[f] else maxf(0.5, pace * PLANT_SPEED))
 		contact[f] = low and slow
 		# (1) a planted foot stays where it was planted
 		if contact[f] and pinning:

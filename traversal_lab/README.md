@@ -100,6 +100,36 @@ Built early, out of order, because a bare capsule with no jump could not be judg
 - **Mixamo's two going-down clips are damaged** (on X Bot and on him alike): the hips go down 0.5 m but no foot ever
   goes below the floor, so the legs fold into a squat. They are no longer used.
 
+### The study audit (26 Nov)
+Yasin: "Why am I still finding things that don't follow the study? ... MAKE DAMN SURE YOU TAKE THE STUDY INTO
+CONSIDERATION AT EVERY STEP! IF A MIXAMO CLIP VIOLATES IT EVEN IN IDLES, CHANGE IT WITH A KIMODO CLIP".
+`tests/test_study.gd` measures what the build shows, on the finished skeleton after blending and IK, against the
+study's own numbers: speed, steps a minute, stride, each foot's share on the ground, both-feet-down share or flight,
+rise and fall and sway of the hips, thigh swing, knee bend in swing and as weight lands, pelvis turn and drop, elbow
+bend, arms against legs, feet apart sideways, and that standing is never still. It is run with the other tests.
+
+What it found and what was done:
+| Found | Study | Now |
+|---|---|---|
+| Mixamo walk: 108 steps a minute | 115 to 120 | Kimodo walk: passes |
+| both feet down 5 % of the stride | 10 to 12 | passes |
+| hips rise and fall 5.6 cm | 2.7 to 4.8 | passes |
+| thigh 35 deg forward | 25 | passes |
+| knee bends 30 deg as weight lands | about 20 | passes |
+| feet 0.32 m apart sideways | 0.08 to 0.10 | 0.08 m |
+| heavy landing from 1.5 m | from 1.0 m | 1.0 m |
+| no gain going gently downhill | Tobler: fastest on a 2.9 degree descent, 6 km/h against 5 on the flat | up to +19 % |
+| run: knee peaks at 125 deg in swing | 94 to 119 | STILL 125 (Mixamo run; Kimodo's fastest run was 2.8 m/s, too slow to stand in) |
+
+- The two Mixamo walks are gone. Six Kimodo walks were auditioned through the audit; the one in use passes all of it.
+- **His legs.** His T-pose has the thighs splayed and the feet turned out, and every clip is a set of turns from a true
+  T-pose, so every clip came out bow-legged and toes out. First tried pulling the feet in with the IK, which left the
+  knees out (Yasin: "knees are bent outwards because you pulled only the feet together"). Now each leg bone's T-pose
+  is corrected at the bake (`tools/build_clips.gd`): thigh and shin straight and angled in to the study's step
+  width, foot and toe pointing ahead. The feet-only pull is off.
+- Still open against the study: the run's knee (above); planted feet drift 2.7 to 3.2 cm at a walk with the Kimodo
+  walk (bar 2); stairs, slopes, starts, stops and idles are not yet in the audit, only walk, run and standing.
+
 ### Steep ground (26 Nov)
 Yasin: "we should be able to climb even higher than 35-40 degrees, there are mountain climbers and trekkers who do
 that all the time". Researched first (`research_notes/Hybrid character traversal study/steep_slopes.md`), then the
@@ -122,10 +152,21 @@ clips were ordered from Kimodo with prompts written from it.
   - 20 to 35 degrees up: a take that rises at 29 degrees with long strides. Down: one that drops at 27 degrees.
   - 35 to 50 degrees up: a take that rises at 44 degrees, on foot. Down: one that drops at 27 degrees, facing
     downhill (no take came down steeper facing forward; Kimodo mostly backs down a hill).
-  - The crawl and the facing-in descent are out. **Hands: not achieved.** No take put a hand on the ground, whatever
-    the wording; that needs arm IK onto the slope at chosen steps, which is not built.
+  - The crawl and the facing-in descent are out. No take put a hand on the ground, whatever the wording (see the
+    third pass for the arm IK that does it).
   - On ground steeper than the ankle bends (23 degrees here; one measured ankle stopped at 24) the heel comes off
     and he stands on the ball of the foot.
+- **Third pass, 26 Nov** (Yasin: "zero forward lean, extremely small steps making it look like this is a joke rather
+  than a hard walk"; downhill "he takes such little steps that it's both unreal and impractical"). I had chosen takes
+  by the slope they climbed and nothing else. Every stride of every climbing take was then measured: strides really
+  do shorten as the hill steepens (1.00 m at 28 degrees, 0.91 m at 37, 0.4 to 0.7 m at 45 and over), and the longest
+  are now used, played slowly by the ground covered: about 80 steps a minute on the 30 degree ramp. Downhill uses a
+  take with a 1.0 m stride (the first had 0.62 m, about 236 steps a minute at his pace); with run held, one that
+  jogs down.
+  - The trunk leans with the slope: 0.9 of the slope over 8 degrees going up (20 degrees on the 30 degree ramp, 33
+    on the 45), a quarter of it back going down. The study says it leans and that it grows; the amounts are ours.
+  - On the 45 degree ramp going up, once a stride he bends and puts his left hand on the slope ahead (arm IK,
+    Godot's `TwoBoneIK3D`). One hand only so far.
 - What was learned about wording Kimodo: one sentence (a full stop starts a new motion), no decimal points, and SHORT.
   The long descriptive prompts did worst: four of four "30 degree hillside" takes stood on the spot. Every take is
   measured (slope climbed, speed, foot sliding) before it is used; the numbers are in `kimodo_clips.csv`.

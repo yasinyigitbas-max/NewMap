@@ -6,7 +6,11 @@ const Feet := preload("res://traversal/character/feet.gd")
 const DIR := "res://traversal/character/clips/"
 const MODEL := "res://traversal/character/player_v4.scn"
 # the loops that make up moving on foot, slowest first (their speeds are read from the clips)
-const GAITS := ["Standing_Idle", "Walking_4", "Walking", "Running_3", "Running"]
+# The walk is a Kimodo take (26 Nov). The two Mixamo walks failed the study audit (tests/test_study.gd) on five
+# counts at 1.4 m/s: 108 steps a minute (study 115 to 120), both feet down 5 % of the stride (10 to 12), hips rising
+# and falling 5.6 cm (2.7 to 4.8), thigh 35 deg forward (25), knee bending 30 deg as weight lands (20). Six Kimodo
+# walks were auditioned through the same audit; this one passes all of those. Its own speed is 1.22 m/s.
+var GAITS := ["Standing_Idle", "KM_Walk", "Running_3", "Running"]
 const FADE := 0.20              # seconds to blend from one kind of motion to the next
 # the Jump clip: it dips to its lowest at 0.50 s, leaves the ground at 0.80 s and lands at 1.30 s (measured)
 const JUMP_LOW := 0.50
@@ -52,18 +56,34 @@ const STAIRS := {1: ["Ascending_Stairs", "KM_Stairs_Run_Up_D"], -1: ["KM_Stairs_
 # at 27 degrees; up 45 degrees, one that rises at 44 degrees; down 45 degrees, one that drops at 27 degrees (no take
 # came down steeper facing forward). A take made on the flat and fitted to a slope looked wrong (Yasin: "he pulls
 # his legs up as if stretching"), and the crawl was turned down ("we look like a small baby").
-const STEEP := {true: "KM_Slope_Up_30", false: "KM_Steep_Walk_Down"}
-const HANDS := {true: "KM_Slope_Up_45", false: "KM_Slope_Down_45"}
+# Downhill (Yasin, 26 Nov: "he takes such little steps that it's both unreal and impractical"): the first downhill
+# take had a 0.62 m stride, which at his downhill pace meant about 236 steps a minute. The research says downhill
+# "shortens stride and raises cadence", but gives no figure near that; uphill, 6 to 20 degrees cost 16 % of stride.
+# The take in use now has a 1.0 m stride and drops at 26 degrees; with run held, one that jogs down at 34 degrees.
+# Uphill (Yasin, 26 Nov, second look: "extremely small steps making it look like this is a joke rather than a hard
+# walk"): the takes were chosen by the slope they climbed and nothing else; their strides were 0.55 and 0.37 m. Every
+# stride of every climbing take was then measured. Real climbing strides do shorten with the slope (1.00 m at 28
+# degrees, 0.91 m at 37, 0.4 to 0.7 m at 45 and over), and the longest are used: slow, long, heavy steps.
+const STEEP := {true: "KM_Climb", false: "KM_Slope_Down_30"}
+const HANDS := {true: "KM_Climb_Steep", false: "KM_Slope_Down_30"}
+const STEEP_DOWN_RUN := "KM_Slope_Down_Run"
 # Walking or running off an edge (Yasin, 26 Nov: "looks stuck and frozen on air before landing, no limbs move to
 # balance itself"): Kimodo takes of stepping and of running off a ledge. [clip, leaves the edge, feet touch down]
 const DROP_WALK := ["KM_Ledge_Walk_Off", 2.10, 2.62]
 const DROP_RUN := ["KM_Ledge_Run_Off", 1.92, 2.72]
-const STANCE := 0.5             # the share of his sideways foot spread kept: 0.32 m becomes 0.16 m at a walk, 0.27 m
+const STANCE := 1.0             # the feet-only pull is off: the legs are put right at the bake instead (tools/build_clips.gd)
+const STANCE_FEET_ONLY := 0.32            # (0.5 at first; the audit measured 0.15 m at that, against the study's 0.08 to 0.10)
+const STANCE_WAS := 0.5             # the share of his sideways foot spread kept: 0.32 m becomes 0.16 m at a walk, 0.27 m
                                 # becomes 0.14 m at a run (people: 0.08 to 0.10 m; his thighs are thicker than most)
+const LEAN_UPHILL := 0.9        # NOT in the study: share of the slope (over 8 degrees) the trunk leans forward going up:
+                                # 20 degrees of lean on the 30 degree ramp, 33 on the 45
+const REACH_BEND_DEG := 22.0     # NOT in the study: the extra bend of the trunk while the hand goes down
+const LEAN_DOWNHILL := 0.25     # NOT in the study: and back, going down
 # Head: "people turn head first", about 15 deg into a curve and 15 to 30 deg of lead; the trunk does not lead
 const LOOK_MOST_DEG := 30.0
 const LOOK_RATE_DEG := 100.0    # well under the 137 to 272 deg/s measured for deliberate turns
-const HARD_DROP := 1.5          # drops from this height use the hard landing (the soft clip was a 1.03 m drop, the hard one 2.08 m)
+const HARD_DROP := 1.0          # the study: "0.30 to 1.0 m, step or hop off with a soft landing; 1.0 to 2.0 m, a heavy
+                                # landing" (this stood at 1.5, a departure found in the 26 Nov audit)
 
 var body: CharacterBody3D
 var skel: Skeleton3D
@@ -102,6 +122,11 @@ var _gone := 0.0                # distance covered since a start began
 var _slope := 0.0               # the stair clip's own slope, faded in and out with the clip
 var _clamped := {}              # per stair clip: its feet were kept on Mixamo's floor (see _floor_clamped)
 var _steep_phase := 0.0
+var _hand_w := 0.0              # 0..1: the left hand is going to the slope
+var _arm_ik: TwoBoneIK3D
+var _hand_target: Node3D
+var _hand_pole: Node3D
+var _trunk := 0.0               # the trunk's lean for the slope (radians, + = forward)
 var _stair_phase := 0.0
 var _stair_on := false
 var _pitch := 0.0               # the whole figure tipped to the slope, on hands and feet (radians)
@@ -151,10 +176,31 @@ func _ready() -> void:
 	_head = skel.find_bone("mixamorig_Head")
 	for n: String in ["LeftUpLeg", "LeftLeg", "RightUpLeg", "RightLeg"]:
 		_legs_i.append(skel.find_bone("mixamorig_" + n))
+	# trying a take: -- --walk=KM_Walk puts one clip in place of the two Mixamo walks, --run=KM_Run in place of the runs
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--walk=") and clips.has(a.split("=")[1]):
+			GAITS = ["Standing_Idle", a.split("=")[1], GAITS[3], GAITS[4]]
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--run=") and clips.has(a.split("=")[1]):
+			GAITS = GAITS.slice(0, GAITS.size() - 2) + [a.split("=")[1]]
 	_make_mirrors()
 	if body:
 		feet = Feet.new()
 		feet.call(&"setup", skel, body)
+		_hand_target = Node3D.new()
+		_hand_pole = Node3D.new()
+		skel.add_child(_hand_target)
+		skel.add_child(_hand_pole)
+		_arm_ik = TwoBoneIK3D.new()
+		_arm_ik.name = "ArmIK"
+		skel.add_child(_arm_ik)
+		_arm_ik.setting_count = 1
+		_arm_ik.set_root_bone(0, _arm[0])
+		_arm_ik.set_middle_bone(0, skel.find_bone("mixamorig_LeftForeArm"))
+		_arm_ik.set_end_bone(0, skel.find_bone("mixamorig_LeftHand"))
+		_arm_ik.set_target_node(0, _arm_ik.get_path_to(_hand_target))
+		_arm_ik.set_pole_node(0, _arm_ik.get_path_to(_hand_pole))
+		_arm_ik.influence = 0.0
 	if body:
 		body.connect(&"jump_started", _on_jump_started)
 		body.connect(&"landed", _on_landed)
@@ -296,6 +342,8 @@ func _physics_process(dt: float) -> void:
 			hips.y = minf(hips.y, _stand_height())
 
 	_open_arms(rot)
+	_hand_reach(dt, state == 0)
+	_slope_lean(rot, dt, state == 0)
 	_look_ahead(rot, dt, state == 0)
 	_lean(dt, state == 0)
 	# on hands and feet the whole figure is tipped to the slope he faces: a crawl on a slope is a crawl on the flat,
@@ -405,6 +453,8 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 		var grade := float(body.get(&"grade"))
 		var up: bool = grade >= 0.0
 		var c: Resource = clips[(STEEP if sub == "steep" else HANDS)[up]]
+		if not up and speed > 2.0 and clips.has(STEEP_DOWN_RUN):
+			c = clips[STEEP_DOWN_RUN]
 		var covered := speed * dt
 		_steep_phase = fposmod(_steep_phase + covered / maxf((c.get(&"travel") as Vector3).length(), 0.1), 1.0)
 		return _slope_clip_pose(c, _steep_phase * float(c.get(&"length")), out, dt)
@@ -593,7 +643,12 @@ func _to_loop(speed: float) -> void:
 	_blend_from_here()
 	if speed < 0.3:
 		return
-	var c: Resource = clips[GAITS[2] if speed < RUN_FROM else GAITS[3]]
+	# the loop he will be in at this speed: the first whose own speed reaches it
+	var c: Resource = clips[GAITS[GAITS.size() - 1]]
+	for i in range(1, GAITS.size()):
+		if speed <= float(clips[GAITS[i]].get(&"speed")):
+			c = clips[GAITS[i]]
+			break
 	var best := 1e9
 	var length := float(c.get(&"length"))
 	for i in 40:
@@ -626,6 +681,63 @@ func _clip_pose_matched(c: Resource, t: float, out: Array[Quaternion], no_turn: 
 		var flat := back * Vector3(h.x, 0.0, h.z)
 		h = Vector3(flat.x, h.y, flat.z)
 	return h
+
+
+## Very steep ground, going up: once a stride he bends and puts his left hand on the slope ahead (Yasin: "long strides
+## ... assisted by hands only at some steps"; the mountaineering sources: hands "for balance", flat-hand push holds).
+## The arm is solved by Godot's TwoBoneIK3D, as the legs are.
+func _hand_reach(dt: float, on_ground: bool) -> void:
+	if _arm_ik == null:
+		return
+	var want := 0.0
+	if on_ground and _mode == "move" and sub == "hands" and float(body.get(&"grade")) > 0.3:
+		# through the second half of the stride, in and out smoothly
+		var u := (_steep_phase - 0.45) / 0.5
+		if u > 0.0 and u < 1.0:
+			want = sin(u * PI) * sin(u * PI)
+	_hand_w = want
+	_arm_ik.influence = _hand_w
+	if _hand_w <= 0.001:
+		return
+	var s := skel.global_transform
+	var shoulder: Vector3 = s * skel.get_bone_global_pose(_arm[0]).origin
+	var fwd := -body.global_transform.basis.z
+	var left := -body.global_transform.basis.x
+	var from := shoulder + fwd * 0.40 + left * 0.08 + Vector3(0.0, 0.6, 0.0)
+	var q := PhysicsRayQueryParameters3D.create(from, from - Vector3(0.0, 2.2, 0.0), body.collision_mask, [body.get_rid()])
+	var hit := body.get_world_3d().direct_space_state.intersect_ray(q)
+	if hit.is_empty():
+		_arm_ik.influence = 0.0
+		return
+	var inv := s.affine_inverse()
+	_hand_target.position = inv * ((hit["position"] as Vector3) + (hit["normal"] as Vector3) * 0.05)
+	# the elbow points back, down and a little out
+	_hand_pole.position = inv * (shoulder - fwd * 0.5 + left * 0.3 - Vector3(0.0, 0.3, 0.0))
+
+
+## On a slope the trunk leans: "uphill the trunk tilts forward ... downhill the trunk tilts back" (the study), and the
+## research has it growing with the slope. How much is NOT measured anywhere for slopes over 6 degrees, so the share
+## is ours: Yasin, 26 Nov, on the 30 and 45 degree ramps: "zero forward lean ... a joke rather than a hard walk".
+## The bend is shared along the spine with most in the lower back, which is where the study puts forward bending.
+func _slope_lean(rot: Array[Quaternion], dt: float, on_ground: bool) -> void:
+	var want := 0.0
+	if on_ground and _mode == "move" and (body.get(&"hvel") as Vector3).length() > 0.1:
+		var grade := float(body.get(&"grade"))
+		var angle := atan(absf(grade))
+		if angle > deg_to_rad(8.0):
+			want = (angle - deg_to_rad(8.0)) * (LEAN_UPHILL if grade > 0.0 else -LEAN_DOWNHILL)
+			want += _hand_w * deg_to_rad(REACH_BEND_DEG)       # bending to put the hand down
+	_trunk += (want - _trunk) * (1.0 - exp(-dt / 0.3))
+	if absf(_trunk) < 0.002:
+		return
+	var base := Quaternion.IDENTITY
+	for b in _chain:
+		var share: float = [0.0, 0.5, 0.3, 0.2][mini(_chain.find(b), 3)]
+		if share > 0.0:
+			# lean forward = a turn about the line through his hips from side to side
+			var turn := Quaternion(Vector3(1.0, 0.0, 0.0), _trunk * share)
+			rot[b] = (base.inverse() * turn * base * rot[b]).normalized()
+		base = base * rot[b]
 
 
 ## The head goes first: turned toward where he is asked to go, shared between neck and head.
