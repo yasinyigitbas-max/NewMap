@@ -154,6 +154,12 @@ var _wish_yaw := 0.0            # the way he was asked to go last tick
 var _wish_turn := 0.0           # how fast the way he is asked to go is turning (rad/s, averaged)
 var _wish_on := false
 var _stood_y := 0.0             # the height of the ground he last stood squarely on (his middle over it)
+var move_path := Callable()     # a traversal move is under way: see begin_move
+var move_clip := ""             # the tree input its clip is under, and where in the clip it is (seconds)
+var move_clip_t := 0.0
+var move_t := 0.0
+var move_landed := false        # he has come down in it
+var _wish_was_moving := false
 var crouched := false           # he is crouched: the smaller capsule, half walking speed, no run, no jump
 var _col: CollisionShape3D
 var _fit := CapsuleShape3D.new()
@@ -291,8 +297,55 @@ func _is_steep(g: Dictionary) -> bool:
 	return absf(float(lo["y"]) - (feet.y - rise)) < 0.05 and absf(float(hi["y"]) - (feet.y + rise)) < 0.05
 
 
+## A traversal move takes the body over (the study: "Switch the body to traversal mode: gravity off, normal collision
+## off, body moved only by the clip's root travel"). `path` is asked every tick, with the seconds since the move
+## began, for {pos, yaw, clip_t, air, done, exit}; nothing else moves him until it says done.
+func begin_move(path: Callable, clip: String) -> void:
+	move_path = path
+	move_clip = clip
+	move_t = 0.0
+	move_landed = false
+	jump_timer = 0.0
+	spot_total = 0.0
+
+
+func in_move() -> bool:
+	return move_path.is_valid()
+
+
+func _run_move(dt: float) -> void:
+	move_t += dt
+	var r: Dictionary = move_path.call(move_t)
+	var was := global_position
+	global_position = r["pos"]
+	rotation.y = float(r["yaw"])
+	move_clip_t = float(r["clip_t"])
+	move_landed = bool(r.get("landed", false))
+	state = State.AIR if bool(r["air"]) else State.GROUND
+	var step := global_position - was
+	hvel = Vector3(step.x, 0.0, step.z) / dt
+	vy = 0.0
+	velocity = Vector3.ZERO
+	ground_y = global_position.y
+	ground_normal = Vector3.UP
+	air_time = 0.0
+	from_jump = false
+	_air_peak = global_position.y
+	if bool(r["done"]):
+		# "hand the body back to code-driven movement at the clip's exit speed"
+		hvel = r["exit"]
+		state = State.GROUND
+		_stood_y = global_position.y
+		_wish_was_moving = false
+		move_path = Callable()
+
+
 func _physics_process(dt: float) -> void:
 	var s: Dictionary = tape.call(&"sample") if tape else {}
+	if move_path.is_valid():
+		# (the stick is read and not obeyed: "cancelling is impossible mid-move")
+		_run_move(dt)
+		return
 	var stick := Vector3(float(s.get("mx", 0.0)), 0.0, float(s.get("mz", 0.0)))
 	if stick.length() > 1.0:
 		stick = stick.normalized()

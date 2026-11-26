@@ -525,6 +525,19 @@ func _physics_process(dt: float) -> void:
 	var lead := _lead_now()
 	_lead_rising = lead > _lead_last
 	_lead_last = lead
+	# a traversal move: the body is carried by it, and its clip is shown where the body says it is
+	if bool(body.call(&"in_move")):
+		if _mode != "move":
+			_set_mode("move")
+			_sub = ""
+			_slope_sub = ""
+			_stair_on = false
+			_steep_on = false
+		_show(String(body.get(&"move_clip")), float(body.get(&"move_clip_t")))
+		landing_kind = "soft" if bool(body.get(&"move_landed")) else ""
+	elif _mode == "move":
+		_set_mode("ground")
+		_to_loops()
 	match _mode:
 		"ground":
 			var st := int(body.get(&"stairs"))

@@ -116,7 +116,7 @@ func measure(dir: Vector3) -> Dictionary:
 		ground = feet.y
 	var rec := _wall(col, ground, dir)
 	if rec.is_empty():
-		rec = _edge(col, feet.y, dir)
+		rec = _edge(col, ground, dir)
 	if rec.is_empty():
 		rec = {"kind": "none"}
 	rec["queries"] = queries

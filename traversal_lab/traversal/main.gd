@@ -8,6 +8,7 @@ const PlainBody := preload("res://traversal/debug/plain_body.gd")
 const Body := preload("res://traversal/body/body.gd")
 const Character := preload("res://traversal/character/character.gd")
 const CharacterV1 := preload("res://traversal/character/character_v1.gd")       # the code-posed one, kept to compare: -- --v1
+const Traverse := preload("res://traversal/moves/traverse.gd")
 const DetectView := preload("res://traversal/detect/detect_view.gd")
 const TAPE_FILE := "user://tapes/last.json"
 
@@ -17,6 +18,7 @@ var character: Node3D
 var tape: Node
 var readout: CanvasLayer
 var detect: Node3D
+var traverse: Node
 var cam: Camera3D
 var station := 0
 var _yaw := 0.0
@@ -53,6 +55,12 @@ func _ready() -> void:
 		character.set(&"body", body)
 		body.add_child(character)
 		body.call(&"show_capsule", false)
+	if body.has_method(&"begin_move"):
+		# Stage 8 onward: the traversal moves
+		traverse = Traverse.new()
+		traverse.name = "Traverse"
+		traverse.set(&"body", body)
+		body.add_child(traverse)
 	if body.has_method(&"can_stand"):
 		# Stage 7: the detection record, measured and drawn (nothing is played from it yet)
 		detect = DetectView.new()
