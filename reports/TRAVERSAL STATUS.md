@@ -1,5 +1,7 @@
 # Traversal work: where we are (read this first after a break or a context compression)
 
+**26 Nov: the work is being handed over. Read `reports/TRAVERSAL HANDOVER.md` FIRST: it says what state this is really in, where the build departs from the study, and what to do next. This file is the running log underneath it.**
+
 Last updated 25 Nov 2026, session "Traversal system research and design". Merged to `main` on 25 Nov at Yasin's word ("merge the branch to main"); later work continues on branch `claude/intelligent-bardeen-errnbs`.
 
 ## What Yasin asked for
