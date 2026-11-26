@@ -214,45 +214,7 @@ func _run() -> void:
 		var b := await go_at(s, 2.6, false, float(a["move_from"]) + 0.3)
 		var off := INF if not bool(b["played"]) else (b["end"] as Vector3).distance_to((b["plan"] as Dictionary)["end"])
 		ok(off < 0.01, "%s: the stick reversed 0.3 s into the move changes nothing: he ends %.3f m from where the move was going" % [s["label"], off])
-	# A jump into the climb (Yasin, 26 Nov: "combine jumps and climbs"): from standing against a wall too high for the
-	# mantle from the ground, with a jump. The standing jump raises him 0.45 m, so what is left to climb decides.
-	var rise := float(body.get(&"JUMP_RISE"))
-	for s: Dictionary in stations:
-		# (deep walls of this height are the grab and climb's, stage 13: tests/test_stage13.gd)
-		if String(s["kind"]) != "wall_thin" or float(s["top"]) < 1.7 or float(s["top"]) > 2.5:
-			continue
-		var h := float(s["top"])
-		var thin := true
-		var most := float((trav.get(&"VAULT_BAND") as Array)[1]) if thin else float(band[1])
-		var should := h - rise <= most + 0.001
-		var r := await go_at(s, 0.27, false, -1.0, 20)
-		var key := String((r["plan"] as Dictionary).get("key", ""))
-		var want_key := "climb_over" if thin else "mantle"
-		if not should:
-			ok(key == "", "%s, with a standing jump: %.2f m left above his feet, not taken (%s)" % [s["label"], h - rise, ("the move '%s' played" % key) if key != "" else "stopped: " + String(r["refused"])])
-			continue
-		var bad := ""
-		if key != want_key or not bool((r["plan"] as Dictionary).get("air", false)):
-			bad = "did not play from the jump (%s%s)" % [r["refused"], (", the move '%s' did" % key) if key != "" else ""]
-		else:
-			var want: Vector3 = (r["plan"] as Dictionary)["end"]
-			var end: Vector3 = r["end"]
-			if Vector2(end.x - want.x, end.z - want.z).length() > END_WITHIN or absf(end.y - want.y) > 0.01:
-				bad = "ended %.2f m from where planned, at height %.3f" % [Vector2(end.x - want.x, end.z - want.z).length(), end.y]
-			elif int(r["end_state"]) != 0:
-				bad = "ended in state %d" % int(r["end_state"])
-			elif int(r["held"]) == 0 or float(r["hand"]) > HAND_WITHIN:
-				bad = "a wrist up to %.1f cm from its place on the top while held (%d ticks)" % [float(r["hand"]) * 100.0, int(r["held"])]
-			elif float(r["in_wall"]) > IN_WALL_MOST:
-				bad = "a knee or a foot %.0f cm inside the wall" % (float(r["in_wall"]) * 100.0)
-			elif not thin and float(r["afloat"]) > FEET_WITHIN:
-				bad = "the foot he stands on up to %.1f cm above the top" % (float(r["afloat"]) * 100.0)
-			elif absf(float(r["sole"])) > FEET_WITHIN:
-				bad = "a foot %.1f cm off the top once both are down on it (at %.2f s of the take)" % [float(r["sole"]) * 100.0, float(r.get("sole_t", 0.0))]
-			elif float(r["feet"]) > FEET_WITHIN:
-				bad = "a foot %.1f cm off the ground as he is handed back" % (float(r["feet"]) * 100.0)
-		ok(bad == "", "%s, with a standing jump: %s from the air, both hands on the top (wrists within %.1f cm for %d ticks), no knee or foot in the wall (%.1f cm), ends where measured%s" % [
-				s["label"], "climbed over" if thin else "mantled", float(r["hand"]) * 100.0, int(r["held"]), float(r["in_wall"]) * 100.0, "" if bad == "" else " -- " + bad])
+	# (a jump into the climb from standing: walls too high for the mantle are the grab and climb's, tests/test_stage13.gd)
 	# A jump at a run at a thin wall: the running vault, from the air (Yasin, 26 Nov: "jumping over 1.80 and run
 	# vault should still be possible if we are running"). The run jump raises him 0.60 m: thin walls to 2.00 m.
 	var rise_run := float(body.get(&"JUMP_RISE_RUN"))
@@ -265,7 +227,8 @@ func _run() -> void:
 		var r := await go_at(s, 9.0, true, -1.0, 110)
 		var key := String((r["plan"] as Dictionary).get("key", ""))
 		if not should:
-			ok(key == "", "%s, at a run with a jump: too high even so, not taken (%s)" % [s["label"], ("the move '%s' played" % key) if key != "" else "stopped: " + String(r["refused"])])
+			# (too high for the vault even so: it is the grab and climb's, stage 13)
+			ok(key != "vault", "%s, at a run with a jump: too high for the vault even so, the vault is not played (%s)" % [s["label"], ("the move '%s' played" % key) if key != "" else "stopped: " + String(r["refused"])])
 			continue
 		var bad := ""
 		if key != "vault" or not bool((r["plan"] as Dictionary).get("air", false)):

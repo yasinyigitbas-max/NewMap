@@ -168,9 +168,10 @@ const GRAB_BAND := [1.45, 2.10]     # the study's band: more than the first, up 
 # the study names for it (Stand To Freehang, Freehang Climb) were measured on him, 26 Nov: they hang FREE, the legs
 # swinging 0.3 to 1.0 m past the plane of the hands, through where a wall stands. They fit a ledge with nothing
 # under it; on a solid wall his legs would be in it. So on walls this band is the grab and climb above, whose
-# first clip is itself a jump to the hang, carried as much higher as the top is. A jump of his own adds nothing more
-# to it: the jump is already in the move.
+# first clip is itself a jump to the hang, carried as much higher as the top is. Begun from a jump of his own it
+# reaches as much higher again as that jump raises him, up to 3.0 m (Yasin, 26 Nov: "fix it until 3m").
 const HIGH_BAND := [2.10, 2.60]
+const NOT_ABOVE := 3.0              # the study: "above 3.0 m | not climbable"
 const GRAB := {"jump": "grab_jump", "jump_res": "res://traversal/character/clips/Jump_To_Braced_Hang.res",
 		"climb": "grab_climb", "climb_res": "res://traversal/character/clips/Braced_Hang_To_Crouch.res",
 		"off": 0.45, "catch": 0.70, "hang": 1.00,        # of the jump: off the ground, hands on, hanging
@@ -542,8 +543,8 @@ func _try_step_up(v: Vector3, wish: Vector3) -> bool:
 		return false                                            # the body walks onto it by itself
 	if top > float(ON_BAND[1]) + MEASURED_WITHIN and top <= float(MANTLE_BAND[1]) + MEASURED_WITHIN and not bool(rec["thin"]):
 		return _try_mantle(v, wish, rec)
-	if top > float(MANTLE_BAND[1]) + MEASURED_WITHIN and top <= float(HIGH_BAND[1]) + MEASURED_WITHIN and not bool(rec["thin"]):
-		return _try_grab(wish, rec)                             # stages 13 and 14
+	if top > float(VAULT_BAND[1] if bool(rec["thin"]) else MANTLE_BAND[1]) + MEASURED_WITHIN and top <= float(HIGH_BAND[1]) + MEASURED_WITHIN:
+		return _try_grab(wish, rec)                             # stages 13 and 14 (thin: up, and off its far side)
 	if top > float(ON_BAND[1]) + MEASURED_WITHIN:
 		refused = "too high to step or climb onto (%.2f m)" % top
 		return false
@@ -1142,11 +1143,14 @@ func _climb_y(p: Dictionary, ct: float, t: float) -> float:
 func _try_air(v: Vector3) -> bool:
 	# (the way he is steering, or failing that the way he is going: jumped from standing against a wall he has no speed)
 	var wish: Vector3 = body.get(&"_wish")
-	if not bool(body.get(&"from_jump")) or (wish.length() < 0.05 and v.length() < 0.5):
+	if not bool(body.get(&"from_jump")):
 		return false
 	if _tick % 2 != 0:
 		return false
-	var dir := wish.normalized() if wish.length() >= 0.05 else v.normalized()
+	# (jumped on the spot with the stick at rest: the way he faces. Yasin, 26 Nov: "nothing happens when we jump near
+	# from standing still to 2.20 walls and above")
+	var dir := wish.normalized() if wish.length() >= 0.05 else (v.normalized() if v.length() >= 0.5 else -body.global_transform.basis.z)
+	dir = Vector3(dir.x, 0.0, dir.z).normalized()
 	# (measured as from the ground under him: see detector.gd)
 	var below: Dictionary = body.call(&"_ray_down", body.global_position)
 	if below.is_empty():
@@ -1178,10 +1182,12 @@ func _try_air(v: Vector3) -> bool:
 	var adds := float(body.get(&"JUMP_RISE") if bool(body.get(&"_jump_still")) else body.get(&"JUMP_RISE_RUN"))
 	if feet_up < adds * 0.5:
 		return false
-	if not thin and top > float(MANTLE_BAND[1]) + adds + MEASURED_WITHIN:
+	if top > float(VAULT_BAND[1] if thin else MANTLE_BAND[1]) + adds + MEASURED_WITHIN:
 		# higher than the mantle reaches with the jump: the grab and climb, as far as it goes from the ground
 		# (Yasin, 26 Nov: "walk or standing still jump climb should still be possible on 2.2 wall")
-		if top > float(HIGH_BAND[1]) + MEASURED_WITHIN:
+		# ... and with his own jump as much higher as it raises him, up to what can be climbed at all (the study:
+		# "above 3.0 m | not climbable"; Yasin, 26 Nov: "fix it until 3m")
+		if top > minf(float(HIGH_BAND[1]) + adds, NOT_ABOVE) + MEASURED_WITHIN:
 			refused = "too high even with the jump (%.2f m)" % top
 			return false
 		return _try_grab(dir, rec, true)
@@ -1201,8 +1207,14 @@ func _try_air(v: Vector3) -> bool:
 ## face, and up onto it. `air` = begun in the air from a jump, as his hands go up.
 func _try_grab(wish: Vector3, rec: Dictionary, air := false) -> bool:
 	var top := float(rec["top"])
-	if bool(rec["blocked"]) or not bool(rec["stand_room"]):
+	# Something thin (Yasin, 26 Nov: "i meant thin walls"): up onto it the same way, then a step off its far side,
+	# and he falls and lands as the body does from any edge (the heavy landing from that height).
+	var thin := bool(rec["thin"])
+	if bool(rec["blocked"]) or (not thin and not bool(rec["stand_room"])):
 		refused = "no room on top"
+		return false
+	if thin and (not rec.has("landing") or absf(float(rec["landing"])) > LAND_LEVEL or not bool(rec.get("landing_ok", false))):
+		refused = "the ground beyond it is not level with his, or has no room"
 		return false
 	var m: Vector3 = -(rec["normal"] as Vector3)
 	if rad_to_deg(wish.normalized().angle_to(m)) > MOST_OFF_DEG:
@@ -1219,12 +1231,12 @@ func _try_grab(wish: Vector3, rec: Dictionary, air := false) -> bool:
 		refused = "no room behind him to jump up from"
 		return false
 	var inward := _at(_g_fwd2, float(GRAB["exit"])) - float(GRAB["hang_at"])
-	if float(rec["depth"]) < inward + float(body.get(&"RADIUS")):
+	if not thin and float(rec["depth"]) < inward + float(body.get(&"RADIUS")):
 		refused = "the top is not deep enough"
 		return false
 	var end := feet + m * (here + inward)
 	end.y = ground + top
-	if not bool(detector.call(&"_fits", end, float(body.get(&"CROUCH_HEIGHT")))):
+	if not thin and not bool(detector.call(&"_fits", end, float(body.get(&"CROUCH_HEIGHT")))):
 		refused = "no room where he would end"
 		return false
 	refused = ""
@@ -1237,6 +1249,10 @@ func _try_grab(wish: Vector3, rec: Dictionary, air := false) -> bool:
 			"hang_y": ground + top + WRIST_OVER - float(GRAB["wrist"]) + float(GRAB["jump_by"]),
 			"from_t": float(GRAB["off"]) + 0.08 if air else 0.0,
 			"hands_at": [on_top + left * float(GRAB["hand_side"]), on_top - left * float(GRAB["hand_side"])]}
+	if thin:
+		var leave := feet + m * (here + float(rec["depth"]) + 0.22)        # NOT in the study: his hips this far past the far edge as his feet leave it
+		leave.y = ground + top
+		_plan.merge({"over": true, "leave": leave})
 	if air:
 		_plan.merge({"air": true, "y_from": feet.y})
 	plays += 1
@@ -1273,9 +1289,20 @@ func _grab(t: float) -> Dictionary:
 		var out_by := by + WRIST_OVER - float(GRAB["climb_wrist"])      # how far the clip's own start and end disagree about its ledge
 		var pos := hang + m * _at(_g_fwd2, ct)
 		pos.y = ground + float(p["top"]) - (by - out_by) * (1.0 - rise)
-		out.merge({"pos": pos, "clip_t": ct, "clip": String(GRAB["climb"])})
+		# (from when his feet come down on the top they are fitted to it, as in the mantle)
+		var feet_down := ct >= float(GRAB["feet_on"])
+		out.merge({"pos": pos, "clip_t": ct, "clip": String(GRAB["climb"]), "free": not feet_down, "base": (ground + float(p["top"]) - pos.y) if feet_down else 0.0}, true)
 		hold = clampf((float(GRAB["feet_on"]) - ct) / HAND_FADE + 1.0, 0.0, 1.0)
-		if ct >= float(GRAB["exit"]):
+		if ct >= float(GRAB["exit"]) and bool(p.get("over", false)):
+			# something thin: the step off its far side (the first part of the stage 8 take), then the fall is the body's
+			var mv: Dictionary = MOVES["walk"]
+			var span := float(mv["leaves"]) - float(mv["from"])
+			var u := clampf((t - t1 - float(GRAB["exit"])) / span, 0.0, 1.0)
+			out.merge({"pos": (p["end"] as Vector3).lerp(p["leave"], u), "clip": String(mv["input"]), "clip_t": lerpf(float(mv["from"]), float(mv["leaves"]), u), "air": false, "free": false, "landed": true}, true)
+			if u >= 1.0:
+				out["done"] = true
+				out["exit"] = m * ((_at(_fwd["walk"], float(mv["leaves"])) - _at(_fwd["walk"], float(mv["from"]))) / span)
+		elif ct >= float(GRAB["exit"]):
 			out["done"] = true
 			out["air"] = false
 			out["pos"] = p["end"]

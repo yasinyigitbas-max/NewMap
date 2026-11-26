@@ -43,7 +43,7 @@ func _after() -> void:
 
 
 ## Go at the face of `s` from `back` metres in front of it; `flip` = the stick is reversed from that many seconds on.
-func go_at(s: Dictionary, back: float, run: bool, flip := -1.0, jump_at := -1) -> Dictionary:
+func go_at(s: Dictionary, back: float, run: bool, flip := -1.0, jump_at := -1, still := false) -> Dictionary:
 	lab.call(&"place", Vector3(float(s["x"]), 0.0, -3.0 + back))
 	body.rotation.y = 0.0
 	for i in 30:
@@ -51,7 +51,7 @@ func go_at(s: Dictionary, back: float, run: bool, flip := -1.0, jump_at := -1) -
 	var samples := []
 	for i in 300:
 		var rev := flip >= 0.0 and i >= int(flip * 60.0)
-		samples.append({"mx": 0.0, "mz": 1.0 if rev else -1.0, "yaw": 0.0, "run": run, "jump": jump_at >= 0 and i >= jump_at and i < jump_at + 6, "crouch": false, "act": false})
+		samples.append({"mx": 0.0, "mz": 0.0 if still else (1.0 if rev else -1.0), "yaw": 0.0, "run": run, "jump": jump_at >= 0 and i >= jump_at and i < jump_at + 6, "crouch": false, "act": false})
 	tape.set(&"tape", samples)
 	tape.call(&"replay")
 	var before := int(trav.get(&"plays"))
@@ -59,6 +59,7 @@ func go_at(s: Dictionary, back: float, run: bool, flip := -1.0, jump_at := -1) -
 	var was_in := false
 	var t := 0
 	var after := -1
+	out["down"] = Vector3(0.0, 99.0, 0.0)
 	while int(tape.get(&"mode")) == 2:
 		await physics_frame
 		await process_frame
@@ -127,7 +128,15 @@ func go_at(s: Dictionary, back: float, run: bool, flip := -1.0, jump_at := -1) -
 					out["nearer"] = minf(float(out["nearer"]), off)
 				# (handed back at a run only one foot is on the ground: there it is the nearer foot that is held to it)
 				out["feet"] = float(out["nearer"]) if run else worst
-			tape.call(&"stop")
+			if bool((out["plan"] as Dictionary).get("over", false)):
+				after = 0               # something thin: he is stepping off its far side; see where he comes down
+			else:
+				tape.call(&"stop")
+		if after >= 0:
+			after += 1
+			if (after > 10 and int(body.get(&"state")) == 0) or after > 240:
+				out["down"] = body.global_position
+				tape.call(&"stop")
 		was_in = inm
 		out["high"] = maxf(float(out["high"]), body.global_position.y)
 		# (stopped once he is well onto the top, or has had time to be: he is not to walk on off its far side)
@@ -173,12 +182,15 @@ func _run() -> void:
 	var inside: Array[Dictionary] = []
 	for how: Array in [["from standing against it", 0.27, false, -1], ["at a walk", 2.6, false, -1], ["at a run", 4.0, true, -1], ["from standing, with a jump", 0.27, false, 20]]:
 		var jumped := int(how[3]) >= 0
-		var adds := 0.0                 # (a jump of his own adds nothing: the jump is already in the move)
+		# (with a jump of his own: as much higher as it raises him, up to 3.0 m)
+		var adds := minf(float(body.get(&"JUMP_RISE")), float(trav.get(&"NOT_ABOVE")) - float(band[1])) if jumped else 0.0
 		for s: Dictionary in order:
 			if not (String(s["kind"]) in ["wall_deep", "wall_thin", "wall_roofed"]) or float(s["top"]) > 3.1 or float(s["top"]) < 1.3:
 				continue
 			var h := float(s["top"])
-			var should := String(s["kind"]) == "wall_deep" and h > float(band[0]) + 0.001 and h <= float(band[1]) + adds + 0.001
+			var thin := String(s["kind"]) == "wall_thin"
+			# (something thin: above what is vaulted, up onto it the same way and off its far side)
+			var should := String(s["kind"]) in ["wall_deep", "wall_thin"] and h > (float((trav.get(&"VAULT_BAND") as Array)[1]) if thin else float(band[0])) + 0.001 and h <= float(band[1]) + adds + 0.001
 			var r := await go_at(s, float(how[1]), bool(how[2]), -1.0, int(how[3]))
 			var key := String((r["plan"] as Dictionary).get("key", ""))
 			if not should:
@@ -194,7 +206,17 @@ func _run() -> void:
 			else:
 				var want: Vector3 = plan["end"]
 				var end: Vector3 = r["end"]
-				if Vector2(end.x - want.x, end.z - want.z).length() > END_WITHIN or absf(end.y - h) > 0.01:
+				if thin:
+					var down: Vector3 = r["down"]
+					if not bool(plan.get("over", false)):
+						bad = "was not taken as something thin"
+					elif absf(down.y) > 0.02 or down.z > -3.0 - float(s["depth"]) - 0.2:
+						bad = "did not come down on the ground beyond it (he is at height %.2f, %.2f m past its near face)" % [down.y, -3.0 - down.z]
+					elif int(r["held"]) == 0 or float(r["hand"]) > HAND_WITHIN:
+						bad = "a wrist up to %.1f cm from its place on the top while held (%d ticks)" % [float(r["hand"]) * 100.0, int(r["held"])]
+					elif float(r["in_wall"]) > IN_WALL_MOST:
+						bad = "a knee or a foot %.0f cm inside the wall" % (float(r["in_wall"]) * 100.0)
+				elif Vector2(end.x - want.x, end.z - want.z).length() > END_WITHIN or absf(end.y - h) > 0.01:
 					bad = "ended %.2f m from where planned, at height %.3f" % [Vector2(end.x - want.x, end.z - want.z).length(), end.y]
 				elif int(r["end_state"]) != 0:
 					bad = "ended in state %d" % int(r["end_state"])
@@ -206,12 +228,44 @@ func _run() -> void:
 					bad = "a knee or a foot %.0f cm inside the wall" % (float(r["in_wall"]) * 100.0)
 				elif float(r["feet"]) > FEET_WITHIN:
 					bad = "a foot %.1f cm off the top as he is handed back" % (float(r["feet"]) * 100.0)
-			ok(bad == "", "%s, %s: grabs the top and climbs up: both hands on it (wrists within %.1f cm for %d ticks), no knee or foot in the wall (%.1f cm), ends on top where measured, at rest (foot %.1f cm off the top)%s" % [
-					s["label"], how[0], float(r["hand"]) * 100.0, int(r["held"]), float(r["in_wall"]) * 100.0, float(r["feet"]) * 100.0, "" if bad == "" else " -- " + bad])
+			ok(bad == "", "%s, %s: grabs the top and climbs up: both hands on it (wrists within %.1f cm for %d ticks), no knee or foot in the wall (%.1f cm), %s (foot %.1f cm off the top)%s" % [
+					s["label"], how[0], float(r["hand"]) * 100.0, int(r["held"]), float(r["in_wall"]) * 100.0, "steps off its far side and comes down on the ground beyond" if thin else "ends on top where measured, at rest", float(r["feet"]) * 100.0, "" if bad == "" else " -- " + bad])
+	# A jump on the spot near the wall, the stick at rest (Yasin, 26 Nov: "nothing happens when we jump near from
+	# standing still to 2.20 walls and above, fix it until 3m"): begun from the jump, to 3.0 m.
+	for s: Dictionary in order:
+		if not (String(s["kind"]) in ["wall_deep", "wall_thin"]) or float(s["top"]) < 2.0 or float(s["top"]) > 3.01:
+			continue
+		var h := float(s["top"])
+		var thin := String(s["kind"]) == "wall_thin"
+		var r := await go_at(s, 0.40, false, -1.0, 20, true)
+		var plan: Dictionary = r["plan"]
+		var key := String(plan.get("key", ""))
+		var bad := ""
+		if key != "grab" or not bool(plan.get("air", false)):
+			bad = "did not play from the jump (%s%s)" % [r["refused"], (", the move '%s' did" % key) if key != "" else ""]
+		else:
+			var want: Vector3 = plan["end"]
+			var end: Vector3 = r["end"]
+			if thin and (absf((r["down"] as Vector3).y) > 0.02 or (r["down"] as Vector3).z > -3.0 - float(s["depth"]) - 0.2):
+				bad = "did not come down on the ground beyond it (he is at height %.2f, %.2f m past its near face)" % [(r["down"] as Vector3).y, -3.0 - (r["down"] as Vector3).z]
+			elif not thin and (Vector2(end.x - want.x, end.z - want.z).length() > END_WITHIN or absf(end.y - h) > 0.01):
+				bad = "ended %.2f m from where planned, at height %.3f" % [Vector2(end.x - want.x, end.z - want.z).length(), end.y]
+			elif not thin and int(r["end_state"]) != 0:
+				bad = "ended in state %d" % int(r["end_state"])
+			elif int(r["held"]) == 0 or float(r["hand"]) > HAND_WITHIN:
+				bad = "a wrist up to %.1f cm from its place on the top while held (%d ticks)" % [float(r["hand"]) * 100.0, int(r["held"])]
+			elif float(r["in_wall"]) > IN_WALL_MOST:
+				bad = "a knee or a foot %.0f cm inside the wall" % (float(r["in_wall"]) * 100.0)
+			elif not thin and float(r["feet"]) > FEET_WITHIN:
+				bad = "a foot %.1f cm off the top as he is handed back" % (float(r["feet"]) * 100.0)
+		ok(bad == "", "%s, a jump on the spot 0.40 m from it, the stick at rest: grabbed from the jump and climbed, both hands on it (wrists within %.1f cm for %d ticks), no knee or foot in the wall (%.1f cm), %s%s" % [
+				s["label"], float(r["hand"]) * 100.0, int(r["held"]), float(r["in_wall"]) * 100.0, "off its far side and down on the ground beyond" if thin else "ends on top where measured", "" if bad == "" else " -- " + bad])
 	for s: Dictionary in [inside[0], inside[inside.size() / 2], inside[inside.size() - 1]]:
 		var a := await go_at(s, 2.6, false)
 		var b := await go_at(s, 2.6, false, float(a["move_from"]) + 0.3)
-		var off := INF if not bool(b["played"]) else (b["end"] as Vector3).distance_to((b["plan"] as Dictionary)["end"])
+		# (something thin: the move ends as he leaves its far edge)
+		var bp: Dictionary = b["plan"]
+		var off := INF if not bool(b["played"]) else (b["end"] as Vector3).distance_to(bp["leave"] if bool(bp.get("over", false)) else bp["end"])
 		ok(off < 0.01, "%s: the stick reversed 0.3 s into the move changes nothing: he ends %.3f m from where the move was going" % [s["label"], off])
 	print("RESULT ", "PASS" if fails == 0 else "FAIL (%d)" % fails)
 	quit(1 if fails else 0)
