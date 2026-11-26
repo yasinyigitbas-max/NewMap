@@ -126,7 +126,8 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 		tracks.append(t)
 	var start := Vector3(hips[0].x, 0.0, hips[0].z)
 	# the hips' own turning, tilting and dropping through the clip, and their averages (for HIPS)
-	var shape: Array = HIPS.get(name, [])
+	# (`-- --raw-hips`: the take as it is, for auditioning a new take and measuring what its hips do)
+	var shape: Array = [] if OS.get_cmdline_user_args().has("--raw-hips") else HIPS.get(name, [])
 	var mean_yaw := 0.0
 	var mean_swing := Vector3.ZERO
 	var mean_pos := Vector3.ZERO
