@@ -20,7 +20,7 @@ const MIRRORED := ["Female_Stop_Walking", "Run_To_Stop", "Left_Turn_90", "Walkin
 		"KM_Stop_Walk", "KM_Walk_To_Run", "KM_Run_To_Walk"]
 # Starts, stops and changes of gait are chosen "by which foot is forward" (the study, Stage 5): for these clips how far
 # the left ankle is ahead of the right, frame by frame, is noted on the animation ("lead", metres).
-const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Stop_Walk", "KM_Slope_Down_Start", "KM_Slope_Down_Stop"]
+const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Stop_Walk", "KM_Slope_Down_Start", "KM_Slope_Down_Stop", "KM_Start_Walk"]
 const TURN_LEAST_DEG := 20.0        # a clip that turns less than this is not a turning clip: its root does not turn
 # In the air the body does the rising and the falling (the study: the body "alone decides where the character is"), so
 # the clip's own rise is taken out: between leaving the ground and landing the hips keep at most their take-off height.
@@ -57,7 +57,11 @@ const SLOPES := ["KM_Climb_Hard", "KMY_Down_Hands_Balance_Long", "KM_Slope_Down_
 # KM_Walk (Kimodo take walk_b_s1), measured by the audit before these edits: hip flexion 35.2 and extension 4.6
 # degrees (the study: 25 and 10), knee 52.9 at toe-off and 67.2 in swing (40 and 60), ankle 25.9 toes-down (20), big
 # toe 31.1 (at least 35). After them: 27.4 and 14.3; 43.0 and 54.9; 19.8; 37.1.
-const FIT := {"KM_Walk": {"pelvis": 7.7, "knee": [20.0, 0.7], "ankle": [1.0, 0.8], "toe": 1.2},
+const FIT := {"KM_Walk": {"pelvis": 7.7, "knee": [20.0, 0.7], "ankle": [1.0, 0.8], "toe": 1.2, "arms": 0.04},
+		# (arms: each arm forward with the opposite leg 90 % of the time as the take came, on the study's bar of 90;
+		# moved 0.04 of a stride later it is 98 %)
+		# Yasin's downhill take: the ankle went 55.8 degrees toes-down at its most, the study's limit is 55
+		"KMY_Down_Hands_Balance_Long": {"ankle": [1.0, 0.9]},
 		# The run at 4.5 m/s is a blend of these two (the jog: Kimodo take run_a_s1; the fast run: Mixamo's Running).
 		# Measured on the blend before the edits: knee 123.6 degrees in swing (the study: 94 to 119), ankle 27.5
 		# toes-down (23.2), hip extension 13.3 (11.8), each arm forward with the opposite leg 78 % of the time (90 or

@@ -25,7 +25,10 @@ const AUTO_CUT := ["KM_Walk", "KM_Run"]
 #   the start and the stop of Yasin's own long downhill take (the loop above is its middle: 2.33 to 4.57 s);
 #   Kimodo takes of 26 Nov: a stop from a walk, a walk breaking into a run, a run slowing to a walk.
 const TRIMS := {"KM_Slope_Down_Start": [0.60, 2.33], "KM_Slope_Down_Stop": [4.57, 6.43],
-		"KM_Stop_Walk": [0.0, 2.50], "KM_Walk_To_Run": [0.40, 3.60], "KM_Run_To_Walk": [0.0, 1.30]}
+		"KM_Stop_Walk": [0.0, 2.50], "KM_Walk_To_Run": [0.40, 3.60], "KM_Run_To_Walk": [0.0, 1.30],
+		# a man's start from standing (Yasin, 26 Nov: "dont use female start stop, this is a male character"): from
+		# standing to the end of its second step
+		"KM_Start_Walk": [0.0, 2.00]}
 const LOOPS := ["Standing_Idle", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
 
 

@@ -65,7 +65,7 @@ const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling
 		"stairs_up_walk": "Ascending_Stairs", "stairs_up_run": "KM_Stairs_Run_Up_D",
 		"stairs_down_walk": "KM_Stairs_Walk_Down", "stairs_down_run": "KM_Stairs_Run_Down",
 		"steep_up": "KM_Climb_Hard", "steep_down": "KMY_Down_Hands_Balance_Long",
-		"start_walk": "Female_Start_Walking", "start_run": "Idle_To_Sprint",
+		"start_walk": "KM_Start_Walk", "start_run": "Idle_To_Sprint",
 		"stop_walk": "Female_Stop_Walking", "stop_walk_m": "Female_Stop_Walking_M",
 		"steep_down_start": "KM_Slope_Down_Start", "steep_down_stop": "KM_Slope_Down_Stop"}
 # Starting and stopping on the very steep ground, going down (Yasin, 26 Nov: "start slope climb stop slope climb
@@ -77,8 +77,9 @@ const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling
 # here"). The study: "Build: start, stop and turn-on-the-spot clips, chosen by direction and by which foot is
 # forward." The body keeps its own speeds ("It alone decides where the character is"); a start is played by how far
 # he has gone and a stop by how far he still has to go, so the feet keep to the ground he really covers.
-# The clips (the study, Part 3): Female Start Walking 1.87 s / 1.71 m and Female Stop Walking 1.53 s / 1.49 m ("Start
-# Walking and Stop Walking are slow (about 3 s each) ... the "Female" pair is closer to that"); Idle To Sprint.
+# The clips: the walk start is a Kimodo take of a man starting to walk (Yasin, 26 Nov: "dont use female start stop,
+# this is a male character. order new ones from kimodo"); Mixamo's own Start Walking takes about 3 s, which the
+# study calls slow. The run start is Mixamo's Idle To Sprint.
 # Only on ordinary ground: stairs and steep ground have their own clips.
 # The stop clip is NOT in use (26 Nov): Female Stop Walking brings the rear foot up beside the front one, and the
 # study has a walk stop "with the front leg stiffened and the rear foot left planted"; tried, it also slid the planted
