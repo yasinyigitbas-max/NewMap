@@ -229,7 +229,27 @@ const DOWN := {"input": "climb_down", "res": "res://traversal/character/clips/Cl
 		"hands_on": 0.20, "hands_off": 1.45, "down": 1.75, "exit": 2.70,
 		# where the take has his wrists while they are on the ledge: [to his left, up over the ledge, forward] (m)
 		"hand_l": [0.17, 0.12, 0.65], "hand_r": [-0.13, 0.15, 0.23]}
+const HANG_FEET := 1.03             # the study: "Falling To Landing | 1.07 s | 1.03 m": the fall that take is made for; his feet
+                                    # are taken to hang that far under the ledge as he lets go
+# the two landings after he lets go (the study: "Falling To Landing ... feet touch at 0.27 s, standing by 0.9 s";
+# "Hard Landing | 2.50 s | 2.08 m | feet touch at 0.6 s, hands on the ground, standing at 2.5 s")
+const LAND_SOFT := {"input": "land_soft", "touch": 0.27, "exit": 1.00, "kind": "soft"}
+const LAND_HARD := {"input": "land_heavy", "touch": 0.60, "exit": 2.40, "kind": "heavy"}
+const DOWN_OUT := 0.55              # NOT in the study, found in the lab: how far from the face he comes down (m)
 const DOWN_NEAR := 0.45             # NOT in the study, mine: begun from within this of the edge (m)
+# Stage 16, across a gap (the study: "People step across a gap up to about 0.94 of leg length and jump beyond that";
+# "An average standing long jump is about 2.2 to 2.3 m for men"; the stage: "jump across a gap, with landing and roll
+# by height | gaps over about 0.9 m"). Yasin, 26 Nov: "for moving across gaps, if we are running, just use running
+# jump and continue jump after landing, implement new jumps only for walking across gaps".
+# At a run: the body's own running jump is begun for him at the edge, if its flight clears the gap; he lands and runs
+# on as after any jump (and rolls by the height, as from any jump). At a walk or from standing: up to 0.94 of his
+# leg he steps across in stride; wider, up to the standing long jump, he jumps it with his own jump take (the one
+# used over low walls: it jumps almost on the spot, so the body carries him across while he is in the air).
+const LEG := 0.829                  # the study, Part 3: his hip to ankle on the Mixamo rig
+const STEP_ACROSS := 0.94           # the study: of leg length
+const LONG_JUMP := 2.2              # the study: the standing long jump (m)
+const GAP_OFF := 0.20               # NOT in the study, mine: he leaves the ground this far before the edge (m)
+const GAP_ON := 0.15                # NOT in the study, mine: ... and comes down this far past the far edge, plus his own radius
 const OVER_BACK := 0.48             # NOT in the study, found in the lab: he sinks for the jump this far from the wall's face
                                     # (nearer, his knees were in the wall). The study: "slide and turn the body over a
                                     # short fixed time so it starts at the clip's native distance from the wall"
@@ -444,8 +464,15 @@ func _physics_process(_dt: float) -> void:
 		var ahead: Dictionary = body.call(&"_ray_down", body.global_position + dir * maxf(LOOK, v.length() * LOOK_TIME))
 		if not ahead.is_empty() and (ahead["position"] as Vector3).y > body.global_position.y - float(BAND[0]):
 			return
-	if record.is_empty() or _tick % AGAIN == 0:
+	# (a gap he is coming up to is measured every tick: a narrow one is under the look ahead for a few ticks only)
+	if record.is_empty() or _tick % AGAIN == 0 or String(record.get("kind", "")) == "gap":
 		record = detector.call(&"measure", dir)
+		if record["kind"] == "gap":
+			var gap_rec := record
+			record = {}
+			if not _try_gap(v, dir, gap_rec, key == "run") and refused == "coming up to the gap":
+				record = gap_rec
+			return
 		if record["kind"] != "drop":
 			refused = "" if record["kind"] == "none" else "not a plain drop (%s)" % record["kind"]
 			record = {}
@@ -1524,19 +1551,21 @@ func _try_climb_down(dir: Vector3, drop: float) -> bool:
 	var start := feet + m * (here - float(DOWN["face"]))
 	start.y = top_y
 	var last := _d_xz[_d_xz.size() - 1]
-	var end := start + m * last.x + fwd * last.y
+	# (he comes down DOWN_OUT from the face: nearer, the knees of the landing were in the wall)
+	var end := start + m * (float(DOWN["face"]) + DOWN_OUT) + fwd * last.y
 	end.y = land_y
 	var g: Dictionary = body.call(&"probe", Vector3(end.x, land_y, end.z))
 	if not bool(g["hit"]) or absf(float(g["y"]) - land_y) > LAND_WITHIN or not bool(detector.call(&"_fits", Vector3(end.x, land_y, end.z), float(body.get(&"HEIGHT")))):
 		refused = "no level, free ground under the edge to come down on"
 		return false
 	refused = ""
-	var extra := maxf(drop - float(DOWN["high"]), 0.0)          # further down than the take lowers him: he lets go and falls it
 	var hl: Array = DOWN["hand_l"]
 	var hr: Array = DOWN["hand_r"]
 	_plan = {"key": "climb_down", "from": feet, "start": start, "end": end, "m": m, "fwd": fwd, "top_y": top_y, "land_y": land_y, "drop": drop,
 			"yaw0": body.rotation.y, "yaw1": atan2(-fwd.x, -fwd.z), "yaw_end": atan2(m.x, m.z), "exit_speed": 0.0, "hand": 2,
-			"t_fall": maxf(float(DOWN["down"]) - float(DOWN["hands_off"]), sqrt(2.0 * extra / float(body.get(&"GRAVITY"))) + 0.15),
+			# after he lets go: the fall that is left with his feet hanging HANG_FEET under the ledge, and its landing
+			"t_air": sqrt(2.0 * maxf(drop - HANG_FEET, 0.0) / float(body.get(&"GRAVITY"))),
+			"land": LAND_HARD if drop - HANG_FEET > float(BAND[1]) else LAND_SOFT,
 			"hands_at": [start + m * float(hl[0]) + Vector3.UP * float(hl[1]) + fwd * float(hl[2]),
 					start + m * float(hr[0]) + Vector3.UP * float(hr[1]) + fwd * float(hr[2])]}
 	plays += 1
@@ -1549,39 +1578,152 @@ func _try_climb_down(dir: Vector3, drop: float) -> bool:
 func _climb_down(t: float) -> Dictionary:
 	var p := _plan
 	var off := float(DOWN["hands_off"])
-	var down := float(DOWN["down"])
-	var exit_t := float(DOWN["exit"])
-	var t_fall := float(p["t_fall"])
-	# the take's own time, but for the fall after he lets go, which lasts as long as the height left takes
-	var ct := t
-	if t > off:
-		ct = lerpf(off, down, clampf((t - off) / t_fall, 0.0, 1.0)) if t < off + t_fall else minf(down + (t - off - t_fall), exit_t)
-	var xz := _at2(_d_xz, ct)
+	var m: Vector3 = p["m"]
 	var start: Vector3 = p["start"]
-	var pos := start + (p["m"] as Vector3) * xz.x + (p["fwd"] as Vector3) * xz.y
-	pos = (p["from"] as Vector3).lerp(pos, smoothstep(0.0, 0.3, t))        # first to where the take kneels
-	# down: with his hands on the ledge, as far under it as the take is under its own; once he has let go, to the
-	# ground that is really there (higher or lower than the take's)
-	var fallen := _at(_d_fall, ct)
-	var high := float(DOWN["high"])
-	var by_top := float(p["top_y"]) - high * fallen
-	var by_ground := float(p["land_y"]) + high * (1.0 - fallen)
-	var u := clampf((t - off) / t_fall, 0.0, 1.0)
-	pos.y = lerpf(by_top, by_ground, u * u)
-	# (NOT in the study, found in the lab: as the kneel comes in over the crouch he was in, his knee passed up to 6 cm
-	# into the ledge for a few ticks; he is held that much higher while it does)
-	pos.y += 0.07 * smoothstep(0.0, 0.06, t) * (1.0 - smoothstep(0.15, 0.35, t))
-	var hold := clampf(minf((ct - float(DOWN["hands_on"])) / HAND_FADE + 1.0, (off - t) / HAND_FADE + 1.0), 0.0, 1.0)
-	hold = hold * hold * (3.0 - 2.0 * hold)
-	var done := ct >= exit_t
-	var out := {"done": done, "pos": pos, "clip_t": ct, "air": t > off and t < off + t_fall,
-			# (his feet are fitted to the ledge while he kneels down on it, and to the ground once he is down; in between they are the take's own)
-			"free": ct > 0.60 and ct < down, "landed": ct <= 0.60 or ct >= down,
-			# he is turned to face along the edge as he kneels; the turn to the wall is in the take itself, and is
-			# given to the body as he is handed back
-			"yaw": float(p["yaw_end"]) if done else lerp_angle(float(p["yaw0"]), float(p["yaw1"]), smoothstep(0.0, 0.3, t)),
-			"hand": [[0, (p["hands_at"] as Array)[0], hold], [1, (p["hands_at"] as Array)[1], hold]]}
+	if t <= off:
+		# on the ledge and lowering himself, his hands on it: the take's own, as far under the ledge as the take is
+		var xz := _at2(_d_xz, t)
+		var pos := start + m * xz.x + (p["fwd"] as Vector3) * xz.y
+		pos = (p["from"] as Vector3).lerp(pos, smoothstep(0.0, 0.3, t))        # first to where the take kneels
+		pos.y = float(p["top_y"]) - float(DOWN["high"]) * _at(_d_fall, t)
+		# (NOT in the study, found in the lab: as the kneel comes in over the crouch he was in, his knee passed up to
+		# 6 cm into the ledge for a few ticks; he is held that much higher while it does)
+		pos.y += 0.07 * smoothstep(0.0, 0.06, t) * (1.0 - smoothstep(0.15, 0.35, t))
+		var hold := clampf(minf((t - float(DOWN["hands_on"])) / HAND_FADE + 1.0, (off - t) / HAND_FADE + 1.0), 0.0, 1.0)
+		hold = hold * hold * (3.0 - 2.0 * hold)
+		return {"done": false, "pos": pos, "clip_t": t, "air": false,
+				# (his feet are fitted to the ledge while he kneels down on it; after that they are the take's own)
+				"free": t > 0.60, "landed": t <= 0.60,
+				# he is turned to face along the edge as he kneels; the turn to the wall is in the take itself
+				"yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), smoothstep(0.0, 0.3, t)),
+				"hand": [[0, (p["hands_at"] as Array)[0], hold], [1, (p["hands_at"] as Array)[1], hold]]}
+	# He has let go (Yasin, 26 Nov: "it looks like he is hanging in the air when climbing down ... just let the hands
+	# go once he is off the wall": the take keeps his arms up at its own ledge until he has landed). From here it is
+	# the fall and the landing he makes from any height: his own falling-to-landing take, or the hard landing from
+	# higher, the body falling as long as the height left takes.
+	var tau := t - off
+	var land: Dictionary = p["land"]
+	var t_air := float(p["t_air"])
+	var xz0 := _at2(_d_xz, off)
+	var from := start + m * xz0.x + (p["fwd"] as Vector3) * xz0.y
+	var pos2 := from.lerp(p["end"], smoothstep(0.0, 0.20, tau))          # out from the wall as he lets go
+	var y_let := float(p["top_y"]) - float(DOWN["high"]) * _at(_d_fall, off)         # where the body was as he let go
+	var y_fall := maxf(float(p["land_y"]), float(p["top_y"]) - HANG_FEET - 0.5 * float(body.get(&"GRAVITY")) * tau * tau)
+	pos2.y = lerpf(y_let, y_fall, smoothstep(0.0, 0.12, tau))
+	var down := tau >= t_air
+	var ct := maxf(float(land["touch"]) - (t_air - tau), 0.0) if not down else minf(float(land["touch"]) + (tau - t_air), float(land["exit"]))
+	var done := down and ct >= float(land["exit"])
+	var out := {"done": done, "pos": pos2, "clip": String(land["input"]), "clip_t": ct, "air": not down, "free": not down, "landed": down,
+			"landing": String(land["kind"]),
+			"yaw": lerp_angle(float(p["yaw1"]), float(p["yaw_end"]), smoothstep(0.0, 0.15, tau))}
 	if done:
+		out["pos"] = p["end"]
+		out["exit"] = Vector3.ZERO
+	return out
+
+
+
+# ------------------------------------------------------------------------------------------- stage 16: across a gap
+
+func _try_gap(v: Vector3, dir: Vector3, rec: Dictionary, running: bool) -> bool:
+	var m: Vector3 = -(rec["normal"] as Vector3)
+	if rad_to_deg(dir.angle_to(m)) > MOST_OFF_DEG:
+		refused = "not heading across it"
+		return false
+	if bool(rec.get("far_wall", false)) or not rec.has("landing") or not bool(rec.get("landing_ok", false)):
+		refused = "no far side to come down on"
+		return false
+	var gap := float(rec["gap"])
+	var landing := float(rec["landing"])
+	var here := (rec["edge"] as Vector3 - body.global_position).dot(m)
+	var rad := float(body.get(&"RADIUS"))
+	if running:
+		# the body's own running jump, begun so that he leaves the ground GAP_OFF before the edge; only if its
+		# flight carries him over (as high as the jump raises him, and down again to the far side)
+		if landing > LAND_LEVEL:
+			refused = "the far side is higher than his"
+			return false
+		var g := float(body.get(&"GRAVITY"))
+		var rise := float(body.get(&"JUMP_RISE_RUN"))
+		var flight := v.length() * (sqrt(2.0 * rise / g) + sqrt(2.0 * (rise - landing) / g))
+		if flight < GAP_OFF + gap + rad + GAP_ON:
+			refused = "too wide for the running jump (%.2f m)" % gap
+			return false
+		var push := v.length() * float(body.get(&"JUMP_PUSH_RUN"))
+		if here > GAP_OFF + push + v.length() / 60.0:
+			refused = "coming up to the gap"
+			return false
+		refused = ""
+		if bool(body.call(&"start_jump")):
+			plays += 1
+			_plan = {"key": "gap_run", "gap": gap}
+			return true
+		return false
+	if absf(landing) > LAND_LEVEL:
+		refused = "the far side is not level with his"
+		return false
+	var feet := body.global_position
+	var ground := float(rec["ground"])
+	var end := feet + m * (here + gap + rad + GAP_ON)
+	end.y = ground + landing
+	if not bool(detector.call(&"_fits", end, float(body.get(&"HEIGHT")))):
+		refused = "no room on the far side"
+		return false
+	if gap <= STEP_ACROSS * LEG + MEASURED_WITHIN:
+		# stepped across in stride: the walk itself is shown, the body is carried level over it at the pace he has
+		if here > 0.10 + v.length() / 60.0 * float(AGAIN):
+			refused = "coming up to the gap"
+			return false
+		refused = ""
+		var pace := maxf(v.length(), 0.8)
+		_plan = {"key": "gap_step", "from": Vector3(feet.x, ground, feet.z), "end": end, "m": m, "yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z),
+				"time": (end - feet).dot(m) / pace, "exit_speed": pace, "gap": gap}
+		plays += 1
+		_up_record = {}
+		body.call(&"begin_move", _gap_step, "ground")
+		return true
+	if gap > LONG_JUMP + MEASURED_WITHIN:
+		refused = "too wide to jump from a walk (%.2f m)" % gap
+		return false
+	if here > 0.35:
+		refused = "coming up to the gap"
+		return false
+	refused = ""
+	var off := feet + m * maxf(here - GAP_OFF, 0.0)
+	off.y = ground
+	_plan = {"key": "gap_jump", "from": Vector3(feet.x, ground, feet.z), "off": off, "end": end, "m": m, "yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z),
+			"exit_speed": 0.0, "gap": gap}
+	plays += 1
+	_up_record = {}
+	body.call(&"begin_move", _gap_jump, String(JUMP["input"]))
+	return true
+
+
+func _gap_step(t: float) -> Dictionary:
+	var p := _plan
+	var u := clampf(t / float(p["time"]), 0.0, 1.0)
+	var out := {"done": u >= 1.0, "pos": (p["from"] as Vector3).lerp(p["end"], u), "clip_t": 0.0, "air": false, "free": true,
+			"yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), clampf(t / 0.15, 0.0, 1.0))}
+	if u >= 1.0:
+		out["exit"] = (p["m"] as Vector3) * float(p["exit_speed"])
+	return out
+
+
+func _gap_jump(t: float) -> Dictionary:
+	var p := _plan
+	var from_t := float(JUMP["from"])
+	var exit_t := float(JUMP["exit"])
+	var ct := minf(from_t + t, exit_t)
+	var off_t := float(JUMP["off"])
+	var down_t := float(JUMP["down"])
+	var air := ct >= off_t and ct < down_t
+	# to his take-off place as he sinks, across while he is in the air, at an even pace
+	var pos := (p["from"] as Vector3).lerp(p["off"], smoothstep(0.0, off_t - from_t, t))
+	if ct >= off_t:
+		pos = (p["off"] as Vector3).lerp(p["end"], clampf((ct - off_t) / (down_t - off_t), 0.0, 1.0))
+	var out := {"done": ct >= exit_t, "pos": pos, "clip_t": ct, "air": air, "free": air, "landed": ct >= down_t,
+			"yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), clampf(t / 0.2, 0.0, 1.0))}
+	if ct >= exit_t:
 		out["pos"] = p["end"]
 		out["exit"] = Vector3.ZERO
 	return out

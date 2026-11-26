@@ -1,0 +1,155 @@
+extends SceneTree
+## Stage 16: across a gap. At a run the body's own running jump, begun for him, and he runs on; at a walk or from
+## standing, up to 0.94 of his leg stepped across in stride, wider (to the standing long jump) jumped. On every gap
+## of the course. Run:  godot --headless --fixed-fps 60 --path traversal_lab -s res://tests/test_stage16.gd
+
+const FEET_WITHIN := 0.03
+const END_WITHIN := 0.05
+
+var lab: Node3D
+var body: CharacterBody3D
+var tape: Node
+var trav: Node
+var skel: Skeleton3D
+var stations: Array
+var fails := 0
+var feet_i := []
+var stand := []
+var final := []
+
+
+func _initialize() -> void:
+	_run.call_deferred()
+
+
+func ok(cond: bool, what: String) -> void:
+	if not cond:
+		fails += 1
+	print("%s  %s" % ["ok  " if cond else "FAIL", what])
+
+
+func _after() -> void:
+	final.clear()
+	for i: int in feet_i:
+		final.append((skel.global_transform * skel.get_bone_global_pose(i)).origin)
+
+
+## Go at the gap of `s` from `back` metres before its edge, on its near deck.
+func go_at(s: Dictionary, back: float, run: bool, flip := -1.0) -> Dictionary:
+	var deck := float(s["top"])
+	var edge_z := float(s["edge_z"])
+	lab.call(&"place", Vector3(float(s["x"]), deck, edge_z + back))
+	body.rotation.y = 0.0
+	for i in 30:
+		await physics_frame
+	var samples := []
+	for i in 360:
+		var rev := flip >= 0.0 and i >= int(flip * 60.0)
+		samples.append({"mx": 0.0, "mz": 1.0 if rev else -1.0, "yaw": 0.0, "run": run, "jump": false, "crouch": false, "act": false})
+	tape.set(&"tape", samples)
+	tape.call(&"replay")
+	var before := int(trav.get(&"plays"))
+	var out := {"played": false, "plan": {}, "end": Vector3.ZERO, "end_state": -1, "end_speed": 0.0, "feet": INF, "lowest": INF, "move_from": -1.0, "over": false, "over_speed": 0.0}
+	var was_in := false
+	var t := 0
+	var far_z := edge_z - float(s["gap"])
+	var beyond := -1
+	while int(tape.get(&"mode")) == 2:
+		await physics_frame
+		await process_frame
+		t += 1
+		var inm := bool(body.call(&"in_move"))
+		if int(trav.get(&"plays")) > before and not bool(out["played"]):
+			out["played"] = true
+			out["plan"] = (trav.get(&"_plan") as Dictionary).duplicate()
+			out["move_from"] = t / 60.0
+		out["lowest"] = minf(float(out["lowest"]), body.global_position.y)
+		if was_in and not inm:
+			out["end"] = body.global_position
+			out["end_state"] = int(body.get(&"state"))
+			out["end_speed"] = (body.get(&"hvel") as Vector3).length()
+			if final.size() == 4:
+				var gy := body.global_position.y
+				var worst := 0.0
+				var nearer := INF
+				for f in 2:
+					var off := minf(absf(final[f * 2].y - gy - stand[f * 2]), absf(final[f * 2 + 1].y - gy - stand[f * 2 + 1]))
+					worst = maxf(worst, off)
+					nearer = minf(nearer, off)
+				out["feet"] = nearer if float(out["end_speed"]) > 0.5 else worst
+		# on the far deck, on the ground, a third of a second after he first is: where he is and how fast he goes
+		if body.global_position.z < far_z - 0.1 and int(body.get(&"state")) == 0 and not inm:
+			beyond += 1
+			if beyond >= 20:
+				out["over"] = absf(body.global_position.y - deck) < 0.05
+				out["over_speed"] = (body.get(&"hvel") as Vector3).length()
+				tape.call(&"stop")
+		was_in = inm
+		if body.global_position.y < deck - 0.5 or t > 340:
+			tape.call(&"stop")
+	out["refused"] = String(trav.get(&"refused"))
+	return out
+
+
+func _run() -> void:
+	lab = (load("res://traversal/main.tscn") as PackedScene).instantiate()
+	root.add_child(lab)
+	for i in 5:
+		await physics_frame
+	body = lab.get(&"body")
+	tape = lab.get(&"tape")
+	trav = lab.get(&"traverse")
+	skel = (lab.get(&"character") as Node).get(&"skel")
+	stations = (lab.get(&"course") as Node3D).get(&"stations")
+	for n: String in ["LeftFoot", "LeftToeBase", "RightFoot", "RightToeBase"]:
+		feet_i.append(skel.find_bone("mixamorig_" + n))
+	skel.skeleton_updated.connect(_after)
+	lab.call(&"place", Vector3(60.0, 0.0, 10.0))
+	for i in 60:
+		await physics_frame
+		await process_frame
+	for p: Vector3 in final:
+		stand.append(p.y - body.global_position.y)
+	var step_most := float(trav.get(&"STEP_ACROSS")) * float(trav.get(&"LEG"))
+	var gaps: Array = stations.filter(func(q: Dictionary) -> bool: return String(q["kind"]) == "gap")
+	for how: Array in [["from standing at its edge", 0.35, false], ["at a walk", 2.0, false], ["at a run", 3.4, true]]:
+		for s: Dictionary in gaps:
+			var w := float(s["gap"])
+			var deck := float(s["top"])
+			var r := await go_at(s, float(how[1]), bool(how[2]))
+			var plan: Dictionary = r["plan"]
+			var key := String(plan.get("key", ""))
+			var want := "gap_run" if bool(how[2]) else ("gap_step" if w <= step_most + 0.01 else "gap_jump")
+			var bad := ""
+			if key != want:
+				bad = "'%s' did not play (%s%s)" % [want, r["refused"], (", '%s' did" % key) if key != "" else ""]
+			elif float(r["lowest"]) < deck - 0.05:
+				bad = "he went down into the gap (%.2f m under the deck)" % (deck - float(r["lowest"]))
+			elif not bool(r["over"]):
+				bad = "he is not on the far side, on the ground"
+			elif want == "gap_run":
+				if float(r["over_speed"]) < 2.5:
+					bad = "he does not run on (%.2f m/s a third of a second after he is down)" % float(r["over_speed"])
+			else:
+				var e: Vector3 = r["end"]
+				var pe: Vector3 = plan["end"]
+				if Vector2(e.x - pe.x, e.z - pe.z).length() > END_WITHIN or absf(e.y - deck) > 0.01:
+					bad = "ended %.2f m from where planned, at height %.3f" % [Vector2(e.x - pe.x, e.z - pe.z).length(), e.y]
+				elif int(r["end_state"]) != 0:
+					bad = "ended in state %d" % int(r["end_state"])
+				elif absf(float(r["end_speed"]) - float(plan["exit_speed"])) > 0.05:
+					bad = "handed back at %.2f m/s, planned %.2f" % [float(r["end_speed"]), float(plan["exit_speed"])]
+				elif float(r["feet"]) > FEET_WITHIN:
+					bad = "a foot %.1f cm off the ground as he is handed back" % (float(r["feet"]) * 100.0)
+			ok(bad == "", "%s, %s: %s, never under the deck (lowest %.2f m over it), on the far side on the ground%s%s" % [s["label"], how[0],
+					{"gap_run": "the running jump, begun for him", "gap_step": "stepped across in stride", "gap_jump": "jumped"}[want], float(r["lowest"]) - deck,
+					(", running on at %.1f m/s" % float(r["over_speed"])) if want == "gap_run" else (", where planned (foot %.1f cm off the ground)" % (float(r["feet"]) * 100.0)),
+					"" if bad == "" else " -- " + bad])
+	# cancelling: the stick reversed a moment into the jump from a walk changes nothing
+	for s: Dictionary in [gaps[1], gaps[gaps.size() - 1]]:
+		var a := await go_at(s, 2.0, false)
+		var b := await go_at(s, 2.0, false, float(a["move_from"]) + 0.3)
+		var off := INF if not bool(b["played"]) else (b["end"] as Vector3).distance_to((b["plan"] as Dictionary)["end"])
+		ok(off < 0.01, "%s: the stick reversed 0.3 s into the jump changes nothing: he ends %.3f m from where it was going" % [s["label"], off])
+	print("RESULT ", "PASS" if fails == 0 else "FAIL (%d)" % fails)
+	quit(1 if fails else 0)

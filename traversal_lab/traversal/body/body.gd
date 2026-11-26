@@ -317,6 +317,16 @@ func begin_move(path: Callable, clip: String) -> void:
 	spot_total = 0.0
 
 
+## A jump begun for him (stage 16: at a run at a gap he can clear), exactly as if the jump key had been pressed now.
+func start_jump() -> bool:
+	if state != State.GROUND or jump_timer > 0.0 or crouched or move_path.is_valid():
+		return false
+	_jump_still = hvel.length() < 2.0
+	jump_timer = (JUMP_DIP_STAND + JUMP_PUSH_STAND) if _jump_still else JUMP_PUSH_RUN
+	jump_started.emit(jump_timer)
+	return true
+
+
 func in_move() -> bool:
 	return move_path.is_valid()
 
