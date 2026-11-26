@@ -148,6 +148,11 @@ const MANTLE := {"exit": 2.90,
 		"edge": 2.38,               # NOT in the study, found in the lab: where the take's edge is taken to be (m along); nearer,
                                     # his knees were in the wall as he came up
 		"across": [1.38, 1.90]}     # NOT in the study, found in the lab: he is carried in over the top between these moments
+# The feet in the climb take (Yasin, 26 Nov: "during jump climbs foot doesnt meet the floor"): off the ground and
+# until the first foot comes over the top they are the take's own; from then they are fitted to the real surface,
+# measured against the TOP (the take's own ground then), not against the body on its way up: against the body, a
+# foot passing over the edge was lifted by the height still to climb, and stood 0.3 m in the air.
+const FEET_FROM := 1.40             # NOT in the study, measured in the lab: the first foot comes over the top then (s of the take)
 const OVER_BACK := 0.48             # NOT in the study, found in the lab: he sinks for the jump this far from the wall's face
                                     # (nearer, his knees were in the wall). The study: "slide and turn the body over a
                                     # short fixed time so it starts at the clip's native distance from the wall"
@@ -644,16 +649,20 @@ func _run_up(t: float) -> Dictionary:
 # ------------------------------------------------------------------------------------------------ stage 10: the vault
 
 ## A thin obstacle of 0.50 to 1.10 m, come at at a run, with level, free ground beyond it: vault it.
-func _try_vault(v: Vector3, wish: Vector3, rec: Dictionary) -> bool:
+## `adds` > 0 = he is in the air from a running jump: the band is that much higher (what the jump raises him), and
+## the clip is taken up in its own flight.
+func _try_vault(v: Vector3, wish: Vector3, rec: Dictionary, adds := 0.0) -> bool:
 	var top := float(rec["top"])
 	# (a thin obstacle of just 0.50 m is vaulted too: there is no standing on it, so it cannot be stepped up onto)
-	if top == INF or top < float(VAULT_BAND[0]) - MEASURED_WITHIN or top > float(VAULT_BAND[1]) + MEASURED_WITHIN:
+	if top == INF or top < float(VAULT_BAND[0]) - MEASURED_WITHIN or top > float(VAULT_BAND[1]) + adds + MEASURED_WITHIN:
 		return false
 	if not bool(rec["thin"]) or bool(rec["blocked"]):
 		return false                                            # deep: to be climbed onto (stage 11), not vaulted
 	var speed := v.length()
 	# Stage 11, a thin obstacle met at a walk or from standing: the standing vault (see TUCK), not this one.
 	var slow := wish.length() <= float(body.get(&"WALK")) + 0.1 or speed <= RUN_FROM
+	if slow and adds > 0.0:
+		return false
 	if slow and top <= JUMP_MOST + MEASURED_WITHIN:
 		return _try_tuck(v, wish, rec, true)
 	# (higher than that, at a walk: the one-hand vault at its slowest, from its own run in, the one move here in
@@ -672,7 +681,8 @@ func _try_vault(v: Vector3, wish: Vector3, rec: Dictionary) -> bool:
 	# fit: the clip's own path, laid so that where its hand comes down is the middle of the obstacle's top
 	var depth := float(rec["depth"])
 	var to_mid := (rec["edge"] as Vector3 - body.global_position).dot(m) + depth * 0.5
-	var start := float(VAULT["at"]) - _at(_v_fwd, float(VAULT["from"]))       # the clip's own distance to it as it is taken up
+	var first_t := float(VAULT["off"]) if adds > 0.0 else float(VAULT["from"])
+	var start := float(VAULT["at"]) - _at(_v_fwd, first_t)       # the clip's own distance to it as it is taken up
 	if to_mid > start:
 		refused = "coming up to the vault"
 		return false
@@ -681,8 +691,8 @@ func _try_vault(v: Vector3, wish: Vector3, rec: Dictionary) -> bool:
 	# the wall early and low, 16 to 45 cm under the top on the higher walls, found when the test began to look at
 	# each foot as it crosses the wall.) He has to leave the ground where the clip does, so nearer than that it
 	# cannot be done: from standing against a thin obstacle there is still no move (it needs a step vault clip).
-	var from_t := float(VAULT["from"])
-	while from_t < float(VAULT["off"]) and float(VAULT["at"]) - _at(_v_fwd, from_t) > to_mid:
+	var from_t := first_t
+	while from_t < (float(VAULT["hand_on"]) - 0.08 if adds > 0.0 else float(VAULT["off"])) and float(VAULT["at"]) - _at(_v_fwd, from_t) > to_mid:
 		from_t += 1.0 / 60.0
 	if float(VAULT["at"]) - _at(_v_fwd, from_t) > to_mid + 0.08:
 		refused = "too near already to vault it"
@@ -718,6 +728,9 @@ func _try_vault(v: Vector3, wish: Vector3, rec: Dictionary) -> bool:
 			# middle itself was 3.4 cm beyond his reach)
 			"hand_at": Vector3(mid.x, ground + top + PALM, mid.z) - m * 0.04 + left * float(VAULT["hand_side"]),
 			"hand": 1 if mirror else 0, "exit_speed": float(VAULT["speed"]) * pace}
+	if adds > 0.0:
+		# (the hand is held from when the vault's own pose has come in over the jump's: sooner, the wrist was 8 cm short)
+		_plan.merge({"air": true, "y_from": feet.y, "hold_from": from_t + 0.17})
 	plays += 1
 	_up_record = {}
 	record = {}
@@ -759,7 +772,10 @@ func _vault(t: float) -> Dictionary:
 	# hold, the top was 6.7 cm beyond the reach of his wrist)
 	var more := CLEAR_MORE * (1.0 - smoothstep(float(VAULT["hand_on"]) - 0.07, float(VAULT["hand_on"]), ct)) if higher else 0.0
 	pos.y += (float(p["top"]) - float(VAULT["high"]) + more) * over
-	var hold := clampf(minf((ct - float(VAULT["hand_on"])) / HAND_FADE + 1.0, (float(VAULT["hand_off"]) - ct) / HAND_FADE + 1.0), 0.0, 1.0)
+	if p.has("y_from"):
+		# begun in the air: from where he is, and on the vault's own path by the time the hand comes down
+		pos.y = lerpf(float(p["y_from"]), pos.y, smoothstep(from_t, maxf(float(VAULT["hand_on"]) - HAND_FADE, from_t + 0.02), ct))
+	var hold := clampf(minf((ct - maxf(float(VAULT["hand_on"]), float(p.get("hold_from", 0.0)))) / HAND_FADE + 1.0, (float(VAULT["hand_off"]) - ct) / HAND_FADE + 1.0), 0.0, 1.0)
 	hold = hold * hold * (3.0 - 2.0 * hold)         # eased in and out, not at an even rate
 	var out := {"done": ct >= exit_t, "pos": pos, "clip_t": ct, "air": air, "free": true,
 			"yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), clampf(t / 0.15, 0.0, 1.0)),
@@ -881,7 +897,8 @@ func _try_over(wish: Vector3, rec: Dictionary, air_ct := -1.0) -> bool:
 	var ground := float(rec["ground"])
 	var mid := feet + m * (here + depth * 0.5)
 	mid.y = ground + top
-	var back := Vector3(feet.x, ground, feet.z) - m * maxf(OVER_BACK - here, 0.0)
+	# (begun in the air he is already higher, and his knees come up sooner: 5 cm further back, found in the lab)
+	var back := Vector3(feet.x, ground, feet.z) - m * maxf(OVER_BACK + (0.05 if air_ct >= 0.0 else 0.0) - here, 0.0)
 	if air_ct < 0.0 and not bool(detector.call(&"_fits", back, float(body.get(&"HEIGHT")))):
 		refused = "no room behind him to jump up from"
 		return false
@@ -938,6 +955,7 @@ func _over(t: float) -> Dictionary:
 	var hold := clampf(minf((ct - float(p.get("hands_on", OVER["hands_on"]))) / HAND_FADE + 1.0, (float(OVER["hands_off"]) - ct) / HAND_FADE + 1.0), 0.0, 1.0)
 	hold = hold * hold * (3.0 - 2.0 * hold)
 	return {"done": false, "pos": pos, "clip_t": ct, "clip": String(OVER["input"]), "air": false,
+			"free": ct > 1.25 and ct < FEET_FROM, "base": (float(p["ground"]) + float(p["top"]) - pos.y) if ct >= FEET_FROM else 0.0,
 			"yaw": lerp_angle(float(p["a_yaw0"]), float(p["yaw1"]), clampf(t / 0.2, 0.0, 1.0)),
 			"hand": [[0, (p["hands_at"] as Array)[0], hold], [1, (p["hands_at"] as Array)[1], hold]]}
 
@@ -992,7 +1010,7 @@ func _try_mantle(v: Vector3, wish: Vector3, rec: Dictionary, air_ct := -1.0) -> 
 	if not bool(detector.call(&"_fits", end, float(body.get(&"HEIGHT")))):
 		refused = "no room where he would end"
 		return false
-	var back := Vector3(feet.x, ground, feet.z) + m * (here - OVER_BACK)
+	var back := Vector3(feet.x, ground, feet.z) + m * (here - OVER_BACK - (0.05 if air_ct >= 0.0 else 0.0))
 	if air_ct >= 0.0:
 		# (in the air too he comes back to where his knees clear the face: his hands are on the top by then)
 		from_t = air_ct
@@ -1040,6 +1058,7 @@ func _mantle(t: float) -> Dictionary:
 	var hold := clampf(minf((ct - on) / HAND_FADE + 1.0, (float(OVER["hands_off"]) - ct) / HAND_FADE + 1.0), 0.0, 1.0)
 	hold = hold * hold * (3.0 - 2.0 * hold)
 	var out := {"done": ct >= exit_t, "pos": pos, "clip_t": ct, "air": false,
+			"free": ct > 1.25 and ct < FEET_FROM, "base": (float(p["ground"]) + float(p["top"]) - pos.y) if ct >= FEET_FROM else 0.0,
 			"yaw": lerp_angle(float(p["a_yaw0"]), float(p["yaw1"]), clampf(t / 0.2, 0.0, 1.0)),
 			"hand": [[0, (p["hands_at"] as Array)[0], hold], [1, (p["hands_at"] as Array)[1], hold]]}
 	if ct >= exit_t:
@@ -1078,22 +1097,16 @@ func _try_air(v: Vector3) -> bool:
 	if _tick % 2 != 0:
 		return false
 	var dir := wish.normalized() if wish.length() >= 0.05 else v.normalized()
-	var rec: Dictionary = detector.call(&"measure", dir)
+	# (measured as from the ground under him: see detector.gd)
+	var below: Dictionary = body.call(&"_ray_down", body.global_position)
+	if below.is_empty():
+		return false
+	var rec: Dictionary = detector.call(&"measure", dir, (below["position"] as Vector3).y)
 	if String(rec["kind"]) != "obstacle" or bool(rec["blocked"]) or float(rec["top"]) == INF:
 		return false
 	var m: Vector3 = -(rec["normal"] as Vector3)
 	if rad_to_deg(dir.angle_to(m)) > MOST_OFF_DEG:
 		return false
-	# (the record is measured from his feet where they are: put it on the ground under him)
-	var under: Dictionary = body.call(&"probe", body.global_position)
-	if not bool(under["hit"]):
-		return false
-	rec = rec.duplicate()
-	var shift := float(rec["ground"]) - float(under["y"])
-	rec["top"] = float(rec["top"]) + shift
-	rec["ground"] = float(under["y"])
-	if rec.has("landing"):
-		rec["landing"] = float(rec["landing"]) + shift
 	var top := float(rec["top"])
 	var feet_up := body.global_position.y - float(rec["ground"])
 	var left := top - feet_up
@@ -1101,6 +1114,12 @@ func _try_air(v: Vector3) -> bool:
 		return false                                            # he clears it, or lands on it, by himself
 	var here := (rec["edge"] as Vector3 - body.global_position).dot(m)
 	# near enough for his hands, and at the top of the jump or about to meet the wall
+	# at a run, over something thin: the running vault, taken up in its own flight, its band raised by what the
+	# running jump raises him (Yasin, 26 Nov: "jumping over 1.80 and run vault should still be possible if we are
+	# running")
+	if bool(rec["thin"]) and not bool(body.get(&"_jump_still")) and v.length() > RUN_FROM:
+		if _try_vault(v, wish if wish.length() >= 0.05 else v, rec, float(body.get(&"JUMP_RISE_RUN"))):
+			return true
 	if here > OVER_BACK + 0.05 or float(body.get(&"vy")) > 0.5:
 		return false
 	# the bands with a jump: what the move takes from the ground, and what the jump raises him (the body's own two
@@ -1114,6 +1133,4 @@ func _try_air(v: Vector3) -> bool:
 	# is brought from where he is to the take's own height over the first 0.2 s
 	var ct := float(OVER["from"])
 	var begun := _try_over(dir, rec, ct) if thin else _try_mantle(v, dir, rec, ct)
-	if not begun and OS.get_cmdline_user_args().has("--air"):
-		print("   air: not begun: ", refused, " landing ", rec.get("landing"), " ok ", rec.get("landing_ok"))
 	return begun

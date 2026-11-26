@@ -54,7 +54,7 @@ func go_at(s: Dictionary, back: float, run: bool, flip := -1.0, jump_at := -1) -
 	tape.set(&"tape", samples)
 	tape.call(&"replay")
 	var before := int(trav.get(&"plays"))
-	var out := {"played": false, "plan": {}, "end": Vector3.ZERO, "end_state": -1, "end_speed": 0.0, "feet": INF, "move_from": -1.0, "high": 0.0, "nearer": INF, "hand": -1.0, "held": 0, "in_wall": 0.0, "sole": 0.0}
+	var out := {"played": false, "plan": {}, "end": Vector3.ZERO, "end_state": -1, "end_speed": 0.0, "feet": INF, "move_from": -1.0, "high": 0.0, "nearer": INF, "hand": -1.0, "held": 0, "in_wall": 0.0, "sole": 0.0, "sunk": 0.0, "afloat": 0.0}
 	var was_in := false
 	var t := 0
 	var after := -1
@@ -70,22 +70,39 @@ func go_at(s: Dictionary, back: float, run: bool, flip := -1.0, jump_at := -1) -
 		if inm and final.size() == 4 and extra.size() == 4:
 			# while both hands are fully held: how far a wrist is from its place on the top
 			var mh: Array = body.get(&"move_hand")
-			var full := mh.size() == 2 and mh[0] is Array and float(mh[0][2]) >= 1.0 and float(mh[1][2]) >= 1.0
+			# (one hand as [which, where, how much], or both as a list of two of those)
+			var held_now: Array = [mh] if (mh.size() == 3 and not (mh[0] is Array)) else mh
+			var full := held_now.size() > 0 and held_now.all(func(o: Array) -> bool: return float(o[2]) >= 1.0)
 			if full:
 				out["held"] = int(out["held"]) + 1
-				for one: Array in mh:
+				for one: Array in held_now:
 					out["hand"] = maxf(float(out["hand"]), (extra[int(one[0])] as Vector3).distance_to(one[1]))
 			# from when his feet are down on the top: how far the lower foot is off it (each joint against its own
 			# standing height)
 			# (the first foot is down at about 1.45 s of the take and the second at about 2.2 s: until then the foot
 			# that is down is the higher one)
 			var mct := float(body.get(&"move_clip_t"))
-			if String(body.get(&"move_clip")) == "climb_up" and mct >= 2.5 and mct < float(trav.get(&"MANTLE")["exit"]) - 0.1:
+			if String(body.get(&"move_clip")) == "climb_up" and mct >= 2.5 and mct < float(trav.get(&"MANTLE")["exit"]) - 0.1 and String((out["plan"] as Dictionary).get("key", "")) == "mantle":
 				var off := [minf(final[0].y - float(stand[0]), final[1].y - float(stand[1])) - float(s["top"]), minf(final[2].y - float(stand[2]), final[3].y - float(stand[3])) - float(s["top"])]
 				var down: float = maxf(off[0], off[1]) if mct < 2.3 else (off[0] if absf(off[0]) > absf(off[1]) else off[1])
 				if absf(down) > absf(float(out["sole"])):
 					out["sole"] = down
 					out["sole_t"] = mct
+			# while he is coming up onto the top: how far the lowest foot joint that is over the top is UNDER it
+			if String(body.get(&"move_clip")) == "climb_up" and mct >= 1.5 and mct < 2.5:
+				for k in 4:
+					if final[k].z < -3.02:
+						var under_by: float = float(s["top"]) - (final[k].y - float(stand[k]))
+						if under_by > float(out["sunk"]):
+							out["sunk"] = under_by
+							out["sunk_t"] = mct
+			# from when his first foot is down on the top: the lower foot is ON it, not in the air above it
+			if String(body.get(&"move_clip")) == "climb_up" and mct >= 1.75:
+				var up_by := minf(minf(final[0].y - float(stand[0]), final[1].y - float(stand[1])), minf(final[2].y - float(stand[2]), final[3].y - float(stand[3]))) - float(s["top"])
+				# (the lower foot may still be the one hanging below the top: then the other one is the one that is down)
+				if up_by < -0.10:
+					up_by = maxf(minf(final[0].y - float(stand[0]), final[1].y - float(stand[1])), minf(final[2].y - float(stand[2]), final[3].y - float(stand[3]))) - float(s["top"])
+				out["afloat"] = maxf(float(out["afloat"]), up_by)
 			# how deep a knee or a foot joint is inside the wall itself (past its face and under its top)
 			# (begun from a jump, the first 0.15 s are still the jump's own pose blending out: pressed to a wall, the
 			# standing jump's knees are in it by themselves, move or no move; that is not held against this move)
@@ -182,6 +199,10 @@ func _run() -> void:
 					bad = "a wrist up to %.1f cm from its place on the top while held (%d ticks)" % [float(r["hand"]) * 100.0, int(r["held"])]
 				elif float(r["in_wall"]) > IN_WALL_MOST:
 					bad = "a knee or a foot %.0f cm inside the wall" % (float(r["in_wall"]) * 100.0)
+				elif float(r["sunk"]) > FEET_WITHIN:
+					bad = "a foot %.1f cm under the top as he comes up onto it (at %.2f s of the take)" % [float(r["sunk"]) * 100.0, float(r.get("sunk_t", 0.0))]
+				elif float(r["afloat"]) > FEET_WITHIN:
+					bad = "the foot he stands on up to %.1f cm above the top" % (float(r["afloat"]) * 100.0)
 				elif absf(float(r["sole"])) > FEET_WITHIN:
 					bad = "the foot that is down up to %.1f cm off the top (at %.2f s of the take)" % [float(r["sole"]) * 100.0, float(r.get("sole_t", 0.0))]
 				elif float(r["feet"]) > FEET_WITHIN:
@@ -223,7 +244,46 @@ func _run() -> void:
 				bad = "a wrist up to %.1f cm from its place on the top while held (%d ticks)" % [float(r["hand"]) * 100.0, int(r["held"])]
 			elif float(r["in_wall"]) > IN_WALL_MOST:
 				bad = "a knee or a foot %.0f cm inside the wall" % (float(r["in_wall"]) * 100.0)
+			elif not thin and float(r["afloat"]) > FEET_WITHIN:
+				bad = "the foot he stands on up to %.1f cm above the top" % (float(r["afloat"]) * 100.0)
+			elif absf(float(r["sole"])) > FEET_WITHIN:
+				bad = "a foot %.1f cm off the top once both are down on it (at %.2f s of the take)" % [float(r["sole"]) * 100.0, float(r.get("sole_t", 0.0))]
+			elif float(r["feet"]) > FEET_WITHIN:
+				bad = "a foot %.1f cm off the ground as he is handed back" % (float(r["feet"]) * 100.0)
 		ok(bad == "", "%s, with a standing jump: %s from the air, both hands on the top (wrists within %.1f cm for %d ticks), no knee or foot in the wall (%.1f cm), ends where measured%s" % [
 				s["label"], "climbed over" if thin else "mantled", float(r["hand"]) * 100.0, int(r["held"]), float(r["in_wall"]) * 100.0, "" if bad == "" else " -- " + bad])
+	# A jump at a run at a thin wall: the running vault, from the air (Yasin, 26 Nov: "jumping over 1.80 and run
+	# vault should still be possible if we are running"). The run jump raises him 0.60 m: thin walls to 2.00 m.
+	var rise_run := float(body.get(&"JUMP_RISE_RUN"))
+	for s: Dictionary in stations:
+		if String(s["kind"]) != "wall_thin" or float(s["top"]) < 1.7 or float(s["top"]) > 2.5:
+			continue
+		var h := float(s["top"])
+		var should := h <= float((trav.get(&"VAULT_BAND") as Array)[1]) + rise_run + 0.001
+		# (the jump pressed about 1.9 m before the wall: tick 110 of a run begun 9 m back)
+		var r := await go_at(s, 9.0, true, -1.0, 110)
+		var key := String((r["plan"] as Dictionary).get("key", ""))
+		if not should:
+			ok(key == "", "%s, at a run with a jump: too high even so, not taken (%s)" % [s["label"], ("the move '%s' played" % key) if key != "" else "stopped: " + String(r["refused"])])
+			continue
+		var bad := ""
+		if key != "vault" or not bool((r["plan"] as Dictionary).get("air", false)):
+			bad = "the vault did not play from the jump (%s%s)" % [r["refused"], (", the move '%s' did" % key) if key != "" else ""]
+		else:
+			var plan: Dictionary = r["plan"]
+			var want: Vector3 = plan["end"]
+			var end: Vector3 = r["end"]
+			if Vector2(end.x - want.x, end.z - want.z).length() > END_WITHIN or absf(end.y - want.y) > 0.01:
+				bad = "ended %.2f m from where planned, at height %.3f" % [Vector2(end.x - want.x, end.z - want.z).length(), end.y]
+			elif int(r["end_state"]) != 0:
+				bad = "ended in state %d" % int(r["end_state"])
+			elif absf(float(r["end_speed"]) - float(plan["exit_speed"])) > 0.05:
+				bad = "exit speed %.2f, the clip's %.2f" % [float(r["end_speed"]), float(plan["exit_speed"])]
+			elif int(r["held"]) == 0 or float(r["hand"]) > HAND_WITHIN:
+				bad = "the wrist up to %.1f cm from its place on the top while held (%d ticks)" % [float(r["hand"]) * 100.0, int(r["held"])]
+			elif float(r["in_wall"]) > IN_WALL_MOST:
+				bad = "a knee or a foot %.0f cm inside the wall" % (float(r["in_wall"]) * 100.0)
+		ok(bad == "", "%s, at a run with a jump: vaulted from the air, hand on the top (wrist within %.1f cm for %d ticks), no knee or foot in the wall (%.1f cm), runs on at the clip's exit speed where measured%s" % [
+				s["label"], float(r["hand"]) * 100.0, int(r["held"]), float(r["in_wall"]) * 100.0, "" if bad == "" else " -- " + bad])
 	print("RESULT ", "PASS" if fails == 0 else "FAIL (%d)" % fails)
 	quit(1 if fails else 0)

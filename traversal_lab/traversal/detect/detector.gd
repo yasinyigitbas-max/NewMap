@@ -101,7 +101,7 @@ func _fits(feet: Vector3, tall: float) -> bool:
 
 ## Measure what is ahead of him the way `dir` points (horizontal). Returns the record; `kind` is "none", "obstacle",
 ## "gap" or "drop". Heights are above his own ground.
-func measure(dir: Vector3) -> Dictionary:
+func measure(dir: Vector3, from_y := INF) -> Dictionary:
 	queries = 0
 	_space = body.get_world_3d().direct_space_state
 	dir = Vector3(dir.x, 0.0, dir.z)
@@ -115,6 +115,12 @@ func measure(dir: Vector3) -> Dictionary:
 	var ground := float(body.get(&"_stood_y")) if int(body.get(&"state")) == 0 else feet.y
 	if absf(ground - feet.y) > STEP_DOWN:
 		ground = feet.y
+	# (`from_y` given = he is in the air from a jump: it is measured as from the ground under him, at that height.
+	# Measured from his feet in the air, the ground ahead read as a drop and a wall beyond it was not seen.)
+	if from_y != INF:
+		feet.y = from_y
+		col = feet + OFF
+		ground = from_y
 	var rec := _wall(col, ground, dir)
 	if rec.is_empty():
 		rec = _edge(col, ground, dir)

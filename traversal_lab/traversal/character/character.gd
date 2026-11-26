@@ -790,6 +790,7 @@ func _physics_process(dt: float) -> void:
 		feet.set(&"step_edge", float(st_m[0]) if st_m.size() >= 3 else 0.0)
 		feet.set(&"step_rise", float(st_m[2]) if st_m.size() >= 3 else 0.0)
 		feet.set(&"step_real", float(st_m[3]) if st_m.size() >= 4 else 0.0)
+		feet.set(&"base", float(body.get(&"move_base")) if bool(body.call(&"in_move")) else 0.0)
 		feet.set(&"stand_wide", STAND_WIDE * (1.0 - _moving) * (1.0 - _low_w) if _act == "ground" else 0.0)
 		# (in step with the tree's own cross-fade, which is even over FADE: eased more slowly than the pose, the
 		# feet of a stair clip coming in were held up on stairs that were no longer under them, 0.2 to 0.5 m high)

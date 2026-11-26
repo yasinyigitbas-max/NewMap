@@ -53,6 +53,8 @@ var step_high := 0.0
 var step_edge := 0.0
 var step_rise := 0.0
 var step_real := 0.0            # the height of the real thing he is stepping onto (m)
+var base := 0.0                 # a climb: the take's own ground is this far above the body's own level (m): the feet are
+                                # fitted to the real ground against THAT, not against where the body is on its way up
 const STEP_SOFT := 0.15         # NOT in the study: the clip's own step is taken as a ramp this long at its edge (m), so
                                 # that a foot crossing the edge is not thrown by it
 var hips_fit := 0.0             # the hips' height put right for a clip made on steeper or shallower ground (m; see character.gd)
@@ -122,7 +124,7 @@ func _process_modification_with_delta(dt: float) -> void:
 		weight = 1.0
 	var xf := sk.global_transform
 	var inv := xf.affine_inverse()
-	var feet_y := body.global_position.y
+	var feet_y := body.global_position.y + base
 	var pace := (body.get(&"hvel") as Vector3).length()
 	var let_go := 1.0 - exp(-dt / LET_GO)
 	var want_pelvis := 0.0
