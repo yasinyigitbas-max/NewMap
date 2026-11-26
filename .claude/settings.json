@@ -7,8 +7,20 @@
   "hooks": {
     "SessionStart": [
       {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && git config core.hooksPath .githooks"
+          }
+        ]
+      },
+      {
         "matcher": "compact",
         "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && python3 -I tools/traversal/check_study.py remind"
+          },
           {
             "type": "command",
             "command": "cd \"$CLAUDE_PROJECT_DIR\" && echo '=== AUTO-REMINDER after context compression: Yasin asked to re-read the job board, rules, budgets and skill before continuing ===' && cat map_dc/coronado/city_kit/JOB_BOARD.md && echo && sed -n '/^## Yasin/,$p' .claude/skills/coronado-city-kit/SKILL.md; if [ -f 'reports/TRAVERSAL STATUS.md' ]; then echo; echo '=== Traversal / player movement / animation clips / player character work: the status file (Yasin, 25 Nov) ==='; if [ -f 'reports/TRAVERSAL HANDOVER.md' ]; then cat 'reports/TRAVERSAL HANDOVER.md'; echo; fi; cat 'reports/TRAVERSAL STATUS.md'; fi"

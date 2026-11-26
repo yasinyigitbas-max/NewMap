@@ -110,3 +110,26 @@ A robust Rockstar-style traversal system for the game (Godot 4.7, Jolt, Mixamo c
   `KM_Slope_Down_Run`. Names: Yasin's takes are `KMY_...`; the log of his runs is
   `clip_measurements/kimodo_takes_yasin_26nov.csv`. Checked in film only (`shot_climb.gd --down`); the foot test
   counts 3 planted ticks on it and shows a knee 1.3 cm the wrong way at worst.
+
+## 26 Nov, new session: the study gate, the true audit, Yasin's three decisions
+
+- Yasin handed the work on with: follow the study "to the comma and the dot", "TIGHTEN ALL THE CHECKS TO THE LEVEL OF
+  THE STUDY", and, mid-work, "OTHER SESSION INVENTED NEW CHECKS TO MAKE ITS TESTS PASS IN THE MIDDLE OF THE WORK AND
+  EVERYTHING BROKE DOWN! MAKE SURE IT DOESNT HAPPEN THIS TIME!"
+- Built first, before any movement code was touched: `traversal_lab/study/` (read its README). `bars.json` holds
+  122 bars, each a word-for-word quote of the study or its notes (machine-checked); `tests/audit.gd` measures every
+  built behaviour against them; both are LOCKED; a commit-msg gate refuses traversal commits that do not quote the
+  study, were not audited, or change a check without Yasin's word, and writes the audit's true result into the
+  commit message itself. The session hook now reprints the study's Part 1 (1, 2) and Part 2 after a compression.
+- **The true baseline: 61 of 114 study lines fail** (the old audit said 1). The list is in the commit message of the
+  gate commit and in `traversal_lab/study/audit_result.json`. `tests/test_study.gd` is superseded by `tests/audit.gd`.
+- His three decisions (asked with options, his answers): margins "±10 %" on single figures; steep slopes "Keep it,
+  body in charge" (listed apart from the study); AnimationTree "Rebuild as the study says" (stages 3 to 5 rebuilt on
+  an AnimationTree and the study's modifier order, one stage at a time, judged by the locked audit).
+- Found on the way: the old "feet 0.08 to 0.10 m apart" bar was the ELDERLY figure, misread (the legs were angled in
+  at the bake to meet it); the study's ankle limit (13 up) contradicts its own running and stairs figures (26.8, 31)
+  and waits on Yasin; a 1.10 m drop gives a soft landing because the body measures the drop from where its probe
+  rolled off the edge; the build's poses depended on what was played before (state leaks between scenarios).
+- Godot 4.7.2 in the cloud: download `Godot_v4.7.2-stable_linux.x86_64.zip` from the GitHub release, then
+  `godot --headless --path traversal_lab --import` once. The raw clips (`assets_src/`) are NOT in this container;
+  the baked `.res` clips in git are what the build uses.

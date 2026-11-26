@@ -1,0 +1,6 @@
+#!/bin/sh
+# The study gate for the traversal work (traversal_lab/). It does nothing for commits that do not touch traversal_lab/.
+# Set up by the SessionStart hook in .claude/settings.json (git config core.hooksPath .githooks).
+# Rules and reasons: traversal_lab/study/README.md
+root=$(git rev-parse --show-toplevel) || exit 0
+exec python3 -I "$root/tools/traversal/check_study.py" gate "$1"

@@ -155,6 +155,7 @@ var foot_narrow := true
 var _narrow := 1.0
 var foot_pin := true            # planted feet held in place
 var foot_ground := true         # feet fitted to the ground under them
+var landing_kind := ""          # for the readout and the audit: "" (none), "soft", "heavy" or "jump"
 
 
 func _ready() -> void:
@@ -269,6 +270,7 @@ func _on_landed(drop: float) -> void:
 		_set_mode("move")
 		return
 	_set_mode("land")
+	landing_kind = "heavy" if _land_clip == "Hard_Landing" else ("jump" if _land_clip == _jump_clip else "soft")
 
 
 func _set_mode(m: String) -> void:
@@ -276,6 +278,7 @@ func _set_mode(m: String) -> void:
 		return
 	_mode = m
 	_mode_t = 0.0
+	landing_kind = ""
 	sub = "loop"
 	_blend_from_here()
 

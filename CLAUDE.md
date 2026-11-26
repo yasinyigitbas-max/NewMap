@@ -15,6 +15,10 @@ ONLY the new map: hand-made, locked city-kit pieces, the kit assets they are bui
    `reports/TRAVERSAL HANDOVER.md` first (26 Nov, on the work branch `claude/intelligent-bardeen-errnbs`: the true state,
    where the build departs from the study, what went wrong), then `reports/TRAVERSAL STATUS.md` (on main since 25 Nov). It holds Yasin's
    rules for that work, the decisions made, what is waiting on him and the next steps (25 Nov).
+   **The study is the authority and the checks are locked (Yasin, 26 Nov):** read `traversal_lab/study/README.md`
+   and the whole study (`reports/Hybrid character traversal study.md`) before any step; the commit gate
+   (`.githooks/commit-msg`, `tools/traversal/check_study.py`) refuses a traversal commit that does not quote the
+   study, was not audited, or changes a check without his word. If a check fails, fix the movement, never the check.
 
 ## The rules that matter most (Yasin)
 - Act as architect, road / city planner and exterior designer at once; every prop has a reason. Lively, worn, varied.
