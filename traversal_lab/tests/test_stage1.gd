@@ -182,16 +182,26 @@ func test_ramps() -> void:
 			var lo := 99.0
 			var hi := 0.0
 			var kind := 0
-			for r: Dictionary in rec:
+			var first := -1
+			var end := -1
+			for i in rec.size():
+				var r: Dictionary = rec[i]
 				var y := (r["p"] as Vector3).y
-				if y > 0.9 and y < 1.3:     # the upper part: what speed he came in with is spent by then
+				if y > 0.3 and y < 1.4:     # on the ramp, clear of its foot and its top
 					lo = minf(lo, r["v"])
 					hi = maxf(hi, r["v"])
 					kind = maxi(kind, int(r["t"]))
+					if first < 0:
+						first = i
+					end = i
 			var want := 1 if deg == 30 else 2
-			ok(absf(last(rec).y - 1.5) < 0.02 and kind == want and count_state(rec, STEEP) == 0 and hi - lo < 0.05,
-					"ramp %d deg, %s: reaches the top (%.2f m) %s at a steady %.2f m/s along the ground (%.2f m/s upward); never 'too steep'" % [
-					deg, "run" if run else "walk", last(rec).y, "leaning in" if kind == 1 else ("on hands and feet" if kind == 2 else "as on the flat"), hi, hi * tan(deg_to_rad(deg))])
+			# the uphill clip sets his pace (he slows while the hands go down), so the speed is not even: what is
+			# held to the rate of climb is the average over the ramp
+			var mean := ((rec[end]["p"] as Vector3) - (rec[first]["p"] as Vector3)).y / maxf((end - first) / 60.0, 0.01)
+			var rate := 1.0 if (run and deg == 30) else (0.6 if run else 0.35)
+			ok(absf(last(rec).y - 1.5) < 0.02 and kind == want and count_state(rec, STEEP) == 0 and absf(mean - rate) < rate * 0.3,
+					"ramp %d deg, %s: reaches the top (%.2f m) %s, climbing %.2f m/s of height on average (wanted %.2f, within 30 %%: the ramp is shorter than one round of the clip); speed along the ground %.2f to %.2f m/s; never 'too steep'" % [
+					deg, "run" if run else "walk", last(rec).y, "leaning in" if kind == 1 else ("on hands and feet" if kind == 2 else "as on the flat"), mean, rate, lo, hi])
 	var s60 := st("ramp 60 deg")
 	var rec60 := await drive(s60["start"], [[6.0, 0.0, -1.0, 0.0, true], [3.0, 0.0, 0.0, 0.0, false]])
 	var peak := 0.0

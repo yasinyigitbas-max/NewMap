@@ -142,6 +142,17 @@
     ],
     "turn_deg": 4.69473692931061
   },
+  "KM_Climb_Hard": {
+    "length": 3.46666666666667,
+    "loop": true,
+    "phase_offset": 0.0,
+    "speed": 0.561396319132585,
+    "travel": [
+      -0.219373732805252,
+      1.93377041816711
+    ],
+    "turn_deg": 4.92590340110922
+  },
   "KM_Climb_Steep": {
     "length": 0.8,
     "loop": true,

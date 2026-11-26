@@ -168,6 +168,8 @@ func _run() -> void:
 		await slope(label + ", down, run", top, 1.0 / RUN + float(s["steps"]) * 0.22 + 1.2, -3.0 - tread, -3.0 - len + tread, 1.0, true)
 	var r30 := st("ramp 30 deg")
 	await slope("ramp 30 deg, up, walk", (r30["start"] as Vector3) + Vector3(0.0, 0.0, -1.5), 1.5 / WALK + float(r30["run"]) / 0.61 + 0.3, -3.5, -3.0 - float(r30["run"]) + 0.4)
+	var r45 := st("ramp 45 deg")
+	await slope("ramp 45 deg, up, walk", (r45["start"] as Vector3) + Vector3(0.0, 0.0, -1.5), 1.5 / WALK + float(r45["run"]) / 0.30 + 0.3, -3.5, -3.0 - float(r45["run"]) + 0.4)
 	await slope("ramp 30 deg, down, walk", Vector3(float(r30["x"]), 1.5, -3.0 - float(r30["run"]) - 1.0), 1.0 / WALK + float(r30["run"]) / 1.22 + 1.2, -3.5, -3.0 - float(r30["run"]) + 0.4, 1.0)
 	for deg: int in [10, 19]:
 		var s := st("ramp %d deg" % deg)

@@ -76,3 +76,28 @@ A robust Rockstar-style traversal system for the game (Godot 4.7, Jolt, Mixamo c
 - The hands slide in the Mixamo climb clips; pin them with arm IK.
 - Kimodo's Mixamo FBX export keeps the uploaded character's own animation on a second layer and puts the hips in the wrong place.
 - A remake on Meshy does not change the skeleton's proportions.
+
+## 26 Nov, later: what was checked honestly, and Yasin's own uphill take
+
+- Yasin asked for the truth about the checks. Verified by running them: `test_study.gd` covers only walk, run and
+  standing (27 lines), and several of its pass bars are WIDER than the study (113 steps a minute passes against 115
+  to 120; pelvis turn 6 degrees against 12; run hip bob 6.4 cm against 8 to 9.5). The bars must be tightened to the
+  study's figures and the audit extended before "it passes" is said again. `test_feet.gd` counts only ticks in which
+  it takes a foot as planted, so a floating foot is not measured; it had no 45 degree line (now it has one).
+- The study has two sentences on slopes and lists "numeric trunk lean per degree of slope" and "maximum walkable
+  slope" as not found. Every slope number in the build is ours or from the side research.
+- Kimodo wording: Yasin's plain sentence ("a person walking up a steep slope having a hard time climbing, getting
+  assistance from their hands, having to bend over to adapt", 3.5 s, seed 42) gave a real climb with a bend and both
+  hands down. My instruction-list prompts did not. Describe the person and the struggle, not the measurements.
+  He now writes the prompts and runs takes himself; pull them from the Replicate history.
+- His take is in as `KM_Climb_Hard`, walking up both steep bands (run on 30 degrees keeps `KM_Climb`). My trunk lean
+  and hand reach are off while it plays. It is played whole as one loop and sets the body's pace (`pace`, `steady` in
+  body.gd), because its hips stop while the hands go down.
+- Why slope feet floated or sank: a generated clip does not climb an even slope (this take's footfalls lie from
+  0.24 m under to 0.23 m over it) and holds its feet tipped to its own slope. Now each foot has its own ground line
+  through the clip (`clip_lump`) and is laid level before it is fitted to the real ground (`clip_pitch`). Feet on the
+  30 and 45 degree ramps went from 30 and 13 cm inside the ramp to 4.4 and 3.0 cm. The older slope clips (down 30,
+  run up 30) do not have this yet.
+- Slope work is looked at in motion from now on: `tests/shot_climb.gd` films a ramp from the side.
+- Still failing: 45 degrees with run held climbs 0.88 m/s of height against 0.60 wanted (the ramp shows only part
+  of the loop); down 30 feet 6.1 cm inside; the earlier open lines (run knee 125, walk plant drift, stairs down).

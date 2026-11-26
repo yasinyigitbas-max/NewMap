@@ -99,6 +99,8 @@ var _look: Array[Node3D] = []
 var slope_deg := 0.0            # how steep the ground under him is
 var grade := 0.0                # its rise per metre the way he is going (+ = uphill)
 var face_in := false            # he is coming down very steep ground backwards, facing the slope
+var pace := 1.0                 # set by the character each tick: a clip whose hips do not move evenly speeds and slows him
+var steady := 0.0               # the speed he asks for before `pace`
 var terrain := 0                # 0 = ordinary ground, 1 = steep (leaning walk), 2 = very steep (hands and feet)
 var stairs := 0                 # +1 going up stairs, -1 going down, 0 not on stairs
 var stair_tread := TREAD        # the depth of a step, measured from the last two edges crossed
@@ -245,6 +247,9 @@ func _physics_process(dt: float) -> void:
 			if gain > 1.0:
 				_wish *= gain
 		_wish = _wish.limit_length(_slope_speed(running))
+	# what he asks for at a steady pace, and the same shaped by a clip that sets the pace (see `pace`)
+	steady = _wish.length()
+	_wish *= pace
 	# The mountaineering sources say "face inwards for steep slopes, but otherwise face out". That was built and
 	# Yasin turned it down with the crawl (26 Nov: "we look like a small baby on both up and down"): he comes down
 	# facing out, crouched, a hand back on the slope.

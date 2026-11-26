@@ -64,8 +64,13 @@ const STAIRS := {1: ["Ascending_Stairs", "KM_Stairs_Run_Up_D"], -1: ["KM_Stairs_
 # walk"): the takes were chosen by the slope they climbed and nothing else; their strides were 0.55 and 0.37 m. Every
 # stride of every climbing take was then measured. Real climbing strides do shorten with the slope (1.00 m at 28
 # degrees, 0.91 m at 37, 0.4 to 0.7 m at 45 and over), and the longest are used: slow, long, heavy steps.
-const STEEP := {true: "KM_Climb", false: "KM_Slope_Down_30"}
-const HANDS := {true: "KM_Climb_Steep", false: "KM_Slope_Down_30"}
+# Up steep ground: Yasin's own Kimodo take (26 Nov, "a person walking up a steep slope having a hard time climbing,
+# getting assistance from their hands, having to bend over to adapt"), the whole 3.5 s of it as one loop: leaning
+# steps, a bend with both hands down, the push back up. It replaces the takes made from my prompts in both bands.
+const STEEP := {true: "KM_Climb_Hard", false: "KM_Slope_Down_30"}
+const HANDS := {true: "KM_Climb_Hard", false: "KM_Slope_Down_30"}
+# Clips that set the body's pace themselves (his hips do not move evenly in them: he stops while the hands go down)
+const DRIVEN := ["KM_Climb_Hard"]
 const STEEP_DOWN_RUN := "KM_Slope_Down_Run"
 # Walking or running off an edge (Yasin, 26 Nov: "looks stuck and frozen on air before landing, no limbs move to
 # balance itself"): Kimodo takes of stepping and of running off a ledge. [clip, leaves the edge, feet touch down]
@@ -122,6 +127,7 @@ var _gone := 0.0                # distance covered since a start began
 var _slope := 0.0               # the stair clip's own slope, faded in and out with the clip
 var _clamped := {}              # per stair clip: its feet were kept on Mixamo's floor (see _floor_clamped)
 var _steep_phase := 0.0
+var _driven_now := false        # this tick the pose is a clip that sets the body's pace (see DRIVEN)
 var _hand_w := 0.0              # 0..1: the left hand is going to the slope
 var _arm_ik: TwoBoneIK3D
 var _hand_target: Node3D
@@ -132,6 +138,7 @@ var _stair_on := false
 var _pitch := 0.0               # the whole figure tipped to the slope, on hands and feet (radians)
 var _hands := false
 var _drop: Array = []           # the ledge clip in use while falling, as DROP_WALK / DROP_RUN
+var _lump := {}                 # per clip that sets the pace: each foot's own ground line (see _stair_floor)
 var _ride := {}                 # per stair clip: how far its hips ride above a standing man's
 var _floor := {}                # per stair clip: where its own stairs stand under the hips
 var _floor_now := 0.0
@@ -424,6 +431,8 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 	elif sub == "stop" and wish > 0.05:
 		_to_loop(maxf(speed, 1.0))
 	# the pose
+	body.set(&"pace", 1.0)
+	_driven_now = false
 	if sub == "stairs" and st != 0:
 		var tread := float(body.get(&"stair_tread"))
 		var c: Resource = clips[STAIRS[st][1 if wish > tread / 0.4 else 0]]
@@ -455,14 +464,33 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 		var c: Resource = clips[(STEEP if sub == "steep" else HANDS)[up]]
 		if not up and speed > 2.0 and clips.has(STEEP_DOWN_RUN):
 			c = clips[STEEP_DOWN_RUN]
+		# with run held on the leaning-walk band the struggling take would have to play at three times its speed:
+		# there the earlier climbing stride stays (unchanged from the last build)
+		if up and sub == "steep" and float(body.get(&"steady")) > float(c.get(&"speed")) * 1.8 and clips.has("KM_Climb"):
+			c = clips["KM_Climb"]
+		var c_len := float(c.get(&"length"))
+		_driven_now = up and DRIVEN.has((STEEP if sub == "steep" else HANDS)[up]) and c != clips.get("KM_Climb")
+		if _driven_now:
+			# the clip runs on at the pace he asks for (his steady climbing speed over the clip's own average), and
+			# the body is told how fast the clip's hips are going at this moment, so the feet hold their ground
+			var mean := maxf(float(c.get(&"speed")), 0.05)
+			var steady := float(body.get(&"steady"))
+			_steep_phase = fposmod(_steep_phase + dt * (steady / mean) / c_len, 1.0)
+			var t := _steep_phase * c_len
+			var t0 := clampf(t - 0.05, 0.0, c_len - 0.1)
+			var now := (float(c.call(&"dist_at", t0 + 0.1)) - float(c.call(&"dist_at", t0))) / 0.1
+			body.set(&"pace", clampf(now / mean, 0.0, 3.0))
+			return _slope_clip_pose(c, t, out, dt, true)
 		var covered := speed * dt
 		_steep_phase = fposmod(_steep_phase + covered / maxf((c.get(&"travel") as Vector3).length(), 0.1), 1.0)
-		return _slope_clip_pose(c, _steep_phase * float(c.get(&"length")), out, dt)
+		return _slope_clip_pose(c, _steep_phase * c_len, out, dt)
 	_slope += (0.0 - _slope) * minf(dt / FADE, 1.0)
 	_floor_now += (0.0 - _floor_now) * minf(dt / FADE, 1.0)
 	if feet:
 		feet.set(&"clip_slope", _slope)
 		feet.set(&"clip_floor", _floor_now)
+		feet.set(&"clip_lump", [0.0, 0.0])
+		feet.set(&"clip_pitch", 0.0)
 	match sub:
 		"spot":
 			var done := 1.0 - absf(float(body.get(&"spot_left"))) / maxf(absf(spot), 0.001) if spot != 0.0 else 1.0
@@ -502,25 +530,32 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 
 ## Pose of a clip that goes up or down its own slope or stairs (or a flat one): the clip's climb is taken out of the
 ## hips, and its slope out from under its feet, so that the real ground under him is what the feet are fitted to.
-func _slope_clip_pose(c: Resource, t: float, out: Array[Quaternion], dt: float) -> Vector3:
+func _slope_clip_pose(c: Resource, t: float, out: Array[Quaternion], dt: float, driven := false) -> Vector3:
 	var hips_path: PackedVector3Array = c.get(&"hips")
 	var length := float(c.get(&"length"))
 	var rise := hips_path[hips_path.size() - 1].y - hips_path[0].y
 	for i in _n:
 		out[i] = c.call(&"rotation_at", i, t)
-	var h: Vector3 = c.call(&"hips_at", t)
+	var h: Vector3 = c.call(&"hips_matched_at" if driven else &"hips_at", t)
+	# how much of the clip's climb is behind him at this moment: by time, or for a clip that sets the pace by how
+	# far its hips have come
+	var part := t / length
+	if driven:
+		part = float(c.call(&"dist_at", t)) / maxf((c.get(&"travel") as Vector3).length(), 0.01)
 	if absf(rise) < 0.06:
 		# a clip made on the flat: nothing to take out
 		_slope += (0.0 - _slope) * minf(dt / FADE, 1.0)
 		_floor_now += (0.0 - _floor_now) * minf(dt / FADE, 1.0)
 		feet.set(&"clip_slope", _slope)
 		feet.set(&"clip_floor", _floor_now)
+		feet.set(&"clip_lump", [0.0, 0.0])
+		feet.set(&"clip_pitch", 0.0)
 		return Vector3(h.x, h.y - rise * t / length, h.z)
 	var slope_now := rise / maxf((c.get(&"travel") as Vector3).length(), 0.01)
 	var floor_now := 0.0
 	var clamped := _floor_clamped(c, rise)
 	if not clamped:
-		floor_now = _stair_floor(c, slope_now, rise)
+		floor_now = _stair_floor(c, slope_now, rise, driven)
 	if clamped:
 		# see _floor_clamped: the feet of this clip stand on a flat floor that the hips sink toward. The hips
 		# are held level here, so the feet are put back by exactly what the hips were let down
@@ -531,11 +566,20 @@ func _slope_clip_pose(c: Resource, t: float, out: Array[Quaternion], dt: float) 
 		_slope += (slope_now - _slope) * minf(dt / FADE, 1.0)
 		_floor_now += (floor_now - _floor_now) * minf(dt / FADE, 1.0)
 	feet.set(&"clip_slope", _slope)
+	var lump := [0.0, 0.0]
+	if _lump.has(c):
+		for f in 2:
+			var track: PackedFloat32Array = _lump[c][f]
+			var at := t / length * track.size()
+			var i0 := posmod(int(at), track.size())
+			lump[f] = lerpf(track[i0], track[posmod(i0 + 1, track.size())], at - floorf(at))
+	feet.set(&"clip_lump", lump)
+	feet.set(&"clip_pitch", atan(_slope) if driven else 0.0)
 	var ride: float = 0.0 if clamped else _ride.get(c, 0.0)
 	feet.set(&"clip_floor", _floor_now if clamped else _floor_now - ride * (_floor_now / floor_now if absf(floor_now) > 0.001 else 1.0))
 	# the hips stand over the clip's own slope, not over a floor at zero: they are let down (or up) onto the body's
 	# ground, and the feet, which hang from them, come with them
-	return Vector3(h.x, h.y - rise * t / length - ride, h.z)
+	return Vector3(h.x, h.y - rise * part - ride, h.z)
 
 
 ## How far ahead of the hips the left foot is when a stair clip brings it down (the clip's own measure).
@@ -579,7 +623,7 @@ func _floor_clamped(c: Resource, rise: float) -> bool:
 
 ## Where a stair clip's own stairs stand under the hips: with the stairs' slope taken out, the height of the ball of
 ## a foot over the frames in which the clip has that foot planted (not moving over the clip's own ground).
-func _stair_floor(c: Resource, slope: float, rise: float) -> float:
+func _stair_floor(c: Resource, slope: float, rise: float, driven := false) -> float:
 	if not _floor.has(c):
 		var length := float(c.get(&"length"))
 		var travel: Vector3 = c.get(&"travel")
@@ -594,12 +638,17 @@ func _stair_floor(c: Resource, slope: float, rise: float) -> float:
 			var t := length * k / steps
 			for i in _n:
 				pose[i] = c.call(&"rotation_at", i, t)
-			var h: Vector3 = c.call(&"hips_at", t)
+			# a clip that sets the pace: its hips are held over the body all the way, and its climb goes by how far
+			# they have come, not by the clock
+			var h: Vector3 = c.call(&"hips_matched_at" if driven else &"hips_at", t)
+			var part := t / length
+			if driven:
+				part = float(c.call(&"dist_at", t)) / maxf(travel.length(), 0.01)
 			var legs: Array = feet.call(&"_legs", pose, h)
 			for f in 2:
 				var toe: Vector3 = (legs[f][3] as Transform3D).origin
-				flat[f].append(toe.y - rise * t / length - slope * (toe.z - h.z))
-				world[f].append(toe + travel * (t / length))       # as the clip itself has it, travel and rise in
+				flat[f].append(toe.y - rise * part - slope * (toe.z - h.z))
+				world[f].append(toe + travel * part)       # as the clip itself has it, travel and rise in
 		feet.set(&"clip_slope", was_slope)
 		var sum := 0.0
 		var count := 0
@@ -611,12 +660,58 @@ func _stair_floor(c: Resource, slope: float, rise: float) -> float:
 					sum += flat[f][k]
 					count += 1
 		_floor[c] = (sum / count if count > 0 else lowest) - float(feet.get(&"_toe_rest"))
+		if driven and count > 0:
+			# A generated clip does not climb a flat slope: the ground it imagines under each footfall is higher
+			# here and lower there (this take: from 0.24 m under the even slope to 0.23 m over it, measured 26 Nov).
+			# Taken as an even slope, every footfall is left that far inside the real ground or above it. So each
+			# foot gets its own ground line through the clip: the height of each of its footfalls, and a straight
+			# run from one footfall to the next while the foot is in the air.
+			var lumps := []
+			for f in 2:
+				var track := PackedFloat32Array()
+				track.resize(steps)
+				var known: Array[int] = []
+				var k := 0
+				while k < steps:
+					if ((world[f][k + 1] as Vector3) - (world[f][k] as Vector3)).length() / (length / steps) < 0.4:
+						var k1 := k
+						var run_sum := 0.0
+						while k1 < steps and ((world[f][k1 + 1] as Vector3) - (world[f][k1] as Vector3)).length() / (length / steps) < 0.4:
+							run_sum += flat[f][k1]
+							k1 += 1
+						for j in range(k, k1):
+							track[j] = run_sum / (k1 - k) - sum / count
+							known.append(j)
+						k = k1
+					else:
+						k += 1
+				for j in steps:
+					if known.has(j):
+						continue
+					# the footfall before and the one after, round the loop
+					var a := j
+					var b := j
+					var na := 0
+					var nb := 0
+					while not known.has(posmod(a, steps)) and na < steps:
+						a -= 1
+						na += 1
+					while not known.has(posmod(b, steps)) and nb < steps:
+						b += 1
+						nb += 1
+					if na < steps and nb < steps:
+						track[j] = lerpf(track[posmod(a, steps)], track[posmod(b, steps)], float(na) / float(na + nb))
+				lumps.append(track)
+			_lump[c] = lumps
 		# and how far the clip's hips, with their climb taken out, ride above a standing man's: a clip cut from
 		# the middle of a flight starts wherever it had got to
 		var mean := 0.0
 		for k in steps:
 			var t := length * k / steps
-			mean += (c.call(&"hips_at", t) as Vector3).y - rise * t / length
+			var part := t / length
+			if driven:
+				part = float(c.call(&"dist_at", t)) / maxf(travel.length(), 0.01)
+			mean += (c.call(&"hips_at", t) as Vector3).y - rise * part
 		_ride[c] = mean / steps - _stand_height() * 0.97
 		if OS.get_cmdline_user_args().has("--dbg"):
 			print("stair clip %s: slope %.2f rise %.2f floor %.3f from %d planted frames, lowest %.3f" % [c.get(&"source"), slope, rise, _floor[c], count, lowest])
@@ -690,7 +785,8 @@ func _hand_reach(dt: float, on_ground: bool) -> void:
 	if _arm_ik == null:
 		return
 	var want := 0.0
-	if on_ground and _mode == "move" and sub == "hands" and float(body.get(&"grade")) > 0.3:
+	# off while the uphill clip does its own bend and puts its own hands down (HANDS[true] in DRIVEN)
+	if on_ground and _mode == "move" and sub == "hands" and float(body.get(&"grade")) > 0.3 and not _driven_now:
 		# through the second half of the stride, in and out smoothly
 		var u := (_steep_phase - 0.45) / 0.5
 		if u > 0.0 and u < 1.0:
@@ -726,6 +822,8 @@ func _slope_lean(rot: Array[Quaternion], dt: float, on_ground: bool) -> void:
 		var angle := atan(absf(grade))
 		if angle > deg_to_rad(8.0):
 			want = (angle - deg_to_rad(8.0)) * (LEAN_UPHILL if grade > 0.0 else -LEAN_DOWNHILL)
+			if _driven_now:
+				want = 0.0       # the uphill clip leans by itself: nothing added on top of it
 			want += _hand_w * deg_to_rad(REACH_BEND_DEG)       # bending to put the hand down
 	_trunk += (want - _trunk) * (1.0 - exp(-dt / 0.3))
 	if absf(_trunk) < 0.002:

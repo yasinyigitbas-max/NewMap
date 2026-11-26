@@ -34,6 +34,8 @@ var foot := [0, 0]
 var toe := [0, 0]
 var foot_goal := [Basis.IDENTITY, Basis.IDENTITY]      # skeleton space, read by foot_orient.gd
 var clip_slope := 0.0           # a stair clip climbs its own stairs: their rise per metre forward (0 for flat clips)
+var clip_lump := [0.0, 0.0]      # and, per foot, how far the clip's own ground under that foot is off its even slope
+var clip_pitch := 0.0           # a clip made on a slope (not stairs) holds its feet tipped to that slope: by this much (rad)
 var clip_floor := 0.0           # and how far above the hips' own floor those stairs stand under him
 var narrow := 1.0               # the share of the clip's sideways foot spread that is kept (1 = as the clip)
 var pinning := true
@@ -132,9 +134,16 @@ func _legs(rot: Array[Quaternion], hips: Vector3) -> Array:
 			d.origin.x += pull
 		# a stair clip puts its feet on its own stairs; take those stairs out, so its feet are on a flat floor like
 		# any other clip's and the real steps under him are what they are fitted to
-		if clip_slope != 0.0 or clip_floor != 0.0:
+		if clip_slope != 0.0 or clip_floor != 0.0 or clip_lump[f] != 0.0:
 			# (the whole foot moves as one, by what its ball needs)
-			var off := clip_slope * (d.origin.z - hips.z) + clip_floor
+			# a foot that the clip holds tipped to its own slope is laid level first, about the ankle: everything
+			# after this (the ground under it, the tilt to the real slope, the heel coming up) takes a level foot
+			if clip_pitch != 0.0:
+				var level := Basis(Vector3(1.0, 0.0, 0.0), clip_pitch)
+				d.origin = c.origin + level * (d.origin - c.origin)
+				d.basis = level * d.basis
+				c.basis = level * c.basis
+			var off := clip_slope * (d.origin.z - hips.z) + clip_floor + float(clip_lump[f])
 			c.origin.y -= off
 			d.origin.y -= off
 		out.append([a, b, c, d])

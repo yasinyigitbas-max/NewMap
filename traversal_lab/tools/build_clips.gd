@@ -15,7 +15,9 @@ const CUTS := {"KM_Stairs_Walk_Down": [0.67, 1.53], "KM_Stairs_Run_Up": [0.67, 1
 		"KM_Slope_Down_30": [3.20, 3.93], "KM_Slope_Down_Run": [2.47, 2.93], "KM_Stairs_Run_Up_D": [1.13, 1.80],
 		# one take, two of its strides: the 1.00 m stride it takes where its hill is 28 degrees, and the 0.91 m
 		# stride where it is 37 degrees (the longest strides any climbing take made at those slopes)
-		"KM_Climb": [1.60, 2.13], "KM_Climb_Steep": [3.27, 4.07]}
+		"KM_Climb": [1.60, 2.13], "KM_Climb_Steep": [3.27, 4.07],
+		# Yasin's uphill take: the whole of it is the loop (it starts and ends on the same step)
+		"KM_Climb_Hard": [0.0, 3.47]}
 const AUTO_CUT := ["KM_Walk", "KM_Run"]
 const LOOPS := ["Standing_Idle", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
 
