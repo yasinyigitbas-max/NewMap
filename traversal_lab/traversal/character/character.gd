@@ -66,7 +66,13 @@ const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling
 		"stairs_down_walk": "KM_Stairs_Walk_Down", "stairs_down_run": "KM_Stairs_Run_Down",
 		"steep_up": "KM_Climb_Hard", "steep_down": "KMY_Down_Hands_Balance_Long",
 		"start_walk": "Female_Start_Walking", "start_run": "Idle_To_Sprint",
-		"stop_walk": "Female_Stop_Walking", "stop_walk_m": "Female_Stop_Walking_M"}
+		"stop_walk": "Female_Stop_Walking", "stop_walk_m": "Female_Stop_Walking_M",
+		"steep_down_start": "KM_Slope_Down_Start", "steep_down_stop": "KM_Slope_Down_Stop"}
+# Starting and stopping on the very steep ground, going down (Yasin, 26 Nov: "start slope climb stop slope climb
+# needed. fit what we have into here"): the first 1.7 s and the last 1.9 s of his own long downhill take, whose
+# middle is the loop: he eases off from standing, and comes to rest. Played as the flat starts and stops are, by the
+# ground the body covers. Going UP there is no such clip: his uphill take has no start or stop in it, and the four
+# Kimodo takes ordered for it stand still.
 # Stage 5, starts and stops (Yasin, 26 Nov: "start walk, stop walk, start run ... needed. fit what we have into
 # here"). The study: "Build: start, stop and turn-on-the-spot clips, chosen by direction and by which foot is
 # forward." The body keeps its own speeds ("It alone decides where the character is"); a start is played by how far
@@ -151,6 +157,7 @@ var _arms: SkeletonModifier3D
 var _sub := ""                  # "" (the loops), "start" or "stop": a start or stop clip is showing
 var _sub_in := ""               # which input of the tree it is
 var _let_go_at := -1.0
+var _slope_sub := ""            # on the steep ground going down: "" (the loop), "start" or "stop"
 var _stop_from := 0.0           # where in the stop clip it was taken up, and how far he then had left to go
 var _stop_left := 0.0
 var _gone := 0.0                # metres covered since the start began
@@ -189,7 +196,7 @@ func _ready() -> void:
 		_length[n] = a.length
 		var t := a.find_track(NodePath("%s:Root" % SKEL), Animation.TYPE_POSITION_3D)
 		_stride[n] = (a.position_track_interpolate(t, a.length) - a.position_track_interpolate(t, 0.0)).length()
-	for key: String in ["start_walk", "start_run", "stop_walk", "stop_walk_m"]:
+	for key: String in ["start_walk", "start_run", "stop_walk", "stop_walk_m", "steep_down_start", "steep_down_stop"]:
 		var a := _lib.get_animation(ACTS[key])
 		var t := a.find_track(NodePath("%s:Root" % SKEL), Animation.TYPE_POSITION_3D)
 		var table := PackedFloat32Array()
@@ -483,12 +490,21 @@ func _physics_process(dt: float) -> void:
 						_show(_sub_in, t)
 			if _sub != "":
 				pass
+			elif _slope_sub == "stop" and not in_air and int(body.get(&"terrain")) == 2 and wish < 0.05:
+				_slope_stop(dt, speed)
 			elif not in_air and st != 0 and speed > 0.15:
 				_steep_on = false
 				_stairs(dt, st, speed)
 			elif not in_air and int(body.get(&"terrain")) == 2 and speed > 0.1 and _steep_ahead():
 				_stair_on = false
-				_steep(dt, speed)
+				if _steep_on and not _steep_up and wish < 0.05 and _slope_sub == "" and _act == "steep_down":
+					# let go on the way down: his take's own coming to rest
+					_slope_sub = "stop"
+					# (taken up where the clip has as far left to go as he has)
+					var stop_table: PackedFloat32Array = _dist["steep_down_stop"]
+					_show("steep_down_stop", _time_for("steep_down_stop", stop_table[stop_table.size() - 1] - float(body.call(&"stop_distance"))))
+				else:
+					_steep(dt, speed)
 			elif _stair_on or _steep_on:
 				if _stair_on and ACTS.has(_act):
 					# The walk takes over on the foot the stairs left him on. (It used to carry on from wherever
@@ -502,6 +518,7 @@ func _physics_process(dt: float) -> void:
 				_show("ground", 0.0)
 			if in_air:
 				_sub = ""
+				_slope_sub = ""
 				_stair_on = false
 				_steep_on = false
 				# off an edge on foot: the step-off or run-off clip while its own fall lasts
@@ -718,6 +735,21 @@ func _start_or_stop(dt: float, speed: float, wish: float) -> void:
 			_seek()
 
 
+## Coming to rest on the steep ground: the stop of his take runs to its end as he covers what he has left.
+func _slope_stop(dt: float, speed: float) -> void:
+	var table: PackedFloat32Array = _dist["steep_down_stop"]
+	if speed > 0.05:
+		_act_t = maxf(_act_t, _time_for("steep_down_stop", table[table.size() - 1] - float(body.call(&"stop_distance"))))
+	else:
+		_act_t += dt
+	if _act_t >= _clip_length("steep_down_stop") - 0.02:
+		_slope_sub = ""
+		_steep_on = false
+		_show("ground", 0.0)
+	else:
+		_seek()
+
+
 ## Is the ground one walking step ahead of him still very steep? (A ray down, where that step would land.)
 func _steep_ahead() -> bool:
 	var v: Vector3 = body.get(&"hvel")
@@ -739,6 +771,27 @@ func _steep(dt: float, speed: float) -> void:
 		_steep_up = grade >= 0.0
 	elif absf(grade) > STEEP_TURN:
 		_steep_up = grade > 0.0
+	# from standing, going down: the take's own start, by the ground he covers; then its loop from its beginning,
+	# which is where the start leaves off
+	if not _steep_on and not _steep_up and speed < 0.4:
+		_slope_sub = "start"
+		_gone = 0.0
+		_steep_on = true
+		_show("steep_down_start", 0.0)
+		return
+	if _slope_sub == "start":
+		if _steep_up:
+			_slope_sub = ""
+		else:
+			_gone += speed * dt
+			_act_t = maxf(_act_t, _time_for("steep_down_start", _gone))
+			if _act_t >= _clip_length("steep_down_start") - 0.05:
+				_slope_sub = ""
+				_steep_phase = 0.0
+			else:
+				_seek()
+				return
+	_slope_sub = ""
 	var input := "steep_up" if _steep_up else "steep_down"
 	var a := _lib.get_animation(ACTS[input])
 	_steep_phase = fposmod(_steep_phase + speed * dt / maxf(float(_stride[ACTS[input]]), 0.1), 1.0)

@@ -16,10 +16,11 @@ const DIR := "res://traversal/character/clips/"
 const MODEL := "res://traversal/character/player_v4_rooted.scn"
 const OUT := "res://traversal/character/library.res"
 const SKEL := "Skeleton3D"
-const MIRRORED := ["Female_Stop_Walking", "Run_To_Stop", "Left_Turn_90", "Walking_Turn_180", "Running_Turn_180", "Female_Start_Walking", "Idle_To_Sprint"]
+const MIRRORED := ["Female_Stop_Walking", "Run_To_Stop", "Left_Turn_90", "Walking_Turn_180", "Running_Turn_180", "Female_Start_Walking", "Idle_To_Sprint",
+		"KM_Stop_Walk", "KM_Walk_To_Run", "KM_Run_To_Walk"]
 # Starts, stops and changes of gait are chosen "by which foot is forward" (the study, Stage 5): for these clips how far
 # the left ankle is ahead of the right, frame by frame, is noted on the animation ("lead", metres).
-const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Climb_Start", "KM_Climb_Stop"]
+const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Stop_Walk", "KM_Slope_Down_Start", "KM_Slope_Down_Stop"]
 const TURN_LEAST_DEG := 20.0        # a clip that turns less than this is not a turning clip: its root does not turn
 # In the air the body does the rising and the falling (the study: the body "alone decides where the character is"), so
 # the clip's own rise is taken out: between leaving the ground and landing the hips keep at most their take-off height.
@@ -43,7 +44,7 @@ const LEDGE := ["KM_Ledge_Walk_Off", "KM_Ledge_Run_Off"]
 const STAIRS := ["Ascending_Stairs", "KM_Stairs_Run_Up_D", "KM_Stairs_Walk_Down", "KM_Stairs_Run_Down"]
 # Steep ground (outside the study, kept at Yasin's word): his own two Kimodo takes, which climb and descend their own
 # slopes. Treated as the stair clips are: the climb out of the hips, the slope of the take's own ground noted.
-const SLOPES := ["KM_Climb_Hard", "KMY_Down_Hands_Balance_Long"]
+const SLOPES := ["KM_Climb_Hard", "KMY_Down_Hands_Balance_Long", "KM_Slope_Down_Start", "KM_Slope_Down_Stop"]
 # (The walk take in use since 26 Nov, Kimodo walk_b_s1, meets the study's pelvis tilt, side drop,
 # rotation and sway as it is; only its rise and fall, 6.2 cm, is brought into the study's 2.7 to 4.8 cm.)
 # A take edited a little to meet the study's joint lines (Yasin, 26 Nov: "why dont you spend any effort on making the
@@ -340,10 +341,18 @@ func _stairs(a: Animation, c: Resource, sk: Skeleton3D) -> void:
 	var rise := hips[frames - 1].y - hips[0].y
 	var slope := rise / maxf(total, 0.01)
 	var t_hips := a.find_track(NodePath("%s:mixamorig_Hips" % SKEL), Animation.TYPE_POSITION_3D)
+	# how much of its way the clip has gone at each frame: evenly for a loop; for a start or a stop, which do not
+	# go at an even pace, by the ground its hips have really covered
+	var way := PackedFloat32Array()
+	var along := Vector3(travel.x, 0.0, travel.z).normalized()
 	for f in frames:
-		var u := float(f) / float(frames - 1)
+		if a.loop_mode == Animation.LOOP_NONE and total > 0.02:
+			way.append(clampf((Vector3(hips[f].x, 0.0, hips[f].z) - Vector3(hips[0].x, 0.0, hips[0].z)).dot(along) / total, 0.0, 1.0))
+		else:
+			way.append(float(f) / float(frames - 1))
+	for f in frames:
 		var p: Vector3 = a.track_get_key_value(t_hips, f)
-		a.track_set_key_value(t_hips, f, Vector3(p.x, p.y - rise * u, p.z))
+		a.track_set_key_value(t_hips, f, Vector3(p.x, p.y - rise * way[f], p.z))
 	# the ball of each foot through the clip, in the frame that travels and climbs with the hips
 	var toe := [sk.find_bone("mixamorig_LeftToeBase"), sk.find_bone("mixamorig_RightToeBase")]
 	var toe_rest := sk.get_bone_global_rest(toe[0]).origin.y
@@ -373,7 +382,7 @@ func _stairs(a: Animation, c: Resource, sk: Skeleton3D) -> void:
 	for k in 2:
 		for f in frames - 1:
 			# over the clip's own ground the foot moves by its move in this frame plus the travel and the climb
-			var step: Vector3 = (balls[k][f + 1] as Vector3) - (balls[k][f] as Vector3) + Vector3(0.0, rise, total) / float(frames - 1)
+			var step: Vector3 = (balls[k][f + 1] as Vector3) - (balls[k][f] as Vector3) + Vector3(0.0, rise, total) * (way[f + 1] - way[f])
 			if step.length() * fps < 0.4:
 				sum += (balls[k][f] as Vector3).y - slope * (balls[k][f] as Vector3).z - toe_rest
 				count += 1
@@ -383,7 +392,7 @@ func _stairs(a: Animation, c: Resource, sk: Skeleton3D) -> void:
 	# (the leg stays at its longest for many frames: the pivot is the earliest of them in the step, the foot furthest ahead)
 	for k in 2:
 		for f in frames - 1:
-			var step: Vector3 = (balls[k][f + 1] as Vector3) - (balls[k][f] as Vector3) + Vector3(0.0, rise, total) / float(frames - 1)
+			var step: Vector3 = (balls[k][f + 1] as Vector3) - (balls[k][f] as Vector3) + Vector3(0.0, rise, total) * (way[f + 1] - way[f])
 			if step.length() * fps < 0.4 and float(legs[k][f]) > longest - 0.002:
 				pivot = maxf(pivot, (balls[k][f] as Vector3).z - (a.track_get_key_value(t_hips, f) as Vector3).z)
 	for f in frames:

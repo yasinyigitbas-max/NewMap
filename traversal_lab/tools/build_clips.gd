@@ -21,6 +21,11 @@ const CUTS := {"KM_Stairs_Walk_Down": [0.67, 1.53], "KM_Stairs_Run_Up": [0.67, 1
 		# Yasin's downhill take: two strides from the middle of its descent (left foot forward to left foot forward)
 		"KMY_Down_Hands_Balance_Long": [2.33, 4.57]}
 const AUTO_CUT := ["KM_Walk", "KM_Run"]
+# A part of a take used as it is, not as a loop (seconds, from and to):
+#   the start and the stop of Yasin's own long downhill take (the loop above is its middle: 2.33 to 4.57 s);
+#   Kimodo takes of 26 Nov: a stop from a walk, a walk breaking into a run, a run slowing to a walk.
+const TRIMS := {"KM_Slope_Down_Start": [0.60, 2.33], "KM_Slope_Down_Stop": [4.57, 6.43],
+		"KM_Stop_Walk": [0.0, 2.50], "KM_Walk_To_Run": [0.40, 3.60], "KM_Run_To_Walk": [0.0, 1.30]}
 const LOOPS := ["Standing_Idle", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
 
 
@@ -207,6 +212,16 @@ func _bake(name: String, src: Skeleton3D, tgt: Skeleton3D, names: PackedStringAr
 		if best >= 0:
 			cut = [peaks[best] / fps, peaks[best + 1] / fps]
 			print("    %s: stride cut at %.2f to %.2f s" % [name, cut[0], cut[1]])
+	var trim: Array = TRIMS.get(name, [])
+	if not trim.is_empty():
+		var f0 := int(round(float(trim[0]) * fps))
+		var f1 := mini(int(round(float(trim[1]) * fps)), frames - 1)
+		rot = rot.slice(f0 * nb * 4, (f1 + 1) * nb * 4)
+		hips = hips.slice(f0, f1 + 1)
+		yaw = yaw.slice(f0, f1 + 1)
+		foot_fwd = foot_fwd.slice(f0, f1 + 1)
+		frames = f1 - f0 + 1
+		cd.set(&"frames", frames)
 	if not cut.is_empty():
 		var f0 := int(round(float(cut[0]) * fps))
 		var f1 := int(round(float(cut[1]) * fps))
