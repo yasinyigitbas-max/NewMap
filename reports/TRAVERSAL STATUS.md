@@ -240,3 +240,15 @@ measured; triangle-mesh colliders are not tried with the detector (the course is
 - **Not built:** thin walls above what the climb over reaches (no grab and climb OVER); a running version of the
   mantle and of the grab and climb (he stops); the stage 14 free hang.
 - **Next in the study's order:** stage 14, jump, grab and climb up (2.10 to 2.60 m).
+
+## After trav56, 26 Nov 2026 (stage 14)
+
+- **Stage 14 (deep, 2.10 to 2.60 m)** is the grab and climb of stage 13 carried higher: its first clip is itself a
+  jump to the hang. The study's free-hang clips (`Stand To Freehang`, `Freehang Climb`) were measured on him and are
+  NOT used on walls: their legs swing 0.3 to 1.0 m past the plane of the hands, through where a wall stands. They
+  would fit a ledge with nothing under it; the course has none. `tests/test_stage13.gd` covers both bands.
+- **Hands in the grab and climb** lie flat on the top, fingers forward (`hand_hold.gd`, `hold_flat`): only the
+  fingers over the edge in the hang, in onto the top on the way up.
+- A jump of his own adds nothing to the grab and climb (the jump is in the move); it still raises the mantle, the
+  climb over and the running vault.
+- **Next in the study's order:** stage 15, turn, hang and drop (ledges above 1.0 m).

@@ -846,10 +846,13 @@ func _physics_process(dt: float) -> void:
 		var w := [0.0, 0.0]
 		# (one hand as [which, where, how much], or both as a list of two of those)
 		var held: Array = [mh] if (mh.size() == 3 and not (mh[0] is Array)) else mh
+		var flat := [false, false]
 		for one: Array in held:
 			w[int(one[0])] = float(one[2])
 			(hands.get(&"hold_at") as Array)[int(one[0])] = one[1]
+			flat[int(one[0])] = one.size() > 3 and bool(one[3])     # a fourth entry: the hand is laid flat on the top
 		hands.set(&"hold_w", w)
+		hands.set(&"hold_flat", flat)
 		hands.set(&"on", _steep_on and ACTS.has(_act))
 		if _steep_on and ACTS.has(_act):
 			var a := _lib.get_animation(ACTS[_act])

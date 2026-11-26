@@ -1,7 +1,8 @@
 extends SceneTree
-## Stage 13: the grab and climb onto something deep of 1.45 to 2.10 m. The study's four tests for a traversal move
-## (see test_stage8.gd): first on a wall of the clips' own height, then the lowest, the middle and the highest of the
-## band, from standing against it, at a walk and at a run; then with a jump, which raises the band by what it raises him.
+## Stages 13 and 14: the grab and climb onto something deep of 1.45 to 2.10 m, and with the jump that is in it to
+## 2.60 m (on a solid wall the two are one move: see traverse.gd HIGH_BAND). The study's four tests for a traversal
+## move (see test_stage8.gd): first on a wall of the clips' own height, then the lowest, the middle and the highest
+## of the bands, from standing against it, at a walk and at a run; then with a jump of his own, which adds nothing.
 ## Run:  godot --headless --fixed-fps 60 --path traversal_lab -s res://tests/test_stage13.gd
 
 const FEET_WITHIN := 0.03       # the study: "within about 3 cm"
@@ -156,7 +157,7 @@ func _run() -> void:
 		await process_frame
 	for p: Vector3 in final:
 		stand.append(p.y - body.global_position.y)
-	var band: Array = trav.get(&"GRAB_BAND")
+	var band: Array = [float((trav.get(&"GRAB_BAND") as Array)[0]), float((trav.get(&"HIGH_BAND") as Array)[1])]
 	# walls built here beyond the last station (not in the course: a new station changes the stage 1 random walk):
 	# the jump's own height (its wrists at 2.14 m: a 2.06 m top), and the lowest and the highest of the band
 	var course: Node3D = lab.get(&"course")
@@ -172,7 +173,7 @@ func _run() -> void:
 	var inside: Array[Dictionary] = []
 	for how: Array in [["from standing against it", 0.27, false, -1], ["at a walk", 2.6, false, -1], ["at a run", 4.0, true, -1], ["from standing, with a jump", 0.27, false, 20]]:
 		var jumped := int(how[3]) >= 0
-		var adds := float(body.get(&"JUMP_RISE")) if jumped else 0.0
+		var adds := 0.0                 # (a jump of his own adds nothing: the jump is already in the move)
 		for s: Dictionary in order:
 			if not (String(s["kind"]) in ["wall_deep", "wall_thin", "wall_roofed"]) or float(s["top"]) > 3.1 or float(s["top"]) < 1.3:
 				continue
@@ -190,8 +191,6 @@ func _run() -> void:
 			var bad := ""
 			if key != "grab":
 				bad = "did not play (%s%s)" % [r["refused"], (", the move '%s' did" % key) if key != "" else ""]
-			elif jumped and h > float(band[1]) + 0.001 and not bool(plan.get("air", false)):
-				bad = "was not begun from the jump"
 			else:
 				var want: Vector3 = plan["end"]
 				var end: Vector3 = r["end"]

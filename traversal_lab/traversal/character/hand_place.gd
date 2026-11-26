@@ -20,6 +20,7 @@ var body: CharacterBody3D
 # (world), and how much (0 = not held).
 var hold_at: Array = [Vector3.ZERO, Vector3.ZERO]
 var hold_w: Array = [0.0, 0.0]
+var hold_flat: Array = [false, false]   # the held hand is laid flat on the top, fingers forward (the climbs): see hand_hold.gd
 var on := false                 # a take that puts hands down is showing
 var clip_slope := 0.0           # that take's own ground: its rise per metre forward
 var hand_low := 0.0             # how near the take's own ground its hands come at their lowest (m, at the wrist)

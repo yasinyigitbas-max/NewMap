@@ -26,5 +26,12 @@ func _process_modification_with_delta(_dt: float) -> void:
 			_on[f] = true
 			_kept[f] = (world * g.basis).orthonormalized()
 		var want := (world.inverse() * (_kept[f] as Basis)).orthonormalized()
+		# A hand laid flat on a top (the grab and climb; Yasin, 26 Nov: "check the climbs hand placements for high
+		# climb, it looks a few cms off": the hand stood on edge in front of the wall, fingers up, touching nothing).
+		# In the rest pose the palm faces down and the fingers point out to the side: turned a quarter about the
+		# upright they point the way he faces, palm still down.
+		var flat: Array = place.get(&"hold_flat")
+		if bool(flat[f]):
+			want = (Basis(Vector3.UP, -PI * 0.5 if f == 0 else PI * 0.5) * sk.get_bone_global_rest(_hand[f]).basis).orthonormalized()
 		g.basis = g.basis.orthonormalized().slerp(want, clampf(float(w[f]), 0.0, 1.0))
 		sk.set_bone_global_pose(_hand[f], g)
