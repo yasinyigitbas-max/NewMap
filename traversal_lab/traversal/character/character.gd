@@ -66,7 +66,7 @@ const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling
 		"stairs_down_walk": "KM_Stairs_Walk_Down", "stairs_down_run": "KM_Stairs_Run_Down",
 		"steep_up": "KM_Climb_Hard", "steep_down": "KMY_Down_Hands_Balance_Long",
 		"start_walk": "KM_Start_Walk", "start_run": "Idle_To_Sprint",
-		"stop_walk": "Female_Stop_Walking", "stop_walk_m": "Female_Stop_Walking_M",
+		"stop_walk": "KM_Stop_Walk", "stop_walk_m": "KM_Stop_Walk_M",
 		"steep_down_start": "KM_Slope_Down_Start", "steep_down_stop": "KM_Slope_Down_Stop"}
 # Starting and stopping on the very steep ground, going down (Yasin, 26 Nov: "start slope climb stop slope climb
 # needed. fit what we have into here"): the first 1.7 s and the last 1.9 s of his own long downhill take, whose
@@ -81,10 +81,12 @@ const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling
 # this is a male character. order new ones from kimodo"); Mixamo's own Start Walking takes about 3 s, which the
 # study calls slow. The run start is Mixamo's Idle To Sprint.
 # Only on ordinary ground: stairs and steep ground have their own clips.
-# The stop clip is NOT in use (26 Nov): Female Stop Walking brings the rear foot up beside the front one, and the
-# study has a walk stop "with the front leg stiffened and the rear foot left planted"; tried, it also slid the planted
-# feet 2.5 to 3 cm (1.5 without it; the study's bar is 2). A walk still stops as it did: the loop fading to standing.
-const STOP_CLIP := false
+# The walk stop is a Kimodo take of a man stopping from a walk (Yasin, 26 Nov: "Don't use female clips, this is a
+# guy. Just get new ones done"). It is taken up where it has as far left to go as he has, and runs on by the ground
+# he covers: the planted feet then drift 0.07 cm (the audit; 4.8 cm when it was fitted by pose and squeezed into his
+# stopping distance instead). It ends with the feet together; the study has the rear foot left planted: NOT met.
+const STOP_CLIP := true
+const STOP_BY_POSE := false
 const START_OVER := 1.35        # NOT in the study: a start is left for the loop once the body outruns the clip's
 const START_OVER_MORE := 0.3    # own end speed by this share, plus this (m/s)
 # Very steep ground (the body's "hands" band, over 35 degrees: the 45 degree ramp; OUTSIDE the study, kept at Yasin's
@@ -478,7 +480,7 @@ func _physics_process(dt: float) -> void:
 						var latest := _time_for("stop_walk", total - left)
 						var t := latest
 						var best := INF
-						for i in int(latest * 30.0) + 1:
+						for i in (int(latest * 30.0) + 1 if STOP_BY_POSE else 0):
 							var gap := absf(absf(lead_clip[mini(i, lead_clip.size() - 1)]) - absf(now))
 							if gap <= best:
 								best = gap
@@ -725,8 +727,11 @@ func _start_or_stop(dt: float, speed: float, wish: float) -> void:
 			_to_loops()         # pressed again mid-stop: back into the stride on the foot he has forward
 			return
 		if speed > 0.05:
-			var done := 1.0 - float(body.call(&"stop_distance")) / _stop_left
-			_act_t = maxf(_act_t, lerpf(_stop_from, _time_for(_sub_in, table[table.size() - 1]), clampf(done, 0.0, 1.0)))
+			if STOP_BY_POSE:
+				var done := 1.0 - float(body.call(&"stop_distance")) / _stop_left
+				_act_t = maxf(_act_t, lerpf(_stop_from, _time_for(_sub_in, table[table.size() - 1]), clampf(done, 0.0, 1.0)))
+			else:
+				_act_t = maxf(_act_t, _time_for(_sub_in, table[table.size() - 1] - float(body.call(&"stop_distance"))))
 		else:
 			_act_t += dt        # the body is at rest: the clip settles him over his feet
 		if _act_t >= a.length - 0.02:
