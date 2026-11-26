@@ -65,7 +65,7 @@ const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling
 		"stairs_up_walk": "Ascending_Stairs", "stairs_up_run": "KM_Stairs_Run_Up_D",
 		"stairs_down_walk": "KM_Stairs_Walk_Down", "stairs_down_run": "KM_Stairs_Run_Down",
 		"steep_up": "KM_Climb_Hard", "steep_down": "KMY_Down_Hands_Balance_Long",
-		"start_walk": "KM_Start_Walk", "start_run": "Idle_To_Sprint",
+		"start_walk": "KM_Start_Walk", "start_run": "KM_Start_Run",
 		"stop_walk": "KM_Stop_Walk", "stop_walk_m": "KM_Stop_Walk_M",
 		"steep_down_start": "KM_Slope_Down_Start", "steep_down_stop": "KM_Slope_Down_Stop",
 		"steep_up_start": "KM_Slope_Up_Start", "steep_up_stop": "KM_Slope_Up_Stop",
@@ -111,7 +111,7 @@ const TURN_BIG_DEG := 120.0     # NOT in the study: a turn on the spot of more t
 # he has gone and a stop by how far he still has to go, so the feet keep to the ground he really covers.
 # The clips: the walk start is a Kimodo take of a man starting to walk (Yasin, 26 Nov: "dont use female start stop,
 # this is a male character. order new ones from kimodo"); Mixamo's own Start Walking takes about 3 s, which the
-# study calls slow. The run start is Mixamo's Idle To Sprint.
+# study calls slow. The run start is a Kimodo take too (26 Nov), in place of Mixamo's Idle To Sprint.
 # Only on ordinary ground: stairs and steep ground have their own clips.
 # The walk stop is a Kimodo take of a man stopping from a walk (Yasin, 26 Nov: "Don't use female clips, this is a
 # guy. Just get new ones done"). It is taken up where it has as far left to go as he has, and runs on by the ground
@@ -875,7 +875,7 @@ func _turn(dt: float, wish: float) -> void:
 	var total := float(body.get(&"spot_total"))
 	if total == 0.0:
 		# the body has finished turning: what is left of the clip is let go, and he sets off (or stands)
-		if _sub_in.begins_with("turn_180_run"):
+		if _sub_in.begins_with("turn_180_run") or bool(body.get(&"spot_walk")):
 			# out of the plant-and-turn he is running: the run loop, not the start from standing (Yasin, 26 Nov:
 			# "dont play start running after 180 running turn, just continue the running animation")
 			_moving = 1.0

@@ -21,7 +21,7 @@ const MIRRORED := ["Female_Stop_Walking", "Run_To_Stop", "Left_Turn_90", "Walkin
 # Starts, stops and changes of gait are chosen "by which foot is forward" (the study, Stage 5): for these clips how far
 # the left ankle is ahead of the right, frame by frame, is noted on the animation ("lead", metres).
 const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Stop_Walk", "KM_Slope_Down_Start", "KM_Slope_Down_Stop", "KM_Start_Walk",
-		"KM_Walk", "KM_Run", "KM_Slope_Up_Start", "KM_Slope_Up_Stop"]
+		"KM_Walk", "KM_Run", "KM_Slope_Up_Start", "KM_Slope_Up_Stop", "KM_Start_Run"]
 const TURN_LEAST_DEG := 20.0        # a clip that turns less than this is not a turning clip: its root does not turn
 # In the air the body does the rising and the falling (the study: the body "alone decides where the character is"), so
 # the clip's own rise is taken out: between leaving the ground and landing the hips keep at most their take-off height.
@@ -85,6 +85,8 @@ const FIT := {"KM_Walk": {"pelvis": 7.7, "knee": [20.0, 0.7], "ankle": [1.0, 0.8
 		# Yasin, 26 Nov: "walking to start run is still nodding the head". Measured: in the walk-to-run take the head
 		# tips 43 degrees down.
 		"KM_Walk_To_Run": {"level": 1.0},
+		# the run start from standing (Kimodo take of 26 Nov): its head tipped up to 40 degrees down as well
+		"KM_Start_Run": {"level": 1.0},
 		"KM_Run": {"pelvis": -1.6, "knee": [60.0, 0.85], "ankle": [1.0, 0.8], "arms": 0.15},
 		"Running": {"pelvis": -1.6, "knee": [60.0, 0.85], "ankle": [1.0, 0.8], "arms": 0.15}}
 const FOOT_UP_SIGN := 1.0       # which way round the foot bone's side-to-side line counts as toes up (found by trying both)

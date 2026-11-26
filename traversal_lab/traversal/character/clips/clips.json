@@ -373,6 +373,17 @@
     ],
     "turn_deg": 0.71671597543665
   },
+  "KM_Start_Run": {
+    "length": 1.8,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 1.93502889739143,
+    "travel": [
+      -0.000429453153628856,
+      3.48305201530457
+    ],
+    "turn_deg": -13.541239350333
+  },
   "KM_Start_Walk": {
     "length": 2.0,
     "loop": false,

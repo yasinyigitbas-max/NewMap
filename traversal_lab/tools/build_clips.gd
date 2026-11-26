@@ -41,7 +41,11 @@ const TRIMS := {"KM_Slope_Down_Start": [0.60, 2.33], "KM_Slope_Down_Stop": [4.57
 		"KM_Crouch_Down": [0.20, 1.60], "KM_Crouch_Up": [0.0, 1.40],
 		# turning round on the spot in steps (Kimodo takes of 26 Nov; Yasin: "THERE WASNT ANY STANDING 180 TURNS, ADD
 		# THEM"): from just before the head starts round to standing again
-		"KM_Turn_180": [0.60, 3.00]}
+		"KM_Turn_180": [0.60, 3.00],
+		# a man's start into a run from standing (Kimodo take of 26 Nov, the straightest of five). Mixamo's Idle To
+		# Sprint, used until then, runs off with the hips turned 43 degrees to one side; straightened, its legs
+		# lunged under an upright trunk (Yasin: "start run now plays two broken and awkward steps").
+		"KM_Start_Run": [0.10, 1.90]}
 const LOOPS := ["Standing_Idle", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
 
 

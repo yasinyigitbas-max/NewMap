@@ -148,6 +148,7 @@ var _since_edge := 99.0
 var spot_total := 0.0           # the on-the-spot turn being made (radians, + = to his left); 0 = none
 var spot_left := 0.0            # how much of it is still to turn
 var spot_run := false           # it is the plant-and-turn out of a run
+var spot_walk := false          # it is the turn round made while walking
 var land_hold := 0.0            # seconds left of gathering himself after a landing, when the stick is not obeyed
 var _wish_yaw := 0.0            # the way he was asked to go last tick
 var _wish_turn := 0.0           # how fast the way he is asked to go is turning (rad/s, averaged)
@@ -431,6 +432,10 @@ func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 			# the study measured ("Runners on a treadmill at 2.5, 3.5 and 4.5 m/s") and builds up from there
 			spot_run = false
 			return wdir * RUN_OUT
+		if spot_walk and want > 0.05:
+			# out of the turn made while walking he is walking again, at the pace of a first step (the study: "A
+			# walk reaches about 90 % of its speed on the first step")
+			return wdir * minf(want, 0.9 * WALK)
 		if speed >= 0.3:
 			# (he has planted and turned: what is left of the old way's speed ends here. Left in, it turned him back
 			# toward the old way for a tick and the turn began again.)
@@ -442,6 +447,7 @@ func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 			spot_total = off
 			spot_left = off
 			spot_run = false
+			spot_walk = false
 			return Vector3.ZERO
 		# set off in the wanted direction
 		speed += (want - speed) * (1.0 - exp(-dt / _start_time(speed, want, fast)))
@@ -459,7 +465,15 @@ func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 			spot_total = off
 			spot_left = off
 			spot_run = true
+			spot_walk = false
 			return dir * speed
+		# asked to walk the other way while walking: the same turn on the spot as from standing, and on he walks
+		# (Yasin, 26 Nov: "play that same turn 180 while walking too"). Until then he walked round in an arc.
+		spot_total = off
+		spot_left = off
+		spot_run = false
+		spot_walk = true
+		return dir * speed
 	var turn := lerpf(TURN_RATE_WALK, TURN_RATE_RUN, fast) * dt
 	if ang > 0.0001:
 		var axis := dir.cross(wdir)
