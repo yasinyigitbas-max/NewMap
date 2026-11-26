@@ -107,12 +107,12 @@ func _bake(name: String, src: Skeleton3D, tgt: Skeleton3D, names: PackedStringAr
 			var now := (tgt.get_bone_global_rest(child).origin - tgt.get_bone_global_rest(b).origin).normalized()
 			var want := Vector3(0.0, now.y, now.z).normalized()
 			if part in ["UpLeg", "Leg"]:
-				# straight down, and in by what brings the ankles to the study's step width: people's feet land
-				# 0.08 to 0.10 m apart, and his hip joints are 0.21 m apart
-				var hip_x := absf(tgt.get_bone_global_rest(tgt.find_bone("mixamorig_%sUpLeg" % side)).origin.x)
-				var leg_len := tgt.get_bone_global_rest(tgt.find_bone("mixamorig_%sUpLeg" % side)).origin.y - tgt.get_bone_global_rest(tgt.find_bone("mixamorig_%sFoot" % side)).origin.y
-				var inward := atan2(hip_x - 0.07, leg_len)
-				want = Vector3(-sin(inward) * signf(tgt.get_bone_global_rest(b).origin.x), -cos(inward), 0.0)
+				# straight down, under the hip joint, as a true T-pose has it. (Until 26 Nov the legs were also angled
+				# IN, to bring the ankles to "0.08 to 0.10 m apart". That figure was a misreading: the study's notes
+				# give it for ELDERLY walkers and list young adults' step width as not found. It put his feet on top
+				# of each other when he stood (Yasin: "AT IDLE HIS BOTH FEET LAND ON EACH OTHER"). Taken out: the
+				# clips now place the feet themselves.)
+				want = Vector3(0.0, -1.0, 0.0)
 			var axis := now.cross(want)
 			if axis.length() > 0.0001:
 				t_rest[b] = Basis(axis.normalized(), now.angle_to(want)) * t_rest[b]
