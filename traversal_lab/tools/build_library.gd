@@ -75,7 +75,13 @@ const FIT := {"KM_Walk": {"pelvis": 7.7, "knee": [20.0, 0.7], "ankle": [1.0, 0.8
 		# head tips 12 degrees down as the trunk ducks 29; the Kimodo stop take looks 41 degrees down at the ground
 		# and stays there. level: the share of the head's tip forward or back, against how it is held standing,
 		# that is taken out again at the neck and head, so he keeps looking where he is going.
-		"Idle_To_Sprint": {"level": 1.0}, "KM_Stop_Walk": {"level": 1.0},
+		# Yasin, 26 Nov, after that: "start run still nods awkwardly" and "start run from stading pose move to anther
+		# direction first before snapping into the direction we input". Measured: through Idle To Sprint the hips
+		# are turned 43 degrees to one side of the way he is going and the chest 63, and both snap back when the
+		# run loop takes over; the trunk ducks 29 degrees where the run holds it at 10.
+		# face: the share of the hips' turn to the side that is kept. lean: the share of the hips' tip forward that
+		# is kept (the trunk comes up with them; the thighs are turned back by as much, so the legs stay).
+		"Idle_To_Sprint": {"level": 1.0, "face": 0.0, "lean": 0.6}, "KM_Stop_Walk": {"level": 1.0},
 		"KM_Run": {"pelvis": -1.6, "knee": [60.0, 0.85], "ankle": [1.0, 0.8], "arms": 0.15},
 		"Running": {"pelvis": -1.6, "knee": [60.0, 0.85], "ankle": [1.0, 0.8], "arms": 0.15}}
 const FOOT_UP_SIGN := 1.0       # which way round the foot bone's side-to-side line counts as toes up (found by trying both)
@@ -244,7 +250,7 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 
 ## Small edits to a take's joint curves (see FIT). Every edit is made to the bone's own turn from its standing pose.
 func _fit(a: Animation, how: Dictionary, sk: Skeleton3D, clip: String) -> void:
-	var fit := {"pelvis": 0.0, "knee": [20.0, 1.0], "ankle": [1.0, 1.0], "toe": 1.0, "arms": 0.0, "head": 1.0, "trunk": 1.0, "level": 0.0}
+	var fit := {"pelvis": 0.0, "knee": [20.0, 1.0], "ankle": [1.0, 1.0], "toe": 1.0, "arms": 0.0, "head": 1.0, "trunk": 1.0, "level": 0.0, "face": 1.0, "lean": 1.0}
 	fit.merge(how.duplicate(true), true)
 	for arg in OS.get_cmdline_user_args():       # for trying figures: -- --fit=KM_Walk/pelvis:6,knee:20:0.8,ankle:0.6:0.8,toe:1.2
 		if arg.begins_with("--fit=%s/" % clip):
@@ -282,6 +288,24 @@ func _fit(a: Animation, how: Dictionary, sk: Skeleton3D, clip: String) -> void:
 				if rel.w < 0.0:
 					rel = -rel
 				a.track_set_key_value(ht, k, (hr * Quaternion.IDENTITY.slerp(rel, float(fit[group[0]]))).normalized())
+	if float(fit["face"]) != 1.0:
+		var ft: int = tr.call("Hips")
+		for k in a.track_get_key_count(ft):
+			var q: Quaternion = a.track_get_key_value(ft, k)
+			a.track_set_key_value(ft, k, (Quaternion(Vector3.UP, -_yaw_of(q) * (1.0 - float(fit["face"]))) * q).normalized())
+	if float(fit["lean"]) != 1.0:
+		var lt: int = tr.call("Hips")
+		for k in a.track_get_key_count(lt):
+			var time := a.track_get_key_time(lt, k)
+			var q: Quaternion = a.track_get_key_value(lt, k)
+			var yw := _yaw_of(q)
+			var side_axis := (Quaternion(Vector3.UP, yw) * Vector3(1.0, 0.0, 0.0)).normalized()
+			var q2 := (Quaternion(side_axis, -_swing_of(q, yw).x * (1.0 - float(fit["lean"]))) * q).normalized()
+			a.track_set_key_value(lt, k, q2)
+			for child: String in ["LeftUpLeg", "RightUpLeg"]:
+				var ct: int = tr.call(child)
+				var kk := a.track_find_key(ct, time, Animation.FIND_MODE_APPROX)
+				a.track_set_key_value(ct, kk, (q2.inverse() * q * (a.track_get_key_value(ct, kk) as Quaternion)).normalized())
 	if float(fit["level"]) != 0.0:
 		_level_head(a, sk, float(fit["level"]))
 	var hips_t: int = tr.call("Hips")

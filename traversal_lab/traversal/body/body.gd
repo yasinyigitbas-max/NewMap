@@ -100,7 +100,10 @@ const JUMP_PUSH_RUN := 0.10     # from a run the take-off comes off the stride: 
 # Stage 6, crouch (Yasin, 26 Nov: "DO THE CROUCH MOVES"). The study: "Build: crouch idle and walk, the smaller
 # capsule, the fit test before standing. Pass when: the character passes under the 1.2 m overhang crouched and cannot
 # stand up beneath it; standing up in the open is instant; crouch speed is about half walk speed".
-const CROUCH_SPEED := WALK * 0.5    # the study: "crouch speed is about half walk speed"
+# The study: "crouch speed is about half walk speed". Built at exactly half, 0.72 m/s; Yasin, 26 Nov: "crouched
+# movement is too slow". Now the top of what the study's figure allows: half of its fastest comfortable walk
+# (1.46 m/s), plus the 10 % a single study figure is given (his decision of 26 Nov).
+const CROUCH_SPEED := 1.46 * 0.5 * 1.1    # 0.80 m/s
 const CROUCH_HEIGHT := 1.15         # feet to the top of the crouched body: under the course's 1.2 m overhang. His
                                     # crouch takes hold the top of the head under this (measured, see character.gd)
 const STAND_ROOM := 0.03            # NOT in the study: the standing shape is tried this much thinner than it is, so
@@ -421,7 +424,9 @@ func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 			return v.normalized() * maxf(speed - STOP_RUN * dt, 0.0) if speed > 0.0001 else Vector3.ZERO
 		spot_total = 0.0
 		if speed >= 0.3:
-			return v.normalized() * maxf(speed - STOP_RUN * dt, 0.0)
+			# (he has planted and turned: what is left of the old way's speed ends here. Left in, it turned him back
+			# toward the old way for a tick and the turn began again.)
+			return Vector3.ZERO
 	if speed < 0.3:
 		# from rest (or nearly): turn on the spot first if the way to go is far off his facing
 		# (not crouched: there is no clip of turning on the spot in a crouch; he sets off and curves round)
@@ -436,7 +441,10 @@ func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 	var dir := v / speed
 	var ang := dir.angle_to(wdir)
 	if ang > deg_to_rad(REVERSE_ANGLE_DEG):
-		if speed > REVERSE_SPEED:
+		# (Until 26 Nov a run was first braked to REVERSE_SPEED and only then turned. Yasin: "make the 180 run turn
+		# immediate, without slowing down first, it makes the hard stop move out of place when we slow down first".
+		# The speed is shed while he turns.)
+		if speed > REVERSE_SPEED and want <= WALK + 0.1:
 			return dir * maxf(speed - brake * dt, 0.0)
 		if want > WALK + 0.1:
 			# asked to run the other way: plant and turn round, as his Running Turn 180 clip does in 0.67 s

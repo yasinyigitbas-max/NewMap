@@ -36,8 +36,9 @@ const TRIMS := {"KM_Slope_Down_Start": [0.60, 2.33], "KM_Slope_Down_Stop": [4.57
 		# the climb. The start climbs from its first frame; the stop take was made on the flat (it slows and stands).
 		"KM_Slope_Up_Start": [0.0, 1.50], "KM_Slope_Up_Stop": [2.00, 4.90],
 		# Stage 6, crouch (Kimodo takes of 26 Nov, Yasin: "DO THE CROUCH MOVES, ORDER WHATS MISSING FROM KIMODO"): going
-		# down as far as the crouch he walks in (the take goes on into a full squat), and up from there
-		"KM_Crouch_Down": [0.20, 1.30], "KM_Crouch_Up": [0.20, 1.40],
+		# down as far as the crouch he idles in (the take goes on into a full squat), and up from there. (First cut
+		# 0.3 s short at each: the clips met the crouch idle 20 cm too high. Yasin: "crouch exit doesnt blend in at all".)
+		"KM_Crouch_Down": [0.20, 1.60], "KM_Crouch_Up": [0.0, 1.40],
 		# turning round on the spot in steps (Kimodo takes of 26 Nov; Yasin: "THERE WASNT ANY STANDING 180 TURNS, ADD
 		# THEM"): from just before the head starts round to standing again
 		"KM_Turn_180": [0.60, 3.00]}
