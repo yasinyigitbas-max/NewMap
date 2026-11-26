@@ -101,3 +101,10 @@ A robust Rockstar-style traversal system for the game (Godot 4.7, Jolt, Mixamo c
 - Slope work is looked at in motion from now on: `tests/shot_climb.gd` films a ramp from the side.
 - Still failing: 45 degrees with run held climbs 0.88 m/s of height against 0.60 wanted (the ramp shows only part
   of the loop); down 30 feet 6.1 cm inside; the earlier open lines (run knee 125, walk plant drift, stairs down).
+- Later still: Yasin's long downhill take is in as `KMY_Down_Hands_Balance_Long` (run 5x7gbt146srmy0d22vd9hej63m,
+  Kimodo-SOMA-RP-v1, 6.5 s; the two strides from 2.33 to 4.57 s), walking down both steep bands, pace-driven like the
+  uphill one. A struggling take is never played faster than 1.15 times its own pace (`DRIVEN_MOST`, ours), so he
+  walks down steep ground at about 0.7 m/s, not the 1.22 m/s the earlier rule gave. Run held keeps
+  `KM_Slope_Down_Run`. Names: Yasin's takes are `KMY_...`; the log of his runs is
+  `clip_measurements/kimodo_takes_yasin_26nov.csv`. Checked in film only (`shot_climb.gd --down`); the foot test
+  counts 3 planted ticks on it and shows a knee 1.3 cm the wrong way at worst.

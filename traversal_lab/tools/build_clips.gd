@@ -17,7 +17,9 @@ const CUTS := {"KM_Stairs_Walk_Down": [0.67, 1.53], "KM_Stairs_Run_Up": [0.67, 1
 		# stride where it is 37 degrees (the longest strides any climbing take made at those slopes)
 		"KM_Climb": [1.60, 2.13], "KM_Climb_Steep": [3.27, 4.07],
 		# Yasin's uphill take: the whole of it is the loop (it starts and ends on the same step)
-		"KM_Climb_Hard": [0.0, 3.47]}
+		"KM_Climb_Hard": [0.0, 3.47],
+		# Yasin's downhill take: two strides from the middle of its descent (left foot forward to left foot forward)
+		"KMY_Down_Hands_Balance_Long": [2.33, 4.57]}
 const AUTO_CUT := ["KM_Walk", "KM_Run"]
 const LOOPS := ["Standing_Idle", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
 
@@ -180,10 +182,10 @@ func _bake(name: String, src: Skeleton3D, tgt: Skeleton3D, names: PackedStringAr
 		# how far forward of the hips the left foot is (for lining loops up): from the source skeleton
 		var sf := sg[src.find_bone("mixamorig_LeftFoot")].origin
 		foot_fwd.append(sf.z - hp.z)
-		if name.begins_with("KM_") and OS.get_cmdline_user_args().has("--table") and f % 2 == 0:
+		if name.begins_with("KM") and OS.get_cmdline_user_args().has("--table") and f % 2 == 0:
 			var rf := sg[src.find_bone("mixamorig_RightFoot")].origin
 			print("    %s %.2f hips z %.2f y %.2f | L fwd %.2f y %.2f | R fwd %.2f y %.2f" % [name.substr(3), time, hp.z, hp.y, sf.z - hp.z, sf.y, rf.z - hp.z, rf.y])
-	if name.begins_with("KM_"):
+	if name.begins_with("KM"):
 		# for cutting a loop out of a generated clip: when each foot is furthest forward, and where the hips are then
 		var line := ""
 		for f in range(1, frames - 1):
