@@ -43,11 +43,26 @@ const MOVES := {
 # 26 Nov, the one of six that is a single step from standing: onto 0.61 m, the right foot up from 0.40 s and on top at
 # 0.83 s, the left foot following from 0.80 s and beside it at 1.77 s.
 const STEP_UP := {"input": "step_up", "res": "res://traversal/character/clips/KM_Step_Up.res",
-		"from": 0.30, "exit": 1.95,
+		"from": 0.30, "from_moving": 0.45, "exit": 1.95,
 		"edge": 0.25}           # NOT in the study: where the take's edge is taken to be (m ahead of where his hips
                                 # start): a foot's length in front of his toes, and behind the heel that lands on top
 const UP_BAND := [0.30, 0.50]   # the study's band for the high step: more than the first, up to the second (m)
+const EARLY := 0.2              # NOT in the study: on the move the step up is begun this many seconds of travel before the
+                                # take's own distance from the step
+# At a run the same step is taken in stride, with a leap (Yasin, 26 Nov: "there should be one for running too ...
+# the running one needs to be smoother, preserving our momentum as much as possible"). Six Kimodo takes ordered for
+# it did not do it (they climb stairs, or leap along the flat), so it is the Running Jump clip he already has, "one
+# run stride with a leap ... in it" (the study, Part 3): the body goes on at the speed he came in at, over an arc
+# that clears the edge and comes down on top, and he runs on. Leaves the ground at 0.10 s of the clip, down at 0.67 s.
+const RUN_UP := {"input": "run_jump", "off": 0.10, "land": 0.67, "exit": 0.90}
+const RUN_UP_AIR := 0.40        # NOT in the study: seconds in the air of the leap onto the step
+const RUN_UP_FACE := 0.75       # NOT in the study: the share of the leap at which he crosses the edge
+const RUN_UP_ARC := 0.25        # NOT in the study: how far the arc rises over a straight line to the top (m); at the
+                                # edge he is then 3 cm or more over a 0.50 m step
+const UP_LOOK_RUN := 1.6        # NOT in the study: at a run it is looked for this far ahead (m)
 const UP_LOOK := 0.9            # NOT in the study: how far ahead something to step onto is looked for (m)
+const ROLL_JUMP_MORE := 0.7     # a jump off an edge falls from the top of the jump: the body's own running jump rises
+                                # 0.60 m (body.gd, JUMP_RISE_RUN), so that much more fall is still rolled out of
 const ROLL_MOST := 3.0          # the study: "2.0 to 3.0 m, hang and drop preferred, with a roll for a running jump; above
                                 # that, expect damage"
 const REST_LEAST := 0.6         # NOT in the study: off the lowest edge he is standing again in this share of the take's time
@@ -100,6 +115,50 @@ func _ready() -> void:
 		_up_fwd.append(up_hips[f].z - up_hips[0].z)
 	_up_rise = ClipData.rise_of(up_hips)
 	_up_high = up_hips[up_hips.size() - 1].y - up_hips[0].y
+	body.connect(&"landed", _on_landed)
+
+
+## Coming down from a jump or a fall at speed, from high enough: the roll, from its landing on, if there is the room
+## for it (Yasin, 26 Nov: "roll off worked only on running off the edge ... it should work when we jump off too, but
+## again with the available space to execute logic").
+func _on_landed(drop: float) -> void:
+	if not enabled or bool(body.call(&"in_move")) or bool(body.get(&"crouched")):
+		return
+	var v: Vector3 = body.get(&"hvel")
+	if drop <= float(BAND[1]) + MEASURED_WITHIN or drop > ROLL_MOST + ROLL_JUMP_MORE or v.length() < RUN_FROM:
+		return
+	var mv: Dictionary = MOVES["roll"]
+	var fwd: PackedFloat32Array = _fwd["roll"]
+	var dir := v.normalized()
+	var feet := body.global_position
+	var travel := _at(fwd, float(mv["exit"])) - _at(fwd, float(mv["down"]))
+	for share: float in [0.0, 0.5, 1.0]:
+		var p := feet + dir * (travel * share)
+		var g: Dictionary = body.call(&"probe", Vector3(p.x, feet.y, p.z))
+		if not bool(g["hit"]) or absf(float(g["y"]) - feet.y) > LAND_WITHIN or not bool(detector.call(&"_fits", Vector3(p.x, feet.y, p.z), float(body.get(&"HEIGHT")))):
+			refused = "no room to roll out of the landing"
+			return
+	refused = ""
+	_plan = {"key": "roll_only", "from": feet, "end": feet + dir * travel, "m": dir, "yaw": atan2(-dir.x, -dir.z),
+			"exit_speed": (_at(fwd, float(mv["exit"])) - _at(fwd, float(mv["exit"]) - 0.2)) / 0.2}
+	plays += 1
+	body.call(&"begin_move", _roll_only, String(mv["input"]))
+
+
+func _roll_only(t: float) -> Dictionary:
+	var mv: Dictionary = MOVES["roll"]
+	var fwd: PackedFloat32Array = _fwd["roll"]
+	var p := _plan
+	var u := clampf(t / (float(mv["exit"]) - float(mv["down"])), 0.0, 1.0)
+	var ct := lerpf(float(mv["down"]), float(mv["exit"]), u)
+	var f0 := _at(fwd, float(mv["down"]))
+	var f1 := _at(fwd, float(mv["exit"]))
+	var free: Array = mv["free"]
+	var out := {"done": u >= 1.0, "pos": (p["from"] as Vector3).lerp(p["end"], (_at(fwd, ct) - f0) / maxf(f1 - f0, 0.001)), "yaw": float(p["yaw"]),
+			"clip_t": ct, "air": false, "landed": true, "landing": "heavy", "free": ct >= float(free[0]) and ct <= float(free[1])}
+	if u >= 1.0:
+		out["exit"] = (p["m"] as Vector3) * float(p["exit_speed"])
+	return out
 
 
 func _at(table: PackedFloat32Array, t: float) -> float:
@@ -263,7 +322,7 @@ func _try_step_up(v: Vector3, wish: Vector3) -> bool:
 	# the cheap look: is anything in the way just above what he steps over by himself?
 	if _up_record.is_empty():
 		var from := body.global_position + Vector3.UP * (float(UP_BAND[0]) + 0.03)
-		var q := PhysicsRayQueryParameters3D.create(from, from + dir * UP_LOOK, body.collision_mask, [body.get_rid()])
+		var q := PhysicsRayQueryParameters3D.create(from, from + dir * (UP_LOOK_RUN if v.length() > RUN_FROM else UP_LOOK), body.collision_mask, [body.get_rid()])
 		if body.get_world_3d().direct_space_state.intersect_ray(q).is_empty():
 			return false
 	if _up_record.is_empty() or _tick % AGAIN == 0:
@@ -285,12 +344,25 @@ func _try_step_up(v: Vector3, wish: Vector3) -> bool:
 	if rad_to_deg(dir.angle_to(m)) > MOST_OFF_DEG:
 		refused = "not heading at it"
 		return false
-	var from_t := float(STEP_UP["from"])
+	if _try_run_up(v, wish, rec, m, top):
+		return true
+	if not refused.is_empty():
+		return false
+	# Come at on the move, the take is taken up with its stepping foot already lifting, and of the take and its mirror
+	# image the one whose stepping foot is the foot he has forward; and it is begun before he is stopped against the
+	# step. (Begun from its standing start once he had walked into the step, the foot he had forward was already past
+	# the step's face: Yasin, 26 Nov, "stepping onto the edge is jittery".)
+	var moving := v.length() > 0.5
+	var from_t := float(STEP_UP["from_moving"]) if moving else float(STEP_UP["from"])
 	var exit_t := float(STEP_UP["exit"])
 	var native := float(STEP_UP["edge"]) - _at(_up_fwd, from_t)      # the take's own distance from the face as it begins
 	var here := (rec["edge"] as Vector3 - body.global_position).dot(m)
-	if here > native + 0.02:
+	if here > native + 0.02 + (v.length() * EARLY if moving else 0.0):
 		return false                                            # not there yet
+	var mirror := false
+	var ch := body.get_node_or_null(^"Character")
+	if moving and ch != null and ch.has_method(&"_lead_now"):
+		mirror = float(ch.call(&"_lead_now")) > 0.0             # the take steps with the right foot; his left is forward
 	# fit: he ends as far in from the edge as the take does; the take's travel is stretched to that
 	var inward := _at(_up_fwd, exit_t) - float(STEP_UP["edge"])
 	if float(rec["depth"]) < inward + float(body.get(&"RADIUS")):
@@ -305,12 +377,12 @@ func _try_step_up(v: Vector3, wish: Vector3) -> bool:
 		return false
 	refused = ""
 	_plan = {"key": "up", "from": Vector3(feet.x, ground, feet.z), "end": end, "m": m, "yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z),
-			"top": top, "here": here, "stretch": (here + inward) / maxf(_at(_up_fwd, exit_t) - _at(_up_fwd, from_t), 0.01),
+			"top": top, "here": here, "from_t": from_t, "stretch": (here + inward) / maxf(_at(_up_fwd, exit_t) - _at(_up_fwd, from_t), 0.01),
 			"exit_speed": maxf((_at(_up_fwd, exit_t) - _at(_up_fwd, exit_t - 0.2)) / 0.2, 0.0)}
 	plays += 1
 	_up_record = {}
 	record = {}
-	body.call(&"begin_move", _step_up, String(STEP_UP["input"]))
+	body.call(&"begin_move", _step_up, String(STEP_UP["input"]) + ("_m" if mirror else ""))
 	return true
 
 
@@ -319,7 +391,7 @@ func _try_step_up(v: Vector3, wish: Vector3) -> bool:
 func _step_up(t: float) -> Dictionary:
 	var p := _plan
 	var m: Vector3 = p["m"]
-	var from_t := float(STEP_UP["from"])
+	var from_t := float(p["from_t"])
 	var exit_t := float(STEP_UP["exit"])
 	var ct := minf(from_t + t, exit_t)
 	var gone := _at(_up_fwd, ct) - _at(_up_fwd, from_t)
@@ -329,8 +401,66 @@ func _step_up(t: float) -> Dictionary:
 	var out := {"done": ct >= exit_t, "pos": pos, "clip_t": ct, "air": false,
 			"yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), clampf(t / 0.2, 0.0, 1.0)),
 			# for the feet: the take's own step, as it stands ahead of him at this moment
-			"step": [float(STEP_UP["edge"]) - _at(_up_fwd, ct), _up_high, _up_high * rise]}
+			"step": [float(STEP_UP["edge"]) - _at(_up_fwd, ct), _up_high, _up_high * rise, float(p["top"])]}
 	if ct >= exit_t:
 		out["pos"] = p["end"]
 		out["exit"] = m * float(p["exit_speed"])
+	return out
+
+
+## The step up at a run: a leap in stride. True once it is begun; false with `refused` empty = not this move's, or
+## not yet; false with `refused` set = it is waiting for its take-off point.
+func _try_run_up(v: Vector3, wish: Vector3, rec: Dictionary, m: Vector3, top: float) -> bool:
+	refused = ""
+	var speed := v.length()
+	if wish.length() <= float(body.get(&"WALK")) + 0.1 or speed <= RUN_FROM:
+		return false
+	var here := (rec["edge"] as Vector3 - body.global_position).dot(m)
+	var take_off := speed * RUN_UP_AIR * RUN_UP_FACE            # how far before the edge he leaves the ground
+	var beyond := speed * RUN_UP_AIR * (1.0 - RUN_UP_FACE)      # ... and how far past it he comes down
+	var out_run := speed * (float(RUN_UP["exit"]) - float(RUN_UP["land"]))
+	if float(rec["depth"]) < beyond + out_run + float(body.get(&"RADIUS")):
+		return false                                            # not the room on top to run on: the walking step up
+	if here < take_off - 0.15:
+		return false                                            # too near already for the leap: the walking step up
+	if here > take_off:
+		refused = "coming up to the leap"
+		return false
+	var feet := body.global_position
+	var ground := float(rec["ground"])
+	var land := feet + m * (here + beyond)
+	land.y = ground + top
+	var end := land + m * out_run
+	for p: Vector3 in [land, end]:
+		if not bool(detector.call(&"_fits", p, float(body.get(&"HEIGHT")))):
+			return false
+	_plan = {"key": "run_up", "from": Vector3(feet.x, ground, feet.z), "land": land, "end": end, "m": m, "yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z),
+			"top": top, "speed": speed, "exit_speed": speed}
+	plays += 1
+	_up_record = {}
+	record = {}
+	body.call(&"begin_move", _run_up, String(RUN_UP["input"]))
+	return true
+
+
+func _run_up(t: float) -> Dictionary:
+	var p := _plan
+	var m: Vector3 = p["m"]
+	var out := {"done": false, "yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), clampf(t / 0.15, 0.0, 1.0))}
+	if t < RUN_UP_AIR:
+		var u := t / RUN_UP_AIR
+		var pos := (p["from"] as Vector3).lerp(p["land"], u)
+		pos.y = (p["from"] as Vector3).y + float(p["top"]) * u + 4.0 * RUN_UP_ARC * u * (1.0 - u)
+		out["pos"] = pos
+		out["clip_t"] = lerpf(float(RUN_UP["off"]), float(RUN_UP["land"]), u)
+		out["air"] = true
+	else:
+		var rest := float(RUN_UP["exit"]) - float(RUN_UP["land"])
+		var u := clampf((t - RUN_UP_AIR) / rest, 0.0, 1.0)
+		out["pos"] = (p["land"] as Vector3).lerp(p["end"], u)
+		out["clip_t"] = lerpf(float(RUN_UP["land"]), float(RUN_UP["exit"]), u)
+		out["air"] = false
+		if u >= 1.0:
+			out["done"] = true
+			out["exit"] = m * float(p["exit_speed"])
 	return out

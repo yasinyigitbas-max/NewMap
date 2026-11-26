@@ -86,6 +86,7 @@ func _step_down(from: Vector3, to: Vector3, reach: float) -> float:
 
 ## Does the body fit with its feet at `feet`? The body's own capsule, a little thinner (see body.gd, STAND_ROOM).
 func _fits(feet: Vector3, tall: float) -> bool:
+	_space = body.get_world_3d().direct_space_state       # (it is also asked without a measurement before it)
 	var fl := float(body.get(&"FLOAT"))
 	_capsule.radius = float(body.get(&"RADIUS")) - 0.03
 	_capsule.height = maxf(tall - fl - 0.03, 2.0 * _capsule.radius)

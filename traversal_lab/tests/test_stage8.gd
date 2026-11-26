@@ -124,6 +124,7 @@ func _run() -> void:
 		stand.append(p.y - body.global_position.y)
 	for run: bool in [false, true]:
 		await band_tests(run)
+	await jump_off_roll()
 	print("RESULT ", "PASS" if fails == 0 else "FAIL (%d)" % fails)
 	quit(1 if fails else 0)
 
@@ -167,3 +168,35 @@ func band_tests(run: bool) -> void:
 		# (held to where its own plan ends, made before the stick was reversed, and set beside the run left alone)
 		var off := INF if not bool(b["played"]) else (b["end"] as Vector3).distance_to((b["plan"] as Dictionary)["end"])
 		ok(off < 0.01, how + ", %s: the stick reversed 0.1 s into the move changes nothing: he ends %.3f m from where the move was going (and %.3f m from where the run left alone ended)" % [s["label"], off, (b["end"] as Vector3).distance_to(a["end"])])
+
+
+## Jumped off a high edge at a run (not run off it): he rolls out of the landing as well, where there is the room.
+func jump_off_roll() -> void:
+	for s: Dictionary in stations:
+		if s["label"] != "deep wall 2.20 m":
+			continue
+		lab.call(&"place", Vector3(float(s["x"]), float(s["top"]), -5.4))
+		body.rotation.y = PI
+		for i in 30:
+			await physics_frame
+		var samples := []
+		for i in 240:
+			samples.append({"mx": 0.0, "mz": 1.0, "yaw": 0.0, "run": true, "jump": i >= 37 and i < 40, "crouch": false, "act": false})
+		tape.set(&"tape", samples)
+		tape.call(&"replay")
+		var key := ""
+		var end := Vector3.INF
+		var was_in := false
+		var jumped := false
+		while int(tape.get(&"mode")) == 2:
+			await physics_frame
+			jumped = jumped or bool(body.get(&"from_jump"))
+			var inm := bool(body.call(&"in_move"))
+			if inm and not was_in:
+				key = String((trav.get(&"_plan") as Dictionary).get("key", ""))
+			if was_in and not inm:
+				end = body.global_position
+				tape.call(&"stop")
+			was_in = inm
+		var want: Vector3 = (trav.get(&"_plan") as Dictionary).get("end", Vector3.ZERO)
+		ok(jumped and key == "roll_only" and end.distance_to(want) < END_WITHIN, "%s, jumped off at a run: he rolls out of the landing and ends where the roll was going (move '%s', %.2f m off)" % [s["label"], key, end.distance_to(want)])

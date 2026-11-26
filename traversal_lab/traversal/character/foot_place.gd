@@ -52,6 +52,7 @@ var hands: SkeletonModifier3D   # hand_place.gd, when it is there: how far the h
 var step_high := 0.0
 var step_edge := 0.0
 var step_rise := 0.0
+var step_real := 0.0            # the height of the real thing he is stepping onto (m)
 const STEP_SOFT := 0.15         # NOT in the study: the clip's own step is taken as a ramp this long at its edge (m), so
                                 # that a foot crossing the edge is not thrown by it
 var hips_fit := 0.0             # the hips' height put right for a clip made on steeper or shallower ground (m; see character.gd)
@@ -228,6 +229,14 @@ func _process_modification_with_delta(dt: float) -> void:
 		elif not by_speed:
 			_lump[f] = lerpf(_lump[f], 0.0, let_go)
 		var lift := clampf(ground_f - feet_y, -REACH, REACH) - clip_slope * ball_t.origin.z + float(_lump[f]) - own_floor
+		var stepping := step_high != 0.0
+		if stepping:
+			# In a climbing move both grounds are known: the clip's own step and the real one, crossed at the same
+			# point of the foot's path. The foot is fitted from the one to the other by that alone. (Fitted by
+			# looking for the ground under it, as everywhere else, the foot was thrown up and down a step's height
+			# from tick to tick as it crossed the edge. Yasin, 26 Nov: "stepping onto the edge is jittery".)
+			var past := smoothstep(step_edge - STEP_SOFT, step_edge, ball_t.origin.z)
+			lift = (step_real - step_high) * (past - step_rise / step_high)
 		# tilt the foot to the ground, about the ball of the foot, the more the nearer it is to the ground
 		var near := clampf(1.0 - (ball_h + float(_lump[f]) - _toe_rest) / NEAR, 0.0, 1.0)
 		var axis := Vector3.UP.cross(normal)
@@ -236,7 +245,7 @@ func _process_modification_with_delta(dt: float) -> void:
 			tilt = Basis(axis.normalized(), minf(Vector3.UP.angle_to(normal), TILT_MOST) * near)
 		var ball_goal := ball + Vector3(0.0, lift, 0.0)
 		# (nor the ball of the foot: a swinging toe that dips under the clip's own floor is kept on top of the ground)
-		if grounding and on_ground:
+		if grounding and on_ground and not stepping:
 			var gt := _ground(ball_goal, feet_y)
 			if not gt.is_empty() and (gt["normal"] as Vector3).y > 0.3:
 				var off_t := (ball_goal - (gt["position"] as Vector3)).dot(gt["normal"])
@@ -246,7 +255,7 @@ func _process_modification_with_delta(dt: float) -> void:
 		# the heel never goes into the ground: a clip that lets its heel sink under its own floor as it lands (the
 		# walk and the runs do, by 3 to 5 cm) has the whole foot raised by what the ankle is short of its standing
 		# height over the ground under it (the study: "no foot inside or floating above it by more than about 2 cm")
-		if grounding and on_ground:
+		if grounding and on_ground and not stepping:
 			var gh := _ground(ankle_goal[f], feet_y)
 			if not gh.is_empty() and (gh["normal"] as Vector3).y > 0.3:
 				var off := ((ankle_goal[f] as Vector3) - (gh["position"] as Vector3)).dot(gh["normal"])

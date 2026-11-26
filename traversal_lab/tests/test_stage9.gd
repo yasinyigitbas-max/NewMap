@@ -47,7 +47,7 @@ func go_at(s: Dictionary, back: float, run: bool, flip := -1.0) -> Dictionary:
 	tape.set(&"tape", samples)
 	tape.call(&"replay")
 	var before := int(trav.get(&"plays"))
-	var out := {"played": false, "plan": {}, "end": Vector3.ZERO, "end_state": -1, "end_speed": 0.0, "feet": INF, "move_from": -1.0, "high": 0.0}
+	var out := {"played": false, "plan": {}, "end": Vector3.ZERO, "end_state": -1, "end_speed": 0.0, "feet": INF, "move_from": -1.0, "high": 0.0, "nearer": INF}
 	var was_in := false
 	var t := 0
 	var after := -1
@@ -69,8 +69,11 @@ func go_at(s: Dictionary, back: float, run: bool, flip := -1.0) -> Dictionary:
 				var gy := body.global_position.y
 				var worst := 0.0
 				for f in 2:
-					worst = maxf(worst, minf(absf(final[f * 2].y - gy - stand[f * 2]), absf(final[f * 2 + 1].y - gy - stand[f * 2 + 1])))
-				out["feet"] = worst
+					var off := minf(absf(final[f * 2].y - gy - stand[f * 2]), absf(final[f * 2 + 1].y - gy - stand[f * 2 + 1]))
+					worst = maxf(worst, off)
+					out["nearer"] = minf(float(out["nearer"]), off)
+				# (handed back at a run only one foot is on the ground: there it is the nearer foot that is held to it)
+				out["feet"] = float(out["nearer"]) if run else worst
 			tape.call(&"stop")
 		was_in = inm
 		out["high"] = maxf(float(out["high"]), body.global_position.y)
@@ -134,8 +137,8 @@ func _run() -> void:
 					bad = "exit speed %.2f, the clip's %.2f" % [float(r["end_speed"]), float(plan["exit_speed"])]
 				elif float(r["feet"]) > FEET_WITHIN:
 					bad = "a foot %.1f cm off the top as he is handed back" % (float(r["feet"]) * 100.0)
-			ok(bad == "", "%s, %s: steps up, ends on top where measured, on the ground, at the clip's exit speed (the worse foot %.1f cm off the top)%s" % [
-					s["label"], how[0], float(r["feet"]) * 100.0, "" if bad == "" else " -- " + bad])
+			ok(bad == "", "%s, %s: steps up, ends on top where measured, on the ground, at the clip's exit speed (foot %.1f cm off the top; %s)%s" % [
+					s["label"], how[0], float(r["feet"]) * 100.0, String((r["plan"] as Dictionary).get("key", "?")), "" if bad == "" else " -- " + bad])
 	for s: Dictionary in [inside[0], inside[inside.size() / 2], inside[inside.size() - 1]]:
 		var a := await go_at(s, 1.6, false)
 		var b := await go_at(s, 1.6, false, float(a["move_from"]) + 0.3)

@@ -61,7 +61,7 @@ const SOFT_DROP := 0.30         # the study: "up to 0.30 m, step down in stride;
 const HARD_DROP := 1.0          # soft landing; 1.0 to 2.0 m, a heavy landing"
 # the inputs of the tree's Transition node, and the clip each one plays under its own TimeSeek
 const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling_To_Landing", "land_heavy": "Hard_Landing",
-		"drop_walk": "KM_Ledge_Walk_Off", "drop_run": "KM_Ledge_Run_Off", "drop_roll": "KM_Land_Roll", "step_up": "KM_Step_Up",
+		"drop_walk": "KM_Ledge_Walk_Off", "drop_run": "KM_Ledge_Run_Off", "drop_roll": "KM_Land_Roll", "step_up": "KM_Step_Up", "step_up_m": "KM_Step_Up_M",
 		"stairs_up_walk": "Ascending_Stairs", "stairs_up_run": "KM_Stairs_Run_Up_D",
 		"stairs_down_walk": "KM_Stairs_Walk_Down", "stairs_down_run": "KM_Stairs_Run_Down",
 		"steep_up": "KM_Climb_Hard", "steep_down": "KMY_Down_Hands_Balance_Long",
@@ -86,6 +86,7 @@ const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling
 # blended toward its own standing end by as much as the drop is short of the take's (see traverse.gd, "soft").
 # input -> the moment of the clip at which he stands again
 const SOFTEN := {"drop_walk": 3.30, "drop_run": 3.70}
+const JUMP_BELOW := 0.15        # NOT in the study: this far below where he jumped from, the jump is over and he is falling (m)
 const CROUCH_IDLE := "KM_Crouch_Idle"
 const CROUCH_WALK := "KM_Crouch_Walk"
 const CROUCH_FADE := 0.3        # NOT in the study: seconds to blend between standing and crouched while he is moving
@@ -220,6 +221,7 @@ var _foot_i := [-1, -1]
 var _foot_len := 0.0            # from the ankle to the ball of the foot, along the ground (from the skeleton)
 var _jump_low := 0.5            # the Jump clip: the moment its hips are lowest (found from the clip itself)
 var _free := 0.0                # 0..1: the feet are left as the clip has them (a roll)
+var _jump_y0 := 0.0             # the height he jumped from
 var _soft := 0.0                # 0..1: how far a landing is eased toward standing
 var _low_w := 0.0               # 0 = the standing set, 1 = the crouched set
 var _low_was := false
@@ -477,6 +479,7 @@ func _on_jump_started(_push: float) -> void:
 	_jump_still = bool(body.get(&"_jump_still"))
 	_jump = JUMP if _jump_still else RUN_JUMP
 	_jump_e = 0.0
+	_jump_y0 = body.global_position.y
 	var rise := float(body.get(&"JUMP_RISE")) if _jump_still else float(body.get(&"JUMP_RISE_RUN"))
 	_flight = 2.0 * sqrt(2.0 * rise / float(body.get(&"GRAVITY")))
 	_set_mode("jump")
@@ -703,7 +706,9 @@ func _physics_process(dt: float) -> void:
 			if in_air:
 				var air := clampf(float(body.get(&"air_time")) / _flight, 0.0, 1.0)
 				_act_t = lerpf(float(_jump["off"]), float(_jump["land"]), air)
-				if float(body.get(&"air_time")) > _flight + 0.3:
+				# (... or he is already below where he jumped from: he has jumped off something. Until 26 Nov the jump
+				# clip was held on its last frame all the way down. Yasin: "we appear stuck in the same pose".)
+				if float(body.get(&"air_time")) > _flight + 0.3 or body.global_position.y < _jump_y0 - JUMP_BELOW:
 					# a longer fall than the jump has: the falling loop
 					_drop = {}
 					_set_mode("fall")
@@ -771,9 +776,10 @@ func _physics_process(dt: float) -> void:
 		feet.set(&"by_speed", _steep_on)
 		# a climbing move: the clip's own step, for the feet to be fitted from (see foot_place.gd)
 		var st_m: Array = body.get(&"move_step") if bool(body.call(&"in_move")) else []
-		feet.set(&"step_high", float(st_m[1]) if st_m.size() == 3 else 0.0)
-		feet.set(&"step_edge", float(st_m[0]) if st_m.size() == 3 else 0.0)
-		feet.set(&"step_rise", float(st_m[2]) if st_m.size() == 3 else 0.0)
+		feet.set(&"step_high", float(st_m[1]) if st_m.size() >= 3 else 0.0)
+		feet.set(&"step_edge", float(st_m[0]) if st_m.size() >= 3 else 0.0)
+		feet.set(&"step_rise", float(st_m[2]) if st_m.size() >= 3 else 0.0)
+		feet.set(&"step_real", float(st_m[3]) if st_m.size() >= 4 else 0.0)
 		feet.set(&"stand_wide", STAND_WIDE * (1.0 - _moving) * (1.0 - _low_w) if _act == "ground" else 0.0)
 		# (in step with the tree's own cross-fade, which is even over FADE: eased more slowly than the pose, the
 		# feet of a stair clip coming in were held up on stairs that were no longer under them, 0.2 to 0.5 m high)

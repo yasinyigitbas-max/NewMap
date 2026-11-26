@@ -310,6 +310,7 @@ func begin_move(path: Callable, clip: String) -> void:
 	move_clip = clip
 	move_t = 0.0
 	move_landed = false
+	land_hold = 0.0
 	jump_timer = 0.0
 	spot_total = 0.0
 
