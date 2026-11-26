@@ -12,6 +12,7 @@ extends SceneTree
 ## Mirror images ("_M") are made for the clips that exist for one side only.
 ## Run:  godot --headless --path traversal_lab -s res://tools/build_library.gd
 
+const ClipData := preload("res://traversal/character/clip_data.gd")
 const DIR := "res://traversal/character/clips/"
 const MODEL := "res://traversal/character/player_v4_rooted.scn"
 const OUT := "res://traversal/character/library.res"
@@ -209,7 +210,7 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 			var l0 := aim * (Vector3(hips[f].x, 0.0, hips[f].z) - start - dir * (total * u0))
 			mean_pos += Vector3(l0.x, hips[f].y, l0.z) / (frames - 1)
 	var furthest := 0.0
-	var rise := rise_of(hips)
+	var rise := ClipData.rise_of(hips)
 	for f in frames:
 		var time := float(f) / fps
 		var u := float(f) / float(maxi(frames - 1, 1))
@@ -510,19 +511,6 @@ func _stairs(a: Animation, c: Resource, sk: Skeleton3D) -> void:
 	print("      its hands come to %.3f m over its own ground at their lowest (wrist)" % low)
 	a.set_meta(&"reach", (balls[0][mini(at, frames - 1)] as Vector3).z)
 	print("   stairs %s: rises %.2f m over %.2f m (slope %.2f), its stairs stood %.3f m off the hips' floor (%d planted frames), left foot comes down %.2f m ahead, its standing leg is longest (%.3f m) with the ball of the foot %.2f m ahead" % [c.get(&"source"), rise, total, slope, floor_y, count, float(a.get_meta(&"reach")), longest, pivot])
-
-
-## The share of a climbing clip's whole rise that its hips have made, frame by frame: never going back down.
-## (traverse.gd moves the body by the same curve.)
-static func rise_of(hips: PackedVector3Array) -> PackedFloat32Array:
-	var out := PackedFloat32Array()
-	var n := hips.size()
-	var whole := hips[n - 1].y - hips[0].y
-	var most := 0.0
-	for f in n:
-		most = maxf(most, clampf((hips[f].y - hips[0].y) / whole, 0.0, 1.0) if absf(whole) > 0.01 else 0.0)
-		out.append(most)
-	return out
 
 
 func _rot(a: Animation, bone: String, time: float) -> Quaternion:

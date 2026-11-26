@@ -154,3 +154,16 @@ func mirrored(parents: PackedInt32Array, rest: Array[Quaternion], pair: PackedIn
 	m.set(&"travel", Vector3(-travel.x, 0.0, travel.z))
 	m.set(&"source", source + " (mirrored)")
 	return m
+
+
+## The share of a climbing clip's whole rise that its hips have made, frame by frame: never going back down.
+## (traverse.gd moves the body by the same curve.)
+static func rise_of(hips: PackedVector3Array) -> PackedFloat32Array:
+	var out := PackedFloat32Array()
+	var n := hips.size()
+	var whole := hips[n - 1].y - hips[0].y
+	var most := 0.0
+	for f in n:
+		most = maxf(most, clampf((hips[f].y - hips[0].y) / whole, 0.0, 1.0) if absf(whole) > 0.01 else 0.0)
+		out.append(most)
+	return out

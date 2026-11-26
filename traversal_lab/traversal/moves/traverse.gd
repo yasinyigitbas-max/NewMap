@@ -13,7 +13,7 @@ extends Node
 ## NOT BUILT: the study's "plant the last foot about 14 cm back from the edge" for kerbs.
 
 const Detector := preload("res://traversal/detect/detector.gd")
-const BuildLibrary := preload("res://tools/build_library.gd")
+const ClipData := preload("res://traversal/character/clip_data.gd")    # (nothing under tools/ is in the exported game)
 const BAND := [0.30, 1.0]       # the study's band for this move: more than the first, up to the second (m)
 # The clip: a Kimodo take of a man stepping off a ledge (the study's Part 3 has no Mixamo clip that steps off and
 # lands standing in under 3 s). Measured on the take's own hip path: he begins the step at 1.45 s, his feet leave at
@@ -98,7 +98,7 @@ func _ready() -> void:
 	var up_hips: PackedVector3Array = up.get(&"hips")
 	for f in up_hips.size():
 		_up_fwd.append(up_hips[f].z - up_hips[0].z)
-	_up_rise = BuildLibrary.rise_of(up_hips)
+	_up_rise = ClipData.rise_of(up_hips)
 	_up_high = up_hips[up_hips.size() - 1].y - up_hips[0].y
 
 
