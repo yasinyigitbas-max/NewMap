@@ -91,6 +91,15 @@ const SOFTEN := {"drop_walk": 3.30, "drop_run": 3.70}
 const JUMP_BELOW := 0.15        # NOT in the study: this far below where he jumped from, the jump is over and he is falling (m)
 const CROUCH_IDLE := "KM_Crouch_Idle"
 const CROUCH_WALK := "KM_Crouch_Walk"
+# Stage 17, narrow surfaces (the study: "0.10 to 0.25 m, walk slowly with arms out (about 0.7 to 0.8 m/s in the
+# older-adult data); 0.04 to 0.10 m, slow heel-to-toe with frequent corrections"). The body says when he is on
+# something narrow and holds him to that pace (body.gd `narrow`); here the beam walk takes the place of the gait
+# loops, as the crouch walk does when he crouches. The take is the study's own Kimodo one ("KM Beam Walk | 4.97 s |
+# 4.50 m forward, 0.91 m/s | slow walk, arms held out to the sides"), one stride cut from its middle.
+const BEAM_WALK := "KM_Beam_Walk"
+const BEAM_ARMS_DEG := 60.0     # NOT in the study, mine: standing still on something narrow his arms are held this far out (the
+                                # beam walk has them out by itself). Yasin, 26 Nov: "we should spread our arms to balance on a beam"
+const NARROW_FADE := 0.3        # NOT in the study: seconds to blend to and from the beam walk
 const CROUCH_FADE := 0.3        # NOT in the study: seconds to blend between standing and crouched while he is moving
 const HEAD_ROOM := 0.03         # NOT in the study: the top of his head is kept this far under the top of the crouched body
 const HEAD_OVER_JOINT := 0.23   # the top of his head above his head joint: standing, the joint is at 1.57 m (measured in
@@ -230,6 +239,7 @@ var _free := 0.0                # 0..1: the feet are left as the clip has them (
 var _jump_y0 := 0.0             # the height he jumped from
 var _soft := 0.0                # 0..1: how far a landing is eased toward standing
 var _low_w := 0.0               # 0 = the standing set, 1 = the crouched set
+var _narrow_w := 0.0            # 0 = as he is, 1 = the narrow set (the beam walk)
 var _low_was := false
 var _head_i := -1
 
@@ -253,7 +263,7 @@ func _ready() -> void:
 	player.name = "AnimationPlayer"
 	model.add_child(player)
 	player.add_animation_library(&"", _lib)
-	for n: String in [WALK, JOG, RUN, "KM_Climb_Hard", "KMY_Down_Hands_Balance_Long", CROUCH_WALK]:
+	for n: String in [WALK, JOG, RUN, "KM_Climb_Hard", "KMY_Down_Hands_Balance_Long", CROUCH_WALK, BEAM_WALK]:
 		var a := _lib.get_animation(n)
 		_length[n] = a.length
 		var t := a.find_track(NodePath("%s:Root" % SKEL), Animation.TYPE_POSITION_3D)
@@ -447,7 +457,22 @@ func _make_tree() -> AnimationNodeBlendTree:
 	act.set_input_name(0, "ground")
 	act.set_input_reset(0, false)       # the stride carries on where it was when he comes back to it
 	bt.add_node(&"act", act, Vector2(800, 100))
-	bt.connect_node(&"act", 0, &"stance")
+	# the narrow set beside both: standing, and the beam walk; a blend from whichever set he is in to this one
+	var beam_idle := AnimationNodeAnimation.new()
+	beam_idle.animation = IDLE
+	bt.add_node(&"beam_idle", beam_idle, Vector2(0, -500))
+	var beam_walk := AnimationNodeAnimation.new()
+	beam_walk.animation = BEAM_WALK
+	bt.add_node(&"beam_walk", beam_walk, Vector2(0, -400))
+	bt.add_node(&"beam_speed", AnimationNodeTimeScale.new(), Vector2(200, -400))
+	bt.connect_node(&"beam_speed", 0, &"beam_walk")
+	bt.add_node(&"beam_ground", AnimationNodeBlend2.new(), Vector2(400, -450))
+	bt.connect_node(&"beam_ground", 0, &"beam_idle")
+	bt.connect_node(&"beam_ground", 1, &"beam_speed")
+	bt.add_node(&"narrow", AnimationNodeBlend2.new(), Vector2(700, -100))
+	bt.connect_node(&"narrow", 0, &"stance")
+	bt.connect_node(&"narrow", 1, &"beam_ground")
+	bt.connect_node(&"act", 0, &"narrow")
 	var fall := AnimationNodeAnimation.new()
 	fall.animation = FALL
 	bt.add_node(&"fall_anim", fall, Vector2(400, 300))
@@ -581,7 +606,8 @@ func _physics_process(dt: float) -> void:
 			var st := int(body.get(&"stairs"))
 			var wish := (body.get(&"_wish") as Vector3).length()
 			var low := bool(body.get(&"crouched"))
-			var plain := not in_air and st == 0 and int(body.get(&"terrain")) == 0 and not low
+			# (on something narrow, as crouched: no start, stop or turn clips; they drop his arms, which are his balance there)
+			var plain := not in_air and st == 0 and int(body.get(&"terrain")) == 0 and not low and int(body.get(&"narrow")) == 0
 			if low != _low_was:
 				_low_was = low
 				if speed < 0.3 and not in_air and not _stair_on and not _steep_on and (_act == "ground" or _sub == "crouch"):
@@ -839,7 +865,7 @@ func _physics_process(dt: float) -> void:
 		_leg_ik.influence = w
 		_orient.influence = w
 	_steep_w = move_toward(_steep_w, 1.0 if _steep_on else 0.0, dt / FADE)
-	_arms.set(&"open_deg", arm_open_deg + (STEEP_ARMS_UP_DEG if _steep_up else STEEP_ARMS_DEG) * _steep_w)
+	_arms.set(&"open_deg", arm_open_deg + (STEEP_ARMS_UP_DEG if _steep_up else STEEP_ARMS_DEG) * _steep_w + BEAM_ARMS_DEG * _narrow_w * (1.0 - _moving))
 	if hands:
 		# a move that puts a hand on something: [which hand (0 left, 1 right), where its wrist goes, how much]
 		var mh: Array = body.get(&"move_hand") if bool(body.call(&"in_move")) else []
@@ -1127,6 +1153,11 @@ func _ground(dt: float, speed: float) -> void:
 	tree.set(&"parameters/stance/blend_amount", _low_w)
 	tree.set(&"parameters/crouch_ground/blend_amount", _moving)
 	tree.set(&"parameters/crouch_speed/scale", clampf(maxf(speed, 0.3) / (float(_stride[CROUCH_WALK]) / float(_length[CROUCH_WALK])), SCALE_LEAST, SCALE_MOST))
+	# the narrow set: the beam walk paced by its own stride
+	_narrow_w = move_toward(_narrow_w, 1.0 if int(body.get(&"narrow")) > 0 and not low else 0.0, dt / NARROW_FADE)
+	tree.set(&"parameters/narrow/blend_amount", _narrow_w)
+	tree.set(&"parameters/beam_ground/blend_amount", _moving)
+	tree.set(&"parameters/beam_speed/scale", clampf(maxf(speed, 0.2) / (float(_stride[BEAM_WALK]) / float(_length[BEAM_WALK])), SCALE_LEAST, SCALE_MOST))
 	var g := _gait_for(maxf(speed, 0.3))
 	tree.set(&"parameters/gait/blend_position", g.x)
 	_natural = g.y

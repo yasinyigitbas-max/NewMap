@@ -52,8 +52,8 @@
     "limit.elbow_bend": 145.121,
     "limit.hip_cross": 17.881,
     "limit.hip_ext": 33.154,
-    "limit.hip_flex": 142.904,
-    "limit.hip_spread": 40.074,
+    "limit.hip_flex": 144.568,
+    "limit.hip_spread": 39.919,
     "limit.knee_back": 0.0,
     "limit.knee_bend": 141.089,
     "limit.low_back": 2.812,
@@ -61,11 +61,11 @@
     "limit.low_side": 20.28,
     "limit.low_turn": 28.779,
     "limit.mid_back": 4.541,
-    "limit.mid_fwd": 34.213,
+    "limit.mid_fwd": 34.722,
     "limit.mid_side": 11.35,
     "limit.mid_turn": 18.484,
     "limit.neck_back": 59.652,
-    "limit.neck_fwd": 26.101,
+    "limit.neck_fwd": 26.089,
     "limit.neck_side": 21.956,
     "limit.neck_turn": 29.385,
     "limit.shoulder": 138.052,
@@ -154,5 +154,5 @@
   "outside_off": [
     "x.steep45_up_feet"
   ],
-  "tree": "a327de94f4f7edb5f21765e0b2a5ffa02cbff7b1cdfd1be4e841125aa7a8b817"
+  "tree": "a2d29bebc9a5e7ca0cb175f70b255180a97dacb3ab5ab87f2e5c5af35eb7857a"
 }

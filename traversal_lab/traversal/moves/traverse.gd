@@ -320,6 +320,7 @@ var _d_xz: PackedVector2Array = PackedVector2Array()
 var _d_fall := PackedFloat32Array()
 var _d_yaw := PackedFloat32Array()
 var _catch_next := 0            # ticks left in which he is to be taken as in the air from a jump (after the jump for a far edge)
+var _narrow_ago := 999          # ticks since he was last on something narrow
 var _o_high := 0.0              # the height the climb take goes up, on him
 
 
@@ -469,6 +470,12 @@ func _physics_process(_dt: float) -> void:
 	var walking := int(body.get(&"state")) == 0 and not bool(body.get(&"crouched")) and v.length() > 0.5 \
 			and wish > 0.05 and int(body.get(&"stairs")) == 0 and int(body.get(&"terrain")) == 0
 	var key := "run" if (wish > float(body.get(&"WALK")) + 0.1 and v.length() > RUN_FROM) else "walk"
+	# Off something narrow (stage 17) he was held to a slow pace: there it is the run key that says which way he goes
+	# off the edge. Yasin, 26 Nov: "if we wanna walk off, we should just step off or jump off like we do on edges
+	# depending on running or walking".
+	_narrow_ago = 0 if int(body.get(&"narrow")) > 0 else _narrow_ago + 1
+	if _narrow_ago < 45 and bool(body.get(&"run_asked")):
+		key = "run"
 	var mv: Dictionary = MOVES[key]
 	var fwd: PackedFloat32Array = _fwd[key]
 	if not walking:

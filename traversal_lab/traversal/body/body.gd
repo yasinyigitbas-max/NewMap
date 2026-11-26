@@ -106,6 +106,13 @@ const JUMP_PUSH_RUN := 0.10     # from a run the take-off comes off the stride: 
 # movement is too slow". Now the top of what the study's figure allows: half of its fastest comfortable walk
 # (1.46 m/s), plus the 10 % a single study figure is given (his decision of 26 Nov).
 const CROUCH_SPEED := 1.46 * 0.5 * 1.1    # 0.80 m/s
+# Stage 17, narrow surfaces. The study: "on a top surface 0.25 m or wider, walk normally; 0.10 to 0.25 m, walk slowly
+# with arms out (about 0.7 to 0.8 m/s in the older-adult data); 0.04 to 0.10 m, slow heel-to-toe with frequent
+# corrections; below 0.04 m, do not allow it."
+const NARROW_SPEED := 0.75          # the middle of the study's 0.7 to 0.8 m/s
+const NARROW_SPEED_LEAST := 0.40    # NOT in the study (it gives no pace for under 0.10 m, only "slow"): mine
+const STEP_HEIGHT_FOR_NARROW := 0.25    # NOT in the study, mine: ground this far below his is not his surface
+const NARROW_SIDE := [0.12, 0.045]   # NOT in the study, mine: no ground this far to BOTH sides of him = under 0.25 m wide, under 0.10 m wide
 const CROUCH_HEIGHT := 1.15         # feet to the top of the crouched body: under the course's 1.2 m overhang. His
                                     # crouch takes hold the top of the head under this (measured, see character.gd)
 const STAND_ROOM := 0.03            # NOT in the study: the standing shape is tried this much thinner than it is, so
@@ -167,6 +174,8 @@ var move_base := 0.0            # a climb: how far above the body's level the ta
 var move_hand: Array = []       # a move that puts a hand on something: [0 left / 1 right, where the wrist goes, how much]
 var move_soft := 0.0            # 0..1: how much less than the clip he folds on landing
 var _wish_was_moving := false
+var narrow := 0                 # he is on something narrow: 0 = no, 1 = under 0.25 m wide, 2 = under 0.10 m
+var run_asked := false          # the run key is held (he may still be held to a slower pace, on something narrow)
 var crouched := false           # he is crouched: the smaller capsule, half walking speed, no run, no jump
 var _col: CollisionShape3D
 var _fit := CapsuleShape3D.new()
@@ -327,6 +336,22 @@ func start_jump() -> bool:
 	return true
 
 
+## Is he on something narrow? No ground near his own level to BOTH sides of him (across the way he faces).
+func _narrow_now() -> int:
+	if state != State.GROUND:
+		return 0
+	var side := global_transform.basis.x
+	side = Vector3(side.x, 0.0, side.z).normalized()
+	var out := 0
+	for k in 2:
+		for way: float in [1.0, -1.0]:
+			var hit := _ray_down(global_position + side * (way * float(NARROW_SIDE[k])))
+			if not hit.is_empty() and (hit["position"] as Vector3).y > global_position.y - STEP_HEIGHT_FOR_NARROW:
+				return out
+		out = k + 1
+	return out
+
+
 func in_move() -> bool:
 	return move_path.is_valid()
 
@@ -380,11 +405,18 @@ func _physics_process(dt: float) -> void:
 		stick = stick.normalized()
 	# crouch: held down he crouches (on the ground); let go, he stands as soon as the standing body fits
 	var want_low := bool(s.get("crouch", false))
-	if want_low and not crouched and state == State.GROUND and jump_timer <= 0.0:
+	# (on something narrow he does not crouch, and stands up if he was: Yasin, 26 Nov: "only be able to walk on them
+	# standing and not crouched")
+	narrow = _narrow_now()
+	if want_low and not crouched and state == State.GROUND and jump_timer <= 0.0 and narrow == 0:
 		_set_crouched(true)
-	elif crouched and not want_low and can_stand():
+	elif crouched and (not want_low or narrow > 0) and can_stand():
 		_set_crouched(false)
+	run_asked = bool(s.get("run", false))
 	_wish = stick.rotated(Vector3.UP, float(s.get("yaw", 0.0))) * (CROUCH_SPEED if crouched else (RUN if bool(s.get("run", false)) else WALK))
+	# on something narrow he goes no faster than the study's pace for it, whatever is asked
+	if narrow > 0 and _wish.length() > (NARROW_SPEED if narrow == 1 else NARROW_SPEED_LEAST):
+		_wish = _wish.normalized() * (NARROW_SPEED if narrow == 1 else NARROW_SPEED_LEAST)
 
 	# a way to go that keeps turning (a curve, not a corner) is walked more slowly
 	if _wish.length() > 0.05:
