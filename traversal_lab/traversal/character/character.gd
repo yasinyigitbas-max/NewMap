@@ -127,6 +127,10 @@ var _steep_w := 0.0             # 0..1: a steep take is showing (for the arms)
 var _arms: SkeletonModifier3D
 var _slope := 0.0               # the showing stair clip's own slope, eased in and out with it
 var _hips_fit := 0.0
+var _slope_from := 0.0
+var _slope_to := 0.0
+var _slope_t := 0.0
+var _foot_i := [-1, -1]
 var _foot_len := 0.0            # from the ankle to the ball of the foot, along the ground (from the skeleton)
 var _jump_low := 0.5            # the Jump clip: the moment its hips are lowest (found from the clip itself)
 
@@ -139,6 +143,7 @@ func _ready() -> void:
 	_pivot.add_child(model)
 	skel = model.get_node(SKEL)
 	_chest_i = skel.find_bone("mixamorig_Spine2")
+	_foot_i = [skel.find_bone("mixamorig_LeftFoot"), skel.find_bone("mixamorig_RightFoot")]
 	_foot_len = skel.get_bone_global_rest(skel.find_bone("mixamorig_LeftToeBase")).origin.z - skel.get_bone_global_rest(skel.find_bone("mixamorig_LeftFoot")).origin.z
 	# The study, Timing: "`AnimationTree.callback_mode_process` and `Skeleton3D.modifier_callback_mode_process` both
 	# set to physics, so clips, IK and queries all see the same moment."
@@ -245,9 +250,12 @@ func _make_tree() -> AnimationNodeBlendTree:
 	bt.add_node(&"gait", gait, Vector2(0, 200))
 	bt.add_node(&"gait_speed", AnimationNodeTimeScale.new(), Vector2(200, 200))
 	bt.connect_node(&"gait_speed", 0, &"gait")
+	# (a TimeSeek on the gait: coming off the stairs the walk is set to the foot the stairs left him on)
+	bt.add_node(&"gait_seek", AnimationNodeTimeSeek.new(), Vector2(300, 200))
+	bt.connect_node(&"gait_seek", 0, &"gait_speed")
 	bt.add_node(&"ground", AnimationNodeBlend2.new(), Vector2(400, 100))
 	bt.connect_node(&"ground", 0, &"idle")
-	bt.connect_node(&"ground", 1, &"gait_speed")
+	bt.connect_node(&"ground", 1, &"gait_seek")
 	var act := AnimationNodeTransition.new()
 	act.xfade_time = FADE
 	act.input_count = ACTS.size() + 2
@@ -358,6 +366,13 @@ func _physics_process(dt: float) -> void:
 				_stair_on = false
 				_steep(dt, speed)
 			elif _stair_on or _steep_on:
+				if _stair_on and ACTS.has(_act):
+					# The walk takes over on the foot the stairs left him on. (It used to carry on from wherever
+					# it had been before the stairs: the foot that had just come down on the landing was lifted
+					# and stepped again. Yasin, 26 Nov: "we take 1 more step after finishing the stairs".)
+					var a := _lib.get_animation(ACTS[_act])
+					var since_left := fposmod(_stair_phase - _phase_offset(ACTS[_act]) / a.length, 1.0)
+					tree.set(&"parameters/gait_seek/seek_request", since_left * float(_length[WALK]))
 				_stair_on = false
 				_steep_on = false
 				_show("ground", 0.0)
@@ -440,7 +455,14 @@ func _physics_process(dt: float) -> void:
 		var want_slope := float(_lib.get_animation(ACTS[_act]).get_meta(&"slope", 0.0)) if ((_stair_on or _steep_on) and ACTS.has(_act)) else 0.0
 		feet.set(&"by_speed", _steep_on)
 		feet.set(&"stand_wide", STAND_WIDE * (1.0 - _moving) if _act == "ground" else 0.0)
-		_slope += (want_slope - _slope) * minf(dt / FADE, 1.0)
+		# (in step with the tree's own cross-fade, which is even over FADE: eased more slowly than the pose, the
+		# feet of a stair clip coming in were held up on stairs that were no longer under them, 0.2 to 0.5 m high)
+		if want_slope != _slope_to:
+			_slope_from = _slope
+			_slope_to = want_slope
+			_slope_t = 0.0
+		_slope_t += dt
+		_slope = lerpf(_slope_from, _slope_to, clampf(_slope_t / FADE, 0.0, 1.0))
 		feet.set(&"clip_slope", _slope)
 		# A stair clip was made on its own stairs (Mixamo's rise 0.245 m a step, the city's 0.18: the study, Part 3).
 		# Its hips stand right over its own steps; over shallower or steeper ones they are out by the difference of
@@ -496,11 +518,18 @@ func _stairs(dt: float, st: int, speed: float) -> void:
 	# the stride runs on by the ground covered and is only drawn toward that place (tied to it outright it jumped
 	# at every step edge, because a measured tread is never exact)
 	_stair_phase += speed * dt / (2.0 * tread)
-	var behind := wrapf(cycle - _stair_phase, -0.5, 0.5)
-	if not _stair_on or absf(behind) > 0.25:
-		_stair_phase = cycle
+	# A stride is two steps, so half a stride on puts the other foot on the same tread: either will do, and the one
+	# nearer to where his stride already is, is the one taken. Coming onto the stairs that is the foot the walk
+	# has forward. (Taken by the count of steps alone, the stair clip came in on the wrong foot as often as not:
+	# both feet were off the ground for a moment. Yasin, 26 Nov: "first step is terrible, looks like switching
+	# between many animations".)
+	if not _stair_on:
+		var lead := skel.get_bone_global_pose(_foot_i[0]).origin.z - skel.get_bone_global_pose(_foot_i[1]).origin.z
+		var since_left := fposmod(cycle - _phase_offset(ACTS[input]) / a.length, 1.0)
+		var clip_left := since_left < 0.25 or since_left > 0.75
+		_stair_phase = cycle if clip_left == (lead > 0.0) else cycle + 0.5
 	else:
-		_stair_phase += behind * minf(dt * STAIR_PULL, 1.0)
+		_stair_phase += wrapf(cycle - _stair_phase, -0.25, 0.25) * minf(dt * STAIR_PULL, 1.0)
 	_stair_on = true
 	_show(input, fposmod(_stair_phase, 1.0) * a.length)
 

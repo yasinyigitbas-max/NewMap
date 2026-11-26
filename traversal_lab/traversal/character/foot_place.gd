@@ -56,6 +56,7 @@ var _shin := [-1, -1]
 var _foot := [-1, -1]
 var _toe := [-1, -1]
 var _leg_len := [0.0, 0.0]
+var _front := [1.0, 1.0]
 var _toe_rest := 0.0
 var _ankle_rest := 0.0
 var _planted := [false, false]
@@ -87,6 +88,10 @@ func bind(sk: Skeleton3D) -> void:
 		_foot[f] = sk.find_bone("mixamorig_%sFoot" % side[f])
 		_toe[f] = sk.find_bone("mixamorig_%sToeBase" % side[f])
 		_leg_len[f] = sk.get_bone_rest(_shin[f]).origin.length() + sk.get_bone_rest(_foot[f]).origin.length()
+		# which way round the thigh's side-to-side line gives "in front of the knee", from the standing pose
+		var side_rest := sk.get_bone_global_rest(_thigh[f]).basis.x.normalized()
+		var down_rest := (sk.get_bone_global_rest(_foot[f]).origin - sk.get_bone_global_rest(_thigh[f]).origin).normalized()
+		_front[f] = 1.0 if side_rest.cross(down_rest).z > 0.0 else -1.0
 	_toe_rest = sk.get_bone_global_rest(_toe[0]).origin.y
 	_ankle_rest = sk.get_bone_global_rest(_foot[0]).origin.y
 
@@ -110,7 +115,7 @@ func _process_modification_with_delta(dt: float) -> void:
 	var want_pelvis := 0.0
 	var ankle_goal := [Vector3.ZERO, Vector3.ZERO]
 	var hip_at := [Vector3.ZERO, Vector3.ZERO]
-	var knee_at := [Vector3.ZERO, Vector3.ZERO]
+	var hinge_at := [Vector3.ZERO, Vector3.ZERO]
 	for f in 2:
 		var hip_t := sk.get_bone_global_pose(_thigh[f])
 		var knee_t := sk.get_bone_global_pose(_shin[f])
@@ -121,7 +126,7 @@ func _process_modification_with_delta(dt: float) -> void:
 		var ball: Vector3 = xf * ball_t.origin
 		var basis := (xf.basis * ankle_t.basis).orthonormalized()
 		hip_at[f] = hip
-		knee_at[f] = knee_t.origin
+		hinge_at[f] = hip_t.basis.x.normalized()
 		# planted = the clip has the ball of the foot on its own floor, and not travelling over the ground
 		# (how high the clip holds the ball of the foot over its OWN ground: a flat floor, or its own stairs)
 		var ball_h := ball_t.origin.y - clip_slope * ball_t.origin.z
@@ -242,7 +247,8 @@ func _process_modification_with_delta(dt: float) -> void:
 	# On stairs the hips go by the even line through his footholds, not by the body's own height, which takes each
 	# step in a ramp and a rest; and by `hips_fit`. Never higher than a planted foot can reach.
 	var off := 0.0
-	if stride_fit and on_ground:
+	# (only while both footholds are known: a foot that was in the air as he came onto the stairs has none yet)
+	if stride_fit and on_ground and (_planted[0] or _bound[0]) and (_planted[1] or _bound[1]):
 		var p := [Vector3.ZERO, Vector3.ZERO]
 		var g := [0.0, 0.0]
 		for f in 2:
@@ -272,23 +278,20 @@ func _process_modification_with_delta(dt: float) -> void:
 		if to.length() > most:
 			to = to.normalized() * most
 		target[f].position = inv * (hip + to)
-		# The knee keeps the side the clip bent it to, measured against the line from hip to ankle AS IT NOW IS: the
-		# pole stands off the middle of that line, square to it (the study: "place the pole target in front of the
-		# knee"). Taken against the clip's own line instead, a foot lifted high onto a step bent the knee backwards.
-		var hip_s: Vector3 = inv * (hip_at[f] as Vector3)
-		var ankle_s := sk.get_bone_global_pose(_foot[f]).origin
-		var knee_s: Vector3 = knee_at[f]
-		var bend := knee_s - (hip_s + ankle_s) * 0.5
-		if bend.length() < 0.01:
-			bend = sk.get_bone_global_pose(_thigh[f]).basis * Vector3(0.0, 0.0, 1.0)
-		bend = bend.normalized()
+		# The knee bends about the hinge the clip gives it (the thigh's own side-to-side line), whatever the leg IK
+		# does with the foot: the pole stands off the middle of the line from hip to ankle AS IT NOW IS, square to
+		# that line and to the hinge, in front of the knee (the study: "place the pole target in front of the
+		# knee"). Until 26 Nov the pole was taken from where the clip's knee stood off its own hip-to-ankle line:
+		# with the leg nearly straight that is a few millimetres and points anywhere, and the knee swung 12 cm out
+		# to the side and snapped back 5 cm in a tick (measured on the stairs; Yasin: "left leg twitch outwards").
 		var hip_now: Vector3 = inv * hip
 		var ankle_now: Vector3 = target[f].position
 		var line := (ankle_now - hip_now).normalized()
-		var square := bend - line * bend.dot(line)
-		if square.length() < 0.25:
-			# the clip's knee direction lies along the new line (a foot far ahead): the knee goes up and forward
+		var hinge: Vector3 = hinge_at[f]
+		var front := hinge.cross(line) * float(_front[f])
+		if front.length() < 0.2:
+			# the leg lies along its own hinge (it never should): the knee goes up and forward
 			var fwd := sk.get_bone_global_pose(_hips).basis * Vector3(0.0, 0.0, 1.0)
 			var lead := (fwd + Vector3.UP).normalized()
-			square = lead - line * lead.dot(line)
-		pole[f].position = (hip_now + ankle_now) * 0.5 + square.normalized() * 0.6
+			front = lead - line * lead.dot(line)
+		pole[f].position = (hip_now + ankle_now) * 0.5 + front.normalized() * 0.6
