@@ -52,9 +52,10 @@ const TURN_SLOW_ANGLE_DEG := 90.0   # the full slow-down applies from a right-an
 # On a curve people slow down: "on a 1 m radius circle people chose 0.96 m/s against 1.61 m/s in a straight line".
 # Taken as a limit on the sideways pull he accepts while the way he is asked to go keeps turning: speed x turn rate
 # stays under what that walker had, scaled to his own walking speed: (0.96 / 1.61 x WALK)^2 / 1 m. That one circle is
-# all the study gives; carrying it to other radii this way, and the figure for running, are OURS.
+# all the study gives; carrying it to other radii this way is OURS. It is a WALKING figure and is applied to walking
+# only: for a day a figure of ours slowed a run on a curve too, down to a walk (Yasin, 26 Nov: "CANT TURN CORNERS
+# WHILE RUNNING NOW, IT SWITCHES TO WALKING"). The study gives nothing for a run on a curve, so a run is not slowed.
 const CURVE_PULL_WALK := (0.96 / 1.61 * WALK) * (0.96 / 1.61 * WALK) / 1.0    # m/s2
-const CURVE_PULL_RUN := 2.26    # NOT in the study: the pull that goes with the 13 degree lean of a run (g x tan 13)
 const CURVE_TIME := 0.25        # NOT in the study: seconds over which the stick's turning is averaged
 const REVERSE_ANGLE_DEG := 135.0  # asked to go nearly the opposite way at a run: "a sudden turn starts with a braking
                                 # action like a rapid stop" - brake to REVERSE_SPEED first, then turn round
@@ -84,8 +85,10 @@ const GRAVITY := 9.8
 const TERMINAL := 50.0
 const TURN_SPEED := 12.0        # radians a second
 const JUMP_RISE := 0.45         # an average standing jump raises the body 0.41 to 0.50 m
-const JUMP_DIP_STAND := 0.70    # the study: "A natural standing jump spends 0.70 s dipping and 0.30 s pushing"
-const JUMP_PUSH_STAND := 0.30   # (until 26 Nov the dip was left out: he left the ground 0.30 s after the button)
+const JUMP_DIP_STAND := 0.0     # DEPARTS FROM THE STUDY AT YASIN'S WORD. The study: "A natural standing jump spends 0.70 s
+                                # dipping and 0.30 s pushing". Built so on 26 Nov; his play-test the same day: "STANDING JUMP
+                                # TAKES WAY TOO LONG". The dip is not waited for; the push keeps the study's 0.30 s.
+const JUMP_PUSH_STAND := 0.30
 const JUMP_RISE_RUN := 0.60     # "a run-up typically 0.10 to 0.20 m more": 0.45 + 0.15
 const JUMP_PUSH_RUN := 0.10     # from a run the take-off comes off the stride: the Running Jump clip leaves at 0.10 s
 
@@ -257,9 +260,8 @@ func _physics_process(dt: float) -> void:
 		_wish_turn += (step - _wish_turn) * (1.0 - exp(-dt / CURVE_TIME))
 		_wish_yaw = wy
 		_wish_on = true
-		if _wish_turn > 0.05:
-			var pull := CURVE_PULL_RUN if _wish.length() > WALK + 0.1 else CURVE_PULL_WALK
-			_wish = _wish.limit_length(pull / _wish_turn)
+		if _wish_turn > 0.05 and _wish.length() <= WALK + 0.1:
+			_wish = _wish.limit_length(CURVE_PULL_WALK / _wish_turn)
 	else:
 		_wish_on = false
 		_wish_turn = 0.0

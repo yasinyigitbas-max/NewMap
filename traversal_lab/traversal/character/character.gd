@@ -23,6 +23,12 @@ const RUN := "Running"
 # The study: "People switch from walk to run at about 2.0 m/s". Below it he walks (the walk played faster or slower),
 # above it he runs; the two are blended only across this narrow band round the switch.
 const SWITCH := 2.0
+# The study: "Young adults take 115 to 120 steps a minute with a 1.5 to 1.7 m stride (two steps)". The walk clip's own
+# stride on him is 1.38 m, which at his 1.45 m/s made 126 quick short steps a minute (Yasin, 26 Nov: "THE WALK SOMEHOW
+# CHANGED TO A WOMANS"). The stride is lengthened to this instead of the steps being hurried: the loop is paced as if
+# its stride were this long, and the planted feet, held to the ground by the leg IK, take up the difference. (The
+# study cites the method: Epic "scaled stride length rather than playback speed to match ground speed".)
+const WALK_STRIDE := 1.506      # m: 1.45 m/s at 115.5 steps a minute
 const SWITCH_BAND := 0.1        # NOT in the study: half the width of the band over which walk gives way to run (m/s)
 const FADE := 0.20              # NOT in the study: seconds to blend from one kind of motion to the next
 const SCALE_LEAST := 0.5        # NOT in the study: a loop is never played slower or faster than this
@@ -401,7 +407,8 @@ func _ground(dt: float, speed: float) -> void:
 	_natural = g.y
 	# "playback matched to body speed from the measured clip speeds": the pace the blend would walk at by itself is
 	# known from the clips' own root travel, and is checked against the tree's root motion as it plays (see _measure)
-	var natural := _measured if _measured > 0.0 else _natural
+	# (while the walk's stride is being lengthened the root's own travel is short of the ground covered by design)
+	var natural := _measured if (_measured > 0.0 and g.x > 0.0) else _natural
 	_scale = clampf(maxf(speed, 0.3) / maxf(natural, 0.05), SCALE_LEAST, SCALE_MOST)
 	tree.set(&"parameters/gait_speed/scale", _scale)
 
@@ -412,7 +419,7 @@ func _gait_for(v: float) -> Vector2:
 	var lo := SWITCH - SWITCH_BAND
 	var hi := SWITCH + SWITCH_BAND
 	if v <= lo:
-		return Vector2(0.0, float(_stride[WALK]) / float(_length[WALK]))
+		return Vector2(0.0, maxf(float(_stride[WALK]), WALK_STRIDE) / float(_length[WALK]))
 	if v < hi:
 		var w := (v - lo) / (hi - lo)
 		return Vector2(w, lerpf(_stride[WALK], _stride[JOG], w) / lerpf(_length[WALK], _length[JOG], w))

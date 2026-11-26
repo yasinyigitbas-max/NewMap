@@ -27,6 +27,13 @@ const GROUNDED := ["Falling_To_Landing", "Hard_Landing"]
 # Ledge clips (step off, fall, land) are played on the spot: the body does the travelling and the falling, so the hips
 # keep only their height above the clip's own landing ground.
 const LEDGE := ["KM_Ledge_Walk_Off", "KM_Ledge_Run_Off"]
+# The walk's hips, brought to the study: "The pelvis moves only a few degrees at normal walking speed: about 3 degrees
+# of tilt, 8.5 of side drop and 12 of rotation in total range", and the body "rises and falls 2.7 to 4.8 cm in walking
+# ... side-to-side sway shrinks from 7.0 to 3.9 cm as speed rises". Measured on him, this take had 6.2 degrees of tilt,
+# 12.0 of side drop, 8.2 of rotation, 5.1 cm of rise and fall and 6.4 cm of sway (Yasin, 26 Nov: "HIPS SHAKE TOO
+# MUCH"). Each is scaled about its own average by study figure / measured figure; the legs are then fitted to the
+# ground by the leg IK as always. [tilt, side drop, rotation, rise and fall, sway]
+const HIPS := {"KM_Walk": [3.0 / 6.15, 8.5 / 12.0, 12.0 / 8.2, 4.2 / 5.1, 4.6 / 6.4]}
 
 
 func _initialize() -> void:
@@ -107,6 +114,21 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 		a.track_set_path(t, NodePath("%s:%s" % [SKEL, bones[b]]))
 		tracks.append(t)
 	var start := Vector3(hips[0].x, 0.0, hips[0].z)
+	# the hips' own turning, tilting and dropping through the clip, and their averages (for HIPS)
+	var shape: Array = HIPS.get(name, [])
+	var mean_yaw := 0.0
+	var mean_swing := Vector3.ZERO
+	var mean_pos := Vector3.ZERO
+	if not shape.is_empty():
+		for f in frames - 1:
+			var o := (f * n + hips_i) * 4
+			var q := aim * Quaternion(rot[o], rot[o + 1], rot[o + 2], rot[o + 3])
+			var yw := _yaw_of(q)
+			mean_yaw += yw / (frames - 1)
+			mean_swing += _swing_of(q, yw) / (frames - 1)
+			var u0 := float(f) / float(frames - 1)
+			var l0 := aim * (Vector3(hips[f].x, 0.0, hips[f].z) - start - dir * (total * u0))
+			mean_pos += Vector3(l0.x, hips[f].y, l0.z) / (frames - 1)
 	for f in frames:
 		var time := float(f) / fps
 		var u := float(f) / float(maxi(frames - 1, 1))
@@ -125,6 +147,9 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 			y = minf(y - hips[frames - 1].y + stand_y, stand_y)
 			local = Vector3.ZERO
 			root_pos = Vector3.ZERO
+		if not shape.is_empty():
+			y = mean_pos.y + (y - mean_pos.y) * float(shape[3])
+			local.x = mean_pos.x + (local.x - mean_pos.x) * float(shape[4])
 		a.position_track_insert_key(t_root_p, time, aim * root_pos)
 		a.rotation_track_insert_key(t_root_r, time, root_rot)
 		a.position_track_insert_key(t_hips_p, time, Vector3(local.x, y, local.z))
@@ -133,5 +158,28 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 			var q := Quaternion(rot[o], rot[o + 1], rot[o + 2], rot[o + 3])
 			if b == hips_i:
 				q = (root_rot.inverse() * aim * q).normalized()
+				if not shape.is_empty():
+					var yw := _yaw_of(q)
+					var sw := _swing_of(q, yw)
+					var new_yaw := mean_yaw + (yw - mean_yaw) * float(shape[2])
+					var new_sw := Vector3(mean_swing.x + (sw.x - mean_swing.x) * float(shape[0]), 0.0, mean_swing.z + (sw.z - mean_swing.z) * float(shape[1]))
+					var turn := Quaternion(Vector3.UP, new_yaw)
+					var lean_q := Quaternion(new_sw.normalized(), new_sw.length()) if new_sw.length() > 0.00001 else Quaternion.IDENTITY
+					# the rest of the hips' own rotation (the bone's frame) is carried through unchanged
+					var was := Quaternion(sw.normalized(), sw.length()) if sw.length() > 0.00001 else Quaternion.IDENTITY
+					q = (lean_q * turn * (was * Quaternion(Vector3.UP, yw)).inverse() * q).normalized()
 			a.rotation_track_insert_key(tracks[b], time, q)
 	return a
+
+
+## How far a rotation turns about the upright (radians).
+func _yaw_of(q: Quaternion) -> float:
+	return wrapf(2.0 * atan2(q.y, q.w), -PI, PI)
+
+
+## What is left of a rotation with that turn taken out, as a tilt: x = forward and back, z = side to side (radians).
+func _swing_of(q: Quaternion, yaw: float) -> Vector3:
+	var s := (q * Quaternion(Vector3.UP, -yaw)).normalized()
+	var angle := 2.0 * acos(clampf(s.w, -1.0, 1.0))
+	var axis := Vector3(s.x, s.y, s.z)
+	return axis.normalized() * angle if axis.length() > 0.00001 else Vector3.ZERO
