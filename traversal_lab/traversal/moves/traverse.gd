@@ -100,8 +100,10 @@ const HAND_FADE := 0.12             # NOT in the study: seconds over which the h
 const LAND_LEVEL := 0.10            # NOT in the study: the ground beyond is taken as level with his if within this (m)
 const UP_LOOK_RUN := 1.6        # NOT in the study: at a run it is looked for this far ahead (m)
 const UP_LOOK := 0.9            # NOT in the study: how far ahead something to step onto is looked for (m)
-const RUN_ON_MOST := 0.50       # NOT in the study: running off an edge up to this high he runs on with no landing clip
-                                # (the height he also runs up onto in stride: the top of the study's high-step band)
+const RUN_ON_MOST := 1.0        # running off an edge up to this high he runs on with no landing clip: all the way to where
+                                # the roll begins (Yasin, 26 Nov: "deep walls above .55 still play those timid steps when
+                                # we run off them ... make the character just continue to run until that threshold").
+                                # Until then it was 0.50 m, with the run-off clip from there to 1.0 m.
 const ROLL_JUMP_MORE := 0.7     # a jump off an edge falls from the top of the jump: the body's own running jump rises
                                 # 0.60 m (body.gd, JUMP_RISE_RUN), so that much more fall is still rolled out of
 const ROLL_MOST := 3.0          # the study: "2.0 to 3.0 m, hang and drop preferred, with a roll for a running jump; above
