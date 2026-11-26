@@ -40,6 +40,12 @@ var clip_slope := 0.0           # a stair clip stands on its own stairs: their r
 var stride_fit := false
 var stride_dir := Vector3.ZERO
 var land_at: Array[Vector3] = [Vector3.ZERO, Vector3.ZERO]
+# A generated take of steep ground does not walk an even slope: the ground it imagines under each footfall is higher
+# here and lower there (measured 26 Nov: from 0.24 m under the even slope to 0.23 m over it). For such a take a foot
+# counts as down when it is not travelling over the ground, however high the take holds it, and is then put ON the
+# ground; it keeps that correction through its swing and eases to the next one where it next comes down.
+var by_speed := false
+var stand_wide := 0.0           # each foot is set this far out to its own side (m): see character.gd, STAND_WIDE
 var hips_fit := 0.0             # the hips' height put right for a clip made on steeper or shallower ground (m; see character.gd)
 var pinning := true
 var grounding := true
@@ -67,6 +73,7 @@ var _from_p := [Vector3.ZERO, Vector3.ZERO]     # the foothold it last left
 var _from_g := [0.0, 0.0]
 var _to_p := [Vector3.ZERO, Vector3.ZERO]       # the foothold it is going to
 var _to_g := [0.0, 0.0]
+var _lump := [0.0, 0.0]         # what the take's own ground is out by under this foot (m)
 var _bound := [false, false]    # the swinging foot has a foothold to go to
 var _ride := 0.0                # how far the body's own height is off the line through his footholds (m)
 
@@ -118,7 +125,7 @@ func _process_modification_with_delta(dt: float) -> void:
 		# planted = the clip has the ball of the foot on its own floor, and not travelling over the ground
 		# (how high the clip holds the ball of the foot over its OWN ground: a flat floor, or its own stairs)
 		var ball_h := ball_t.origin.y - clip_slope * ball_t.origin.z
-		var low: bool = on_ground and ball_h < _toe_rest + CONTACT
+		var low: bool = on_ground and (by_speed or ball_h < _toe_rest + CONTACT)
 		var over := (Vector2(ball.x - (_was[f] as Vector3).x, ball.z - (_was[f] as Vector3).z).length() / dt) if _was_ok else 0.0
 		_was[f] = ball
 		var slow := over < (maxf(HOLD_LEAST, pace * HOLD_SHARE) if _planted[f] else maxf(PLANT_LEAST, pace * PLANT_SHARE))
@@ -139,6 +146,11 @@ func _process_modification_with_delta(dt: float) -> void:
 		_planted[f] = planted
 		ball += _corr[f]
 		ankle += _corr[f]
+		if stand_wide != 0.0:
+			var side := xf.basis.x.normalized()
+			var out := side * (signf((ankle - xf * sk.get_bone_global_pose(_hips).origin).dot(side)) * stand_wide)
+			ball += out
+			ankle += out
 		# 2. the ground under this foot: the same height above it as the clip holds the foot above its own floor
 		var want_g := feet_y
 		var normal := Vector3.UP
@@ -190,9 +202,13 @@ func _process_modification_with_delta(dt: float) -> void:
 			var span: Vector3 = (_to_p[f] as Vector3) - (_from_p[f] as Vector3)
 			var u := clampf((flat_ball - (_from_p[f] as Vector3)).dot(span) / maxf(span.length_squared(), 0.0025), 0.0, 1.0)
 			ground_f = lerpf(ground_f, lerpf(_from_g[f], _to_g[f], u), _swing[f])
-		var lift := clampf(ground_f - feet_y, -REACH, REACH) - clip_slope * ball_t.origin.z
+		if by_speed and planted:
+			_lump[f] = lerpf(_lump[f], _toe_rest - ball_h, let_go)
+		elif not by_speed:
+			_lump[f] = lerpf(_lump[f], 0.0, let_go)
+		var lift := clampf(ground_f - feet_y, -REACH, REACH) - clip_slope * ball_t.origin.z + float(_lump[f])
 		# tilt the foot to the ground, about the ball of the foot, the more the nearer it is to the ground
-		var near := clampf(1.0 - (ball_h - _toe_rest) / NEAR, 0.0, 1.0)
+		var near := clampf(1.0 - (ball_h + float(_lump[f]) - _toe_rest) / NEAR, 0.0, 1.0)
 		var axis := Vector3.UP.cross(normal)
 		var tilt := Basis.IDENTITY
 		if axis.length() > 0.001 and near > 0.0:

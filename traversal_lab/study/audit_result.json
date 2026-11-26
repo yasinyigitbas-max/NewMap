@@ -36,6 +36,7 @@
     "limit.knee_bend",
     "limit.hip_flex",
     "limit.hip_ext",
+    "limit.ankle_down",
     "limit.mid_fwd",
     "limit.low_turn"
   ],
@@ -59,12 +60,12 @@
     "land.heavy": 1.0,
     "land.in_stride": 1.0,
     "land.soft": 1.0,
-    "limit.ankle_down": 54.713,
+    "limit.ankle_down": 59.013,
     "limit.elbow_back": 0.0,
     "limit.elbow_bend": 142.062,
     "limit.hip_cross": 18.502,
     "limit.hip_ext": 32.127,
-    "limit.hip_flex": 142.862,
+    "limit.hip_flex": 142.853,
     "limit.hip_spread": 38.701,
     "limit.knee_back": 2.005,
     "limit.knee_bend": 141.089,
@@ -77,7 +78,7 @@
     "limit.mid_side": 9.738,
     "limit.mid_turn": 14.038,
     "limit.neck_back": 59.652,
-    "limit.neck_fwd": 26.101,
+    "limit.neck_fwd": 27.286,
     "limit.neck_side": 14.752,
     "limit.neck_turn": 29.385,
     "limit.shoulder": 134.853,
@@ -125,7 +126,7 @@
     "stop.run_steps": 3.0,
     "stop.walk_one_to_two": 2.0,
     "stop.walk_rear_planted": 1.0,
-    "stop.walk_slide": 0.818,
+    "stop.walk_slide": 1.25,
     "stop.walk_under_two": 2.0,
     "turn.circle": 0.594,
     "turn.head_angle": 2.478,
@@ -159,8 +160,8 @@
     "x.stairs_run_up_feet": 0.0,
     "x.steep30_down_feet": 2.875,
     "x.steep30_up_feet": 1.366,
-    "x.steep45_down_feet": 2.407,
-    "x.steep45_up_feet": 5.555,
+    "x.steep45_down_feet": 2.558,
+    "x.steep45_up_feet": 2.262,
     "x.steep_body_in_charge": 0.0
   },
   "outside_off": [
@@ -168,5 +169,5 @@
     "x.steep45_up_feet",
     "x.steep45_down_feet"
   ],
-  "tree": "d91350957a0d91644f0ec8b4bb350d5771b0921db1090ec87019f48862802484"
+  "tree": "59310cc963c8cb28425e897bbb946213732bdf63eb34fcccf1057bfbeb26da39"
 }

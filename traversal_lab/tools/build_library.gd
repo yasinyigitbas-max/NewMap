@@ -38,6 +38,9 @@ const LEDGE := ["KM_Ledge_Walk_Off", "KM_Ledge_Run_Off"]
 # stairs' slope, which is noted on the animation ("slope": rise per metre forward; "reach": how far ahead of the hips
 # the left foot comes down) for foot_place.gd to take out, so the feet are fitted to the real steps under him.
 const STAIRS := ["Ascending_Stairs", "KM_Stairs_Run_Up_D", "KM_Stairs_Walk_Down", "KM_Stairs_Run_Down"]
+# Steep ground (outside the study, kept at Yasin's word): his own two Kimodo takes, which climb and descend their own
+# slopes. Treated as the stair clips are: the climb out of the hips, the slope of the take's own ground noted.
+const SLOPES := ["KM_Climb_Hard", "KMY_Down_Hands_Balance_Long"]
 const HIPS := {"KM_Walk": [3.0 / 6.15, 8.5 / 12.0, 12.0 / 8.2, 4.2 / 5.1, 4.6 / 6.4]}
 
 
@@ -66,7 +69,7 @@ func _initialize() -> void:
 	for n in names:
 		var c: Resource = load(DIR + n + ".res")
 		var made := _animation(c, n, stand.y)
-		if STAIRS.has(n):
+		if STAIRS.has(n) or SLOPES.has(n):
 			_stairs(made, c, sk)
 		lib.add_animation(n, made)
 		if MIRRORED.has(n):

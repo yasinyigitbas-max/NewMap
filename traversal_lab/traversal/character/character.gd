@@ -62,7 +62,19 @@ const HARD_DROP := 1.0          # soft landing; 1.0 to 2.0 m, a heavy landing"
 const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling_To_Landing", "land_heavy": "Hard_Landing",
 		"drop_walk": "KM_Ledge_Walk_Off", "drop_run": "KM_Ledge_Run_Off",
 		"stairs_up_walk": "Ascending_Stairs", "stairs_up_run": "KM_Stairs_Run_Up_D",
-		"stairs_down_walk": "KM_Stairs_Walk_Down", "stairs_down_run": "KM_Stairs_Run_Down"}
+		"stairs_down_walk": "KM_Stairs_Walk_Down", "stairs_down_run": "KM_Stairs_Run_Down",
+		"steep_up": "KM_Climb_Hard", "steep_down": "KMY_Down_Hands_Balance_Long"}
+# Very steep ground (the body's "hands" band, over 35 degrees: the 45 degree ramp; OUTSIDE the study, kept at Yasin's
+# word, "Keep it, body in charge"). Yasin, 26 Nov: "steep slope up and down are supposed to use these animations,
+# open their hands to the sides just a bit in both", and then "no these clips were only for 45 degrees". Between 20
+# and 35 degrees he walks with the ordinary walk, fitted by the leg IK, as before:
+# his own two Kimodo takes (up: leaning steps, a bend with both hands down, the push back up; down: crouched, leaning
+# back, the hands out for balance). The body sets the pace; the take is played by the ground he covers.
+const STEEP_ARMS_DEG := 8.0     # NOT in the study, mine: "just a bit" (Yasin); the arms opened this much more on these takes
+# Standing (Yasin, 26 Nov: "feet need to be a bit wider both on idle and and standing still"). The study gives no
+# standing foot spacing. Each foot is set this far out to its side while he stands, and comes back in as he walks.
+const STAND_WIDE := 0.03        # NOT in the study, mine: "a bit" (Yasin). Metres, each foot: 6 cm wider in all
+const STEEP_TURN := 0.1         # NOT in the study: the take for the other way only once the ground rises or falls this much a metre
 # Stairs are their own movement (the study: "Going up and going down are different movements, not one played
 # backwards"; "Stairs are climbed at about half a second per step: 0.51 s up and 0.47 s down", which is the body's
 # pace there). Each stair clip is two steps a loop and is played by WHERE HE IS on the stairs, so that each foot comes
@@ -108,6 +120,11 @@ var _lean_s := 0.0              # the lean, eased, before it is held to the stud
 var _own_mean := 0.0            # where the stride has the chest over the feet, averaged over about a stride
 var _stair_phase := 0.0         # strides along the stairs (two steps a stride)
 var _stair_on := false
+var _steep_on := false
+var _steep_up := true
+var _steep_phase := 0.0         # strides along the take
+var _steep_w := 0.0             # 0..1: a steep take is showing (for the arms)
+var _arms: SkeletonModifier3D
 var _slope := 0.0               # the showing stair clip's own slope, eased in and out with it
 var _hips_fit := 0.0
 var _foot_len := 0.0            # from the ankle to the ball of the foot, along the ground (from the skeleton)
@@ -131,7 +148,7 @@ func _ready() -> void:
 	player.name = "AnimationPlayer"
 	model.add_child(player)
 	player.add_animation_library(&"", _lib)
-	for n: String in [WALK, JOG, RUN]:
+	for n: String in [WALK, JOG, RUN, "KM_Climb_Hard", "KMY_Down_Hands_Balance_Long"]:
 		var a := _lib.get_animation(n)
 		_length[n] = a.length
 		var t := a.find_track(NodePath("%s:Root" % SKEL), Animation.TYPE_POSITION_3D)
@@ -196,6 +213,7 @@ func _ready() -> void:
 	arms.name = "ArmOpen"
 	arms.set(&"open_deg", arm_open_deg)
 	skel.add_child(arms)
+	_arms = arms
 	if body:
 		body.connect(&"jump_started", _on_jump_started)
 		body.connect(&"landed", _on_landed)
@@ -334,12 +352,18 @@ func _physics_process(dt: float) -> void:
 		"ground":
 			var st := int(body.get(&"stairs"))
 			if not in_air and st != 0 and speed > 0.15:
+				_steep_on = false
 				_stairs(dt, st, speed)
-			elif _stair_on:
+			elif not in_air and int(body.get(&"terrain")) == 2 and speed > 0.1:
 				_stair_on = false
+				_steep(dt, speed)
+			elif _stair_on or _steep_on:
+				_stair_on = false
+				_steep_on = false
 				_show("ground", 0.0)
 			if in_air:
 				_stair_on = false
+				_steep_on = false
 				# off an edge on foot: the step-off or run-off clip while its own fall lasts
 				_drop = DROP_RUN if speed > RUN_FROM else DROP_WALK
 				_set_mode("fall")
@@ -413,7 +437,9 @@ func _physics_process(dt: float) -> void:
 	_ground(dt, speed)
 	_lean(dt, not in_air)
 	if feet:
-		var want_slope := float(_lib.get_animation(ACTS[_act]).get_meta(&"slope", 0.0)) if (_stair_on and ACTS.has(_act)) else 0.0
+		var want_slope := float(_lib.get_animation(ACTS[_act]).get_meta(&"slope", 0.0)) if ((_stair_on or _steep_on) and ACTS.has(_act)) else 0.0
+		feet.set(&"by_speed", _steep_on)
+		feet.set(&"stand_wide", STAND_WIDE * (1.0 - _moving) if _act == "ground" else 0.0)
 		_slope += (want_slope - _slope) * minf(dt / FADE, 1.0)
 		feet.set(&"clip_slope", _slope)
 		# A stair clip was made on its own stairs (Mixamo's rise 0.245 m a step, the city's 0.18: the study, Part 3).
@@ -444,6 +470,8 @@ func _physics_process(dt: float) -> void:
 		var w := float(feet.get(&"weight"))
 		_leg_ik.influence = w
 		_orient.influence = w
+	_steep_w = move_toward(_steep_w, 1.0 if _steep_on else 0.0, dt / FADE)
+	_arms.set(&"open_deg", arm_open_deg + STEEP_ARMS_DEG * _steep_w)
 	note = "%s  gait x%.2f" % [_mode if _mode != "land" else "land (%s)" % landing_kind, _scale]
 
 
@@ -475,6 +503,20 @@ func _stairs(dt: float, st: int, speed: float) -> void:
 		_stair_phase += behind * minf(dt * STAIR_PULL, 1.0)
 	_stair_on = true
 	_show(input, fposmod(_stair_phase, 1.0) * a.length)
+
+
+## On steep ground: his take for the way he is going, moved on by the ground he covers (the body sets the pace).
+func _steep(dt: float, speed: float) -> void:
+	var grade := float(body.get(&"grade"))
+	if not _steep_on:
+		_steep_up = grade >= 0.0
+	elif absf(grade) > STEEP_TURN:
+		_steep_up = grade > 0.0
+	var input := "steep_up" if _steep_up else "steep_down"
+	var a := _lib.get_animation(ACTS[input])
+	_steep_phase = fposmod(_steep_phase + speed * dt / maxf(float(_stride[ACTS[input]]), 0.1), 1.0)
+	_steep_on = true
+	_show(input, _steep_phase * a.length)
 
 
 ## Standing and the gait loops: which blend, and at what pace, so that the feet cover the ground at the body's speed.
