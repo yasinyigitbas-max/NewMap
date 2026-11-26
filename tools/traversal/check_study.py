@@ -301,6 +301,11 @@ def cmd_gate(msg_path):
             refuse.append("this commit changes the movement code or clips. Its message must carry one or more lines"
                           " 'Study: \"<a sentence of the study this change follows, word for word>\"', or the line"
                           " 'Study: %s'." % SILENT)
+        if silent and not re.search(r"^Yasin: \".+\"", body, re.M):
+            refuse.append("this commit says the study is silent and brings in a number of its own. That needs Yasin's"
+                          " own words allowing that number, in a line 'Yasin: \"<his words>\"' (26 Nov: a made-up"
+                          " foot-spacing number was on its way in through this line). Without his words: leave the"
+                          " number out.")
         for q in quotes:
             if not any(norm(q) in t for t in texts.values()):
                 refuse.append("not word for word in the study or its notes: \"%s\"" % q)

@@ -38,7 +38,9 @@ does not rest on anyone's memory or good intentions.
    the case, and change it only when he says so.
 5. **Every commit of movement code or clips quotes the study.** Its message carries one or more lines
    `Study: "<a sentence of the study the change follows, word for word>"` (the gate checks each against the file),
-   or the line `Study: the study is silent on this, the number is mine`.
+   or the line `Study: the study is silent on this, the number is mine`, which the gate accepts ONLY together
+   with a line `Yasin: "<his words allowing that number>"`. A number the study does not give does not go in on a
+   session's own say-so (26 Nov: a made-up standing foot-spacing was on its way in that way).
 6. **No commit can claim more than the audit showed.** The audit must have been run on exactly the code being
    committed (the gate compares fingerprints), and the gate itself writes the result into the commit message:
    `Audit (written by the gate, not by hand): N of M study lines FAIL: ...`.
