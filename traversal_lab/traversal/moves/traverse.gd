@@ -18,8 +18,9 @@ const BAND := [0.30, 1.0]       # the study's band for this move: more than the 
 # 2.10 s, he is down at 2.52 s and standing again by 3.30 s; the ledge it steps off is 1.15 m high.
 const STEP_OFF := {"input": "drop_walk", "res": "res://traversal/character/clips/KM_Ledge_Walk_Off.res",
 		"from": 1.75, "leaves": 2.10, "down": 2.52, "exit": 3.30,
-		"edge": 0.46}           # NOT in the study: where the take's edge is taken to be, along its own path (m):
+		"native": 1.15, "edge": 0.46}           # NOT in the study: where the take's edge is taken to be, along its own path (m):
                                 # 5 cm behind his hips at the moment his feet leave (the take has no real ledge)
+const REST_LEAST := 0.6         # NOT in the study: off the lowest edge he is standing again in this share of the take's time
 const LOOK := 0.7               # NOT in the study: the ground this far ahead is looked at every tick; only when it
                                 # ends there is the full measurement made
 const AGAIN := 6                # ticks between measurements while he comes up to an edge
@@ -126,6 +127,13 @@ func _physics_process(_dt: float) -> void:
 			"t_step": maxf((leave - feet).dot(m), 0.05) / speed_in, "t_air": sqrt(2.0 * drop / float(body.get(&"GRAVITY"))),
 			"t_rest": float(STEP_OFF["exit"]) - float(STEP_OFF["down"]),
 			"exit_speed": (_fwd[n - 1] - _fwd[n - 7]) / (6.0 / _fps)}
+	# A softer landing off a lower edge (Yasin, 26 Nov: "Make a softer landing for edges lower than 1 meter"): he
+	# folds by the share this drop is of the take's own (the study gives the landing forces by height, "4.4 body
+	# weights from 0.45 m and 7.4 from 0.89 m", and no fold depth; taking the fold as in step with the height is
+	# OURS), and is up again sooner by the same share.
+	var share := clampf(drop / float(STEP_OFF["native"]), 0.0, 1.0)
+	_plan["soft"] = 1.0 - share
+	_plan["t_rest"] = float(_plan["t_rest"]) * lerpf(REST_LEAST, 1.0, share)
 	plays += 1
 	record = {}
 	body.call(&"begin_move", _step_off, String(STEP_OFF["input"]))
@@ -158,6 +166,7 @@ func _step_off(t: float) -> Dictionary:
 		out["pos"] = pos
 		out["clip_t"] = ct
 		out["air"] = true
+		out["soft"] = float(p["soft"]) * u
 	else:
 		var u := clampf((t - t_step - t_air) / t_rest, 0.0, 1.0)
 		var ct := lerpf(float(STEP_OFF["down"]), float(STEP_OFF["exit"]), u)
@@ -167,6 +176,7 @@ func _step_off(t: float) -> Dictionary:
 		out["clip_t"] = ct
 		out["air"] = false
 		out["landed"] = true
+		out["soft"] = float(p["soft"])
 		if u >= 1.0:
 			out["done"] = true
 			out["exit"] = m * float(p["exit_speed"])

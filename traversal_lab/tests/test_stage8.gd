@@ -21,6 +21,8 @@ var fails := 0
 var feet_i := []
 var stand := []                 # each foot joint's height above the ground when he stands
 var final := []
+var hips_i := -1
+var hips_y := 0.0
 
 
 func _initialize() -> void:
@@ -37,6 +39,7 @@ func _after() -> void:
 	final.clear()
 	for i: int in feet_i:
 		final.append((skel.global_transform * skel.get_bone_global_pose(i)).origin)
+	hips_y = (skel.global_transform * skel.get_bone_global_pose(hips_i)).origin.y
 
 
 ## Walk off the edge of `s` from on top of it; `flip` = the stick is reversed from that many seconds on.
@@ -53,7 +56,7 @@ func walk_off(s: Dictionary, flip := -1.0) -> Dictionary:
 	tape.set(&"tape", samples)
 	tape.call(&"replay")
 	var before := int(trav.get(&"plays"))
-	var out := {"played": false, "plan": {}, "end": Vector3.ZERO, "end_state": -1, "end_speed": 0.0, "feet": INF, "under": 0.0, "air_ticks": 0, "move_from": -1.0}
+	var out := {"played": false, "plan": {}, "end": Vector3.ZERO, "end_state": -1, "end_speed": 0.0, "feet": INF, "under": 0.0, "air_ticks": 0, "move_from": -1.0, "hips_low": INF}
 	var was_in := false
 	var landed_for := -1
 	var t := 0
@@ -70,6 +73,7 @@ func walk_off(s: Dictionary, flip := -1.0) -> Dictionary:
 			out["air_ticks"] = int(out["air_ticks"]) + 1
 		if inm and bool(body.get(&"move_landed")):
 			landed_for += 1
+			out["hips_low"] = minf(float(out["hips_low"]), hips_y - body.global_position.y)
 			# the feet 0.1 s after he comes down: how far the nearer foot's joints are off the ground, and how far
 			# under it any joint is
 			if landed_for == 6 and final.size() == 4:
@@ -104,6 +108,7 @@ func _run() -> void:
 	stations = (lab.get(&"course") as Node3D).get(&"stations")
 	for n: String in ["LeftFoot", "LeftToeBase", "RightFoot", "RightToeBase"]:
 		feet_i.append(skel.find_bone("mixamorig_" + n))
+	hips_i = skel.find_bone("mixamorig_Hips")
 	skel.skeleton_updated.connect(_after)
 	lab.call(&"place", Vector3(60.0, 0.0, 10.0))
 	for i in 60:
@@ -138,8 +143,8 @@ func _run() -> void:
 				bad = "exit speed %.2f, the clip's %.2f" % [float(r["end_speed"]), float(plan["exit_speed"])]
 			elif float(r["feet"]) > FEET_WITHIN:
 				bad = "feet %.1f cm off the ground 0.1 s after landing" % (float(r["feet"]) * 100.0)
-		ok(bad == "", "%s: steps off, lands where measured, on the ground, at the clip's exit speed (feet %.1f cm off, %.1f cm under; %.2f s in the air)%s" % [
-				s["label"], float(r["feet"]) * 100.0, float(r["under"]) * 100.0, int(r["air_ticks"]) / 60.0, "" if bad == "" else " -- " + bad])
+		ok(bad == "", "%s: steps off, lands where measured, on the ground, at the clip's exit speed (feet %.1f cm off, %.1f cm under; %.2f s in the air; hips down to %.2f m on landing)%s" % [
+				s["label"], float(r["feet"]) * 100.0, float(r["under"]) * 100.0, int(r["air_ticks"]) / 60.0, float(r["hips_low"]), "" if bad == "" else " -- " + bad])
 	# cancelling: the stick is reversed a tenth of a second into the move on the lowest, middle and highest of the band
 	for s: Dictionary in [inside[0], inside[inside.size() / 2], inside[inside.size() - 1]]:
 		var a := await walk_off(s)

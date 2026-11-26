@@ -159,6 +159,7 @@ var move_clip := ""             # the tree input its clip is under, and where in
 var move_clip_t := 0.0
 var move_t := 0.0
 var move_landed := false        # he has come down in it
+var move_soft := 0.0            # 0..1: how much less than the clip he folds on landing
 var _wish_was_moving := false
 var crouched := false           # he is crouched: the smaller capsule, half walking speed, no run, no jump
 var _col: CollisionShape3D
@@ -321,6 +322,7 @@ func _run_move(dt: float) -> void:
 	rotation.y = float(r["yaw"])
 	move_clip_t = float(r["clip_t"])
 	move_landed = bool(r.get("landed", false))
+	move_soft = float(r.get("soft", 0.0))
 	state = State.AIR if bool(r["air"]) else State.GROUND
 	var step := global_position - was
 	hvel = Vector3(step.x, 0.0, step.z) / dt

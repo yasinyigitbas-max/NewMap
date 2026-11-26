@@ -81,6 +81,11 @@ const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling
 # and the crouch walk take the place of standing and the gait loops. All four clips are Kimodo takes of 26 Nov: the
 # study found no clip in the folder that moves with the head under 1.29 m, and the course's overhang is 1.2 m.
 # Standing still he goes down and comes up with the two clips; on the move the two sets are blended across.
+# A softer landing off the lower edges (Yasin, 26 Nov: "Make a softer landing for edges lower than 1 meter"). The
+# step-off take lands from 1.15 m and folds for that; the library's other landing clips fold as deep. So the take is
+# blended toward its own standing end by as much as the drop is short of the take's (see traverse.gd, "soft").
+# input -> the moment of the clip at which he stands again
+const SOFTEN := {"drop_walk": 3.30}
 const CROUCH_IDLE := "KM_Crouch_Idle"
 const CROUCH_WALK := "KM_Crouch_Walk"
 const CROUCH_FADE := 0.3        # NOT in the study: seconds to blend between standing and crouched while he is moving
@@ -214,6 +219,7 @@ var _slope_t := 0.0
 var _foot_i := [-1, -1]
 var _foot_len := 0.0            # from the ankle to the ball of the foot, along the ground (from the skeleton)
 var _jump_low := 0.5            # the Jump clip: the moment its hips are lowest (found from the clip itself)
+var _soft := 0.0                # 0..1: how far a landing is eased toward standing
 var _low_w := 0.0               # 0 = the standing set, 1 = the crouched set
 var _low_was := false
 var _head_i := -1
@@ -442,7 +448,19 @@ func _make_tree() -> AnimationNodeBlendTree:
 		bt.add_node(StringName("seek_" + key), AnimationNodeTimeSeek.new(), Vector2(600, 300 + i * 100))
 		bt.connect_node(StringName("seek_" + key), 0, StringName("anim_" + key))
 		act.set_input_name(i, key)
-		bt.connect_node(&"act", i, StringName("seek_" + key))
+		if SOFTEN.has(key):
+			# beside the clip, the same clip held at its standing end: blended toward it, the landing folds less
+			var held := AnimationNodeAnimation.new()
+			held.animation = ACTS[key]
+			bt.add_node(StringName("held_" + key), held, Vector2(400, 350 + i * 100))
+			bt.add_node(StringName("hold_" + key), AnimationNodeTimeSeek.new(), Vector2(600, 350 + i * 100))
+			bt.connect_node(StringName("hold_" + key), 0, StringName("held_" + key))
+			bt.add_node(StringName("soft_" + key), AnimationNodeBlend2.new(), Vector2(700, 320 + i * 100))
+			bt.connect_node(StringName("soft_" + key), 0, StringName("seek_" + key))
+			bt.connect_node(StringName("soft_" + key), 1, StringName("hold_" + key))
+			bt.connect_node(&"act", i, StringName("soft_" + key))
+		else:
+			bt.connect_node(&"act", i, StringName("seek_" + key))
 		i += 1
 	bt.connect_node(&"output", 0, &"act")
 	return bt
@@ -534,10 +552,16 @@ func _physics_process(dt: float) -> void:
 			_stair_on = false
 			_steep_on = false
 		_show(String(body.get(&"move_clip")), float(body.get(&"move_clip_t")))
+		_soft = float(body.get(&"move_soft"))
 		landing_kind = "soft" if bool(body.get(&"move_landed")) else ""
 	elif _mode == "move":
 		_set_mode("ground")
 		_to_loops()
+	if _mode != "move":
+		_soft = move_toward(_soft, 0.0, dt / FADE)
+	for key: String in SOFTEN:
+		tree.set(StringName("parameters/soft_%s/blend_amount" % key), _soft if _act == key else 0.0)
+		tree.set(StringName("parameters/hold_%s/seek_request" % key), float(SOFTEN[key]))
 	match _mode:
 		"ground":
 			var st := int(body.get(&"stairs"))
