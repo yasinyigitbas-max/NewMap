@@ -19,7 +19,7 @@ const SKEL := "Skeleton3D"
 # the study: "lines up feet between walk and run").
 const IDLE := "Standing_Idle"
 const WALK := "KM_Walk"
-const JOG := "Running_3"
+const JOG := "KM_Run"
 const RUN := "Running"
 # The study: "People switch from walk to run at about 2.0 m/s". Below it he walks (the walk played faster or slower),
 # above it he runs; the two are blended only across this narrow band round the switch.

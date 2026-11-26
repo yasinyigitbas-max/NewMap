@@ -53,9 +53,16 @@ const SLOPES := ["KM_Climb_Hard", "KMY_Down_Hands_Balance_Long"]
 # KM_Walk (Kimodo take walk_b_s1), measured by the audit before these edits: hip flexion 35.2 and extension 4.6
 # degrees (the study: 25 and 10), knee 52.9 at toe-off and 67.2 in swing (40 and 60), ankle 25.9 toes-down (20), big
 # toe 31.1 (at least 35). After them: 27.4 and 14.3; 43.0 and 54.9; 19.8; 37.1.
-const FIT := {"KM_Walk": {"pelvis": 7.7, "knee": [20.0, 0.7], "ankle": [1.0, 0.8], "toe": 1.2}}
+const FIT := {"KM_Walk": {"pelvis": 7.7, "knee": [20.0, 0.7], "ankle": [1.0, 0.8], "toe": 1.2},
+		# The run at 4.5 m/s is a blend of these two (the jog: Kimodo take run_a_s1; the fast run: Mixamo's Running).
+		# Measured on the blend before the edits: knee 123.6 degrees in swing (the study: 94 to 119), ankle 27.5
+		# toes-down (23.2), hip extension 13.3 (11.8), each arm forward with the opposite leg 78 % of the time (90 or
+		# more). After: 114.4, 22.2, 12.7, 96 %. Both get the same edits.
+		"KM_Run": {"pelvis": -1.6, "knee": [60.0, 0.85], "ankle": [1.0, 0.8], "arms": 0.15},
+		"Running": {"pelvis": -1.6, "knee": [60.0, 0.85], "ankle": [1.0, 0.8], "arms": 0.15}}
 const FOOT_UP_SIGN := 1.0       # which way round the foot bone's side-to-side line counts as toes up (found by trying both)
-const HIPS := {"KM_Walk": [1.0, 1.0, 1.0, 4.2 / 6.2, 1.0]}
+# The run's rise and fall: "In running the bob is 8 to 9.5 cm"; the blend of the two run clips had 6.0 cm.
+const HIPS := {"KM_Walk": [1.0, 1.0, 1.0, 4.2 / 6.2, 1.0], "KM_Run": [1.0, 1.0, 1.0, 8.75 / 6.0, 1.0], "Running": [1.0, 1.0, 1.0, 8.75 / 6.0, 1.0]}
 
 
 func _initialize() -> void:
@@ -84,7 +91,7 @@ func _initialize() -> void:
 		var c: Resource = load(DIR + n + ".res")
 		var made := _animation(c, n, stand.y)
 		if FIT.has(n) and not OS.get_cmdline_user_args().has("--raw-hips"):
-			_fit(made, FIT[n], sk)
+			_fit(made, FIT[n], sk, n)
 		if STAIRS.has(n) or SLOPES.has(n):
 			_stairs(made, c, sk)
 		lib.add_animation(n, made)
@@ -144,6 +151,9 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 	# the hips' own turning, tilting and dropping through the clip, and their averages (for HIPS)
 	# (`-- --raw-hips`: the take as it is, for auditioning a new take and measuring what its hips do)
 	var shape: Array = [] if OS.get_cmdline_user_args().has("--raw-hips") else HIPS.get(name, [])
+	for arg in OS.get_cmdline_user_args():       # for trying figures: -- --hips=KM_Run/1,1,1,1.4,1
+		if arg.begins_with("--hips=%s/" % name):
+			shape = Array(arg.trim_prefix("--hips=%s/" % name).split_floats(","))
 	var mean_yaw := 0.0
 	var mean_swing := Vector3.ZERO
 	var mean_pos := Vector3.ZERO
@@ -201,11 +211,12 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 
 
 ## Small edits to a take's joint curves (see FIT). Every edit is made to the bone's own turn from its standing pose.
-func _fit(a: Animation, how: Dictionary, sk: Skeleton3D) -> void:
-	var fit := how.duplicate(true)
-	for arg in OS.get_cmdline_user_args():       # for trying figures: -- --fit=pelvis:6,knee:20:0.8,ankle:0.6:0.8,toe:1.2
-		if arg.begins_with("--fit="):
-			for part in arg.trim_prefix("--fit=").split(","):
+func _fit(a: Animation, how: Dictionary, sk: Skeleton3D, clip: String) -> void:
+	var fit := {"pelvis": 0.0, "knee": [20.0, 1.0], "ankle": [1.0, 1.0], "toe": 1.0, "arms": 0.0}
+	fit.merge(how.duplicate(true), true)
+	for arg in OS.get_cmdline_user_args():       # for trying figures: -- --fit=KM_Walk/pelvis:6,knee:20:0.8,ankle:0.6:0.8,toe:1.2
+		if arg.begins_with("--fit=%s/" % clip):
+			for part in arg.trim_prefix("--fit=%s/" % clip).split(","):
 				var v := part.split(":")
 				if v.size() == 2:
 					fit[v[0]] = float(v[1])
@@ -213,6 +224,20 @@ func _fit(a: Animation, how: Dictionary, sk: Skeleton3D) -> void:
 					fit[v[0]] = [float(v[1]), float(v[2])]
 	var tr := func(bone: String) -> int: return a.find_track(NodePath("%s:mixamorig_%s" % [SKEL, bone]), Animation.TYPE_ROTATION_3D)
 	var rest := func(bone: String) -> Quaternion: return sk.get_bone_rest(sk.find_bone("mixamorig_" + bone)).basis.get_rotation_quaternion()
+	# the arms' swing moved along the clip by a share of the stride (+ = later), so each arm is forward with the
+	# opposite leg (the study: "Each arm swings with the opposite leg")
+	if float(fit["arms"]) != 0.0:
+		var was: Animation = a.duplicate(true)
+		for t in a.get_track_count():
+			if a.track_get_type(t) != Animation.TYPE_ROTATION_3D:
+				continue
+			var bone := String(a.track_get_path(t)).get_slice(":", 1)
+			var arm := false
+			for part: String in ["Shoulder", "Arm", "ForeArm", "Hand"]:
+				arm = arm or bone.begins_with("mixamorig_Left" + part) or bone.begins_with("mixamorig_Right" + part)
+			if arm:
+				for k in a.track_get_key_count(t):
+					a.track_set_key_value(t, k, was.rotation_track_interpolate(t, fposmod(a.track_get_key_time(t, k) - a.length * float(fit["arms"]), a.length)))
 	var hips_t: int = tr.call("Hips")
 	var back := deg_to_rad(float(fit["pelvis"]))
 	for k in a.track_get_key_count(hips_t):
