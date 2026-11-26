@@ -261,6 +261,8 @@ func _wall(col: Vector3, ground: float, dir: Vector3) -> Dictionary:
 	var right := _follow(w_from, side, top_y, WIDTH_MOST, 0.2)
 	var left := _follow(w_from, -side, top_y, WIDTH_MOST, 0.2)
 	rec["width"] = float(right["len"]) + float(left["len"])
+	rec["width_right"] = float(right["len"])        # to his own right and left of where he would arrive
+	rec["width_left"] = float(left["len"])
 	rec["width_open"] = bool(right["open"]) and bool(left["open"])
 	return rec
 

@@ -240,6 +240,7 @@ var _jump_y0 := 0.0             # the height he jumped from
 var _soft := 0.0                # 0..1: how far a landing is eased toward standing
 var _low_w := 0.0               # 0 = the standing set, 1 = the crouched set
 var _narrow_w := 0.0            # 0 = as he is, 1 = the narrow set (the beam walk)
+var _beam_arms := 0.0           # 0 to 1: how far his arms are held out for standing on something narrow (not in a move)
 var _low_was := false
 var _head_i := -1
 
@@ -818,6 +819,7 @@ func _physics_process(dt: float) -> void:
 		feet.set(&"step_real", float(st_m[3]) if st_m.size() >= 4 else 0.0)
 		feet.set(&"base", float(body.get(&"move_base")) if bool(body.call(&"in_move")) else 0.0)
 		feet.set(&"stand_wide", STAND_WIDE * (1.0 - _moving) * (1.0 - _low_w) if _act == "ground" else 0.0)
+		feet.set(&"stand_on", (1.0 - _moving) if _act == "ground" else 0.0)
 		# (in step with the tree's own cross-fade, which is even over FADE: eased more slowly than the pose, the
 		# feet of a stair clip coming in were held up on stairs that were no longer under them, 0.2 to 0.5 m high)
 		if want_slope != _slope_to:
@@ -865,7 +867,11 @@ func _physics_process(dt: float) -> void:
 		_leg_ik.influence = w
 		_orient.influence = w
 	_steep_w = move_toward(_steep_w, 1.0 if _steep_on else 0.0, dt / FADE)
-	_arms.set(&"open_deg", arm_open_deg + (STEEP_ARMS_UP_DEG if _steep_up else STEEP_ARMS_DEG) * _steep_w + BEAM_ARMS_DEG * _narrow_w * (1.0 - _moving))
+	# (his arms are held out only while he stands there on his own: laid over the take of a move, the fall off a beam
+	# above all, they threw his arms from one place to another from tick to tick, up to 0.8 m. Yasin, 26 Nov: "arms
+	# flicker when falling idle too long>fall animation plays")
+	_beam_arms = move_toward(_beam_arms, _narrow_w * (1.0 - _moving) if _mode != "move" else 0.0, dt / FADE)
+	_arms.set(&"open_deg", arm_open_deg + (STEEP_ARMS_UP_DEG if _steep_up else STEEP_ARMS_DEG) * _steep_w + BEAM_ARMS_DEG * _beam_arms)
 	if hands:
 		# a move that puts a hand on something: [which hand (0 left, 1 right), where its wrist goes, how much]
 		var mh: Array = body.get(&"move_hand") if bool(body.call(&"in_move")) else []

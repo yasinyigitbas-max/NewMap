@@ -58,6 +58,17 @@ var base := 0.0                 # a climb: the take's own ground is this far abo
 const STEP_SOFT := 0.15         # NOT in the study: the clip's own step is taken as a ramp this long at its edge (m), so
                                 # that a foot crossing the edge is not thrown by it
 var hips_fit := 0.0             # the hips' height put right for a clip made on steeper or shallower ground (m; see character.gd)
+# Standing still with a foot over nothing (Yasin, 26 Nov: "standing idle on the walls or beams feet dont stand on the
+# wall": the standing take sets his feet 0.28 m apart, wider than a beam or a wall top, and each stood in the air
+# beside it). The study: "the careful walk with the feet narrowed and arms raised by IK for beams". A standing foot
+# whose outer side has no ground under it is brought sideways onto what he stands on, just inside its edge (on
+# something narrower than his shoe, onto its middle); two feet brought onto one line are set one before the other.
+var stand_on := 0.0             # 0 to 1: he is standing still on the ground (set by character.gd)
+const SHOE_HALF := 0.05         # NOT in the study, mine: half the width of his shoe (m)
+const SHOE_EDGE := 0.04         # NOT in the study, mine: this much of it, each side of its middle, is to have ground under it (m)
+const SHOE_LONG := 0.27         # NOT in the study, mine: the length of his shoe (m)
+const IN_TIME := 0.15           # NOT in the study, mine: seconds for a foot to be brought in, and let back out
+var _in := [Vector3.ZERO, Vector3.ZERO]
 var pinning := true
 var grounding := true
 
@@ -131,6 +142,11 @@ func _process_modification_with_delta(dt: float) -> void:
 	var ankle_goal := [Vector3.ZERO, Vector3.ZERO]
 	var hip_at := [Vector3.ZERO, Vector3.ZERO]
 	var hinge_at := [Vector3.ZERO, Vector3.ZERO]
+	var want_in := [Vector3.ZERO, Vector3.ZERO]
+	if stand_on > 0.0 and on_ground and grounding:
+		want_in = _onto(sk, xf, feet_y)
+	for f in 2:
+		_in[f] = (_in[f] as Vector3).lerp((want_in[f] as Vector3) * stand_on, 1.0 - exp(-dt / IN_TIME))
 	for f in 2:
 		var hip_t := sk.get_bone_global_pose(_thigh[f])
 		var knee_t := sk.get_bone_global_pose(_shin[f])
@@ -175,6 +191,8 @@ func _process_modification_with_delta(dt: float) -> void:
 			var out := side * (signf((ankle - xf * sk.get_bone_global_pose(_hips).origin).dot(side)) * stand_wide)
 			ball += out
 			ankle += out
+		ball += _in[f]
+		ankle += _in[f]
 		# 2. the ground under this foot: the same height above it as the clip holds the foot above its own floor
 		var want_g := feet_y
 		var normal := Vector3.UP
@@ -323,3 +341,57 @@ func _process_modification_with_delta(dt: float) -> void:
 			var lead := (fwd + Vector3.UP).normalized()
 			front = lead - line * lead.dot(line)
 		pole[f].position = (hip_now + ankle_now) * 0.5 + front.normalized() * 0.6
+
+
+## How far each standing foot must be brought sideways (and, two feet on one line, along) to stand on what he
+## stands on: see `stand_on`. Zero for a foot that has ground under it as it is.
+func _onto(sk: Skeleton3D, xf: Transform3D, feet_y: float) -> Array:
+	var out := [Vector3.ZERO, Vector3.ZERO]
+	var side := body.global_transform.basis.x
+	side = Vector3(side.x, 0.0, side.z).normalized()
+	var fwd := -body.global_transform.basis.z
+	fwd = Vector3(fwd.x, 0.0, fwd.z).normalized()
+	var centre := body.global_position
+	var mid := [Vector3.ZERO, Vector3.ZERO]
+	var any := false
+	for f in 2:
+		var ankle: Vector3 = xf * sk.get_bone_global_pose(_foot[f]).origin
+		var ball: Vector3 = xf * sk.get_bone_global_pose(_toe[f]).origin
+		mid[f] = (ankle + ball) * 0.5 + (_corr[f] as Vector3)     # (where it is held, if it is held where it came down)
+		if stand_wide != 0.0:
+			# (as it will be set out to its own side: see `stand_wide`)
+			var sk_side := xf.basis.x.normalized()
+			mid[f] = (mid[f] as Vector3) + sk_side * (signf((ankle - xf * sk.get_bone_global_pose(_hips).origin).dot(sk_side)) * stand_wide)
+		# its outer side: SHOE_EDGE out from its middle, away from the middle of him
+		var lat := ((mid[f] as Vector3) - centre).dot(side)
+		var o := side * (signf(lat) if lat != 0.0 else 1.0)
+		var outer: Vector3 = (mid[f] as Vector3) + o * SHOE_EDGE
+		if not _ground(outer, feet_y).is_empty():
+			continue
+		var s := 0.01
+		var found := false
+		while s <= absf(lat) + 0.15 + SHOE_EDGE:
+			if not _ground(outer - o * s, feet_y).is_empty():
+				found = true
+				break
+			s += 0.01
+		if not found:
+			continue
+		# how far what he stands on goes on from its edge: on something narrower than his shoe the foot is set on its middle
+		var run := 0.0
+		while run < 2.0 * SHOE_EDGE and not _ground(outer - o * (s + run + 0.01), feet_y).is_empty():
+			run += 0.01
+		out[f] = -o * ((s + 0.01) if run >= 2.0 * SHOE_EDGE else (s + run * 0.5 - SHOE_EDGE))
+		any = true
+	if any:
+		var a: Vector3 = (mid[0] as Vector3) + (out[0] as Vector3)
+		var b: Vector3 = (mid[1] as Vector3) + (out[1] as Vector3)
+		var apart := absf((a - b).dot(side))
+		var along := (a - b).dot(fwd)
+		var short := SHOE_LONG - absf(along)
+		if apart < 2.0 * SHOE_HALF and short > 0.0:
+			var push := fwd * ((1.0 if along >= 0.0 else -1.0) * short * 0.5 * (1.0 - apart / (2.0 * SHOE_HALF)))
+			if not _ground(a + push, feet_y).is_empty() and not _ground(b - push, feet_y).is_empty():
+				out[0] = (out[0] as Vector3) + push
+				out[1] = (out[1] as Vector3) - push
+	return out

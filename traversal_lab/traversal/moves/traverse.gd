@@ -1020,6 +1020,18 @@ func _vault(t: float) -> Dictionary:
 
 ## A thin obstacle from standing or at a walk. `low` = up to 1.0 m: the jump over it; higher: the vault with both
 ## hands on its top.
+## Where the two hands of a climb go: `side` m to each side of him on the top, as the take has them. On a top that
+## does not reach that far (a wall met end on, 0.2 m across) each hand is brought in to rest on it, HAND_IN inside
+## its edge: left as the take had them they held the air to each side of the wall. Yasin, 26 Nov: "hands should
+## close and grab the wall when we climb on walls from the narrow sides".
+const HAND_IN := 0.04           # NOT in the study, mine: the wrist this far inside the edge of a narrow top (m)
+const HAND_LEAST := 0.03        # NOT in the study, mine: and never nearer his middle than this, so the hands lie side by side
+func _hands(on_top: Vector3, left: Vector3, side: float, rec: Dictionary) -> Array:
+	var l := clampf(float(rec.get("width_left", INF)) - HAND_IN, HAND_LEAST, side)
+	var r := clampf(float(rec.get("width_right", INF)) - HAND_IN, HAND_LEAST, side)
+	return [on_top + left * l, on_top - left * r]
+
+
 func _try_tuck(v: Vector3, wish: Vector3, rec: Dictionary, low: bool) -> bool:
 	var top := float(rec["top"])
 	var m: Vector3 = -(rec["normal"] as Vector3)
@@ -1057,7 +1069,7 @@ func _try_tuck(v: Vector3, wish: Vector3, rec: Dictionary, low: bool) -> bool:
 	_plan = {"key": "vault_jump" if low else "vault_tuck", "low": low, "from": Vector3(feet.x, ground, feet.z), "mid": mid,
 			"end": Vector3(end.x, ground, end.z), "m": m, "yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z), "top": top,
 			"to_mid": to_mid, "from_t": from_t, "hand": -1 if low else 2, "exit_speed": 0.0,
-			"hands_at": [on_top + left * float(TUCK["hand_side"]), on_top - left * float(TUCK["hand_side"])]}
+			"hands_at": _hands(on_top, left, float(TUCK["hand_side"]), rec)}
 	plays += 1
 	_up_record = {}
 	record = {}
@@ -1156,7 +1168,7 @@ func _try_over(wish: Vector3, rec: Dictionary, air_ct := -1.0) -> bool:
 			"t_step": float(mv["leaves"]) - float(mv["from"]), "t_air": sqrt(2.0 * top / float(body.get(&"GRAVITY"))),
 			"t_rest": (float(mv["exit"]) - float(mv["down"])) * lerpf(REST_LEAST, 1.0, share), "soft": 1.0 - share,
 			"exit_speed": (_at(fwd, float(mv["exit"])) - _at(fwd, float(mv["exit"]) - 0.2)) / 0.2, "hand": 2,
-			"hands_at": [on_top + left * float(OVER["hand_side"]), on_top - left * float(OVER["hand_side"])]}
+			"hands_at": _hands(on_top, left, float(OVER["hand_side"]), rec)}
 	if air_ct >= 0.0:
 		_plan.merge({"air": true, "from_t": air_ct, "hands_on": air_ct, "y_from": feet.y})
 	plays += 1
@@ -1278,7 +1290,7 @@ func _try_mantle(v: Vector3, wish: Vector3, rec: Dictionary, air_ct := -1.0) -> 
 	_plan = {"key": "mantle", "moving": moving, "a_from": Vector3(feet.x, ground, feet.z), "a_back": back, "a_yaw0": body.rotation.y,
 			"end": end, "top": top, "ground": ground, "m": m, "yaw1": atan2(-m.x, -m.z), "here": here, "from_t": from_t,
 			"exit_speed": run_v, "run_d": run_d if run_v > 0.0 else 0.0, "hand": 2, "hands_on": hands_on,
-			"hands_at": [on_top + left * float(OVER["hand_side"]), on_top - left * float(OVER["hand_side"])]}
+			"hands_at": _hands(on_top, left, float(OVER["hand_side"]), rec)}
 	if air_ct >= 0.0:
 		_plan.merge({"air": true, "y_from": feet.y})
 	plays += 1
@@ -1470,7 +1482,7 @@ func _try_grab(wish: Vector3, rec: Dictionary, air := false) -> bool:
 			# the body's height in the hang: his wrists on the top
 			"hang_y": ground + top + WRIST_OVER - float(GRAB["wrist"]) + float(GRAB["jump_by"]),
 			"from_t": float(GRAB["off"]) + 0.08 if air else 0.0,
-			"hands_at": [on_top + left * float(GRAB["hand_side"]), on_top - left * float(GRAB["hand_side"])]}
+			"hands_at": _hands(on_top, left, float(GRAB["hand_side"]), rec)}
 	if thin:
 		var leave := feet + m * (here + float(rec["depth"]) + 0.22)        # NOT in the study: his hips this far past the far edge as his feet leave it
 		leave.y = ground + top
@@ -1589,7 +1601,7 @@ func _try_wallrun(v: Vector3, wish: Vector3, rec: Dictionary) -> bool:
 			"yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z), "exit_speed": run_v, "run_d": run_d, "hand": 2, "from_t": from_t,
 			# (the little he is out by as it begins is taken up over the run in)
 			"stretch": (here + inward) / maxf(_at(_w_fwd, exit_t) - _at(_w_fwd, from_t), 0.01),
-			"hands_at": [on_top + left * float(WALLRUN["hand_side"]), on_top - left * float(WALLRUN["hand_side"])]}
+			"hands_at": _hands(on_top, left, float(WALLRUN["hand_side"]), rec)}
 	plays += 1
 	_up_record = {}
 	record = {}
