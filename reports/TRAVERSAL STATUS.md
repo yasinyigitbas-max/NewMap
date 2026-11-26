@@ -283,3 +283,15 @@ What stands at this commit, all play-tested or approved by him up to trav57, and
   and joint-limit clips he has approved by play-test. His rule: no 20 % better, change nothing, go to stage 16.
 - **Next:** stage 16, his words: running across a gap = the running jump, and run on after landing; new jumps only
   for walking across gaps.
+
+## After trav63, 26 Nov 2026 (stage 16)
+
+- **Stage 16, gaps:** at a run the body's own running jump is begun for him at the edge and he runs on; at a walk or
+  from standing a gap to 0.78 m is stepped across in stride and one to 2.2 m jumped (`KM_Jump_Over`, carried across).
+  Too wide to clear but the far edge within reach: he jumps for it, catches the edge and climbs up (the mantle begun
+  in the air): at a walk to 2.8 m, at a run as far as his feet are no more than 1.35 m under the far top when he
+  gets there (tested at 3.2 and 4.0 m; 5.5 m is refused). `tests/test_stage16.gd`.
+- The detector looks for a far side up to 5 m across when asked by the moves (`measure(dir, from_y, gap_most)`); its
+  own default is unchanged.
+- **Stage 15** is asked for by going at an edge crouched; after he lets go it is his own fall and landing (trav62).
+- **Next in the study's order:** stage 17, narrow surfaces (beam walk and wall-ledge sidle, 0.10 to 0.25 m wide).

@@ -248,6 +248,10 @@ const DOWN_NEAR := 0.45             # NOT in the study, mine: begun from within 
 const LEG := 0.829                  # the study, Part 3: his hip to ankle on the Mixamo rig
 const STEP_ACROSS := 0.94           # the study: of leg length
 const LONG_JUMP := 2.2              # the study: the standing long jump (m)
+const GAP_LOOK := 5.0               # NOT in the study, mine: a far side is looked for this far across (m): further than he can jump for
+const CATCH_REACH := 0.60           # NOT in the study, mine: at a walk, how much wider than the long jump a gap may be for him to
+                                    # reach its far edge with his hands (m)
+const CATCH_UNDER := 0.50           # NOT in the study, mine: how far under the far top his feet are as he gets to it (m)
 const GAP_OFF := 0.20               # NOT in the study, mine: he leaves the ground this far before the edge (m)
 const GAP_ON := 0.15                # NOT in the study, mine: ... and comes down this far past the far edge, plus his own radius
 const OVER_BACK := 0.48             # NOT in the study, found in the lab: he sinks for the jump this far from the wall's face
@@ -310,6 +314,7 @@ var _w_rise := PackedFloat32Array()
 var _d_xz: PackedVector2Array = PackedVector2Array()
 var _d_fall := PackedFloat32Array()
 var _d_yaw := PackedFloat32Array()
+var _catch_next := 0            # ticks left in which he is to be taken as in the air from a jump (after the jump for a far edge)
 var _o_high := 0.0              # the height the climb take goes up, on him
 
 
@@ -434,6 +439,12 @@ func _physics_process(_dt: float) -> void:
 	_tick += 1
 	var v: Vector3 = body.get(&"hvel")
 	var wish := (body.get(&"_wish") as Vector3).length()
+	if _catch_next > 0:
+		_catch_next -= 1
+		if int(body.get(&"state")) >= 2:
+			body.set(&"from_jump", true)
+			body.set(&"_jump_still", true)
+			_catch_next = 0
 	if int(body.get(&"state")) >= 2 and _try_air(v):
 		return
 	if _try_step_up(v, body.get(&"_wish")):
@@ -466,7 +477,7 @@ func _physics_process(_dt: float) -> void:
 			return
 	# (a gap he is coming up to is measured every tick: a narrow one is under the look ahead for a few ticks only)
 	if record.is_empty() or _tick % AGAIN == 0 or String(record.get("kind", "")) == "gap":
-		record = detector.call(&"measure", dir)
+		record = detector.call(&"measure", dir, INF, GAP_LOOK)
 		if record["kind"] == "gap":
 			var gap_rec := record
 			record = {}
@@ -1268,10 +1279,12 @@ func _try_air(v: Vector3) -> bool:
 	var dir := wish.normalized() if wish.length() >= 0.05 else (v.normalized() if v.length() >= 0.5 else -body.global_transform.basis.z)
 	dir = Vector3(dir.x, 0.0, dir.z).normalized()
 	# (measured as from the ground under him: see detector.gd)
-	var below: Dictionary = body.call(&"_ray_down", body.global_position)
-	if below.is_empty():
-		return false
-	var rec: Dictionary = detector.call(&"measure", dir, (below["position"] as Vector3).y)
+	# (over a gap the ground under him is far down, or not there: looked for 6 m down, and failing that taken 3 m down)
+	var here_p := body.global_position
+	var q_down := PhysicsRayQueryParameters3D.create(here_p + Vector3(0.0, 0.6, 0.0), here_p - Vector3(0.0, 6.0, 0.0), body.collision_mask, [body.get_rid()])
+	var below: Dictionary = body.get_world_3d().direct_space_state.intersect_ray(q_down)
+	var under_y := (below["position"] as Vector3).y if not below.is_empty() else here_p.y - 3.0
+	var rec: Dictionary = detector.call(&"measure", dir, under_y)
 	if String(rec["kind"]) != "obstacle" or bool(rec["blocked"]) or float(rec["top"]) == INF:
 		return false
 	var m: Vector3 = -(rec["normal"] as Vector3)
@@ -1646,9 +1659,17 @@ func _try_gap(v: Vector3, dir: Vector3, rec: Dictionary, running: bool) -> bool:
 		var g := float(body.get(&"GRAVITY"))
 		var rise := float(body.get(&"JUMP_RISE_RUN"))
 		var flight := v.length() * (sqrt(2.0 * rise / g) + sqrt(2.0 * (rise - landing) / g))
+		var catching := false
 		if flight < GAP_OFF + gap + rad + GAP_ON:
-			refused = "too wide for the running jump (%.2f m)" % gap
-			return false
+			# too wide to clear. If he gets to its far face with his feet no further under the top than the mantle
+			# takes, he jumps for the edge: he catches it and climbs up (the mantle begun in the air does that).
+			# Yasin, 26 Nov: "for gaps longer than 2m, if we can reach, cwe should catch the edge and climb up".
+			var t_face := (GAP_OFF + gap - OVER_BACK) / maxf(v.length(), 0.1)
+			var y_face := sqrt(2.0 * g * rise) * t_face - 0.5 * g * t_face * t_face
+			if landing - y_face > float(MANTLE_BAND[1]) - 0.10:
+				refused = "too wide for the running jump, and the far edge is out of reach (%.2f m)" % gap
+				return false
+			catching = true
 		var push := v.length() * float(body.get(&"JUMP_PUSH_RUN"))
 		if here > GAP_OFF + push + v.length() / 60.0:
 			refused = "coming up to the gap"
@@ -1656,7 +1677,7 @@ func _try_gap(v: Vector3, dir: Vector3, rec: Dictionary, running: bool) -> bool:
 		refused = ""
 		if bool(body.call(&"start_jump")):
 			plays += 1
-			_plan = {"key": "gap_run", "gap": gap}
+			_plan = {"key": "gap_catch" if catching else "gap_run", "gap": gap}
 			return true
 		return false
 	if absf(landing) > LAND_LEVEL:
@@ -1666,7 +1687,7 @@ func _try_gap(v: Vector3, dir: Vector3, rec: Dictionary, running: bool) -> bool:
 	var ground := float(rec["ground"])
 	var end := feet + m * (here + gap + rad + GAP_ON)
 	end.y = ground + landing
-	if not bool(detector.call(&"_fits", end, float(body.get(&"HEIGHT")))):
+	if gap <= LONG_JUMP + MEASURED_WITHIN and not bool(detector.call(&"_fits", end, float(body.get(&"HEIGHT")))):
 		refused = "no room on the far side"
 		return false
 	if gap <= STEP_ACROSS * LEG + MEASURED_WITHIN:
@@ -1682,9 +1703,15 @@ func _try_gap(v: Vector3, dir: Vector3, rec: Dictionary, running: bool) -> bool:
 		_up_record = {}
 		body.call(&"begin_move", _gap_step, "ground")
 		return true
-	if gap > LONG_JUMP + MEASURED_WITHIN:
-		refused = "too wide to jump from a walk (%.2f m)" % gap
+	var catching_w := gap > LONG_JUMP + MEASURED_WITHIN
+	if gap > LONG_JUMP + CATCH_REACH + MEASURED_WITHIN:
+		refused = "too wide to jump from a walk, and the far edge is out of reach (%.2f m)" % gap
 		return false
+	if catching_w:
+		# short of the far side: he is carried to within reach of its edge, his feet under the top, and let go there
+		# in the air, as from a jump; the mantle begun in the air catches the edge and climbs up
+		end = feet + m * (here + gap - OVER_BACK)
+		end.y = ground + landing - CATCH_UNDER
 	if here > 0.35:
 		refused = "coming up to the gap"
 		return false
@@ -1692,7 +1719,7 @@ func _try_gap(v: Vector3, dir: Vector3, rec: Dictionary, running: bool) -> bool:
 	var off := feet + m * maxf(here - GAP_OFF, 0.0)
 	off.y = ground
 	_plan = {"key": "gap_jump", "from": Vector3(feet.x, ground, feet.z), "off": off, "end": end, "m": m, "yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z),
-			"exit_speed": 0.0, "gap": gap}
+			"exit_speed": 0.0, "gap": gap, "catch": catching_w}
 	plays += 1
 	_up_record = {}
 	body.call(&"begin_move", _gap_jump, String(JUMP["input"]))
@@ -1721,6 +1748,11 @@ func _gap_jump(t: float) -> Dictionary:
 	var pos := (p["from"] as Vector3).lerp(p["off"], smoothstep(0.0, off_t - from_t, t))
 	if ct >= off_t:
 		pos = (p["off"] as Vector3).lerp(p["end"], clampf((ct - off_t) / (down_t - off_t), 0.0, 1.0))
+	if bool(p.get("catch", false)):
+		# let go in the air within reach of the far edge, moving at it: as from a jump of his own
+		if ct >= down_t - 0.10:
+			_catch_next = 3
+			return {"done": true, "pos": pos, "clip_t": ct, "air": true, "free": true, "yaw": float(p["yaw1"]), "exit": (p["m"] as Vector3) * 1.5}
 	var out := {"done": ct >= exit_t, "pos": pos, "clip_t": ct, "air": air, "free": air, "landed": ct >= down_t,
 			"yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), clampf(t / 0.2, 0.0, 1.0))}
 	if ct >= exit_t:

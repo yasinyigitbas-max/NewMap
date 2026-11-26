@@ -101,7 +101,7 @@ func _fits(feet: Vector3, tall: float) -> bool:
 
 ## Measure what is ahead of him the way `dir` points (horizontal). Returns the record; `kind` is "none", "obstacle",
 ## "gap" or "drop". Heights are above his own ground.
-func measure(dir: Vector3, from_y := INF) -> Dictionary:
+func measure(dir: Vector3, from_y := INF, gap_most := GAP_MOST) -> Dictionary:
 	queries = 0
 	_space = body.get_world_3d().direct_space_state
 	dir = Vector3(dir.x, 0.0, dir.z)
@@ -123,7 +123,7 @@ func measure(dir: Vector3, from_y := INF) -> Dictionary:
 		ground = from_y
 	var rec := _wall(col, ground, dir)
 	if rec.is_empty():
-		rec = _edge(col, ground, dir)
+		rec = _edge(col, ground, dir, gap_most)
 	if rec.is_empty():
 		rec = {"kind": "none"}
 	rec["queries"] = queries
@@ -313,7 +313,7 @@ func _ground_end(from: Vector3, way: Vector3, ground: float, most: float, first:
 	return -1.0
 
 
-func _edge(col: Vector3, ground: float, dir: Vector3) -> Dictionary:
+func _edge(col: Vector3, ground: float, dir: Vector3, gap_most := GAP_MOST) -> Dictionary:
 	var from := col + Vector3.UP * 0.4
 	var end := _ground_end(from, dir, ground, REACH, 0.1)
 	if end < 0.0:
@@ -344,7 +344,8 @@ func _edge(col: Vector3, ground: float, dir: Vector3) -> Dictionary:
 	var s := 0.1
 	var at := out
 	var last_open := 0.0
-	while s <= GAP_MOST:
+	# (`gap_most`: how far across a far side is looked for; the moves that jump for a far edge look further)
+	while s <= gap_most:
 		var y := _step_down(at, out + m * s, reach)
 		if y == INF:
 			# a wall across the gap: the far side stands higher than he can step

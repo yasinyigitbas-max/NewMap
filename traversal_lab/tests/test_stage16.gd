@@ -85,7 +85,7 @@ func go_at(s: Dictionary, back: float, run: bool, flip := -1.0) -> Dictionary:
 				out["over_speed"] = (body.get(&"hvel") as Vector3).length()
 				tape.call(&"stop")
 		was_in = inm
-		if body.global_position.y < deck - 0.5 or t > 340:
+		if body.global_position.y < deck - 0.9 or t > 340:
 			tape.call(&"stop")
 	out["refused"] = String(trav.get(&"refused"))
 	return out
@@ -145,6 +145,35 @@ func _run() -> void:
 					{"gap_run": "the running jump, begun for him", "gap_step": "stepped across in stride", "gap_jump": "jumped"}[want], float(r["lowest"]) - deck,
 					(", running on at %.1f m/s" % float(r["over_speed"])) if want == "gap_run" else (", where planned (foot %.1f cm off the ground)" % (float(r["feet"]) * 100.0)),
 					"" if bad == "" else " -- " + bad])
+	# Too wide to clear, the far edge within reach (Yasin, 26 Nov: "for gaps longer than 2m, if we can reach, cwe should
+	# catch the edge and climb up"). Gaps built here beyond the last station (the course's widest is 2.0 m).
+	var course: Node3D = lab.get(&"course")
+	var nx := float(stations[stations.size() - 1]["x"]) + 6.0
+	var built := []
+	for w: float in [2.6, 3.2, 5.5, 4.0]:
+		course.call(&"_box", Vector3(nx, 0.5, 10.0), Vector3(2.4, 1.0, 12.0))
+		course.call(&"_box", Vector3(nx, 0.5, 4.0 - w - 3.0), Vector3(2.4, 1.0, 6.0))
+		built.append({"kind": "gap", "label": "gap %.1f m (built for this test)" % w, "top": 1.0, "gap": w, "edge_z": 4.0, "x": nx})
+		nx += 4.0
+	for i in 5:
+		await physics_frame
+	for c: Array in [[built[0], "at a walk", 2.0, false, "gap_jump", true], [built[1], "at a walk", 2.0, false, "", false],
+			[built[1], "at a run", 6.0, true, "gap_catch", true], [built[3], "at a run", 6.0, true, "gap_catch", true], [built[2], "at a run", 6.0, true, "", false]]:
+		var s: Dictionary = c[0]
+		var r := await go_at(s, float(c[2]), bool(c[3]))
+		var key := String((r["plan"] as Dictionary).get("key", ""))
+		if not bool(c[5]):
+			ok(key == "", "%s, %s: out of reach, no jump is begun for him (%s)" % [s["label"], c[1], ("'%s' played" % key) if key != "" else String(r["refused"])])
+			continue
+		var bad := ""
+		if key != String(c[4]):
+			bad = "'%s' did not play (%s%s)" % [c[4], r["refused"], (", '%s' did" % key) if key != "" else ""]
+		elif float(r["lowest"]) < 0.15:
+			bad = "he went down to the bottom of the gap"
+		elif not bool(r["over"]):
+			bad = "he is not on the far side, on the ground"
+		ok(bad == "", "%s, %s: he jumps for the far edge, catches it and climbs up: on the far side on the ground (at his lowest %.2f m under its top)%s" % [
+				s["label"], c[1], 1.0 - float(r["lowest"]), "" if bad == "" else " -- " + bad])
 	# cancelling: the stick reversed a moment into the jump from a walk changes nothing
 	for s: Dictionary in [gaps[1], gaps[gaps.size() - 1]]:
 		var a := await go_at(s, 2.0, false)
