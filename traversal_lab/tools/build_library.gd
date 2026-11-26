@@ -23,6 +23,9 @@ const MIRRORED := ["Female_Stop_Walking", "Run_To_Stop", "Left_Turn_90", "Walkin
 # the left ankle is ahead of the right, frame by frame, is noted on the animation ("lead", metres).
 const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Stop_Walk", "KM_Slope_Down_Start", "KM_Slope_Down_Stop", "KM_Start_Walk",
 		"KM_Walk", "KM_Run", "KM_Slope_Up_Start", "KM_Slope_Up_Stop", "KM_Start_Run"]
+# A vault ends a stride on, with the hips turned as a running stride turns them (31 degrees in Vault 1 Hand): that is
+# not a turn of his path, and its root does not turn.
+const STRAIGHT_ON := ["Vault_1_Hand"]
 const TURN_LEAST_DEG := 20.0        # a clip that turns less than this is not a turning clip: its root does not turn
 # In the air the body does the rising and the falling (the study: the body "alone decides where the character is"), so
 # the clip's own rise is taken out: between leaving the ground and landing the hips keep at most their take-off height.
@@ -176,7 +179,7 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 	var aim := Quaternion.IDENTITY
 	if loop and total >= 0.02:
 		aim = Quaternion(Vector3.UP, -atan2(dir.x, dir.z))
-	var turning: bool = not loop and not yaw.is_empty() and absf(rad_to_deg(yaw[frames - 1])) >= TURN_LEAST_DEG
+	var turning: bool = not loop and not yaw.is_empty() and absf(rad_to_deg(yaw[frames - 1])) >= TURN_LEAST_DEG and not STRAIGHT_ON.has(name)
 	var hips_i := bones.find("mixamorig_Hips")
 	var t_root_p := a.add_track(Animation.TYPE_POSITION_3D)
 	a.track_set_path(t_root_p, NodePath("%s:Root" % SKEL))

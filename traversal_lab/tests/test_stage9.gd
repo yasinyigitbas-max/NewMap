@@ -117,8 +117,12 @@ func _run() -> void:
 				# under the band he walks onto it by himself (he ends on top without the move); over it, or with
 				# no room on top, he is stopped in front of it
 				var on_top := absf(float(r["high"]) - h) < 0.02
-				ok(not bool(r["played"]) and (on_top == (h <= float(band[0]) + 0.001)), "%s, %s: outside the band, the move is not played (%s)" % [s["label"], how[0],
-						"he walks onto it" if on_top else "he is stopped: " + String(r["refused"])])
+				# (another stage's move may take it: a thin wall at a run is vaulted, stage 10. Here it is the step up
+				# that must not be played.)
+				var key := String((r["plan"] as Dictionary).get("key", ""))
+				var other := bool(r["played"]) and not (key in ["up", "run_up"])
+				ok((not bool(r["played"]) and (on_top == (h <= float(band[0]) + 0.001))) or other, "%s, %s: outside the band, the move is not played (%s)" % [s["label"], how[0],
+						("taken by the move '%s'" % key) if other else ("he walks onto it" if on_top else "he is stopped: " + String(r["refused"]))])
 				continue
 			if how[0] == "at a walk":
 				inside.append(s)

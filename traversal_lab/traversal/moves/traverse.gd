@@ -59,6 +59,21 @@ const RUN_UP_AIR := 0.40        # NOT in the study: seconds in the air of the le
 const RUN_UP_FACE := 0.75       # NOT in the study: the share of the leap at which he crosses the edge
 const RUN_UP_ARC := 0.25        # NOT in the study: how far the arc rises over a straight line to the top (m); at the
                                 # edge he is then 3 cm or more over a 0.50 m step
+# Stage 10, the vault over a thin obstacle from a run (the study: "0.50 to 1.10 m | vault if thin ... one-hand vault at
+# a run"; "The speed vault is one hand down, take-off from one leg, legs kicked sideways over with no foot touching,
+# landing in stride"). The clip is Mixamo's Vault 1 Hand, downloaded for him. Measured on him (tests/zz_meas, 26 Nov):
+# the left foot takes off at 0.33 s, 1.3 m before the obstacle; the left wrist is on it from 0.45 to 0.72 s, at
+# 0.94 m (so an obstacle about 0.88 m high, a palm lower) and 2.30 m along the clip's path, 0.25 m to his left; the
+# left foot comes down at 0.90 s, 1.5 m beyond it; it runs at 4.3 m/s; his hips peak at 1.32 m and leave the ground
+# at 1.12 m.
+const VAULT := {"input": "vault", "res": "res://traversal/character/clips/Vault_1_Hand.res",
+		"from": 0.20, "off": 0.33, "hand_on": 0.47, "hand_off": 0.65, "down": 0.90, "exit": 1.13,
+		"at": 2.30, "high": 0.88, "hand_side": 0.25, "speed": 4.3, "hips_off": 1.12, "hips_top": 1.32}
+const VAULT_BAND := [0.50, 1.10]    # the study's band: more than the first, up to the second (m)
+const VAULT_PACE := [0.75, 1.1]     # NOT in the study: the clip is played at between these shares of its own pace, to go at his
+const PALM := 0.08                  # the study, Part 3: "the gripping palm is about 0.08 m further along" than the wrist
+const HAND_FADE := 0.07             # NOT in the study: seconds over which the hand's hold comes in and goes out
+const LAND_LEVEL := 0.10            # NOT in the study: the ground beyond is taken as level with his if within this (m)
 const UP_LOOK_RUN := 1.6        # NOT in the study: at a run it is looked for this far ahead (m)
 const UP_LOOK := 0.9            # NOT in the study: how far ahead something to step onto is looked for (m)
 const RUN_ON_MOST := 0.50       # NOT in the study: running off an edge up to this high he runs on with no landing clip
@@ -93,6 +108,8 @@ var _up_fwd := PackedFloat32Array()
 var _up_rise := PackedFloat32Array()
 var _up_high := 0.0             # the height the step-up take climbs
 var _up_record: Dictionary = {}
+var _v_fwd := PackedFloat32Array()
+var _v_hips := PackedFloat32Array()
 
 
 func _ready() -> void:
@@ -118,6 +135,11 @@ func _ready() -> void:
 	_up_rise = ClipData.rise_of(up_hips)
 	_up_high = up_hips[up_hips.size() - 1].y - up_hips[0].y
 	body.connect(&"landed", _on_landed)
+	var vc: Resource = load(String(VAULT["res"]))
+	var v_hips: PackedVector3Array = vc.get(&"hips")
+	for f in v_hips.size():
+		_v_fwd.append(v_hips[f].z - v_hips[0].z)
+		_v_hips.append(v_hips[f].y)
 
 
 ## Coming down from a jump or a fall at speed, from high enough: the roll, from its landing on, if there is the room
@@ -341,13 +363,17 @@ func _try_step_up(v: Vector3, wish: Vector3) -> bool:
 		var q := PhysicsRayQueryParameters3D.create(from, from + dir * (UP_LOOK_RUN if v.length() > RUN_FROM else UP_LOOK), body.collision_mask, [body.get_rid()])
 		if body.get_world_3d().direct_space_state.intersect_ray(q).is_empty():
 			return false
-	if _up_record.is_empty() or _tick % AGAIN == 0:
+	# (at a run it is measured every tick once something is seen: he covers 7 cm a tick, and a move has to be begun
+	# within a few tenths of a metre of its place)
+	if _up_record.is_empty() or _tick % (1 if v.length() > RUN_FROM else AGAIN) == 0:
 		_up_record = detector.call(&"measure", dir)
 		if _up_record["kind"] != "obstacle":
 			_up_record = {}
 			return false
 	var rec := _up_record
 	var top := float(rec["top"])
+	if _try_vault(v, wish, rec):
+		return true
 	if top <= float(UP_BAND[0]) + MEASURED_WITHIN:
 		return false                                            # the body walks onto it by itself
 	if top > float(UP_BAND[1]) + MEASURED_WITHIN:
@@ -479,4 +505,95 @@ func _run_up(t: float) -> Dictionary:
 		if u >= 1.0:
 			out["done"] = true
 			out["exit"] = m * float(p["exit_speed"])
+	return out
+
+
+# ------------------------------------------------------------------------------------------------ stage 10: the vault
+
+## A thin obstacle of 0.50 to 1.10 m, come at at a run, with level, free ground beyond it: vault it.
+func _try_vault(v: Vector3, wish: Vector3, rec: Dictionary) -> bool:
+	var top := float(rec["top"])
+	# (a thin obstacle of just 0.50 m is vaulted too: there is no standing on it, so it cannot be stepped up onto)
+	if top == INF or top < float(VAULT_BAND[0]) - MEASURED_WITHIN or top > float(VAULT_BAND[1]) + MEASURED_WITHIN:
+		return false
+	if not bool(rec["thin"]) or bool(rec["blocked"]):
+		return false                                            # deep: to be climbed onto (stage 11), not vaulted
+	var speed := v.length()
+	if wish.length() <= float(body.get(&"WALK")) + 0.1 or speed <= RUN_FROM:
+		refused = "a thin obstacle, but not at a run (the step vault is stage 11)"
+		return false
+	var m: Vector3 = -(rec["normal"] as Vector3)
+	if rad_to_deg(v.normalized().angle_to(m)) > MOST_OFF_DEG:
+		refused = "not heading at it"
+		return false
+	if not rec.has("landing") or absf(float(rec["landing"])) > LAND_LEVEL or not bool(rec.get("landing_ok", false)):
+		refused = "the ground beyond it is not level with his, or has no room"
+		return false
+	# fit: the clip's own path, laid so that where its hand comes down is the middle of the obstacle's top
+	var depth := float(rec["depth"])
+	var to_mid := (rec["edge"] as Vector3 - body.global_position).dot(m) + depth * 0.5
+	var start := float(VAULT["at"]) - _at(_v_fwd, float(VAULT["from"]))       # the clip's own distance to it as it is taken up
+	if to_mid > start:
+		refused = "coming up to the vault"
+		return false
+	if to_mid < start - 0.45:
+		refused = "too near already to vault it"
+		return false
+	var feet := body.global_position
+	var ground := float(rec["ground"])
+	var mid := feet + m * to_mid
+	mid.y = ground
+	var land := mid + m * (_at(_v_fwd, float(VAULT["down"])) - float(VAULT["at"]))
+	var end := mid + m * (_at(_v_fwd, float(VAULT["exit"])) - float(VAULT["at"]))
+	for p: Vector3 in [land, end]:
+		var g: Dictionary = body.call(&"probe", p)
+		if not bool(g["hit"]) or absf(float(g["y"]) - ground) > LAND_LEVEL or not bool(detector.call(&"_fits", Vector3(p.x, float(g["y"]), p.z), float(body.get(&"HEIGHT")))):
+			refused = "no level, free ground to land on"
+			return false
+	refused = ""
+	var pace := clampf(speed / float(VAULT["speed"]), float(VAULT_PACE[0]), float(VAULT_PACE[1]))
+	var left := Vector3.UP.cross(m).normalized()
+	_plan = {"key": "vault", "from": Vector3(feet.x, ground, feet.z), "mid": mid, "end": Vector3(end.x, ground, end.z), "m": m,
+			"yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z), "top": top, "pace": pace, "to_mid": to_mid,
+			# the hand: on the middle of the top, as far to his left as the clip has it, the wrist a palm over it
+			"hand_at": Vector3(mid.x, ground + top + PALM, mid.z) + left * float(VAULT["hand_side"]),
+			"exit_speed": float(VAULT["speed"]) * pace}
+	plays += 1
+	_up_record = {}
+	record = {}
+	body.call(&"begin_move", _vault, String(VAULT["input"]))
+	return true
+
+
+## Where the body is `t` seconds into the vault. Forward by the clip's own travel, set so that its hand comes down
+## on the obstacle. Up or down by how much higher or lower the obstacle is than the clip's own, by the share of the
+## clip's own rise over its take-off height that it has made (none on the ground, all of it at the top).
+func _vault(t: float) -> Dictionary:
+	var p := _plan
+	var m: Vector3 = p["m"]
+	var from_t := float(VAULT["from"])
+	var exit_t := float(VAULT["exit"])
+	var ct := minf(from_t + t * float(p["pace"]), exit_t)
+	# (before its hand is down the clip's travel is fitted to the distance he really had to go; after, it is its own)
+	var z := _at(_v_fwd, ct) - float(VAULT["at"])
+	var before := float(VAULT["at"]) - _at(_v_fwd, from_t)
+	if z < 0.0:
+		z *= float(p["to_mid"]) / before
+	var pos := (p["mid"] as Vector3) + m * z
+	var air := ct >= float(VAULT["off"]) and ct < float(VAULT["down"])
+	# (all of it for as long as the hand is down, coming in from take-off and going out to landing: fitted by the
+	# clip's own rise alone he was still too high over a low obstacle when the hand came down, and the wrist was up
+	# to 11 cm short of it. His arm is 17 % shorter than the clip's body's, so the hand is held for the middle 0.18 s
+	# of the clip's 0.27 s: outside that his arm cannot reach the place.)
+	var over := 0.0
+	if air:
+		over = minf(smoothstep(float(VAULT["off"]), float(VAULT["hand_on"]), ct), 1.0 - smoothstep(float(VAULT["hand_off"]), float(VAULT["down"]), ct))
+	pos.y += (float(p["top"]) - float(VAULT["high"])) * over
+	var hold := clampf(minf((ct - float(VAULT["hand_on"])) / HAND_FADE + 1.0, (float(VAULT["hand_off"]) - ct) / HAND_FADE + 1.0), 0.0, 1.0)
+	var out := {"done": ct >= exit_t, "pos": pos, "clip_t": ct, "air": air, "free": true,
+			"yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), clampf(t / 0.15, 0.0, 1.0)),
+			"hand": [0, p["hand_at"], hold]}
+	if ct >= exit_t:
+		out["pos"] = p["end"]
+		out["exit"] = m * float(p["exit_speed"])
 	return out

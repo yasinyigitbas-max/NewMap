@@ -527,6 +527,17 @@
     ],
     "turn_deg": -0.00303345776513191
   },
+  "Running_Jump_Climb": {
+    "length": 2.16666666666667,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 1.04120085789607,
+    "travel": [
+      0.240102127194405,
+      2.24312162399292
+    ],
+    "turn_deg": -7.58520511105513
+  },
   "Running_Right_Turn": {
     "length": 0.766666666666667,
     "loop": false,
@@ -615,6 +626,28 @@
     ],
     "turn_deg": 10.4900350461901
   },
+  "Step_Onto_Platform": {
+    "length": 1.36666666666667,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 0.832181296697477,
+    "travel": [
+      -0.000178925693035126,
+      1.13731443881989
+    ],
+    "turn_deg": -4.01201555242505
+  },
+  "Step_Up_Vault": {
+    "length": 2.86666666666667,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 1.74950987793678,
+    "travel": [
+      -2.45687413215637,
+      4.37225532531738
+    ],
+    "turn_deg": -95.1834467259792
+  },
   "Stop_Walking": {
     "length": 3.0,
     "loop": false,
@@ -636,6 +669,28 @@
       -0.0609933622181416
     ],
     "turn_deg": -113.382779467612
+  },
+  "Vault_1_Hand": {
+    "length": 1.16666666666667,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 4.29878997802734,
+    "travel": [
+      0.00575148034840822,
+      5.01525163650513
+    ],
+    "turn_deg": 31.5306633032988
+  },
+  "Vault_2_Hands": {
+    "length": 1.2,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 3.55388601620992,
+    "travel": [
+      -0.000161334057338536,
+      4.2646632194519
+    ],
+    "turn_deg": 2.43279983046359
   },
   "Walking_Turn_180": {
     "length": 1.0,

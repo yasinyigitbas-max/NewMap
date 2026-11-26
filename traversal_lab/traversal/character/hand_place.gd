@@ -15,6 +15,11 @@ const HIPS_MOST := 0.20         # NOT in the study: the most the hips come down 
 const EASE := 0.10              # NOT in the study: seconds to ease the reach in and out
 
 var body: CharacterBody3D
+# A traversal move that puts a hand on something measured (the study: "From hand contact to release, hold the hands
+# on the measured ledge points with arm `TwoBoneIK3D`, faded in and out by `influence`"): where each wrist is to be
+# (world), and how much (0 = not held).
+var hold_at: Array = [Vector3.ZERO, Vector3.ZERO]
+var hold_w: Array = [0.0, 0.0]
 var on := false                 # a take that puts hands down is showing
 var clip_slope := 0.0           # that take's own ground: its rise per metre forward
 var hand_low := 0.0             # how near the take's own ground its hands come at their lowest (m, at the wrist)
@@ -66,7 +71,11 @@ func _process_modification_with_delta(dt: float) -> void:
 					want = 0.0
 				else:
 					goal = inv * ((hit["position"] as Vector3) + (hit["normal"] as Vector3) * PALM)
-		reach[f] = move_toward(reach[f], want, dt / EASE)
+		if float(hold_w[f]) > 0.0:
+			goal = inv * (hold_at[f] as Vector3)
+			reach[f] = float(hold_w[f])
+		else:
+			reach[f] = move_toward(reach[f], want, dt / EASE)
 		# never further than the arm is long
 		var to := goal - shoulder_s
 		var most: float = float(_len[f]) * STRAIGHT
