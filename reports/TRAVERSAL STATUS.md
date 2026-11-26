@@ -268,3 +268,18 @@ What stands at this commit, all play-tested or approved by him up to trav57, and
   "dont break anything that was approved before, no system wide edits".
 - Stage 16, his words: "for moving across gaps, if we are running, just use running jump and continue jump after
   landing, implement new jumps only for walking across gaps".
+
+## After trav61, 26 Nov 2026 (stage 15)
+
+- **Stage 15, turn, hang and drop:** `Climbing_Down` (his Mixamo clip), asked for by going at an edge CROUCHED, drops
+  of 1.0 to 3.0 m. Upright, walking or running off an edge is as before (fall and heavy landing, or the roll): asked
+  for by walking alone it took away the heavy landing the audit holds him to (land.heavy, land.fold began to fail)
+  and it began in the air after the thin-wall step off. `tests/test_stage15.gd`.
+- The grab and climb from standing ends with a stand-up clip (trav60). Running: wall climb 2.10 to 3.00 m, running
+  exits (trav58, trav59).
+- **Items 3 to 5 of the open list (stage 1 random-walk faults, the stops and the kerb step, the 26 audit lines): not
+  touched.** Of the 26 lines, 8 fail by his own decisions (jump.dip, jump.push; spot.steps, spot.steps_stage,
+  spot.order, spot.head_peak; turn.head_first, turn.head_lead_time); the other 18 are in the walk, run, stop, stairs
+  and joint-limit clips he has approved by play-test. His rule: no 20 % better, change nothing, go to stage 16.
+- **Next:** stage 16, his words: running across a gap = the running jump, and run on after landing; new jumps only
+  for walking across gaps.

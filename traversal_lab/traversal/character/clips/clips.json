@@ -21,6 +21,17 @@
     ],
     "turn_deg": 16.3538600241254
   },
+  "Climbing_Down": {
+    "length": 3.13333333333333,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 0.200197493776362,
+    "travel": [
+      0.530853569507599,
+      0.334187895059586
+    ],
+    "turn_deg": -88.2597727567965
+  },
   "Crouched_To_Standing": {
     "length": 0.633333333333333,
     "loop": false,

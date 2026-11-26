@@ -214,6 +214,22 @@ const WALLRUN := {"input": "wallrun", "res": "res://traversal/character/clips/Sp
 		"high": 2.40,               # the take's own wall, and the rise taken out of it in the library (RISE_BY)
 		"hand_side": 0.30, "grip_out": 0.15, "grip_turn": [0.95, 1.30],
 		"run_out": [1.45, 1.80]}    # NOT in the study, mine: he gathers pace over this part of it, to be handed back running
+# Stage 15, turn, hang and drop (the study: "1.0 to 2.0 m, a heavy landing or a turn, hang and drop; 2.0 to 3.0 m,
+# hang and drop preferred"; "The standard way to shorten a drop is to turn, hang from the edge and let go";
+# "`Climbing Down` is the closest, from 1.55 m"). His own Mixamo clip Climbing Down, measured on him: he kneels at
+# the edge with the drop on his LEFT, both hands on the ledge, turns to his right as his legs go out over the edge
+# (0.7 to 1.2 s), lowers himself with the hands still on it (to 1.45 s), is down at 1.75 s, 1.52 m lower and 0.31 m
+# out from the face, and has stood up, facing the wall, by 2.6 s. Asked for by going at an edge CROUCHED, with a
+# drop of more than 1.0 m, up to 3.0 m. Upright, at a walk or a run, the edge is taken as before (the fall, the roll).
+const DOWN_BAND := [1.0, 3.0]       # the study's: more than the first, up to the second (m)
+const DOWN := {"input": "climb_down", "res": "res://traversal/character/clips/Climbing_Down.res",
+		"high": 1.52,               # the ledge the take comes down from, found in the lab (and build_library.gd DROP_BY)
+		"face": 0.10,               # NOT in the study, found in the lab: where the take's wall face is, to his left of where he kneels (m)
+		"lower_from": 1.20,         # he begins to lower himself then (and build_library.gd DROP_FROM)
+		"hands_on": 0.20, "hands_off": 1.45, "down": 1.75, "exit": 2.70,
+		# where the take has his wrists while they are on the ledge: [to his left, up over the ledge, forward] (m)
+		"hand_l": [0.17, 0.12, 0.65], "hand_r": [-0.13, 0.15, 0.23]}
+const DOWN_NEAR := 0.45             # NOT in the study, mine: begun from within this of the edge (m)
 const OVER_BACK := 0.48             # NOT in the study, found in the lab: he sinks for the jump this far from the wall's face
                                     # (nearer, his knees were in the wall). The study: "slide and turn the body over a
                                     # short fixed time so it starts at the clip's native distance from the wall"
@@ -271,6 +287,9 @@ var _g_rise2 := PackedFloat32Array()
 var _g_fwd2 := PackedFloat32Array()
 var _w_fwd := PackedFloat32Array()
 var _w_rise := PackedFloat32Array()
+var _d_xz: PackedVector2Array = PackedVector2Array()
+var _d_fall := PackedFloat32Array()
+var _d_yaw := PackedFloat32Array()
 var _o_high := 0.0              # the height the climb take goes up, on him
 
 
@@ -320,6 +339,15 @@ func _ready() -> void:
 	_w_rise = ClipData.rise_of(wh)
 	for f in wh.size():
 		_w_fwd.append(wh[f].z - wh[0].z)
+	var dres: Resource = load(String(DOWN["res"]))
+	var dh: PackedVector3Array = dres.get(&"hips")
+	var d_fallen := 0.0
+	var d_from := int(round(float(DOWN["lower_from"]) * 30.0))
+	for f in dh.size():
+		_d_xz.append(Vector2(dh[f].x - dh[0].x, dh[f].z - dh[0].z))
+		if f >= d_from:
+			d_fallen = maxf(d_fallen, clampf((dh[d_from].y - dh[f].y) / (dh[d_from].y - dh[dh.size() - 1].y), 0.0, 1.0))
+		_d_fall.append(d_fallen)
 	var tc: Resource = load(String(TUCK["res"]))
 	var t_hips: PackedVector3Array = tc.get(&"hips")
 	for f in t_hips.size():
@@ -389,6 +417,18 @@ func _physics_process(_dt: float) -> void:
 	if int(body.get(&"state")) >= 2 and _try_air(v):
 		return
 	if _try_step_up(v, body.get(&"_wish")):
+		return
+	# Stage 15: crouched, going at an edge with a drop of 1.0 to 3.0 m: the turn, hang and drop. (Walking off such an
+	# edge upright is left as it was, a fall and the heavy landing: asked for by walking alone, it took the heavy
+	# landing away, which the audit holds him to, and it began in the air after other moves.)
+	if bool(body.get(&"crouched")) and int(body.get(&"state")) == 0 and wish > 0.05 and v.length() > 0.2:
+		if _tick % AGAIN == 0:
+			var rec: Dictionary = detector.call(&"measure", v.normalized())
+			var d := float(rec.get("drop", INF))
+			if String(rec["kind"]) == "drop" and d > float(DOWN_BAND[0]) + MEASURED_WITHIN and d <= float(DOWN_BAND[1]) + MEASURED_WITHIN:
+				record = rec
+				_try_climb_down(v.normalized(), d)
+				record = {} if not bool(body.call(&"in_move")) else record
 		return
 	var walking := int(body.get(&"state")) == 0 and not bool(body.get(&"crouched")) and v.length() > 0.5 \
 			and wish > 0.05 and int(body.get(&"stairs")) == 0 and int(body.get(&"terrain")) == 0
@@ -1456,4 +1496,92 @@ func _wallrun(t: float) -> Dictionary:
 		out["air"] = false
 		out["pos"] = p["end"]
 		out["exit"] = m * float(p["exit_speed"])
+	return out
+
+
+# ------------------------------------------------------------------------------- stage 15: turn, hang and drop
+
+func _at2(table: PackedVector2Array, t: float) -> Vector2:
+	var f := clampf(t * _fps, 0.0, float(table.size() - 1))
+	var i := mini(int(f), table.size() - 2)
+	return table[i].lerp(table[i + 1], f - float(i))
+
+
+func _try_climb_down(dir: Vector3, drop: float) -> bool:
+	var m: Vector3 = -(record["normal"] as Vector3)
+	if rad_to_deg(dir.angle_to(m)) > MOST_OFF_DEG:
+		refused = "not heading at the edge"
+		return false
+	var here := (record["edge"] as Vector3 - body.global_position).dot(m)
+	if here > DOWN_NEAR:
+		refused = "coming up to the edge"
+		return false
+	var feet := body.global_position
+	var top_y := float(record["ground"])
+	var land_y := top_y - drop
+	# the take is laid with its wall face on the edge: he kneels with the drop on his left, so he faces along the edge
+	var fwd := m.cross(Vector3.UP).normalized()                 # the way the take faces as it begins (his left is then m)
+	var start := feet + m * (here - float(DOWN["face"]))
+	start.y = top_y
+	var last := _d_xz[_d_xz.size() - 1]
+	var end := start + m * last.x + fwd * last.y
+	end.y = land_y
+	var g: Dictionary = body.call(&"probe", Vector3(end.x, land_y, end.z))
+	if not bool(g["hit"]) or absf(float(g["y"]) - land_y) > LAND_WITHIN or not bool(detector.call(&"_fits", Vector3(end.x, land_y, end.z), float(body.get(&"HEIGHT")))):
+		refused = "no level, free ground under the edge to come down on"
+		return false
+	refused = ""
+	var extra := maxf(drop - float(DOWN["high"]), 0.0)          # further down than the take lowers him: he lets go and falls it
+	var hl: Array = DOWN["hand_l"]
+	var hr: Array = DOWN["hand_r"]
+	_plan = {"key": "climb_down", "from": feet, "start": start, "end": end, "m": m, "fwd": fwd, "top_y": top_y, "land_y": land_y, "drop": drop,
+			"yaw0": body.rotation.y, "yaw1": atan2(-fwd.x, -fwd.z), "yaw_end": atan2(m.x, m.z), "exit_speed": 0.0, "hand": 2,
+			"t_fall": maxf(float(DOWN["down"]) - float(DOWN["hands_off"]), sqrt(2.0 * extra / float(body.get(&"GRAVITY"))) + 0.15),
+			"hands_at": [start + m * float(hl[0]) + Vector3.UP * float(hl[1]) + fwd * float(hl[2]),
+					start + m * float(hr[0]) + Vector3.UP * float(hr[1]) + fwd * float(hr[2])]}
+	plays += 1
+	record = {}
+	_up_record = {}
+	body.call(&"begin_move", _climb_down, String(DOWN["input"]))
+	return true
+
+
+func _climb_down(t: float) -> Dictionary:
+	var p := _plan
+	var off := float(DOWN["hands_off"])
+	var down := float(DOWN["down"])
+	var exit_t := float(DOWN["exit"])
+	var t_fall := float(p["t_fall"])
+	# the take's own time, but for the fall after he lets go, which lasts as long as the height left takes
+	var ct := t
+	if t > off:
+		ct = lerpf(off, down, clampf((t - off) / t_fall, 0.0, 1.0)) if t < off + t_fall else minf(down + (t - off - t_fall), exit_t)
+	var xz := _at2(_d_xz, ct)
+	var start: Vector3 = p["start"]
+	var pos := start + (p["m"] as Vector3) * xz.x + (p["fwd"] as Vector3) * xz.y
+	pos = (p["from"] as Vector3).lerp(pos, smoothstep(0.0, 0.3, t))        # first to where the take kneels
+	# down: with his hands on the ledge, as far under it as the take is under its own; once he has let go, to the
+	# ground that is really there (higher or lower than the take's)
+	var fallen := _at(_d_fall, ct)
+	var high := float(DOWN["high"])
+	var by_top := float(p["top_y"]) - high * fallen
+	var by_ground := float(p["land_y"]) + high * (1.0 - fallen)
+	var u := clampf((t - off) / t_fall, 0.0, 1.0)
+	pos.y = lerpf(by_top, by_ground, u * u)
+	# (NOT in the study, found in the lab: as the kneel comes in over the crouch he was in, his knee passed up to 6 cm
+	# into the ledge for a few ticks; he is held that much higher while it does)
+	pos.y += 0.07 * smoothstep(0.0, 0.06, t) * (1.0 - smoothstep(0.15, 0.35, t))
+	var hold := clampf(minf((ct - float(DOWN["hands_on"])) / HAND_FADE + 1.0, (off - t) / HAND_FADE + 1.0), 0.0, 1.0)
+	hold = hold * hold * (3.0 - 2.0 * hold)
+	var done := ct >= exit_t
+	var out := {"done": done, "pos": pos, "clip_t": ct, "air": t > off and t < off + t_fall,
+			# (his feet are fitted to the ledge while he kneels down on it, and to the ground once he is down; in between they are the take's own)
+			"free": ct > 0.60 and ct < down, "landed": ct <= 0.60 or ct >= down,
+			# he is turned to face along the edge as he kneels; the turn to the wall is in the take itself, and is
+			# given to the body as he is handed back
+			"yaw": float(p["yaw_end"]) if done else lerp_angle(float(p["yaw0"]), float(p["yaw1"]), smoothstep(0.0, 0.3, t)),
+			"hand": [[0, (p["hands_at"] as Array)[0], hold], [1, (p["hands_at"] as Array)[1], hold]]}
+	if done:
+		out["pos"] = p["end"]
+		out["exit"] = Vector3.ZERO
 	return out

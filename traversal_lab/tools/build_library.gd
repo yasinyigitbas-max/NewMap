@@ -25,7 +25,7 @@ const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint",
 		"KM_Walk", "KM_Run", "KM_Slope_Up_Start", "KM_Slope_Up_Stop", "KM_Start_Run"]
 # A vault ends a stride on, with the hips turned as a running stride turns them (31 degrees in Vault 1 Hand): that is
 # not a turn of his path, and its root does not turn.
-const STRAIGHT_ON := ["Vault_1_Hand", "KM_Climb_Up", "Jump_To_Braced_Hang", "Braced_Hang_To_Crouch", "Sprint_To_Wall_Climb"]
+const STRAIGHT_ON := ["Vault_1_Hand", "KM_Climb_Up", "Jump_To_Braced_Hang", "Braced_Hang_To_Crouch", "Sprint_To_Wall_Climb", "Climbing_Down"]
 const TURN_LEAST_DEG := 20.0        # a clip that turns less than this is not a turning clip: its root does not turn
 # In the air the body does the rising and the falling (the study: the body "alone decides where the character is"), so
 # the clip's own rise is taken out: between leaving the ground and landing the hips keep at most their take-off height.
@@ -40,6 +40,10 @@ const GROUNDED := ["Falling_To_Landing", "Hard_Landing"]
 # he holds himself over a body that is already on its way up. The study: "keep it in the hips and move the body node
 # up by measured amounts while offsetting the mesh".
 const RISE := ["KM_Step_Up", "Step_Onto_Platform", "Running_Jump_Climb", "KM_Climb_Up"]
+# Stage 15, the climb down: the body does the travelling and the lowering (traverse.gd CLIMB_DOWN), so the hips keep
+# no travel, and of their height only what is over a body that goes down by the share of the descent made so far.
+const DROP_BY := {"Climbing_Down": 1.52}        # the ledge the take climbs down from (found in the lab: his left toe and knee on it)
+const DROP_FROM := {"Climbing_Down": 1.20}      # ... and when in it he begins to lower himself (s)
 const LEDGE := ["KM_Ledge_Walk_Off", "KM_Ledge_Run_Off", "KM_Land_Roll"]
 # Stage 13, the grab and climb: two clips that do not start standing on the ground or do not end standing, so the
 # rise taken out of each is given here, measured on him (see traverse.gd GRAB): the jump to the braced hang gives the
@@ -219,6 +223,17 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 			mean_pos += Vector3(l0.x, hips[f].y, l0.z) / (frames - 1)
 	var furthest := 0.0
 	var rise := ClipData.rise_of(hips)
+	var fall := PackedFloat32Array()        # the share of the clip's own descent made by each frame (never going back up)
+	var fallen := 0.0
+	# (counted from when he begins to lower himself: before that the hips of a man kneeling at an edge dip a little,
+	# and counted as descent that put him 9 cm into the ledge)
+	var f_from := int(round(float(DROP_FROM.get(name, 0.0)) * fps))
+	for f in frames:
+		var top_h := hips[mini(f_from, frames - 1)].y
+		var whole_down := top_h - hips[frames - 1].y
+		if f >= f_from and absf(whole_down) > 0.01:
+			fallen = maxf(fallen, clampf((top_h - hips[f].y) / whole_down, 0.0, 1.0))
+		fall.append(fallen)
 	for f in frames:
 		var time := float(f) / fps
 		var u := float(f) / float(maxi(frames - 1, 1))
@@ -243,6 +258,11 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 			y -= (hips[frames - 1].y - hips[0].y) * rise[f]
 		if RISE_BY.has(name):
 			y -= float(RISE_BY[name]) * rise[f]
+		if DROP_BY.has(name):
+			# (the hips' own small dip before that stays in the hips: he is over a body that has not moved)
+			y -= float(DROP_BY[name]) * (1.0 - fall[f])
+			local = Vector3.ZERO
+			root_pos = Vector3.ZERO
 		if LEDGE.has(name):
 			y = minf(y - hips[frames - 1].y + stand_y, stand_y)
 			local = Vector3.ZERO
