@@ -12,6 +12,7 @@ const ArmOpen := preload("res://traversal/character/arm_open.gd")
 const FootPlace := preload("res://traversal/character/foot_place.gd")
 const FootOrient := preload("res://traversal/character/foot_orient.gd")
 const HandPlace := preload("res://traversal/character/hand_place.gd")
+const HandHold := preload("res://traversal/character/hand_hold.gd")
 const MODEL := "res://traversal/character/player_v4_rooted.scn"
 const LIBRARY := "res://traversal/character/library.res"
 const SKEL := "Skeleton3D"
@@ -61,7 +62,7 @@ const SOFT_DROP := 0.30         # the study: "up to 0.30 m, step down in stride;
 const HARD_DROP := 1.0          # soft landing; 1.0 to 2.0 m, a heavy landing"
 # the inputs of the tree's Transition node, and the clip each one plays under its own TimeSeek
 const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling_To_Landing", "land_heavy": "Hard_Landing",
-		"drop_walk": "KM_Ledge_Walk_Off", "drop_run": "KM_Ledge_Run_Off", "drop_roll": "KM_Land_Roll", "step_up": "KM_Step_Up", "step_up_m": "KM_Step_Up_M", "vault": "Vault_1_Hand",
+		"drop_walk": "KM_Ledge_Walk_Off", "drop_run": "KM_Ledge_Run_Off", "drop_roll": "KM_Land_Roll", "step_up": "KM_Step_Up", "step_up_m": "KM_Step_Up_M", "vault": "Vault_1_Hand", "vault_m": "Vault_1_Hand_M",
 		"stairs_up_walk": "Ascending_Stairs", "stairs_up_run": "KM_Stairs_Run_Up_D",
 		"stairs_down_walk": "KM_Stairs_Walk_Down", "stairs_down_run": "KM_Stairs_Run_Down",
 		"steep_up": "KM_Climb_Hard", "steep_down": "KMY_Down_Hands_Balance_Long",
@@ -98,6 +99,10 @@ const HEAD_OVER_JOINT := 0.23   # the top of his head above his head joint: stan
 # by foot": the study). Turns on the spot: Left Turn 90, Walking Turn 180 and, for the plant-and-turn out of a run,
 # Running Turn 180, each with its mirror image for the other way (the study, Part 3). The body does the turning and
 # sets the pace, as everywhere; the clips are shown by how far it has got.
+# Walk to run is carried by the loops themselves again, the walk giving way to the run as he gathers speed (Yasin, 26
+# Nov: "transition from walking to running plays two timid short steps before transition is complete, make that
+# transition smoother"). The Kimodo walk-to-run take, in since trav30, is those two steps. Run to walk keeps its take.
+const WALK_TO_RUN_CLIP := false
 const CHANGE_PACE := [0.8, 1.3]   # NOT in the study: a change-of-gait clip is taken up where its own pace is within these shares of his
 const TURN_PACE := [0.6, 1.5]     # NOT in the study: a turn clip runs at between these shares of its own pace
 const TURN_BIG_DEG := 120.0     # NOT in the study: a turn on the spot of more than this is shown with the 180 clip, less with the 90
@@ -373,6 +378,10 @@ func _ready() -> void:
 		hands.set(&"target", h_targets)
 		hands.set(&"pole", h_poles)
 		hands.set(&"ik", h_ik)
+		var hand_hold: SkeletonModifier3D = HandHold.new()
+		hand_hold.name = "HandHold"
+		hand_hold.set(&"place", hands)
+		skel.add_child(hand_hold)       # (after the two arm IKs, which were added in the loop above)
 		feet.set(&"hands", hands)
 	if body:
 		body.connect(&"jump_started", _on_jump_started)
@@ -626,7 +635,7 @@ func _physics_process(dt: float) -> void:
 					_sub = "turn"
 					_sub_in = kind if (base[base.size() - 1] > 0.0) == (spot > 0.0) else kind + "_m"
 					_show(_sub_in, 0.0)
-				elif _moving >= 1.0 and _wish_was <= SWITCH and wish > RUN_FROM and speed > 1.0 and speed < SWITCH + 0.3:
+				elif WALK_TO_RUN_CLIP and _moving >= 1.0 and _wish_was <= SWITCH and wish > RUN_FROM and speed > 1.0 and speed < SWITCH + 0.3:
 					_begin_change("walk_to_run", speed)
 				elif _moving >= 1.0 and _slowing and speed > SWITCH:
 					# (asked to walk while running: taken up as soon as he has slowed to a pace the clip has)

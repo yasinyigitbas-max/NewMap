@@ -18,7 +18,7 @@ const MODEL := "res://traversal/character/player_v4_rooted.scn"
 const OUT := "res://traversal/character/library.res"
 const SKEL := "Skeleton3D"
 const MIRRORED := ["Female_Stop_Walking", "Run_To_Stop", "Left_Turn_90", "Walking_Turn_180", "Running_Turn_180", "Female_Start_Walking", "Idle_To_Sprint",
-		"KM_Stop_Walk", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Turn_180", "KM_Step_Up"]
+		"KM_Stop_Walk", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Turn_180", "KM_Step_Up", "Vault_1_Hand"]
 # Starts, stops and changes of gait are chosen "by which foot is forward" (the study, Stage 5): for these clips how far
 # the left ankle is ahead of the right, frame by frame, is noted on the animation ("lead", metres).
 const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Stop_Walk", "KM_Slope_Down_Start", "KM_Slope_Down_Stop", "KM_Start_Walk",

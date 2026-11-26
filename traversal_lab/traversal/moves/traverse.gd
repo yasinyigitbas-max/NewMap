@@ -72,7 +72,7 @@ const VAULT := {"input": "vault", "res": "res://traversal/character/clips/Vault_
 const VAULT_BAND := [0.50, 1.10]    # the study's band: more than the first, up to the second (m)
 const VAULT_PACE := [0.75, 1.1]     # NOT in the study: the clip is played at between these shares of its own pace, to go at his
 const PALM := 0.08                  # the study, Part 3: "the gripping palm is about 0.08 m further along" than the wrist
-const HAND_FADE := 0.07             # NOT in the study: seconds over which the hand's hold comes in and goes out
+const HAND_FADE := 0.12             # NOT in the study: seconds over which the hand's hold comes in and goes out
 const LAND_LEVEL := 0.10            # NOT in the study: the ground beyond is taken as level with his if within this (m)
 const UP_LOOK_RUN := 1.6        # NOT in the study: at a run it is looked for this far ahead (m)
 const UP_LOOK := 0.9            # NOT in the study: how far ahead something to step onto is looked for (m)
@@ -96,6 +96,7 @@ const LAND_WITHIN := 0.05       # the landing must be where the record said, wit
 var body: CharacterBody3D
 var detector: RefCounted
 var record: Dictionary = {}
+var force_mirror := -1          # for the tests: 0 = the vault as the clip has it, 1 = its mirror image, -1 = by the foot he has forward
 var enabled := true             # false = no move is begun (the tests of the body alone, and of detection alone)
 var refused := ""               # why the last edge met was not taken with the move ("" = it was, or none met)
 var plays := 0                  # moves begun (for the tests)
@@ -553,15 +554,25 @@ func _try_vault(v: Vector3, wish: Vector3, rec: Dictionary) -> bool:
 	refused = ""
 	var pace := clampf(speed / float(VAULT["speed"]), float(VAULT_PACE[0]), float(VAULT_PACE[1]))
 	var left := Vector3.UP.cross(m).normalized()
+	# The clip takes off from the left foot and puts the left hand down. With his right foot forward it is the mirror
+	# image: off the right foot, the right hand down, on his right (Yasin, 26 Nov: "make a mirrored vault too").
+	var mirror := false
+	var ch := body.get_node_or_null(^"Character")
+	if ch != null and ch.has_method(&"_lead_now"):
+		mirror = float(ch.call(&"_lead_now")) < 0.0
+	if force_mirror >= 0:
+		mirror = force_mirror == 1
+	if mirror:
+		left = -left
 	_plan = {"key": "vault", "from": Vector3(feet.x, ground, feet.z), "mid": mid, "end": Vector3(end.x, ground, end.z), "m": m,
 			"yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z), "top": top, "pace": pace, "to_mid": to_mid,
 			# the hand: on the middle of the top, as far to his left as the clip has it, the wrist a palm over it
 			"hand_at": Vector3(mid.x, ground + top + PALM, mid.z) + left * float(VAULT["hand_side"]),
-			"exit_speed": float(VAULT["speed"]) * pace}
+			"hand": 1 if mirror else 0, "exit_speed": float(VAULT["speed"]) * pace}
 	plays += 1
 	_up_record = {}
 	record = {}
-	body.call(&"begin_move", _vault, String(VAULT["input"]))
+	body.call(&"begin_move", _vault, String(VAULT["input"]) + ("_m" if mirror else ""))
 	return true
 
 
@@ -590,9 +601,10 @@ func _vault(t: float) -> Dictionary:
 		over = minf(smoothstep(float(VAULT["off"]), float(VAULT["hand_on"]), ct), 1.0 - smoothstep(float(VAULT["hand_off"]), float(VAULT["down"]), ct))
 	pos.y += (float(p["top"]) - float(VAULT["high"])) * over
 	var hold := clampf(minf((ct - float(VAULT["hand_on"])) / HAND_FADE + 1.0, (float(VAULT["hand_off"]) - ct) / HAND_FADE + 1.0), 0.0, 1.0)
+	hold = hold * hold * (3.0 - 2.0 * hold)         # eased in and out, not at an even rate
 	var out := {"done": ct >= exit_t, "pos": pos, "clip_t": ct, "air": air, "free": true,
 			"yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), clampf(t / 0.15, 0.0, 1.0)),
-			"hand": [0, p["hand_at"], hold]}
+			"hand": [int(p["hand"]), p["hand_at"], hold]}
 	if ct >= exit_t:
 		out["pos"] = p["end"]
 		out["exit"] = m * float(p["exit_speed"])

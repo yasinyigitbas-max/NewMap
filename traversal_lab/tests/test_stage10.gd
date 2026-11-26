@@ -5,6 +5,7 @@ extends SceneTree
 ## cannot be cancelled. Run:  godot --headless --fixed-fps 60 --path traversal_lab -s res://tests/test_stage10.gd
 
 const HAND_WITHIN := 0.03       # the study: "hands rest on the edge within about 3 cm"
+const HAND_ROCK := 1.0          # NOT in the study: a held hand does not turn more than this in a tick (degrees)
 const FEET_WITHIN := 0.03
 const END_WITHIN := 0.05
 
@@ -18,6 +19,7 @@ var fails := 0
 var bones := []
 var stand := []
 var final := []
+var hand_turn := []
 
 
 func _initialize() -> void:
@@ -34,6 +36,7 @@ func _after() -> void:
 	final.clear()
 	for i: int in bones:
 		final.append((skel.global_transform * skel.get_bone_global_pose(i)).origin)
+	hand_turn = [(skel.global_transform.basis * skel.get_bone_global_pose(bones[4]).basis).orthonormalized(), (skel.global_transform.basis * skel.get_bone_global_pose(bones[5]).basis).orthonormalized()]
 
 
 func go_at(s: Dictionary, run: bool, flip := -1.0) -> Dictionary:
@@ -48,10 +51,11 @@ func go_at(s: Dictionary, run: bool, flip := -1.0) -> Dictionary:
 	tape.set(&"tape", samples)
 	tape.call(&"replay")
 	var before := int(trav.get(&"plays"))
-	var out := {"played": false, "plan": {}, "end": Vector3.ZERO, "end_state": -1, "end_speed": 0.0, "feet": INF, "hand": -1.0, "held": 0, "move_from": -1.0, "low": INF}
+	var out := {"played": false, "plan": {}, "end": Vector3.ZERO, "end_state": -1, "end_speed": 0.0, "feet": INF, "hand": -1.0, "held": 0, "move_from": -1.0, "low": INF, "rock": 0.0}
 	var was_in := false
 	var t := 0
 	var after := -1
+	var last_turn := Basis()
 	while int(tape.get(&"mode")) == 2:
 		await physics_frame
 		await process_frame
@@ -61,12 +65,19 @@ func go_at(s: Dictionary, run: bool, flip := -1.0) -> Dictionary:
 			out["played"] = true
 			out["plan"] = (trav.get(&"_plan") as Dictionary).duplicate()
 			out["move_from"] = t / 60.0
-		if inm and final.size() == 5:
+		if inm and final.size() == 6:
 			var mh: Array = body.get(&"move_hand")
 			# while the hand is fully held: how far the wrist is from where it is to be
 			if mh.size() == 3 and float(mh[2]) >= 1.0:
-				out["hand"] = maxf(float(out["hand"]), (final[4] as Vector3).distance_to(mh[1]))
+				out["hand"] = maxf(float(out["hand"]), (final[4 + int(mh[0])] as Vector3).distance_to(mh[1]))
 				out["held"] = int(out["held"]) + 1
+				# ... and how far the hand itself has turned since the tick before
+				var now: Basis = hand_turn[int(mh[0])]
+				if last_turn != Basis():
+					out["rock"] = maxf(float(out["rock"]), rad_to_deg(Quaternion(last_turn).angle_to(Quaternion(now))))
+				last_turn = now
+			else:
+				last_turn = Basis()
 			# the lowest any foot joint goes over the obstacle's top while he is over it
 			var plan: Dictionary = out["plan"]
 			if plan.has("mid") and absf((body.global_position - (plan["mid"] as Vector3)).dot(plan["m"])) < 0.25:
@@ -79,7 +90,7 @@ func go_at(s: Dictionary, run: bool, flip := -1.0) -> Dictionary:
 			after = 0
 		if after >= 0 and not inm:
 			# a foot on the ground within one running step of being handed back (ball or heel, whichever is nearer)
-			if final.size() == 5:
+			if final.size() == 6:
 				var gy := body.global_position.y
 				for f in 2:
 					out["feet"] = minf(float(out["feet"]), minf(absf(final[f * 2].y - gy - stand[f * 2]), absf(final[f * 2 + 1].y - gy - stand[f * 2 + 1])))
@@ -104,7 +115,7 @@ func _run() -> void:
 	trav = lab.get(&"traverse")
 	skel = (lab.get(&"character") as Node).get(&"skel")
 	stations = (lab.get(&"course") as Node3D).get(&"stations")
-	for n: String in ["LeftFoot", "LeftToeBase", "RightFoot", "RightToeBase", "LeftHand"]:
+	for n: String in ["LeftFoot", "LeftToeBase", "RightFoot", "RightToeBase", "LeftHand", "RightHand"]:
 		bones.append(skel.find_bone("mixamorig_" + n))
 	skel.skeleton_updated.connect(_after)
 	lab.call(&"place", Vector3(60.0, 0.0, 10.0))
@@ -115,7 +126,10 @@ func _run() -> void:
 		stand.append(p.y - body.global_position.y)
 	var band: Array = trav.get(&"VAULT_BAND")
 	var inside: Array[Dictionary] = []
-	for run: bool in [true, false]:
+	for way: Array in [[true, 0], [true, 1], [false, -1]]:
+		var run: bool = way[0]
+		trav.set(&"force_mirror", int(way[1]))
+		var which := "" if int(way[1]) < 0 else (", the mirror image" if int(way[1]) == 1 else ", as the clip has it")
 		for s: Dictionary in stations:
 			if not (String(s["kind"]) in ["wall_deep", "wall_thin"]) or float(s["top"]) > 2.0:
 				continue
@@ -140,15 +154,20 @@ func _run() -> void:
 					bad = "ended in state %d" % int(r["end_state"])
 				elif absf(float(r["end_speed"]) - float(plan["exit_speed"])) > 0.05:
 					bad = "exit speed %.2f, the clip's %.2f" % [float(r["end_speed"]), float(plan["exit_speed"])]
+				elif float(r["rock"]) > HAND_ROCK:
+					bad = "the held hand turns %.1f degrees in a tick" % float(r["rock"])
+				elif int(plan["hand"]) != int(way[1]):
+					bad = "the wrong hand"
 				elif int(r["held"]) == 0 or float(r["hand"]) > HAND_WITHIN:
 					bad = "the wrist up to %.1f cm from its place on the top while held (%d ticks)" % [float(r["hand"]) * 100.0, int(r["held"])]
 				elif float(r["feet"]) > FEET_WITHIN:
 					bad = "no foot nearer than %.1f cm to the ground in the step after" % (float(r["feet"]) * 100.0)
 				elif float(r["low"]) < 0.0:
 					bad = "a foot %.1f cm under the top as he goes over" % (-float(r["low"]) * 100.0)
-			ok(bad == "", "%s, at a run: vaults it, hand on the top (wrist within %.1f cm for %d ticks), feet %.0f cm clear of the top, lands and ends where measured at the clip's exit speed (foot %.1f cm off the ground)%s" % [
-					s["label"], float(r["hand"]) * 100.0, int(r["held"]), float(r["low"]) * 100.0, float(r["feet"]) * 100.0, "" if bad == "" else " -- " + bad])
+			ok(bad == "", ("%s, at a run" % s["label"]) + which + (": vaults it, hand on the top (wrist within %.1f cm for %d ticks, the hand turning at most %.1f deg a tick), feet" % [float(r["hand"]) * 100.0, int(r["held"]), float(r["rock"])]) + " %.0f cm clear of the top, lands and ends where measured at the clip's exit speed (foot %.1f cm off the ground)%s" % [
+					float(r["low"]) * 100.0, float(r["feet"]) * 100.0, "" if bad == "" else " -- " + bad])
 	for s: Dictionary in [inside[0], inside[inside.size() / 2], inside[inside.size() - 1]]:
+		trav.set(&"force_mirror", -1)
 		var a := await go_at(s, true)
 		var b := await go_at(s, true, float(a["move_from"]) + 0.2)
 		var off := INF if not bool(b["played"]) else (b["end"] as Vector3).distance_to((b["plan"] as Dictionary)["end"])
