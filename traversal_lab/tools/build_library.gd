@@ -18,7 +18,7 @@ const MODEL := "res://traversal/character/player_v4_rooted.scn"
 const OUT := "res://traversal/character/library.res"
 const SKEL := "Skeleton3D"
 const MIRRORED := ["Female_Stop_Walking", "Run_To_Stop", "Left_Turn_90", "Walking_Turn_180", "Running_Turn_180", "Female_Start_Walking", "Idle_To_Sprint",
-		"KM_Stop_Walk", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Turn_180", "KM_Step_Up", "Vault_1_Hand"]
+		"KM_Stop_Walk", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Turn_180", "KM_Step_Up", "Vault_1_Hand", "Step_Onto_Platform", "Running_Jump_Climb"]
 # Starts, stops and changes of gait are chosen "by which foot is forward" (the study, Stage 5): for these clips how far
 # the left ankle is ahead of the right, frame by frame, is noted on the animation ("lead", metres).
 const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Stop_Walk", "KM_Slope_Down_Start", "KM_Slope_Down_Stop", "KM_Start_Walk",
@@ -39,7 +39,7 @@ const GROUNDED := ["Falling_To_Landing", "Hard_Landing"]
 # clip's own rise the clip has made so far (rise_of); that much is taken out of the hips here, so what is left is how
 # he holds himself over a body that is already on its way up. The study: "keep it in the hips and move the body node
 # up by measured amounts while offsetting the mesh".
-const RISE := ["KM_Step_Up"]
+const RISE := ["KM_Step_Up", "Step_Onto_Platform", "Running_Jump_Climb"]
 const LEDGE := ["KM_Ledge_Walk_Off", "KM_Ledge_Run_Off", "KM_Land_Roll"]
 # The walk's hips, brought to the study: "The pelvis moves only a few degrees at normal walking speed: about 3 degrees
 # of tilt, 8.5 of side drop and 12 of rotation in total range", and the body "rises and falls 2.7 to 4.8 cm in walking
