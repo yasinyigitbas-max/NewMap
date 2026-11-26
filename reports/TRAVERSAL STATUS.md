@@ -252,3 +252,19 @@ measured; triangle-mesh colliders are not tried with the detector (the course is
 - A jump of his own adds nothing to the grab and climb (the jump is in the move); it still raises the mantle, the
   climb over and the running vault.
 - **Next in the study's order:** stage 15, turn, hang and drop (ledges above 1.0 m).
+
+## CHECKPOINT 2, 26 Nov 2026, after trav59 (commit 85794708): Yasin: "take another checkpoint to fall back to if anything after this breaks"
+
+To fall back: `git checkout 85794708 -- traversal_lab` (or reset the work branch to it, at his word only).
+What stands at this commit, all play-tested or approved by him up to trav57, and tested: stages 0 to 14.
+- Tests that pass here: `tests/test_stage0.gd`, `test_stage1.gd -- --minutes=10`, `test_stage7.gd` to `test_stage13.gd`
+  (stage 13's covers stages 13 and 14). Audit: 26 of 114 study lines fail (the list is in the commit message).
+- Moves: step off and landings (8), high step (9), vaults and the jump over (10), climb on (11), mantle (12), grab and
+  climb to 2.60 m, thin walls up and over, jumps joined to the moves (13, 14), running wall climb 2.10 to 3.00 m,
+  running exits from the mantle and the grab and climb (trav58, trav59: built after his last play-test).
+- His words for what comes next: the stand-up after the grab and climb, stage 15, then the stage 1 random-walk
+  faults, the stops and the kerb step, the failing audit lines "all at once and present me before moving onto the
+  stage 16, if things dont improve by a 20% after 3 to 5, dont change anything and move dircetly to stage 16"; and
+  "dont break anything that was approved before, no system wide edits".
+- Stage 16, his words: "for moving across gaps, if we are running, just use running jump and continue jump after
+  landing, implement new jumps only for walking across gaps".
