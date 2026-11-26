@@ -61,7 +61,7 @@ const SOFT_DROP := 0.30         # the study: "up to 0.30 m, step down in stride;
 const HARD_DROP := 1.0          # soft landing; 1.0 to 2.0 m, a heavy landing"
 # the inputs of the tree's Transition node, and the clip each one plays under its own TimeSeek
 const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling_To_Landing", "land_heavy": "Hard_Landing",
-		"drop_walk": "KM_Ledge_Walk_Off", "drop_run": "KM_Ledge_Run_Off",
+		"drop_walk": "KM_Ledge_Walk_Off", "drop_run": "KM_Ledge_Run_Off", "drop_roll": "KM_Land_Roll",
 		"stairs_up_walk": "Ascending_Stairs", "stairs_up_run": "KM_Stairs_Run_Up_D",
 		"stairs_down_walk": "KM_Stairs_Walk_Down", "stairs_down_run": "KM_Stairs_Run_Down",
 		"steep_up": "KM_Climb_Hard", "steep_down": "KMY_Down_Hands_Balance_Long",
@@ -85,7 +85,7 @@ const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling
 # step-off take lands from 1.15 m and folds for that; the library's other landing clips fold as deep. So the take is
 # blended toward its own standing end by as much as the drop is short of the take's (see traverse.gd, "soft").
 # input -> the moment of the clip at which he stands again
-const SOFTEN := {"drop_walk": 3.30}
+const SOFTEN := {"drop_walk": 3.30, "drop_run": 3.70}
 const CROUCH_IDLE := "KM_Crouch_Idle"
 const CROUCH_WALK := "KM_Crouch_Walk"
 const CROUCH_FADE := 0.3        # NOT in the study: seconds to blend between standing and crouched while he is moving
@@ -219,6 +219,7 @@ var _slope_t := 0.0
 var _foot_i := [-1, -1]
 var _foot_len := 0.0            # from the ankle to the ball of the foot, along the ground (from the skeleton)
 var _jump_low := 0.5            # the Jump clip: the moment its hips are lowest (found from the clip itself)
+var _free := 0.0                # 0..1: the feet are left as the clip has them (a roll)
 var _soft := 0.0                # 0..1: how far a landing is eased toward standing
 var _low_w := 0.0               # 0 = the standing set, 1 = the crouched set
 var _low_was := false
@@ -553,7 +554,7 @@ func _physics_process(dt: float) -> void:
 			_steep_on = false
 		_show(String(body.get(&"move_clip")), float(body.get(&"move_clip_t")))
 		_soft = float(body.get(&"move_soft"))
-		landing_kind = "soft" if bool(body.get(&"move_landed")) else ""
+		landing_kind = String(body.get(&"move_landing")) if bool(body.get(&"move_landed")) else ""
 	elif _mode == "move":
 		_set_mode("ground")
 		_to_loops()
@@ -809,6 +810,10 @@ func _physics_process(dt: float) -> void:
 		feet.set(&"hips_fit", _hips_fit)
 		# the fitting fades out in the air and back in on the ground; the three modifiers go together
 		var w := float(feet.get(&"weight"))
+		# (through a roll the feet are not fitted to the ground at all: he is upside down for part of it)
+		_free = move_toward(_free, 1.0 if (bool(body.call(&"in_move")) and bool(body.get(&"move_free"))) else 0.0, dt / 0.15)
+		w *= 1.0 - _free
+		feet.influence = 1.0 - _free
 		_leg_ik.influence = w
 		_orient.influence = w
 	_steep_w = move_toward(_steep_w, 1.0 if _steep_on else 0.0, dt / FADE)

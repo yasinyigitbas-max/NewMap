@@ -108,6 +108,10 @@ func _process_modification_with_delta(dt: float) -> void:
 		return
 	var on_ground := int(body.get(&"state")) == 0
 	weight = move_toward(weight, 1.0 if on_ground else 0.0, dt / WEIGHT_TIME)
+	if on_ground and body.has_method(&"in_move") and bool(body.call(&"in_move")) and bool(body.get(&"move_landed")):
+		# coming down in a traversal move the ground is known beforehand: the feet are on it from the tick he lands
+		# (faded in over WEIGHT_TIME, they stood up to 5 cm in the ground for the first tenth of a second)
+		weight = 1.0
 	var xf := sk.global_transform
 	var inv := xf.affine_inverse()
 	var feet_y := body.global_position.y

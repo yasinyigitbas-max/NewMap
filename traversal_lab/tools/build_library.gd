@@ -31,7 +31,7 @@ const AIR := {"Jump": [0.80, 1.30], "Running_Jump": [0.10, 0.67]}
 const GROUNDED := ["Falling_To_Landing", "Hard_Landing"]
 # Ledge clips (step off, fall, land) are played on the spot: the body does the travelling and the falling, so the hips
 # keep only their height above the clip's own landing ground.
-const LEDGE := ["KM_Ledge_Walk_Off", "KM_Ledge_Run_Off"]
+const LEDGE := ["KM_Ledge_Walk_Off", "KM_Ledge_Run_Off", "KM_Land_Roll"]
 # The walk's hips, brought to the study: "The pelvis moves only a few degrees at normal walking speed: about 3 degrees
 # of tilt, 8.5 of side drop and 12 of rotation in total range", and the body "rises and falls 2.7 to 4.8 cm in walking
 # ... side-to-side sway shrinks from 7.0 to 3.9 cm as speed rises". Measured on him, this take had 6.2 degrees of tilt,

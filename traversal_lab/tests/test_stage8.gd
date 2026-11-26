@@ -43,16 +43,16 @@ func _after() -> void:
 
 
 ## Walk off the edge of `s` from on top of it; `flip` = the stick is reversed from that many seconds on.
-func walk_off(s: Dictionary, flip := -1.0) -> Dictionary:
+func walk_off(s: Dictionary, flip := -1.0, run := false) -> Dictionary:
 	var h := float(s["top"])
-	lab.call(&"place", Vector3(float(s["x"]), h, -4.6))
+	lab.call(&"place", Vector3(float(s["x"]), h, -5.3 if run else -4.6))
 	body.rotation.y = PI
 	for i in 30:
 		await physics_frame
 	var samples := []
 	for i in 300:
 		var back := flip >= 0.0 and i >= int(flip * 60.0)
-		samples.append({"mx": 0.0, "mz": -1.0 if back else 1.0, "yaw": 0.0, "run": false, "jump": false, "crouch": false, "act": false})
+		samples.append({"mx": 0.0, "mz": -1.0 if back else 1.0, "yaw": 0.0, "run": run, "jump": false, "crouch": false, "act": false})
 	tape.set(&"tape", samples)
 	tape.call(&"replay")
 	var before := int(trav.get(&"plays"))
@@ -76,12 +76,18 @@ func walk_off(s: Dictionary, flip := -1.0) -> Dictionary:
 			out["hips_low"] = minf(float(out["hips_low"]), hips_y - body.global_position.y)
 			# the feet 0.1 s after he comes down: how far the nearer foot's joints are off the ground, and how far
 			# under it any joint is
-			if landed_for == 6 and final.size() == 4:
+			# (at a run a foot is on the ground at the landing and both may be off it again a tenth of a second
+			# later, so it is the nearest a foot comes to the ground in that tenth that is held to the bar)
+			if landed_for <= 6 and final.size() == 4 and OS.get_cmdline_user_args().has("--feet"):
+				print("   %s tick %d: L ankle %+.3f toe %+.3f | R ankle %+.3f toe %+.3f" % [s["label"], landed_for, final[0].y - body.global_position.y - stand[0], final[1].y - body.global_position.y - stand[1], final[2].y - body.global_position.y - stand[2], final[3].y - body.global_position.y - stand[3]])
+			if landed_for <= 6 and final.size() == 4:
 				var gy := body.global_position.y
 				var off := INF
 				for f in 2:
-					off = minf(off, maxf(absf(final[f * 2].y - gy - stand[f * 2]), absf(final[f * 2 + 1].y - gy - stand[f * 2 + 1])))
-				out["feet"] = off
+					# (as the audit has it: "the ball of the foot or the heel, whichever is nearer to it". He lands on
+					# the balls of his feet with the heels up.)
+					off = minf(off, minf(absf(final[f * 2].y - gy - stand[f * 2]), absf(final[f * 2 + 1].y - gy - stand[f * 2 + 1])))
+				out["feet"] = minf(float(out["feet"]), off)
 				for k in 4:
 					out["under"] = maxf(float(out["under"]), gy + stand[k] - final[k].y - 0.0)
 		if was_in and not inm:
@@ -90,7 +96,7 @@ func walk_off(s: Dictionary, flip := -1.0) -> Dictionary:
 			out["end_speed"] = (body.get(&"hvel") as Vector3).length()
 			tape.call(&"stop")
 		was_in = inm
-		if not inm and int(trav.get(&"plays")) == before and body.global_position.z > -2.0:
+		if not inm and int(trav.get(&"plays")) == before and body.global_position.z > -1.0:
 			tape.call(&"stop")
 	out["refused"] = String(trav.get(&"refused"))
 	return out
@@ -116,16 +122,25 @@ func _run() -> void:
 		await process_frame
 	for p: Vector3 in final:
 		stand.append(p.y - body.global_position.y)
+	for run: bool in [false, true]:
+		await band_tests(run)
+	print("RESULT ", "PASS" if fails == 0 else "FAIL (%d)" % fails)
+	quit(1 if fails else 0)
+
+
+func band_tests(run: bool) -> void:
+	var how := "run" if run else "walk"
 	var band: Array = trav.get(&"BAND")
 	var inside: Array[Dictionary] = []
 	for s: Dictionary in stations:
-		if not (String(s["kind"]) in ["kerb", "step", "wall_deep"]) or float(s["top"]) > 2.0:
+		if not (String(s["kind"]) in ["kerb", "step", "wall_deep"]):
 			continue
 		var h := float(s["top"])
-		var should := h > float(band[0]) + 0.001 and h <= float(band[1]) + 0.001
-		var r := await walk_off(s)
+		# at a run the higher edges, up to 3.0 m, are taken too, with the roll
+		var should := h > float(band[0]) + 0.001 and h <= (float(trav.get(&"ROLL_MOST")) if run else float(band[1])) + 0.001
+		var r := await walk_off(s, -1.0, run)
 		if not should:
-			ok(not bool(r["played"]), "%s: outside the band, refused (%s)" % [s["label"], r["refused"]])
+			ok(not bool(r["played"]), "%s, %s: outside the band, refused (%s)" % [s["label"], how, r["refused"]])
 			continue
 		inside.append(s)
 		var plan: Dictionary = r["plan"]
@@ -142,15 +157,13 @@ func _run() -> void:
 			elif absf(float(r["end_speed"]) - float(plan["exit_speed"])) > 0.05:
 				bad = "exit speed %.2f, the clip's %.2f" % [float(r["end_speed"]), float(plan["exit_speed"])]
 			elif float(r["feet"]) > FEET_WITHIN:
-				bad = "feet %.1f cm off the ground 0.1 s after landing" % (float(r["feet"]) * 100.0)
-		ok(bad == "", "%s: steps off, lands where measured, on the ground, at the clip's exit speed (feet %.1f cm off, %.1f cm under; %.2f s in the air; hips down to %.2f m on landing)%s" % [
+				bad = "no foot nearer than %.1f cm to the ground in the 0.1 s after landing" % (float(r["feet"]) * 100.0)
+		ok(bad == "", how + ", %s: goes off, lands where measured, on the ground, at the clip's exit speed (feet %.1f cm off, %.1f cm under; %.2f s in the air; hips down to %.2f m on landing)%s" % [
 				s["label"], float(r["feet"]) * 100.0, float(r["under"]) * 100.0, int(r["air_ticks"]) / 60.0, float(r["hips_low"]), "" if bad == "" else " -- " + bad])
 	# cancelling: the stick is reversed a tenth of a second into the move on the lowest, middle and highest of the band
 	for s: Dictionary in [inside[0], inside[inside.size() / 2], inside[inside.size() - 1]]:
-		var a := await walk_off(s)
-		var b := await walk_off(s, float(a["move_from"]) + 0.1)
+		var a := await walk_off(s, -1.0, run)
+		var b := await walk_off(s, float(a["move_from"]) + 0.1, run)
 		# (held to where its own plan ends, made before the stick was reversed, and set beside the run left alone)
 		var off := INF if not bool(b["played"]) else (b["end"] as Vector3).distance_to((b["plan"] as Dictionary)["end"])
-		ok(off < 0.01, "%s: the stick reversed 0.1 s into the move changes nothing: he ends %.3f m from where the move was going (and %.3f m from where the run left alone ended)" % [s["label"], off, (b["end"] as Vector3).distance_to(a["end"])])
-	print("RESULT ", "PASS" if fails == 0 else "FAIL (%d)" % fails)
-	quit(1 if fails else 0)
+		ok(off < 0.01, how + ", %s: the stick reversed 0.1 s into the move changes nothing: he ends %.3f m from where the move was going (and %.3f m from where the run left alone ended)" % [s["label"], off, (b["end"] as Vector3).distance_to(a["end"])])

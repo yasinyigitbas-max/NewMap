@@ -219,6 +219,17 @@
     ],
     "turn_deg": 5.79488446354785
   },
+  "KM_Land_Roll": {
+    "length": 3.96666666666667,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 1.35691923253676,
+    "travel": [
+      -0.35713517665863,
+      5.3705849647522
+    ],
+    "turn_deg": -1.55173808437391
+  },
   "KM_Ledge_Run_Off": {
     "length": 3.96666666666667,
     "loop": false,
