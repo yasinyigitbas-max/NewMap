@@ -42,7 +42,7 @@ func _after() -> void:
 
 
 ## Go at the face of `s` from `back` metres in front of it; `flip` = the stick is reversed from that many seconds on.
-func go_at(s: Dictionary, back: float, run: bool, flip := -1.0) -> Dictionary:
+func go_at(s: Dictionary, back: float, run: bool, flip := -1.0, jump_at := -1) -> Dictionary:
 	lab.call(&"place", Vector3(float(s["x"]), 0.0, -3.0 + back))
 	body.rotation.y = 0.0
 	for i in 30:
@@ -50,11 +50,11 @@ func go_at(s: Dictionary, back: float, run: bool, flip := -1.0) -> Dictionary:
 	var samples := []
 	for i in 300:
 		var rev := flip >= 0.0 and i >= int(flip * 60.0)
-		samples.append({"mx": 0.0, "mz": 1.0 if rev else -1.0, "yaw": 0.0, "run": run, "jump": false, "crouch": false, "act": false})
+		samples.append({"mx": 0.0, "mz": 1.0 if rev else -1.0, "yaw": 0.0, "run": run, "jump": jump_at >= 0 and i >= jump_at and i < jump_at + 6, "crouch": false, "act": false})
 	tape.set(&"tape", samples)
 	tape.call(&"replay")
 	var before := int(trav.get(&"plays"))
-	var out := {"played": false, "plan": {}, "end": Vector3.ZERO, "end_state": -1, "end_speed": 0.0, "feet": INF, "move_from": -1.0, "high": 0.0, "nearer": INF, "hand": -1.0, "held": 0, "in_wall": 0.0}
+	var out := {"played": false, "plan": {}, "end": Vector3.ZERO, "end_state": -1, "end_speed": 0.0, "feet": INF, "move_from": -1.0, "high": 0.0, "nearer": INF, "hand": -1.0, "held": 0, "in_wall": 0.0, "sole": 0.0}
 	var was_in := false
 	var t := 0
 	var after := -1
@@ -75,9 +75,26 @@ func go_at(s: Dictionary, back: float, run: bool, flip := -1.0) -> Dictionary:
 				out["held"] = int(out["held"]) + 1
 				for one: Array in mh:
 					out["hand"] = maxf(float(out["hand"]), (extra[int(one[0])] as Vector3).distance_to(one[1]))
+			# from when his feet are down on the top: how far the lower foot is off it (each joint against its own
+			# standing height)
+			# (the first foot is down at about 1.45 s of the take and the second at about 2.2 s: until then the foot
+			# that is down is the higher one)
+			var mct := float(body.get(&"move_clip_t"))
+			if String(body.get(&"move_clip")) == "climb_up" and mct >= 2.5 and mct < float(trav.get(&"MANTLE")["exit"]) - 0.1:
+				var off := [minf(final[0].y - float(stand[0]), final[1].y - float(stand[1])) - float(s["top"]), minf(final[2].y - float(stand[2]), final[3].y - float(stand[3])) - float(s["top"])]
+				var down: float = maxf(off[0], off[1]) if mct < 2.3 else (off[0] if absf(off[0]) > absf(off[1]) else off[1])
+				if absf(down) > absf(float(out["sole"])):
+					out["sole"] = down
+					out["sole_t"] = mct
 			# how deep a knee or a foot joint is inside the wall itself (past its face and under its top)
-			for q: Vector3 in [final[0], final[1], final[2], final[3], extra[2], extra[3]]:
-				out["in_wall"] = maxf(float(out["in_wall"]), minf(-3.0 - q.z, float(s["top"]) - q.y))
+			# (begun from a jump, the first 0.15 s are still the jump's own pose blending out: pressed to a wall, the
+			# standing jump's knees are in it by themselves, move or no move; that is not held against this move)
+			var blending := bool((out["plan"] as Dictionary).get("air", false)) and t / 60.0 - float(out["move_from"]) < 0.15
+			for q: Vector3 in ([] if blending else [final[0], final[1], final[2], final[3], extra[2], extra[3]]):
+				var inside := minf(minf(-3.0 - q.z, q.z + 3.0 + float(s["depth"])), float(s["top"]) - q.y)
+				if inside > float(out["in_wall"]) + 0.01 and OS.get_cmdline_user_args().has("--feet"):
+					print("   in the wall %.2f at %.2f s of %s, body z %.2f y %.2f" % [inside, float(body.get(&"move_clip_t")), body.get(&"move_clip"), body.global_position.z, body.global_position.y])
+				out["in_wall"] = maxf(float(out["in_wall"]), inside)
 		if was_in and not inm:
 			out["end"] = body.global_position
 			out["end_state"] = int(body.get(&"state"))
@@ -165,14 +182,48 @@ func _run() -> void:
 					bad = "a wrist up to %.1f cm from its place on the top while held (%d ticks)" % [float(r["hand"]) * 100.0, int(r["held"])]
 				elif float(r["in_wall"]) > IN_WALL_MOST:
 					bad = "a knee or a foot %.0f cm inside the wall" % (float(r["in_wall"]) * 100.0)
+				elif absf(float(r["sole"])) > FEET_WITHIN:
+					bad = "the foot that is down up to %.1f cm off the top (at %.2f s of the take)" % [float(r["sole"]) * 100.0, float(r.get("sole_t", 0.0))]
 				elif float(r["feet"]) > FEET_WITHIN:
 					bad = "a foot %.1f cm off the top as he is handed back" % (float(r["feet"]) * 100.0)
-			ok(bad == "", "%s, %s: mantles it: both hands on the top (wrists within %.1f cm for %d ticks), no knee or foot in the wall (%.1f cm), ends standing on top where measured, at rest (foot %.1f cm off the top)%s" % [
-					s["label"], how[0], float(r["hand"]) * 100.0, int(r["held"]), float(r["in_wall"]) * 100.0, float(r["feet"]) * 100.0, "" if bad == "" else " -- " + bad])
+			ok(bad == "", "%s, %s: mantles it: both hands on the top (wrists within %.1f cm for %d ticks), no knee or foot in the wall (%.1f cm), feet on the top once down (within %.1f cm), ends standing on top where measured, at rest (foot %.1f cm off the top)%s" % [
+					s["label"], how[0], float(r["hand"]) * 100.0, int(r["held"]), float(r["in_wall"]) * 100.0, float(r["sole"]) * 100.0, float(r["feet"]) * 100.0, "" if bad == "" else " -- " + bad])
 	for s: Dictionary in [inside[0], inside[inside.size() / 2], inside[inside.size() - 1]]:
 		var a := await go_at(s, 2.6, false)
 		var b := await go_at(s, 2.6, false, float(a["move_from"]) + 0.3)
 		var off := INF if not bool(b["played"]) else (b["end"] as Vector3).distance_to((b["plan"] as Dictionary)["end"])
 		ok(off < 0.01, "%s: the stick reversed 0.3 s into the move changes nothing: he ends %.3f m from where the move was going" % [s["label"], off])
+	# A jump into the climb (Yasin, 26 Nov: "combine jumps and climbs"): from standing against a wall too high for the
+	# mantle from the ground, with a jump. The standing jump raises him 0.45 m, so what is left to climb decides.
+	var rise := float(body.get(&"JUMP_RISE"))
+	for s: Dictionary in stations:
+		if not (String(s["kind"]) in ["wall_deep", "wall_thin"]) or float(s["top"]) < 1.7 or float(s["top"]) > 2.5:
+			continue
+		var h := float(s["top"])
+		var thin := String(s["kind"]) == "wall_thin"
+		var most := float((trav.get(&"VAULT_BAND") as Array)[1]) if thin else float(band[1])
+		var should := h - rise <= most + 0.001
+		var r := await go_at(s, 0.27, false, -1.0, 20)
+		var key := String((r["plan"] as Dictionary).get("key", ""))
+		var want_key := "climb_over" if thin else "mantle"
+		if not should:
+			ok(key == "", "%s, with a standing jump: %.2f m left above his feet, not taken (%s)" % [s["label"], h - rise, ("the move '%s' played" % key) if key != "" else "stopped: " + String(r["refused"])])
+			continue
+		var bad := ""
+		if key != want_key or not bool((r["plan"] as Dictionary).get("air", false)):
+			bad = "did not play from the jump (%s%s)" % [r["refused"], (", the move '%s' did" % key) if key != "" else ""]
+		else:
+			var want: Vector3 = (r["plan"] as Dictionary)["end"]
+			var end: Vector3 = r["end"]
+			if Vector2(end.x - want.x, end.z - want.z).length() > END_WITHIN or absf(end.y - want.y) > 0.01:
+				bad = "ended %.2f m from where planned, at height %.3f" % [Vector2(end.x - want.x, end.z - want.z).length(), end.y]
+			elif int(r["end_state"]) != 0:
+				bad = "ended in state %d" % int(r["end_state"])
+			elif int(r["held"]) == 0 or float(r["hand"]) > HAND_WITHIN:
+				bad = "a wrist up to %.1f cm from its place on the top while held (%d ticks)" % [float(r["hand"]) * 100.0, int(r["held"])]
+			elif float(r["in_wall"]) > IN_WALL_MOST:
+				bad = "a knee or a foot %.0f cm inside the wall" % (float(r["in_wall"]) * 100.0)
+		ok(bad == "", "%s, with a standing jump: %s from the air, both hands on the top (wrists within %.1f cm for %d ticks), no knee or foot in the wall (%.1f cm), ends where measured%s" % [
+				s["label"], "climbed over" if thin else "mantled", float(r["hand"]) * 100.0, int(r["held"]), float(r["in_wall"]) * 100.0, "" if bad == "" else " -- " + bad])
 	print("RESULT ", "PASS" if fails == 0 else "FAIL (%d)" % fails)
 	quit(1 if fails else 0)
