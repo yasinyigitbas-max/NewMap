@@ -226,3 +226,17 @@ measured; triangle-mesh colliders are not tried with the detector (the course is
   the body 0.30 m under the ground on the one-mesh floor (x 236, z -5), and 12 s pressed into the 0.4 m passage. The
   station was taken out again (the native wall is built inside the stage 12 test), so the stage 1 test is as it was.
 - **Next in the study's order:** stage 13, standing grab and climb up (1.45 to 2.10 m).
+
+## After trav55, 26 Nov 2026 (stage 13 built, jumps joined to the moves)
+
+- **Stage 13, grab and climb (deep, 1.45 to 2.10 m):** `Jump_To_Braced_Hang` then `Braced_Hang_To_Crouch` (his own
+  Mixamo clips, raw files not in git), the hands gripping the edge in the hang and turned onto the top on the way up.
+  `tests/test_stage13.gd`. He ends crouched and is blended to standing by the tree; there is no stand-up clip in it.
+- **Jumps and moves (Yasin, 26 Nov):** in the air from a jump the bands are raised by what the jump raises him (0.45 m
+  standing, 0.60 m from a run): mantle to 1.90 / 2.05 m, grab and climb to 2.55 / 2.70 m, climb over (thin) to 1.85 /
+  2.00 m, and at a run the running vault over thin walls to 2.00 m. The detector measures from the ground under him
+  when he is in the air (`measure(dir, from_y)`).
+- **Feet in the climbs** are fitted to the top itself from when the first foot comes over it (`foot_place.gd base`).
+- **Not built:** thin walls above what the climb over reaches (no grab and climb OVER); a running version of the
+  mantle and of the grab and climb (he stops); the stage 14 free hang.
+- **Next in the study's order:** stage 14, jump, grab and climb up (2.10 to 2.60 m).

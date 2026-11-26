@@ -218,10 +218,11 @@ func _run() -> void:
 	# mantle from the ground, with a jump. The standing jump raises him 0.45 m, so what is left to climb decides.
 	var rise := float(body.get(&"JUMP_RISE"))
 	for s: Dictionary in stations:
-		if not (String(s["kind"]) in ["wall_deep", "wall_thin"]) or float(s["top"]) < 1.7 or float(s["top"]) > 2.5:
+		# (deep walls of this height are the grab and climb's, stage 13: tests/test_stage13.gd)
+		if String(s["kind"]) != "wall_thin" or float(s["top"]) < 1.7 or float(s["top"]) > 2.5:
 			continue
 		var h := float(s["top"])
-		var thin := String(s["kind"]) == "wall_thin"
+		var thin := true
 		var most := float((trav.get(&"VAULT_BAND") as Array)[1]) if thin else float(band[1])
 		var should := h - rise <= most + 0.001
 		var r := await go_at(s, 0.27, false, -1.0, 20)

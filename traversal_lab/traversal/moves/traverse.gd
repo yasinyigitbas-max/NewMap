@@ -153,6 +153,35 @@ const MANTLE := {"exit": 2.90,
 # measured against the TOP (the take's own ground then), not against the body on its way up: against the body, a
 # foot passing over the edge was lifted by the height still to climb, and stood 0.3 m in the air.
 const FEET_FROM := 1.40             # NOT in the study, measured in the lab: the first foot comes over the top then (s of the take)
+# Stage 13, the grab and climb (the study: "1.45 to 2.10 m | reach up, grab the top, climb up | standing grip reach
+# 2.11 m; police wall 1.83 m"; "1.45 to 2.10 m, grab and climb | Braced Hang To Crouch | the climb-up exists; the
+# clip from standing into the braced hang is on Mixamo"; "the hands must be pinned to the measured ledge with arm IK
+# from contact to release, and the body moved to suit"). Two of his own Mixamo clips, measured on him:
+# Jump To Braced Hang: sunk at 0.3 s, off the ground at 0.45 s, both wrists at 2.14 m by 0.70 s and staying there,
+# feet braced on the wall (ankles 1.0 m) by 0.9 s, hips 0.31 m from the face.
+# Braced Hang To Crouch: from that hang (wrists 1.43 m over ITS origin, hips 0.64 m) up to a crouch on top, feet
+# down on it at 1.72 m by 0.85 s. Its wrists rise 0.7 m while they should be planted (the study: "The hands are not
+# fixed in the climb clips ... the start of each clip and its end disagree about where the ledge is"), so the body is
+# set by the hands at its start and by the feet at its end, and the hands are held on the top.
+const GRAB_BAND := [1.45, 2.10]     # the study's band: more than the first, up to the second (m)
+const GRAB := {"jump": "grab_jump", "jump_res": "res://traversal/character/clips/Jump_To_Braced_Hang.res",
+		"climb": "grab_climb", "climb_res": "res://traversal/character/clips/Braced_Hang_To_Crouch.res",
+		"off": 0.45, "catch": 0.70, "hang": 1.00,        # of the jump: off the ground, hands on, hanging
+		"wrist": 2.14,              # of the jump: how high its wrists are in the hang
+		"jump_by": 0.70,            # the rise taken out of the jump's hips in the library (build_library.gd RISE_BY)
+		"climb_wrist": 1.43,        # of the climb: its wrists as it begins
+		"climb_by": 1.63,           # of the climb, found in the lab: where his feet end (its own ledge), and the rise taken out of it
+		"feet_on": 0.85, "exit": 1.10,
+		"hang_at": 0.54,            # NOT in the study, found in the lab: how far from the face his hips hang (m): his toes on it
+		"hand_side": 0.33}
+# In the hang the fingers are over the edge and the wrist is outside the face and a little under the top; on the way
+# up the hands turn onto the top (the study: "a turn of the hands from pulling to pressing as the chest clears the
+# edge"). NOT in the study, mine: the wrist 0.10 m out from the face and 0.04 m under the top in the hang; the turn
+# between 0.10 and 0.40 s of the climb.
+const GRIP_OUT := 0.10
+const GRIP_UNDER := 0.04
+const GRIP_TURN := [0.10, 0.40]
+const GRAB_NEAR := 0.60             # NOT in the study: it is begun from within this of the wall's face (m)
 const OVER_BACK := 0.48             # NOT in the study, found in the lab: he sinks for the jump this far from the wall's face
                                     # (nearer, his knees were in the wall). The study: "slide and turn the body over a
                                     # short fixed time so it starts at the clip's native distance from the wall"
@@ -205,6 +234,9 @@ var _t_fwd := PackedFloat32Array()
 var _j_fwd := PackedFloat32Array()
 var _o_fwd := PackedFloat32Array()
 var _o_rise := PackedFloat32Array()
+var _g_rise1 := PackedFloat32Array()
+var _g_rise2 := PackedFloat32Array()
+var _g_fwd2 := PackedFloat32Array()
 var _o_high := 0.0              # the height the climb take goes up, on him
 
 
@@ -244,6 +276,12 @@ func _ready() -> void:
 		_o_fwd.append(o_hips[f].z - o_hips[0].z)
 	_o_rise = ClipData.rise_of(o_hips)
 	_o_high = o_hips[o_hips.size() - 1].y - o_hips[0].y
+	var g1: PackedVector3Array = (load(String(GRAB["jump_res"])) as Resource).get(&"hips")
+	_g_rise1 = ClipData.rise_of(g1)
+	var g2: PackedVector3Array = (load(String(GRAB["climb_res"])) as Resource).get(&"hips")
+	_g_rise2 = ClipData.rise_of(g2)
+	for f in g2.size():
+		_g_fwd2.append(g2[f].z - g2[0].z)
 	var tc: Resource = load(String(TUCK["res"]))
 	var t_hips: PackedVector3Array = tc.get(&"hips")
 	for f in t_hips.size():
@@ -494,6 +532,8 @@ func _try_step_up(v: Vector3, wish: Vector3) -> bool:
 		return false                                            # the body walks onto it by itself
 	if top > float(ON_BAND[1]) + MEASURED_WITHIN and top <= float(MANTLE_BAND[1]) + MEASURED_WITHIN and not bool(rec["thin"]):
 		return _try_mantle(v, wish, rec)
+	if top > float(MANTLE_BAND[1]) + MEASURED_WITHIN and top <= float(GRAB_BAND[1]) + MEASURED_WITHIN and not bool(rec["thin"]):
+		return _try_grab(wish, rec)
 	if top > float(ON_BAND[1]) + MEASURED_WITHIN:
 		refused = "too high to step or climb onto (%.2f m)" % top
 		return false
@@ -1126,7 +1166,16 @@ func _try_air(v: Vector3) -> bool:
 	# figures, the study's 0.41 to 0.50 m and 0.10 to 0.20 m more from a run)
 	var thin := bool(rec["thin"])
 	var adds := float(body.get(&"JUMP_RISE") if bool(body.get(&"_jump_still")) else body.get(&"JUMP_RISE_RUN"))
-	if top > float(VAULT_BAND[1] if thin else MANTLE_BAND[1]) + adds + MEASURED_WITHIN or feet_up < adds * 0.5:
+	if feet_up < adds * 0.5:
+		return false
+	if not thin and top > float(MANTLE_BAND[1]) + adds + MEASURED_WITHIN:
+		# higher than the mantle reaches with the jump: the grab and climb, its band raised by the jump the same way
+		# (Yasin, 26 Nov: "walk or standing still jump climb should still be possible on 2.2 wall")
+		if top > float(GRAB_BAND[1]) + adds + MEASURED_WITHIN:
+			refused = "too high even with the jump (%.2f m)" % top
+			return false
+		return _try_grab(dir, rec, true)
+	if top > float(VAULT_BAND[1] if thin else MANTLE_BAND[1]) + adds + MEASURED_WITHIN:
 		refused = "too high even with the jump (%.2f m)" % top
 		return false
 	# the take is taken up as it pushes off (its knees still down: taken up later, they were in the wall); the body
@@ -1134,3 +1183,98 @@ func _try_air(v: Vector3) -> bool:
 	var ct := float(OVER["from"])
 	var begun := _try_over(dir, rec, ct) if thin else _try_mantle(v, dir, rec, ct)
 	return begun
+
+
+# ------------------------------------------------------------------------------------------ stage 13: the grab and climb
+
+## Something deep of 1.45 to 2.10 m with room on top: a jump to its edge, both hands on it, feet braced on its
+## face, and up onto it. `air` = begun in the air from a jump, as his hands go up.
+func _try_grab(wish: Vector3, rec: Dictionary, air := false) -> bool:
+	var top := float(rec["top"])
+	if bool(rec["blocked"]) or not bool(rec["stand_room"]):
+		refused = "no room on top"
+		return false
+	var m: Vector3 = -(rec["normal"] as Vector3)
+	if rad_to_deg(wish.normalized().angle_to(m)) > MOST_OFF_DEG:
+		refused = "not heading at it"
+		return false
+	var here := (rec["edge"] as Vector3 - body.global_position).dot(m)
+	if here > GRAB_NEAR:
+		refused = "coming up to it"
+		return false
+	var feet := body.global_position
+	var ground := float(rec["ground"])
+	var hang := Vector3(feet.x, ground, feet.z) + m * (here - float(GRAB["hang_at"]))
+	if not air and here < float(GRAB["hang_at"]) and not bool(detector.call(&"_fits", hang, float(body.get(&"HEIGHT")))):
+		refused = "no room behind him to jump up from"
+		return false
+	var inward := _at(_g_fwd2, float(GRAB["exit"])) - float(GRAB["hang_at"])
+	if float(rec["depth"]) < inward + float(body.get(&"RADIUS")):
+		refused = "the top is not deep enough"
+		return false
+	var end := feet + m * (here + inward)
+	end.y = ground + top
+	if not bool(detector.call(&"_fits", end, float(body.get(&"CROUCH_HEIGHT")))):
+		refused = "no room where he would end"
+		return false
+	refused = ""
+	var left := Vector3.UP.cross(m).normalized()
+	var on_top := feet + m * (here + 0.03)
+	on_top.y = ground + top + PALM
+	_plan = {"key": "grab", "from": Vector3(feet.x, ground, feet.z), "hang": hang, "end": end, "top": top, "ground": ground, "m": m,
+			"yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z), "exit_speed": 0.0, "hand": 2,
+			# the body's height in the hang: his wrists on the top
+			"hang_y": ground + top - GRIP_UNDER - float(GRAB["wrist"]) + float(GRAB["jump_by"]),
+			"from_t": float(GRAB["off"]) + 0.08 if air else 0.0,
+			"hands_at": [on_top + left * float(GRAB["hand_side"]), on_top - left * float(GRAB["hand_side"])],
+			# ... and in the hang: outside the face, a little under the top
+			"grip_by": Vector3(0.0, -GRIP_UNDER - PALM, 0.0) - m * (GRIP_OUT + 0.03)}
+	if air:
+		_plan.merge({"air": true, "y_from": feet.y})
+	plays += 1
+	_up_record = {}
+	record = {}
+	body.call(&"begin_move", _grab, String(GRAB["jump"]))
+	return true
+
+
+func _grab(t: float) -> Dictionary:
+	var p := _plan
+	var m: Vector3 = p["m"]
+	var from_t := float(p["from_t"])
+	var t1 := float(GRAB["hang"]) - from_t                      # how long the jump to the hang is played
+	var ground := float(p["ground"])
+	var hang: Vector3 = p["hang"]
+	var hold := 0.0
+	var out := {"done": false, "air": true, "free": true, "yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), clampf(t / 0.2, 0.0, 1.0))}
+	if t < t1:
+		# the jump to the hang: to where he hangs as he sinks and leaves the ground, up by the take's own rise set
+		# to bring his wrists to the top
+		var ct := from_t + t
+		var pos := (p["from"] as Vector3).lerp(hang, smoothstep(0.0, 0.15, t))
+		pos.y = ground + (float(p["hang_y"]) - ground) * _at(_g_rise1, ct)
+		if p.has("y_from"):
+			pos.y = lerpf(float(p["y_from"]), pos.y, smoothstep(0.0, float(GRAB["catch"]) - from_t, t))
+		out.merge({"pos": pos, "clip_t": ct, "clip": String(GRAB["jump"]), "air": ct >= float(GRAB["off"])})
+		hold = clampf((ct - float(GRAB["catch"])) / HAND_FADE + 1.0, 0.0, 1.0)
+	else:
+		# the climb from the hang: by the hands as it begins (his wrists on the top), by the feet as it ends (on the top)
+		var ct := minf(t - t1, float(GRAB["exit"]))
+		var rise := _at(_g_rise2, ct)
+		var by := float(GRAB["climb_by"])
+		var out_by := by - GRIP_UNDER - float(GRAB["climb_wrist"])      # how far the clip's own start and end disagree about its ledge
+		var pos := hang + m * _at(_g_fwd2, ct)
+		pos.y = ground + float(p["top"]) - (by - out_by) * (1.0 - rise)
+		out.merge({"pos": pos, "clip_t": ct, "clip": String(GRAB["climb"])})
+		hold = clampf((float(GRAB["feet_on"]) - ct) / HAND_FADE + 1.0, 0.0, 1.0)
+		if ct >= float(GRAB["exit"]):
+			out["done"] = true
+			out["air"] = false
+			out["pos"] = p["end"]
+			out["exit"] = Vector3.ZERO
+	hold = hold * hold * (3.0 - 2.0 * hold)
+	# the hands: gripping the edge in the hang, turned onto the top on the way up
+	var turned := smoothstep(float(GRIP_TURN[0]), float(GRIP_TURN[1]), t - t1) if t >= t1 else 0.0
+	var grip: Vector3 = (p["grip_by"] as Vector3) * (1.0 - turned)
+	out["hand"] = [[0, (p["hands_at"] as Array)[0] + grip, hold], [1, (p["hands_at"] as Array)[1] + grip, hold]]
+	return out
