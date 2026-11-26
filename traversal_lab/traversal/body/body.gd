@@ -99,8 +99,6 @@ var _look: Array[Node3D] = []
 var slope_deg := 0.0            # how steep the ground under him is
 var grade := 0.0                # its rise per metre the way he is going (+ = uphill)
 var face_in := false            # he is coming down very steep ground backwards, facing the slope
-var pace := 1.0                 # set by the character each tick: a clip whose hips do not move evenly speeds and slows him
-var steady := 0.0               # the speed he asks for before `pace`
 var terrain := 0                # 0 = ordinary ground, 1 = steep (leaning walk), 2 = very steep (hands and feet)
 var stairs := 0                 # +1 going up stairs, -1 going down, 0 not on stairs
 var stair_tread := TREAD        # the depth of a step, measured from the last two edges crossed
@@ -115,6 +113,7 @@ var spot_total := 0.0           # the on-the-spot turn being made (radians, + = 
 var spot_left := 0.0            # how much of it is still to turn
 var spot_run := false           # it is the plant-and-turn out of a run
 var land_hold := 0.0            # seconds left of gathering himself after a landing, when the stick is not obeyed
+var _stood_y := 0.0             # the height of the ground he last stood squarely on (his middle over it)
 
 
 func _ready() -> void:
@@ -247,9 +246,8 @@ func _physics_process(dt: float) -> void:
 			if gain > 1.0:
 				_wish *= gain
 		_wish = _wish.limit_length(_slope_speed(running))
-	# what he asks for at a steady pace, and the same shaped by a clip that sets the pace (see `pace`)
-	steady = _wish.length()
-	_wish *= pace
+	# (Until 26 Nov a slope clip could set his pace here. The study: "It alone decides where the character is ...
+	# Animation never pushes it in this mode." Taken out at Yasin's word: "Keep it, body in charge".)
 	# The mountaineering sources say "face inwards for steep slopes, but otherwise face out". That was built and
 	# Yasin turned it down with the crawl (26 Nov: "we look like a small baby on both up and down"): he comes down
 	# facing out, crouched, a hand back on the slope.
@@ -387,6 +385,8 @@ func _find_stairs(dt: float) -> void:
 	var speed := hvel.length()
 	var dir := hvel / speed if speed > 0.2 else (_wish.normalized() if _wish.length() > 0.05 else Vector3.ZERO)
 	var here := _ray_down(global_position)
+	if state == State.GROUND and not here.is_empty() and absf((here["position"] as Vector3).y - ground_y) < 0.05:
+		_stood_y = (here["position"] as Vector3).y
 	if state != State.GROUND or here.is_empty() or dir == Vector3.ZERO:
 		stairs = 0
 		_ray_ok = false
@@ -547,7 +547,10 @@ func _update_ground(dt: float) -> void:
 				vy = 0.0
 				from_jump = false
 				air_time = 0.0
-				_air_peak = feet.y
+				# The drop is measured from the ledge he stood on, not from where the rounded probe had let him
+				# sink to as it rolled over the edge (a 1.10 m ledge used to count as under 1.0 m, and so as a
+				# soft landing; the study: "1.0 to 2.0 m, a heavy landing").
+				_air_peak = _stood_y if (_stood_y > feet.y and _stood_y - feet.y < STEP_DOWN) else feet.y
 			return
 		ground_y = float(g["y"])
 		ground_normal = g["normal"]
@@ -587,7 +590,7 @@ func _update_ground(dt: float) -> void:
 			var drop := _air_peak - ground_y
 			# after a real drop he gathers himself before moving off (a jump on the level is run out of)
 			if not (from_jump and drop < 0.9):
-				land_hold = LAND_HOLD_HARD if drop >= HARD_DROP else (LAND_HOLD_SOFT if drop >= 0.35 else 0.0)
+				land_hold = LAND_HOLD_HARD if drop >= HARD_DROP else (LAND_HOLD_SOFT if drop > STEP_DOWN else 0.0)   # the study: "up to 0.30 m, step down in stride"
 			landed.emit(drop)
 			from_jump = false
 		else:
@@ -609,4 +612,5 @@ func place(at: Vector3) -> void:
 	from_jump = false
 	air_time = 0.0
 	_air_peak = at.y
+	_stood_y = at.y
 	state = State.AIR

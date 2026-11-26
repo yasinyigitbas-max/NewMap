@@ -73,7 +73,9 @@ const STEEP := {true: "KM_Climb_Hard", false: "KMY_Down_Hands_Balance_Long"}
 const HANDS := {true: "KM_Climb_Hard", false: "KMY_Down_Hands_Balance_Long"}
 const DRIVEN_MOST := 1.15       # NOT in the study: a struggling take is never played faster than this over its own speed
 # Clips that set the body's pace themselves (his hips do not move evenly in them: he stops while the hands go down)
-const DRIVEN := ["KM_Climb_Hard", "KMY_Down_Hands_Balance_Long"]
+# (26 Nov, later: none may. The study: "It alone decides where the character is ... Animation never pushes it in this
+# mode." Yasin: "Keep it, body in charge". The takes now follow the body's pace like every other clip.)
+const DRIVEN: Array[String] = []
 const STEEP_DOWN_RUN := "KM_Slope_Down_Run"
 # Walking or running off an edge (Yasin, 26 Nov: "looks stuck and frozen on air before landing, no limbs move to
 # balance itself"): Kimodo takes of stepping and of running off a ledge. [clip, leaves the edge, feet touch down]
@@ -259,11 +261,11 @@ func _on_landed(drop: float) -> void:
 	elif drop >= HARD_DROP:
 		_land_clip = "Hard_Landing"
 		_land_from = HARD_CONTACT
-	elif _mode == "fall" and not _drop.is_empty() and drop >= 0.35:
+	elif _mode == "fall" and not _drop.is_empty() and drop > 0.30:
 		# the same clip carries on from where its feet touch down
 		_land_clip = _drop[0]
 		_land_from = float(_drop[2])
-	elif drop >= 0.35:
+	elif drop > 0.30:        # the study: "0.30 to 1.0 m, step or hop off with a soft landing"
 		_land_clip = "Falling_To_Landing"
 		_land_from = LAND_CONTACT
 	else:
@@ -437,7 +439,6 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 	elif sub == "stop" and wish > 0.05:
 		_to_loop(maxf(speed, 1.0))
 	# the pose
-	body.set(&"pace", 1.0)
 	_driven_now = false
 	if sub == "stairs" and st != 0:
 		var tread := float(body.get(&"stair_tread"))
@@ -469,12 +470,12 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 		var up: bool = grade >= 0.0
 		var c: Resource = clips[(STEEP if sub == "steep" else HANDS)[up]]
 		var name: String = (STEEP if sub == "steep" else HANDS)[up]
-		var asked := float(body.get(&"steady"))
+		var asked := (body.get(&"_wish") as Vector3).length()
 		if not up and asked > 2.0 and clips.has(STEEP_DOWN_RUN):
 			c = clips[STEEP_DOWN_RUN]
 		# with run held on the leaning-walk band the struggling take would have to play at three times its speed:
 		# there the earlier climbing stride stays (unchanged from the last build)
-		if up and sub == "steep" and float(body.get(&"steady")) > float(c.get(&"speed")) * 1.8 and clips.has("KM_Climb"):
+		if up and sub == "steep" and asked > float(c.get(&"speed")) * 1.8 and clips.has("KM_Climb"):
 			c = clips["KM_Climb"]
 		var c_len := float(c.get(&"length"))
 		_driven_now = DRIVEN.has(name) and c == clips[name]
@@ -482,14 +483,12 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 			# the clip runs on at the pace he asks for (his steady climbing speed over the clip's own average), and
 			# the body is told how fast the clip's hips are going at this moment, so the feet hold their ground
 			var mean := maxf(float(c.get(&"speed")), 0.05)
-			var steady := float(body.get(&"steady"))
 			# (never faster than a little over the take's own pace: his speed on this ground is then the take's)
-			var rate := minf(steady / mean, DRIVEN_MOST)
+			var rate := minf(asked / mean, DRIVEN_MOST)
 			_steep_phase = fposmod(_steep_phase + dt * rate / c_len, 1.0)
 			var t := _steep_phase * c_len
 			var t0 := clampf(t - 0.05, 0.0, c_len - 0.1)
 			var now := (float(c.call(&"dist_at", t0 + 0.1)) - float(c.call(&"dist_at", t0))) / 0.1
-			body.set(&"pace", clampf(now * rate / maxf(steady, 0.01), 0.0, 3.0))
 			return _slope_clip_pose(c, t, out, dt, true)
 		var covered := speed * dt
 		_steep_phase = fposmod(_steep_phase + covered / maxf((c.get(&"travel") as Vector3).length(), 0.1), 1.0)
