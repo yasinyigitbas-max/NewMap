@@ -9,6 +9,8 @@ extends Node3D
 ## stairs and steep-ground clips. Until they are, he walks stairs and slopes with the plain walk.
 
 const ArmOpen := preload("res://traversal/character/arm_open.gd")
+const FootPlace := preload("res://traversal/character/foot_place.gd")
+const FootOrient := preload("res://traversal/character/foot_orient.gd")
 const MODEL := "res://traversal/character/player_v4_rooted.scn"
 const LIBRARY := "res://traversal/character/library.res"
 const SKEL := "Skeleton3D"
@@ -82,6 +84,9 @@ var _flight := 0.6
 var _drop: Dictionary = {}
 var _last_dir := Vector3.ZERO
 var _measured := 0.0            # the natural speed as measured from the tree's root motion (0 = not measured)
+var feet: SkeletonModifier3D
+var _leg_ik: TwoBoneIK3D
+var _orient: SkeletonModifier3D
 var _chest_i := -1
 var _lean_s := 0.0              # the lean, eased, before it is held to the study's limit
 var _own_mean := 0.0            # where the stride has the chest over the feet, averaged over about a stride
@@ -127,7 +132,44 @@ func _ready() -> void:
 	tree.root_node = tree.get_path_to(model)
 	tree.root_motion_track = NodePath("%s:Root" % SKEL)
 	tree.active = true
-	# Layer 3, the corrections, as children of the skeleton in the study's order. Stage 3 has only this one.
+	# Layer 3, the corrections, as children of the skeleton in the study's order: "a pelvis height offset (custom),
+	# leg `TwoBoneIK3D`, arm `TwoBoneIK3D`, `BoneTwistDisperser3D` for forearms, look-at for spine then neck then
+	# head, `LimitAngularVelocityModifier3D` as a pop filter". (Arm IK and the twist disperser come with the first
+	# move that puts hands on something; they are NOT built yet.)
+	if body:
+		feet = FootPlace.new()
+		feet.name = "FootPlace"
+		feet.set(&"body", body)
+		feet.call(&"bind", skel)
+		skel.add_child(feet)
+		var ik := TwoBoneIK3D.new()
+		ik.name = "LegIK"
+		skel.add_child(ik)
+		ik.setting_count = 2
+		var side := ["Left", "Right"]
+		var targets: Array[Node3D] = []
+		var poles: Array[Node3D] = []
+		for f in 2:
+			var t := Node3D.new()
+			t.name = "%sFootTarget" % side[f]
+			skel.add_child(t)
+			targets.append(t)
+			var p := Node3D.new()
+			p.name = "%sKneePole" % side[f]
+			skel.add_child(p)
+			poles.append(p)
+			ik.set_root_bone(f, skel.find_bone("mixamorig_%sUpLeg" % side[f]))
+			ik.set_middle_bone(f, skel.find_bone("mixamorig_%sLeg" % side[f]))
+			ik.set_end_bone(f, skel.find_bone("mixamorig_%sFoot" % side[f]))
+			ik.set_target_node(f, ik.get_path_to(t))
+			ik.set_pole_node(f, ik.get_path_to(p))
+		feet.set(&"target", targets)
+		feet.set(&"pole", poles)
+		_leg_ik = ik
+		_orient = FootOrient.new()
+		_orient.name = "FootOrient"
+		_orient.set(&"place", feet)
+		skel.add_child(_orient)
 	var arms: SkeletonModifier3D = ArmOpen.new()
 	arms.name = "ArmOpen"
 	arms.set(&"open_deg", arm_open_deg)
@@ -341,6 +383,11 @@ func _physics_process(dt: float) -> void:
 					_seek()
 	_ground(dt, speed)
 	_lean(dt, not in_air)
+	if feet:
+		# the fitting fades out in the air and back in on the ground; the three modifiers go together
+		var w := float(feet.get(&"weight"))
+		_leg_ik.influence = w
+		_orient.influence = w
 	note = "%s  gait x%.2f" % [_mode if _mode != "land" else "land (%s)" % landing_kind, _scale]
 
 

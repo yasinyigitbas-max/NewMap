@@ -6,7 +6,7 @@ extends RefCounted
 ## pointed the way the clip had it, and foot_orient.gd turns the feet back afterwards.
 ## The report's bar: no foot inside or above its surface by more than about 2 cm, a planted foot drifts under 2 cm.
 
-const FootOrient := preload("res://traversal/character/foot_orient.gd")
+const FootOrient := preload("res://traversal/character/foot_orient_v1.gd")
 const CONTACT := 0.025          # the ball of the foot this close to the clip's floor counts as on the ground (m)
 const PLANT_SPEED := 0.45        # NOT in the study: a low foot counts as planted while it moves over the ground slower than
                                 # this share of the body's speed (a swinging foot moves at about twice the body's speed)

@@ -1,17 +1,20 @@
 extends SkeletonModifier3D
-## Runs after the leg IK: the IK has moved the shins, so each foot is turned back to the way it should point
-## (the clip's own foot, kept where it was planted and tilted to the ground under it).
+## Runs after the leg IK: the IK has moved the shins, so each foot is turned to the way it should point (the clip's
+## own foot, tilted to the ground under it), as foot_place.gd worked it out. The study lists as unknown "whether
+## `TwoBoneIK3D` orients the hand or foot to the target", so the foot is turned here and not left to the solver.
 
-var feet: RefCounted
+var place: SkeletonModifier3D
+var _foot := [-1, -1]
 
 
-func _process_modification() -> void:
+func _process_modification_with_delta(_delta: float) -> void:
 	var sk := get_skeleton()
-	if sk == null or feet == null:
+	if sk == null or place == null:
 		return
-	var foot: Array = feet.get(&"foot")
-	var shin: Array = feet.get(&"shin")
-	var goal: Array = feet.get(&"foot_goal")
+	if _foot[0] < 0:
+		_foot = [sk.find_bone("mixamorig_LeftFoot"), sk.find_bone("mixamorig_RightFoot")]
+	var goal: Array = place.get(&"goal")
 	for f in 2:
-		var parent := sk.get_bone_global_pose(shin[f]).basis.orthonormalized()
-		sk.set_bone_pose_rotation(foot[f], (parent.inverse() * (goal[f] as Basis)).get_rotation_quaternion())
+		var t := sk.get_bone_global_pose(_foot[f])
+		t.basis = goal[f]
+		sk.set_bone_global_pose(_foot[f], t)
