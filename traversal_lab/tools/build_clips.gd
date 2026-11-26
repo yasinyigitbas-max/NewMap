@@ -51,7 +51,10 @@ const TRIMS := {"KM_Slope_Down_Start": [0.60, 2.33], "KM_Slope_Down_Stop": [4.57
 		"KM_Vault_Stand": [0.0, 2.60],
 		# the jump over a low obstacle from standing (Kimodo, Yasin's words and seed, 26 Nov: "jump over obstacle when
 		# standing still")
-		"KM_Jump_Over": [0.0, 2.50]}
+		"KM_Jump_Over": [0.0, 2.50],
+		# the climb up onto a wall (Kimodo, Yasin's words "vaulting over a wall. landing on the other side", seed 1,
+		# 26 Nov): a short run in, both hands on the top, up onto it; he is standing on top by 3.0 s
+		"KM_Climb_Up": [0.20, 3.40]}
 const LOOPS := ["Standing_Idle", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
 
 

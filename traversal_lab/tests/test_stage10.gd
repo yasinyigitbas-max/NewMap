@@ -20,6 +20,7 @@ var fails := 0
 var bones := []
 var stand := []
 var final := []
+var knees := []
 var hand_turn := []
 
 
@@ -37,6 +38,7 @@ func _after() -> void:
 	final.clear()
 	for i: int in bones:
 		final.append((skel.global_transform * skel.get_bone_global_pose(i)).origin)
+	knees = [(skel.global_transform * skel.get_bone_global_pose(skel.find_bone("mixamorig_LeftLeg"))).origin, (skel.global_transform * skel.get_bone_global_pose(skel.find_bone("mixamorig_RightLeg"))).origin]
 	hand_turn = [(skel.global_transform.basis * skel.get_bone_global_pose(bones[4]).basis).orthonormalized(), (skel.global_transform.basis * skel.get_bone_global_pose(bones[5]).basis).orthonormalized()]
 
 
@@ -52,7 +54,7 @@ func go_at(s: Dictionary, run: bool, flip := -1.0, near := false) -> Dictionary:
 	tape.set(&"tape", samples)
 	tape.call(&"replay")
 	var before := int(trav.get(&"plays"))
-	var out := {"played": false, "plan": {}, "end": Vector3.ZERO, "end_state": -1, "end_speed": 0.0, "feet": INF, "hand": -1.0, "held": 0, "move_from": -1.0, "low": INF, "rock": 0.0}
+	var out := {"played": false, "plan": {}, "end": Vector3.ZERO, "end_state": -1, "end_speed": 0.0, "feet": INF, "hand": -1.0, "held": 0, "move_from": -1.0, "low": INF, "rock": 0.0, "in_wall": 0.0}
 	var was_in := false
 	var t := 0
 	var after := -1
@@ -79,6 +81,9 @@ func go_at(s: Dictionary, run: bool, flip := -1.0, near := false) -> Dictionary:
 				any = true
 				var hi := int(one[0])
 				out["hand"] = maxf(float(out["hand"]), (final[4 + hi] as Vector3).distance_to(one[1]))
+				if OS.get_cmdline_user_args().has("--hands") and hi == 0:
+					var dv: Vector3 = (final[4 + hi] as Vector3) - (one[1] as Vector3)
+					print("   hands ct %.2f body y %.2f wrist off: up %.2f, level %.2f" % [float(body.get(&"move_clip_t")), body.global_position.y, dv.y, Vector2(dv.x, dv.z).length()])
 				var now: Basis = hand_turn[hi]
 				if last_turn[hi] != Basis():
 					out["rock"] = maxf(float(out["rock"]), rad_to_deg(Quaternion(last_turn[hi] as Basis).angle_to(Quaternion(now))))
@@ -92,6 +97,14 @@ func go_at(s: Dictionary, run: bool, flip := -1.0, near := false) -> Dictionary:
 			# (a foot joint counts while it is itself over the obstacle: within its thickness, and the length of
 			# the toes beyond the toe joint more each way)
 			# ... and while he is off the ground: standing against it his toes are at its foot, which is no fault
+			# the climb over: how deep a knee or a foot joint is inside the wall itself (under its top and between its faces)
+			if String(plan.get("key", "")) == "climb_over" and knees.size() == 2:
+				for q: Vector3 in [final[0], final[1], final[2], final[3], knees[0], knees[1]]:
+					var along := absf((q - (plan["mid"] as Vector3)).dot(plan["m"]))
+					var inside := minf(float(s["depth"]) * 0.5 - along, float(plan["top"]) - q.y)
+					if inside > float(out["in_wall"]) and OS.get_cmdline_user_args().has("--feet"):
+						print("   in the wall %.2f m at clip %s %.2f" % [inside, body.get(&"move_clip"), float(body.get(&"move_clip_t"))])
+					out["in_wall"] = maxf(float(out["in_wall"]), inside)
 			if plan.has("mid") and int(body.get(&"state")) >= 2:
 				for k in 4:
 					if absf(((final[k] as Vector3) - (plan["mid"] as Vector3)).dot(plan["m"])) < float(s["depth"]) * 0.5 + TOE:
@@ -154,12 +167,8 @@ func _run() -> void:
 			var should := String(s["kind"]) == "wall_thin" and h >= float(band[0]) - 0.001 and h <= float(band[1]) + 0.001
 			# at a walk or from standing: the jump over it up to 1.0 m, the vault with both hands on its top above
 			var want_key := "vault" if run else ("vault_jump" if h <= float(trav.get(&"JUMP_MOST")) + 0.001 else "vault")
-			if should and bool(way[2]) and want_key == "vault":
-				# from standing against a wall over 1.0 m there is no move yet: it takes a clip with the hands on the top
-				var r0 := await go_at(s, run, -1.0, true)
-				var k0 := String((r0["plan"] as Dictionary).get("key", ""))
-				ok(k0 == "", "%s, from standing against it: no move yet (%s)" % [s["label"], ("the move '%s' played" % k0) if k0 != "" else "stopped: " + String(r0["refused"])])
-				continue
+			if bool(way[2]) and want_key == "vault":
+				want_key = "climb_over"     # from standing against a wall over 1.0 m: up onto it with both hands, and off its far side
 			var r := await go_at(s, run, -1.0, bool(way[2]))
 			var key := String((r["plan"] as Dictionary).get("key", ""))
 			if not should:
@@ -186,6 +195,8 @@ func _run() -> void:
 						bad = "no foot nearer than %.1f cm to the ground in the step after" % (float(r["feet"]) * 100.0)
 					elif float(r["low"]) < 0.0:
 						bad = "a foot %.1f cm under the top as he goes over" % (-float(r["low"]) * 100.0)
+				elif float(r["in_wall"]) > 0.02:
+					bad = "a knee or a foot %.0f cm inside the wall" % (float(r["in_wall"]) * 100.0)
 				elif float(r["rock"]) > HAND_ROCK:
 					bad = "the held hand turns %.1f degrees in a tick" % float(r["rock"])
 				elif run and int(plan["hand"]) != int(way[1]):

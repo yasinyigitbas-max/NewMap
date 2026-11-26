@@ -175,6 +175,17 @@
     ],
     "turn_deg": -8.59987410849013
   },
+  "KM_Climb_Up": {
+    "length": 3.2,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 0.767280161380768,
+    "travel": [
+      -0.177662819623947,
+      2.44886016845703
+    ],
+    "turn_deg": 6.56874105452889
+  },
   "KM_Crouch_Down": {
     "length": 1.4,
     "loop": false,

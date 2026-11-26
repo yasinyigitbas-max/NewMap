@@ -25,7 +25,7 @@ const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint",
 		"KM_Walk", "KM_Run", "KM_Slope_Up_Start", "KM_Slope_Up_Stop", "KM_Start_Run"]
 # A vault ends a stride on, with the hips turned as a running stride turns them (31 degrees in Vault 1 Hand): that is
 # not a turn of his path, and its root does not turn.
-const STRAIGHT_ON := ["Vault_1_Hand"]
+const STRAIGHT_ON := ["Vault_1_Hand", "KM_Climb_Up"]
 const TURN_LEAST_DEG := 20.0        # a clip that turns less than this is not a turning clip: its root does not turn
 # In the air the body does the rising and the falling (the study: the body "alone decides where the character is"), so
 # the clip's own rise is taken out: between leaving the ground and landing the hips keep at most their take-off height.
@@ -39,7 +39,7 @@ const GROUNDED := ["Falling_To_Landing", "Hard_Landing"]
 # clip's own rise the clip has made so far (rise_of); that much is taken out of the hips here, so what is left is how
 # he holds himself over a body that is already on its way up. The study: "keep it in the hips and move the body node
 # up by measured amounts while offsetting the mesh".
-const RISE := ["KM_Step_Up", "Step_Onto_Platform", "Running_Jump_Climb"]
+const RISE := ["KM_Step_Up", "Step_Onto_Platform", "Running_Jump_Climb", "KM_Climb_Up"]
 const LEDGE := ["KM_Ledge_Walk_Off", "KM_Ledge_Run_Off", "KM_Land_Roll"]
 # The walk's hips, brought to the study: "The pelvis moves only a few degrees at normal walking speed: about 3 degrees
 # of tilt, 8.5 of side drop and 12 of rotation in total range", and the body "rises and falls 2.7 to 4.8 cm in walking

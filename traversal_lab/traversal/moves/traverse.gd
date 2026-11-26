@@ -126,6 +126,26 @@ const JUMP_MOST := 1.0              # his word: the jump "for short walls", the 
 const VAULT_SLOW := 0.6             # NOT in the study: the pace of the one-hand vault at a walk (over 1.0 m)
 const BEYOND := 0.45                # NOT in the study: how far past the middle of the obstacle the jump sets him down (m):
                                     # his own radius, half a thin wall, and a hand's breadth
+# A thin wall over 1.0 m from standing against it: no vault from standing with the hands on the top exists (44 more
+# Kimodo takes in other verbs and objects, and the Drive clips, measured 26 Nov: none). Yasin, 26 Nov: "if nothing
+# else works, then use a vault over vault (which results in climbing over a thick object and then a jump down animation
+# in succession smoothly". So: the climb up onto it, both hands on its top, then the step off its far side with the
+# landing of stage 8, as one move. The climb is a Kimodo take in his words ("vaulting over a wall. landing on the
+# other side", seed 1), measured on him: a short run in, off the ground at about 0.9 s with both wrists forward at
+# the height of the top, feet on top and nearly upright by 2.3 s, standing by 2.6 s, 1.30 m up. It is taken up at
+# 0.85 s, as he pushes off: its run in is not played (begun earlier, standing at the wall, its stride was in the wall).
+const OVER := {"input": "climb_up", "res": "res://traversal/character/clips/KM_Climb_Up.res",
+		"from": 0.85, "hands_on": 0.85, "top": 2.30, "hand_side": 0.24}
+const OVER_REACH := 1.03            # NOT in the study, measured in the lab: his wrists reach the top while his feet are at least
+                                    # this far under it; higher than that his arms are too short and the hands let go. So over
+                                    # a 1.40 m wall they bear on it for about 0.1 s, and over a 1.10 m wall NOT AT ALL
+const OVER_REACH_FADE := 0.10       # NOT in the study: ... over this much more rise (m)
+const OVER_BACK := 0.48             # NOT in the study, found in the lab: he sinks for the jump this far from the wall's face
+                                    # (nearer, his knees were in the wall). The study: "slide and turn the body over a
+                                    # short fixed time so it starts at the clip's native distance from the wall"
+const OVER_ACROSS := [1.30, 1.85]   # NOT in the study, found in the lab: between these moments of the take he is carried
+                                    # in over the top: not before his knees and feet are above it
+const OVER_NEAR := 0.45             # NOT in the study: it is begun from within this of the wall's face (m)
 const PALM := 0.08                  # the study, Part 3: "the gripping palm is about 0.08 m further along" than the wrist
 const HAND_FADE := 0.12             # NOT in the study: seconds over which the hand's hold comes in and goes out
 const LAND_LEVEL := 0.10            # NOT in the study: the ground beyond is taken as level with his if within this (m)
@@ -170,6 +190,8 @@ var _v_fwd := PackedFloat32Array()
 var _v_hips := PackedFloat32Array()
 var _t_fwd := PackedFloat32Array()
 var _j_fwd := PackedFloat32Array()
+var _o_fwd := PackedFloat32Array()
+var _o_rise := PackedFloat32Array()
 
 
 func _ready() -> void:
@@ -202,6 +224,11 @@ func _ready() -> void:
 	var j_hips: PackedVector3Array = jc.get(&"hips")
 	for f in j_hips.size():
 		_j_fwd.append(j_hips[f].z - j_hips[0].z)
+	var oc: Resource = load(String(OVER["res"]))
+	var o_hips: PackedVector3Array = oc.get(&"hips")
+	for f in o_hips.size():
+		_o_fwd.append(o_hips[f].z - o_hips[0].z)
+	_o_rise = ClipData.rise_of(o_hips)
 	var tc: Resource = load(String(TUCK["res"]))
 	var t_hips: PackedVector3Array = tc.get(&"hips")
 	for f in t_hips.size():
@@ -365,9 +392,10 @@ func _physics_process(_dt: float) -> void:
 ## Where the body is `t` seconds into the step off (called by the body every tick of the move).
 func _step_off(t: float) -> Dictionary:
 	var p := _plan
-	var mv: Dictionary = MOVES[p["key"]]
-	var fwd: PackedFloat32Array = _fwd[p["key"]]
-	var high: PackedFloat32Array = _high[p["key"]]
+	var dk := String(p.get("drop_key", p["key"]))
+	var mv: Dictionary = MOVES[dk]
+	var fwd: PackedFloat32Array = _fwd[dk]
+	var high: PackedFloat32Array = _high[dk]
 	var m: Vector3 = p["m"]
 	var t_step := float(p["t_step"])
 	var t_air := float(p["t_air"])
@@ -618,6 +646,8 @@ func _try_vault(v: Vector3, wish: Vector3, rec: Dictionary) -> bool:
 	# which a hand truly bears on the top. The Kimodo vault from standing is NOT used above 1.0 m: its hands do not
 	# come down, and carried over a higher wall he floated with his hands 16 cm and more above the top. Yasin, 26 Nov:
 	# "they do at the very start, but then the character just levitates".)
+	if slow and speed < 0.5:
+		return _try_over(wish, rec)                             # from standing against it: the climb over
 	var m: Vector3 = -(rec["normal"] as Vector3)
 	if rad_to_deg(wish.normalized().angle_to(m)) > MOST_OFF_DEG:
 		refused = "not heading at it"
@@ -815,3 +845,84 @@ func _tuck(t: float) -> Dictionary:
 		out["pos"] = p["end"]
 		out["exit"] = Vector3.ZERO
 	return out
+
+
+# ------------------------------------------------------------------------- the climb over a thin wall from standing
+
+func _try_over(wish: Vector3, rec: Dictionary) -> bool:
+	var top := float(rec["top"])
+	var m: Vector3 = -(rec["normal"] as Vector3)
+	if rad_to_deg(wish.normalized().angle_to(m)) > MOST_OFF_DEG:
+		refused = "not heading at it"
+		return false
+	if not rec.has("landing") or absf(float(rec["landing"])) > LAND_LEVEL or not bool(rec.get("landing_ok", false)):
+		refused = "the ground beyond it is not level with his, or has no room"
+		return false
+	var depth := float(rec["depth"])
+	var here := (rec["edge"] as Vector3 - body.global_position).dot(m)
+	if here > OVER_NEAR:
+		refused = "coming up to it"
+		return false
+	var feet := body.global_position
+	var ground := float(rec["ground"])
+	var mid := feet + m * (here + depth * 0.5)
+	mid.y = ground + top
+	var back := Vector3(feet.x, ground, feet.z) - m * maxf(OVER_BACK - here, 0.0)
+	if not bool(detector.call(&"_fits", back, float(body.get(&"HEIGHT")))):
+		refused = "no room behind him to jump up from"
+		return false
+	# the far side: the step off of stage 8, from the top of the wall
+	var mv: Dictionary = MOVES["walk"]
+	var fwd: PackedFloat32Array = _fwd["walk"]
+	var leave := mid + m * (depth * 0.5 + 0.15)                 # NOT in the study: his hips this far past the far edge as his feet leave it
+	var down := leave + m * (_at(fwd, float(mv["down"])) - _at(fwd, float(mv["leaves"])))
+	var end := down + m * (_at(fwd, float(mv["exit"])) - _at(fwd, float(mv["down"])))
+	for p: Vector3 in [down, end]:
+		var g: Dictionary = body.call(&"probe", Vector3(p.x, ground, p.z))
+		if not bool(g["hit"]) or absf(float(g["y"]) - ground) > LAND_LEVEL or not bool(detector.call(&"_fits", Vector3(p.x, float(g["y"]), p.z), float(body.get(&"HEIGHT")))):
+			refused = "no level, free ground to land on"
+			return false
+	refused = ""
+	var share := clampf(top / float(mv["native"]), 0.0, 1.0)
+	var left := Vector3.UP.cross(m).normalized()
+	var on_top := Vector3(mid.x, ground + top + PALM, mid.z) - m * (depth * 0.5 - 0.01)       # on its near edge
+	_plan = {"key": "climb_over", "drop_key": "walk", "a_from": Vector3(feet.x, ground, feet.z), "a_back": back, "a_yaw0": body.rotation.y,
+			"mid": mid, "top": top, "ground": ground,
+			"from": mid, "leave": Vector3(leave.x, ground + top, leave.z), "down": Vector3(down.x, ground, down.z), "end": Vector3(end.x, ground, end.z),
+			"m": m, "yaw0": atan2(-m.x, -m.z), "yaw1": atan2(-m.x, -m.z), "drop": top,
+			"t_step": float(mv["leaves"]) - float(mv["from"]), "t_air": sqrt(2.0 * top / float(body.get(&"GRAVITY"))),
+			"t_rest": (float(mv["exit"]) - float(mv["down"])) * lerpf(REST_LEAST, 1.0, share), "soft": 1.0 - share,
+			"exit_speed": (_at(fwd, float(mv["exit"])) - _at(fwd, float(mv["exit"]) - 0.2)) / 0.2, "hand": 2,
+			"hands_at": [on_top + left * float(OVER["hand_side"]), on_top - left * float(OVER["hand_side"])]}
+	plays += 1
+	_up_record = {}
+	record = {}
+	body.call(&"begin_move", _over, String(OVER["input"]))
+	return true
+
+
+func _over(t: float) -> Dictionary:
+	var p := _plan
+	var from_t := float(OVER["from"])
+	var top_t := float(OVER["top"])
+	if t >= top_t - from_t:
+		if not p.has("a_done"):
+			p["a_done"] = true
+			p["from"] = body.global_position        # the step off begins where the climb has brought him
+		var r := _step_off(t - (top_t - from_t))
+		r["clip"] = String(MOVES["walk"]["input"])
+		return r
+	var ct := from_t + t
+	var u := smoothstep(float(OVER_ACROSS[0]), float(OVER_ACROSS[1]), ct)
+	var up := _at(_o_rise, ct)                                  # the share of the take's own rise made so far
+	# first back to where the jump is made from (0.2 s), then up, then in over the top
+	var a: Vector3 = (p["a_from"] as Vector3).lerp(p["a_back"], smoothstep(0.0, 0.2, t))
+	var mid: Vector3 = p["mid"]
+	var pos := Vector3(lerpf(a.x, mid.x, u), float(p["ground"]) + float(p["top"]) * up, lerpf(a.z, mid.z, u))
+	# both hands on the top from as he sinks for the jump until he has risen past the reach of his arms
+	var under := float(p["top"]) * (1.0 - up)
+	var hold := clampf(minf((ct - float(OVER["hands_on"])) / HAND_FADE + 1.0, (under - OVER_REACH) / OVER_REACH_FADE + 1.0), 0.0, 1.0)
+	hold = hold * hold * (3.0 - 2.0 * hold)
+	return {"done": false, "pos": pos, "clip_t": ct, "clip": String(OVER["input"]), "air": false,
+			"yaw": lerp_angle(float(p["a_yaw0"]), float(p["yaw1"]), clampf(t / 0.2, 0.0, 1.0)),
+			"hand": [[0, (p["hands_at"] as Array)[0], hold], [1, (p["hands_at"] as Array)[1], hold]]}

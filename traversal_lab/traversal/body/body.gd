@@ -326,6 +326,8 @@ func _run_move(dt: float) -> void:
 	var was := global_position
 	global_position = r["pos"]
 	rotation.y = float(r["yaw"])
+	if r.has("clip"):
+		move_clip = String(r["clip"])       # a move made of two clips (the climb over) changes clip on its way
 	move_clip_t = float(r["clip_t"])
 	move_landed = bool(r.get("landed", false))
 	move_soft = float(r.get("soft", 0.0))
