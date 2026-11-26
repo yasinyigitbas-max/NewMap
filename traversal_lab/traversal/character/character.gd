@@ -11,6 +11,7 @@ extends Node3D
 const ArmOpen := preload("res://traversal/character/arm_open.gd")
 const FootPlace := preload("res://traversal/character/foot_place.gd")
 const FootOrient := preload("res://traversal/character/foot_orient.gd")
+const HandPlace := preload("res://traversal/character/hand_place.gd")
 const MODEL := "res://traversal/character/player_v4_rooted.scn"
 const LIBRARY := "res://traversal/character/library.res"
 const SKEL := "Skeleton3D"
@@ -71,6 +72,13 @@ const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling
 # his own two Kimodo takes (up: leaning steps, a bend with both hands down, the push back up; down: crouched, leaning
 # back, the hands out for balance). The body sets the pace; the take is played by the ground he covers.
 const STEEP_ARMS_DEG := 8.0     # NOT in the study, mine: "just a bit" (Yasin); the arms opened this much more on these takes
+# Going up (Yasin, 26 Nov, after seeing the 8 degrees: "hands are too closed, open them at least 10 cm each
+# direction"): 10 cm at the hand, 0.55 m from the shoulder, is 10.5 degrees more.
+const STEEP_ARMS_UP_DEG := 19.0
+# The takes end where the steep ground does (Yasin, 26 Nov: "it doesnt detect the end of the slope, so it keeps
+# looking like climbing although a short normal step is enough at the end"): when the ground one walking step ahead
+# (half the study's stride of 1.5 m, measured along the slope) is no longer very steep, he walks.
+const STEEP_STEP := 0.75
 # Standing (Yasin, 26 Nov: "feet need to be a bit wider both on idle and and standing still"). The study gives no
 # standing foot spacing. Each foot is set this far out to its side while he stands, and comes back in as he walks.
 const STAND_WIDE := 0.03        # NOT in the study, mine: "a bit" (Yasin). Metres, each foot: 6 cm wider in all
@@ -125,6 +133,7 @@ var _steep_up := true
 var _steep_phase := 0.0         # strides along the take
 var _steep_w := 0.0             # 0..1: a steep take is showing (for the arms)
 var _arms: SkeletonModifier3D
+var hands: SkeletonModifier3D
 var _slope := 0.0               # the showing stair clip's own slope, eased in and out with it
 var _hips_fit := 0.0
 var _slope_from := 0.0
@@ -219,6 +228,41 @@ func _ready() -> void:
 	arms.set(&"open_deg", arm_open_deg)
 	skel.add_child(arms)
 	_arms = arms
+	if body:
+		# after the legs, the arms (the study's order), here for the takes that put hands on the ground
+		hands = HandPlace.new()
+		hands.name = "HandPlace"
+		hands.set(&"body", body)
+		hands.call(&"bind", skel)
+		skel.add_child(hands)
+		var h_targets: Array[Node3D] = []
+		var h_poles: Array[Node3D] = []
+		var h_ik: Array[SkeletonModifier3D] = []
+		var hs := ["Left", "Right"]
+		for f in 2:
+			var t := Node3D.new()
+			t.name = "%sHandTarget" % hs[f]
+			skel.add_child(t)
+			h_targets.append(t)
+			var p := Node3D.new()
+			p.name = "%sElbowPole" % hs[f]
+			skel.add_child(p)
+			h_poles.append(p)
+			var one := TwoBoneIK3D.new()
+			one.name = "%sArmIK" % hs[f]
+			skel.add_child(one)
+			one.setting_count = 1
+			one.set_root_bone(0, skel.find_bone("mixamorig_%sArm" % hs[f]))
+			one.set_middle_bone(0, skel.find_bone("mixamorig_%sForeArm" % hs[f]))
+			one.set_end_bone(0, skel.find_bone("mixamorig_%sHand" % hs[f]))
+			one.set_target_node(0, one.get_path_to(t))
+			one.set_pole_node(0, one.get_path_to(p))
+			one.influence = 0.0
+			h_ik.append(one)
+		hands.set(&"target", h_targets)
+		hands.set(&"pole", h_poles)
+		hands.set(&"ik", h_ik)
+		feet.set(&"hands", hands)
 	if body:
 		body.connect(&"jump_started", _on_jump_started)
 		body.connect(&"landed", _on_landed)
@@ -362,7 +406,7 @@ func _physics_process(dt: float) -> void:
 			if not in_air and st != 0 and speed > 0.15:
 				_steep_on = false
 				_stairs(dt, st, speed)
-			elif not in_air and int(body.get(&"terrain")) == 2 and speed > 0.1:
+			elif not in_air and int(body.get(&"terrain")) == 2 and speed > 0.1 and _steep_ahead():
 				_stair_on = false
 				_steep(dt, speed)
 			elif _stair_on or _steep_on:
@@ -493,7 +537,13 @@ func _physics_process(dt: float) -> void:
 		_leg_ik.influence = w
 		_orient.influence = w
 	_steep_w = move_toward(_steep_w, 1.0 if _steep_on else 0.0, dt / FADE)
-	_arms.set(&"open_deg", arm_open_deg + STEEP_ARMS_DEG * _steep_w)
+	_arms.set(&"open_deg", arm_open_deg + (STEEP_ARMS_UP_DEG if _steep_up else STEEP_ARMS_DEG) * _steep_w)
+	if hands:
+		hands.set(&"on", _steep_on and ACTS.has(_act))
+		if _steep_on and ACTS.has(_act):
+			var a := _lib.get_animation(ACTS[_act])
+			hands.set(&"clip_slope", float(a.get_meta(&"slope", 0.0)))
+			hands.set(&"hand_low", float(a.get_meta(&"hand_low", 0.0)))
 	note = "%s  gait x%.2f" % [_mode if _mode != "land" else "land (%s)" % landing_kind, _scale]
 
 
@@ -532,6 +582,20 @@ func _stairs(dt: float, st: int, speed: float) -> void:
 		_stair_phase += wrapf(cycle - _stair_phase, -0.25, 0.25) * minf(dt * STAIR_PULL, 1.0)
 	_stair_on = true
 	_show(input, fposmod(_stair_phase, 1.0) * a.length)
+
+
+## Is the ground one walking step ahead of him still very steep? (A ray down, where that step would land.)
+func _steep_ahead() -> bool:
+	var v: Vector3 = body.get(&"hvel")
+	if v.length() < 0.05:
+		return true
+	var here := deg_to_rad(float(body.get(&"slope_deg")))
+	var at := body.global_position + v.normalized() * (STEEP_STEP * cos(here))
+	var q := PhysicsRayQueryParameters3D.create(at + Vector3(0.0, 1.5, 0.0), at - Vector3(0.0, 1.5, 0.0), body.collision_mask, [body.get_rid()])
+	var hit := body.get_world_3d().direct_space_state.intersect_ray(q)
+	if hit.is_empty():
+		return false
+	return rad_to_deg(acos(clampf((hit["normal"] as Vector3).y, -1.0, 1.0))) > float(body.get(&"SLOPE_HANDS_DEG"))
 
 
 ## On steep ground: his take for the way he is going, moved on by the ground he covers (the body sets the pace).

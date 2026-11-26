@@ -46,6 +46,7 @@ var land_at: Array[Vector3] = [Vector3.ZERO, Vector3.ZERO]
 # ground; it keeps that correction through its swing and eases to the next one where it next comes down.
 var by_speed := false
 var stand_wide := 0.0           # each foot is set this far out to its own side (m): see character.gd, STAND_WIDE
+var hands: SkeletonModifier3D   # hand_place.gd, when it is there: how far the hips must come down for the hands
 var hips_fit := 0.0             # the hips' height put right for a clip made on steeper or shallower ground (m; see character.gd)
 var pinning := true
 var grounding := true
@@ -261,7 +262,8 @@ func _process_modification_with_delta(dt: float) -> void:
 		var u := clampf((here - (p[0] as Vector3)).dot(stride_dir) / span, -2.0, 3.0) if absf(span) > 0.05 else 0.5
 		off = feet_y - lerpf(g[0], g[1], u)
 	_ride += (off - _ride) * (1.0 - exp(-dt / HIPS_TIME))
-	want_pelvis = maxf(minf(want_pelvis, hips_fit - _ride), -HIPS_MOST) if on_ground else 0.0
+	var for_hands := float(hands.get(&"hips_down")) if hands else 0.0
+	want_pelvis = maxf(minf(want_pelvis, hips_fit - _ride) - for_hands, -HIPS_MOST) if on_ground else 0.0
 	if want_pelvis < _pelvis:
 		_pelvis = maxf(want_pelvis, _pelvis - HIPS_DOWN * dt)
 	else:

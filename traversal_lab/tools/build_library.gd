@@ -258,6 +258,18 @@ func _stairs(a: Animation, c: Resource, sk: Skeleton3D) -> void:
 	var at := int(round(fposmod(float(c.get(&"phase_offset")), a.length) * fps))
 	a.set_meta(&"slope", slope)
 	a.set_meta(&"pivot", pivot)
+	# how near its own ground the take brings a hand (the wrist), at its lowest: for hand_place.gd
+	var low := INF
+	for f in frames:
+		var time := float(f) / fps
+		for k in 2:
+			var x := Transform3D(Basis(_rot(a, "mixamorig_Hips", time)), a.position_track_interpolate(t_hips, time))
+			for bn: String in ["Spine", "Spine1", "Spine2", "%sShoulder" % side[k], "%sArm" % side[k], "%sForeArm" % side[k], "%sHand" % side[k]]:
+				var name := "mixamorig_" + bn
+				x = x * Transform3D(Basis(_rot(a, name, time)), sk.get_bone_rest(sk.find_bone(name)).origin)
+			low = minf(low, x.origin.y - slope * x.origin.z)
+	a.set_meta(&"hand_low", low)
+	print("      its hands come to %.3f m over its own ground at their lowest (wrist)" % low)
 	a.set_meta(&"reach", (balls[0][mini(at, frames - 1)] as Vector3).z)
 	print("   stairs %s: rises %.2f m over %.2f m (slope %.2f), its stairs stood %.3f m off the hips' floor (%d planted frames), left foot comes down %.2f m ahead, its standing leg is longest (%.3f m) with the ball of the foot %.2f m ahead" % [c.get(&"source"), rise, total, slope, floor_y, count, float(a.get_meta(&"reach")), longest, pivot])
 
