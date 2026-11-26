@@ -59,6 +59,8 @@ func walk_off(s: Dictionary, flip := -1.0, run := false) -> Dictionary:
 	var out := {"played": false, "plan": {}, "end": Vector3.ZERO, "end_state": -1, "end_speed": 0.0, "feet": INF, "under": 0.0, "air_ticks": 0, "move_from": -1.0, "hips_low": INF}
 	var was_in := false
 	var landed_for := -1
+	var ended := false
+	var window := 6
 	var t := 0
 	while int(tape.get(&"mode")) == 2:
 		await physics_frame
@@ -68,19 +70,25 @@ func walk_off(s: Dictionary, flip := -1.0, run := false) -> Dictionary:
 		if inm and not was_in:
 			out["played"] = true
 			out["plan"] = (trav.get(&"_plan") as Dictionary).duplicate()
+			# Running on off a low edge the run itself is shown: both feet are off the ground for part of every
+			# running stride, so there a foot is looked for on the ground over one running step (a third of a
+			# second), not over a tenth of a second.
+			if bool((out["plan"] as Dictionary).get("run_on", false)):
+				window = 20
 			out["move_from"] = t / 60.0
 		if inm and int(body.get(&"state")) >= 2:
 			out["air_ticks"] = int(out["air_ticks"]) + 1
-		if inm and bool(body.get(&"move_landed")):
+		# (a move that hands him back as he touches down: the tenth of a second after it is looked at the same way)
+		if (inm and bool(body.get(&"move_landed"))) or (was_in and not inm) or (landed_for >= 0 and not inm):
 			landed_for += 1
 			out["hips_low"] = minf(float(out["hips_low"]), hips_y - body.global_position.y)
 			# the feet 0.1 s after he comes down: how far the nearer foot's joints are off the ground, and how far
 			# under it any joint is
 			# (at a run a foot is on the ground at the landing and both may be off it again a tenth of a second
 			# later, so it is the nearest a foot comes to the ground in that tenth that is held to the bar)
-			if landed_for <= 6 and final.size() == 4 and OS.get_cmdline_user_args().has("--feet"):
+			if landed_for <= window and final.size() == 4 and OS.get_cmdline_user_args().has("--feet"):
 				print("   %s tick %d: L ankle %+.3f toe %+.3f | R ankle %+.3f toe %+.3f" % [s["label"], landed_for, final[0].y - body.global_position.y - stand[0], final[1].y - body.global_position.y - stand[1], final[2].y - body.global_position.y - stand[2], final[3].y - body.global_position.y - stand[3]])
-			if landed_for <= 6 and final.size() == 4:
+			if landed_for <= window and final.size() == 4:
 				var gy := body.global_position.y
 				var off := INF
 				for f in 2:
@@ -94,6 +102,8 @@ func walk_off(s: Dictionary, flip := -1.0, run := false) -> Dictionary:
 			out["end"] = body.global_position
 			out["end_state"] = int(body.get(&"state"))
 			out["end_speed"] = (body.get(&"hvel") as Vector3).length()
+			ended = true
+		if ended and landed_for >= window:
 			tape.call(&"stop")
 		was_in = inm
 		if not inm and int(trav.get(&"plays")) == before and body.global_position.z > -1.0:

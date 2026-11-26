@@ -172,3 +172,42 @@ A robust Rockstar-style traversal system for the game (Godot 4.7, Jolt, Mixamo c
      Same for the run (knee 130 against 94 to 119, bob 6.2 cm against 8 to 9.5) and the idle (sway 0.18 Hz against 0.33).
   4. Not built: arm IK, forearm twist disperser, steep-ground takes in the new tree, a Windows exe of the rebuild
      (the export templates are not in this container).
+
+## CHECKPOINT, 26 Nov 2026, after trav42 (asked for by Yasin: "after making that small change make a checkpoint")
+
+Read this section first; it is the true state at that commit. Everything above it is older.
+
+**Built and looked at by Yasin ("looks good"), stages 0 to 9 of the study's build order:**
+- Stages 0 to 5: the course, the body, the clips, idle / walk / run, feet and head, starts, stops and turns.
+  Stage 6: crouch (hold C). Stage 7: detection (`traversal/detect/`, drawn on screen in the lab).
+- Stage 8, going down off an edge (`traversal/moves/traverse.gd`): at a walk, 0.30 to 1.0 m, the step-off clip with
+  the landing eased by height. At a run: up to 0.50 m he just runs on; 0.50 to 1.0 m the run-off clip; 1.0 to 3.0 m
+  he lands, rolls and comes up moving (also after a jump off, if there are 3.6 m of free level ground ahead).
+- Stage 9, the high step up, 0.30 to 0.50 m: the step-up clip at a walk or from standing; a leap in stride at a run.
+
+**His decisions that depart from the study (do not undo):** the standing 180 turns with no steps (Mixamo Walking
+Turn 180, also played when reversing at a walk); the 180 at a run is immediate and he runs on out of it; the standing
+jump does not wait for the dip; crouch speed 0.80 m/s; kerbs are left to the body ("doesnt look that bad now").
+
+**Tests, all read at this commit:** `tests/test_stage0.gd`, `test_stage1.gd -- --minutes=10`, `test_stage7.gd`,
+`test_stage8.gd`, `test_stage9.gd`: RESULT PASS. The locked audit (`tests/audit.gd`): 26 of 114 study lines fail;
+the list is in the commit message the gate wrote. Stage 1 and stage 7 tests switch the traversal moves off
+(`traverse.enabled`), because they test the body alone and detection alone.
+
+**Before sending any exe:** export a pack and start it headless (`--export-pack`, then `--main-pack ... --quit-after
+300`) and read it for script errors. Game code must not load from `tools/`, `tests/` or `assets_src/` (trav39's exe
+crashed at start for that).
+
+**Clips:** Kimodo takes are in the scratchpad of the session that made them, not in git (raw files carry the mesh);
+only the baked `traversal/character/clips/*.res` are in git. The character upload on Replicate expired 26 Nov
+17:15 UTC: to order more takes, Yasin's `character.fbx` must be uploaded again first.
+
+**Next, in the study's order:** stage 10, vault over a thin obstacle from a run (0.50 to 1.10 m; the study names
+Mixamo's `Vault 1 Hand`, not in this build); stage 11, step vault or climb on from a walk or stand (0.50 to 1.10 m;
+`Jumping_2`, a jump onto 0.62 m, is baked; `Running Jump Climb` at 1.00 m is not); stage 12, mantle (1.10 to
+1.45 m); then grab and climb, hang and drop, gap jump, beams, squeezes, ragdoll, cover, doors, cars. From stage 10
+on the hands go on things: arm IK to the measured edge ("hands rest on the edge within about 3 cm").
+
+**Open, known, not fixed:** the 26 audit lines; a stop from a walk ends feet together; the uphill stop take was
+made on the flat; the study's last foot 14 cm back from a kerb is not built; the cost of detection on a phone is not
+measured; triangle-mesh colliders are not tried with the detector (the course is boxes).

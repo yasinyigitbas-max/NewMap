@@ -61,6 +61,8 @@ const RUN_UP_ARC := 0.25        # NOT in the study: how far the arc rises over a
                                 # edge he is then 3 cm or more over a 0.50 m step
 const UP_LOOK_RUN := 1.6        # NOT in the study: at a run it is looked for this far ahead (m)
 const UP_LOOK := 0.9            # NOT in the study: how far ahead something to step onto is looked for (m)
+const RUN_ON_MOST := 0.50       # NOT in the study: running off an edge up to this high he runs on with no landing clip
+                                # (the height he also runs up onto in stride: the top of the study's high-step band)
 const ROLL_JUMP_MORE := 0.7     # a jump off an edge falls from the top of the jump: the body's own running jump rises
                                 # 0.60 m (body.gd, JUMP_RISE_RUN), so that much more fall is still rolled out of
 const ROLL_MOST := 3.0          # the study: "2.0 to 3.0 m, hang and drop preferred, with a roll for a running jump; above
@@ -247,6 +249,14 @@ func _physics_process(_dt: float) -> void:
 			"m": m, "yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z), "drop": drop,
 			# align and step: at the pace he came in at. Air: as long as that drop takes to fall. Then the take's own time.
 			"t_step": maxf((leave - feet).dot(m), 0.05) / speed_in, "t_air": t_air, "t_rest": t_rest, "exit_speed": exit_speed}
+	# Running off a low edge he simply runs on (Yasin, 26 Nov: "only running off a low edge plays timid short steps
+	# before the run continues, just continue running animation in that case"): the run itself is shown all the way,
+	# the body is carried down as before, and he is handed back as he touches down, at the speed he came in at.
+	var run_on := key == "run" and drop <= RUN_ON_MOST + MEASURED_WITHIN
+	if run_on:
+		_plan["end"] = _plan["down"]
+		_plan["exit_speed"] = speed_in
+		_plan["run_on"] = true
 	# A softer landing off a lower edge (Yasin, 26 Nov: "Make a softer landing for edges lower than 1 meter"): he
 	# folds by the share this drop is of the take's own (the study gives the landing forces by height, "4.4 body
 	# weights from 0.45 m and 7.4 from 0.89 m", and no fold depth; taking the fold as in step with the height is
@@ -256,7 +266,7 @@ func _physics_process(_dt: float) -> void:
 	_plan["t_rest"] = float(_plan["t_rest"]) * lerpf(REST_LEAST, 1.0, share)
 	plays += 1
 	record = {}
-	body.call(&"begin_move", _step_off, String(mv["input"]))
+	body.call(&"begin_move", _step_off, "ground" if run_on else String(mv["input"]))
 
 
 ## Where the body is `t` seconds into the step off (called by the body every tick of the move).
@@ -290,6 +300,12 @@ func _step_off(t: float) -> Dictionary:
 		out["clip_t"] = ct
 		out["air"] = true
 		out["soft"] = float(p["soft"]) * u
+	elif bool(p.get("run_on", false)):
+		out["pos"] = p["down"]
+		out["clip_t"] = 0.0
+		out["air"] = false
+		out["done"] = true
+		out["exit"] = m * float(p["exit_speed"])
 	else:
 		var u := clampf((t - t_step - t_air) / t_rest, 0.0, 1.0)
 		var ct := lerpf(float(mv["down"]), float(mv["exit"]), u)
