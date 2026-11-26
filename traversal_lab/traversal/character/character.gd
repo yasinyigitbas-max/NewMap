@@ -61,7 +61,7 @@ const SOFT_DROP := 0.30         # the study: "up to 0.30 m, step down in stride;
 const HARD_DROP := 1.0          # soft landing; 1.0 to 2.0 m, a heavy landing"
 # the inputs of the tree's Transition node, and the clip each one plays under its own TimeSeek
 const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling_To_Landing", "land_heavy": "Hard_Landing",
-		"drop_walk": "KM_Ledge_Walk_Off", "drop_run": "KM_Ledge_Run_Off", "drop_roll": "KM_Land_Roll",
+		"drop_walk": "KM_Ledge_Walk_Off", "drop_run": "KM_Ledge_Run_Off", "drop_roll": "KM_Land_Roll", "step_up": "KM_Step_Up",
 		"stairs_up_walk": "Ascending_Stairs", "stairs_up_run": "KM_Stairs_Run_Up_D",
 		"stairs_down_walk": "KM_Stairs_Walk_Down", "stairs_down_run": "KM_Stairs_Run_Down",
 		"steep_up": "KM_Climb_Hard", "steep_down": "KMY_Down_Hands_Balance_Long",
@@ -769,6 +769,11 @@ func _physics_process(dt: float) -> void:
 	if feet:
 		var want_slope := float(_lib.get_animation(ACTS[_act]).get_meta(&"slope", 0.0)) if ((_stair_on or _steep_on) and ACTS.has(_act)) else 0.0
 		feet.set(&"by_speed", _steep_on)
+		# a climbing move: the clip's own step, for the feet to be fitted from (see foot_place.gd)
+		var st_m: Array = body.get(&"move_step") if bool(body.call(&"in_move")) else []
+		feet.set(&"step_high", float(st_m[1]) if st_m.size() == 3 else 0.0)
+		feet.set(&"step_edge", float(st_m[0]) if st_m.size() == 3 else 0.0)
+		feet.set(&"step_rise", float(st_m[2]) if st_m.size() == 3 else 0.0)
 		feet.set(&"stand_wide", STAND_WIDE * (1.0 - _moving) * (1.0 - _low_w) if _act == "ground" else 0.0)
 		# (in step with the tree's own cross-fade, which is even over FADE: eased more slowly than the pose, the
 		# feet of a stair clip coming in were held up on stairs that were no longer under them, 0.2 to 0.5 m high)

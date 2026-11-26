@@ -161,6 +161,8 @@ var move_t := 0.0
 var move_landed := false        # he has come down in it
 var move_free := false          # the clip is shown as it is, with no fitting of the feet (a roll)
 var move_landing := "soft"      # what kind of landing the move makes
+var move_step: Array = []       # a climbing move: [how far ahead the clip's own edge is, the clip's own height, how much
+                                # of it the body has risen] (m), for the feet
 var move_soft := 0.0            # 0..1: how much less than the clip he folds on landing
 var _wish_was_moving := false
 var crouched := false           # he is crouched: the smaller capsule, half walking speed, no run, no jump
@@ -325,6 +327,7 @@ func _run_move(dt: float) -> void:
 	move_clip_t = float(r["clip_t"])
 	move_landed = bool(r.get("landed", false))
 	move_soft = float(r.get("soft", 0.0))
+	move_step = r.get("step", [])
 	move_free = bool(r.get("free", false))
 	move_landing = String(r.get("landing", "soft"))
 	state = State.AIR if bool(r["air"]) else State.GROUND
@@ -344,6 +347,7 @@ func _run_move(dt: float) -> void:
 		_stood_y = global_position.y
 		_wish_was_moving = false
 		move_path = Callable()
+		move_step = []
 
 
 func _physics_process(dt: float) -> void:

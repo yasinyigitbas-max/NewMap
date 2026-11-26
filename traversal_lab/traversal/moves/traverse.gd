@@ -13,6 +13,7 @@ extends Node
 ## NOT BUILT: the study's "plant the last foot about 14 cm back from the edge" for kerbs.
 
 const Detector := preload("res://traversal/detect/detector.gd")
+const BuildLibrary := preload("res://tools/build_library.gd")
 const BAND := [0.30, 1.0]       # the study's band for this move: more than the first, up to the second (m)
 # The clip: a Kimodo take of a man stepping off a ledge (the study's Part 3 has no Mixamo clip that steps off and
 # lands standing in under 3 s). Measured on the take's own hip path: he begins the step at 1.45 s, his feet leave at
@@ -37,6 +38,16 @@ const MOVES := {
 		"from": 1.12, "leaves": 1.20, "down": 1.57, "exit": 2.93, "native": 1.19,
 		"edge": 0.96, "landing": "heavy",
 		"free": [1.68, 2.60]}}  # between these moments of the take he is rolling: the feet are not fitted to the ground
+# Stage 9, the high step up (the study: "0.30 to 0.50 m | deliberate high step"). No clip for it was in the library
+# (the study: "0.30 to 0.50 m, high step | none | **missing**"; Mixamo's nearest steps onto 0.59 m). A Kimodo take of
+# 26 Nov, the one of six that is a single step from standing: onto 0.61 m, the right foot up from 0.40 s and on top at
+# 0.83 s, the left foot following from 0.80 s and beside it at 1.77 s.
+const STEP_UP := {"input": "step_up", "res": "res://traversal/character/clips/KM_Step_Up.res",
+		"from": 0.30, "exit": 1.95,
+		"edge": 0.25}           # NOT in the study: where the take's edge is taken to be (m ahead of where his hips
+                                # start): a foot's length in front of his toes, and behind the heel that lands on top
+const UP_BAND := [0.30, 0.50]   # the study's band for the high step: more than the first, up to the second (m)
+const UP_LOOK := 0.9            # NOT in the study: how far ahead something to step onto is looked for (m)
 const ROLL_MOST := 3.0          # the study: "2.0 to 3.0 m, hang and drop preferred, with a roll for a running jump; above
                                 # that, expect damage"
 const REST_LEAST := 0.6         # NOT in the study: off the lowest edge he is standing again in this share of the take's time
@@ -53,6 +64,7 @@ const LAND_WITHIN := 0.05       # the landing must be where the record said, wit
 var body: CharacterBody3D
 var detector: RefCounted
 var record: Dictionary = {}
+var enabled := true             # false = no move is begun (the tests of the body alone, and of detection alone)
 var refused := ""               # why the last edge met was not taken with the move ("" = it was, or none met)
 var plays := 0                  # moves begun (for the tests)
 var _tick := 0
@@ -60,6 +72,10 @@ var _fwd := {}                  # move -> the take's own travel forward, frame b
 var _high := {}                 # move -> how far above its landing the take is, as a share of its whole drop
 var _fps := 30.0
 var _plan: Dictionary = {}
+var _up_fwd := PackedFloat32Array()
+var _up_rise := PackedFloat32Array()
+var _up_high := 0.0             # the height the step-up take climbs
+var _up_record: Dictionary = {}
 
 
 func _ready() -> void:
@@ -78,6 +94,12 @@ func _ready() -> void:
 			high.append(clampf((hips[f].y - hips[last].y) / drop, 0.0, 1.0))
 		_fwd[key] = fwd
 		_high[key] = high
+	var up: Resource = load(String(STEP_UP["res"]))
+	var up_hips: PackedVector3Array = up.get(&"hips")
+	for f in up_hips.size():
+		_up_fwd.append(up_hips[f].z - up_hips[0].z)
+	_up_rise = BuildLibrary.rise_of(up_hips)
+	_up_high = up_hips[up_hips.size() - 1].y - up_hips[0].y
 
 
 func _at(table: PackedFloat32Array, t: float) -> float:
@@ -87,11 +109,13 @@ func _at(table: PackedFloat32Array, t: float) -> float:
 
 
 func _physics_process(_dt: float) -> void:
-	if body == null or bool(body.call(&"in_move")):
+	if body == null or not enabled or bool(body.call(&"in_move")):
 		return
 	_tick += 1
 	var v: Vector3 = body.get(&"hvel")
 	var wish := (body.get(&"_wish") as Vector3).length()
+	if _try_step_up(v, body.get(&"_wish")):
+		return
 	var walking := int(body.get(&"state")) == 0 and not bool(body.get(&"crouched")) and v.length() > 0.5 \
 			and wish > 0.05 and int(body.get(&"stairs")) == 0 and int(body.get(&"terrain")) == 0
 	var key := "run" if (wish > float(body.get(&"WALK")) + 0.1 and v.length() > RUN_FROM) else "walk"
@@ -223,4 +247,90 @@ func _step_off(t: float) -> Dictionary:
 		if u >= 1.0:
 			out["done"] = true
 			out["exit"] = m * float(p["exit_speed"])
+	return out
+
+
+# ------------------------------------------------------------------------------------------------ stage 9: the high step up
+
+## Something of 0.30 to 0.50 m ahead, with room to stand on it: step up onto it. Asked for by going at it, at a walk,
+## at a run, or from standing against it (the body is stopped by anything over 0.30 m).
+func _try_step_up(v: Vector3, wish: Vector3) -> bool:
+	if int(body.get(&"state")) != 0 or bool(body.get(&"crouched")) or wish.length() < 0.05 \
+			or int(body.get(&"stairs")) != 0 or int(body.get(&"terrain")) != 0:
+		_up_record = {}
+		return false
+	var dir := wish.normalized()
+	# the cheap look: is anything in the way just above what he steps over by himself?
+	if _up_record.is_empty():
+		var from := body.global_position + Vector3.UP * (float(UP_BAND[0]) + 0.03)
+		var q := PhysicsRayQueryParameters3D.create(from, from + dir * UP_LOOK, body.collision_mask, [body.get_rid()])
+		if body.get_world_3d().direct_space_state.intersect_ray(q).is_empty():
+			return false
+	if _up_record.is_empty() or _tick % AGAIN == 0:
+		_up_record = detector.call(&"measure", dir)
+		if _up_record["kind"] != "obstacle":
+			_up_record = {}
+			return false
+	var rec := _up_record
+	var top := float(rec["top"])
+	if top <= float(UP_BAND[0]) + MEASURED_WITHIN:
+		return false                                            # the body walks onto it by itself
+	if top > float(UP_BAND[1]) + MEASURED_WITHIN:
+		refused = "too high for a step up (%.2f m)" % top
+		return false
+	if bool(rec["blocked"]) or not bool(rec["stand_room"]):
+		refused = "no room to stand on top"
+		return false
+	var m: Vector3 = -(rec["normal"] as Vector3)
+	if rad_to_deg(dir.angle_to(m)) > MOST_OFF_DEG:
+		refused = "not heading at it"
+		return false
+	var from_t := float(STEP_UP["from"])
+	var exit_t := float(STEP_UP["exit"])
+	var native := float(STEP_UP["edge"]) - _at(_up_fwd, from_t)      # the take's own distance from the face as it begins
+	var here := (rec["edge"] as Vector3 - body.global_position).dot(m)
+	if here > native + 0.02:
+		return false                                            # not there yet
+	# fit: he ends as far in from the edge as the take does; the take's travel is stretched to that
+	var inward := _at(_up_fwd, exit_t) - float(STEP_UP["edge"])
+	if float(rec["depth"]) < inward + float(body.get(&"RADIUS")):
+		refused = "the top is not deep enough to step onto"
+		return false
+	var feet := body.global_position
+	var ground := float(rec["ground"])
+	var end := feet + m * (here + inward)
+	end.y = ground + top
+	if not bool(detector.call(&"_fits", end, float(body.get(&"HEIGHT")))):
+		refused = "no room where he would end"
+		return false
+	refused = ""
+	_plan = {"key": "up", "from": Vector3(feet.x, ground, feet.z), "end": end, "m": m, "yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z),
+			"top": top, "here": here, "stretch": (here + inward) / maxf(_at(_up_fwd, exit_t) - _at(_up_fwd, from_t), 0.01),
+			"exit_speed": maxf((_at(_up_fwd, exit_t) - _at(_up_fwd, exit_t - 0.2)) / 0.2, 0.0)}
+	plays += 1
+	_up_record = {}
+	record = {}
+	body.call(&"begin_move", _step_up, String(STEP_UP["input"]))
+	return true
+
+
+## Where the body is `t` seconds into the step up: forward by the take's own travel (stretched to the distance
+## measured), up by the take's own rise (scaled to the height measured).
+func _step_up(t: float) -> Dictionary:
+	var p := _plan
+	var m: Vector3 = p["m"]
+	var from_t := float(STEP_UP["from"])
+	var exit_t := float(STEP_UP["exit"])
+	var ct := minf(from_t + t, exit_t)
+	var gone := _at(_up_fwd, ct) - _at(_up_fwd, from_t)
+	var rise := _at(_up_rise, ct)
+	var pos := (p["from"] as Vector3) + m * (gone * float(p["stretch"]))
+	pos.y = (p["from"] as Vector3).y + float(p["top"]) * rise
+	var out := {"done": ct >= exit_t, "pos": pos, "clip_t": ct, "air": false,
+			"yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), clampf(t / 0.2, 0.0, 1.0)),
+			# for the feet: the take's own step, as it stands ahead of him at this moment
+			"step": [float(STEP_UP["edge"]) - _at(_up_fwd, ct), _up_high, _up_high * rise]}
+	if ct >= exit_t:
+		out["pos"] = p["end"]
+		out["exit"] = m * float(p["exit_speed"])
 	return out

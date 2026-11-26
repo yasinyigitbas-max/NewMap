@@ -68,6 +68,9 @@ func _run() -> void:
 	body = lab.get(&"body")
 	tape = lab.get(&"tape")
 	stations = (lab.get(&"course") as Node3D).get(&"stations")
+	# "Detection only. No clips.": the traversal moves are off while it is tested
+	if lab.get(&"traverse") != null:
+		(lab.get(&"traverse") as Node).set(&"enabled", false)
 	det = Detector.new()
 	det.set(&"body", body)
 	for s: Dictionary in stations:

@@ -86,6 +86,10 @@ func _run() -> void:
 	body = lab.get(&"body")
 	tape = lab.get(&"tape")
 	stations = (lab.get(&"course") as Node3D).get(&"stations")
+	# Stage 1 is "the body alone": the traversal moves of stage 8 onward are off for it (with them on he steps up
+	# onto the 0.35 to 0.50 m steps this test says the body is stopped by)
+	if lab.get(&"traverse") != null:
+		(lab.get(&"traverse") as Node).set(&"enabled", false)
 	# Stage 6: "Stage 1 tests pass in crouch". Run with `-- --crouch`: the same tests with crouch held throughout.
 	if OS.get_cmdline_user_args().has("--crouch"):
 		tape.set(&"hold_crouch", true)

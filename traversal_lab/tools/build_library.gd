@@ -31,6 +31,11 @@ const AIR := {"Jump": [0.80, 1.30], "Running_Jump": [0.10, 0.67]}
 const GROUNDED := ["Falling_To_Landing", "Hard_Landing"]
 # Ledge clips (step off, fall, land) are played on the spot: the body does the travelling and the falling, so the hips
 # keep only their height above the clip's own landing ground.
+# Clips that climb onto something (stage 9 onward). In a traversal move the body does the rising, by the share of the
+# clip's own rise the clip has made so far (rise_of); that much is taken out of the hips here, so what is left is how
+# he holds himself over a body that is already on its way up. The study: "keep it in the hips and move the body node
+# up by measured amounts while offsetting the mesh".
+const RISE := ["KM_Step_Up"]
 const LEDGE := ["KM_Ledge_Walk_Off", "KM_Ledge_Run_Off", "KM_Land_Roll"]
 # The walk's hips, brought to the study: "The pelvis moves only a few degrees at normal walking speed: about 3 degrees
 # of tilt, 8.5 of side drop and 12 of rotation in total range", and the body "rises and falls 2.7 to 4.8 cm in walking
@@ -204,6 +209,7 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 			var l0 := aim * (Vector3(hips[f].x, 0.0, hips[f].z) - start - dir * (total * u0))
 			mean_pos += Vector3(l0.x, hips[f].y, l0.z) / (frames - 1)
 	var furthest := 0.0
+	var rise := rise_of(hips)
 	for f in frames:
 		var time := float(f) / fps
 		var u := float(f) / float(maxi(frames - 1, 1))
@@ -224,6 +230,8 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 			y = minf(y, hips[int(round(float(AIR[name][0]) * fps))].y)
 		if GROUNDED.has(name):
 			y = minf(y, stand_y)
+		if RISE.has(name):
+			y -= (hips[frames - 1].y - hips[0].y) * rise[f]
 		if LEDGE.has(name):
 			y = minf(y - hips[frames - 1].y + stand_y, stand_y)
 			local = Vector3.ZERO
@@ -502,6 +510,19 @@ func _stairs(a: Animation, c: Resource, sk: Skeleton3D) -> void:
 	print("      its hands come to %.3f m over its own ground at their lowest (wrist)" % low)
 	a.set_meta(&"reach", (balls[0][mini(at, frames - 1)] as Vector3).z)
 	print("   stairs %s: rises %.2f m over %.2f m (slope %.2f), its stairs stood %.3f m off the hips' floor (%d planted frames), left foot comes down %.2f m ahead, its standing leg is longest (%.3f m) with the ball of the foot %.2f m ahead" % [c.get(&"source"), rise, total, slope, floor_y, count, float(a.get_meta(&"reach")), longest, pivot])
+
+
+## The share of a climbing clip's whole rise that its hips have made, frame by frame: never going back down.
+## (traverse.gd moves the body by the same curve.)
+static func rise_of(hips: PackedVector3Array) -> PackedFloat32Array:
+	var out := PackedFloat32Array()
+	var n := hips.size()
+	var whole := hips[n - 1].y - hips[0].y
+	var most := 0.0
+	for f in n:
+		most = maxf(most, clampf((hips[f].y - hips[0].y) / whole, 0.0, 1.0) if absf(whole) > 0.01 else 0.0)
+		out.append(most)
+	return out
 
 
 func _rot(a: Animation, bone: String, time: float) -> Quaternion:

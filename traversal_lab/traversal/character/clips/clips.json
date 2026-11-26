@@ -406,6 +406,17 @@
     ],
     "turn_deg": -3.38787841559799
   },
+  "KM_Step_Up": {
+    "length": 3.96666666666667,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 0.120091558504505,
+    "travel": [
+      -0.027786411345005,
+      0.475552082061768
+    ],
+    "turn_deg": 1.00919865624005
+  },
   "KM_Stop_Walk": {
     "length": 2.5,
     "loop": false,

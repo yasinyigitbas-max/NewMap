@@ -47,6 +47,13 @@ var land_at: Array[Vector3] = [Vector3.ZERO, Vector3.ZERO]
 var by_speed := false
 var stand_wide := 0.0           # each foot is set this far out to its own side (m): see character.gd, STAND_WIDE
 var hands: SkeletonModifier3D   # hand_place.gd, when it is there: how far the hips must come down for the hands
+# A clip that climbs onto something stands on its own step: `step_high` m high, its edge `step_edge` m ahead of him
+# now, and `step_rise` m of the climb already made by the body (see build_library.gd, RISE). 0 = a flat clip.
+var step_high := 0.0
+var step_edge := 0.0
+var step_rise := 0.0
+const STEP_SOFT := 0.15         # NOT in the study: the clip's own step is taken as a ramp this long at its edge (m), so
+                                # that a foot crossing the edge is not thrown by it
 var hips_fit := 0.0             # the hips' height put right for a clip made on steeper or shallower ground (m; see character.gd)
 var pinning := true
 var grounding := true
@@ -134,7 +141,11 @@ func _process_modification_with_delta(dt: float) -> void:
 		hinge_at[f] = hip_t.basis.x.normalized()
 		# planted = the clip has the ball of the foot on its own floor, and not travelling over the ground
 		# (how high the clip holds the ball of the foot over its OWN ground: a flat floor, or its own stairs)
-		var ball_h := ball_t.origin.y - clip_slope * ball_t.origin.z
+		# (the clip's own floor under this foot, for a clip that climbs onto a step)
+		var own_floor := 0.0
+		if step_high != 0.0:
+			own_floor = step_high * smoothstep(step_edge - STEP_SOFT, step_edge, ball_t.origin.z) - step_rise
+		var ball_h := ball_t.origin.y - clip_slope * ball_t.origin.z - own_floor
 		var low: bool = on_ground and (by_speed or ball_h < _toe_rest + CONTACT)
 		var over := (Vector2(ball.x - (_was[f] as Vector3).x, ball.z - (_was[f] as Vector3).z).length() / dt) if _was_ok else 0.0
 		_was[f] = ball
@@ -216,7 +227,7 @@ func _process_modification_with_delta(dt: float) -> void:
 			_lump[f] = lerpf(_lump[f], _toe_rest - ball_h, let_go)
 		elif not by_speed:
 			_lump[f] = lerpf(_lump[f], 0.0, let_go)
-		var lift := clampf(ground_f - feet_y, -REACH, REACH) - clip_slope * ball_t.origin.z + float(_lump[f])
+		var lift := clampf(ground_f - feet_y, -REACH, REACH) - clip_slope * ball_t.origin.z + float(_lump[f]) - own_floor
 		# tilt the foot to the ground, about the ball of the foot, the more the nearer it is to the ground
 		var near := clampf(1.0 - (ball_h + float(_lump[f]) - _toe_rest) / NEAR, 0.0, 1.0)
 		var axis := Vector3.UP.cross(normal)
