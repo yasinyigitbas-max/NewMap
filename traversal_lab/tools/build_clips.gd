@@ -45,7 +45,10 @@ const TRIMS := {"KM_Slope_Down_Start": [0.60, 2.33], "KM_Slope_Down_Stop": [4.57
 		# a man's start into a run from standing (Kimodo take of 26 Nov, the straightest of five). Mixamo's Idle To
 		# Sprint, used until then, runs off with the hips turned 43 degrees to one side; straightened, its legs
 		# lunged under an upright trunk (Yasin: "start run now plays two broken and awkward steps").
-		"KM_Start_Run": [0.10, 1.90]}
+		"KM_Start_Run": [0.10, 1.90],
+		# the vault from standing (Kimodo, in Yasin's own words and seed, 26 Nov: "vaulting over a wall. landing on
+		# the other side"): the take is 7 s long, he is standing again by 2.5 s
+		"KM_Vault_Stand": [0.0, 2.60]}
 const LOOPS := ["Standing_Idle", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
 
 

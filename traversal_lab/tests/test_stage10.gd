@@ -83,7 +83,8 @@ func go_at(s: Dictionary, run: bool, flip := -1.0, near := false) -> Dictionary:
 			var plan: Dictionary = out["plan"]
 			# (a foot joint counts while it is itself over the obstacle: within its thickness, and the length of
 			# the toes beyond the toe joint more each way)
-			if plan.has("mid"):
+			# ... and while he is off the ground: standing against it his toes are at its foot, which is no fault
+			if plan.has("mid") and int(body.get(&"state")) >= 2:
 				for k in 4:
 					if absf(((final[k] as Vector3) - (plan["mid"] as Vector3)).dot(plan["m"])) < float(s["depth"]) * 0.5 + TOE:
 						out["low"] = minf(float(out["low"]), final[k].y - float(plan["top"]))
@@ -133,28 +134,33 @@ func _run() -> void:
 	var band: Array = trav.get(&"VAULT_BAND")
 	var inside: Array[Dictionary] = []
 	# (stage 11: at a walk and from standing against it the same vault is used, slowed, until there is a step vault)
-	for way: Array in [[true, 0, false], [true, 1, false], [false, 0, false], [false, 1, false], [false, 0, true]]:
+	# (at a walk and from standing against it: the standing vault, legs tucked, no hand on the top)
+	for way: Array in [[true, 0, false], [true, 1, false], [false, 0, false], [false, 0, true]]:
 		var run: bool = way[0]
 		trav.set(&"force_mirror", int(way[1]))
-		var which := (", the mirror image" if int(way[1]) == 1 else ", as the clip has it")
+		var which := (", the mirror image" if int(way[1]) == 1 else ", as the clip has it") if run else (", from standing against it" if bool(way[2]) else "")
 		for s: Dictionary in stations:
 			if not (String(s["kind"]) in ["wall_deep", "wall_thin"]) or float(s["top"]) > 2.0:
 				continue
 			var h := float(s["top"])
-			# (from standing right against it there is no move yet: he has to leave the ground where the clip does,
-			# a metre before the obstacle. That case is run to show it plainly, and is held to "no vault".)
-			var should := String(s["kind"]) == "wall_thin" and h >= float(band[0]) - 0.001 and h <= float(band[1]) + 0.001 and not bool(way[2])
+			var should := String(s["kind"]) == "wall_thin" and h >= float(band[0]) - 0.001 and h <= float(band[1]) + 0.001
+			# at a walk or from standing: the standing vault up to its own most, the slowed one-hand vault above it
+			# at a walk, and from standing against one higher than that there is no move (held to: not played)
+			var tuck_most := float(trav.get(&"TUCK_MOST")) + 0.001
+			var want_key := "vault" if (run or h > tuck_most) else "vault_tuck"
+			if bool(way[2]) and h > tuck_most:
+				should = false
 			var r := await go_at(s, run, -1.0, bool(way[2]))
 			var key := String((r["plan"] as Dictionary).get("key", ""))
 			if not should:
-				ok(key != "vault", "%s, %s: the vault is not played (%s)" % [s["label"], "at a run" if run else ("from standing against it" if bool(way[2]) else "at a walk"), ("the move '%s'" % key) if key != "" else "stopped: " + String(r["refused"])])
+				ok(not (key in ["vault", "vault_tuck"]), "%s, %s: the vault is not played (%s)" % [s["label"], "at a run" if run else ("from standing against it" if bool(way[2]) else "at a walk"), ("the move '%s'" % key) if key != "" else "stopped: " + String(r["refused"])])
 				continue
 			if run and int(way[1]) == 0:
 				inside.append(s)
 			var plan: Dictionary = r["plan"]
 			var bad := ""
-			if key != "vault":
-				bad = "did not play (%s)" % r["refused"]
+			if key != want_key:
+				bad = "did not play (%s%s)" % [r["refused"], (", the move '%s' did" % key) if key != "" else ""]
 			else:
 				var want: Vector3 = plan["end"]
 				var end: Vector3 = r["end"]
@@ -164,6 +170,12 @@ func _run() -> void:
 					bad = "ended in state %d" % int(r["end_state"])
 				elif absf(float(r["end_speed"]) - float(plan["exit_speed"])) > 0.05:
 					bad = "exit speed %.2f, the clip's %.2f" % [float(r["end_speed"]), float(plan["exit_speed"])]
+				elif int(plan["hand"]) < 0:
+					# the standing vault: no hand is put down; the feet and the landing are what is checked
+					if float(r["feet"]) > FEET_WITHIN:
+						bad = "no foot nearer than %.1f cm to the ground in the step after" % (float(r["feet"]) * 100.0)
+					elif float(r["low"]) < 0.0:
+						bad = "a foot %.1f cm under the top as he goes over" % (-float(r["low"]) * 100.0)
 				elif float(r["rock"]) > HAND_ROCK:
 					bad = "the held hand turns %.1f degrees in a tick" % float(r["rock"])
 				elif int(plan["hand"]) != int(way[1]):
