@@ -15,13 +15,13 @@ const PIN_TURN_MOST := 0.70     # radians (40 deg): the same for a planted foot'
 const LET_GO := 0.10            # seconds for a lifted foot to return to the clip's own path
 const REACH := 0.45             # how far above or below the body's ground a foot will look for its own ground (m)
 const EDGE_REACH := 0.12         # NOT in the study: how far before and behind a moving foot a step edge is felt (m)
-const STAND_TIME := 0.12         # NOT in the study: seconds for a foot to settle from "on its way" to "standing"
+const STAND_TIME := 0.07         # NOT in the study: seconds for a foot to settle from "on its way" to "standing"
 const FOOT_SPEED := 5.0         # m/s: how fast a foot follows a jump in the ground's height (a stair edge); a swinging
                                 # foot on a 19 degree street needs 1 m/s, so slopes are followed exactly
 const HIPS_TIME := 0.10         # seconds for the hips to come back up
 const HIPS_DOWN := 1.5           # m/s: how fast they may come down when a planted foot cannot reach its ground
                                 # (walking up a 19 degree street needs 0.5 m/s)
-const TILT_MOST := 0.35         # radians (20 deg): the ankle bends 10 deg up to 20 deg down in walking; streets reach 19 deg
+const TILT_MOST := 0.40         # radians (23 deg): how far the foot tilts to the ground; one measured ankle stopped at 24 deg
 const STRAIGHT := 0.997         # the leg is never asked to be longer than this share of its length
 const HIPS_MOST := 0.25         # NOT in the study: the most the hips come down for a foot to reach (m)
 
@@ -207,8 +207,14 @@ func solve(rot: Array[Quaternion], hips: Vector3, dt: float, on_ground: bool) ->
 				# on a slope the tilt of the foot puts the ball on the ground; only ground under the ball that is
 				# higher than the slope (the next stair) lifts the whole foot
 				if not gb.is_empty() and normal.y > 0.3:
-					var on_plane := want_g - (normal.x * (ball.x - ankle.x) + normal.z * (ball.z - ankle.z)) / normal.y
+					var along := -(normal.x * (ball.x - ankle.x) + normal.z * (ball.z - ankle.z)) / normal.y
+					var on_plane := want_g + along
 					want_g += maxf((gb["position"] as Vector3).y - on_plane, 0.0)
+					# the ankle only bends so far (TILT_MOST; one measured ankle stopped at 24 degrees): on ground
+					# steeper than that, facing up it, the heel comes off and he stands on the ball of the foot
+					var reach := Vector2(ball.x - ankle.x, ball.z - ankle.z).length() * tan(TILT_MOST)
+					if along > reach:
+						want_g += along - reach
 			elif not gb.is_empty():
 				want_g = (gb["position"] as Vector3).y
 			ground_at[f] = want_g

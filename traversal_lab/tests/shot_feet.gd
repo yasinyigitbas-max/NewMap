@@ -50,12 +50,8 @@ func _run() -> void:
 		st[s["label"]] = s
 	var r30: Dictionary = st["ramp 30 deg"]
 	var r45: Dictionary = st["ramp 45 deg"]
-	await play((r30["start"] as Vector3) + Vector3(0.0, 0.0, -2.0), 90.0, [[4.0, 0.0, -1.0, 0.0, false]], [2.2, 2.5, 2.8, 3.1], "steep_up")
-	await play(Vector3(float(r30["x"]), 1.5, -3.0 - float(r30["run"]) - 1.0), 90.0, [[5.0, 0.0, 1.0, 0.0, false]], [2.6, 2.9, 3.2, 3.5], "steep_down", PI)
-	await play((r45["start"] as Vector3) + Vector3(0.0, 0.0, -2.0), 90.0, [[5.0, 0.0, -1.0, 0.0, false]], [2.4, 2.9, 3.4, 3.9], "hands_up")
-	await play(Vector3(float(r45["x"]), 1.5, -3.0 - float(r45["run"]) - 1.0), 90.0, [[6.0, 0.0, 1.0, 0.0, false]], [2.6, 3.2, 3.8, 4.4], "hands_down", PI)
-	var w: Dictionary = st["deep wall 1.00 m"]
-	await play(Vector3(float(w["x"]), 1.0, -4.3), 90.0, [[2.6, 0.0, 1.0, 0.0, false]], [0.95, 1.05, 1.15, 1.25, 1.4, 1.7, 2.2], "walk_off", PI)
-	var w2: Dictionary = st["deep wall 2.20 m"]
-	await play(Vector3(float(w2["x"]), 2.2, -5.5), 90.0, [[2.2, 0.0, 1.0, 0.0, true]], [0.75, 0.9, 1.05, 1.2, 1.35, 1.6], "run_off", PI)
+	await play((r45["start"] as Vector3) + Vector3(0.0, 0.0, -2.0), 90.0, [[6.0, 0.0, -1.0, 0.0, false]], [2.6, 3.0, 3.4, 3.8, 4.2], "up45")
+	await play(Vector3(float(r45["x"]), 1.5, -3.0 - float(r45["run"]) - 1.0), 90.0, [[5.0, 0.0, 1.0, 0.0, false]], [2.2, 2.5, 2.8, 3.1, 3.4], "down45", PI)
+	var s: Dictionary = st["stairs 0.18 / 0.28 m x 10"]
+	await play((s["start"] as Vector3) + Vector3(0.0, 0.0, -1.0), 90.0, [[2.6, 0.0, -1.0, 0.0, true]], [1.3, 1.4, 1.5, 1.6, 1.7], "stairs_run")
 	quit(0)

@@ -12,7 +12,9 @@ const OUT := "res://traversal/character/clips"
 # Generated (Kimodo) clips are a few seconds of movement, not a loop: one stride is cut out of each, from the
 # moment the left foot comes down to the next time it does, and its end is eased into its start.
 const CUTS := {"KM_Stairs_Walk_Down": [0.67, 1.53], "KM_Stairs_Run_Up": [0.67, 1.33], "KM_Stairs_Run_Down": [1.27, 1.93],
-		"KM_Steep_Walk_Up": [1.80, 2.53], "KM_Steep_Walk_Down": [2.53, 3.20], "KM_Crawl_Fwd": [1.13, 1.93], "KM_Crawl_Back": [2.13, 3.47]}
+		"KM_Slope_Up_45": [2.33, 3.13], "KM_Slope_Down_45": [2.47, 3.13],
+		"KM_Slope_Up_30": [2.07, 2.87], "KM_Stairs_Run_Up_D": [1.13, 1.80],
+		"KM_Steep_Walk_Down": [2.53, 3.20]}
 const LOOPS := ["Standing_Idle", "Walking_4", "Walking", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
 
 

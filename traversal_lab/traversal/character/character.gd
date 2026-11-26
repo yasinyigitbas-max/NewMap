@@ -46,13 +46,14 @@ const RUN_FROM := 2.5           # above this speed the run clips are used (his j
 # Mixamo's two going-down clips are damaged (see _floor_clamped) and its Running Up Stairs was replaced with them.
 # A second round of Kimodo takes (walk up, walk down, run up) was tried on 26 Nov and measured worse at the feet
 # than these (their strides do not match a 0.28 m tread), so these stay.
-const STAIRS := {1: ["Ascending_Stairs", "KM_Stairs_Run_Up"], -1: ["KM_Stairs_Walk_Down", "KM_Stairs_Run_Down"]}
-# Steep ground (26 Nov; research_notes/.../steep_slopes.md). All four clips were made with Kimodo from that research:
-# up a steep slope "short steps, trunk tilted forward, weight over the feet"; down "straight down, knees bent, back
-# straight, the whole sole placed, short steps"; on very steep ground hands and feet, "the footfall of a lower limb
-# usually followed that of the same-side upper limb"; and very steep ground is come down facing it.
-const STEEP := {true: "KM_Steep_Walk_Up", false: "KM_Steep_Walk_Down"}
-const HANDS := {true: "KM_Crawl_Fwd", false: "KM_Crawl_Back"}
+const STAIRS := {1: ["Ascending_Stairs", "KM_Stairs_Run_Up_D"], -1: ["KM_Stairs_Walk_Down", "KM_Stairs_Run_Down"]}
+# Steep ground (26 Nov; research_notes/.../steep_slopes.md), Kimodo clips, each one a take that really climbs or
+# descends (measured): up a 30 degree slope a take that rises at 29 degrees with long strides; down, one that drops
+# at 27 degrees; up 45 degrees, one that rises at 44 degrees; down 45 degrees, one that drops at 27 degrees (no take
+# came down steeper facing forward). A take made on the flat and fitted to a slope looked wrong (Yasin: "he pulls
+# his legs up as if stretching"), and the crawl was turned down ("we look like a small baby").
+const STEEP := {true: "KM_Slope_Up_30", false: "KM_Steep_Walk_Down"}
+const HANDS := {true: "KM_Slope_Up_45", false: "KM_Slope_Down_45"}
 # Walking or running off an edge (Yasin, 26 Nov: "looks stuck and frozen on air before landing, no limbs move to
 # balance itself"): Kimodo takes of stepping and of running off a ledge. [clip, leaves the edge, feet touch down]
 const DROP_WALK := ["KM_Ledge_Walk_Off", 2.10, 2.62]
@@ -299,7 +300,7 @@ func _physics_process(dt: float) -> void:
 	_lean(dt, state == 0)
 	# on hands and feet the whole figure is tipped to the slope he faces: a crawl on a slope is a crawl on the flat,
 	# tipped (the feet and the hands then meet the slope as they met the floor)
-	_hands = _mode == "move" and sub == "hands" and state == 0
+	_hands = false      # the crawl, tipped to the slope, was taken out (Yasin, 26 Nov); kept in case a crawl returns
 	var tip := 0.0
 	if _hands:
 		var n: Vector3 = body.get(&"ground_normal")
@@ -316,7 +317,7 @@ func _physics_process(dt: float) -> void:
 	var drop := 0.0
 	if feet:
 		# on his feet (not crawling, not in the air) the stance is narrowed; eased so it never snaps
-		var want_narrow := STANCE if (_mode == "move" and sub != "hands") else 1.0
+		var want_narrow := STANCE if _mode == "move" else 1.0
 		_narrow += (want_narrow - _narrow) * (1.0 - exp(-dt / 0.2))
 		feet.set(&"narrow", _narrow if foot_narrow else 1.0)
 		feet.set(&"pinning", foot_pin)
@@ -402,9 +403,9 @@ func _on_foot(dt: float, out: Array[Quaternion]) -> Vector3:
 	if (sub == "steep" or sub == "hands") and terr != 0:
 		# steep ground: the stride goes by the ground covered (along the slope when he is tipped to it)
 		var grade := float(body.get(&"grade"))
-		var up: bool = grade >= 0.0 if sub == "steep" else not bool(body.get(&"face_in"))
+		var up: bool = grade >= 0.0
 		var c: Resource = clips[(STEEP if sub == "steep" else HANDS)[up]]
-		var covered := speed * dt / (cos(atan(absf(grade))) if sub == "hands" else 1.0)
+		var covered := speed * dt
 		_steep_phase = fposmod(_steep_phase + covered / maxf((c.get(&"travel") as Vector3).length(), 0.1), 1.0)
 		return _slope_clip_pose(c, _steep_phase * float(c.get(&"length")), out, dt)
 	_slope += (0.0 - _slope) * minf(dt / FADE, 1.0)

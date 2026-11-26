@@ -236,8 +236,10 @@ func _physics_process(dt: float) -> void:
 		_wish = _wish.limit_length(_stair_speed(_wish.length() > WALK + 0.1))
 	elif state == State.GROUND and _wish.length() > 0.05:
 		_wish = _wish.limit_length(_slope_speed(_wish.length() > WALK + 0.1))
-	# very steep ground is come down facing it ("face inwards for steep slopes, but otherwise face out")
-	face_in = terrain == 2 and grade < -0.3
+	# The mountaineering sources say "face inwards for steep slopes, but otherwise face out". That was built and
+	# Yasin turned it down with the crawl (26 Nov: "we look like a small baby on both up and down"): he comes down
+	# facing out, crouched, a hand back on the slope.
+	face_in = false
 
 	# jump: a push-off first, then the body leaves the ground
 	var jump_now := bool(s.get("jump", false))
@@ -434,12 +436,11 @@ func _read_slope(n: Vector3, dir: Vector3) -> void:
 
 
 ## The most he asks of himself on sloping ground (m/s along the level): his rate of climb over the slope's rise.
-## Downhill a slope counts as one about half as steep; on hands and feet he comes down facing the slope, no faster
-## than he goes up.
+## Downhill a slope counts as one about half as steep.
 func _slope_speed(run: bool) -> float:
 	var hands := terrain == 2
 	var angle := atan(absf(grade))
-	if grade < 0.0 and not hands:
+	if grade < 0.0:
 		angle *= DOWN_EASE
 	if angle < 0.02:
 		return 1000.0

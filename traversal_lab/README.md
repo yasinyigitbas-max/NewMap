@@ -114,22 +114,43 @@ clips were ordered from Kimodo with prompts written from it.
 | on hands and feet "the footfall of a lower limb usually followed that of the same-side upper limb"; comfortable at about 0.83 m/s on the flat, tested at 0.56 m/s on a 35 degree incline | Kimodo crawl clips made to that description; 0.35 m/s of height, 0.6 with run held (the 0.6 is not measured for crawling) |
 | "face inwards for steep slopes, but otherwise face out" | over 35 degrees he comes down backwards, facing the slope |
 
-- 20 to 35 degrees: `KM_Steep_Walk_Up` / `KM_Steep_Walk_Down`, feet fitted to the slope as elsewhere.
-- 35 to 50 degrees: `KM_Crawl_Fwd` / `KM_Crawl_Back`, the whole figure tipped to the slope he faces (a crawl on a slope
-  is a crawl on the flat, tipped). The feet are held where planted; the hands have no IK yet, so on a flat ramp they
-  meet the surface only as well as the clip's did.
-- Not done: sideways traverse and zig-zag on steep ground; hands on uneven steep ground; a slide down ground over 50.
+- **Second pass, 26 Nov, after Yasin's look** ("going up 30 deg slope is terrible, he pulls his legs up as if
+  stretching ... why is the ramp a crawl? we look like a small baby ... long strides assisted by hands only at some
+  steps"). The fault with the first clips: Kimodo had made the uphill walk on the FLAT, and a flat walk fitted to a
+  30 degree slope by the foot IK lifts the knees absurdly. The rule now: a slope clip must itself climb or descend at
+  about the slope it is used on (measured from the take), so the IK has only the difference to make up.
+  - 20 to 35 degrees up: a take that rises at 29 degrees with long strides. Down: one that drops at 27 degrees.
+  - 35 to 50 degrees up: a take that rises at 44 degrees, on foot. Down: one that drops at 27 degrees, facing
+    downhill (no take came down steeper facing forward; Kimodo mostly backs down a hill).
+  - The crawl and the facing-in descent are out. **Hands: not achieved.** No take put a hand on the ground, whatever
+    the wording; that needs arm IK onto the slope at chosen steps, which is not built.
+  - On ground steeper than the ankle bends (23 degrees here; one measured ankle stopped at 24) the heel comes off
+    and he stands on the ball of the foot.
+- What was learned about wording Kimodo: one sentence (a full stop starts a new motion), no decimal points, and SHORT.
+  The long descriptive prompts did worst: four of four "30 degree hillside" takes stood on the spot. Every take is
+  measured (slope climbed, speed, foot sliding) before it is used; the numbers are in `kimodo_clips.csv`.
+- Not done: hands on steep ground; sideways traverse and zig-zag; a slide down ground over 50.
 
 ### Walking or running off an edge
 Yasin: "looks stuck and frozen on air before landing, no limbs move to balance itself". The Mixamo falling loop
 barely moves. Now `KM_Ledge_Walk_Off` / `KM_Ledge_Run_Off` (Kimodo): the clip's own time in the air plays while he
 falls and its landing carries on from where the feet touch; a fall longer than the clip has goes to the old loop.
 
-### Stairs at a walk were jittery
-Measured: his whole body took each step's height in a hop of 4 to 5 cm a tick and then stood level. Now his height
-follows the flight (and, going down, the step his foot is reaching for). Biggest tick-to-tick jolt of the hips: going
-up 1.7 cm (was 2.8), going down 1.6 cm (was 3.2). A second round of Kimodo stair clips was tried and measured worse
-at the feet than the ones in use (their strides do not fit a 0.28 m tread), so the clips were not changed.
+### Stairs were jittery
+First attempt (smoothing the hop of the hips) made no difference to the eye (Yasin: "there isnt any visual
+difference"). Measuring every joint found it: a foot passing a step edge had its ground jump a whole step and was
+snapped there at up to 8 cm a tick, and the stride itself jumped a few hundredths at every edge because it was tied
+to a measured tread that is never exact. Jolts of feet and knees were 300 to 500 m/s2 on stairs against under 60 on
+the flat. Now a moving foot feels a step edge 12 cm before and behind and rises across it; the stride runs on by
+distance and is only drawn toward its place on the stairs; a little knee bend is kept. Feet now jolt at about 100
+m/s2 going up and down, knees about 110 going up, still up to 280 going down.
+Running up stairs has a new Kimodo take whose stride matches real steps (two steps of 18 cm in 55 cm, climbing at 30
+degrees).
+
+### Stance
+Yasin: "legs are too spread apart". Measured: 0.32 m between the ankles at a walk, where people were measured at 0.08
+to 0.10 m. It comes from his T-pose (legs splayed) which every clip inherits. The feet are brought in by half with
+the leg IK: 0.16 m walking, 0.14 m running.
 
 ### Jump at a run, landings, turning round at a run
 - A jump at a run plays `Running Jump` (one stride with a leap in it) and runs on without stopping. Measured: a leap
