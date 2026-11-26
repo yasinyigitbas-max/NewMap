@@ -6,6 +6,7 @@ extends SceneTree
 
 const HAND_WITHIN := 0.03       # the study: "hands rest on the edge within about 3 cm"
 const HAND_ROCK := 1.0          # NOT in the study: a held hand does not turn more than this in a tick (degrees)
+const TOE := 0.08                # the toes beyond the toe joint (m), allowed for each side of the obstacle
 const FEET_WITHIN := 0.03
 const END_WITHIN := 0.05
 
@@ -39,8 +40,8 @@ func _after() -> void:
 	hand_turn = [(skel.global_transform.basis * skel.get_bone_global_pose(bones[4]).basis).orthonormalized(), (skel.global_transform.basis * skel.get_bone_global_pose(bones[5]).basis).orthonormalized()]
 
 
-func go_at(s: Dictionary, run: bool, flip := -1.0) -> Dictionary:
-	lab.call(&"place", Vector3(float(s["x"]), 0.0, 2.6 if run else -1.2))
+func go_at(s: Dictionary, run: bool, flip := -1.0, near := false) -> Dictionary:
+	lab.call(&"place", Vector3(float(s["x"]), 0.0, 2.6 if run else (-2.72 if near else -1.2)))
 	body.rotation.y = 0.0
 	for i in 30:
 		await physics_frame
@@ -80,9 +81,14 @@ func go_at(s: Dictionary, run: bool, flip := -1.0) -> Dictionary:
 				last_turn = Basis()
 			# the lowest any foot joint goes over the obstacle's top while he is over it
 			var plan: Dictionary = out["plan"]
-			if plan.has("mid") and absf((body.global_position - (plan["mid"] as Vector3)).dot(plan["m"])) < 0.25:
+			# (a foot joint counts while it is itself over the obstacle: within its thickness, and the length of
+			# the toes beyond the toe joint more each way)
+			if plan.has("mid"):
 				for k in 4:
-					out["low"] = minf(float(out["low"]), final[k].y - float(plan["top"]))
+					if absf(((final[k] as Vector3) - (plan["mid"] as Vector3)).dot(plan["m"])) < float(s["depth"]) * 0.5 + TOE:
+						out["low"] = minf(float(out["low"]), final[k].y - float(plan["top"]))
+						if OS.get_cmdline_user_args().has("--feet") and final[k].y < float(plan["top"]):
+							print("   under: joint %d at clip %.2f, %.2f m along from the middle, y %.2f (top %.2f), body %.2f along" % [k, float(body.get(&"move_clip_t")), ((final[k] as Vector3) - (plan["mid"] as Vector3)).dot(plan["m"]), final[k].y, float(plan["top"]), (body.global_position - (plan["mid"] as Vector3)).dot(plan["m"])])
 		if was_in and not inm:
 			out["end"] = body.global_position
 			out["end_state"] = int(body.get(&"state"))
@@ -126,21 +132,25 @@ func _run() -> void:
 		stand.append(p.y - body.global_position.y)
 	var band: Array = trav.get(&"VAULT_BAND")
 	var inside: Array[Dictionary] = []
-	for way: Array in [[true, 0], [true, 1], [false, -1]]:
+	# (stage 11: at a walk and from standing against it the same vault is used, slowed, until there is a step vault)
+	for way: Array in [[true, 0, false], [true, 1, false], [false, 0, false], [false, 1, false], [false, 0, true]]:
 		var run: bool = way[0]
 		trav.set(&"force_mirror", int(way[1]))
-		var which := "" if int(way[1]) < 0 else (", the mirror image" if int(way[1]) == 1 else ", as the clip has it")
+		var which := (", the mirror image" if int(way[1]) == 1 else ", as the clip has it")
 		for s: Dictionary in stations:
 			if not (String(s["kind"]) in ["wall_deep", "wall_thin"]) or float(s["top"]) > 2.0:
 				continue
 			var h := float(s["top"])
-			var should := run and String(s["kind"]) == "wall_thin" and h >= float(band[0]) - 0.001 and h <= float(band[1]) + 0.001
-			var r := await go_at(s, run)
+			# (from standing right against it there is no move yet: he has to leave the ground where the clip does,
+			# a metre before the obstacle. That case is run to show it plainly, and is held to "no vault".)
+			var should := String(s["kind"]) == "wall_thin" and h >= float(band[0]) - 0.001 and h <= float(band[1]) + 0.001 and not bool(way[2])
+			var r := await go_at(s, run, -1.0, bool(way[2]))
 			var key := String((r["plan"] as Dictionary).get("key", ""))
 			if not should:
-				ok(key != "vault", "%s, %s: not this move's, the vault is not played (%s)" % [s["label"], "at a run" if run else "at a walk", ("the move '%s'" % key) if key != "" else "stopped: " + String(r["refused"])])
+				ok(key != "vault", "%s, %s: the vault is not played (%s)" % [s["label"], "at a run" if run else ("from standing against it" if bool(way[2]) else "at a walk"), ("the move '%s'" % key) if key != "" else "stopped: " + String(r["refused"])])
 				continue
-			inside.append(s)
+			if run and int(way[1]) == 0:
+				inside.append(s)
 			var plan: Dictionary = r["plan"]
 			var bad := ""
 			if key != "vault":
@@ -164,7 +174,7 @@ func _run() -> void:
 					bad = "no foot nearer than %.1f cm to the ground in the step after" % (float(r["feet"]) * 100.0)
 				elif float(r["low"]) < 0.0:
 					bad = "a foot %.1f cm under the top as he goes over" % (-float(r["low"]) * 100.0)
-			ok(bad == "", ("%s, at a run" % s["label"]) + which + (": vaults it, hand on the top (wrist within %.1f cm for %d ticks, the hand turning at most %.1f deg a tick), feet" % [float(r["hand"]) * 100.0, int(r["held"]), float(r["rock"])]) + " %.0f cm clear of the top, lands and ends where measured at the clip's exit speed (foot %.1f cm off the ground)%s" % [
+			ok(bad == "", ("%s, %s" % [s["label"], "at a run" if run else "at a walk"]) + which + (": vaults it, hand on the top (wrist within %.1f cm for %d ticks, the hand turning at most %.1f deg a tick), feet" % [float(r["hand"]) * 100.0, int(r["held"]), float(r["rock"])]) + " %.0f cm clear of the top, lands and ends where measured at the clip's exit speed (foot %.1f cm off the ground)%s" % [
 					float(r["low"]) * 100.0, float(r["feet"]) * 100.0, "" if bad == "" else " -- " + bad])
 	for s: Dictionary in [inside[0], inside[inside.size() / 2], inside[inside.size() - 1]]:
 		trav.set(&"force_mirror", -1)
