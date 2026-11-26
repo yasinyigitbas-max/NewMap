@@ -1,0 +1,22 @@
+name,sent_to_claude_as,replicate_run_id,made,prompt,seed,model,seconds,samples,output_format
+,,nd9nc3vtg9rmy0d22ve8jtxcgc,2026-11-26 07:57:57 UTC,having a hard time walking down a hill,13289398,Kimodo-SOMA-RP-v1,3.6,1,all
+,,hmfn8ya4bxrmw0d22vebgm2hxg,2026-11-26 07:57:43 UTC,having a hard time walking down a hill,13289398,Kimodo-SOMA-SEED-v1.1,3.6,1,all
+,,mhs09wkq6nrmw0d22vdrf302hw,2026-11-26 07:56:51 UTC,jumping and sliding over a car bonnet,13289398,Kimodo-SOMA-RP-v1,6.5,1,all
+KMY_Down_Hands_Balance_Long,yes: kimodo_motion_00_1.fbx,5x7gbt146srmy0d22vd9hej63m,2026-11-26 07:55:24 UTC,using hands to balance yourself while walking down steep slope with difficulty,13289398,Kimodo-SOMA-RP-v1,6.5,1,all
+KMY_Down_Hands_Balance,yes: kimodo_motion_00.fbx,6h6yfe0rpdrmr0d22vctpyex4c,2026-11-26 07:54:16 UTC,using hands to balance yourself while walking down steep slope with difficulty,13289398,Kimodo-SOMA-RP-v1,3.5,1,all
+,,decf5zc4cxrmr0d22vc9z8fqhc,2026-11-26 07:53:38 UTC,using hands to balance yourself while walking down steep slope with difficulty,13289398,Kimodo-SOMA-RP-v1.1,3.5,1,all
+,,egc42t0rfnrmw0d22vc865erc8,2026-11-26 07:53:10 UTC,"walking down steep slope with difficulty, leaning back, using hands to balance",13289398,Kimodo-SOMA-RP-v1.1,3.5,1,all
+,,eeq260gb69rmt0d22vbr4wbz6g,2026-11-26 07:52:01 UTC,"climbing down a steep slope with difficulty, leaning back, using hands to balance",46512893,Kimodo-SOMA-RP-v1.1,3.5,5,all
+,,560r57b1z1rmy0d22vb845rfa8,2026-11-26 07:51:18 UTC,"climbing down a steep slope with difficulty, balancing with arms",112959882,Kimodo-SOMA-RP-v1.1,3.5,1,all
+,,dntma66ydxrmw0d22vat1f07zm,2026-11-26 07:50:44 UTC,climbing down a steep slope with difficulty,139538678,Kimodo-SOMA-RP-v1.1,3.5,1,all
+,,kbfef5509hrmt0d22varrkhgnc,2026-11-26 07:50:28 UTC,climbing down a steep slope with difficulty,139538678,Kimodo-SOMA-RP-v1.1,0.5,1,all
+,,kc2714hvwxrmy0d22var4xbmt4,2026-11-26 07:50:02 UTC,having a hard time climbing down a steep slope,139538678,Kimodo-SOMA-RP-v1.1,0.5,1,all
+,,ha26txnjbhrmw0d22va8p432p0,2026-11-26 07:49:27 UTC,struggles of a man climbing down a steep slope,139538678,Kimodo-SOMA-RP-v1.1,3.5,1,all
+,,bmkhm584c9rmw0d22vab5cddpg,2026-11-26 07:48:43 UTC,a person walking down steep slope leaning back a lot to balance,139538678,Kimodo-SOMA-RP-v1.1,3.5,1,all
+,,hnzmn7e3gnrmw0d22v9v7939vw,2026-11-26 07:48:26 UTC,a person walking down steep slope leaning back to balance,139538678,Kimodo-SOMA-RP-v1.1,3.5,1,all
+,,v0fxj33gfdrmr0d22v9tp84ky0,2026-11-26 07:48:05 UTC,a person walking down steep slope leaning back and using hands on ground to balance,139538678,Kimodo-SOMA-RP-v1.1,3.5,1,all
+,,v7rdpbd3axrmy0d22v99rh99hg,2026-11-26 07:47:12 UTC,a person walking down steep slope leaning back and using hands on ground to balance,42,Kimodo-SOMA-RP-v1.1,3.5,1,all
+,,6vpdszfexxrmy0d22v8tkh9kdc,2026-11-26 07:46:26 UTC,"a person walking down 45 degree slope, having a hard time going down, leaning back and using hands on ground to balance, trying not to fall",42,Kimodo-SOMA-RP-v1.1,3.5,1,all
+,,5tnygwn1q5rmy0d22v7skh4nf8,2026-11-26 07:43:55 UTC,"a person walking down a steep slope having a hard time descending, getting assistance from their hands, having to bend back to adapt, trying not to fall",42,Kimodo-SOMA-RP-v1.1,3.5,1,all
+"KM_Climb_Hard (in the build, rerun on the character with the same seed)",,fs8rx8y4thrmr0d22tzsy8bmy4,2026-11-26 07:26:36 UTC,"a person walking up a steep slope having a hard time climbing, getting assistance from their hands, having to bend over to adapt",42,Kimodo-SOMA-RP-v1.1,3.5,1,glb
+,,7gmam012edrmt0d22tz8wa8hww,2026-11-26 07:24:49 UTC,a person walking up a 45 degree slope having a hard time climbing,42,Kimodo-SOMA-RP-v1.1,3.5,1,glb
