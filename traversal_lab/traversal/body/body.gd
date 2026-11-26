@@ -64,6 +64,11 @@ const REVERSE_ANGLE_DEG := 135.0  # asked to go nearly the opposite way at a run
 # first, at the turn rates above; he sets off when within SPOT_END.
 const SPOT_START_DEG := 60.0    # NOT in the study: below this he just sets off and curves; a value to tune by eye
 const SPOT_END_DEG := 15.0      # NOT in the study
+# How fast he turns on the spot from standing. The study: "Turning 180 degrees on the spot takes about 3 to 4 steps"
+# and "Young adults take 115 to 120 steps a minute": three and a half steps at 117.5 a minute are 1.79 s for the 180
+# degrees. (Putting the two figures together is OURS. Until 26 Nov he spun round at the walking turn rate, 180
+# degrees in one second, with no steps: Yasin, "THERE WASNT ANY STANDING 180 TURNS".)
+const SPOT_RATE := PI / (3.5 * 60.0 / 117.5)    # rad/s
 # Stairs are their own movement: "stairs are climbed at about half a second per step: 0.51 s up and 0.47 s down".
 # The study has nothing on running stairs (its notes: "two-steps-at-a-time mechanics, running on stairs: not
 # found"), so the running figures are OURS, set 26 Nov at Yasin's word ("we need to set them ourselves as many
@@ -91,6 +96,15 @@ const JUMP_DIP_STAND := 0.0     # DEPARTS FROM THE STUDY AT YASIN'S WORD. The st
 const JUMP_PUSH_STAND := 0.30
 const JUMP_RISE_RUN := 0.60     # "a run-up typically 0.10 to 0.20 m more": 0.45 + 0.15
 const JUMP_PUSH_RUN := 0.10     # from a run the take-off comes off the stride: the Running Jump clip leaves at 0.10 s
+
+# Stage 6, crouch (Yasin, 26 Nov: "DO THE CROUCH MOVES"). The study: "Build: crouch idle and walk, the smaller
+# capsule, the fit test before standing. Pass when: the character passes under the 1.2 m overhang crouched and cannot
+# stand up beneath it; standing up in the open is instant; crouch speed is about half walk speed".
+const CROUCH_SPEED := WALK * 0.5    # the study: "crouch speed is about half walk speed"
+const CROUCH_HEIGHT := 1.15         # feet to the top of the crouched body: under the course's 1.2 m overhang. His
+                                    # crouch takes hold the top of the head under this (measured, see character.gd)
+const STAND_ROOM := 0.03            # NOT in the study: the standing shape is tried this much thinner than it is, so
+                                    # that a wall he is touching does not count as no room to stand
 
 signal jump_started(push_time: float)
 signal jumped
@@ -134,6 +148,9 @@ var _wish_yaw := 0.0            # the way he was asked to go last tick
 var _wish_turn := 0.0           # how fast the way he is asked to go is turning (rad/s, averaged)
 var _wish_on := false
 var _stood_y := 0.0             # the height of the ground he last stood squarely on (his middle over it)
+var crouched := false           # he is crouched: the smaller capsule, half walking speed, no run, no jump
+var _col: CollisionShape3D
+var _fit := CapsuleShape3D.new()
 
 
 func _ready() -> void:
@@ -147,6 +164,9 @@ func _ready() -> void:
 	col.shape = shape
 	col.position.y = FLOAT + (HEIGHT - FLOAT) * 0.5
 	add_child(col)
+	_col = col
+	_fit.radius = RADIUS - STAND_ROOM
+	_fit.height = HEIGHT - FLOAT - STAND_ROOM
 	# a flat underside: without it a block between FLOAT and waist height meets the capsule's round bottom and
 	# is ridden up. With it the block meets an upright side and is a wall.
 	var skirt_shape := CylinderShape3D.new()
@@ -182,6 +202,28 @@ func _ready() -> void:
 	nose.position = Vector3(0, 1.6, -0.3)
 	add_child(nose)
 	_look.append(nose)
+
+
+## The capsule for standing or for crouching: from FLOAT above the feet to the top of the body, as always.
+func _set_crouched(low: bool) -> void:
+	crouched = low
+	var top := CROUCH_HEIGHT if low else HEIGHT
+	(_col.shape as CapsuleShape3D).height = top - FLOAT
+	_col.position.y = FLOAT + (top - FLOAT) * 0.5
+	if _look.size() > 0:
+		((_look[0] as MeshInstance3D).mesh as CapsuleMesh).height = top - FLOAT
+		_look[0].position.y = _col.position.y
+
+
+## The study: "After changing capsule size for crouch, test that the standing capsule fits before standing up."
+## An overlap test of the standing shape where it would be ("Is this space free" is `intersect_shape`).
+func can_stand() -> bool:
+	var q := PhysicsShapeQueryParameters3D.new()
+	q.shape = _fit
+	q.transform = Transform3D(Basis.IDENTITY, global_position + Vector3.UP * (FLOAT + (HEIGHT - FLOAT) * 0.5))
+	q.exclude = [get_rid()]
+	q.collision_mask = collision_mask
+	return get_world_3d().direct_space_state.intersect_shape(q, 1).is_empty()
 
 
 ## Show or hide the plain capsule look (hidden when the character is on the body).
@@ -248,7 +290,13 @@ func _physics_process(dt: float) -> void:
 	var stick := Vector3(float(s.get("mx", 0.0)), 0.0, float(s.get("mz", 0.0)))
 	if stick.length() > 1.0:
 		stick = stick.normalized()
-	_wish = stick.rotated(Vector3.UP, float(s.get("yaw", 0.0))) * (RUN if bool(s.get("run", false)) else WALK)
+	# crouch: held down he crouches (on the ground); let go, he stands as soon as the standing body fits
+	var want_low := bool(s.get("crouch", false))
+	if want_low and not crouched and state == State.GROUND and jump_timer <= 0.0:
+		_set_crouched(true)
+	elif crouched and not want_low and can_stand():
+		_set_crouched(false)
+	_wish = stick.rotated(Vector3.UP, float(s.get("yaw", 0.0))) * (CROUCH_SPEED if crouched else (RUN if bool(s.get("run", false)) else WALK))
 
 	# a way to go that keeps turning (a curve, not a corner) is walked more slowly
 	if _wish.length() > 0.05:
@@ -290,7 +338,7 @@ func _physics_process(dt: float) -> void:
 
 	# jump: a push-off first, then the body leaves the ground
 	var jump_now := bool(s.get("jump", false))
-	if state == State.GROUND and jump_now and not _jump_held and jump_timer <= 0.0:
+	if state == State.GROUND and jump_now and not _jump_held and jump_timer <= 0.0 and not crouched:
 		_jump_still = hvel.length() < 2.0
 		jump_timer = (JUMP_DIP_STAND + JUMP_PUSH_STAND) if _jump_still else JUMP_PUSH_RUN
 		jump_started.emit(jump_timer)
@@ -367,7 +415,7 @@ func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 		# turning on the spot, or the plant-and-turn that ends a brake from a run: he turns, and what speed he
 		# still has is shed
 		if absf(off) > deg_to_rad(SPOT_END_DEG):
-			var rate := TURN_RATE_RUN if spot_run else lerpf(TURN_RATE_WALK, TURN_RATE_RUN, fast)
+			var rate := TURN_RATE_RUN if spot_run else SPOT_RATE
 			rotation.y += signf(off) * minf(rate * dt, absf(off))
 			spot_left = wrapf(atan2(-wdir.x, -wdir.z) - rotation.y, -PI, PI)
 			return v.normalized() * maxf(speed - STOP_RUN * dt, 0.0) if speed > 0.0001 else Vector3.ZERO
@@ -376,7 +424,8 @@ func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 			return v.normalized() * maxf(speed - STOP_RUN * dt, 0.0)
 	if speed < 0.3:
 		# from rest (or nearly): turn on the spot first if the way to go is far off his facing
-		if absf(off) > deg_to_rad(SPOT_START_DEG):
+		# (not crouched: there is no clip of turning on the spot in a crouch; he sets off and curves round)
+		if absf(off) > deg_to_rad(SPOT_START_DEG) and not crouched:
 			spot_total = off
 			spot_left = off
 			spot_run = false

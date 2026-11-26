@@ -17,6 +17,8 @@ var tape: Node
 var stations: Array
 
 
+const TURN_ROUND_MORE := 0.8    # seconds: see test_kerbs_and_stairs
+
 func ok(cond: bool, what: String) -> void:
 	if not cond:
 		fails += 1
@@ -84,6 +86,10 @@ func _run() -> void:
 	body = lab.get(&"body")
 	tape = lab.get(&"tape")
 	stations = (lab.get(&"course") as Node3D).get(&"stations")
+	# Stage 6: "Stage 1 tests pass in crouch". Run with `-- --crouch`: the same tests with crouch held throughout.
+	if OS.get_cmdline_user_args().has("--crouch"):
+		tape.set(&"hold_crouch", true)
+		print("WITH CROUCH HELD")
 	await test_kerbs_and_stairs()
 	await test_steps()
 	await test_ramps()
@@ -110,7 +116,9 @@ func test_kerbs_and_stairs() -> void:
 			var stairs: bool = s["kind"] == "stairs"
 			var up := await drive(s["start"], segs, float(s["top"]) - 0.002 if stairs else -1000.0)
 			var top_ok := absf(last(up).y - float(s["top"])) < 0.01
-			var down := await drive(last(up), [[t, 0.0, 1.0, 0.0, run]], 0.002 if stairs else -1000.0, true)
+			# (coming back he first turns round on the spot: since 26 Nov that takes the study's "about 3 to 4 steps",
+			# 1.8 s, where it took 1.0 s; the time allowed is longer by that much. What is checked is unchanged.)
+			var down := await drive(last(up), [[t + TURN_ROUND_MORE, 0.0, 1.0, 0.0, run]], 0.002 if stairs else -1000.0, true)
 			var back_ok := absf(last(down).y) < 0.01
 			var in_air := count_state(up, AIR) + count_state(up, 2)
 			var pace := ""
@@ -266,7 +274,7 @@ func test_ledges() -> void:
 	# low edges are stepped down without leaving the ground
 	for h: float in [0.20, 0.30]:
 		var s := st(("kerb %.2f m" if h < 0.25 else "step %.2f m") % h)
-		var rec := await drive(Vector3(float(s["x"]), h, -4.5), [[3.0, 0.0, 1.0, 0.0, false]])
+		var rec := await drive(Vector3(float(s["x"]), h, -4.5), [[3.0 + TURN_ROUND_MORE, 0.0, 1.0, 0.0, false]])
 		ok(count_state(rec, AIR) == 0 and absf(last(rec).y) < 0.01 and max_step(rec) <= 0.055, "walking off a %.2f m edge: steps down, never 'in air', biggest height step %.1f cm" % [h, max_step(rec) * 100.0])
 	# high edges: in the air at once, on the ground at once on landing
 	for label: String in ["deep wall 1.00 m", "deep wall 2.20 m"]:

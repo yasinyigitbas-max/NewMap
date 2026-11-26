@@ -17,7 +17,7 @@ const MODEL := "res://traversal/character/player_v4_rooted.scn"
 const OUT := "res://traversal/character/library.res"
 const SKEL := "Skeleton3D"
 const MIRRORED := ["Female_Stop_Walking", "Run_To_Stop", "Left_Turn_90", "Walking_Turn_180", "Running_Turn_180", "Female_Start_Walking", "Idle_To_Sprint",
-		"KM_Stop_Walk", "KM_Walk_To_Run", "KM_Run_To_Walk"]
+		"KM_Stop_Walk", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Turn_180"]
 # Starts, stops and changes of gait are chosen "by which foot is forward" (the study, Stage 5): for these clips how far
 # the left ankle is ahead of the right, frame by frame, is noted on the animation ("lead", metres).
 const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Stop_Walk", "KM_Slope_Down_Start", "KM_Slope_Down_Stop", "KM_Start_Walk",
@@ -71,6 +71,11 @@ const FIT := {"KM_Walk": {"pelvis": 7.7, "knee": [20.0, 0.7], "ankle": [1.0, 0.8
 		# ahead of it; together the head peaked at 684 degrees a second in the audit, the study: "the head peaking
 		# at 137 to 272 degrees a second". The head's and neck's own turning is kept at this share.
 		"Walking_Turn_180": {"head": 0.3}, "Left_Turn_90": {"head": 0.3}, "Running_Turn_180": {"head": 0.3},
+		# Yasin, 26 Nov: "START RUN NODS THE HEAD DOWN STRANGELY SO DOES STOP WALK". Measured: in Idle To Sprint the
+		# head tips 12 degrees down as the trunk ducks 29; the Kimodo stop take looks 41 degrees down at the ground
+		# and stays there. level: the share of the head's tip forward or back, against how it is held standing,
+		# that is taken out again at the neck and head, so he keeps looking where he is going.
+		"Idle_To_Sprint": {"level": 1.0}, "KM_Stop_Walk": {"level": 1.0},
 		"KM_Run": {"pelvis": -1.6, "knee": [60.0, 0.85], "ankle": [1.0, 0.8], "arms": 0.15},
 		"Running": {"pelvis": -1.6, "knee": [60.0, 0.85], "ankle": [1.0, 0.8], "arms": 0.15}}
 const FOOT_UP_SIGN := 1.0       # which way round the foot bone's side-to-side line counts as toes up (found by trying both)
@@ -239,7 +244,7 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 
 ## Small edits to a take's joint curves (see FIT). Every edit is made to the bone's own turn from its standing pose.
 func _fit(a: Animation, how: Dictionary, sk: Skeleton3D, clip: String) -> void:
-	var fit := {"pelvis": 0.0, "knee": [20.0, 1.0], "ankle": [1.0, 1.0], "toe": 1.0, "arms": 0.0, "head": 1.0, "trunk": 1.0}
+	var fit := {"pelvis": 0.0, "knee": [20.0, 1.0], "ankle": [1.0, 1.0], "toe": 1.0, "arms": 0.0, "head": 1.0, "trunk": 1.0, "level": 0.0}
 	fit.merge(how.duplicate(true), true)
 	for arg in OS.get_cmdline_user_args():       # for trying figures: -- --fit=KM_Walk/pelvis:6,knee:20:0.8,ankle:0.6:0.8,toe:1.2
 		if arg.begins_with("--fit=%s/" % clip):
@@ -277,6 +282,8 @@ func _fit(a: Animation, how: Dictionary, sk: Skeleton3D, clip: String) -> void:
 				if rel.w < 0.0:
 					rel = -rel
 				a.track_set_key_value(ht, k, (hr * Quaternion.IDENTITY.slerp(rel, float(fit[group[0]]))).normalized())
+	if float(fit["level"]) != 0.0:
+		_level_head(a, sk, float(fit["level"]))
 	var hips_t: int = tr.call("Hips")
 	var back := deg_to_rad(float(fit["pelvis"]))
 	for k in a.track_get_key_count(hips_t):
@@ -321,6 +328,34 @@ func _fit(a: Animation, how: Dictionary, sk: Skeleton3D, clip: String) -> void:
 				if rel.w < 0.0:
 					rel = -rel
 				a.track_set_key_value(tt, k, (trr * Quaternion.IDENTITY.slerp(rel, float(fit["toe"]))).normalized())
+
+
+## The head kept level: at every key, how far the head is tipped forward or back of how it is held in the standing
+## pose (about his own side-to-side line) is found from the whole chain, hips to head, and `share` of it is turned
+## back out, half at the neck and half at the head.
+func _level_head(a: Animation, sk: Skeleton3D, share: float) -> void:
+	var chain := ["Hips", "Spine", "Spine1", "Spine2", "Neck", "Head"]
+	var up_rest := sk.get_bone_global_rest(sk.find_bone("mixamorig_Head")).basis.orthonormalized().y
+	var pitch_rest := atan2(up_rest.z, up_rest.y)
+	var nt := a.find_track(NodePath("%s:mixamorig_Neck" % SKEL), Animation.TYPE_ROTATION_3D)
+	var ht := a.find_track(NodePath("%s:mixamorig_Head" % SKEL), Animation.TYPE_ROTATION_3D)
+	for k in a.track_get_key_count(nt):
+		var time := a.track_get_key_time(nt, k)
+		var g: Array[Quaternion] = []
+		var q := Quaternion.IDENTITY
+		for bn: String in chain:
+			q = (q * _rot(a, "mixamorig_" + bn, time)).normalized()
+			g.append(q)
+		# (in his own frame: the way the hips face taken out)
+		var facing := Quaternion(Vector3.UP, _yaw_of(g[0]))
+		var up := facing.inverse() * (g[5] * Vector3.UP)
+		var off := (atan2(up.z, up.y) - pitch_rest) * share
+		var half := Quaternion(facing * Vector3(1.0, 0.0, 0.0), -0.5 * off)
+		var neck := (half * g[4]).normalized()
+		var head := (half * half * g[5]).normalized()
+		a.track_set_key_value(nt, k, (g[3].inverse() * neck).normalized())
+		var hk := a.track_find_key(ht, time, Animation.FIND_MODE_APPROX)
+		a.track_set_key_value(ht, hk, (neck.inverse() * head).normalized())
 
 
 ## How far the left ankle is ahead of the right through a clip (metres, one figure a frame).

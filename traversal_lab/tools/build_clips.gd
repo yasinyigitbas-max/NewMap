@@ -19,7 +19,10 @@ const CUTS := {"KM_Stairs_Walk_Down": [0.67, 1.53], "KM_Stairs_Run_Up": [0.67, 1
 		# Yasin's uphill take: the whole of it is the loop (it starts and ends on the same step)
 		"KM_Climb_Hard": [0.0, 3.47],
 		# Yasin's downhill take: two strides from the middle of its descent (left foot forward to left foot forward)
-		"KMY_Down_Hands_Balance_Long": [2.33, 4.57]}
+		"KMY_Down_Hands_Balance_Long": [2.33, 4.57],
+		# Stage 6, crouch: one stride of the lowest crouch-walk take (left foot forward to left foot forward; the top
+		# of its head stays between 0.97 and 1.16 m), and three still seconds of the crouch idle
+		"KM_Crouch_Walk": [1.40, 2.95], "KM_Crouch_Idle": [0.50, 3.50]}
 const AUTO_CUT := ["KM_Walk", "KM_Run"]
 # A part of a take used as it is, not as a loop (seconds, from and to):
 #   the start and the stop of Yasin's own long downhill take (the loop above is its middle: 2.33 to 4.57 s);
@@ -31,7 +34,13 @@ const TRIMS := {"KM_Slope_Down_Start": [0.60, 2.33], "KM_Slope_Down_Stop": [4.57
 		"KM_Start_Walk": [0.0, 2.00],
 		# setting off up, and coming to rest on, very steep ground: Kimodo takes of 26 Nov in Yasin's own wording for
 		# the climb. The start climbs from its first frame; the stop take was made on the flat (it slows and stands).
-		"KM_Slope_Up_Start": [0.0, 1.50], "KM_Slope_Up_Stop": [2.00, 4.90]}
+		"KM_Slope_Up_Start": [0.0, 1.50], "KM_Slope_Up_Stop": [2.00, 4.90],
+		# Stage 6, crouch (Kimodo takes of 26 Nov, Yasin: "DO THE CROUCH MOVES, ORDER WHATS MISSING FROM KIMODO"): going
+		# down as far as the crouch he walks in (the take goes on into a full squat), and up from there
+		"KM_Crouch_Down": [0.20, 1.30], "KM_Crouch_Up": [0.20, 1.40],
+		# turning round on the spot in steps (Kimodo takes of 26 Nov; Yasin: "THERE WASNT ANY STANDING 180 TURNS, ADD
+		# THEM"): from just before the head starts round to standing again
+		"KM_Turn_180": [0.60, 3.00]}
 const LOOPS := ["Standing_Idle", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
 
 

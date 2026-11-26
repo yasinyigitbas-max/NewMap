@@ -44,11 +44,19 @@ func _axis(name: StringName, axis: JoyAxis, value: float) -> void:
 	InputMap.action_add_event(name, ev)
 
 
+## For the Stage 6 test ("Stage 1 tests pass in crouch"): every sample of a replayed tape is given with crouch held.
+var hold_crouch := false
+
+
 ## Called once per physics tick by the body.
 func sample() -> Dictionary:
 	if mode == Mode.REPLAY:
 		if cursor < tape.size():
 			cursor += 1
+			if hold_crouch:
+				var low: Dictionary = (tape[cursor - 1] as Dictionary).duplicate()
+				low["crouch"] = true
+				return low
 			return tape[cursor - 1]
 		mode = Mode.LIVE
 		replay_finished.emit()

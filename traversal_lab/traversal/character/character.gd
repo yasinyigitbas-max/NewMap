@@ -73,7 +73,20 @@ const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling
 		"run_to_walk": "KM_Run_To_Walk", "run_to_walk_m": "KM_Run_To_Walk_M",
 		"turn_90": "Left_Turn_90", "turn_90_m": "Left_Turn_90_M",
 		"turn_180_walk": "Walking_Turn_180", "turn_180_walk_m": "Walking_Turn_180_M",
-		"turn_180_run": "Running_Turn_180", "turn_180_run_m": "Running_Turn_180_M"}
+		"turn_180_run": "Running_Turn_180", "turn_180_run_m": "Running_Turn_180_M",
+		"turn_180_step": "KM_Turn_180", "turn_180_step_m": "KM_Turn_180_M",
+		"crouch_down": "KM_Crouch_Down", "crouch_up": "KM_Crouch_Up"}
+# Stage 6, crouch (Yasin, 26 Nov: "DO THE CROUCH MOVES, ORDER WHATS MISSING FROM KIMODO"). The study: "Build: crouch
+# idle and walk, the smaller capsule, the fit test before standing." The body crouches (body.gd); here the crouch idle
+# and the crouch walk take the place of standing and the gait loops. All four clips are Kimodo takes of 26 Nov: the
+# study found no clip in the folder that moves with the head under 1.29 m, and the course's overhang is 1.2 m.
+# Standing still he goes down and comes up with the two clips; on the move the two sets are blended across.
+const CROUCH_IDLE := "KM_Crouch_Idle"
+const CROUCH_WALK := "KM_Crouch_Walk"
+const CROUCH_FADE := 0.3        # NOT in the study: seconds to blend between standing and crouched while he is moving
+const HEAD_ROOM := 0.03         # NOT in the study: the top of his head is kept this far under the top of the crouched body
+const HEAD_OVER_JOINT := 0.23   # the top of his head above his head joint: standing, the joint is at 1.57 m (measured in
+                                # the lab) and the study has the "top of head about 1.80 m"
 # Changes of gait and turns on the spot (Yasin, 26 Nov: "i want all of them, include all of them in the next build").
 # Walk to run and run to walk: Kimodo takes of 26 Nov (GTA V's movement set has "walk-to-run and run-to-walk changes
 # by foot": the study). Turns on the spot: Left Turn 90, Walking Turn 180 and, for the plant-and-turn out of a run,
@@ -82,6 +95,9 @@ const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling
 const CHANGE_PACE := [0.8, 1.3]   # NOT in the study: a change-of-gait clip is taken up where its own pace is within these shares of his
 const TURN_PACE := [0.6, 1.5]     # NOT in the study: a turn clip runs at between these shares of its own pace
 const TURN_BIG_DEG := 120.0     # NOT in the study: a turn on the spot of more than this is shown with the 180 clip, less with the 90
+# The 180 on the spot from standing is a Kimodo take of a man turning round in steps (Yasin, 26 Nov: "THERE WASNT ANY
+# STANDING 180 TURNS, ADD THEM"). Mixamo's Walking Turn 180, used until then, spins round in one second on the balls
+# of the feet; the study: "Turning 180 degrees on the spot takes about 3 to 4 steps".
 # Starting and stopping on the very steep ground, going down (Yasin, 26 Nov: "start slope climb stop slope climb
 # needed. fit what we have into here"): the first 1.7 s and the last 1.9 s of his own long downhill take, whose
 # middle is the loop: he eases off from standing, and comes to rest. Played as the flat starts and stops are, by the
@@ -196,6 +212,9 @@ var _slope_t := 0.0
 var _foot_i := [-1, -1]
 var _foot_len := 0.0            # from the ankle to the ball of the foot, along the ground (from the skeleton)
 var _jump_low := 0.5            # the Jump clip: the moment its hips are lowest (found from the clip itself)
+var _low_w := 0.0               # 0 = the standing set, 1 = the crouched set
+var _low_was := false
+var _head_i := -1
 
 
 func _ready() -> void:
@@ -206,6 +225,7 @@ func _ready() -> void:
 	_pivot.add_child(model)
 	skel = model.get_node(SKEL)
 	_chest_i = skel.find_bone("mixamorig_Spine2")
+	_head_i = skel.find_bone("mixamorig_Head")
 	_foot_i = [skel.find_bone("mixamorig_LeftFoot"), skel.find_bone("mixamorig_RightFoot")]
 	_foot_len = skel.get_bone_global_rest(skel.find_bone("mixamorig_LeftToeBase")).origin.z - skel.get_bone_global_rest(skel.find_bone("mixamorig_LeftFoot")).origin.z
 	# The study, Timing: "`AnimationTree.callback_mode_process` and `Skeleton3D.modifier_callback_mode_process` both
@@ -216,12 +236,12 @@ func _ready() -> void:
 	player.name = "AnimationPlayer"
 	model.add_child(player)
 	player.add_animation_library(&"", _lib)
-	for n: String in [WALK, JOG, RUN, "KM_Climb_Hard", "KMY_Down_Hands_Balance_Long"]:
+	for n: String in [WALK, JOG, RUN, "KM_Climb_Hard", "KMY_Down_Hands_Balance_Long", CROUCH_WALK]:
 		var a := _lib.get_animation(n)
 		_length[n] = a.length
 		var t := a.find_track(NodePath("%s:Root" % SKEL), Animation.TYPE_POSITION_3D)
 		_stride[n] = (a.position_track_interpolate(t, a.length) - a.position_track_interpolate(t, 0.0)).length()
-	for key: String in ["turn_90", "turn_90_m", "turn_180_walk", "turn_180_walk_m", "turn_180_run", "turn_180_run_m"]:
+	for key: String in ["turn_90", "turn_90_m", "turn_180_walk", "turn_180_walk_m", "turn_180_run", "turn_180_run_m", "turn_180_step", "turn_180_step_m"]:
 		var a := _lib.get_animation(ACTS[key])
 		var t := a.find_track(NodePath("%s:Root" % SKEL), Animation.TYPE_ROTATION_3D)
 		var table := PackedFloat32Array()
@@ -385,13 +405,28 @@ func _make_tree() -> AnimationNodeBlendTree:
 	bt.add_node(&"ground", AnimationNodeBlend2.new(), Vector2(400, 100))
 	bt.connect_node(&"ground", 0, &"idle")
 	bt.connect_node(&"ground", 1, &"gait_seek")
+	# the crouched set beside it: crouch idle and the crouch walk, and a blend from the standing set to this one
+	var low_idle := AnimationNodeAnimation.new()
+	low_idle.animation = CROUCH_IDLE
+	bt.add_node(&"crouch_idle", low_idle, Vector2(0, -300))
+	var low_walk := AnimationNodeAnimation.new()
+	low_walk.animation = CROUCH_WALK
+	bt.add_node(&"crouch_walk", low_walk, Vector2(0, -200))
+	bt.add_node(&"crouch_speed", AnimationNodeTimeScale.new(), Vector2(200, -200))
+	bt.connect_node(&"crouch_speed", 0, &"crouch_walk")
+	bt.add_node(&"crouch_ground", AnimationNodeBlend2.new(), Vector2(400, -250))
+	bt.connect_node(&"crouch_ground", 0, &"crouch_idle")
+	bt.connect_node(&"crouch_ground", 1, &"crouch_speed")
+	bt.add_node(&"stance", AnimationNodeBlend2.new(), Vector2(600, 0))
+	bt.connect_node(&"stance", 0, &"ground")
+	bt.connect_node(&"stance", 1, &"crouch_ground")
 	var act := AnimationNodeTransition.new()
 	act.xfade_time = FADE
 	act.input_count = ACTS.size() + 2
 	act.set_input_name(0, "ground")
 	act.set_input_reset(0, false)       # the stride carries on where it was when he comes back to it
 	bt.add_node(&"act", act, Vector2(800, 100))
-	bt.connect_node(&"act", 0, &"ground")
+	bt.connect_node(&"act", 0, &"stance")
 	var fall := AnimationNodeAnimation.new()
 	fall.animation = FALL
 	bt.add_node(&"fall_anim", fall, Vector2(400, 300))
@@ -492,7 +527,21 @@ func _physics_process(dt: float) -> void:
 		"ground":
 			var st := int(body.get(&"stairs"))
 			var wish := (body.get(&"_wish") as Vector3).length()
-			var plain := not in_air and st == 0 and int(body.get(&"terrain")) == 0
+			var low := bool(body.get(&"crouched"))
+			var plain := not in_air and st == 0 and int(body.get(&"terrain")) == 0 and not low
+			if low != _low_was:
+				_low_was = low
+				if speed < 0.3 and not in_air and not _stair_on and not _steep_on and (_act == "ground" or _sub == "crouch"):
+					# standing still: down into the crouch, or up out of it, with the clip for it
+					var back := _sub == "crouch"
+					_sub = "crouch"
+					_sub_in = "crouch_down" if low else "crouch_up"
+					_low_w = 1.0 if low else 0.0
+					# (turned round half way: the other clip from as far through as this one had left)
+					_show(_sub_in, clampf(_clip_length(_sub_in) - _act_t, 0.0, _clip_length(_sub_in) - 0.1) if back else 0.0)
+				elif _sub != "" or (ACTS.has(_act) and not _stair_on and not _steep_on):
+					_sub = ""
+					_show("ground", 0.0)
 			# (the pace he was at when the stick was let go: a stop from a run is not a stop from a walk)
 			if _wish_was > RUN_FROM and wish > 0.05 and wish <= SWITCH:
 				_slowing = true
@@ -502,9 +551,18 @@ func _physics_process(dt: float) -> void:
 				_let_go_at = -1.0
 			elif _let_go_at < 0.0:
 				_let_go_at = speed
-			if _sub != "" and not plain:
+			if _sub != "" and _sub != "crouch" and not plain:
 				_sub = ""
-			if _sub == "turn":
+				if not _stair_on and not _steep_on:
+					_show("ground", 0.0)
+			if _sub == "crouch":
+				_act_t += dt
+				if _act_t >= _clip_length(_sub_in) - 0.05 or speed > 0.3 or in_air:
+					_sub = ""
+					_show("ground", 0.0)
+				else:
+					_seek()
+			elif _sub == "turn":
 				_turn(dt, wish)
 			elif _sub == "change":
 				_change(dt, speed, wish)
@@ -515,7 +573,7 @@ func _physics_process(dt: float) -> void:
 				if spot != 0.0:
 					# a turn on the spot: the clip for its size, or the one out of a run; of that clip and its mirror
 					# image, the one that turns the way he is turning
-					var kind := "turn_180_run" if bool(body.get(&"spot_run")) else ("turn_180_walk" if absf(spot) > deg_to_rad(TURN_BIG_DEG) else "turn_90")
+					var kind := "turn_180_run" if bool(body.get(&"spot_run")) else ("turn_180_step" if absf(spot) > deg_to_rad(TURN_BIG_DEG) else "turn_90")
 					var base: PackedFloat32Array = _yaw[kind]
 					_sub = "turn"
 					_sub_in = kind if (base[base.size() - 1] > 0.0) == (spot > 0.0) else kind + "_m"
@@ -560,10 +618,10 @@ func _physics_process(dt: float) -> void:
 				pass
 			elif _slope_sub == "stop" and not in_air and int(body.get(&"terrain")) == 2 and wish < 0.05:
 				_slope_stop(dt, speed)
-			elif not in_air and st != 0 and speed > 0.15:
+			elif not in_air and st != 0 and speed > 0.15 and not low:
 				_steep_on = false
 				_stairs(dt, st, speed)
-			elif not in_air and int(body.get(&"terrain")) == 2 and speed > 0.1 and _steep_ahead():
+			elif not in_air and int(body.get(&"terrain")) == 2 and speed > 0.1 and not low and _steep_ahead():
 				_stair_on = false
 				if _steep_on and wish < 0.05 and _slope_sub == "" and (_act == "steep_down" or _act == "steep_up"):
 					# let go: the coming to rest for the way he was going (down: the end of his own take)
@@ -666,7 +724,7 @@ func _physics_process(dt: float) -> void:
 	if feet:
 		var want_slope := float(_lib.get_animation(ACTS[_act]).get_meta(&"slope", 0.0)) if ((_stair_on or _steep_on) and ACTS.has(_act)) else 0.0
 		feet.set(&"by_speed", _steep_on)
-		feet.set(&"stand_wide", STAND_WIDE * (1.0 - _moving) if _act == "ground" else 0.0)
+		feet.set(&"stand_wide", STAND_WIDE * (1.0 - _moving) * (1.0 - _low_w) if _act == "ground" else 0.0)
 		# (in step with the tree's own cross-fade, which is even over FADE: eased more slowly than the pose, the
 		# feet of a stair clip coming in were held up on stairs that were no longer under them, 0.2 to 0.5 m high)
 		if want_slope != _slope_to:
@@ -698,6 +756,11 @@ func _physics_process(dt: float) -> void:
 			feet.set(&"land_at", lands)
 			feet.set(&"stride_dir", dir)
 		feet.set(&"stride_fit", on_stairs)
+		# Crouched, the body's top is the limit (the study: the body "alone decides where the character is"): where
+		# a take holds the top of his head higher than that, less a little room, the hips are lowered by as much.
+		if _low_w > 0.0 and _act == "ground":
+			var top := (skel.global_transform * skel.get_bone_global_pose(_head_i).origin).y - body.global_position.y + HEAD_OVER_JOINT
+			want_fit -= maxf(top - (float(body.get(&"CROUCH_HEIGHT")) - HEAD_ROOM), 0.0) * _low_w
 		_hips_fit += (want_fit - _hips_fit) * minf(dt / FADE, 1.0)
 		feet.set(&"hips_fit", _hips_fit)
 		# the fitting fades out in the air and back in on the ground; the three modifiers go together
@@ -970,6 +1033,13 @@ func _ground(dt: float, speed: float) -> void:
 	var want := 1.0 if speed > 0.15 else 0.0
 	_moving = move_toward(_moving, want, dt / FADE)
 	tree.set(&"parameters/ground/blend_amount", _moving)
+	# the crouched set: the same, with the crouch walk paced by its own stride
+	var low := bool(body.get(&"crouched"))
+	if _sub != "crouch":
+		_low_w = move_toward(_low_w, 1.0 if low else 0.0, dt / CROUCH_FADE)
+	tree.set(&"parameters/stance/blend_amount", _low_w)
+	tree.set(&"parameters/crouch_ground/blend_amount", _moving)
+	tree.set(&"parameters/crouch_speed/scale", clampf(maxf(speed, 0.3) / (float(_stride[CROUCH_WALK]) / float(_length[CROUCH_WALK])), SCALE_LEAST, SCALE_MOST))
 	var g := _gait_for(maxf(speed, 0.3))
 	tree.set(&"parameters/gait/blend_position", g.x)
 	_natural = g.y
@@ -1007,7 +1077,7 @@ func _gait_for(v: float) -> Vector2:
 ## really covered last tick, at the pace it was played, is the blend's own speed; used while nothing else is blended in.
 func _measure(dt: float) -> void:
 	var covered := tree.get_root_motion_position().length()
-	if _act == "ground" and _settled > FADE + 0.05 and _moving >= 1.0 and _scale > 0.0 and covered > 0.0001:
+	if _act == "ground" and _settled > FADE + 0.05 and _moving >= 1.0 and _scale > 0.0 and covered > 0.0001 and _low_w <= 0.0:
 		var seen := covered / (dt * _scale)
 		# (taken only when it agrees with the clips' own figures to within a fifth: a blend in progress reads low)
 		_measured = seen if absf(seen - _natural) < 0.2 * _natural else 0.0
