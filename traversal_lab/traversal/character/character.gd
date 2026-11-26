@@ -60,7 +60,17 @@ const SOFT_DROP := 0.30         # the study: "up to 0.30 m, step down in stride;
 const HARD_DROP := 1.0          # soft landing; 1.0 to 2.0 m, a heavy landing"
 # the inputs of the tree's Transition node, and the clip each one plays under its own TimeSeek
 const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling_To_Landing", "land_heavy": "Hard_Landing",
-		"drop_walk": "KM_Ledge_Walk_Off", "drop_run": "KM_Ledge_Run_Off"}
+		"drop_walk": "KM_Ledge_Walk_Off", "drop_run": "KM_Ledge_Run_Off",
+		"stairs_up_walk": "Ascending_Stairs", "stairs_up_run": "KM_Stairs_Run_Up_D",
+		"stairs_down_walk": "KM_Stairs_Walk_Down", "stairs_down_run": "KM_Stairs_Run_Down"}
+# Stairs are their own movement (the study: "Going up and going down are different movements, not one played
+# backwards"; "Stairs are climbed at about half a second per step: 0.51 s up and 0.47 s down", which is the body's
+# pace there). Each stair clip is two steps a loop and is played by WHERE HE IS on the stairs, so that each foot comes
+# down in the middle of a tread; the feet are then fitted to the real steps by the leg IK ("On city stairs they will
+# need the feet corrected by leg IK": the clips were made on steeper stairs). Mixamo's two going-down clips are
+# damaged (the study, 26 Nov) and are not used: going down, and running, are Kimodo takes.
+const STAIR_RUN := 0.4          # NOT in the study: asked to take a step in less than this many seconds, he runs the stairs
+const STAIR_PULL := 3.0         # NOT in the study: how fast the stride is drawn to its place on the stairs (a share a second)
 
 var body: CharacterBody3D
 var skel: Skeleton3D
@@ -96,6 +106,9 @@ var _orient: SkeletonModifier3D
 var _chest_i := -1
 var _lean_s := 0.0              # the lean, eased, before it is held to the study's limit
 var _own_mean := 0.0            # where the stride has the chest over the feet, averaged over about a stride
+var _stair_phase := 0.0         # strides along the stairs (two steps a stride)
+var _stair_on := false
+var _slope := 0.0               # the showing stair clip's own slope, eased in and out with it
 var _jump_low := 0.5            # the Jump clip: the moment its hips are lowest (found from the clip itself)
 
 
@@ -316,7 +329,14 @@ func _physics_process(dt: float) -> void:
 	_measure(dt)
 	match _mode:
 		"ground":
+			var st := int(body.get(&"stairs"))
+			if not in_air and st != 0 and speed > 0.15:
+				_stairs(dt, st, speed)
+			elif _stair_on:
+				_stair_on = false
+				_show("ground", 0.0)
 			if in_air:
+				_stair_on = false
 				# off an edge on foot: the step-off or run-off clip while its own fall lasts
 				_drop = DROP_RUN if speed > RUN_FROM else DROP_WALK
 				_set_mode("fall")
@@ -390,11 +410,38 @@ func _physics_process(dt: float) -> void:
 	_ground(dt, speed)
 	_lean(dt, not in_air)
 	if feet:
+		var want_slope := float(_lib.get_animation(ACTS[_act]).get_meta(&"slope", 0.0)) if (_stair_on and ACTS.has(_act)) else 0.0
+		_slope += (want_slope - _slope) * minf(dt / FADE, 1.0)
+		feet.set(&"clip_slope", _slope)
 		# the fitting fades out in the air and back in on the ground; the three modifiers go together
 		var w := float(feet.get(&"weight"))
 		_leg_ik.influence = w
 		_orient.influence = w
 	note = "%s  gait x%.2f" % [_mode if _mode != "land" else "land (%s)" % landing_kind, _scale]
+
+
+## On stairs: the clip for the way he is going and his pace, at the point of its stride that belongs to where he is.
+func _stairs(dt: float, st: int, speed: float) -> void:
+	var tread := float(body.get(&"stair_tread"))
+	var run: bool = (body.get(&"_wish") as Vector3).length() > tread / STAIR_RUN
+	var input := "stairs_%s_%s" % ["up" if st > 0 else "down", "run" if run else "walk"]
+	var a := _lib.get_animation(ACTS[input])
+	# steps taken so far, from the edges he has crossed and how far he is past the last one
+	var along := (body.global_position - (body.get(&"stair_edge") as Vector3)).dot(body.get(&"stair_dir"))
+	var steps := float(int(body.get(&"stair_count"))) + clampf(along / tread, 0.0, 1.0)
+	# the left foot comes down `reach` ahead of him: that moment must find it over the middle of a tread
+	var lands := 0.5 - float(a.get_meta(&"reach", 0.0)) / tread
+	var cycle := _phase_offset(ACTS[input]) / a.length + (steps - lands) * 0.5
+	# the stride runs on by the ground covered and is only drawn toward that place (tied to it outright it jumped
+	# at every step edge, because a measured tread is never exact)
+	_stair_phase += speed * dt / (2.0 * tread)
+	var behind := wrapf(cycle - _stair_phase, -0.5, 0.5)
+	if not _stair_on or absf(behind) > 0.25:
+		_stair_phase = cycle
+	else:
+		_stair_phase += behind * minf(dt * STAIR_PULL, 1.0)
+	_stair_on = true
+	_show(input, fposmod(_stair_phase, 1.0) * a.length)
 
 
 ## Standing and the gait loops: which blend, and at what pace, so that the feet cover the ground at the body's speed.

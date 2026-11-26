@@ -33,6 +33,7 @@ var target: Array[Node3D] = []      # where each ankle should be: read by the le
 var pole: Array[Node3D] = []        # which way each knee points
 var goal := [Basis.IDENTITY, Basis.IDENTITY]       # each foot's wanted orientation, skeleton space: read by foot_orient.gd
 var weight := 0.0               # 0 = the clip alone (in the air), 1 = feet fitted
+var clip_slope := 0.0           # a stair clip stands on its own stairs: their rise per metre forward (0 for a flat clip)
 var pinning := true
 var grounding := true
 
@@ -99,7 +100,9 @@ func _process_modification_with_delta(dt: float) -> void:
 		hip_at[f] = hip
 		knee_at[f] = knee_t.origin
 		# planted = the clip has the ball of the foot on its own floor, and not travelling over the ground
-		var low: bool = on_ground and ball_t.origin.y < _toe_rest + CONTACT
+		# (how high the clip holds the ball of the foot over its OWN ground: a flat floor, or its own stairs)
+		var ball_h := ball_t.origin.y - clip_slope * ball_t.origin.z
+		var low: bool = on_ground and ball_h < _toe_rest + CONTACT
 		var over := (Vector2(ball.x - (_was[f] as Vector3).x, ball.z - (_was[f] as Vector3).z).length() / dt) if _was_ok else 0.0
 		_was[f] = ball
 		var slow := over < (maxf(HOLD_LEAST, pace * HOLD_SHARE) if _planted[f] else maxf(PLANT_LEAST, pace * PLANT_SHARE))
@@ -137,9 +140,9 @@ func _process_modification_with_delta(dt: float) -> void:
 		if not _g_ok or not on_ground:
 			_g[f] = want_g
 		_g[f] = move_toward(_g[f], want_g, FOOT_SPEED * dt)
-		var lift := clampf(float(_g[f]) - feet_y, -REACH, REACH)
+		var lift := clampf(float(_g[f]) - feet_y, -REACH, REACH) - clip_slope * ball_t.origin.z
 		# tilt the foot to the ground, about the ball of the foot, the more the nearer it is to the ground
-		var near := clampf(1.0 - (ball_t.origin.y - _toe_rest) / NEAR, 0.0, 1.0)
+		var near := clampf(1.0 - (ball_h - _toe_rest) / NEAR, 0.0, 1.0)
 		var axis := Vector3.UP.cross(normal)
 		var tilt := Basis.IDENTITY
 		if axis.length() > 0.001 and near > 0.0:

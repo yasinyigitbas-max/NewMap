@@ -33,6 +33,11 @@ const LEDGE := ["KM_Ledge_Walk_Off", "KM_Ledge_Run_Off"]
 # 12.0 of side drop, 8.2 of rotation, 5.1 cm of rise and fall and 6.4 cm of sway (Yasin, 26 Nov: "HIPS SHAKE TOO
 # MUCH"). Each is scaled about its own average by study figure / measured figure; the legs are then fitted to the
 # ground by the leg IK as always. [tilt, side drop, rotation, rise and fall, sway]
+# Stair clips climb or descend their own stairs. The body does the climbing, so the clip's climb is taken out of its
+# hips, and the hips are set at their own height above the clip's stairs; what is left under the feet is those
+# stairs' slope, which is noted on the animation ("slope": rise per metre forward; "reach": how far ahead of the hips
+# the left foot comes down) for foot_place.gd to take out, so the feet are fitted to the real steps under him.
+const STAIRS := ["Ascending_Stairs", "KM_Stairs_Run_Up_D", "KM_Stairs_Walk_Down", "KM_Stairs_Run_Down"]
 const HIPS := {"KM_Walk": [3.0 / 6.15, 8.5 / 12.0, 12.0 / 8.2, 4.2 / 5.1, 4.6 / 6.4]}
 
 
@@ -60,7 +65,10 @@ func _initialize() -> void:
 	var stand := sk.get_bone_rest(sk.find_bone("mixamorig_Hips")).origin
 	for n in names:
 		var c: Resource = load(DIR + n + ".res")
-		lib.add_animation(n, _animation(c, n, stand.y))
+		var made := _animation(c, n, stand.y)
+		if STAIRS.has(n):
+			_stairs(made, c, sk)
+		lib.add_animation(n, made)
 		if MIRRORED.has(n):
 			lib.add_animation(n + "_M", _animation(c.call(&"mirrored", parents, rest, pair), n, stand.y))
 	# The study: "`deterministic` is on by default, so include a RESET animation": the pose every blend starts from
@@ -183,3 +191,54 @@ func _swing_of(q: Quaternion, yaw: float) -> Vector3:
 	var angle := 2.0 * acos(clampf(s.w, -1.0, 1.0))
 	var axis := Vector3(s.x, s.y, s.z)
 	return axis.normalized() * angle if axis.length() > 0.00001 else Vector3.ZERO
+
+
+## A stair clip: take its climb out of the hips, find where its own stairs stand under it, and note their slope.
+func _stairs(a: Animation, c: Resource, sk: Skeleton3D) -> void:
+	var frames := int(c.get(&"frames"))
+	var fps := float(c.get(&"fps"))
+	var hips: PackedVector3Array = c.get(&"hips")
+	var travel: Vector3 = c.get(&"travel")
+	var total := Vector2(travel.x, travel.z).length()
+	var rise := hips[frames - 1].y - hips[0].y
+	var slope := rise / maxf(total, 0.01)
+	var t_hips := a.find_track(NodePath("%s:mixamorig_Hips" % SKEL), Animation.TYPE_POSITION_3D)
+	for f in frames:
+		var u := float(f) / float(frames - 1)
+		var p: Vector3 = a.track_get_key_value(t_hips, f)
+		a.track_set_key_value(t_hips, f, Vector3(p.x, p.y - rise * u, p.z))
+	# the ball of each foot through the clip, in the frame that travels and climbs with the hips
+	var toe := [sk.find_bone("mixamorig_LeftToeBase"), sk.find_bone("mixamorig_RightToeBase")]
+	var toe_rest := sk.get_bone_global_rest(toe[0]).origin.y
+	var balls := [[], []]
+	var side := ["Left", "Right"]
+	for f in frames:
+		var time := float(f) / fps
+		for k in 2:
+			# down the leg by hand: hips, thigh, shin, foot, ball of the foot
+			var x := Transform3D(Basis(_rot(a, "mixamorig_Hips", time)), a.position_track_interpolate(t_hips, time))
+			for bn: String in ["UpLeg", "Leg", "Foot", "ToeBase"]:
+				var name := "mixamorig_%s%s" % [side[k], bn]
+				x = x * Transform3D(Basis(_rot(a, name, time)), sk.get_bone_rest(sk.find_bone(name)).origin)
+			balls[k].append(x.origin)
+	var sum := 0.0
+	var count := 0
+	for k in 2:
+		for f in frames - 1:
+			# over the clip's own ground the foot moves by its move in this frame plus the travel and the climb
+			var step: Vector3 = (balls[k][f + 1] as Vector3) - (balls[k][f] as Vector3) + Vector3(0.0, rise, total) / float(frames - 1)
+			if step.length() * fps < 0.4:
+				sum += (balls[k][f] as Vector3).y - slope * (balls[k][f] as Vector3).z - toe_rest
+				count += 1
+	var floor_y := sum / count if count > 0 else 0.0
+	for f in frames:
+		var p: Vector3 = a.track_get_key_value(t_hips, f)
+		a.track_set_key_value(t_hips, f, Vector3(p.x, p.y - floor_y, p.z))
+	var at := int(round(fposmod(float(c.get(&"phase_offset")), a.length) * fps))
+	a.set_meta(&"slope", slope)
+	a.set_meta(&"reach", (balls[0][mini(at, frames - 1)] as Vector3).z)
+	print("   stairs %s: rises %.2f m over %.2f m (slope %.2f), its stairs stood %.3f m off the hips' floor (%d planted frames), left foot comes down %.2f m ahead" % [c.get(&"source"), rise, total, slope, floor_y, count, float(a.get_meta(&"reach"))])
+
+
+func _rot(a: Animation, bone: String, time: float) -> Quaternion:
+	return a.rotation_track_interpolate(a.find_track(NodePath("%s:%s" % [SKEL, bone]), Animation.TYPE_ROTATION_3D), time)
