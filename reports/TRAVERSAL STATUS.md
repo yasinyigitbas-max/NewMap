@@ -133,3 +133,23 @@ A robust Rockstar-style traversal system for the game (Godot 4.7, Jolt, Mixamo c
 - Godot 4.7.2 in the cloud: download `Godot_v4.7.2-stable_linux.x86_64.zip` from the GitHub release, then
   `godot --headless --path traversal_lab --import` once. The raw clips (`assets_src/`) are NOT in this container;
   the baked `.res` clips in git are what the build uses.
+
+## 26 Nov, later still: the body in charge (trav13), Stage 3 rebuilt on an AnimationTree (trav14)
+
+- trav13: no clip sets the body's pace any more; drops are measured from the ledge; the stage 1 ramp check is a
+  steady speed again. `test_stage1` passes in full.
+- trav14: `traversal/character/character.gd` is new, on an `AnimationTree` (see `traversal_lab/README.md`, top
+  section). The old one is `character_v1.gd` (`-- --v1`). New tools: `tools/build_rig.gd` (adds the Root bone, writes
+  `player_v4_rooted.scn`), `tools/build_library.gd` (writes `library.res` from the baked clips; re-run it after any
+  clip is re-baked). Body numbers brought to the study: walk 1.45 m/s, a two-rate start (90 % at the first step,
+  steady in the third), slowing on a curve from the study's 1 m circle, the standing jump's 0.70 s dip and 0.30 s
+  push, a higher jump at a run, legs brought down to meet the ground before a landing.
+- Audit after trav14: 51 of 114 study lines fail (61 before). Still failing and why:
+  - the walk and run CLIPS themselves (cadence, stride, pelvis, hip, knee, ankle, toe, arms, run bob): `KM_Walk` has a
+    1.38 m stride, so at 1.45 m/s it takes 126 steps a minute. The study's speed, cadence and stride only fit
+    together at 1.44 to 1.46 m/s with a 1.50 to 1.52 m stride. A walk that meets the study has to be found or made
+    (Kimodo auditions through the audit); this is the next big job after stages 4 and 5.
+  - feet, stairs, slopes, head, starts, stops, turns on the spot: stages 4 and 5, not rebuilt yet.
+  - the standing sway frequency (Mixamo `Standing_Idle` sways at 0.18 Hz, the study 0.33).
+- Kimodo: the character file uploaded to Replicate (the `CH` link in `tools/kimodo/batch.py`) expires 26 Nov 17:15
+  UTC; after that Yasin's `character.fbx` must be uploaded again. The raw clips are not in the cloud container.

@@ -7,6 +7,7 @@ const Tape := preload("res://traversal/debug/input_tape.gd")
 const PlainBody := preload("res://traversal/debug/plain_body.gd")
 const Body := preload("res://traversal/body/body.gd")
 const Character := preload("res://traversal/character/character.gd")
+const CharacterV1 := preload("res://traversal/character/character_v1.gd")       # the code-posed one, kept to compare: -- --v1
 const TAPE_FILE := "user://tapes/last.json"
 
 var course: Node3D
@@ -45,7 +46,7 @@ func _ready() -> void:
 	body.set(&"tape", tape)
 	add_child(body)
 	if body.has_method(&"show_capsule") and not ("--capsule" in OS.get_cmdline_user_args()):
-		character = Character.new()
+		character = CharacterV1.new() if "--v1" in OS.get_cmdline_user_args() else Character.new()
 		character.name = "Character"
 		character.set(&"body", body)
 		body.add_child(character)

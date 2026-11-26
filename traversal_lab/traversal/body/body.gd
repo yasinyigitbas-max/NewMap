@@ -29,9 +29,14 @@ const CLIMB_HANDS_RUN := 0.6    # on hands and feet with run held: the racers' r
 const DOWN_EASE := 16.0 / 30.0  # "walking down a slope of 30 degrees was done at the same speed as walking up 16"
 # Speeds and how they change come from the movement study (reports/Hybrid character traversal study.md, Part 1
 # "Turning, starting, stopping" and Part 3), not from feel. Each line says which finding it follows.
-const WALK := 1.4               # comfortable walking is 1.3 to 1.45 m/s
+const WALK := 1.45              # the study: "Comfortable adult walking is about 1.27 to 1.46 m/s". 1.45, because its
+                                # other two walking figures ("115 to 120 steps a minute with a 1.5 to 1.7 m stride") only
+                                # fit together with that range at 1.44 to 1.46 m/s (speed = steps a minute x stride / 120)
 const RUN := 4.5                # running was measured at 2.5 to 4.5 m/s
-const START_TIME_WALK := 0.24   # "about 90 % of its speed on the first step" (a step is about 0.55 s), steady by the third
+const START_TIME_WALK := 0.24   # "A walk reaches about 90 % of its speed on the first step and steady speed in about three":
+                                # this time constant gives 90 % in 0.55 s, about when the first step lands
+const START_TAIL_WALK := 0.33   # ... and from 90 % on this slower one, so the last tenth comes in during the third step
+                                # (the split into two rates is OURS: the study gives the two points, not the curve)
 const START_TIME_RUN := 0.60    # NOT in the study (steps to reach a run were not found): a value to tune by eye
 const STOP_WALK := 2.3          # m/s2: "a walk stops in under two steps" -> from 1.4 m/s in 0.6 s
 const STOP_RUN := 6.2           # m/s2: "5 steps and 2.9 m" from a flat-out run (about 6 m/s)
@@ -44,6 +49,13 @@ const TURN_RATE_RUN := 4.7      # rad/s: his Running Turn 180 clip turns 180 deg
                                 # 137 to 272 deg/s measured; over 300 deg/s is outside the data)
 const TURN_SLOW := 0.6          # people slow to turn: 0.96 m/s on a 1 m circle against 1.61 m/s straight
 const TURN_SLOW_ANGLE_DEG := 90.0   # the full slow-down applies from a right-angle turn up
+# On a curve people slow down: "on a 1 m radius circle people chose 0.96 m/s against 1.61 m/s in a straight line".
+# Taken as a limit on the sideways pull he accepts while the way he is asked to go keeps turning: speed x turn rate
+# stays under what that walker had, scaled to his own walking speed: (0.96 / 1.61 x WALK)^2 / 1 m. That one circle is
+# all the study gives; carrying it to other radii this way, and the figure for running, are OURS.
+const CURVE_PULL_WALK := (0.96 / 1.61 * WALK) * (0.96 / 1.61 * WALK) / 1.0    # m/s2
+const CURVE_PULL_RUN := 2.26    # NOT in the study: the pull that goes with the 13 degree lean of a run (g x tan 13)
+const CURVE_TIME := 0.25        # NOT in the study: seconds over which the stick's turning is averaged
 const REVERSE_ANGLE_DEG := 135.0  # asked to go nearly the opposite way at a run: "a sudden turn starts with a braking
                                 # action like a rapid stop" - brake to REVERSE_SPEED first, then turn round
 # Turning on the spot before setting off (Stage 5): "turning 180 degrees on the spot takes about 3 to 4 steps", and
@@ -72,7 +84,9 @@ const GRAVITY := 9.8
 const TERMINAL := 50.0
 const TURN_SPEED := 12.0        # radians a second
 const JUMP_RISE := 0.45         # an average standing jump raises the body 0.41 to 0.50 m
-const JUMP_PUSH_STAND := 0.30   # the push-off of a standing jump takes 0.30 s (the slower dip before it is left out)
+const JUMP_DIP_STAND := 0.70    # the study: "A natural standing jump spends 0.70 s dipping and 0.30 s pushing"
+const JUMP_PUSH_STAND := 0.30   # (until 26 Nov the dip was left out: he left the ground 0.30 s after the button)
+const JUMP_RISE_RUN := 0.60     # "a run-up typically 0.10 to 0.20 m more": 0.45 + 0.15
 const JUMP_PUSH_RUN := 0.10     # from a run the take-off comes off the stride: the Running Jump clip leaves at 0.10 s
 
 signal jump_started(push_time: float)
@@ -113,6 +127,9 @@ var spot_total := 0.0           # the on-the-spot turn being made (radians, + = 
 var spot_left := 0.0            # how much of it is still to turn
 var spot_run := false           # it is the plant-and-turn out of a run
 var land_hold := 0.0            # seconds left of gathering himself after a landing, when the stick is not obeyed
+var _wish_yaw := 0.0            # the way he was asked to go last tick
+var _wish_turn := 0.0           # how fast the way he is asked to go is turning (rad/s, averaged)
+var _wish_on := false
 var _stood_y := 0.0             # the height of the ground he last stood squarely on (his middle over it)
 
 
@@ -230,6 +247,22 @@ func _physics_process(dt: float) -> void:
 		stick = stick.normalized()
 	_wish = stick.rotated(Vector3.UP, float(s.get("yaw", 0.0))) * (RUN if bool(s.get("run", false)) else WALK)
 
+	# a way to go that keeps turning (a curve, not a corner) is walked more slowly
+	if _wish.length() > 0.05:
+		var wy := atan2(_wish.x, _wish.z)
+		var step := absf(wrapf(wy - _wish_yaw, -PI, PI)) / dt if _wish_on else 0.0
+		# (a corner is one jump of the stick, not a curve: it is left to the turning rule below)
+		if step > deg_to_rad(400.0):
+			step = 0.0
+		_wish_turn += (step - _wish_turn) * (1.0 - exp(-dt / CURVE_TIME))
+		_wish_yaw = wy
+		_wish_on = true
+		if _wish_turn > 0.05:
+			var pull := CURVE_PULL_RUN if _wish.length() > WALK + 0.1 else CURVE_PULL_WALK
+			_wish = _wish.limit_length(pull / _wish_turn)
+	else:
+		_wish_on = false
+		_wish_turn = 0.0
 	if land_hold > 0.0:
 		land_hold -= dt
 		_wish = Vector3.ZERO
@@ -257,7 +290,7 @@ func _physics_process(dt: float) -> void:
 	var jump_now := bool(s.get("jump", false))
 	if state == State.GROUND and jump_now and not _jump_held and jump_timer <= 0.0:
 		_jump_still = hvel.length() < 2.0
-		jump_timer = JUMP_PUSH_STAND if _jump_still else JUMP_PUSH_RUN
+		jump_timer = (JUMP_DIP_STAND + JUMP_PUSH_STAND) if _jump_still else JUMP_PUSH_RUN
 		jump_started.emit(jump_timer)
 	_jump_held = jump_now
 	if jump_timer > 0.0:
@@ -270,7 +303,7 @@ func _physics_process(dt: float) -> void:
 			if jump_timer <= 0.0:
 				jump_timer = 0.0
 				state = State.AIR
-				vy = sqrt(2.0 * GRAVITY * JUMP_RISE)
+				vy = sqrt(2.0 * GRAVITY * (JUMP_RISE if _jump_still else JUMP_RISE_RUN))
 				from_jump = true
 				air_time = 0.0
 				_air_peak = global_position.y
@@ -347,7 +380,7 @@ func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 			spot_run = false
 			return Vector3.ZERO
 		# set off in the wanted direction
-		speed += (want - speed) * (1.0 - exp(-dt / lerpf(START_TIME_WALK, START_TIME_RUN, fast)))
+		speed += (want - speed) * (1.0 - exp(-dt / _start_time(speed, want, fast)))
 		return wdir * speed
 	var dir := v / speed
 	var ang := dir.angle_to(wdir)
@@ -368,10 +401,16 @@ func _steer(v: Vector3, wish: Vector3, dt: float) -> Vector3:
 	# the sharper the turn still to make, the more speed is given up for it
 	want *= lerpf(1.0, TURN_SLOW, clampf(ang / deg_to_rad(TURN_SLOW_ANGLE_DEG), 0.0, 1.0))
 	if want > speed:
-		speed += (want - speed) * (1.0 - exp(-dt / lerpf(START_TIME_WALK, START_TIME_RUN, fast)))
+		speed += (want - speed) * (1.0 - exp(-dt / _start_time(speed, want, fast)))
 	else:
 		speed = maxf(speed - brake * dt, want)
 	return dir * speed
+
+
+## The time constant of gaining speed: quick to nine tenths of the speed asked for, slower over the last tenth.
+func _start_time(speed: float, want: float, fast: float) -> float:
+	var walk_time := START_TIME_WALK if speed < 0.9 * want else START_TAIL_WALK
+	return lerpf(walk_time, START_TIME_RUN, fast)
 
 
 func _ray_down(at: Vector3) -> Dictionary:
@@ -595,6 +634,20 @@ func _update_ground(dt: float) -> void:
 			from_jump = false
 		else:
 			state = State.UNSUPPORTED if _touched else State.AIR
+
+
+## While he is in the air: how long until he lands on the ground now under him, and how far he will have dropped by
+## then. Empty if there is no ground within reach. For the character, so that the legs can be brought down to meet
+## the ground (the study: "Start the landing fold on the contact frame").
+func landing_ahead() -> Dictionary:
+	var q := PhysicsRayQueryParameters3D.create(global_position + Vector3(0.0, 0.3, 0.0), global_position - Vector3(0.0, 6.0, 0.0), collision_mask, [get_rid()])
+	var hit := get_world_3d().direct_space_state.intersect_ray(q)
+	if hit.is_empty():
+		return {}
+	var y := (hit["position"] as Vector3).y
+	var d := maxf(global_position.y - y, 0.0)
+	var down := -vy
+	return {"time": (-down + sqrt(maxf(down * down + 2.0 * GRAVITY * d, 0.0))) / GRAVITY, "drop": _air_peak - y}
 
 
 func get_readout() -> Dictionary:

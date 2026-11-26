@@ -13,6 +13,20 @@ Before building or changing anything in a stage:
    study does not give is marked `NOT in the study` and is a value to tune by eye, never passed off as sourced.
 3. The stage's table below lists what the study says and what the code does, so the two can be compared.
 
+## 26 Nov 2026: the study gate and the rebuild (read this before the rest)
+- **The study is the authority and the checks are locked.** Read `study/README.md`. The one audit is
+  `tests/audit.gd`; its bars are the study's own sentences (`study/bars.json`). The older tests named further down
+  (`test_study`, `test_feet`, `test_starts`, `test_turn`) are gone: their bars were looser than the study.
+- **The character is being rebuilt as the study describes it** (Yasin: "Rebuild as the study says"): a Root bone on
+  the rig (`tools/build_rig.gd`), an animation library made from the baked clips (`tools/build_library.gd`), one
+  `AnimationTree` on the physics tick with a synced walk / jog / run blend space whose root travel is cancelled and
+  used as a measurement, and skeleton modifiers for the corrections (`traversal/character/character.gd`).
+  - Stage 3 (idle, walk, run, the change from walk to run at 2.0 m/s, lean, jump, falling, landing): rebuilt.
+  - Stage 4 (feet and head) and Stage 5 (starts, stops, turns on the spot), stairs and steep-ground clips: NOT
+    rebuilt yet. Until they are he walks stairs and slopes with the plain walk, and those audit lines fail.
+  - The earlier code-posed character is kept as `character_v1.gd`: run the lab with `-- --v1` to compare.
+- Everything below this section describes the build as it was before the rebuild, and is kept as a record.
+
 ## Run it (PC)
 Open this folder (`traversal_lab`) as a project in Godot 4.7.2 and press Play, or:
 
