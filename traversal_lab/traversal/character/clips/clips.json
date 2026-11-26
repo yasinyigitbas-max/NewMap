@@ -65,6 +65,17 @@
     ],
     "turn_deg": 0.0000102452837550191
   },
+  "Falling_From_Losing_Balance": {
+    "length": 6.66666666666667,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 0.507876205444336,
+    "travel": [
+      -0.0180577728897333,
+      3.38579320907593
+    ],
+    "turn_deg": 66.3553970697006
+  },
   "Falling_Idle": {
     "length": 0.7,
     "loop": true,
@@ -559,6 +570,17 @@
       -0.00766048533841968
     ],
     "turn_deg": 90.0001049573157
+  },
+  "Push_Up_To_Idle": {
+    "length": 3.1,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 0.0532228956299443,
+    "travel": [
+      -0.0345071367919445,
+      -0.16134212911129
+    ],
+    "turn_deg": 68.7769791682261
   },
   "Right_Turn_90": {
     "length": 0.933333333333333,

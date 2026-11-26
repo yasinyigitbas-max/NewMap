@@ -25,7 +25,7 @@ const LEADS := ["Female_Start_Walking", "Female_Stop_Walking", "Idle_To_Sprint",
 		"KM_Walk", "KM_Run", "KM_Slope_Up_Start", "KM_Slope_Up_Stop", "KM_Start_Run"]
 # A vault ends a stride on, with the hips turned as a running stride turns them (31 degrees in Vault 1 Hand): that is
 # not a turn of his path, and its root does not turn.
-const STRAIGHT_ON := ["Vault_1_Hand", "KM_Climb_Up", "Jump_To_Braced_Hang", "Braced_Hang_To_Crouch", "Sprint_To_Wall_Climb", "Climbing_Down"]
+const STRAIGHT_ON := ["Vault_1_Hand", "KM_Climb_Up", "Jump_To_Braced_Hang", "Braced_Hang_To_Crouch", "Sprint_To_Wall_Climb", "Climbing_Down", "Falling_From_Losing_Balance", "Push_Up_To_Idle"]
 const TURN_LEAST_DEG := 20.0        # a clip that turns less than this is not a turning clip: its root does not turn
 # In the air the body does the rising and the falling (the study: the body "alone decides where the character is"), so
 # the clip's own rise is taken out: between leaving the ground and landing the hips keep at most their take-off height.
@@ -42,8 +42,9 @@ const GROUNDED := ["Falling_To_Landing", "Hard_Landing"]
 const RISE := ["KM_Step_Up", "Step_Onto_Platform", "Running_Jump_Climb", "KM_Climb_Up"]
 # Stage 15, the climb down: the body does the travelling and the lowering (traverse.gd CLIMB_DOWN), so the hips keep
 # no travel, and of their height only what is over a body that goes down by the share of the descent made so far.
-const DROP_BY := {"Climbing_Down": 1.52}        # the ledge the take climbs down from (found in the lab: his left toe and knee on it)
-const DROP_FROM := {"Climbing_Down": 1.20}      # ... and when in it he begins to lower himself (s)
+const DROP_BY := {"Climbing_Down": 1.52,
+		"Falling_From_Losing_Balance": 1.13}        # the ledge that take falls from (its feet as it begins), measured on him        # the ledge the take climbs down from (found in the lab: his left toe and knee on it)
+const DROP_FROM := {"Climbing_Down": 1.20, "Falling_From_Losing_Balance": 4.20}      # ... and when in it he begins to lower himself (s)
 const LEDGE := ["KM_Ledge_Walk_Off", "KM_Ledge_Run_Off", "KM_Land_Roll"]
 # Stage 13, the grab and climb: two clips that do not start standing on the ground or do not end standing, so the
 # rise taken out of each is given here, measured on him (see traverse.gd GRAB): the jump to the braced hang gives the

@@ -259,6 +259,18 @@ const GAP_UP := 0.30                # NOT in the study, mine: at a walk he jumps
 const GAP_DOWN := 0.50              # ... or this much lower
 const GAP_OFF := 0.20               # NOT in the study, mine: he leaves the ground this far before the edge (m)
 const GAP_ON := 0.15                # NOT in the study, mine: ... and comes down this far past the far edge, plus his own radius
+# Losing his balance on something narrow (Yasin, 26 Nov: "we should fall off losing balance if we dont move more
+# than 10 seconds on the beam", "we should fall onto our back or face down and get up later after a balance loss").
+# Two of his own Mixamo clips, measured on him. Falling From Losing Balance: he wobbles on the spot to 4.2 s, then
+# goes over forward, is down at 5.4 s and lies face down by 6.0 s, 3.4 m on, off a 1.13 m ledge. Push Up To Idle
+# (the study: "Push Up To Idle 3.1 s from face down"): from lying face down, the same way round, to standing.
+# He is turned to the side that has room for him first, since he goes over forward.
+const BALANCE_AFTER := 10.0         # his word: seconds without moving
+const BALANCE := {"input": "balance_fall", "res": "res://traversal/character/clips/Falling_From_Losing_Balance.res",
+		"from": 2.60,               # NOT in the study, mine: taken up here: 1.6 s of wobbling, then the fall
+		"over": 4.20, "end": 6.60, "high": 1.13,
+		"lie": 1.5,                 # NOT in the study, mine: he lies this long before he gets up (s)
+		"up": "get_up_front", "up_len": 3.05}
 const OVER_BACK := 0.48             # NOT in the study, found in the lab: he sinks for the jump this far from the wall's face
                                     # (nearer, his knees were in the wall). The study: "slide and turn the body over a
                                     # short fixed time so it starts at the clip's native distance from the wall"
@@ -321,6 +333,9 @@ var _d_fall := PackedFloat32Array()
 var _d_yaw := PackedFloat32Array()
 var _catch_next := 0            # ticks left in which he is to be taken as in the air from a jump (after the jump for a far edge)
 var _narrow_ago := 999          # ticks since he was last on something narrow
+var _b_xz: PackedVector2Array = PackedVector2Array()
+var _b_fall := PackedFloat32Array()
+var _still := 0.0               # seconds he has stood still on something narrow
 var _o_high := 0.0              # the height the climb take goes up, on him
 
 
@@ -379,6 +394,14 @@ func _ready() -> void:
 		if f >= d_from:
 			d_fallen = maxf(d_fallen, clampf((dh[d_from].y - dh[f].y) / (dh[d_from].y - dh[dh.size() - 1].y), 0.0, 1.0))
 		_d_fall.append(d_fallen)
+	var bh: PackedVector3Array = (load(String(BALANCE["res"])) as Resource).get(&"hips")
+	var b_from := int(round(float(BALANCE["over"]) * 30.0))
+	var b_fallen := 0.0
+	for f in bh.size():
+		_b_xz.append(Vector2(bh[f].x - bh[0].x, bh[f].z - bh[0].z))
+		if f >= b_from:
+			b_fallen = maxf(b_fallen, clampf((bh[b_from].y - bh[f].y) / (bh[b_from].y - bh[bh.size() - 1].y), 0.0, 1.0))
+		_b_fall.append(b_fallen)
 	var tc: Resource = load(String(TUCK["res"]))
 	var t_hips: PackedVector3Array = tc.get(&"hips")
 	for f in t_hips.size():
@@ -445,6 +468,15 @@ func _physics_process(_dt: float) -> void:
 	_tick += 1
 	var v: Vector3 = body.get(&"hvel")
 	var wish := (body.get(&"_wish") as Vector3).length()
+	# standing still on something narrow: after 10 s he loses his balance
+	if int(body.get(&"narrow")) > 0 and int(body.get(&"state")) == 0 and v.length() < 0.1:
+		_still += 1.0 / 60.0
+		if _still >= BALANCE_AFTER:
+			_still = 0.0
+			if _try_balance_fall():
+				return
+	else:
+		_still = 0.0
 	if _catch_next > 0:
 		_catch_next -= 1
 		if int(body.get(&"state")) >= 2:
@@ -1800,5 +1832,71 @@ func _gap_jump(t: float) -> Dictionary:
 			"yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), clampf(t / 0.2, 0.0, 1.0))}
 	if ct >= exit_t:
 		out["pos"] = p["end"]
+		out["exit"] = Vector3.ZERO
+	return out
+
+
+# -------------------------------------------------------------------------------- losing his balance on something narrow
+
+func _try_balance_fall() -> bool:
+	var feet := body.global_position
+	var face := -body.global_transform.basis.z
+	face = Vector3(face.x, 0.0, face.z).normalized()
+	var last := _b_xz[_b_xz.size() - 1]
+	# to the side that has ground and room where he would lie (he goes over forward, so he is turned to it first);
+	# the take goes 3.4 m on: where there is no room for that, less far
+	for reach: float in [1.0, 0.8, 0.65]:
+		for way: float in [1.0, -1.0]:
+			var m := face.cross(Vector3.UP).normalized() * way
+			var end := feet + m * (last.y * reach)
+			var q := PhysicsRayQueryParameters3D.create(end + Vector3(0.0, 0.5, 0.0), end - Vector3(0.0, 6.0, 0.0), body.collision_mask, [body.get_rid()])
+			var hit: Dictionary = body.get_world_3d().direct_space_state.intersect_ray(q)
+			if hit.is_empty():
+				continue
+			var gy := (hit["position"] as Vector3).y
+			if gy > feet.y - 0.05:
+				continue                                        # not lower than where he stands: no fall that way
+			var ok := true
+			# (room for the whole of him lying there: his head 0.6 m beyond his hips, his feet 1.0 m behind them)
+			for along: float in [0.7, 0.0, -0.6, -1.1]:
+				var at := end + m * along
+				var g: Dictionary = body.call(&"probe", Vector3(at.x, gy, at.z))
+				if not bool(g["hit"]) or absf(float(g["y"]) - gy) > LAND_LEVEL or not bool(detector.call(&"_fits", Vector3(at.x, gy, at.z), float(body.get(&"CROUCH_HEIGHT")))):
+					ok = false
+			if not ok:
+				continue
+			refused = ""
+			_plan = {"key": "balance_fall", "from": feet, "end": Vector3(end.x, gy, end.z), "m": m, "top_y": feet.y, "land_y": gy, "reach": reach,
+					"yaw0": body.rotation.y, "yaw1": atan2(-m.x, -m.z), "exit_speed": 0.0}
+			plays += 1
+			record = {}
+			_up_record = {}
+			body.call(&"begin_move", _balance_fall, String(BALANCE["input"]))
+			return true
+	return false
+
+
+func _balance_fall(t: float) -> Dictionary:
+	var p := _plan
+	var from_t := float(BALANCE["from"])
+	var fall_len := float(BALANCE["end"]) - from_t
+	var m: Vector3 = p["m"]
+	if t < fall_len:
+		# wobbling, turned to the side he will go over; then over and down: forward by the take's own travel, down by
+		# the take's share of its fall, set to the height that is really there
+		var ct := from_t + t
+		var xz := _at2(_b_xz, ct)
+		var pos := (p["from"] as Vector3) + m * (xz.y * float(p["reach"]))
+		pos.y = float(p["land_y"]) + (float(p["top_y"]) - float(p["land_y"])) * (1.0 - _at(_b_fall, ct))
+		return {"done": false, "pos": pos, "clip_t": ct, "air": ct >= float(BALANCE["over"]) and _at(_b_fall, ct) < 0.95, "free": true,
+				"yaw": lerp_angle(float(p["yaw0"]), float(p["yaw1"]), smoothstep(0.0, 1.0, t))}
+	# lying where he fell, then up
+	var tu := t - fall_len - float(BALANCE["lie"])
+	if tu < 0.0:
+		return {"done": false, "pos": p["end"], "clip_t": float(BALANCE["end"]), "air": false, "free": true, "yaw": float(p["yaw1"])}
+	var done := tu >= float(BALANCE["up_len"])
+	var out := {"done": done, "pos": p["end"], "clip": String(BALANCE["up"]), "clip_t": minf(tu, float(BALANCE["up_len"])), "air": false,
+			"free": tu < float(BALANCE["up_len"]) - 0.5, "landed": true, "yaw": float(p["yaw1"])}
+	if done:
 		out["exit"] = Vector3.ZERO
 	return out

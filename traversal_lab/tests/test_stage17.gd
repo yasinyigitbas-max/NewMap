@@ -107,5 +107,54 @@ func _run() -> void:
 			# with the crouch key held: he does not crouch on it
 			var rc := await along(s, false, true, 300, 0)
 			ok(not bool(rc["crouched"]) and float(rc["far"]) < -6.5, "%s, the crouch key held: he is not crouched on it, and walks it (to %.1f m along)" % [s["label"], -5.0 - float(rc["far"])])
+	# Losing his balance (Yasin, 26 Nov: "we should fall off losing balance if we dont move more than 10 seconds on the
+	# beam", "we should fall onto our back or face down and get up later"): still on the 0.10 m beam.
+	for s: Dictionary in stations:
+		if String(s["kind"]) != "beam" or absf(float(s["width"]) - 0.10) > 0.001:
+			continue
+		for wait: Array in [[8.0, false], [10.5, true]]:
+			lab.call(&"place", Vector3(float(s["x"]), float(s["top"]), -8.0))
+			body.rotation.y = 0.0
+			var samples := []
+			for i in 1500:
+				# (still for `wait` seconds; then, if he is not to fall, a step along the beam)
+				samples.append({"mx": 0.0, "mz": -1.0 if (not bool(wait[1]) and i > int(float(wait[0]) * 60.0)) else 0.0, "yaw": 0.0, "run": false, "jump": false, "crouch": false, "act": false})
+			tape.set(&"tape", samples)
+			tape.call(&"replay")
+			var before := int(trav.get(&"plays"))
+			var t := 0
+			var began := -1
+			var lowest_hips := INF
+			var done_at := -1
+			while int(tape.get(&"mode")) == 2 and t < (1400 if bool(wait[1]) else 720):
+				await physics_frame
+				await process_frame
+				t += 1
+				if began < 0 and int(trav.get(&"plays")) > before:
+					began = t
+				if began >= 0:
+					lowest_hips = minf(lowest_hips, (skel.global_transform * skel.get_bone_global_pose(skel.find_bone("mixamorig_Hips"))).origin.y)
+					if not bool(body.call(&"in_move")):
+						done_at = t
+						break
+			tape.call(&"stop")
+			var key := String((trav.get(&"_plan") as Dictionary).get("key", "")) if began >= 0 else ""
+			if not bool(wait[1]):
+				ok(began < 0 and body.global_position.y > float(s["top"]) - 0.03, "%s, still for %.0f s and then on: he does not fall (%s)" % [s["label"], float(wait[0]), "no move" if began < 0 else "'%s' began" % key])
+				continue
+			var p := body.global_position
+			var bad := ""
+			if key != "balance_fall":
+				bad = "he did not lose his balance (%s)" % ("no move" if began < 0 else "'%s' began" % key)
+			elif absf(began / 60.0 - 10.0) > 0.6:
+				bad = "it began after %.1f s" % (began / 60.0)
+			elif done_at < 0:
+				bad = "it did not end"
+			elif absf(p.y) > 0.02 or int(body.get(&"state")) != 0 or absf(p.x - float(s["x"])) < 1.0:
+				bad = "he is not standing on the ground beside it (at %s, state %d)" % [p, int(body.get(&"state"))]
+			elif lowest_hips > 0.35:
+				bad = "he did not go down to the ground (his hips no lower than %.2f m)" % lowest_hips
+			ok(bad == "", "%s, still for 10 s: he loses his balance after %.1f s, goes down on the ground beside it (hips to %.2f m) and gets up: standing %.1f m to its side, on the ground, %.1f s later%s" % [
+					s["label"], began / 60.0, lowest_hips, absf(p.x - float(s["x"])), (done_at - began) / 60.0, "" if bad == "" else " -- " + bad])
 	print("RESULT ", "PASS" if fails == 0 else "FAIL (%d)" % fails)
 	quit(1 if fails else 0)
