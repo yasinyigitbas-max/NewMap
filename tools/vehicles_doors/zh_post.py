@@ -32,7 +32,14 @@ def dilate(img, mask, n=40):
         img[~m] = img[m].mean(0)
     return img
 def save(arr, size, path, normal=False, mode='RGB'):
-    im = Image.fromarray((np.clip(arr, 0, 1) * 255 + 0.5).astype(np.uint8), mode).resize((size, size), Image.LANCZOS)
+    u8 = (np.clip(arr, 0, 1) * 255 + 0.5).astype(np.uint8)
+    if mode == 'RGBA':   # (Pillow resizes RGBA premultiplied: every texel with alpha 0 - all the car's own colours, the
+        # alpha is the paint mask here, not coverage - came out black. Colour and mask are resized apart)
+        rgb = Image.fromarray(u8[..., :3], 'RGB').resize((size, size), Image.LANCZOS)
+        al = Image.fromarray(u8[..., 3], 'L').resize((size, size), Image.NEAREST)
+        im = Image.merge('RGBA', (*rgb.split(), al))
+    else:
+        im = Image.fromarray(u8, mode).resize((size, size), Image.LANCZOS)
     if normal:
         v = np.asarray(im).astype(np.float32) / 255 * 2 - 1
         v /= np.maximum(np.linalg.norm(v, axis=-1, keepdims=True), 1e-6)

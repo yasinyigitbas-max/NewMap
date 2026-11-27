@@ -246,8 +246,8 @@ bpy.ops.object.mode_set(mode='OBJECT')
 # the shared wheel: 1.5 x the texel density of the body (scaled as a whole, about one point: its islands stay whole)
 uv = J.data.uv_layers['UV'].data
 pa = J.data.attributes['part'].data
-# (and each UV set moved off the body's page and off the others: the pack merges only the wheels that share the
-# template's UVs, lying exactly on each other, never a wheel onto the body)
+# the wheels that share the template's UVs are left out of the pack (they would lie on it); packed: the body, the
+# template wheel (part 1) and any wheel with its own UVs; then the template's packed UVs are copied onto the others
 groups = {}
 for p in J.data.polygons:
     v = pa[p.index].value
@@ -256,12 +256,33 @@ for p in J.data.polygons:
 for g, wl in groups.items():
     c0 = sum((uv[li].uv for li in wl), Vector((0, 0))) / len(wl)
     for li in set(wl):
-        uv[li].uv = c0 + (uv[li].uv - c0) * 1.5 + Vector((3.0 * (1 + g), 0.0))
-# (one texel density for all: shrinking single faces split them into thousands of islands and wasted the page)
+        uv[li].uv = c0 + (uv[li].uv - c0) * 1.5
+packed = {0, 1} | own_uv
 edit([J])
-bpy.ops.uv.pack_islands(udim_source='CLOSEST_UDIM', rotate=True, rotate_method='ANY', scale=True, merge_overlap=True,
+bm = bmesh.from_edit_mesh(J.data)
+lay = bm.faces.layers.int.get('part')
+for f in bm.faces:
+    f.select = f[lay] in packed
+bmesh.update_edit_mesh(J.data)
+bpy.ops.uv.select_all(action='SELECT')
+# (one texel density for all: shrinking single faces split them into thousands of islands and wasted the page)
+bpy.ops.uv.pack_islands(udim_source='CLOSEST_UDIM', rotate=True, rotate_method='ANY', scale=True, merge_overlap=False,
                         margin_method='FRACTION', margin=0.003, pin=False, shape_method='CONCAVE')
+bpy.ops.mesh.select_all(action='SELECT')
 bpy.ops.object.mode_set(mode='OBJECT')
+uv = J.data.uv_layers['UV'].data
+pa = J.data.attributes['part'].data
+loops_of = {}
+for p in J.data.polygons:
+    loops_of.setdefault(pa[p.index].value, []).extend(p.loop_indices)
+for v, ls in loops_of.items():
+    if v in packed:
+        continue
+    src = loops_of[1]
+    if len(ls) != len(src):
+        raise SystemExit('wheel %d: %d loops, the template %d' % (v, len(ls), len(src)))
+    for d, s_ in zip(ls, src):
+        uv[d].uv = uv[s_].uv.copy()
 lows = [J]
 
 # ---------------------------------------------------------------- 4. bake from the original
@@ -331,8 +352,10 @@ def emission_mode(fn):
         sock, val = fn(m, b)
         if sock is not None:
             nt.links.new(sock, em.inputs['Color'])
-        else:
+        elif isinstance(val, (int, float)):
             em.inputs['Color'].default_value = (val, val, val, 1)
+        else:
+            em.inputs['Color'].default_value = tuple(val)
         nt.links.new(em.outputs[0], out.inputs[0])
 
 
@@ -359,7 +382,10 @@ def bake(kind, name, samples, margin=None, pass_color=False):
 
 
 S = (lambda q, f: q if QUICK else f)
-bake('DIFFUSE', 'color', S(4, 8), pass_color=True)
+# the base colour itself, through emission (a DIFFUSE colour bake gives (1 - metallic) x colour: chrome came out black)
+emission_mode(lambda m, b: (b.inputs['Base Color'].links[0].from_socket if b.inputs['Base Color'].links else None, b.inputs['Base Color'].default_value[:]))
+bake('EMIT', 'color', S(4, 8))
+emission_mode(None)
 bake('ROUGHNESS', 'rough', S(4, 8))
 bake('NORMAL', 'normal', S(4, 8))
 bake('AO', 'ao', S(32, 96))
