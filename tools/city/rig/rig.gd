@@ -139,6 +139,9 @@ func _ready() -> void:
 	var from_file := false
 	if FileAccess.file_exists("user://rig_args.txt"):
 		args.append_array(FileAccess.get_file_as_string("user://rig_args.txt").replace("\n", " ").split(" ", false)); from_file = true
+	# (Yasin, 28 Nov, the downloaded build: "goes straight into test laps instead of letting me roam") on a phone with no
+	# rig_args.txt the app is the GAME: a measuring run always writes that file (phone_rig.sh run), a downloaded build has none
+	elif OS.has_feature("android") and OS.get_cmdline_user_args().is_empty(): args.append("--game")
 	# --game (Yasin, 20 Nov: "cant you just inject skipping the rig?"): the rig app opens the game's menu instead of a measuring
 	# run (game/boot.tscn; the game then loads this scene as its world, with its own Game node at the root)
 	if "--game" in args and get_tree().root.get_node_or_null(^"Game") == null:
