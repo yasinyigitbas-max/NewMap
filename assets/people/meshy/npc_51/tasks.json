@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21d51-6590-7253-ba23-4485edb367b4",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795788204358,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is a navy sailor of about 24, a Black woman with medium brown skin, an athletic build and hair in a tight low bun under a white sailor's cap, no tattoos. She wears a crisp white short-sleeved naval uniform shirt tucked in, with plain blank dark shoulder boards and no text, a white belt, straight-legged white uniform trousers that end at the ankle, and flat white shoes. The person stands upright in a T-pose, the arms raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and the body and under each armpit, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21d52-4757-7433-b961-e1b5d1f23b18",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795788262270,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21d53-12e1-73c0-91bd-1ba79af94529",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795788317882,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.69,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}

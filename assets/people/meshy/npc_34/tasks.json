@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21d4a-6037-706e-b573-1a31b557e5ad",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795787744032,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is a bicycle courier of about 26, a wiry Latina woman with tan skin and short dark hair under a small cycling cap, no tattoos. She wears a tight bright lime green short-sleeved cycling jersey with no text, tight black knee-length cycling shorts with bare lower legs, fingerless black cycling gloves, and flat black cycling shoes with no logos. No bag, nothing in her hands. The person stands upright in a T-pose, the arms raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and the body and under each armpit, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21d4a-de84-70d7-9af0-d8af3072587a",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795787776452,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21d4b-a7cd-7343-b703-3ef530af7fbd",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795787830875,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.69,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}

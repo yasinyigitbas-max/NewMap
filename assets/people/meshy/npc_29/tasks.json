@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21d48-01e4-7511-8bd4-b489addcd83e",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795787588985,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is a gym bodybuilder of about 28, a very muscular white man with tanned skin, huge shoulders and arms, a thick neck, a shaved head and a short blond beard, no tattoos. He wears a tight grey stringer tank top, knee-length black gym shorts that are not baggy, with bare lower legs, and flat white training shoes with no logos. The person stands upright in a T-pose, the arms raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and the body and under each armpit, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21d48-549b-74a8-a629-e62d80833f4b",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795787610083,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21d49-35c5-74bb-a43c-fba0a2c05d16",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795787670774,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.88,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}

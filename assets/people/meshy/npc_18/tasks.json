@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21d43-eeb6-72d7-843e-01d88814a578",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795787324258,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is a woman of about 28 who works the street at night, a Latina woman with tan skin, a slim build, long straight dark hair and heavy eye make-up, no tattoos. She wears a short tight leopard-print sleeveless top that fits close to her body, a very short tight black mini skirt that ends high on the thighs and does not hang between the legs, black fishnet tights, and flat black ankle boots with no heels. The person stands upright in a T-pose, the arms raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and the body and under each armpit, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21d44-8f44-72e0-9514-9a5951d53316",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795787363117,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21d45-a189-7434-95fb-e2b8357b4d6a",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795787436316,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.68,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}

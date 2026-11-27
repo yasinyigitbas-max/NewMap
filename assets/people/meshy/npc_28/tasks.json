@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21d47-53b8-73f6-ad3b-5430d291ae72",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795787544312,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is a jogger of about 30, a fit South Asian woman with brown skin and long black hair in a high ponytail, with a pink sweatband on her forehead, no tattoos. She wears a tight purple sleeveless running top, tight black knee-length running leggings with bare lower legs, and flat bright orange running shoes with no logos. The person stands upright in a T-pose, the arms raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and the body and under each armpit, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21d47-d300-7319-8b63-3c777f46f39f",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795787576900,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21d48-a4bb-76ff-8e21-815cc72c04b8",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795787633443,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.67,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}

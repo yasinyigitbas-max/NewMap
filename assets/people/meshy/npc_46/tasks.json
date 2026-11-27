@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21d4f-687f-72b8-bc74-5cf2926cc911",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795788074077,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is a hipster of about 29, a slim white man with light skin, a full well-groomed brown beard, round glasses and a mustard-yellow beanie, with a small tattoo on one forearm. He wears a red and black checked short-sleeved flannel shirt buttoned up, that fits close to his body, slim dark blue jeans rolled up at the ankle, and flat brown leather boots. The person stands upright in a T-pose, the arms raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and the body and under each armpit, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21d4f-d0b7-70b6-b3b4-59143d4a6736",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795788100730,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21d50-e390-736e-99ba-7c0758e1a12e",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795788174028,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.8,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}

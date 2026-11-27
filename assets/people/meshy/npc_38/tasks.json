@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21d4c-0282-76a5-9be0-1f47df834ef1",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795787851182,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is a car mechanic of about 40, a stocky white man with oil-smudged skin, short dark hair and heavy stubble, no tattoos. He wears dark blue work overalls with short sleeves that fit close to his body, zipped up, stained with oil, with the legs ending at the ankle, a red rag tucked flat in one hip pocket, and flat black work boots. Nothing in his hands. The person stands upright in a T-pose, the arms raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and the body and under each armpit, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21d4c-8185-74f7-8fd4-f62363cf3f7c",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795787884231,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21d4d-4cff-75c8-98d1-91aebe4b8eb5",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795787938876,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.77,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}

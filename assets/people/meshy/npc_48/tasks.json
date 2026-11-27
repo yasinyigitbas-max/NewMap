@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21d4f-ae96-75e4-a770-872a0a890392",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795788091720,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is a university student of about 20, a slim Arab woman with light brown skin, wearing a plain dusty-pink hijab that covers her hair and neck and lies close to her head, no tattoos. She wears a fitted white long-sleeved top with tight sleeves, a fitted light denim sleeveless vest that ends at the hips, straight-legged black trousers that end at the ankle, and flat white sneakers with no logos. Nothing in her hands. The person stands upright in a T-pose, the arms raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and the body and under each armpit, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21d50-2e13-762b-aae8-e6e0d7225a2a",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795788124815,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21d51-112d-747b-a60a-8f4831ac0f6b",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795788185650,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.6,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}

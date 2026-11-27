@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21d4a-c07c-7361-b227-c07f22119f1d",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795787768853,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is a street food cook of about 42, a heavy-set Mexican man with tan skin, a round face, a black moustache and a white paper cook's cap, no tattoos. He wears a white short-sleeved double-breasted chef's jacket that ends at the hips and fits close to his body, a short stained white apron tied at the waist that ends above the knees and lies flat against his thighs, black and white checked trousers that end at the ankle, and flat black kitchen clogs. The person stands upright in a T-pose, the arms raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and the body and under each armpit, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21d4b-3f61-76e4-9c19-2db2b1c00c22",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795787801478,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21d4c-2259-71b7-8fca-e1741d5bb1e6",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795787862397,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.71,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}

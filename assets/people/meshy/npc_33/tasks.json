@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21d49-a902-7639-96ac-9c41d4750c0b",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795787697492,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is a taxi driver of about 48, a Sikh man with brown skin, a full greying black beard and a neatly wrapped dark blue turban, a slightly heavy build with a small belly, no tattoos. He wears a pale yellow short-sleeved button-up shirt tucked in, that fits close to his body, straight-legged dark brown trousers with a belt that end at the ankle, and flat black leather shoes. The person stands upright in a T-pose, the arms raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and the body and under each armpit, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21d4a-19c9-7017-833d-5ed2963cf2ea",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795787726055,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21d4a-fca9-7698-a864-991944bfd114",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795787787361,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.73,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}
