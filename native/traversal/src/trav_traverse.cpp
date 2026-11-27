@@ -65,7 +65,7 @@ TravTraverse::TravTraverse() {
 }
 
 void TravTraverse::_ready() {
-	if (OS::get_singleton()->get_cmdline_user_args().has("--native") && ClassDBSingleton::get_singleton()->class_exists("TravDetector")) {
+	if (!OS::get_singleton()->get_cmdline_user_args().has("--script") && ClassDBSingleton::get_singleton()->class_exists("TravDetector")) {
 		detector = ClassDBSingleton::get_singleton()->instantiate("TravDetector");
 	} else {
 		Ref<Resource> script = ResourceLoader::get_singleton()->load("res://traversal/detect/detector.gd");

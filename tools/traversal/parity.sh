@@ -8,8 +8,8 @@ OUT=${1:?a folder for the files}
 mkdir -p "$OUT"
 cd "$(dirname "$0")/../../traversal_lab" || exit 1
 run() { name=$1; shift
-  timeout 1700 godot --headless --fixed-fps 60 --path . -s res://tests/parity_run.gd -- --out="$OUT/${name}_script.bin" "$@" > "$OUT/${name}_script.log" 2>&1 &
-  timeout 1700 godot --headless --fixed-fps 60 --path . -s res://tests/parity_run.gd -- --out="$OUT/${name}_native.bin" --native "$@" > "$OUT/${name}_native.log" 2>&1
+  timeout 1700 godot --headless --fixed-fps 60 --path . -s res://tests/parity_run.gd -- --out="$OUT/${name}_script.bin" --script "$@" > "$OUT/${name}_script.log" 2>&1 &
+  timeout 1700 godot --headless --fixed-fps 60 --path . -s res://tests/parity_run.gd -- --out="$OUT/${name}_native.bin" "$@" > "$OUT/${name}_native.log" 2>&1
   wait
   grep -h "body is\|detector is\|moves are\|interact is" "$OUT/${name}_script.log" "$OUT/${name}_native.log" | tr '\n' ' '; echo; }
 # (EXTRA="--npc=npc_04" runs the same three with an NPC body in the player's place)
