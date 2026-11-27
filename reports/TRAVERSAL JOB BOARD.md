@@ -51,6 +51,39 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
 - [ ] 11. The phone pass of every stage (the study: "Phone testing of each stage follows the desktop pass"). Never
       done for any stage. (The Redmi run comes last.)
 
+## NPCs (27 Nov, started at his word; the ragdolls still wait for his go)
+
+His words: "i need this system to apply to every npc"; "i dont think all the npcs need the full move set, they just
+need basic movements"; "make sure they arent as many triangles as the player"; "will we be able to make them move as
+intended without touching the players existing and approved traversal set? we worked hard to get the player right, i
+dont want anything messing that up"; "also limit the tests to allowed civilian moves only"; "oh npcs should be able
+to get in and out of cars". Order agreed: the fitting first, then the recipe fixed, then the cast in one batch.
+
+- **Rule: nothing of the player's is changed for an NPC.** NPC code lives in `traversal_lab/traversal/npc/`. A change
+  inside a file the player uses is shown to him and asked first. The player's 18 tests and the audit (26 of 114,
+  the same lines) are run before every commit, as always.
+- **The recipe** (`assets/people/meshy/<name>/tasks.json`; the script is not in the repo yet): the player concept
+  redrawn as another person in the same pose (nano-banana-2), arms STRAIGHT OUT (arms held low fused the sleeve
+  with the shirt on the first woman), image to 3D (t-pose, remeshed to 5,000 triangles), rigging (mixamo skeleton,
+  `include_fingers`, height). 41 Meshy credits a body. Then `tools/build_npc.gd -- --name=<name>` (twice, with
+  `--import` between).
+- **Bodies:** npc_01 (man, 1.79 m), npc_03 (heavy man, 1.74 m), npc_04 (woman, 1.61 m). See one in the lab in the
+  player's place: `-- --npc=npc_04`.
+- **The civilian moves:** stand, walk, run, starts, stops, turns, kerbs, stairs, slopes, step down, high step,
+  shoulder turn, doors, sitting, phone, the car in and out; ragdoll and get-up when built. Add-ons later: cover
+  (armed), vault, climb on and mantle (chasers). Everything else is refused to them (not wired yet).
+- [x] (trav82, trav83) three trial bodies on the player's skeleton standard, the player's clips unchanged.
+- [x] (trav84) the fitting: hips at the height their legs need, their own stride, seated at the seat.
+- [ ] a civilian test of their own (`tests/` for NPC bodies; today the player's tests are run on them and some lines
+      hold them to the player's size).
+- [ ] the texting grip on their hands; the woman's feet when seated (toes 7 cm up on the 0.45 m bench) and in the
+      car; stairs up (a foot 3.2 cm off); the big toe at push-off (14 to 16 degrees).
+- [ ] an NPC's own walking and running pace (his stride is his own; the pace is still the player's 1.45 m/s).
+- [ ] the moves outside the civilian set refused to an NPC.
+- [ ] a brain that drives the body in place of the keys; an NPC on the course beside the player.
+- [ ] what a phone can afford (never measured).
+- [ ] then the cast, in one batch.
+
 ## Known weak points (not in the queue until he says so)
 
 - He slows into the mantle and the grab at a run; only their exits are running.
