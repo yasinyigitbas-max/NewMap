@@ -39,7 +39,8 @@ func _run() -> void:
 	var st: Array = course.get(&"stations")
 	var labels := course.find_children("*", "Label3D", true, false).size()
 	ok(st.size() == 64, "64 stations built (got %d)" % st.size())      # 63 until the roofed wall of stage 7
-	ok(labels == st.size(), "every station has its label (%d labels)" % labels)
+	# (and the stations added later, listed apart in `extras`: the wall ledges of 27 Nov)
+	ok(labels == st.size() + (course.get(&"extras") as Array).size(), "every station has its label (%d labels)" % labels)
 	var kinds := {}
 	var bad: Array[String] = []
 	for s: Dictionary in st:

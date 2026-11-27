@@ -5,6 +5,10 @@ extends SkeletonModifier3D
 ## Why: Yasin's play-test of 25 Nov, "his arms are almost sticking to his body, they need to open up a bit". The clips
 ## were captured on a slimmer body than his.
 
+var flat := 0.0                 # 0 to 1: his arms are laid into the plane of his chest (sideways in a gap or on a ledge: an elbow
+                                # the take holds 4 cm forward of it was that far into the wall of a 0.26 m gap). Set by character.gd
+var _fore := [-1, -1]
+var _hand := [-1, -1]
 var open_deg := 9.0             # NOT in the study: set by eye on his body
 
 var _arm := [-1, -1]
@@ -21,6 +25,8 @@ func _bind(sk: Skeleton3D) -> void:
 		return
 	_arm = [sk.find_bone("mixamorig_LeftArm"), sk.find_bone("mixamorig_RightArm")]
 	_chest = sk.find_bone("mixamorig_Spine2")
+	_fore = [sk.find_bone("mixamorig_LeftForeArm"), sk.find_bone("mixamorig_RightForeArm")]
+	_hand = [sk.find_bone("mixamorig_LeftHand"), sk.find_bone("mixamorig_RightHand")]
 	if _chest >= 0:
 		_chest_rest_inv = sk.get_bone_global_rest(_chest).basis.orthonormalized().inverse()
 
@@ -38,3 +44,16 @@ func _process_modification_with_delta(_delta: float) -> void:
 		var g := sk.get_bone_global_pose(_arm[side])
 		g.basis = Basis(fwd.normalized(), deg_to_rad(open_deg) * (1.0 if side == 0 else -1.0)) * g.basis
 		sk.set_bone_global_pose(_arm[side], g)
+		if flat > 0.0:
+			# the upper arm, then the forearm: each turned the shortest way into the plane square to `fwd`
+			for pair: Array in [[_arm[side], _fore[side]], [_fore[side], _hand[side]]]:
+				var b := sk.get_bone_global_pose(int(pair[0]))
+				var d := (sk.get_bone_global_pose(int(pair[1])).origin - b.origin).normalized()
+				var in_plane := d - fwd.normalized() * d.dot(fwd.normalized())
+				if in_plane.length() < 0.2:
+					continue
+				var axis := d.cross(in_plane.normalized())
+				if axis.length() < 0.0001:
+					continue
+				b.basis = Basis(axis.normalized(), d.angle_to(in_plane.normalized()) * flat) * b.basis
+				sk.set_bone_global_pose(int(pair[0]), b)

@@ -27,10 +27,10 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
       can go through facing either wall.
 - [x] 2. (trav72) Stage 17, what is left: the wall-ledge sidle (the study: "For a ledge with a wall behind, allow a sidle
       down to about 0.10 m"). The course has no such ledge: build one in the test.
-- [ ] 3. (27 Nov: "Open the arms to both sides during squeeze in tight places. Also open arms to sides on sidle, head
+- [x] 3. (trav73) (27 Nov: "Open the arms to both sides during squeeze in tight places. Also open arms to sides on sidle, head
       should look towards the direction we are moving") and the wall-ledge station on the course ("yes add wall ledge
       station, how else am i supposed o test?").
-- [ ] 4. (27 Nov: "also play the sideway squeeze in any passage smaller than 60cms"): sideways in every gap under
+- [x] 4. (trav73) (27 Nov: "also play the sideway squeeze in any passage smaller than 60cms"): sideways in every gap under
       0.60 m. His word over the study's shoulder turn for 0.45 to 0.60 m.
 - [ ] 5. Stage 21: cover, low and high: enter, peek, exit.
 - [ ] 6. Stage 22: doors: push, then pull.
@@ -55,7 +55,12 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
 - The balance fall from 3.1 m up is always face down.
 - Running-jump bands other than the vault are untested; the longer step over a shallow gap under 0.78 m was not
   run; running off the side of a beam was not run.
-- In a 0.26 m gap a forearm joint is 0.025 m into a wall. Fingers do not curl on any hold (no finger correction).
+- Found 27 Nov by stage 1's random walk when a 65th station changed its path (the ledge station is therefore listed
+  apart, in the course's `extras`, and the walk is as it was): (1) pressed sideways against the 0.25 m beam (0.5 m
+  up) he does nothing: no step onto it, no vault, for as long as the stick is held; the same in trav72, so not new.
+  (2) the walk can set him down standing under the 1.5 m overhang, which pushes him 0.3 m into the floor: the
+  test's own doing, not a way the player gets there.
+- Fingers do not curl on any hold (no finger correction).
 - The sidle is taken to 0.30 m, not the study's 0.25 (mine); his arms hang, they are not spread on the wall; going
   back the way he came in a gap (not on a ledge) is not tested.
 - On a beam the walking feet are not brought onto it, only the standing feet.
@@ -65,5 +70,6 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
 ## Waiting on Yasin's eyes
 
 - trav69: feet on beams and wall tops, the arm flicker in the balance fall, hands on a wall met end on.
-- trav72: the sidle along a ledge with a wall behind (ledges are built only in its test, not on the course).
+- trav72, trav73: the sidle along a ledge with a wall behind; the last station key reaches the course's two ledges
+  (0.20 and 0.12 m). Arms open and head turned the way he goes, on the ledge and sideways in a gap.
 - trav70, trav71: the squeeze through gaps, either way round. Whether "the character gets lost on many frames" is gone.

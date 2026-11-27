@@ -124,7 +124,10 @@ const LEDGE_BAND := [0.10, 0.30]    # from the study's 0.10 m. To 0.30 m, NOT th
                                     # shape stands 0.25 m out from it, so on a ledge under 0.30 m he has no ground under him
                                     # as he walks (measured on 0.24 and 0.26 m: he slid along its edge and fell)
 const LEDGE_PULL := 6.0             # NOT in the study, mine: he is drawn onto the middle line of the ledge at this rate (1/s)
-const SQUEEZE_BAND := [0.25, 0.45, 0.60]    # the study's: sideways from the first, shoulders turned from the second, plain from the third
+# Yasin, 27 Nov: "also play the sideway squeeze in any passage smaller than 60cms": his word over the study's turned
+# shoulders for 0.45 to 0.60 m. He goes sideways through every gap from 0.25 m to under 0.60 m. (The shoulder turn
+# is still built: the second figure was 0.45.)
+const SQUEEZE_BAND := [0.25, 0.60, 0.60]    # sideways from the first, shoulders turned from the second, plain from the third
 const SQUEEZE_AHEAD := 0.5          # the study's "half a metre before"
 const SQUEEZE_SLOW_TIME := 0.8    # NOT in the study, mine: see _find_squeeze (s)
 const SQUEEZE_PLAY := 0.02          # NOT in the study, mine: his shape is kept this much clear of each wall (m)
@@ -195,6 +198,7 @@ var _wish_was_moving := false
 var narrow := 0                 # he is on something narrow: 0 = no, 1 = under 0.25 m wide, 2 = under 0.10 m
 var stick_held := false         # the stick is off its rest (read by the moves that end differently when it is let go)
 var squeeze := 0                # 0 = no; in a gap between walls: 1 = shoulders turned (0.45 to 0.60 m), 2 = sideways (0.25 to 0.45 m); 3 = on a ledge with a wall behind, sideways
+var stick_wish := Vector3.ZERO    # the way and pace the stick asks for, before he is drawn onto a ledge's line
 var squeeze_side := 1           # 1 = he turns to face the wall on his left, -1 = the wall on his right
 var squeeze_w := INF            # the free width of that gap (m)
 var ledge_wall := Vector3.ZERO    # the sidle: a point at the foot of the wall behind him, and the way out from the wall
@@ -633,6 +637,7 @@ func _physics_process(dt: float) -> void:
 		squeeze_side = -squeeze_side
 		spot_total = 0.0
 		hvel = Vector3.ZERO
+	stick_wish = _wish
 	_find_squeeze()
 	if squeeze >= 2:
 		_wish = _wish.limit_length(SQUEEZE_SPEED)

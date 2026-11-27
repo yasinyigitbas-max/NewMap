@@ -105,6 +105,10 @@ const BEAM_WALK := "KM_Beam_Walk"
 # runs on to where its feet are together.
 const SIDE_STEP := "KM_Side_Step"
 const SHOULDER_TURN_DEG := 40.0 # NOT in the study (it gives no angle), mine: how far the shoulders are turned in a 0.45 to 0.60 m gap
+# Yasin, 27 Nov: "Open the arms to both sides during squeeze in tight places. Also open arms to sides on sidle, head
+# should look towards the direction we are moving to instead of straight ahead in both moves".
+const SIDE_ARMS_DEG := 45.0     # NOT in the study, mine: sideways in a gap or on a ledge his arms are held this far out to his sides
+const SIDE_HEAD_DEG := 70.0     # NOT in the study, mine: and his head turned this far the way he goes (the study: "the neck turns 85 degrees each way")
 const SIDE_REST := 0.6          # NOT in the study, mine: standing still, the side step runs on at this share of its own pace to its end
 const BEAM_ARMS_DEG := 60.0     # NOT in the study, mine: standing still on something narrow his arms are held this far out (the
                                 # beam walk has them out by itself). Yasin, 26 Nov: "we should spread our arms to balance on a beam"
@@ -904,9 +908,10 @@ func _physics_process(dt: float) -> void:
 	# (his arms are held out only while he stands there on his own: laid over the take of a move, the fall off a beam
 	# above all, they threw his arms from one place to another from tick to tick, up to 0.8 m. Yasin, 26 Nov: "arms
 	# flicker when falling idle too long>fall animation plays")
-	_beam_arms = move_toward(_beam_arms, _narrow_w * (1.0 - _moving) if _mode != "move" else 0.0, dt / FADE)
+	_beam_arms = move_toward(_beam_arms, _narrow_w * (1.0 - _moving) if (_mode != "move" and int(body.get(&"squeeze")) < 2) else 0.0, dt / FADE)
 	# (in a gap between walls his arms are not held out from his body at all)
-	_arms.set(&"open_deg", arm_open_deg * (1.0 - maxf(absf(_turn_deg) / SHOULDER_TURN_DEG, _squeeze_w)) + (STEEP_ARMS_UP_DEG if _steep_up else STEEP_ARMS_DEG) * _steep_w + BEAM_ARMS_DEG * _beam_arms)
+	_arms.set(&"flat", _squeeze_w if int(body.get(&"squeeze")) == 2 else 0.0)    # (not on a ledge: there the plane of his chest is in the wall behind him)
+	_arms.set(&"open_deg", arm_open_deg * (1.0 - maxf(absf(_turn_deg) / SHOULDER_TURN_DEG, _squeeze_w)) + SIDE_ARMS_DEG * _squeeze_w + (STEEP_ARMS_UP_DEG if _steep_up else STEEP_ARMS_DEG) * _steep_w + BEAM_ARMS_DEG * _beam_arms)
 	if hands:
 		# a move that puts a hand on something: [which hand (0 left, 1 right), where its wrist goes, how much]
 		var mh: Array = body.get(&"move_hand") if bool(body.call(&"in_move")) else []
@@ -1220,6 +1225,8 @@ func _ground(dt: float, speed: float) -> void:
 		tree.set(&"parameters/side_pick/blend_amount", 0.0 if turned > 0.0 else 1.0)
 	_turn_deg = move_toward(_turn_deg, SHOULDER_TURN_DEG * turned if (sq == 1 and _mode == "ground") else 0.0, SHOULDER_TURN_DEG * dt / FADE)
 	_trunk.set(&"turn_deg", _turn_deg)
+	# (the side step as it is baked goes to his right; its mirror to his left)
+	_trunk.set(&"head_deg", -SIDE_HEAD_DEG * _squeeze_w * (1.0 if float(tree.get(&"parameters/side_pick/blend_amount")) < 0.5 else -1.0))
 	var g := _gait_for(maxf(speed, 0.3))
 	tree.set(&"parameters/gait/blend_position", g.x)
 	_natural = g.y

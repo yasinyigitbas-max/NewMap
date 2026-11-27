@@ -2,10 +2,11 @@ extends SceneTree
 ## Stage 18, gaps between walls. The study: "walk straight through at 0.60 m and wider, turn the shoulders from 0.45
 ## to 0.60 m starting half a metre before, go fully sideways from 0.45 down to 0.25 m, and block below about 0.20 m";
 ## of the shoulder turn, people "begin turning about half a metre before it, and do not slow down".
+## Yasin, 27 Nov: "also play the sideway squeeze in any passage smaller than 60cms": sideways from 0.25 to 0.60 m.
 ## The passages of the course (0.4, 0.5, 0.6, 0.8 m) and gaps built here (0.20, 0.26, 0.30, 0.46 m).
 ## Run:  godot --headless --fixed-fps 60 --path traversal_lab -s res://tests/test_stage18.gd
 
-const NAMES := ["Head", "LeftShoulder", "RightShoulder", "LeftForeArm", "RightForeArm", "LeftHand", "RightHand", "Hips", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot", "LeftToeBase", "RightToeBase"]
+const NAMES := ["LeftArm", "RightArm", "Head", "LeftShoulder", "RightShoulder", "LeftForeArm", "RightForeArm", "LeftHand", "RightHand", "Hips", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot", "LeftToeBase", "RightToeBase"]
 const IN_WALL_MOST := 0.03      # OURS, how it is told: no joint's centre is further into a wall than this (m)
 
 var lab: Node3D
@@ -27,7 +28,11 @@ func ok(cond: bool, what: String) -> void:
 	print("%s  %s" % ["ok  " if cond else "FAIL", what])
 
 
+var head_fwd := Vector3.ZERO
+
+
 func _after() -> void:
+	head_fwd = (skel.global_transform.basis * skel.get_bone_global_pose(skel.find_bone("mixamorig_Head")).basis).z.normalized()
 	for n: String in NAMES:
 		J[n] = (skel.global_transform * skel.get_bone_global_pose(skel.find_bone("mixamorig_" + n))).origin
 
@@ -46,7 +51,7 @@ func through(w: float, x: float, zc: float, run: bool, off: float, go := 0, rest
 		samples.append({"mx": 0.0, "mz": -1.0 if (go == 0 or i < go) else 0.0, "yaw": 0.0, "run": run, "jump": false, "crouch": false, "act": false})
 	tape.set(&"tape", samples)
 	tape.call(&"replay")
-	var out := {"kinds": {}, "slow": INF, "fast": 0.0, "turn_least": INF, "turn_most": 0.0, "from": INF, "in_wall": 0.0, "in_wall_at": "", "past": 0.0, "at_rest": {}, "face": 0.0}
+	var out := {"kinds": {}, "slow": INF, "fast": 0.0, "turn_least": INF, "turn_most": 0.0, "from": INF, "in_wall": 0.0, "in_wall_at": "", "past": 0.0, "at_rest": {}, "face": 0.0, "head": 1.0, "arms": INF}
 	var t := 0
 	while t < (go + rest if go > 0 else 860):
 		await physics_frame
@@ -66,6 +71,9 @@ func through(w: float, x: float, zc: float, run: bool, off: float, go := 0, rest
 				if over > float(out["in_wall"]):
 					out["in_wall"] = over
 					out["in_wall_at"] = n
+			if z < zc + 0.8 and z > zc - 0.8:
+				out["head"] = minf(float(out["head"]), -head_fwd.z)
+				out["arms"] = minf(float(out["arms"]), (J["LeftHand"] as Vector3).distance_to(J["RightHand"]))
 			# how far the line of his shoulders is turned from square to his way
 			var sh: Vector3 = (J["RightShoulder"] as Vector3) - (J["LeftShoulder"] as Vector3)
 			var a := absf(rad_to_deg(atan2(sh.z, sh.x)))
@@ -118,7 +126,9 @@ func _run() -> void:
 	gaps.sort_custom(func(a: Array, b: Array) -> bool: return float(a[0]) > float(b[0]))
 	for g: Array in gaps:
 		var w := float(g[0])
-		var band := 0 if w >= 0.60 - 0.001 else (1 if w >= 0.45 - 0.001 else (2 if w >= 0.25 - 0.001 else -1))
+		# (Yasin, 27 Nov: "also play the sideway squeeze in any passage smaller than 60cms": no gap is taken with
+		# turned shoulders any more; those rows are kept below for the day the band is given back)
+		var band := 0 if w >= 0.60 - 0.001 else (2 if w >= 0.25 - 0.001 else -1)
 		for run: bool in [false, true]:
 			if band < 0 and run:
 				continue                # (at a run a 2.5 m wall is climbed: the wall climb of stage 14, not this stage)
@@ -149,6 +159,9 @@ func _run() -> void:
 					if off == 0.0:
 						ok(float(r["turn_least"]) > 75.0, "%s: he is sideways in it (the line of his shoulders at least %.0f degrees from square)" % [how, float(r["turn_least"])])
 						ok(float(r["in_wall"]) <= IN_WALL_MOST, "%s: no joint is in a wall (the furthest %.3f m: %s)" % [how, float(r["in_wall"]), r["in_wall_at"]])
+						# (Yasin, 27 Nov: arms open to both sides, head looking the way he goes)
+						ok(float(r["arms"]) > 0.95, "%s: his arms are open to both sides (wrists at least %.2f m apart; 0.53 m standing)" % [how, float(r["arms"])])
+						ok(float(r["head"]) > 0.8, "%s: his head looks the way he goes (within %.0f degrees of it)" % [how, rad_to_deg(acos(clampf(float(r["head"]), -1.0, 1.0)))])
 		if band == 2:
 			# standing still in it: he stays sideways, his feet in the gap, and the side step runs on to feet together
 			var st := await through(w, float(g[1]), float(g[2]), false, 0.0, 300, 150)
@@ -171,7 +184,7 @@ func _run() -> void:
 			kinds.append_array((r["kinds"] as Dictionary).keys())
 			ok(float(r["past"]) > 0.3, "%s, at a walk, %+.2f m off its middle: he goes through" % [g[3], off])
 		ok(float(faces[0]) * float(faces[1]) < 0.0, "%s, from 0.08 m to each side of its middle: he is turned opposite ways (%s)" % [g[3], faces])
-		if w < 0.45:
+		if true:
 			ok(walls <= IN_WALL_MOST, "%s, either way round: no joint is in a wall (the furthest %.3f m)" % [g[3], walls])
 	print("RESULT ", "PASS" if fails == 0 else "FAIL (%d)" % fails)
 	quit(1 if fails else 0)

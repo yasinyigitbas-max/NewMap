@@ -7,6 +7,9 @@ const LANE := 4.0                      # metres between station centres
 const GROUND_SIZE := Vector3(280.0, 1.0, 120.0)
 
 var stations: Array[Dictionary] = []   # {id, kind, label, start, top, size, pos, ...}
+# Stations added after the course was first measured: reached with the station keys like the others, but kept apart,
+# so that the count of `stations`, and with it the path of stage 1's seeded random walk, stays what it was.
+var extras: Array[Dictionary] = []
 var _x := 0.0
 var _grey := StandardMaterial3D.new()
 var _dark := StandardMaterial3D.new()
@@ -40,6 +43,12 @@ func _ready() -> void:
 	_floor_one_mesh()
 	# Stage 7 ("a wall with no headroom above it is reported as blocked"): added last, so no other station moves
 	_wall_under_roof(1.00, 0.60)
+	# Stage 17, the sidle (Yasin, 27 Nov: "yes add wall ledge station, how else am i supposed o test?"): behind the
+	# start line of the last lane (z from 5 to 15), so that no other station moves and the free ground beyond the
+	# last lane, where the tests build their own things, stays where it is. It is listed in `extras`, not `stations`:
+	# as a 65th station it changed the path of stage 1's random walk, which then met two things that were there
+	# before (see reports/TRAVERSAL JOB BOARD.md).
+	_ledges(0.20, 0.12)
 
 
 # ---------------------------------------------------------------- building blocks
@@ -171,6 +180,27 @@ func _beam(w: float) -> void:
 	_box(Vector3(x, 0.25, -11.5), Vector3(1.2, 0.5, 1.0))
 	_station("beam", "beam %.2f m wide" % w, {"top": h, "width": w, "edge_z": -5.0,
 			"probe": Vector3(x, 0.0, -8.0)})
+
+
+## A wall with a ledge 0.5 m up along each face (`w_a` m wide on its +X face, `w_b` on its -X face), a platform at
+## each end of each ledge and a step up to the near one. Approached from z = 15.6, walking toward -Z.
+func _ledges(w_a: float, w_b: float) -> void:
+	var x := _x - LANE
+	var h := 0.5
+	_box(Vector3(x, 1.5, 10.0), Vector3(1.0, 3.0, 10.0))
+	for side in 2:
+		var way := 1.0 if side == 0 else -1.0
+		var w := w_a if side == 0 else w_b
+		var face := x + way * 0.5
+		_box(Vector3(face + way * 0.6, 0.125, 14.0), Vector3(1.2, 0.25, 1.0))
+		_box(Vector3(face + way * 0.6, h * 0.5, 12.5), Vector3(1.2, h, 2.0))
+		_box(Vector3(face + way * w * 0.5, h - 0.05, 9.5), Vector3(w, 0.1, 4.0))
+		_box(Vector3(face + way * 0.6, h * 0.5, 6.5), Vector3(1.2, h, 2.0))
+	var s := {"id": "ledge_%02d" % (stations.size() + extras.size()), "kind": "ledge", "label": "wall ledges %.2f and %.2f m (walk toward the wall end, then along it)" % [w_a, w_b],
+			"start": Vector3(x + 0.9, 0.0, 15.6), "x": x, "top": h, "widths": [w_a, w_b],
+			"probe": Vector3(x + 0.5 + w_a * 0.5, 0.0, 9.5)}
+	extras.append(s)
+	_label("wall ledges: %.2f m (this side), %.2f m (far side)" % [w_a, w_b], Vector3(x + 1.1, 1.8, 14.8))
 
 
 func _passage(w: float) -> void:

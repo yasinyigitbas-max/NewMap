@@ -5,22 +5,25 @@ extends SkeletonModifier3D
 ## "the neck turns 85 degrees each way, the mid-back 47, the lower back only 15"), and turns the neck back by the
 ## same, so that he goes on looking where he is going. His arms are kept swinging along his way.
 
+var head_deg := 0.0             # how far his head is turned to look the way he goes, sideways in a gap or on a ledge (+ = to his left)
 var turn_deg := 0.0             # how far the shoulders are turned (set by character.gd)
 
 var _low := -1
 var _mid := -1
 var _neck := -1
+var _head := -1
 var _arms: Array[int] = []
 
 
 func _process_modification_with_delta(_delta: float) -> void:
 	var sk := get_skeleton()
-	if sk == null or turn_deg == 0.0:
+	if sk == null or (turn_deg == 0.0 and head_deg == 0.0):
 		return
 	if _low < 0:
 		_low = sk.find_bone("mixamorig_Spine")
 		_mid = sk.find_bone("mixamorig_Spine1")
 		_neck = sk.find_bone("mixamorig_Neck")
+		_head = sk.find_bone("mixamorig_Head")
 		_arms = [sk.find_bone("mixamorig_LeftArm"), sk.find_bone("mixamorig_RightArm")]
 	if _low < 0 or _mid < 0 or _neck < 0:
 		return
@@ -35,3 +38,11 @@ func _process_modification_with_delta(_delta: float) -> void:
 		var g := sk.get_bone_global_pose(arm)
 		g.basis = Basis(Vector3.UP, -deg_to_rad(turn_deg)) * g.basis
 		sk.set_bone_global_pose(arm, g)
+	# Going sideways he looks the way he is going, not at the wall in front of him: half of the turn in the neck and
+	# half in the head (Yasin, 27 Nov: "head should look towards the direction we are moving to instead of straight
+	# ahead in both moves").
+	if head_deg != 0.0 and _head >= 0:
+		for bone: int in [_neck, _head]:
+			var g := sk.get_bone_global_pose(bone)
+			g.basis = Basis(Vector3.UP, deg_to_rad(head_deg * 0.5)) * g.basis
+			sk.set_bone_global_pose(bone, g)

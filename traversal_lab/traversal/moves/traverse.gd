@@ -480,6 +480,14 @@ func _physics_process(_dt: float) -> void:
 				return
 	else:
 		_still = 0.0
+	# Sidling along a ledge he is drawn in toward the wall behind him: that is not walking at the wall, and no climb
+	# of it begins unless the stick itself is pushed at the wall (on the course's own ledge, a wall 2.5 m above it,
+	# he grabbed the top and climbed it as he came onto the ledge).
+	if int(body.get(&"squeeze")) == 3:
+		var sw: Vector3 = body.get(&"stick_wish")
+		if sw.length() < 0.05 or sw.normalized().dot(-(body.get(&"ledge_out") as Vector3)) < 0.5:
+			record = {}
+			return
 	if _catch_next > 0:
 		_catch_next -= 1
 		if int(body.get(&"state")) >= 2:

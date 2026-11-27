@@ -3,7 +3,7 @@ extends SceneTree
 ## The course has no such ledge: walls with a ledge 1.0 m up on each face are built here, a platform at each end.
 ## Run:  godot --headless --fixed-fps 60 --path traversal_lab -s res://tests/test_stage17_sidle.gd
 
-const NAMES := ["Head", "LeftShoulder", "RightShoulder", "Hips", "LeftFoot", "RightFoot", "LeftToeBase", "RightToeBase"]
+const NAMES := ["LeftHand", "RightHand", "LeftArm", "RightArm", "Head", "LeftShoulder", "RightShoulder", "Hips", "LeftFoot", "RightFoot", "LeftToeBase", "RightToeBase"]
 const UP := 1.0                 # the ledges' height (m)
 
 var lab: Node3D
@@ -12,6 +12,8 @@ var tape: Node
 var trav: Node
 var skel: Skeleton3D
 var fails := 0
+var z_off := 0.0               # the course's own ledges are 1 m further along z than those built here, and 0.5 m up
+var up_h := UP
 var J := {}
 
 
@@ -25,7 +27,11 @@ func ok(cond: bool, what: String) -> void:
 	print("%s  %s" % ["ok  " if cond else "FAIL", what])
 
 
+var head_fwd := Vector3.ZERO
+
+
 func _after() -> void:
+	head_fwd = (skel.global_transform.basis * skel.get_bone_global_pose(skel.find_bone("mixamorig_Head")).basis).z.normalized()
 	for n: String in NAMES:
 		J[n] = (skel.global_transform * skel.get_bone_global_pose(skel.find_bone("mixamorig_" + n))).origin
 
@@ -35,7 +41,7 @@ func _after() -> void:
 func along(face: float, wall: float, plan: Array) -> Dictionary:
 	while bool(body.call(&"in_move")):
 		await physics_frame
-	lab.call(&"place", Vector3(face - wall * 0.4, UP, 12.0))
+	lab.call(&"place", Vector3(face - wall * 0.4, up_h, 12.0 + z_off))
 	body.rotation.y = 0.0
 	for i in 20:
 		await physics_frame
@@ -46,18 +52,18 @@ func along(face: float, wall: float, plan: Array) -> Dictionary:
 	tape.set(&"tape", samples)
 	tape.call(&"replay")
 	var out := {"kinds": {}, "fast": 0.0, "turn_least": INF, "low": INF, "ankle_least": INF, "ankle_most": 0.0, "hips_least": INF, "toes_out": true,
-			"far": INF, "moves": int(trav.get(&"plays")), "after": -1, "after_r": 0.0, "back": -INF}
+			"far": INF, "moves": int(trav.get(&"plays")), "after": -1, "after_r": 0.0, "back": -INF, "head": 1.0, "arms": INF, "hand_least": INF}
 	var before := int(trav.get(&"plays"))
 	for t in samples.size() - 2:
 		await physics_frame
 		await process_frame
 		var p := body.global_position
-		out["low"] = minf(float(out["low"]), p.y)
-		out["far"] = minf(float(out["far"]), p.z)
-		if p.y < UP - 0.3:
+		out["low"] = minf(float(out["low"]), p.y + (UP - up_h))
+		out["far"] = minf(float(out["far"]), p.z - z_off)
+		if p.y < up_h - 0.3:
 			break
 		# well onto the ledge
-		if p.z < 10.0 and p.z > 7.0:
+		if p.z < 10.0 + z_off and p.z > 7.0 + z_off:
 			(out["kinds"] as Dictionary)[int(body.get(&"squeeze"))] = true
 			out["fast"] = maxf(float(out["fast"]), (body.get(&"hvel") as Vector3).length())
 			var sh: Vector3 = (J["RightShoulder"] as Vector3) - (J["LeftShoulder"] as Vector3)
@@ -69,13 +75,17 @@ func along(face: float, wall: float, plan: Array) -> Dictionary:
 				out["ankle_least"] = minf(float(out["ankle_least"]), ankle)
 				out["ankle_most"] = maxf(float(out["ankle_most"]), ankle)
 				out["toes_out"] = bool(out["toes_out"]) and ball > ankle
+			out["head"] = minf(float(out["head"]), head_fwd.z * (-1.0 if (body.get(&"hvel") as Vector3).z < 0.0 else 1.0)) if (body.get(&"hvel") as Vector3).length() > 0.3 and p.z < 9.5 + z_off else float(out["head"])
+			out["arms"] = minf(float(out["arms"]), (J["LeftHand"] as Vector3).distance_to(J["RightHand"])) if p.z < 9.5 + z_off else float(out["arms"])
+			for hn: String in ["LeftHand", "RightHand"]:
+				out["hand_least"] = minf(float(out["hand_least"]), ((J[hn] as Vector3).x - face) * -wall)
 			out["hips_least"] = minf(float(out["hips_least"]), ((J["Hips"] as Vector3).x - face) * -wall)
-		if p.z < 5.6 and int(out["after"]) < 0:
+		if p.z < 5.6 + z_off and int(out["after"]) < 0:
 			out["after"] = int(body.get(&"squeeze"))
 			out["after_r"] = float(body.get(&"radius"))
-		out["back"] = p.z
+		out["back"] = p.z - z_off
 		# (he is not walked on off the end of a platform)
-		if p.z < 5.3 or (t > 400 and p.z > 11.3):
+		if p.z < 5.3 + z_off or (t > 400 and p.z > 11.3 + z_off):
 			break
 	out["moves"] = int(trav.get(&"plays")) - before
 	tape.call(&"stop")
@@ -112,9 +122,16 @@ func _run() -> void:
 	for i in 5:
 		await physics_frame
 	var pace := float(body.get(&"SQUEEZE_SPEED"))
+	# the course's own station: [width, face, wall side, z offset, height]
+	for st: Dictionary in (course.get(&"extras") as Array):
+		if String(st["kind"]) == "ledge":
+			ledges.append([float((st["widths"] as Array)[0]), float(st["x"]) + 0.5, -1.0, 1.0, float(st["top"])])
+			ledges.append([float((st["widths"] as Array)[1]), float(st["x"]) - 0.5, 1.0, 1.0, float(st["top"])])
 	for l: Array in ledges:
 		var w := float(l[0])
-		var what := "a ledge %.2f m wide with a wall behind, the wall on his %s" % [w, "left" if float(l[2]) < 0.0 else "right"]
+		z_off = float(l[3]) if l.size() > 3 else 0.0
+		up_h = float(l[4]) if l.size() > 4 else UP
+		var what := "%s %.2f m wide with a wall behind, the wall on his %s" % ["the course's ledge" if l.size() > 3 else "a ledge", w, "left" if float(l[2]) < 0.0 else "right"]
 		var r := await along(float(l[1]), float(l[2]), [[900, -1.0]])
 		if w < 0.10 - 0.001:
 			ok(float(r["low"]) < UP - 0.3 or float(r["far"]) > 6.5, "%s: not allowed, he does not get along it (to z %.2f, lowest %.2f m)" % [what, float(r["far"]), float(r["low"])])
@@ -126,11 +143,17 @@ func _run() -> void:
 		ok(float(r["turn_least"]) > 75.0 and bool(r["toes_out"]), "%s: sideways, his back to the wall (shoulders at least %.0f degrees from square, toes out from the wall: %s)" % [what, float(r["turn_least"]), r["toes_out"]])
 		ok(float(r["ankle_least"]) > 0.01 and float(r["ankle_most"]) < 0.14, "%s: his heels to the wall (ankle joints %.2f to %.2f m out from it)" % [what, float(r["ankle_least"]), float(r["ankle_most"])])
 		ok(float(r["hips_least"]) > 0.10, "%s: his back on the wall, not in it (hip joints at least %.2f m out from it)" % [what, float(r["hips_least"])])
+		ok(float(r["arms"]) > 0.95 and float(r["hand_least"]) > 0.0, "%s: his arms are open to both sides, on the wall and not in it (wrists at least %.2f m apart, at least %.2f m out from the wall)" % [what, float(r["arms"]), float(r["hand_least"])])
+		ok(float(r["head"]) > 0.8, "%s: his head looks the way he goes (within %.0f degrees of it)" % [what, rad_to_deg(acos(clampf(float(r["head"]), -1.0, 1.0)))])
 		ok(int(r["after"]) == 0 and float(r["after_r"]) > 0.24 and int(r["moves"]) == 0, "%s: on the far platform he is as he was before (kind %d, his shape %.2f m, %d moves played)" % [what, int(r["after"]), float(r["after_r"]), int(r["moves"])])
 	# half way along, standing still for 12 s (no loss of balance: his back is on the wall), then back the way he came
 	for l: Array in ledges:
 		if absf(float(l[0]) - 0.15) > 0.001 and absf(float(l[0]) - 0.20) > 0.001:
 			continue
+		if l.size() > 3:
+			continue
+		z_off = 0.0
+		up_h = UP
 		var what := "a ledge %.2f m wide, the wall on his %s" % [float(l[0]), "left" if float(l[2]) < 0.0 else "right"]
 		var r := await along(float(l[1]), float(l[2]), [[330, -1.0], [720, 0.0], [600, 1.0]])
 		ok(float(r["low"]) > UP - 0.03 and int(r["moves"]) == 0 and float(r["far"]) < 9.5 and float(r["far"]) > 7.0, "%s, half way and still for 12 s: he stays on it, no move plays (lowest %.2f m, furthest z %.2f, %d moves)" % [what, float(r["low"]), float(r["far"]), int(r["moves"])])

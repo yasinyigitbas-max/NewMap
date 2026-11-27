@@ -87,7 +87,7 @@ func make_body() -> CharacterBody3D:
 
 
 func go_to(i: int) -> void:
-	var st: Array = course.get(&"stations")
+	var st: Array = (course.get(&"stations") as Array) + (course.get(&"extras") as Array)
 	station = posmod(i, st.size())
 	var s: Dictionary = st[station]
 	place(s["start"])
