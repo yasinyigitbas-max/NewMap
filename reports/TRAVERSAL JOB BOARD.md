@@ -111,7 +111,8 @@ How nothing breaks (the rules of the port):
       `godot --headless --path traversal_lab --import` once so the lab sees the library.
 - [ ] d. The traversal moves.
 - [ ] e. Doors, sitting, the phone, the car, cover.
-- [ ] f. The NPC fitting.
+- [x] f. (trav92) The NPC fitting in C++ (`trav_npc.*`): the same as the script byte for byte on npc_04 and npc_03
+      (`EXTRA="--npc=npc_04" bash tools/traversal/parity.sh <folder>`).
 - [ ] His play-test of the C++ version; then, at his word, C++ becomes the default.
 
 ## NPCs (27 Nov, started at his word; the ragdolls still wait for his go)

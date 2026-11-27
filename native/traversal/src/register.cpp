@@ -8,6 +8,7 @@
 #include "trav_foot_place.h"
 #include "trav_hand_place.h"
 #include "trav_mods.h"
+#include "trav_npc.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/class_db.hpp>
@@ -30,6 +31,8 @@ static void trav_init(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(TravHandPlace);
 	GDREGISTER_CLASS(TravFootPlace);
 	GDREGISTER_CLASS(TravCharacter);
+	GDREGISTER_CLASS(TravBodyFit);
+	GDREGISTER_CLASS(TravNpcCharacter);
 }
 
 static void trav_term(ModuleInitializationLevel p_level) {}

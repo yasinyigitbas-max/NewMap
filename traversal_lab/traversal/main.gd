@@ -61,6 +61,9 @@ func _ready() -> void:
 			if arg.begins_with("--npc="):
 				character.free()
 				character = (load("res://traversal/npc/npc_character.gd") as GDScript).new()
+				if "--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(&"TravNpcCharacter"):
+					character.free()
+					character = ClassDB.instantiate(&"TravNpcCharacter")
 		character.name = "Character"
 		character.set(&"body", body)
 		# `-- --npc=npc_01`: the trial NPC body in the player's place (Yasin, 27 Nov: "yes go on, and make it")
