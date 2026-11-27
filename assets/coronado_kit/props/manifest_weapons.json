@@ -17,7 +17,7 @@
   "width": 0.036,
   "height": 0.137,
   "atlas_page": "props_g_*",
-  "px_per_m_colour": 663.1,
+  "px_per_m_colour": 657.0,
   "col": 1,
   "grips": {
    "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
@@ -60,7 +60,7 @@
   "width": 0.03,
   "height": 0.131,
   "atlas_page": "props_g_*",
-  "px_per_m_colour": 663.1,
+  "px_per_m_colour": 657.0,
   "col": 1,
   "grips": {
    "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
@@ -103,7 +103,7 @@
   "width": 0.049,
   "height": 0.29,
   "atlas_page": "props_g_*",
-  "px_per_m_colour": 663.1,
+  "px_per_m_colour": 657.0,
   "col": 1,
   "grips": {
    "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
@@ -146,7 +146,7 @@
   "width": 0.046,
   "height": 0.202,
   "atlas_page": "props_g_*",
-  "px_per_m_colour": 663.1,
+  "px_per_m_colour": 657.0,
   "col": 1,
   "grips": {
    "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
@@ -189,7 +189,7 @@
   "width": 0.046,
   "height": 0.143,
   "atlas_page": "props_g_*",
-  "px_per_m_colour": 663.1,
+  "px_per_m_colour": 657.0,
   "col": 1,
   "grips": {
    "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
@@ -232,7 +232,7 @@
   "width": 0.054,
   "height": 0.274,
   "atlas_page": "props_g_*",
-  "px_per_m_colour": 663.1,
+  "px_per_m_colour": 657.0,
   "col": 1,
   "grips": {
    "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
@@ -275,7 +275,7 @@
   "width": 0.067,
   "height": 0.064,
   "atlas_page": "props_g_*",
-  "px_per_m_colour": 663.1,
+  "px_per_m_colour": 657.0,
   "col": 1,
   "grips": {
    "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
@@ -307,14 +307,14 @@
   ],
   "mount": "hand",
   "tiers": {
-   "near": 176
+   "near": 172
   },
   "high_tris": 808,
   "length": 0.24,
   "width": 0.018,
   "height": 0.032,
   "atlas_page": "props_g_*",
-  "px_per_m_colour": 663.1,
+  "px_per_m_colour": 657.0,
   "col": 1,
   "grips": {
    "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
@@ -348,7 +348,7 @@
   "width": 0.094,
   "height": 0.042,
   "atlas_page": "props_g_*",
-  "px_per_m_colour": 663.1,
+  "px_per_m_colour": 657.0,
   "col": 1,
   "grips": {
    "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
@@ -387,7 +387,7 @@
   "width": 0.022,
   "height": 0.109,
   "atlas_page": "props_g_*",
-  "px_per_m_colour": 663.1,
+  "px_per_m_colour": 657.0,
   "col": 1,
   "grips": {
    "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
@@ -426,7 +426,7 @@
   "width": 0.071,
   "height": 0.067,
   "atlas_page": "props_g_*",
-  "px_per_m_colour": 663.1,
+  "px_per_m_colour": 657.0,
   "col": 1,
   "grips": {
    "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",

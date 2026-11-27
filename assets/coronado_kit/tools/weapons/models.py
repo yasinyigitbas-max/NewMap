@@ -608,11 +608,7 @@ def molotov(hi):
         hp = [(0, 0)] + catmull(bp[1:-1], 3) + [(0.238, 0)]
         b = lathe('bottle', hp, seg, 'glass_amb', p0)
         lab = lathe('label', [(0.030, 0.0330), (0.0302, 0.0340), (0.0948, 0.0340), (0.095, 0.0330)], seg, 'label', p0)
-        # torn label: cut a ragged wedge out of it
-        tear = extrude('tear', [(0.050, 0.004), (0.020, 0.000), (-0.004, 0.012), (0.012, 0.030), (0.050, 0.030)], -0.06, -0.012, None)
-        cut(lab, tear)
-        ink = lathe('ink', [(0.052, 0.0338), (0.0522, 0.0343), (0.0698, 0.0343), (0.070, 0.0338)], seg, 'label_ink', p0)
-        cut(ink, extrude('tear2', [(0.050, 0.004), (0.020, 0.000), (-0.004, 0.012), (0.012, 0.030), (0.050, 0.030)], -0.06, -0.012, None))
+                ink = lathe('ink', [(0.052, 0.0338), (0.0522, 0.0343), (0.0698, 0.0343), (0.070, 0.0338)], seg, 'label_ink', p0)
         parts += [b, lab, ink]
     else:
         parts.append(lathe('bottle', [bp[0], bp[1], bp[3], bp[4], bp[5], bp[6], bp[8], bp[9], bp[11]], seg, 'glass_amb', p0))

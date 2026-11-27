@@ -142,57 +142,47 @@ for n in names:
     print('RENDERED', n)
 
 if os.environ.get('W_LINEUP', '1') == '1':
-    # lineup: every weapon lying on its right side? no - standing in profile, muzzle +X, one row each
-    zrow = 0.0
-    objs = []
-    for n, mesh, new in placed:
-        mesh.hide_render = False
-        mesh.rotation_euler = (0, 0, math.radians(90))      # muzzle -Y -> +X
-        bpy.context.view_layer.update()
-        lo, hi = bounds(mesh)
-        mesh.location = Vector((-lo.x, 0, 0)) + mesh.location
-        bpy.context.view_layer.update()
-        lo, hi = bounds(mesh)
-        mesh.location.z += zrow - hi.z
-        bpy.context.view_layer.update()
-        lo, hi = bounds(mesh)
-        zrow = lo.z - 0.03
-        objs.append(mesh)
-    # 10 cm grid board behind
+    # lineup: every weapon in right-side profile, muzzle to +X, stacked in two columns, with a 10 cm scale bar
     import bmesh
-    bm = bmesh.new()
-    W_ = 1.2
-    H_ = -zrow + 0.05
-    for k in range(int(W_ / 0.1) + 1):
-        bmesh.ops.create_cube(bm, size=1, matrix=Matrix.Translation((k * 0.1, 0.06, zrow / 2)) @ Matrix.Diagonal((0.002 if k % 5 else 0.004, 0.001, H_, 1)))
-    me = bpy.data.meshes.new('grid')
-    bm.to_mesh(me)
-    g = bpy.data.objects.new('grid', me)
-    sc.collection.objects.link(g)
-    mm = bpy.data.materials.new('gridm')
-    mm.use_nodes = True
-    mm.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value = (0.9, 0.9, 0.9, 1)
-    me.materials.append(mm)
-    bpy.ops.mesh.primitive_plane_add(size=1)
-    board = bpy.context.object
-    board.scale = (W_ + 0.1, 1, H_ + 0.05)
-    board.rotation_euler = (math.radians(90), 0, 0)
-    board.location = (W_ / 2, 0.07, zrow / 2 + 0.01)
-    bm2 = bpy.data.materials.new('board')
-    bm2.use_nodes = True
-    bm2.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value = (0.22, 0.24, 0.27, 1)
-    board.data.materials.append(bm2)
     gp.hide_render = True
+    col_x = [0.0, 1.15]
+    zc = [0.0, 0.0]
+    for k, (n, mesh, new) in enumerate(placed):
+        mesh.hide_render = False
+        mesh.matrix_world = Matrix.Rotation(math.radians(90), 4, 'Z') @ mesh.matrix_world   # muzzle -Y -> +X
+        bpy.context.view_layer.update()
+        lo, hi = bounds(mesh)
+        c = 0 if (hi.x - lo.x) > 0.6 else 1                  # long guns left, short ones right
+        mesh.location += Vector((col_x[c] - lo.x, -(lo.y + hi.y) / 2, zc[c] - hi.z))
+        bpy.context.view_layer.update()
+        lo, hi = bounds(mesh)
+        zc[c] = lo.z - 0.06
+        print('LINEUP', n, [round(v, 3) for v in lo], [round(v, 3) for v in hi])
+    zb = min(zc) - 0.02
+    bm = bmesh.new()
+    for k in range(10):
+        bmesh.ops.create_cube(bm, size=1, matrix=Matrix.Translation((0.05 + 0.1 * k, 0, zb - 0.01 * (k % 2))) @ Matrix.Diagonal((0.1, 0.01, 0.02, 1)))
+    me = bpy.data.meshes.new('bar')
+    bm.to_mesh(me)
+    bar = bpy.data.objects.new('bar', me)
+    sc.collection.objects.link(bar)
+    mm = bpy.data.materials.new('barm')
+    mm.use_nodes = True
+    mm.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value = (0.85, 0.85, 0.85, 1)
+    me.materials.append(mm)
+    W_ = 2.15
+    H_ = -zb + 0.06
     cam_d.type = 'ORTHO'
-    cam.location = (W_ / 2, -3, zrow / 2)
+    cam_d.ortho_scale = W_
+    cam.location = (W_ / 2 - 0.04, -3, -H_ / 2 + 0.02)
     cam.rotation_euler = (math.radians(90), 0, 0)
-    sc.render.resolution_x = 1600
-    sc.render.resolution_y = int(1600 * (H_ + 0.1) / (W_ + 0.1))
-    cam_d.ortho_scale = W_ + 0.1
+    sc.render.resolution_x = 1800
+    sc.render.resolution_y = int(1800 * H_ / W_)
+    bg.inputs[0].default_value = (0.30, 0.32, 0.35, 1)
     for l in [o for o in sc.objects if o.type == 'LIGHT']:
         bpy.data.objects.remove(l)
-    light('key', (W_ / 2 + 0.6, -2.0, 1.2), 900, 2.0, (W_ / 2, 0, zrow / 2))
-    light('fill', (W_ / 2 - 1.5, -1.5, -0.5), 300, 2.0, (W_ / 2, 0, zrow / 2))
+    light('key', (W_ / 2 + 0.5, -2.5, 0.8), 160, 2.5, (W_ / 2, 0, -H_ / 2))
+    light('fill', (W_ / 2 - 1.5, -2.0, -H_), 50, 2.5, (W_ / 2, 0, -H_ / 2))
     sc.render.filepath = os.path.join(OUT, 'lineup.png')
     bpy.ops.render.render(write_still=True)
     print('RENDERED lineup')
