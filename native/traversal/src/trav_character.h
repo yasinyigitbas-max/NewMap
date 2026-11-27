@@ -168,6 +168,8 @@ protected:
 	String hold_take[2];
 	double hold_w[2] = { 0.0, 0.0 };
 	double hold_t[2] = { 0.0, 0.0 };
+	double item_grip[2] = { 0.0, 0.0 };    // its fingers closed on the thing: [left, right]
+	bool item_turned[2] = { false, false };     // ... and turned to lie on it (the hand under a long gun), not left as the take has it
 	double item_w[2] = { 0.0, 0.0 };       // a hand held on the thing itself (a box's side, a gun's forend): [left, right]
 
 	Ref<AnimationNodeBlendTree> _make_tree();

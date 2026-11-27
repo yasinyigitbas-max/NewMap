@@ -170,6 +170,7 @@ void TravCharacter::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_landed", "drop"), &TravCharacter::_on_landed);
 	ClassDB::bind_method(D_METHOD("_phone_refit"), &TravCharacter::_phone_refit);
 	ClassDB::bind_method(D_METHOD("_place_phones"), &TravCharacter::_place_phones);
+	ClassDB::bind_method(D_METHOD("hand_turned", "hand", "along", "out"), &TravCharacter::_hand_turned);
 	ClassDB::bind_method(D_METHOD("_lead_now"), &TravCharacter::_lead_now);
 }
 
@@ -202,6 +203,18 @@ bool TravCharacter::_set(const StringName &p_name, const Variant &p_value) {
 	}
 	if (n == "arm_open_deg") {
 		arm_open_deg = p_value;
+		return true;
+	}
+	if (n == "item_grip_w") {
+		Array ig = p_value;
+		item_grip[0] = ig[0];
+		item_grip[1] = ig[1];
+		return true;
+	}
+	if (n == "item_turned") {
+		Array itn = p_value;
+		item_turned[0] = itn[0];
+		item_turned[1] = itn[1];
 		return true;
 	}
 	if (n == "item_hold_w") {
@@ -1161,6 +1174,7 @@ void TravCharacter::_physics_process(double dt) {
 		for (int f = 0; f < 2; f++) {
 			if (item_w[f] > 0.0 && w[f] <= 0.0) {
 				w[f] = item_w[f];
+				turned[f] = item_turned[f];     // (turned to lie on it: its turn is set with its place)
 			}
 		}
 		Array a_turned;
@@ -1183,6 +1197,23 @@ void TravCharacter::_physics_process(double dt) {
 			tw.push_back(turned[1] ? w[1] : 0.0);
 			_grip->set("thumb_w", tw);
 			_phone_thumbs();
+			if (item_grip[0] > 0.0 || item_grip[1] > 0.0 || item_w[0] > 0.0 || item_w[1] > 0.0) {
+				// a thing in the hand: the study, "everyday grips use about 61, 60 and 39 degrees at the three finger
+				// joints"; a hand that lies flat on it (a box's side) stays open
+				static const double ITEM_CURL[3] = { 61.0, 60.0, 39.0 };
+				Array gw2;
+				gw2.push_back(item_grip[0]);
+				gw2.push_back(item_grip[1]);
+				_grip->set("w", gw2);
+				Array gd2;
+				gd2.push_back(arr3(ITEM_CURL));
+				gd2.push_back(arr3(ITEM_CURL));
+				_grip->set("deg", gd2);
+				Array tw2;
+				tw2.push_back(0.0);
+				tw2.push_back(0.0);
+				_grip->set("thumb_w", tw2);
+			}
 		}
 		Array a_loose;
 		a_loose.push_back(false);

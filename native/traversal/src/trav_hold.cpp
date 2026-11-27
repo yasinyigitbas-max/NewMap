@@ -64,7 +64,7 @@ void TravHold::_hand(int side, Vector3 &r_palm, Vector3 &r_along, Vector3 &r_acr
 	r_along = (k - w).normalized();
 	Vector3 across = (i - p).normalized();
 	r_across = (across - r_along * across.dot(r_along)).normalized();
-	Vector3 out = r_along.cross(r_across) * (side == 1 ? 1.0f : -1.0f);
+	Vector3 out = r_across.cross(r_along) * (side == 1 ? 1.0f : -1.0f);      // out of the palm (27 Nov, Yasin: they "look like they are attached to the back of his hands": it was the other way)
 	r_palm = w.lerp(k, (real_t)PALM_ALONG) + out * (real_t)PALM_OUT;
 }
 
@@ -123,6 +123,16 @@ void TravHold::_physics_process(double dt) {
 	iw.push_back(_shown > 0 && (ITEMS[_shown - 1].kind == BOX || ITEMS[_shown - 1].kind == LONG) ? _w : 0.0);
 	iw.push_back(_shown > 0 && ITEMS[_shown - 1].kind == BOX ? _w : 0.0);
 	_chr->set("item_hold_w", iw);
+	Array itn;
+	itn.push_back(_shown > 0 && ITEMS[_shown - 1].kind == LONG);        // the hand under a long gun is turned palm up to it
+	itn.push_back(false);
+	_chr->set("item_turned", itn);
+	// the fingers closed on it: the hand that carries a bag, both hands on a gun (a box is held with flat hands)
+	Array ig;
+	Kind kd = _shown > 0 ? ITEMS[_shown - 1].kind : BOX;
+	ig.push_back(_shown > 0 && (kd == LONG || kd == PISTOL) ? _w : 0.0);
+	ig.push_back(_shown > 0 && kd != BOX ? _w : 0.0);
+	_chr->set("item_grip_w", ig);
 	_t_set = false;
 	if (_prop != nullptr) {
 		_prop->set_visible(_w > 0.5);
@@ -154,12 +164,21 @@ void TravHold::_refit() {
 	Vector3 gr = gr_n->get_position();
 	Vector3 gl = gl_n->get_position();
 	Array hold_at = hands->get("hold_at");
+	Array hold_basis = hands->get("hold_basis");
 	Transform3D to_world = _skel->get_global_transform();
 	Vector3 wrist[2] = { _skel->get_bone_global_pose(_bone[0][0]).origin, _skel->get_bone_global_pose(_bone[1][0]).origin };
+	// A hand laid on the thing: turned so that its fingers run `fingers` and its palm faces `into`, and placed so
+	// that its palm point is on `at` (27 Nov, Yasin: "it lands on the side of that hand instead of in the palm").
+	auto lay = [&](int f, const Vector3 &at, const Vector3 &fingers, const Vector3 &into) {
+		Vector3 a = fingers.normalized();
+		Vector3 o = (into - a * into.dot(a)).normalized();
+		double reach = (double)(_skel->get_bone_global_pose(_bone[f][1]).origin - wrist[f]).length();
+		Vector3 w = at - a * (real_t)(PALM_ALONG * reach) - o * (real_t)PALM_OUT;
+		hold_at[f] = to_world.xform(w);
+		hold_basis[f] = _chr->call("hand_turned", f, a, o);
+	};
 	if (it.kind == BOX) {
-		// the box in front of him where the take has his hands, level, facing as he does; then each palm on its side
-		// (the kit's `grip_l` is at the box's own -X: his right as he holds it facing him... so each hand takes the
-		// point on its own side)
+		// the box in front of him where the take has his hands, level, facing as he does; each palm on its side
 		if (!_t_set) {
 			_t = Transform3D(Basis(), (palm[0] + palm[1]) * 0.5f - (gr + gl) * 0.5f);
 			_t_set = true;
@@ -168,11 +187,13 @@ void TravHold::_refit() {
 		Vector3 b = _t.xform(gr);
 		bool a_left = (a - palm[0]).length_squared() <= (b - palm[0]).length_squared();
 		Vector3 want[2] = { a_left ? a : b, a_left ? b : a };
+		// (each hand as the take turns it, moved so that its palm point is on the box's side: Yasin, 27 Nov, of this:
+		// "box is okay")
 		for (int f = 0; f < 2; f++) {
 			hold_at[f] = to_world.xform(want[f] - (palm[f] - wrist[f]));
 		}
 	} else {
-		// a long gun: it stays in the right hand; the left palm goes onto its forend
+		// a long gun: it stays in the right hand; the left hand under its forend, palm up, the fingers across it
 		if (!_t_set) {
 			Vector3 z = along[1];
 			Vector3 y = across[1];
@@ -184,7 +205,10 @@ void TravHold::_refit() {
 			_t = Transform3D(bb, palm[1] - bb.xform(gr));
 			_t_set = true;
 		}
-		hold_at[0] = to_world.xform(_t.xform(gl) - (palm[0] - wrist[0]));
+		Vector3 gx = _t.basis.get_column(0);
+		Vector3 gy = _t.basis.get_column(1);
+		Vector3 gz = _t.basis.get_column(2);
+		lay(0, _t.xform(gl), gz * 0.5f - gx * 0.85f, gy);
 	}
 }
 
