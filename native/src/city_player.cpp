@@ -952,6 +952,7 @@ void CityPlayer::set_traversal(bool p_on) {
 		n->set("body", trav);
 		trav->add_child(n);
 	}
+	if (trav->has_method("show_capsule")) trav->call("show_capsule", false);   // (the lab draws the body's capsule: not in the game)
 	// this node no longer stands in the world itself, and its own figure is not drawn
 	set_collision_layer(0); set_collision_mask(0);
 	if (fig) fig->set_visible(false);

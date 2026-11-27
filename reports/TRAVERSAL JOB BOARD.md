@@ -223,6 +223,27 @@ else, don't merge anything else that is involving play or npc movement".
         The Windows compile of the whole game module was tried in the cloud: all 59 files compile (the cloud's own
         mingw needs `P_WAIT` set aside, a clash of its headers with traffic_sim.h; his PC's llvm-mingw built that
         file before). Not linked here, not run: his PC.
+      - 28 Nov, HIS WORDS: "i just need to have a new build asap, even if its crippled, lets move onto an android
+        build"; "i need to see the new npcs and the character in the game"; "make all of them replace the old ones";
+        "bring everything new in. performance work is after that". So: everything new first, performance after.
+      - THE NEW CHARACTER IS THE DEFAULT in the game (`rig.gd`; `-- --oldplayer` gives the old one back; only when
+        `res://traversal/` is there). The lab's grey capsule is not drawn in the game.
+      - THE NEW PEOPLE, FIRST STEP (`native/src/city_crowd_trav.cpp`, `CityCrowd::set_trav_people`, on with the new
+        character; `-- --oldpeople` off): every NEAR figure of the crowd (the pool, 12) is drawn as one of the 39 new
+        bodies on the traversal system, a TravBody with its NPC character that walks after its walker's place (the
+        old figure is still driven there, not drawn). `tests/people/test_trav_people.gd` RESULT PASS: 11 shown at
+        once, 0.33 m from their walker on average (worst 1.75 m), all walking, none under the floor. Seen in one
+        frame (a flat floor, no city). CRIPPLED, told to him: what a person does beyond walking and standing
+        (sitting, a phone, a fight, lying) is not shown on the new body; shoved or knocked down, the OLD figure is
+        drawn while its physical body has it; the far figures are still the old bodies; which body a person gets is
+        by pool place, not by who he is (a man can come near as a woman); one body in the frame stood with its
+        forearms crossed in front of it (not looked into). All numbers there are mine.
+      - OPEN: `tests/traffic/test_law.gd` passed 3 runs of 7 since the new police cars (fails: "an officer ran the
+        mugger down (150 s)", once also the mugging itself). It runs on the real clock, so it may have been unsteady
+        before; NOT yet run on the old police model to tell. Commit 190fa965's message says it passed: it had failed.
+      - STILL TO BRING IN, in this order: NPC acts on the new bodies; the far crowd from the new bodies; into a car
+        as the new character; touch buttons for the new moves; the old player's phone / talk / bicycle / swimming /
+        combat on the new character; the traversal's own strike in place of the TEMP line.
       - the NPC parity run (`EXTRA="--npc=..."`) now FAILS by design: the C++ NPC has its own pace, the frozen
         script NPC has not. The player's parity run still passes.
 

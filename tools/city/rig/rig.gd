@@ -444,6 +444,9 @@ func _free_walk(start: Vector3, yaw: float) -> void:
 	# as he was.
 	if not ("--oldplayer" in OS.get_cmdline_user_args()) and ResourceLoader.exists("res://traversal/character/library.res"):
 		pl.call(&"set_traversal", true)
+		# the crowd's near figures are drawn as the new bodies, on the traversal system (CityCrowd::set_trav_people)
+		if people and people.has_method(&"set_trav_people") and not ("--oldpeople" in OS.get_cmdline_user_args()):
+			people.call(&"set_trav_people", true)
 		_say("the player is on the traversal body: %s" % str(pl.call(&"get_traversal")))
 	if game:      # the shell sets him down (a new game: the pavement nearest the centre, with his bicycle and a car; or where he was saved)
 		pl.set(&"capture_mouse", false)

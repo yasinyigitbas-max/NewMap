@@ -122,6 +122,19 @@ private:
 	int n_shoved = 0, n_told_off = 0, n_hit_back = 0;
 	double l_sit_in = 0, l_sit_out = 0, l_gsit_in = 0, l_gsit_out = 0, l_lie_in = 0, l_lie_out = 0, l_duck_in = 0, l_duck_out = 0, l_fight_in = 0, l_fight_out = 0, l_surprise = 0, l_cheer = 0;
 	std::vector<Near> near_pool;
+#ifdef TRAV_IN_GAME
+	// the new people (city_crowd_trav.cpp): each near figure drawn as a new body on the traversal system
+	struct TravNb { class CharacterBody3D *body = nullptr; class CityTravTape *tape = nullptr; bool on = false, going = false, failed = false; int walker = -1; float base_pace = 1.0f; };
+	std::vector<TravNb> trav_pool;
+	std::vector<String> trav_ids;
+	bool trav_people = false;
+	void trav_make(int k);
+	void trav_people_update();
+public:
+	void set_trav_people(bool p_on);
+	bool get_trav_people() const { return trav_people; }
+private:
+#endif
 	// the smaller things (city_crowd_extra.cpp): capsules round the player, umbrellas, towels, the murmur
 	enum { CAPSULES = 12 };
 	bool extras = false;
@@ -396,5 +409,18 @@ public:
 	String report();
 	pc::Crowd *brain() { return crowd; }
 };
+
+
+#ifdef TRAV_IN_GAME
+// what a new body is told each tick (TravBody reads its tape's sample()): filled by CityCrowd::trav_people_update
+class CityTravTape : public Node {
+	GDCLASS(CityTravTape, Node)
+protected:
+	static void _bind_methods();
+public:
+	Dictionary s;
+	Dictionary sample() const { return s; }
+};
+#endif
 
 } // namespace godot

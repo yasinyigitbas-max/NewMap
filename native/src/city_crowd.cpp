@@ -1249,6 +1249,9 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 		}
 	}
 	cnt.near += n_near;
+#ifdef TRAV_IN_GAME
+	trav_people_update();
+#endif
 }
 
 void CityCrowd::_process(double p_delta) {
@@ -1854,6 +1857,10 @@ void CityCrowd::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_rain", "rain"), &CityCrowd::set_rain);
 	ClassDB::bind_method(D_METHOD("get_rain"), &CityCrowd::get_rain);
 	ClassDB::bind_method(D_METHOD("set_near_max", "n"), &CityCrowd::set_near_max);
+#ifdef TRAV_IN_GAME
+	ClassDB::bind_method(D_METHOD("set_trav_people", "on"), &CityCrowd::set_trav_people);
+	ClassDB::bind_method(D_METHOD("get_trav_people"), &CityCrowd::get_trav_people);
+#endif
 	ClassDB::bind_method(D_METHOD("get_near_max"), &CityCrowd::get_near_max);
 	ClassDB::bind_method(D_METHOD("set_streets_path", "path"), &CityCrowd::set_streets_path);
 	ClassDB::bind_method(D_METHOD("get_streets_path"), &CityCrowd::get_streets_path);

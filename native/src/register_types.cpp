@@ -81,6 +81,7 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(PeopleBake);    // tool time: the far figures of the crowd, every body posed once
 	GDREGISTER_CLASS(PeoplePlaces);  // tool time: the places people go (doors, benches, bus stops ...), from the pieces and the shop list
 #ifdef TRAV_IN_GAME
+	GDREGISTER_CLASS(CityTravTape);  // the input of a new body of the crowd (city_crowd_trav.cpp)
 	trav_register_classes();         // the traversal system (native/traversal/src), compiled into this module: one library, every platform
 #endif
 }

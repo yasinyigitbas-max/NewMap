@@ -572,3 +572,5 @@ void CityPed::_bind_methods() {
 }
 
 } // namespace godot
+
+void godot::CityPed::set_drawn(bool p_on) { if (mi && mi->is_visible() != p_on) mi->set_visible(p_on); }

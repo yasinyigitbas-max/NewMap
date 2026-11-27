@@ -136,6 +136,7 @@ public:
 	Ref<ShaderMaterial> get_look() const;
 	Vector3 bone_world(const char *p_bone) const;   // (traces) a bone's place as drawn, world
 	int get_mode() const { return mode; }
+	void set_drawn(bool p_on);   // (28 Nov) his mesh drawn or not, the figure itself going on as it was: a new body is drawn in his place (city_crowd_trav.cpp)
 	// a hard knock: once down it lies until told (a medic has been); false: it gets up as it would
 	void set_stay_down(bool p_on) { stay_down = p_on; }
 	bool get_stay_down() const { return stay_down; }
