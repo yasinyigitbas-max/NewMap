@@ -20,6 +20,8 @@ var body: CharacterBody3D
 # (world), and how much (0 = not held).
 var hold_at: Array = [Vector3.ZERO, Vector3.ZERO]
 var hold_w: Array = [0.0, 0.0]
+var hold_turned := [false, false]  # the held hand is turned to `hold_basis` (skeleton space): a hand on the phone
+var hold_basis := [Basis.IDENTITY, Basis.IDENTITY]
 var hold_loose := [false, false]   # held in place, but the hand itself turns as the take turns it (the phone at his ear)
 var hold_flat: Array = [false, false]   # the held hand is laid flat on the top, fingers forward (the climbs): see hand_hold.gd
 var on := false                 # a take that puts hands down is showing

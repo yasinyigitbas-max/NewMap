@@ -9,6 +9,7 @@ extends Node3D
 ## stairs and steep-ground clips. Until they are, he walks stairs and slopes with the plain walk.
 
 const ArmOpen := preload("res://traversal/character/arm_open.gd")
+const FingerGrip := preload("res://traversal/character/finger_grip.gd")
 const TrunkTurn := preload("res://traversal/character/trunk_turn.gd")
 const FootPlace := preload("res://traversal/character/foot_place.gd")
 const FootOrient := preload("res://traversal/character/foot_orient.gd")
@@ -121,6 +122,12 @@ const SIDE_HEAD_DEG := 70.0     # NOT in the study, mine: and his head turned th
 const PHONE_TEXT := "Texting_While_Standing"
 const PHONE_CALL := "Male_Talking_On_The_Cell_Phone"
 const PHONE_SIZE := Vector3(0.072, 0.148, 0.008)        # a phone: wide, long, thick (m). NOT in the study
+const PHONE_TEXT_AT := Vector2(0.27, 0.20)      # NOT in the study, mine (where the texting take's own thumbs are, measured): below his head joint, ahead of his hips (m)
+const PHONE_TEXT_HOLD := Vector3(0.076, 0.070, 0.035)   # NOT in the study, mine: each wrist from the phone's middle: out to its side, toward its foot, behind it (m)
+const PHONE_TEXT_CURL := [35.0, 35.0, 20.0]     # NOT in the study, mine: his fingers' bend behind the phone, texting (degrees at the three joints)
+const PHONE_CALL_HOLD := Vector3(0.050, 0.035, 0.030)   # NOT in the study, mine: on a call, his left wrist from the phone's middle: toward the front of his head, toward its foot, out from its back (m)
+const PHONE_CALL_OUT := 0.022   # NOT in the study, mine: on a call, the phone's middle this far out of his palm (m)
+const PHONE_CALL_UP := 0.030    # NOT in the study, mine: and this far up across his hand (m)
 const PHONE_IN_PALM := [0.065, 0.035, 0.035]   # NOT in the study, mine: its middle this far along his fingers from the wrist, out of the palm, and up across the hand (m)
 const PHONE_EAR := Vector3(0.078, 0.105, 0.012)         # NOT in the study, mine: his left ear from the head joint: to his left, up, forward (m)
 const PHONE_FADE := 0.4         # NOT in the study, mine: seconds to bring the phone up, and to put it away
@@ -276,9 +283,7 @@ var _phone_w := 0.0             # 0 = no phone, 1 = his arms and head are the ph
 var _phone_kind := 0.0          # 0 = texting, 1 = a call
 var _phone_box: MeshInstance3D
 var _phone_box_l: MeshInstance3D
-var _palm_sign := 1.0
-var _call_wrist := Vector3.ZERO  # on a call: where his left wrist belongs for his hand to be on the phone (world)
-var _call_wrist_ok := false
+var _grip: SkeletonModifier3D   # finger_grip.gd
 var _beam_arms := 0.0           # 0 to 1: how far his arms are held out for standing on something narrow (not in a move)
 var _low_was := false
 var _head_i := -1
@@ -421,11 +426,6 @@ func _ready() -> void:
 			_phone_box = box
 		else:
 			_phone_box_l = box
-	# which way is "out of the palm" for his right hand: in the rest pose (arms out to the sides) the palm faces the ground
-	var rw := skel.get_bone_global_rest(skel.find_bone("mixamorig_RightHand")).origin
-	var ri := skel.get_bone_global_rest(skel.find_bone("mixamorig_RightHandIndex1")).origin
-	var rp := skel.get_bone_global_rest(skel.find_bone("mixamorig_RightHandPinky1")).origin
-	_palm_sign = 1.0 if (ri - rw).cross(rp - rw).dot(Vector3.DOWN) > 0.0 else -1.0
 	skel.skeleton_updated.connect(_place_phones)
 	_trunk = TrunkTurn.new()
 	_trunk.name = "TrunkTurn"
@@ -474,6 +474,10 @@ func _ready() -> void:
 		hand_hold.set(&"place", hands)
 		skel.add_child(hand_hold)       # (after the two arm IKs, which were added in the loop above)
 		feet.set(&"hands", hands)
+	# after the arms: his fingers, closed round what he holds (the phone)
+	_grip = FingerGrip.new()
+	_grip.name = "FingerGrip"
+	skel.add_child(_grip)
 	if body:
 		body.connect(&"jump_started", _on_jump_started)
 		body.connect(&"landed", _on_landed)
@@ -623,20 +627,6 @@ func _make_tree() -> AnimationNodeBlendTree:
 	return bt
 
 
-## One hand's own frame from the finished pose: [wrist, along the fingers, out of the palm, across from little finger to
-## first finger], in the skeleton's space. `left`: his left hand.
-func _hand_frame(left: bool) -> Array:
-	var side := "Left" if left else "Right"
-	var w := skel.get_bone_global_pose(skel.find_bone("mixamorig_%sHand" % side)).origin
-	var m := skel.get_bone_global_pose(skel.find_bone("mixamorig_%sHandMiddle1" % side)).origin
-	var i1 := skel.get_bone_global_pose(skel.find_bone("mixamorig_%sHandIndex1" % side)).origin
-	var p1 := skel.get_bone_global_pose(skel.find_bone("mixamorig_%sHandPinky1" % side)).origin
-	var along := (m - w).normalized()
-	# (the two hands are mirror images: the same cross product points out of one palm and into the other)
-	var out := ((i1 - w).cross(p1 - w) * _palm_sign * (-1.0 if left else 1.0)).normalized()
-	return [w, along, out, (i1 - p1).normalized()]
-
-
 ## The head from the finished pose: [the head joint, the turn of the head from its rest].
 func _head_frame() -> Array:
 	var hb := skel.find_bone("mixamorig_Head")
@@ -644,35 +634,75 @@ func _head_frame() -> Array:
 	return [head.origin, head.basis.orthonormalized() * skel.get_bone_global_rest(hb).basis.orthonormalized().inverse()]
 
 
+## Where the phone is held for texting, in the skeleton's space: in front of his chest, PHONE_TEXT_AT below and ahead of
+## his head joint, its width from hand to hand, its face turned to his eyes. Both his wrists are brought to it by the
+## arm IK (_physics_process), so that it stays in the middle of both hands, under his thumbs, whatever the take's
+## hands do (the take lifts one hand or the other away now and then, and lowers both at its end).
+func _text_phone() -> Transform3D:
+	var hd: Array = _head_frame()
+	var head: Vector3 = hd[0]
+	var hips := skel.get_bone_global_pose(skel.find_bone("mixamorig_Hips")).origin
+	var at := Vector3((head.x + hips.x) * 0.5, head.y - PHONE_TEXT_AT.x, hips.z + PHONE_TEXT_AT.y)
+	var eyes: Vector3 = head + (hd[1] as Basis) * Vector3(0.0, 0.10, 0.09)
+	var face := (eyes - at).normalized()
+	var wide := (Vector3(1.0, 0.0, 0.0) - face * face.x).normalized()          # toward his left hand, square to its face
+	return Transform3D(Basis(-wide, face.cross(-wide).normalized(), face), at)
+
+
+## Where the phone is held on a call, in the skeleton's space: flat on the side of his head at his left ear, its top at
+## the ear and its foot toward his mouth, its face to the head.
+func _call_phone() -> Transform3D:
+	var hd: Array = _head_frame()
+	var turn: Basis = hd[1]
+	var side := (turn * Vector3(1.0, 0.0, 0.0)).normalized()                # out of his left ear
+	var ear: Vector3 = (hd[0] as Vector3) + turn * PHONE_EAR + side * (PHONE_SIZE.z * 0.5 + 0.004)
+	var up := (turn * Vector3(0.0, 0.75, -0.65)).normalized()               # from his mouth to his ear
+	up = (up - side * up.dot(side)).normalized()
+	return Transform3D(Basis(up.cross(-side).normalized(), up, -side), ear - up * (PHONE_SIZE.y * 0.5 - 0.03))
+
+
+## The turn a hand bone is given so that its fingers lie along `along` and its palm faces `out` (skeleton space).
+## `f`: 0 his left hand, 1 his right. In the rest pose the palm faces the ground and the fingers point out to the side.
+func _hand_turned(f: int, along: Vector3, out: Vector3) -> Basis:
+	var side := "Left" if f == 0 else "Right"
+	var hb := skel.find_bone("mixamorig_%sHand" % side)
+	var rest := skel.get_bone_global_rest(hb)
+	var a0 := (skel.get_bone_global_rest(skel.find_bone("mixamorig_%sHandMiddle1" % side)).origin - rest.origin).normalized()
+	var o0 := (Vector3.DOWN - a0 * Vector3.DOWN.dot(a0)).normalized()
+	var a := along.normalized()
+	var o := (out - a * out.dot(a)).normalized()
+	return (Basis(a, o, a.cross(o)) * Basis(a0, o0, a0.cross(o0)).inverse() * rest.basis.orthonormalized()).orthonormalized()
+
+
+## How his hands hold the phone: for each hand [where its wrist goes (world), the turn of the hand (skeleton space),
+## how much]. Texting: both hands behind it, one to each side of its foot, palms to its back, fingers across it.
+## On a call: his left hand on its back, its fingers over the phone's rear edge.
+func _phone_hold() -> Array:
+	var out := [[Vector3.ZERO, Basis.IDENTITY, 0.0], [Vector3.ZERO, Basis.IDENTITY, 0.0]]
+	var texting := _phone_w * (1.0 - _phone_kind)
+	var calling := _phone_w * _phone_kind
+	if texting > 0.0 and calling <= 0.0:
+		var ph := _text_phone()
+		for f in 2:
+			var side := -1.0 if f == 0 else 1.0             # (the phone's own +X is toward his right hand)
+			var wrist := ph.origin + ph.basis.x * (side * PHONE_TEXT_HOLD.x) - ph.basis.y * PHONE_TEXT_HOLD.y - ph.basis.z * PHONE_TEXT_HOLD.z
+			out[f] = [skel.global_transform * wrist, _hand_turned(f, -ph.basis.x * side * 0.9 + ph.basis.y * 0.45, ph.basis.z), texting]
+	elif calling > 0.0:
+		var pc := _call_phone()
+		# (its own +X is toward the front of his head, its back faces out from the head)
+		var wrist2 := pc.origin + pc.basis.x * PHONE_CALL_HOLD.x - pc.basis.y * PHONE_CALL_HOLD.y - pc.basis.z * PHONE_CALL_HOLD.z
+		out[0] = [skel.global_transform * wrist2, _hand_turned(0, -pc.basis.x * 0.8 + pc.basis.y * 0.6, pc.basis.z), calling]
+	return out
+
+
 ## The phone, placed on the finished pose (after every correction).
 func _place_phones() -> void:
 	if _phone_box == null:
 		return
-	var hd: Array = _head_frame()
-	var turn: Basis = hd[1]
 	if _phone_box.visible:
-		# Texting: gripped in his right hand, the fingers round its back: its length runs across the hand (from the
-		# little finger up to the first finger and on), its width along the fingers, and its face is turned to his eyes.
-		var h: Array = _hand_frame(false)
-		var long: Vector3 = h[3]
-		var at: Vector3 = (h[0] as Vector3) + (h[1] as Vector3) * float(PHONE_IN_PALM[0]) + (h[2] as Vector3) * float(PHONE_IN_PALM[1]) + long * float(PHONE_IN_PALM[2])
-		var eyes: Vector3 = (hd[0] as Vector3) + turn * Vector3(0.0, 0.10, 0.09)
-		var to_eyes := eyes - at
-		var face := (to_eyes - long * to_eyes.dot(long)).normalized()
-		_phone_box.transform = Transform3D(Basis(long.cross(face).normalized(), long, face), at)
+		_phone_box.transform = _text_phone()
 	if _phone_box_l.visible:
-		# A call: its foot in the grip of his left hand, its top at his left ear, laid flat on the side of his head
-		# with its face to the head.
-		# (the take holds his left hand at his jaw, a hand's length short of his ear: the phone is set by his head, and
-		# his left wrist is brought to its foot by the arm IK: see _physics_process)
-		var side := (turn * Vector3(1.0, 0.0, 0.0)).normalized()                # out of his left ear
-		var ear: Vector3 = (hd[0] as Vector3) + turn * PHONE_EAR + side * (PHONE_SIZE.z * 0.5 + 0.004)
-		var up := (turn * Vector3(0.0, 0.75, -0.65)).normalized()               # from his mouth to his ear
-		up = (up - side * up.dot(side)).normalized()
-		var mid := ear - up * (PHONE_SIZE.y * 0.5 - 0.03)
-		_phone_box_l.transform = Transform3D(Basis(up.cross(-side).normalized(), up, -side), mid)
-		_call_wrist = skel.global_transform * (mid - up * (PHONE_SIZE.y * 0.5 + 0.035) + side * 0.04)
-		_call_wrist_ok = true
+		_phone_box_l.transform = _call_phone()
 
 
 ## Seconds into a loop at which the left foot is furthest forward (measured when the clip was baked).
@@ -1072,12 +1102,34 @@ func _physics_process(dt: float) -> void:
 			w[int(one[0])] = float(one[2])
 			(hands.get(&"hold_at") as Array)[int(one[0])] = one[1]
 			flat[int(one[0])] = one.size() > 3 and bool(one[3])     # a fourth entry: the hand is laid flat on the top
-		# on a call his left hand is brought to the phone at his ear (and turns as the take turns it)
+		# the phone: his wrists are brought to it and his hands turned to it (texting: both; a call: his left), and his
+		# fingers closed: behind it texting, round it on a call
 		var loose := [false, false]
-		if float(w[0]) <= 0.0 and _call_wrist_ok and _phone_w > 0.0 and _phone_kind > 0.0:
-			w[0] = _phone_w * _phone_kind
-			(hands.get(&"hold_at") as Array)[0] = _call_wrist
-			loose[0] = true
+		var turned := [false, false]
+		if _phone_w > 0.0 and float(w[0]) <= 0.0 and float(w[1]) <= 0.0:
+			var hold: Array = _phone_hold()
+			for f in 2:
+				if float(hold[f][2]) > 0.0:
+					(hands.get(&"hold_at") as Array)[f] = hold[f][0]
+					(hands.get(&"hold_basis") as Array)[f] = hold[f][1]
+					w[f] = float(hold[f][2])
+					turned[f] = true
+		hands.set(&"hold_turned", turned)
+		if _grip:
+			var calling := _phone_w * _phone_kind
+			var texting := _phone_w * (1.0 - _phone_kind)
+			_grip.set(&"w", [float(w[0]) if turned[0] else 0.0, float(w[1]) if turned[1] else 0.0])
+			_grip.set(&"deg", [[61.0, 60.0, 39.0] if calling >= texting else PHONE_TEXT_CURL, PHONE_TEXT_CURL])
+			# his thumbs: texting, on the lower part of its face, side by side (Yasin, 27 Nov: "fixed under the thumbs");
+			# on a call, his left thumb on the edge toward the front of his head
+			_grip.set(&"thumb_w", [float(w[0]) if turned[0] else 0.0, float(w[1]) if turned[1] else 0.0])
+			if calling >= texting:
+				var pc := _call_phone()
+				_grip.set(&"thumb_to", [pc.origin + pc.basis.x * (PHONE_SIZE.x * 0.5) - pc.basis.y * 0.02 + pc.basis.z * 0.006, Vector3.ZERO])
+			else:
+				var pt := _text_phone()
+				var low := pt.origin - pt.basis.y * 0.035 + pt.basis.z * (PHONE_SIZE.z * 0.5 + 0.008)
+				_grip.set(&"thumb_to", [low - pt.basis.x * 0.014, low + pt.basis.x * 0.014])
 		hands.set(&"hold_loose", loose)
 		hands.set(&"hold_w", w)
 		hands.set(&"hold_flat", flat)

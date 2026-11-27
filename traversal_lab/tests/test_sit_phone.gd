@@ -25,7 +25,7 @@ func ok(cond: bool, what: String) -> void:
 
 
 func _after() -> void:
-	for n: String in ["HeadTop_End", "Hips", "LeftHand", "RightHand", "Head", "LeftToeBase", "RightToeBase", "LeftLeg", "RightLeg", "LeftUpLeg", "RightUpLeg"]:
+	for n: String in ["LeftHandThumb4", "RightHandThumb4", "LeftHandMiddle4", "LeftHandIndex4", "HeadTop_End", "Hips", "LeftHand", "RightHand", "Head", "LeftToeBase", "RightToeBase", "LeftLeg", "RightLeg", "LeftUpLeg", "RightUpLeg"]:
 		J[n] = (skel.global_transform * skel.get_bone_global_pose(skel.find_bone("mixamorig_" + n))).origin
 
 
@@ -103,7 +103,19 @@ func _run() -> void:
 	var ph := phone(false)
 	var eyes: Vector3 = (J["Head"] as Vector3) + Vector3(0.0, 0.10, 0.0) + facing() * 0.09
 	var to_eyes: Vector3 = (eyes - (ph["at"] as Vector3)).normalized()
-	ok(bool(ph["shown"]) and (ph["at"] as Vector3).distance_to(J["RightHand"]) < 0.13 and (ph["face"] as Vector3).dot(to_eyes) > 0.70, "standing text: the phone is in his right hand (its middle %.2f m from the wrist), its lit face turned to his eyes (%.0f degrees off them)" % [(ph["at"] as Vector3).distance_to(J["RightHand"]), rad_to_deg(acos(clampf((ph["face"] as Vector3).dot(to_eyes), -1.0, 1.0)))])
+	ok(bool(ph["shown"]) and (ph["at"] as Vector3).distance_to(J["RightHand"]) < 0.14 and (ph["face"] as Vector3).dot(to_eyes) > 0.70, "standing text: the phone is in his right hand (its middle %.2f m from the wrist), its lit face turned to his eyes (%.0f degrees off them)" % [(ph["at"] as Vector3).distance_to(J["RightHand"]), rad_to_deg(acos(clampf((ph["face"] as Vector3).dot(to_eyes), -1.0, 1.0)))])
+	# (Yasin, 27 Nov: "cant we make the phone held in the middle of both hands during texting? like fixed under the thumbs")
+	var px: Vector3 = (ph["up"] as Vector3).cross(ph["face"] as Vector3).normalized()
+	var both_ok := true
+	var thumbs := ""
+	for tn: String in ["LeftHandThumb4", "RightHandThumb4"]:
+		var rel: Vector3 = (J[tn] as Vector3) - (ph["at"] as Vector3)
+		var over := rel.dot(ph["face"] as Vector3)
+		both_ok = both_ok and over > -0.005 and over < 0.035 and absf(rel.dot(px)) < 0.036 and absf(rel.dot(ph["up"] as Vector3)) < 0.074
+		thumbs += " %.3f" % over
+	var lw := (J["LeftHand"] as Vector3).distance_to(ph["at"])
+	var rw := (J["RightHand"] as Vector3).distance_to(ph["at"])
+	ok(both_ok and absf(lw - rw) < 0.03, "standing text: the phone is in the middle of both hands (wrists %.2f and %.2f m from its middle), both thumb tips over its face (%s m above it), inside its outline" % [lw, rw, thumbs])
 	keys["mz"] = -1.0
 	await ticks(150)
 	var pace := (body.get(&"hvel") as Vector3).length()
@@ -135,6 +147,10 @@ func _run() -> void:
 	var foot: Vector3 = (pc["at"] as Vector3) - (pc["up"] as Vector3) * 0.074
 	ok(bool(pc["shown"]) and off_head > 0.06 and off_head < 0.11 and tilt < 0.12 and absf(top_at.y - ear_at.y) < 0.04, "standing call: the phone lies flat on the side of his head at his ear (its ear end %.3f m out from the middle of his head, at ear height within %.3f m, its face %.0f degrees from upright along the head)" % [off_head, absf(top_at.y - ear_at.y), rad_to_deg(asin(clampf(tilt, 0.0, 1.0)))])
 	ok(foot.distance_to(J["LeftHand"]) < 0.09, "standing call: his left hand is on it (wrist %.3f m from its foot)" % foot.distance_to(J["LeftHand"]))
+	# (Yasin, 27 Nov: "make the fingers grab the phone properly during phone call")
+	var mid_tip: Vector3 = (J["LeftHandMiddle4"] as Vector3) - (pc["at"] as Vector3)
+	var thumb_tip: Vector3 = (J["LeftHandThumb4"] as Vector3) - (pc["at"] as Vector3)
+	ok(absf(mid_tip.dot(pc["up"] as Vector3)) < 0.085 and mid_tip.length() < 0.09 and thumb_tip.length() < 0.09, "standing call: his fingers are closed round it (the tip of his middle finger %.3f m and of his thumb %.3f m from its middle; it is 0.148 by 0.072 m)" % [mid_tip.length(), thumb_tip.length()])
 	ok(int(body.get(&"phone")) == 2 and ear < 0.32, "standing call: G brings the phone to his ear (left wrist %.2f m from his head joint)" % ear)
 	await tap("call")
 	await ticks(60)

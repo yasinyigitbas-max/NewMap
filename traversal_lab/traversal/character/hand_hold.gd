@@ -19,6 +19,12 @@ func _process_modification_with_delta(_dt: float) -> void:
 	var world := sk.global_transform.basis.orthonormalized()
 	for f in 2:
 		var g := sk.get_bone_global_pose(_hand[f])
+		if float(w[f]) > 0.0 and bool((place.get(&"hold_turned") as Array)[f]):
+			# turned to what it holds (the phone), whatever the take does with it
+			_on[f] = false
+			g.basis = g.basis.orthonormalized().slerp(((place.get(&"hold_basis") as Array)[f] as Basis).orthonormalized(), clampf(float(w[f]), 0.0, 1.0))
+			sk.set_bone_global_pose(_hand[f], g)
+			continue
 		if float(w[f]) <= 0.0 or bool((place.get(&"hold_loose") as Array)[f]):
 			_on[f] = false
 			continue
