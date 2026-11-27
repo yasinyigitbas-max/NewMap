@@ -132,6 +132,25 @@ How nothing breaks (the rules of the port):
       "scripts" after the C++ start file, the dll did not load on his PC. Known: the readout's key line now lies
       over the top edge of the height graph (one more line of text).
 
+## CARRYING AND THINGS IN THE HAND (27 Nov evening, his words; after the C++ port)
+
+His words: "we didnt add any of the carry moves yet, nor any combat moves... we are supposed to have a one hand
+briefcase or plastic bag carry and two handed box carry, , pick up from ground for both, also the npcs. after C++
+port is done, we need to add them in. we have new weapons on a new branch. logic behind them isnt tied yet, lets
+just make sure the look correct in player hand. also we got carry props too. copy the weapons and carry props here
+and get to work on those animations."
+
+- The props: the carry props (page J, `assets/coronado_kit/props/indoor/carry/`, scenes and grips in
+  `map_dc/coronado/city_kit/carry/`) were already here. The weapons (page G, `assets/coronado_kit/props/weapons/`,
+  eleven, `manifest_weapons.json`: origin = `grip_r`, the right fist; `grip_l`, `muzzle`; `hold` names the pose
+  family) were copied 27 Nov from the branch `ccr-744faae9-jbjc01`, additive.
+- [ ] one-hand carry: briefcase or plastic bag, standing, walking, running; put down / pick up from the ground.
+- [ ] two-hand carry: a box, the same.
+- [ ] the same on the NPCs.
+- [ ] each weapon in the player's hand, looking right (no logic behind them yet: the look only).
+- [ ] combat moves: NOT asked for yet beyond being named; ask him what the set is before building any.
+- New code for these is written in C++ from the start (his ground rule), with a script only where a test needs one.
+
 ## NPCs (27 Nov, started at his word; the ragdolls still wait for his go)
 
 His words: "i need this system to apply to every npc"; "i dont think all the npcs need the full move set, they just

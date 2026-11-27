@@ -1,0 +1,445 @@
+{
+ "pistol_service": {
+  "file_base": "prop_pistol_service",
+  "batch": "weapons",
+  "kind": "handgun",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "hand",
+  "tiers": {
+   "near": 272
+  },
+  "high_tris": 2956,
+  "length": 0.224,
+  "width": 0.036,
+  "height": 0.137,
+  "atlas_page": "props_g_*",
+  "px_per_m_colour": 657.0,
+  "col": 1,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
+   "points": {
+    "grip_r": [
+     0,
+     0,
+     0
+    ],
+    "grip_l": [
+     -0.019,
+     -0.01,
+     -0.004
+    ]
+   },
+   "hold": "pistol"
+  },
+  "muzzle": [
+   0,
+   0.0575,
+   0.1795
+  ],
+  "note": "full-size hammer-fired service pistol: blued steel slide, black alloy frame, walnut grips"
+ },
+ "pistol_polymer": {
+  "file_base": "prop_pistol_polymer",
+  "batch": "weapons",
+  "kind": "handgun",
+  "class": "small",
+  "budget": 600,
+  "conds": [
+   "clean"
+  ],
+  "mount": "hand",
+  "tiers": {
+   "near": 236
+  },
+  "high_tris": 2366,
+  "length": 0.203,
+  "width": 0.03,
+  "height": 0.131,
+  "atlas_page": "props_g_*",
+  "px_per_m_colour": 657.0,
+  "col": 1,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
+   "points": {
+    "grip_r": [
+     0,
+     0,
+     0
+    ],
+    "grip_l": [
+     -0.018,
+     -0.01,
+     -0.004
+    ]
+   },
+   "hold": "pistol"
+  },
+  "muzzle": [
+   0,
+   0.0585,
+   0.16
+  ],
+  "note": "compact striker-fired polymer pistol, 9 mm class (Glock-type silhouette, generic)"
+ },
+ "rifle": {
+  "file_base": "prop_rifle",
+  "batch": "weapons",
+  "kind": "rifle",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "hand",
+  "tiers": {
+   "near": 492
+  },
+  "high_tris": 4150,
+  "length": 0.915,
+  "width": 0.049,
+  "height": 0.29,
+  "atlas_page": "props_g_*",
+  "px_per_m_colour": 657.0,
+  "col": 1,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
+   "points": {
+    "grip_r": [
+     0,
+     0,
+     0
+    ],
+    "grip_l": [
+     0,
+     0.056,
+     0.363
+    ]
+   },
+   "hold": "rifle"
+  },
+  "muzzle": [
+   0,
+   0.068,
+   0.613
+  ],
+  "note": "flat-top carbine with free-float handguard, flip-up sights, tan 30-round magazine"
+ },
+ "shotgun": {
+  "file_base": "prop_shotgun",
+  "batch": "weapons",
+  "kind": "shotgun",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "hand",
+  "tiers": {
+   "near": 380
+  },
+  "high_tris": 5024,
+  "length": 1.0,
+  "width": 0.046,
+  "height": 0.202,
+  "atlas_page": "props_g_*",
+  "px_per_m_colour": 657.0,
+  "col": 1,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
+   "points": {
+    "grip_r": [
+     0,
+     0,
+     0
+    ],
+    "grip_l": [
+     0,
+     0.022,
+     0.4
+    ]
+   },
+   "hold": "rifle"
+  },
+  "muzzle": [
+   0,
+   0.062,
+   0.7
+  ],
+  "note": "pump-action 12 gauge, walnut stock and grooved forend, blued steel"
+ },
+ "shotgun_sawn": {
+  "file_base": "prop_shotgun_sawn",
+  "batch": "weapons",
+  "kind": "shotgun",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "hand",
+  "tiers": {
+   "near": 344
+  },
+  "high_tris": 3124,
+  "length": 0.497,
+  "width": 0.046,
+  "height": 0.143,
+  "atlas_page": "props_g_*",
+  "px_per_m_colour": 657.0,
+  "col": 1,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
+   "points": {
+    "grip_r": [
+     0,
+     0,
+     0
+    ],
+    "grip_l": [
+     0,
+     0.022,
+     0.334
+    ]
+   },
+   "hold": "pistol_two_hand"
+  },
+  "muzzle": [
+   0,
+   0.062,
+   0.42
+  ],
+  "note": "the pump shotgun cut down: barrel and tube shortened, stock cut to a rough pistol grip"
+ },
+ "smg": {
+  "file_base": "prop_smg",
+  "batch": "weapons",
+  "kind": "smg",
+  "class": "medium",
+  "budget": 1200,
+  "conds": [
+   "clean"
+  ],
+  "mount": "hand",
+  "tiers": {
+   "near": 448
+  },
+  "high_tris": 3074,
+  "length": 0.454,
+  "width": 0.054,
+  "height": 0.274,
+  "atlas_page": "props_g_*",
+  "px_per_m_colour": 657.0,
+  "col": 1,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
+   "points": {
+    "grip_r": [
+     0,
+     0,
+     0
+    ],
+    "grip_l": [
+     0,
+     0.005,
+     0.1073
+    ]
+   },
+   "hold": "rifle"
+  },
+  "muzzle": [
+   0,
+   0.09,
+   0.3093
+  ],
+  "note": "compact 9 mm sub-machine gun, magazine ahead of the grip (support hand on the magwell), collapsed wire stock"
+ },
+ "bat": {
+  "file_base": "prop_bat",
+  "batch": "weapons",
+  "kind": "melee",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "hand",
+  "tiers": {
+   "near": 240
+  },
+  "high_tris": 6960,
+  "length": 0.838,
+  "width": 0.067,
+  "height": 0.064,
+  "atlas_page": "props_g_*",
+  "px_per_m_colour": 657.0,
+  "col": 1,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
+   "points": {
+    "grip_r": [
+     0,
+     0,
+     0
+    ],
+    "grip_l": [
+     0,
+     0,
+     -0.09
+    ]
+   },
+   "hold": "two_hand_swing"
+  },
+  "muzzle": null,
+  "note": "wooden baseball bat, 84 cm, taped handle, stained barrel"
+ },
+ "knife": {
+  "file_base": "prop_knife",
+  "batch": "weapons",
+  "kind": "melee",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "hand",
+  "tiers": {
+   "near": 172
+  },
+  "high_tris": 808,
+  "length": 0.24,
+  "width": 0.018,
+  "height": 0.032,
+  "atlas_page": "props_g_*",
+  "px_per_m_colour": 657.0,
+  "col": 1,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
+   "points": {
+    "grip_r": [
+     0,
+     0,
+     0
+    ]
+   },
+   "hold": "one_hand_melee"
+  },
+  "muzzle": null,
+  "note": "fixed-blade utility knife, 12 cm satin blade, rubber handle"
+ },
+ "golf_club": {
+  "file_base": "prop_golf_club",
+  "batch": "weapons",
+  "kind": "melee",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "hand",
+  "tiers": {
+   "near": 170
+  },
+  "high_tris": 1954,
+  "length": 0.993,
+  "width": 0.094,
+  "height": 0.042,
+  "atlas_page": "props_g_*",
+  "px_per_m_colour": 657.0,
+  "col": 1,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
+   "points": {
+    "grip_r": [
+     0,
+     0,
+     0
+    ],
+    "grip_l": [
+     0,
+     0,
+     -0.08
+    ]
+   },
+   "hold": "two_hand_swing"
+  },
+  "muzzle": null,
+  "note": "7-iron: chrome shaft, black rubber grip, satin head"
+ },
+ "crowbar": {
+  "file_base": "prop_crowbar",
+  "batch": "weapons",
+  "kind": "melee",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "hand",
+  "tiers": {
+   "near": 140
+  },
+  "high_tris": 880,
+  "length": 0.554,
+  "width": 0.022,
+  "height": 0.109,
+  "atlas_page": "props_g_*",
+  "px_per_m_colour": 657.0,
+  "col": 1,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
+   "points": {
+    "grip_r": [
+     0,
+     0,
+     0
+    ],
+    "grip_l": [
+     0,
+     0,
+     -0.09
+    ]
+   },
+   "hold": "one_hand_melee"
+  },
+  "muzzle": null,
+  "note": "60 cm hex wrecking bar, red paint worn to steel"
+ },
+ "molotov": {
+  "file_base": "prop_molotov",
+  "batch": "weapons",
+  "kind": "thrown",
+  "class": "tiny",
+  "budget": 300,
+  "conds": [
+   "clean"
+  ],
+  "mount": "hand",
+  "tiers": {
+   "near": 204
+  },
+  "high_tris": 2516,
+  "length": 0.267,
+  "width": 0.071,
+  "height": 0.067,
+  "atlas_page": "props_g_*",
+  "px_per_m_colour": 657.0,
+  "col": 1,
+  "grips": {
+   "space": "glTF / Godot local, metres, Y up, muzzle / business end +Z, origin = grip_r",
+   "points": {
+    "grip_r": [
+     0,
+     0,
+     0
+    ]
+   },
+   "hold": "throwable"
+  },
+  "muzzle": null,
+  "note": "amber glass bottle with an aged printed label and a rag in the neck (the flame is a game effect)"
+ }
+}
