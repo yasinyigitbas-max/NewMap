@@ -85,6 +85,12 @@ func _ready() -> void:
 		traverse.name = "Traverse"
 		traverse.set(&"body", body)
 		body.add_child(traverse)
+		# things in his hands (27 Nov; C++ only: there is no script version)
+		if not ("--script" in OS.get_cmdline_user_args()) and ClassDB.class_exists(&"TravHold") and character != null and character.get_script() == null:
+			var hold: Node = ClassDB.instantiate(&"TravHold")
+			hold.name = "Hold"
+			hold.set(&"body", body)
+			body.add_child(hold)
 	if body.has_method(&"can_stand"):
 		# Stage 7: the detection record, measured and drawn (nothing is played from it yet)
 		detect = DetectView.new()

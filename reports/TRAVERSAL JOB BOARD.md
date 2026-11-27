@@ -210,6 +210,21 @@ and get to work on those animations."
       closed on anything, the left hand on a forend, any of it moving.
   - Also kept: `tools/traversal/view_takes.gd` (six moments of any takes of the library on his body) and
     `tools/traversal/npc_cast_run.gd` (the civilian run of one body; `-- --npc=<name>`).
+  - (trav99) THINGS IN THE HAND, FIRST VERSION, IN THE LAB (C++ only: `native/traversal/src/trav_hold.*`, the arm
+    layer in `trav_character.*`). Keys: 0 nothing, 1 briefcase, 2 plastic bag, 3 box, 4 pistol, 5 rifle, 6 shotgun;
+    F held = aimed (long guns). What it does: the arms of a hold take over his movement (right arm for a bag, both
+    for a box or a gun); the thing placed at his palm each tick; fingers closed with the study's everyday grip;
+    both palms moved onto a box's side points; the left hand turned palm up under a long gun's forend (as the
+    texting hold turns the hands). With nothing held the player is the same as the scripts byte for byte.
+    His words on it, 27 Nov: "other than brief case being held sideways, they look good"; "the hands dig into the
+    box"; "brief case and bag both look like they are attached to the back of his hands"; "same for the weapons";
+    "it lands on the side of that hand instead of in the palm"; "yeah exactly like the phone hold during texting";
+    "box is okay, just for the rifle"; "rifle looks great now, make sure it translates to every rifle hold when
+    moving idle and aimin i mean".
+    OPEN: the rifle aimed points off to his left (only the arms come from the aim take, not the turn of his
+    trunk); the pistol is rolled about 45 degrees; the bag and the briefcase not yet shown to him close up after the
+    palm fix; every long gun (shotgun, smg, sawn-off) to be looked at standing, walking, running and aimed; the
+    shot, the reload, aiming a pistol, picking up and putting down, the NPCs; no test of its own yet.
   - The plan for the code (C++ only): the body takes new keys from the tape (which thing is in the hand, pick up
     / put down, aim, fire, reload); the character gets one more upper-body layer after the phone's (a filtered
     blend: arms and trunk from the hold take, legs from the movement as it is); the prop is a child placed at

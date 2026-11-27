@@ -24,6 +24,9 @@ func _ready() -> void:
 	_action(&"tl_act", [KEY_E])
 	_action(&"tl_text", [KEY_T])       # the phone: texting (Yasin, 27 Nov)
 	_action(&"tl_call", [KEY_G])       # the phone: a call
+	_action(&"tl_aim", [KEY_F])        # a gun: aimed while held (27 Nov)
+	for k in 7:
+		_action(StringName("tl_item%d" % k), [KEY_0 + k])     # what is in his hands: 0 nothing, 1 to 6 (trav_hold.cpp ITEMS)
 	_axis(&"tl_left", JOY_AXIS_LEFT_X, -1.0)
 	_axis(&"tl_right", JOY_AXIS_LEFT_X, 1.0)
 	_axis(&"tl_fwd", JOY_AXIS_LEFT_Y, -1.0)
@@ -48,6 +51,7 @@ func _axis(name: StringName, axis: JoyAxis, value: float) -> void:
 
 ## For the Stage 6 test ("Stage 1 tests pass in crouch"): every sample of a replayed tape is given with crouch held.
 var hold_crouch := false
+var live_item := 0               # what is in his hands (the number keys)
 
 
 ## Called once per physics tick by the body.
@@ -66,6 +70,11 @@ func sample() -> Dictionary:
 	var s := {"mx": v.x, "mz": v.y, "yaw": live_yaw, "run": Input.is_action_pressed(&"tl_run"),
 			"jump": Input.is_action_pressed(&"tl_jump"), "crouch": Input.is_action_pressed(&"tl_crouch"),
 			"act": Input.is_action_pressed(&"tl_act"), "text": Input.is_action_pressed(&"tl_text"), "call": Input.is_action_pressed(&"tl_call")}
+	for k in 7:
+		if Input.is_action_just_pressed(StringName("tl_item%d" % k)):
+			live_item = k
+	s["item"] = live_item
+	s["aim"] = Input.is_action_pressed(&"tl_aim")
 	if mode == Mode.RECORD:
 		tape.append(s)
 	return s
