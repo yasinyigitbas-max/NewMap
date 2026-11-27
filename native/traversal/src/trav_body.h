@@ -95,7 +95,7 @@ namespace godot {
 	X(move_landing) X(move_step) X(move_base) X(move_hand) X(move_soft) X(_wish_was_moving) X(narrow) X(stick_held) \
 	X(squeeze) X(stick_wish) X(squeeze_side) X(squeeze_w) X(ledge_wall) X(ledge_out) X(squeeze_mid) \
 	X(squeeze_across) X(_gap_mid) X(_gap_n) X(radius) X(stick_dir) X(cover_drop) X(act_held) X(act_now) X(phone) \
-	X(auto_on) X(auto_to) X(_text_was) X(_call_was) X(run_asked) X(crouched)
+	X(auto_on) X(auto_to) X(_text_was) X(_call_was) X(run_asked) X(crouched) X(last_sample)
 
 class TravBody : public CharacterBody3D {
 	GDCLASS(TravBody, CharacterBody3D)
@@ -108,6 +108,7 @@ public:
 #undef X
 
 	Variant tape;
+	Dictionary last_sample;         // the keys of this tick, as read from the tape (for the things he holds: trav_hold)
 	int state = AIR;
 	Vector3 hvel;
 	double vy = 0.0;

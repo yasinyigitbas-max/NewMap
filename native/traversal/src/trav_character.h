@@ -5,6 +5,7 @@
 #pragma once
 
 #include <godot_cpp/classes/animation_library.hpp>
+#include <godot_cpp/classes/animation_node_animation.hpp>
 #include <godot_cpp/classes/animation_node_blend_tree.hpp>
 #include <godot_cpp/classes/animation_player.hpp>
 #include <godot_cpp/classes/animation_tree.hpp>
@@ -161,6 +162,12 @@ protected:
 	double _beam_arms = 0.0;
 	bool _low_was = false;
 	int _head_i = -1;
+	// Things in the hand (trav_hold.cpp sets these each tick; NOT in the script version): the arms of a hold take
+	// laid over the movement. [0] = the right arm only (a bag, a briefcase); [1] = both arms (a box, a gun).
+	Ref<AnimationNodeAnimation> _hold_anim[2];
+	String hold_take[2];
+	double hold_w[2] = { 0.0, 0.0 };
+	double hold_t[2] = { 0.0, 0.0 };
 
 	Ref<AnimationNodeBlendTree> _make_tree();
 	void _head_frame(Vector3 &r_at, Basis &r_turn);

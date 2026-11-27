@@ -72,6 +72,7 @@ static inline void take(Vector3 &d, const Variant &v) { d = (Vector3)v; }
 static inline void take(String &d, const Variant &v) { d = (String)v; }
 static inline void take(Array &d, const Variant &v) { d = (Array)v; }
 static inline void take(Callable &d, const Variant &v) { d = (Callable)v; }
+static inline void take(Dictionary &d, const Variant &v) { d = (Dictionary)v; }
 static inline void take(Variant &d, const Variant &v) { d = v; }
 
 bool TravBody::_get(const StringName &p_name, Variant &r_ret) const {
@@ -596,6 +597,7 @@ void TravBody::_physics_process(double dt) {
 	if (tape_o) {
 		s = tape_o->call("sample");
 	}
+	last_sample = s;
 	bool act = (bool)s.get("act", false);
 	act_now = act && !act_held;
 	act_held = act;

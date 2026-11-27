@@ -204,6 +204,26 @@ bool TravCharacter::_set(const StringName &p_name, const Variant &p_value) {
 		arm_open_deg = p_value;
 		return true;
 	}
+	for (int k = 0; k < 2; k++) {
+		const char *pre = k == 0 ? "hold_r_" : "hold_b_";
+		if (n == String(pre) + "take") {
+			if (hold_take[k] != (String)p_value) {
+				hold_take[k] = p_value;
+				if (_hold_anim[k].is_valid()) {
+					_hold_anim[k]->set_animation(hold_take[k]);
+				}
+			}
+			return true;
+		}
+		if (n == String(pre) + "w") {
+			hold_w[k] = p_value;
+			return true;
+		}
+		if (n == String(pre) + "t") {
+			hold_t[k] = p_value;
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -539,7 +559,33 @@ Ref<AnimationNodeBlendTree> TravCharacter::_make_tree() {
 	bt->add_node("phone", phone, Vector2(1200, 200));
 	bt->connect_node("phone", 0, "act");
 	bt->connect_node("phone", 1, "phone_pick");
-	bt->connect_node("output", 0, "phone");
+	// Things in the hand (27 Nov, Yasin: "one hand briefcase or plastic bag carry and two handed box carry"; the
+	// study: "Bone filters on blend nodes give upper and lower body layering"): the arms of a hold take over the
+	// movement as it is; the legs and the trunk stay the movement's own. With nothing held both weights are 0.
+	const char *last = "phone";
+	for (int k = 0; k < 2; k++) {
+		_hold_anim[k] = clip_node(k == 0 ? "Walking_With_Shopping_Bag" : "Jogging_With_Box");
+		StringName an = k == 0 ? "hold_r_anim" : "hold_b_anim";
+		StringName sn = k == 0 ? "hold_r_seek" : "hold_b_seek";
+		StringName hn = k == 0 ? "hold_r" : "hold_b";
+		bt->add_node(an, _hold_anim[k], Vector2(1200, 500 + k * 200));
+		bt->add_node(sn, fresh<AnimationNodeTimeSeek>(), Vector2(1400, 500 + k * 200));
+		bt->connect_node(sn, 0, an);
+		Ref<AnimationNodeBlend2> hb = fresh<AnimationNodeBlend2>();
+		hb->set_filter_enabled(true);
+		for (int b = 0; b < skel->get_bone_count(); b++) {
+			String bn = skel->get_bone_name(b);
+			bool arm = bn.contains("Arm") || bn.contains("Hand") || bn.contains("Shoulder");
+			if (arm && (k == 1 || bn.contains("Right"))) {
+				hb->set_filter_path(NodePath(vformat("%s:%s", SKEL, bn)), true);
+			}
+		}
+		bt->add_node(hn, hb, Vector2(1600, 200 + k * 200));
+		bt->connect_node(hn, 0, last);
+		bt->connect_node(hn, 1, sn);
+		last = k == 0 ? "hold_r" : "hold_b";
+	}
+	bt->connect_node("output", 0, last);
 	return bt;
 }
 
@@ -1038,12 +1084,21 @@ void TravCharacter::_physics_process(double dt) {
 	int ph = (int)(int64_t)body->get("phone");
 	bool seated = _mode == "move" && (_act == "sit_idle" || _act == "sit_down" || _act == "sit_up");
 	bool phone_ok = ph > 0 && (seated || (_mode == "ground" && !(bool)body->get("crouched") && (int)(int64_t)body->get("narrow") == 0 && (int)(int64_t)body->get("squeeze") < 2));
+	phone_ok = phone_ok && hold_w[0] <= 0.0 && hold_w[1] <= 0.0;       // (not with something else in his hands)
 	_phone_w = move_toward(_phone_w, phone_ok ? 1.0 : 0.0, dt / PHONE_FADE);
 	if (ph > 0 && _phone_w < 0.05) {
 		_phone_kind = (double)(ph - 1);
 	}
 	_phone_kind = move_toward(_phone_kind, ph > 0 ? (double)(ph - 1) : _phone_kind, dt / PHONE_FADE);
 	tree->set("parameters/phone/blend_amount", _phone_w);
+	tree->set("parameters/hold_r/blend_amount", hold_w[0]);
+	tree->set("parameters/hold_b/blend_amount", hold_w[1]);
+	if (hold_w[0] > 0.0) {
+		tree->set("parameters/hold_r_seek/seek_request", hold_t[0]);
+	}
+	if (hold_w[1] > 0.0) {
+		tree->set("parameters/hold_b_seek/seek_request", hold_t[1]);
+	}
 	tree->set("parameters/phone_pick/blend_amount", _phone_kind);
 	if (_phone_box) {
 		_phone_box->set_visible(_phone_w > 0.5 && _phone_kind < 0.5);

@@ -9,6 +9,7 @@
 #include "trav_hand_place.h"
 #include "trav_mods.h"
 #include "trav_npc.h"
+#include "trav_hold.h"
 #include "trav_interact.h"
 #include "trav_traverse.h"
 
@@ -37,6 +38,7 @@ static void trav_init(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(TravNpcCharacter);
 	GDREGISTER_CLASS(TravTraverse);
 	GDREGISTER_CLASS(TravInteract);
+	GDREGISTER_CLASS(TravHold);
 }
 
 static void trav_term(ModuleInitializationLevel p_level) {}
