@@ -109,8 +109,20 @@ How nothing breaks (the rules of the port):
       (5) a fresh container: `pip install scons`, clone godot-cpp branch 4.5 into `OUT/native_tools/godot-cpp`,
       `scons -j4 platform=linux arch=x86_64 target=template_debug` (25 minutes), then `build.sh linux`, then
       `godot --headless --path traversal_lab --import` once so the lab sees the library.
-- [ ] d. The traversal moves.
-- [ ] e. Doors, sitting, the phone, the car, cover.
+- [x] d. (trav93) The traversal moves in C++ (`trav_traverse.*`, TravTraverse): the same as the script byte for
+      byte, the plan of every move included. Its constants are made from the script by a tool (`*_consts.inc`,
+      `*_ctor.inc`, `*_get.inc`), not copied by hand.
+- [x] e. (trav94) Doors, sitting, the car, cover in C++ (`trav_interact.*`, TravInteract): the same byte for byte.
+      The parity proof has a fourth run for it, `acts` (every station with the act key pressed on the way: 24 moves
+      on doors, seats, the car and cover, 50 climbs): 203,200 ticks in all.
+      FOUND by that run, in the SCRIPT (not changed, it is the reference; tell Yasin): walking at a wall whose top
+      cannot be seen (under a ceiling) traverse.gd line 736 reads `rec["thin"]`, which such a record does not have:
+      an error line each tick in the test runs; in the exported game it reads nothing and goes on. Nothing is begun
+      either way; only the `refused` text differs. The C++ does as the script does in the tests.
+      TRAP for the next translations: a C++ `dict["key"]` on a missing key puts the key in; the script stops with
+      an error instead. Where a key may be missing, ask `has` first.
+- Still scripts after this: the lab itself (main.gd: camera, course, readout, the input tape) and the test props
+  (the door, the car, the seats). Every part of the player's and the NPCs' movement is in C++ behind `-- --native`.
 - [x] f. (trav92) The NPC fitting in C++ (`trav_npc.*`): the same as the script byte for byte on npc_04 and npc_03
       (`EXTRA="--npc=npc_04" bash tools/traversal/parity.sh <folder>`).
 - [ ] His play-test of the C++ version; then, at his word, C++ becomes the default.

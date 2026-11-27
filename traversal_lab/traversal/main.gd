@@ -75,7 +75,8 @@ func _ready() -> void:
 	if body.has_method(&"begin_move"):
 		# Stage 8 onward: the traversal moves
 		# (before the traversal moves, so that a door he walks at is opened, not taken for a wall)
-		interact = Interact.new()
+		# (`-- --native`: doors, sitting, the car and cover translated to C++, native/traversal)
+		interact = ClassDB.instantiate(&"TravInteract") if ("--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(&"TravInteract")) else Interact.new()
 		interact.name = "Interact"
 		interact.set(&"body", body)
 		body.add_child(interact)

@@ -501,6 +501,12 @@ bool TravTraverse::_try_step_up(const Vector3 &v, const Vector3 &wish) {
 	if (top > F(ON_BAND[1]) + MEASURED_WITHIN && top <= F(MANTLE_BAND[1]) + MEASURED_WITHIN && !(bool)rec["thin"]) {
 		return _try_mantle(v, wish, rec);
 	}
+	// (A wall whose top cannot be seen, under a ceiling, has no "thin" in its record. The script stops here on it with
+	// an error and hands back false; its exported game reads nothing for it, goes on, and hands back false further
+	// down with `refused` set. Nothing is begun either way. This does as the script run by the tests does.)
+	if (!rec.has("thin")) {
+		return false;
+	}
 	if (!(bool)rec["thin"] && top > F(WALLRUN_BAND[0]) + MEASURED_WITHIN && top <= F(WALLRUN_BAND[1]) + MEASURED_WITHIN && D(wish.length()) > F(body->get("WALK")) + 0.1 && D(v.length()) > RUN_FROM) {
 		if (_try_wallrun(v, wish, rec)) {
 			return true;

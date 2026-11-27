@@ -54,6 +54,9 @@ func _run() -> void:
 	var trav: Node = lab.get(&"traverse")
 	if trav != null:
 		print("moves are ", trav.get_class(), "  script: ", trav.get_script() != null)
+	var inter: Node = lab.get(&"interact")
+	if inter != null:
+		print("interact is ", inter.get_class(), "  script: ", inter.get_script() != null)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_n
 	var st: Array = ((lab.get(&"course") as Node3D).get(&"stations") as Array) + ((lab.get(&"course") as Node3D).get(&"extras") as Array)
@@ -63,8 +66,13 @@ func _run() -> void:
 	var names := ["state", "hvel", "vy", "ground_y", "narrow", "squeeze", "stairs", "terrain", "spot_total", "radius", "jump_timer", "land_hold", "crouched", "stair_tread", "grade", "phone", "_wish", "squeeze_side", "air_time", "move_clip_t"]
 	var lanes := "--lanes" in OS.get_cmdline_user_args()
 	var no_act := "--noact" in OS.get_cmdline_user_args()
+	# `--acts`: every station walked along its lane with the act key pressed on the way (cover against what is ahead,
+	# the seats, the car), and again later (out of it); the text key between
+	var acts := "--acts" in OS.get_cmdline_user_args()
 	if lanes:
 		ticks = st.size() * 4 * 300
+	if acts:
+		ticks = st.size() * 1200
 	for t in ticks:
 		if lanes:
 			if t % 300 == 0:
@@ -78,6 +86,23 @@ func _run() -> void:
 				keys["jump"] = (t % 300) % 70 < 4
 			if (t % 300) == 200:
 				keys["mz"] = 1.0            # and back the way he came
+		elif acts:
+			# two goes at each station: the act key after 1.5 s of walking, and after 3 s
+			var at_t := t % 600
+			var press := 90 if (t / 600) % 2 == 0 else 180
+			if at_t == 0:
+				var s3: Dictionary = st[(t / 1200) % st.size()]
+				lab.call(&"place", s3["start"])
+				body.rotation.y = 0.0
+				body.set(&"phone", 0)
+				keys = {"mx": 0.0, "mz": -1.0, "yaw": 0.0, "run": false, "jump": false, "crouch": false, "act": false, "text": false, "call": false}
+				hold = 100000
+			keys["act"] = at_t == press or at_t == press + 330
+			# (the stick let go once the key is pressed, so that he is walked to the seat, the car or the cover;
+			# then held along the wall for a second; and held again at the end, to walk on)
+			keys["mz"] = -1.0 if at_t <= press else (1.0 if at_t > press + 380 else 0.0)
+			keys["mx"] = 1.0 if (at_t > press + 200 and at_t < press + 260) else 0.0
+			keys["text"] = (t / 600) % 2 == 1 and at_t == press + 280
 		elif t % 600 == 0:
 			var s: Dictionary = st[rng.randi_range(0, st.size() - 1)]
 			lab.call(&"place", s["start"])
@@ -125,11 +150,20 @@ func _run() -> void:
 			line.append(float(String(trav.get(&"refused")).hash()))
 			_add_any(line, trav.get(&"_plan"))
 			_add_any(line, trav.get(&"record"))
+		# doors, sitting, the car, cover: the same of them
+		if inter != null:
+			line.append(float(int(inter.get(&"plays"))))
+			for n2: String in ["last", "in_cover", "cover_phase", "sit_phase"]:
+				line.append(float(String(inter.get(n2)).hash()))
+			line.append(1.0 if bool(inter.get(&"in_car")) else 0.0)
+			line.append(1.0 if bool(inter.get(&"seated")) else 0.0)
+			_add_any(line, inter.get(&"_plan"))
 		f.store_var(line)
 		if keys["jump"] and hold < 5:
 			keys["jump"] = false
 	f.close()
 	print("written ", ticks, " ticks")
+	print("moves begun: ", (int(trav.get(&"plays")) if trav != null else -1), " climbing and the like, ", (int(inter.get(&"plays")) if inter != null else -1), " on doors, seats, cars and cover")
 	quit()
 
 
@@ -165,6 +199,9 @@ func _add_any(line: PackedFloat64Array, v: Variant) -> void:
 		line.append((v as Vector3).x); line.append((v as Vector3).y); line.append((v as Vector3).z)
 	elif v is String or v is StringName:
 		line.append(float(String(v).hash()))
+	elif v is PackedFloat32Array:
+		line.append(float((v as PackedFloat32Array).size()))
+		line.append(float(hash((v as PackedFloat32Array).to_byte_array()) & 0xFFFFFF))
 	elif v is bool or v is int or v is float:
 		line.append(float(typeof(v))); line.append(float(v))
 	else:
