@@ -225,6 +225,25 @@ and get to work on those animations."
     trunk); the pistol is rolled about 45 degrees; the bag and the briefcase not yet shown to him close up after the
     palm fix; every long gun (shotgun, smg, sawn-off) to be looked at standing, walking, running and aimed; the
     shot, the reload, aiming a pistol, picking up and putting down, the NPCs; no test of its own yet.
+  - (trav100) AIM, SHOT, RELOAD, PUT DOWN / PICK UP, THE FIST FIGHT, in the lab (C++ only, `trav_hold.*`).
+    Keys: 0 to 9 what is in his hands (1 briefcase, 2 bag, 3 box, 4 pistol, 5 rifle, 6 shotgun, 7 smg, 8 sawn-off,
+    9 fists); F aim; X a shot, or a punch (F+X the combination); B reload, or jab and elbow; Q put down, or with
+    empty hands pick up the nearest thing on the ground; H be hit. The readout lists them.
+    How: aimed, a long gun's butt is put on his right shoulder, level, pointing the way he faces, and both hands
+    are laid on it (his words: "rifle goes into his face when aiming ... place the butt of the rifle onto his
+    shoulder and place hands according to that"); the left hand takes the forend only as far along as his arm
+    reaches (reaching for the forend's own point bent his whole trunk forward); a pistol aimed is at his eye, both
+    hands on it; a shot is a kick of the gun and a flash at its muzzle; reload is his own Mixamo takes' arms;
+    put down / pick up / punches / hits are moves on the spot begun on the body (`_spot`), the thing leaving or
+    coming into his hands at the moment the take's hands are lowest; he is brought to where the take picks it
+    up from (the study's "slide and turn the body over a short fixed time").
+    The fight's set (his body's own Mixamo takes; he did not name it): the boxing idle as the stance (arms only),
+    cross, lead hook, rear hook, a combination, jab and elbow; being hit: light left / right, medium, body, big
+    left / right. In the library but not used yet: Fight_Side_Step, Fight_Walk_Back, Fight_Idle_Still.
+    SEEN IN FRAMES: all of it but the jab and elbow, and guns 6 to 8 aimed. KNOWN ROUGH: a box settles the last
+    centimetres after he lets go; picking up, the hands are not solved onto the thing before the grip; aimed, the
+    rifle's left hand is back by the magazine; in the stance only the arms guard; nothing of this on the NPCs;
+    no test of its own.
   - The plan for the code (C++ only): the body takes new keys from the tape (which thing is in the hand, pick up
     / put down, aim, fire, reload); the character gets one more upper-body layer after the phone's (a filtered
     blend: arms and trunk from the hold take, legs from the movement as it is); the prop is a child placed at

@@ -25,8 +25,12 @@ func _ready() -> void:
 	_action(&"tl_text", [KEY_T])       # the phone: texting (Yasin, 27 Nov)
 	_action(&"tl_call", [KEY_G])       # the phone: a call
 	_action(&"tl_aim", [KEY_F])        # a gun: aimed while held (27 Nov)
-	for k in 7:
-		_action(StringName("tl_item%d" % k), [KEY_0 + k])     # what is in his hands: 0 nothing, 1 to 6 (trav_hold.cpp ITEMS)
+	_action(&"tl_fire", [KEY_X])       # a gun: a shot; his fists: a punch (with F held: the combination)
+	_action(&"tl_reload", [KEY_B])     # a gun: reload; his fists: jab and elbow
+	_action(&"tl_drop", [KEY_Q])       # a bag, a briefcase, a box: put it down; with empty hands: pick up the nearest
+	_action(&"tl_hit", [KEY_H])        # be hit (for looking at the reactions)
+	for k in 10:
+		_action(StringName("tl_item%d" % k), [KEY_0 + k])     # what is in his hands: 0 nothing, 1 to 9 (trav_hold.cpp ITEMS)
 	_axis(&"tl_left", JOY_AXIS_LEFT_X, -1.0)
 	_axis(&"tl_right", JOY_AXIS_LEFT_X, 1.0)
 	_axis(&"tl_fwd", JOY_AXIS_LEFT_Y, -1.0)
@@ -70,11 +74,15 @@ func sample() -> Dictionary:
 	var s := {"mx": v.x, "mz": v.y, "yaw": live_yaw, "run": Input.is_action_pressed(&"tl_run"),
 			"jump": Input.is_action_pressed(&"tl_jump"), "crouch": Input.is_action_pressed(&"tl_crouch"),
 			"act": Input.is_action_pressed(&"tl_act"), "text": Input.is_action_pressed(&"tl_text"), "call": Input.is_action_pressed(&"tl_call")}
-	for k in 7:
+	for k in 10:
 		if Input.is_action_just_pressed(StringName("tl_item%d" % k)):
 			live_item = k
 	s["item"] = live_item
 	s["aim"] = Input.is_action_pressed(&"tl_aim")
+	s["fire"] = Input.is_action_pressed(&"tl_fire")
+	s["reload"] = Input.is_action_pressed(&"tl_reload")
+	s["drop"] = Input.is_action_pressed(&"tl_drop")
+	s["hit"] = Input.is_action_pressed(&"tl_hit")
 	if mode == Mode.RECORD:
 		tape.append(s)
 	return s

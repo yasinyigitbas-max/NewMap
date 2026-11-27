@@ -58,7 +58,10 @@ func _process(_dt: float) -> void:
 			parts += 1
 			cpp += 1 if part.get_script() == null else 0
 	var code := "C++ (all %d parts)" % parts if cpp == parts else ("scripts" if cpp == 0 else "MIXED: %d of %d parts in C++" % [cpp, parts])
-	_text.text = "code    " + code + "\n" + "state   %s\nspeed   %.2f m/s\nheight  %.3f m\nbiggest height step  %.1f cm / tick\npos     %.2f  %.2f  %.2f\nstation %s\ninput   %s\n%s\n\nSpace jump   [ ] station   R reset   F5 record   F6 stop   F7 replay   F8 save   F9 load   Esc mouse" % [
+	# what is in his hands, and the keys for it (27 Nov)
+	var hold := body.get_node_or_null(^"Hold")
+	var hands := ("hands   %s\n0-9 hands (1 briefcase 2 bag 3 box 4 pistol 5 rifle 6 shotgun 7 smg 8 sawn-off 9 fists)\nF aim   X shot / punch (F+X combination)   B reload / jab   Q put down / pick up   H be hit\n" % String(hold.call(&"label"))) if hold != null else ""
+	_text.text = "code    " + code + "\n" + hands + "state   %s\nspeed   %.2f m/s\nheight  %.3f m\nbiggest height step  %.1f cm / tick\npos     %.2f  %.2f  %.2f\nstation %s\ninput   %s\n%s\n\nSpace jump   [ ] station   R reset   F5 record   F6 stop   F7 replay   F8 save   F9 load   Esc mouse" % [
 			str(r.get("state", "?")), float(r.get("speed", 0.0)), float(r.get("height", p.y)), _max_step * 100.0,
 			p.x, p.y, p.z, station_label, mode, str(r.get("note", ""))]
 	_graph.queue_redraw()
