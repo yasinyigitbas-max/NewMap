@@ -200,4 +200,250 @@ double TravTraverse::_at(const PackedFloat32Array &table, double t) {
 	return lerpf(D(table[i]), D(table[i + 1]), x - i);
 }
 
-// ---- TRANSLATED TO traverse.gd LINE 466 (the end of _at). NEXT: _physics_process (line 468).
+void TravTraverse::_physics_process(double _dt) {
+	if (body == nullptr || !enabled || (bool)body->call("in_move")) {
+		return;
+	}
+	if ((bool)body->get("auto_on")) {
+		record = Dictionary();
+		return;
+	}
+	_tick += 1;
+	Vector3 v = body->get("hvel");
+	double wish = D(((Vector3)body->get("_wish")).length());
+	if ((int)(int64_t)body->get("narrow") > 0 && (int)(int64_t)body->get("squeeze") != 3 && (int)(int64_t)body->get("state") == 0 && D(v.length()) < 0.1) {
+		_still += 1.0 / 60.0;
+		if (_still >= BALANCE_AFTER) {
+			_still = 0.0;
+			if (_try_balance_fall()) {
+				return;
+			}
+		}
+	} else {
+		_still = 0.0;
+	}
+	if ((int)(int64_t)body->get("squeeze") == 3) {
+		Vector3 sw = body->get("stick_wish");
+		if (D(sw.length()) < 0.05 || D(sw.normalized().dot(-(Vector3)body->get("ledge_out"))) < 0.5) {
+			record = Dictionary();
+			return;
+		}
+	}
+	if (_catch_next > 0) {
+		_catch_next -= 1;
+		if ((int)(int64_t)body->get("state") >= 2) {
+			body->set("from_jump", true);
+			body->set("_jump_still", true);
+			_catch_next = 0;
+		}
+	}
+	if ((int)(int64_t)body->get("state") >= 2 && _try_air(v)) {
+		return;
+	}
+	if (_try_step_up(v, (Vector3)body->get("_wish"))) {
+		return;
+	}
+	if ((bool)body->get("crouched") && (int)(int64_t)body->get("state") == 0 && wish > 0.05 && D(v.length()) > 0.2) {
+		if (_tick % AGAIN == 0) {
+			Dictionary rec = det()->call("measure", v.normalized());
+			double d = (double)rec.get("drop", (double)INFINITY);
+			if ((String)rec["kind"] == "drop" && d > (double)DOWN_BAND[0] + MEASURED_WITHIN && d <= (double)DOWN_BAND[1] + MEASURED_WITHIN) {
+				record = rec;
+				_try_climb_down(v.normalized(), d);
+				if (!(bool)body->call("in_move")) {
+					record = Dictionary();
+				}
+			}
+		}
+		return;
+	}
+	bool walking = (int)(int64_t)body->get("state") == 0 && !(bool)body->get("crouched") && D(v.length()) > 0.5 && wish > 0.05 && (int)(int64_t)body->get("stairs") == 0 && (int)(int64_t)body->get("terrain") == 0;
+	String key = (wish > (double)body->get("WALK") + 0.1 && D(v.length()) > RUN_FROM) ? "run" : "walk";
+	_narrow_ago = (int)(int64_t)body->get("narrow") > 0 ? 0 : _narrow_ago + 1;
+	if (_narrow_ago < 45 && (bool)body->get("run_asked")) {
+		key = "run";
+	}
+	Dictionary mv = MOVES[key];
+	PackedFloat32Array fwd = _fwd[key];
+	if (!walking) {
+		record = Dictionary();
+		return;
+	}
+	Vector3 dir = v.normalized();
+	if (record.is_empty()) {
+		Dictionary ahead = body->call("_ray_down", body->get_global_position() + mul(dir, maxf(LOOK, D(v.length()) * LOOK_TIME)));
+		if (!ahead.is_empty() && D(((Vector3)ahead["position"]).y) > D(body->get_global_position().y) - GAP_DEEP_LEAST) {
+			return;
+		}
+	}
+	if (record.is_empty() || _tick % AGAIN == 0 || (String)record.get("kind", "") == "gap") {
+		record = det()->call("measure", dir, (double)INFINITY, GAP_LOOK);
+		if ((String)record["kind"] != "gap") {
+			Dictionary e = det()->call("measure_edge", dir, GAP_LOOK, GAP_DEEP_LEAST, GAP_DOWN);
+			if (!e.is_empty() && (String)e["kind"] == "gap" && (double)e["gap"] >= GAP_LEAST && !(bool)e.get("far_wall", false)) {
+				record = e;
+			} else if (!e.is_empty() && (String)record["kind"] == "obstacle" && (double)record.get("top", (double)INFINITY) != (double)INFINITY && !(bool)record.get("blocked", true)) {
+				Vector3 em = -(Vector3)e["normal"];
+				double across = D(((Vector3)record["edge"] - (Vector3)e["edge"]).dot(em));
+				if (across >= GAP_LEAST) {
+					e["kind"] = "gap";
+					e["gap"] = across;
+					e["far_wall"] = false;
+					e["landing"] = (double)record["top"];
+					e["landing_ok"] = (bool)record.get("stand_room", false);
+					record = e;
+				}
+			}
+		}
+		if ((String)record["kind"] == "gap") {
+			Dictionary gap_rec = record;
+			record = Dictionary();
+			if (!_try_gap(v, dir, gap_rec, key == "run") && refused == "coming up to the gap") {
+				record = gap_rec;
+			}
+			return;
+		}
+		if ((String)record["kind"] != "drop") {
+			refused = (String)record["kind"] == "none" ? String("") : vformat("not a plain drop (%s)", record["kind"]);
+			record = Dictionary();
+			return;
+		}
+	}
+	double drop = (double)record.get("drop", (double)INFINITY);
+	if (drop <= (double)BAND[0] + MEASURED_WITHIN) {
+		refused = "low enough to step down in stride";
+		return;
+	}
+	if (drop > (double)BAND[1] + MEASURED_WITHIN) {
+		if (key != "run" || drop > ROLL_MOST + MEASURED_WITHIN) {
+			refused = vformat("too high for a step off (%.2f m)", drop);
+			return;
+		}
+		key = "roll";
+		mv = MOVES[key];
+		fwd = _fwd[key];
+	}
+	Vector3 m = -(Vector3)record["normal"];
+	if (rad_to_deg(D(dir.angle_to(m))) > MOST_OFF_DEG) {
+		refused = "not heading at the edge";
+		return;
+	}
+	double from_t = (double)mv["from"];
+	double edge_at = (double)mv["edge"];
+	double to_edge = edge_at - _at(fwd, from_t);
+	double here = D(((Vector3)record["edge"] - body->get_global_position()).dot(m));
+	if (here > to_edge) {
+		return;
+	}
+	Vector3 feet = body->get_global_position();
+	double top_y = (double)record["ground"];
+	double land_y = top_y - drop;
+	double speed_in = maxf(D(v.length()), 0.8);
+	double t_air = std::sqrt(2.0 * drop / (double)body->get("GRAVITY"));
+	double t_rest = (double)mv["exit"] - (double)mv["down"];
+	double exit_speed = (_at(fwd, (double)mv["exit"]) - _at(fwd, (double)mv["exit"] - 0.2)) / 0.2;
+	Vector3 leave = feet + mul(m, here + _at(fwd, (double)mv["leaves"]) - edge_at);
+	Vector3 down = leave + mul(m, key != "walk" ? speed_in * t_air : _at(fwd, (double)mv["down"]) - _at(fwd, (double)mv["leaves"]));
+	Vector3 end = down + mul(m, key == "run" ? (speed_in + exit_speed) * 0.5 * t_rest : _at(fwd, (double)mv["exit"]) - _at(fwd, (double)mv["down"]));
+	const Vector3 spots[3] = { down, lerp3(down, end, 0.5), end };
+	for (int k = 0; k < 3; k++) {
+		Vector3 p = spots[k];
+		Dictionary g = body->call("probe", V(D(p.x), land_y, D(p.z)));
+		if (!(bool)g["hit"] || absf((double)g["y"] - land_y) > LAND_WITHIN) {
+			refused = "the ground where he would land is not level with the drop measured";
+			return;
+		}
+		if (!(bool)det()->call("_fits", V(D(p.x), land_y, D(p.z)), (double)body->get("HEIGHT"))) {
+			refused = "no room to land";
+			return;
+		}
+	}
+	refused = "";
+	_plan = Dictionary();
+	_plan["key"] = key;
+	_plan["from"] = feet;
+	_plan["leave"] = V(D(leave.x), top_y, D(leave.z));
+	_plan["down"] = V(D(down.x), land_y, D(down.z));
+	_plan["end"] = V(D(end.x), land_y, D(end.z));
+	_plan["m"] = m;
+	_plan["yaw0"] = _rot_y();
+	_plan["yaw1"] = std::atan2(-D(m.x), -D(m.z));
+	_plan["drop"] = drop;
+	_plan["t_step"] = maxf(D((leave - feet).dot(m)), 0.05) / speed_in;
+	_plan["t_air"] = t_air;
+	_plan["t_rest"] = t_rest;
+	_plan["exit_speed"] = exit_speed;
+	bool run_on = key == "run" && drop <= RUN_ON_MOST + MEASURED_WITHIN;
+	if (run_on) {
+		_plan["end"] = _plan["down"];
+		_plan["exit_speed"] = speed_in;
+		_plan["run_on"] = true;
+	}
+	double share = key == "roll" ? 1.0 : clampf(drop / (double)mv["native"], 0.0, 1.0);
+	_plan["soft"] = 1.0 - share;
+	_plan["t_rest"] = (double)_plan["t_rest"] * lerpf(REST_LEAST, 1.0, share);
+	plays += 1;
+	record = Dictionary();
+	body->call("begin_move", Callable(this, "_step_off"), run_on ? String("ground") : (String)mv["input"]);
+}
+
+Dictionary TravTraverse::_step_off(double t) {
+	Dictionary p = _plan;
+	String dk = p.get("drop_key", p["key"]);
+	Dictionary mv = MOVES[dk];
+	PackedFloat32Array fwd = _fwd[dk];
+	PackedFloat32Array high = _high[dk];
+	Vector3 m = p["m"];
+	double t_step = (double)p["t_step"];
+	double t_air = (double)p["t_air"];
+	double t_rest = (double)p["t_rest"];
+	Dictionary out;
+	out["done"] = false;
+	out["yaw"] = lerp_angle((double)p["yaw0"], (double)p["yaw1"], clampf(t / maxf(t_step, 0.05), 0.0, 1.0));
+	if (t < t_step) {
+		double u = t / t_step;
+		out["pos"] = lerp3((Vector3)p["from"], (Vector3)p["leave"], u);
+		out["clip_t"] = lerpf((double)mv["from"], (double)mv["leaves"], u);
+		out["air"] = false;
+	} else if (t < t_step + t_air) {
+		double u = (t - t_step) / t_air;
+		double ct = lerpf((double)mv["leaves"], (double)mv["down"], u);
+		double f0 = _at(fwd, (double)mv["leaves"]);
+		double f1 = _at(fwd, (double)mv["down"]);
+		double along = (_at(fwd, ct) - f0) / maxf(f1 - f0, 0.001);
+		Vector3 pos = lerp3((Vector3)p["leave"], (Vector3)p["down"], along);
+		double h0 = _at(high, (double)mv["leaves"]);
+		double h1 = _at(high, (double)mv["down"]);
+		pos.y = (real_t)(D(((Vector3)p["down"]).y) + (double)p["drop"] * clampf((_at(high, ct) - h1) / maxf(h0 - h1, 0.001), 0.0, 1.0));
+		out["pos"] = pos;
+		out["clip_t"] = ct;
+		out["air"] = true;
+		out["soft"] = (double)p["soft"] * u;
+	} else if ((bool)p.get("run_on", false)) {
+		out["pos"] = p["down"];
+		out["clip_t"] = 0.0;
+		out["air"] = false;
+		out["done"] = true;
+		out["exit"] = mul(m, (double)p["exit_speed"]);
+	} else {
+		double u = clampf((t - t_step - t_air) / t_rest, 0.0, 1.0);
+		double ct = lerpf((double)mv["down"], (double)mv["exit"], u);
+		double f0 = _at(fwd, (double)mv["down"]);
+		double f1 = _at(fwd, (double)mv["exit"]);
+		out["pos"] = lerp3((Vector3)p["down"], (Vector3)p["end"], (_at(fwd, ct) - f0) / maxf(f1 - f0, 0.001));
+		out["clip_t"] = ct;
+		out["air"] = false;
+		out["landed"] = true;
+		Array free = mv.get("free", Array());
+		out["free"] = free.size() == 2 && ct >= (double)free[0] && ct <= (double)free[1];
+		out["landing"] = (String)mv.get("landing", "soft");
+		out["soft"] = (double)p["soft"];
+		if (u >= 1.0) {
+			out["done"] = true;
+			out["exit"] = mul(m, (double)p["exit_speed"]);
+		}
+	}
+	return out;
+}
+
+// ---- TRANSLATED TO traverse.gd LINE 702 (the end of _step_off). NEXT: _try_step_up (line 708).

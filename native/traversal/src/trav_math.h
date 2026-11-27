@@ -57,6 +57,10 @@ inline double rotate_toward(double from, double to, double delta) {
 	return from + clampf(delta, abs_difference - PI, abs_difference) * (difference >= 0.0 ? 1.0 : -1.0);
 }
 
+inline double lerp_angle(double from, double to, double weight) {
+	return from + angle_difference(from, to) * weight;
+}
+
 inline double move_toward(double from, double to, double delta) {
 	return absf(to - from) <= delta ? to : from + signf(to - from) * delta;
 }
