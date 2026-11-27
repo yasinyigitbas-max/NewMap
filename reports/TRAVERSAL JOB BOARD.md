@@ -82,7 +82,9 @@ How nothing breaks (the rules of the port):
       Windows library and `traversal.windows.x86_64.dll` build here too (`bash native/traversal/build.sh windows`). Not yet
       tried: the dll inside an exported exe on his PC.
       A fresh container has none of this: build godot-cpp again first (about 25 minutes each).
-- [ ] a. The body in C++, with its parity test.
+- [x] a. (trav87) The body in C++ (`native/traversal/src/trav_body.*`): 121,600 ticks the same as the script byte for
+      byte (`bash tools/traversal/parity.sh <folder>`), every stage test passes with `-- --native`, the audit on it is
+      26 of 114, the same lines. For the next layers: add that layer's numbers to `tests/parity_run.gd`.
 - [ ] b. Detection.
 - [ ] c. The character and its corrections.
 - [ ] d. The traversal moves.

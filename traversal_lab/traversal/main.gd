@@ -98,6 +98,11 @@ func _ready() -> void:
 func make_body() -> CharacterBody3D:
 	if "--plain" in OS.get_cmdline_user_args():
 		return PlainBody.new()
+	# `-- --native`: the body translated to C++ (native/traversal, TravBody), where its library has been built. The
+	# script body stays the default until Yasin has play-tested the C++ one (27 Nov: "make all the code c plus plus
+	# and make god damn sure nothing ever breaks").
+	if "--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(&"TravBody"):
+		return ClassDB.instantiate(&"TravBody")
 	return Body.new()
 
 
