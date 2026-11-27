@@ -27,16 +27,24 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
       can go through facing either wall.
 - [x] 2. (trav72) Stage 17, what is left: the wall-ledge sidle (the study: "For a ledge with a wall behind, allow a sidle
       down to about 0.10 m"). The course has no such ledge: build one in the test.
-- [ ] 3. Stage 19: ragdoll on hard impact and long fall, with get-up by lying direction.
-- [ ] 4. Stage 20: partial ragdoll hit reactions.
+- [ ] 3. (27 Nov: "Open the arms to both sides during squeeze in tight places. Also open arms to sides on sidle, head
+      should look towards the direction we are moving") and the wall-ledge station on the course ("yes add wall ledge
+      station, how else am i supposed o test?").
+- [ ] 4. (27 Nov: "also play the sideway squeeze in any passage smaller than 60cms"): sideways in every gap under
+      0.60 m. His word over the study's shoulder turn for 0.45 to 0.60 m.
 - [ ] 5. Stage 21: cover, low and high: enter, peek, exit.
 - [ ] 6. Stage 22: doors: push, then pull.
 - [ ] 7. Stage 23: cars: bonnet slide, then entry and exit. (No bonnet slide clip exists.)
-- [ ] 8. The phone pass of every stage (the study: "Phone testing of each stage follows the desktop pass"). Never
-      done for any stage.
-- [ ] 9. Sitting and phone use (27 Nov, his list, to the end of the queue): stand to sit, walk to sit, sitting idle,
-      sit to stand, sitting phone talk, sitting messaging, sitting to type, walking text, standing text, standing
-      call.
+- [ ] 8. Sitting and phone use (27 Nov, his list): stand to sit, walk to sit, sitting idle, sit to stand, sitting
+      phone talk, sitting messaging, sitting to type, walking text, standing text, standing call.
+- [ ] 9. Then an exe of all of the above for him.
+- [ ] 10. STOP HERE AND WAIT FOR HIS GO. On his go: take a checkpoint, then the ragdolls (27 Nov: "push the ragdolls
+      to the end of the queue, add the other moves in succession until them then make another exe and them move onto
+      the ragdolls after taking another checkpoint on my go"):
+      stage 19, ragdoll on hard impact and long fall, with get-up by lying direction; stage 20, partial ragdoll hit
+      reactions.
+- [ ] 11. The phone pass of every stage (the study: "Phone testing of each stage follows the desktop pass"). Never
+      done for any stage. (The Redmi run comes last.)
 
 ## Known weak points (not in the queue until he says so)
 
