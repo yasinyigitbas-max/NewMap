@@ -161,6 +161,26 @@ and get to work on those animations."
       4 cm walking), npc_18 and npc_31 (sit low), npc_09 (sits high), feet hanging when seated (22 bodies over
       5 cm), their own pace.
 - [ ] then an exe of only these moves (carry, pick up / put down, the weapons: hold, aim, shoot, reload).
+- WHERE THIS STANDS (27 Nov, night; read before going on):
+  - Takes for his body from the Drive are in `traversal_lab/assets_src/carry/` (not in git) and baked to
+    `traversal/character/clips/` with a copy of `tools/build_clips.gd` whose SRC is that folder (so no existing
+    clip is re-baked): Walking_With_Shopping_Bag, Jogging_With_Box, Box_Turn, Box_Walk_Arc, the briefcase turns,
+    Pistol_Idle, Rifle_Standing_Idle, Walk_With_Rifle, Rifle_Start_Run, Walking_While_Aiming_Rifle. Seen on his
+    body in frames (small): they stand right.
+  - `library.res` rebuilt with them: the 115 animations it had are the same key for key (checked), 22 added.
+    NOT COMMITTED YET: it waits for the takes to be final and one run of every test.
+  - Kimodo: the first 16 carry takes came out with the arms spread and a wide stance: Kimodo takes the rest pose
+    from the character file it is given, and it was given his Texting take as it was. Given the same file with
+    every rotation set to zero (his T-pose; scratch `kim2/character_tpose.fbx`) a test take stands right. 46
+    takes ordered again with it: pick up / put down / stand / walk for a box and a bag, and for the pistol and the
+    rifle: aim, shoot, reload, idle. To do: look at each, keep the least wrong, bake.
+  - The plan for the code (C++ only): the body takes new keys from the tape (which thing is in the hand, pick up
+    / put down, aim, fire, reload); the character gets one more upper-body layer after the phone's (a filtered
+    blend: arms and trunk from the hold take, legs from the movement as it is); the prop is a child placed at
+    the hand each tick from its own `grip_r` (weapons: origin = right fist, +Z = muzzle; carry props: `grips` in
+    `carry_props.json`), the left hand held on `grip_l` by hand_place, fingers closed by finger_grip; picking up
+    and putting down are moves (begin_move) like sitting. With nothing in the hand the new layer's weight is 0,
+    and parity against the scripts must still pass: that is the proof the player is untouched.
 - New code for these is written in C++ from the start (his ground rule), with a script only where a test needs one.
 
 ## NPCs (27 Nov, started at his word; the ragdolls still wait for his go)

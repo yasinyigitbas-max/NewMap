@@ -114,6 +114,11 @@ Then the same tests on the scripts, then the Windows build.
   shirt; extra arm bones mapped to the chest "break" the arms: look at every new body in frames.
 - NPCs use the player's clips unchanged; `body_fit` puts the hips where their own legs need them and gives them
   their own stride. See one in the lab: `-- --npc=npc_04`.
+- Kimodo takes the rest pose from the character file it is given (`custom_fbx`): give it his Mixamo body WITH skin
+  in its T-pose (every bone rotation zero). Given a take as it was, every result came back with the arms spread.
+  A 37-byte or broken upload makes its FBX step crash (SIGSEGV in the prediction's error). The upload lasts a day.
+- New takes are baked with a copy of `tools/build_clips.gd` pointed at their own folder, so that no existing clip
+  is baked again; after `tools/build_library.gd` check that every animation the library had is the same key for key.
 - Mixamo is reachable only on Yasin's PC. Kimodo (Replicate) and Meshy are reachable from the cloud.
 
 ## The exe for his play-test
