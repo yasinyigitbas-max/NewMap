@@ -421,7 +421,7 @@
   "tiers": {
    "near": 204
   },
-  "high_tris": 2540,
+  "high_tris": 2516,
   "length": 0.267,
   "width": 0.071,
   "height": 0.067,
@@ -440,6 +440,6 @@
    "hold": "throwable"
   },
   "muzzle": null,
-  "note": "amber glass bottle with a torn label and a rag in the neck (the flame is a game effect)"
+  "note": "amber glass bottle with an aged printed label and a rag in the neck (the flame is a game effect)"
  }
 }
