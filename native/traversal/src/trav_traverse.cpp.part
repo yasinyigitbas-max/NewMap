@@ -1,0 +1,203 @@
+// The traversal moves (the study, stage 8 onward: "Each move is built the same way (align, play, fit, hand IK, hand
+// back)"). A line-for-line translation of traversal_lab/traversal/moves/traverse.gd (the script version, the
+// reference): the same names, the same numbers, the same order of work. The reasons for each thing are in the script.
+// IN PROGRESS: this file is `.part` (not compiled) until the whole script is translated. Translated so far: to the
+// script's line given at the end of this file.
+#include "trav_traverse.h"
+
+#include "trav_math.h"
+
+#include <godot_cpp/classes/class_db_singleton.hpp>
+#include <godot_cpp/classes/os.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
+#include <godot_cpp/core/class_db.hpp>
+#include <godot_cpp/variant/packed_vector2_array.hpp>
+#include <godot_cpp/variant/packed_vector3_array.hpp>
+#include <godot_cpp/variant/vector2.hpp>
+
+using namespace godot;
+using namespace trav;
+
+static const Vector3 UP(0, 1, 0);
+static const Vector3 ZERO(0, 0, 0);
+static inline double D(real_t x) { return (double)x; }
+static inline Vector3 V(double x, double y, double z) { return Vector3((real_t)x, (real_t)y, (real_t)z); }
+static inline Vector3 mul(const Vector3 &v, double s) { return v * (real_t)s; }
+static inline Vector3 div(const Vector3 &v, double s) { return v / (real_t)s; }
+static inline Vector3 lerp3(const Vector3 &a, const Vector3 &b, double w) { return a.lerp(b, (real_t)w); }
+static inline Ref<Resource> res(const Variant &path) { return ResourceLoader::get_singleton()->load((String)path); }
+
+// clip_data.gd, rise_of
+static PackedFloat32Array rise_of(const PackedVector3Array &hips) {
+	PackedFloat32Array out;
+	int n = hips.size();
+	double whole = D(hips[n - 1].y) - D(hips[0].y);
+	double most = 0.0;
+	for (int f = 0; f < n; f++) {
+		most = maxf(most, absf(whole) > 0.01 ? clampf((D(hips[f].y) - D(hips[0].y)) / whole, 0.0, 1.0) : 0.0);
+		out.append((real_t)most);
+	}
+	return out;
+}
+
+TravTraverse::TravTraverse() {
+#include "trav_traverse_ctor.inc"
+}
+
+void TravTraverse::_ready() {
+	if (OS::get_singleton()->get_cmdline_user_args().has("--native") && ClassDBSingleton::get_singleton()->class_exists("TravDetector")) {
+		detector = ClassDBSingleton::get_singleton()->instantiate("TravDetector");
+	} else {
+		Ref<Resource> script = ResourceLoader::get_singleton()->load("res://traversal/detect/detector.gd");
+		detector = script->call("new");
+	}
+	det()->set("body", body);
+	Array mkeys = MOVES.keys();
+	for (int k = 0; k < mkeys.size(); k++) {
+		String key = mkeys[k];
+		Ref<Resource> c = res(((Dictionary)MOVES[key])["res"]);
+		PackedVector3Array hips = c->get("hips");
+		_fps = (double)c->get("fps");
+		int last = hips.size() - 1;
+		double drop = D(hips[0].y) - D(hips[last].y);
+		PackedFloat32Array fwd;
+		PackedFloat32Array high;
+		for (int f = 0; f < hips.size(); f++) {
+			fwd.append((real_t)(D(hips[f].z) - D(hips[0].z)));
+			high.append((real_t)clampf((D(hips[f].y) - D(hips[last].y)) / drop, 0.0, 1.0));
+		}
+		_fwd[key] = fwd;
+		_high[key] = high;
+	}
+	Array ckeys = CLIMBS.keys();
+	for (int k = 0; k < ckeys.size(); k++) {
+		String key = ckeys[k];
+		Ref<Resource> up = res(((Dictionary)CLIMBS[key])["res"]);
+		PackedVector3Array up_hips = up->get("hips");
+		PackedFloat32Array up_fwd;
+		for (int f = 0; f < up_hips.size(); f++) {
+			up_fwd.append((real_t)(D(up_hips[f].z) - D(up_hips[0].z)));
+		}
+		_c_fwd[key] = up_fwd;
+		_c_rise[key] = rise_of(up_hips);
+		_c_high[key] = D(up_hips[up_hips.size() - 1].y) - D(up_hips[0].y);
+	}
+	body->connect("landed", Callable(this, "_on_landed"));
+	PackedVector3Array j_hips = res(JUMP["res"])->get("hips");
+	for (int f = 0; f < j_hips.size(); f++) {
+		_j_fwd.append((real_t)(D(j_hips[f].z) - D(j_hips[0].z)));
+	}
+	PackedVector3Array o_hips = res(OVER["res"])->get("hips");
+	for (int f = 0; f < o_hips.size(); f++) {
+		_o_fwd.append((real_t)(D(o_hips[f].z) - D(o_hips[0].z)));
+	}
+	_o_rise = rise_of(o_hips);
+	_o_high = D(o_hips[o_hips.size() - 1].y) - D(o_hips[0].y);
+	PackedVector3Array g1 = res(GRAB["jump_res"])->get("hips");
+	_g_rise1 = rise_of(g1);
+	PackedVector3Array g2 = res(GRAB["climb_res"])->get("hips");
+	_g_rise2 = rise_of(g2);
+	for (int f = 0; f < g2.size(); f++) {
+		_g_fwd2.append((real_t)(D(g2[f].z) - D(g2[0].z)));
+	}
+	PackedVector3Array wh = res(WALLRUN["res"])->get("hips");
+	_w_rise = rise_of(wh);
+	for (int f = 0; f < wh.size(); f++) {
+		_w_fwd.append((real_t)(D(wh[f].z) - D(wh[0].z)));
+	}
+	PackedVector3Array dh = res(DOWN["res"])->get("hips");
+	double d_fallen = 0.0;
+	int d_from = (int)std::round((double)DOWN["lower_from"] * 30.0);
+	for (int f = 0; f < dh.size(); f++) {
+		_d_xz.append(Vector2((real_t)(D(dh[f].x) - D(dh[0].x)), (real_t)(D(dh[f].z) - D(dh[0].z))));
+		if (f >= d_from) {
+			d_fallen = maxf(d_fallen, clampf((D(dh[d_from].y) - D(dh[f].y)) / (D(dh[d_from].y) - D(dh[dh.size() - 1].y)), 0.0, 1.0));
+		}
+		_d_fall.append((real_t)d_fallen);
+	}
+	PackedVector3Array bh = res(BALANCE["res"])->get("hips");
+	int b_from = (int)std::round((double)BALANCE["over"] * 30.0);
+	double b_fallen = 0.0;
+	for (int f = 0; f < bh.size(); f++) {
+		_b_xz.append(Vector2((real_t)(D(bh[f].x) - D(bh[0].x)), (real_t)(D(bh[f].z) - D(bh[0].z))));
+		if (f >= b_from) {
+			b_fallen = maxf(b_fallen, clampf((D(bh[b_from].y) - D(bh[f].y)) / (D(bh[b_from].y) - D(bh[bh.size() - 1].y)), 0.0, 1.0));
+		}
+		_b_fall.append((real_t)b_fallen);
+	}
+	PackedVector3Array t_hips = res(TUCK["res"])->get("hips");
+	for (int f = 0; f < t_hips.size(); f++) {
+		_t_fwd.append((real_t)(D(t_hips[f].z) - D(t_hips[0].z)));
+	}
+	PackedVector3Array v_hips = res(VAULT["res"])->get("hips");
+	for (int f = 0; f < v_hips.size(); f++) {
+		_v_fwd.append((real_t)(D(v_hips[f].z) - D(v_hips[0].z)));
+		_v_hips.append(v_hips[f].y);
+	}
+}
+
+void TravTraverse::_on_landed(double drop) {
+	if (!enabled || (bool)body->call("in_move") || (bool)body->get("crouched")) {
+		return;
+	}
+	Vector3 v = body->get("hvel");
+	if (drop <= (double)BAND[1] + MEASURED_WITHIN || drop > ROLL_MOST + ROLL_JUMP_MORE || D(v.length()) < RUN_FROM) {
+		return;
+	}
+	Dictionary mv = MOVES["roll"];
+	PackedFloat32Array fwd = _fwd["roll"];
+	Vector3 dir = v.normalized();
+	Vector3 feet = body->get_global_position();
+	double travel = _at(fwd, (double)mv["exit"]) - _at(fwd, (double)mv["down"]);
+	const double shares[3] = { 0.0, 0.5, 1.0 };
+	for (int k = 0; k < 3; k++) {
+		Vector3 p = feet + mul(dir, travel * shares[k]);
+		Dictionary g = body->call("probe", V(D(p.x), D(feet.y), D(p.z)));
+		if (!(bool)g["hit"] || absf((double)g["y"] - D(feet.y)) > LAND_WITHIN || !(bool)det()->call("_fits", V(D(p.x), D(feet.y), D(p.z)), (double)body->get("HEIGHT"))) {
+			refused = "no room to roll out of the landing";
+			return;
+		}
+	}
+	refused = "";
+	_plan = Dictionary();
+	_plan["key"] = "roll_only";
+	_plan["from"] = feet;
+	_plan["end"] = feet + mul(dir, travel);
+	_plan["m"] = dir;
+	_plan["yaw"] = std::atan2(-D(dir.x), -D(dir.z));
+	_plan["exit_speed"] = (_at(fwd, (double)mv["exit"]) - _at(fwd, (double)mv["exit"] - 0.2)) / 0.2;
+	plays += 1;
+	body->call("begin_move", Callable(this, "_roll_only"), (String)mv["input"]);
+}
+
+Dictionary TravTraverse::_roll_only(double t) {
+	Dictionary mv = MOVES["roll"];
+	PackedFloat32Array fwd = _fwd["roll"];
+	Dictionary p = _plan;
+	double u = clampf(t / ((double)mv["exit"] - (double)mv["down"]), 0.0, 1.0);
+	double ct = lerpf((double)mv["down"], (double)mv["exit"], u);
+	double f0 = _at(fwd, (double)mv["down"]);
+	double f1 = _at(fwd, (double)mv["exit"]);
+	Array free = mv["free"];
+	Dictionary out;
+	out["done"] = u >= 1.0;
+	out["pos"] = lerp3((Vector3)p["from"], (Vector3)p["end"], (_at(fwd, ct) - f0) / maxf(f1 - f0, 0.001));
+	out["yaw"] = (double)p["yaw"];
+	out["clip_t"] = ct;
+	out["air"] = false;
+	out["landed"] = true;
+	out["landing"] = "heavy";
+	out["free"] = ct >= (double)free[0] && ct <= (double)free[1];
+	if (u >= 1.0) {
+		out["exit"] = mul((Vector3)p["m"], (double)p["exit_speed"]);
+	}
+	return out;
+}
+
+double TravTraverse::_at(const PackedFloat32Array &table, double t) {
+	double x = clampf(t * _fps, 0.0, (double)table.size() - 1.001);
+	int i = (int)x;
+	return lerpf(D(table[i]), D(table[i + 1]), x - i);
+}
+
+// ---- TRANSLATED TO traverse.gd LINE 466 (the end of _at). NEXT: _physics_process (line 468).
