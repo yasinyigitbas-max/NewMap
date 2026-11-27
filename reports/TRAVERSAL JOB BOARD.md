@@ -125,7 +125,12 @@ How nothing breaks (the rules of the port):
   (the door, the car, the seats). Every part of the player's and the NPCs' movement is in C++ behind `-- --native`.
 - [x] f. (trav92) The NPC fitting in C++ (`trav_npc.*`): the same as the script byte for byte on npc_04 and npc_03
       (`EXTRA="--npc=npc_04" bash tools/traversal/parity.sh <folder>`).
-- [ ] His play-test of the C++ version; then, at his word, C++ becomes the default.
+- [ ] His play-test of the C++ version; then, at his word, C++ becomes the default. The exe was sent 27 Nov
+      (`TraversalLab_trav95.zip`: "Start C++ version.bat" starts it with `-- --native`; "Start script version.bat"
+      is the approved one). (trav95) The readout's first line says which is running: "code  C++ (all 4 parts)" or
+      "code  scripts". NOT checked: the Windows dll has never been run (no Windows here); if the line says
+      "scripts" after the C++ start file, the dll did not load on his PC. Known: the readout's key line now lies
+      over the top edge of the height graph (one more line of text).
 
 ## NPCs (27 Nov, started at his word; the ragdolls still wait for his go)
 
