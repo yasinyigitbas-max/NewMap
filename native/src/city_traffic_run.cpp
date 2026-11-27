@@ -406,6 +406,15 @@ void CityTraffic::put_row(float *r, float x, float y, float z, float yaw, float 
 	r[16] = c0; r[17] = c1; r[18] = c2; r[19] = c3;
 }
 
+// (28 Nov) a light-model row (22-85 m): its wheels' roll (rad, about the axle) and the front wheels' steer, for
+// traffic_car.gdshader to turn the wheel vertices of the mesh (UV2.x = 10 + k) about their hubs
+void CityTraffic::mid_wheels(float *row, const Row &r, float t) const {
+	const float rad = (r.model < (int)wheels.size() && wheels[r.model].on) ? wheels[r.model].r : 0.33f;
+	const float odo = r.podo + (r.odo - r.podo) * t;
+	row[16] = std::fmod(odo / std::max(rad, 0.1f), 6.2831853f);
+	row[17] = r.psteer + (r.steer - r.psteer) * t;
+}
+
 // The four wheels of a car whose row (not yet leaned) is car_row: each at its hub, the front ones turned by `steer`
 // (rad, + = left), all rolled by the metres the car has gone. The right-hand wheels are the same mesh turned about.
 void CityTraffic::put_wheels(float *w, const float *car_row, const WheelSet &ws, float steer, float odo) {
@@ -571,6 +580,18 @@ void CityTraffic::_ready() {
 				n->set_shader_parameter("normal_map", rl->load(cx + t + String("_veh_normal.png")));
 				n->set_shader_parameter("orm_map", rl->load(cx + t + String("_veh_orm.png")));
 				mat_near_m[m] = n; mat_mid_m[m] = n->duplicate();
+				// (28 Nov) the light model's wheels (UV2.x = 10 + k, install_car.py) spin about their hubs in the shader, by
+				// the roll and steer CityTraffic puts in the row's custom x, y: no wheel batch at 22-85 m
+				if (qb->has_meta("wheels")) {
+					const Array wl = qb->get_meta("wheels");
+					PackedVector4Array hubs; hubs.resize(4);
+					for (int k = 0; k < 4 && k < wl.size(); k++) {
+						const Vector3 c = Dictionary(wl[k]).get("center", Vector3());
+						hubs.set(k, Vector4(c.x, c.y, c.z, 1.0f));
+					}
+					mat_mid_m[m]->set_shader_parameter("wheel_hub", hubs);
+					mat_mid_m[m]->set_shader_parameter("wheel_spin", wl.size() == 4);
+				}
 				continue;
 			}
 			const bool ok = rl->exists(cx + t + String("_car_normal.png")) && rl->exists(cx + t + String("_far_albedo.png")) && qb.is_valid() && qb->has_meta("cartex");
@@ -993,7 +1014,8 @@ void CityTraffic::_process(double p_delta) {
 					Batch &mb = mid_b[r.model];
 					grow(mb, mb.n + 1);
 					float *mrow = mb.buf.ptrw() + (size_t)mb.n * ROW;
-					put_row(mrow, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, col, brake, ind, lamps, 0.0f); lean_row(mrow, p[6]);
+					put_row(mrow, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, col, 0.0f, 0.0f, lamps, 0.0f); lean_row(mrow, p[6]);
+					mid_wheels(mrow, r, p[7]);
 					mrow[15] = 1.0f + f; mb.n++; c_mid++;
 				}
 			}
@@ -1001,7 +1023,8 @@ void CityTraffic::_process(double p_delta) {
 			Batch &b = mid_b[r.model];
 			grow(b, b.n + 1);
 			float *mrow = b.buf.ptrw() + (size_t)b.n * ROW;
-			put_row(mrow, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, col, brake, ind, lamps, 0.0f); lean_row(mrow, p[6]); b.n++; c_mid++;
+			put_row(mrow, p[0], p[1], p[2], p[3], p[4], 1.0f, 1.0f, 1.0f, col, 0.0f, 0.0f, lamps, 0.0f); lean_row(mrow, p[6]);
+			mid_wheels(mrow, r, p[7]); b.n++; c_mid++;
 			// B6: over its last MID_BAND metres the light model fades out into the far shape
 			const float dm = std::sqrt(p[5]);
 			if (dm > (float)mid_r - MID_BAND) {

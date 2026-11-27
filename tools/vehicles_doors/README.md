@@ -51,3 +51,12 @@ with scons in /opt/native_tools); Yasin's PC keeps using `native/build.sh`.
 - Two more draw calls per car with real doors (each door has its own material for its glass's cabin frame), one more
   while a door is open. Not measured on the phone.
 - Tested in a cloud Godot 4.7.2 with the Compatibility renderer (no Vulkan here), not the Mobile renderer.
+
+## 28 Nov: door depth, far wheels
+- `cut_doors.py`: a door takes only what lies within `depth` (0.20 m) of the car's outer skin at that point of the side
+  view (an outer-x grid, 4 cm cells). With the cabin modelled, the old `|x| > skin_x` also took seat bolsters and the dash's
+  ends and the flat card went behind the deepest of them: half-metre black slabs beside every open door. The card is now
+  the door's outward skin pushed in 8 cm (hidden behind the door's own modelled trim).
+- `install_car.py`: the light model's wheels carry UV2.x = 10 + k; `traffic_car.gdshader` turns them about their hubs
+  (`wheel_hub[4]`, from the body mesh's wheels meta) by the row's custom x (roll) and y (steer), set by
+  `CityTraffic::mid_wheels`. No wheel batch at 22-85 m, no extra draw.

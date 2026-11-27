@@ -45,6 +45,7 @@ for k, w in enumerate(info['wheels']):
     lo = os.path.join(G, '%s_w%d_lo' % (ID, k))     # (the light tier: the ~120-triangle wheels when the build made them)
     _, W, _ = meshio.read(lo if os.path.exists(lo + '.json') else os.path.join(G, '%s_w%d' % (ID, k)))
     W = W.copy(); W[:, 0:3] += np.array(w['center'], np.float32)
+    W[:, 12] = 10.0 + k; W[:, 13] = 0.0     # (UV2.x = 10 + wheel: traffic_car.gdshader spins it about its hub at 22-85 m)
     rows.append(W)
 Q = np.concatenate(rows)
 meshio.write(os.path.join(G, ID + '_q'), Q, np.arange(len(Q)), {'metas': {}, 'format': 0})

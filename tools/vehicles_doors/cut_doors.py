@@ -84,7 +84,7 @@ def main(dump, out_dir, car):
             C['door'] = [(z + dz, y) for z, y in C['door']]
             C['hinge_z'] = C['hinge_z'] + dz
             print('outline of', base, 'moved %.3f m' % dz)
-        C.setdefault('skin_x', 0.5); C.setdefault('card', 0.05); C.setdefault('jamb', 0.06); C.setdefault('dark', (0.0, 0.6))
+        C.setdefault('skin_x', 0.5); C.setdefault('card', 0.08); C.setdefault('jamb', 0.06); C.setdefault('dark', (0.0, 0.6))
         C.setdefault('albedo', os.path.join(os.path.dirname(dump), 'tex', car + '_veh_albedo.png'))
         zs = [p[0] for p in C['door']]; ys = [p[1] for p in C['door']]
         # the parallax cabin box: from behind the dash to the back of the rear seat, floor to under the roof
@@ -113,10 +113,31 @@ def main(dump, out_dir, car):
     k = sel[np.argmin((cen[sel, 2] - cz) ** 2 + (cen[sel, 1] - cy) ** 2)]
     print('dark texel: triangle', k, 'rgba', px[k].round(3), 'at', cen[k].round(2))
     dark_uv, dark_uv2 = tris[k, :, UV:UV + 2].mean(0), tris[k, :, UV2:UV2 + 2].mean(0)
+    # (28 Nov) with the cabin modelled, |x| > skin_x also caught seat bolsters and the dash's ends, and the flat card went
+    # behind the deepest of them: half-metre black slabs on the doors. A door now takes only what lies within 'depth' of
+    # the car's outer skin at that point of the side view (its panel, its window, its modelled inner trim)
+    GS = 0.04
+    outer = {}
+    for t in tris:
+        pts = list(t[:, :3]) + [t[:, :3].mean(0)] + [(t[i, :3] + t[(i + 1) % 3, :3]) / 2 for i in range(3)]
+        for p in pts:
+            k = (int(np.floor(p[2] / GS)), int(np.floor(p[1] / GS)), 1 if p[0] > 0 else -1)
+            outer[k] = max(outer.get(k, 0.0), abs(p[0]))
+
+    def outer_at(z, y, sgn):
+        kz, ky = int(np.floor(z / GS)), int(np.floor(y / GS))
+        for r in range(0, 6):       # (the nearest cells that hold a sample)
+            best = max((outer.get((kz + a, ky + b, sgn), -1.0) for a in range(-r, r + 1) for b in range(-r, r + 1)), default=-1.0)
+            if best > 0:
+                return best
+        return 9.0
+    depth = C.get('depth', 0.20)
     body, doors = [], {'l': [], 'r': []}
     for t in tris:
         c = t[:, :3].mean(0)
         sd = 'l' if c[0] > C['skin_x'] else ('r' if c[0] < -C['skin_x'] else None)
+        if sd is not None and car not in CARS and abs(c[0]) < outer_at(c[2], c[1], 1 if c[0] > 0 else -1) - depth:
+            sd = None
         if sd is None:
             body.append(t); continue
         # the outline of this side (the right door: the same outline, the skin mirrored in x only)
@@ -177,7 +198,11 @@ def main(dump, out_dir, car):
             raise SystemExit('no door triangles on side ' + sd)
         inn = np.array([-s, 0.0, 0.0])
         # inner card: the skin pushed in, wound the other way, facing in
-        if C.get('flat_card', car not in CARS):
+        if car not in CARS:
+            # the card: the door's outward-facing skin pushed in (behind its own modelled trim, which hides it), facing in
+            outw = [t for t in skin if t[:, NRM].mean() * s > 0.3]
+            card = [np.array([new_vert(v[:3] + inn * C['card'], -s * np.array([1.0, 0, 0])) for v in (t[0], t[2], t[1])]) for t in outw]
+        elif C.get('flat_card', False):
             # a flat card across the outline, just inside the skin's innermost point (a handful of triangles; the edge
             # strip closes the gap to the curved skin)
             sk = np.array([t[:, :3] for t in skin]).reshape(-1, 3)
@@ -194,7 +219,7 @@ def main(dump, out_dir, car):
             card = [np.array([new_vert(v[:3] + inn * C['card'], -s * np.array([1.0, 0, 0])) for v in (t[0], t[2], t[1])]) for t in skin]
         strip = []
         rim = [(p, q) for p, q in boundary(skin) if on_outline(p, q)]
-        flat = C.get('flat_card', car not in CARS)
+        flat = car in CARS and C.get('flat_card', False)
         for p, q in rim:
             if flat:
                 p2, q2 = p.copy(), q.copy(); p2[0] = xin; q2[0] = xin
