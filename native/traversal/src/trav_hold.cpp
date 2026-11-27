@@ -118,8 +118,73 @@ void TravHold::_physics_process(double dt) {
 	}
 	_chr->set("hold_r_w", w[0]);
 	_chr->set("hold_b_w", w[1]);
+	// the hands held on the thing itself: both on a box's sides, the left on a long gun's forend
+	Array iw;
+	iw.push_back(_shown > 0 && (ITEMS[_shown - 1].kind == BOX || ITEMS[_shown - 1].kind == LONG) ? _w : 0.0);
+	iw.push_back(_shown > 0 && ITEMS[_shown - 1].kind == BOX ? _w : 0.0);
+	_chr->set("item_hold_w", iw);
+	_t_set = false;
 	if (_prop != nullptr) {
 		_prop->set_visible(_w > 0.5);
+	}
+}
+
+// Before the arms are solved (called by the character at modifier time, with the take's pose on the skeleton): where
+// the thing is, and where each hand that is held on it has to be for its palm to lie on the thing's own hand point.
+void TravHold::_refit() {
+	if (_prop == nullptr || _shown <= 0 || _bone[1][0] < 0) {
+		return;
+	}
+	const Item &it = ITEMS[_shown - 1];
+	if (it.kind != BOX && it.kind != LONG) {
+		return;
+	}
+	Object *hands = (Object *)_chr->get("hands");
+	if (hands == nullptr) {
+		return;
+	}
+	Vector3 palm[2], along[2], across[2];
+	_hand(0, palm[0], along[0], across[0]);
+	_hand(1, palm[1], along[1], across[1]);
+	Node3D *gr_n = Object::cast_to<Node3D>(_prop->get_node_or_null("grip_r"));
+	Node3D *gl_n = Object::cast_to<Node3D>(_prop->get_node_or_null("grip_l"));
+	if (gr_n == nullptr || gl_n == nullptr) {
+		return;
+	}
+	Vector3 gr = gr_n->get_position();
+	Vector3 gl = gl_n->get_position();
+	Array hold_at = hands->get("hold_at");
+	Transform3D to_world = _skel->get_global_transform();
+	Vector3 wrist[2] = { _skel->get_bone_global_pose(_bone[0][0]).origin, _skel->get_bone_global_pose(_bone[1][0]).origin };
+	if (it.kind == BOX) {
+		// the box in front of him where the take has his hands, level, facing as he does; then each palm on its side
+		// (the kit's `grip_l` is at the box's own -X: his right as he holds it facing him... so each hand takes the
+		// point on its own side)
+		if (!_t_set) {
+			_t = Transform3D(Basis(), (palm[0] + palm[1]) * 0.5f - (gr + gl) * 0.5f);
+			_t_set = true;
+		}
+		Vector3 a = _t.xform(gl);
+		Vector3 b = _t.xform(gr);
+		bool a_left = (a - palm[0]).length_squared() <= (b - palm[0]).length_squared();
+		Vector3 want[2] = { a_left ? a : b, a_left ? b : a };
+		for (int f = 0; f < 2; f++) {
+			hold_at[f] = to_world.xform(want[f] - (palm[f] - wrist[f]));
+		}
+	} else {
+		// a long gun: it stays in the right hand; the left palm goes onto its forend
+		if (!_t_set) {
+			Vector3 z = along[1];
+			Vector3 y = across[1];
+			Basis b0 = Basis(y.cross(z).normalized(), y, z).orthonormalized();
+			Vector3 have = b0.xform((gl - gr).normalized());
+			Vector3 want_line = (palm[0] - palm[1]).normalized();
+			Quaternion turn(have, want_line);
+			Basis bb = Basis(turn.xform(y).cross(turn.xform(z)).normalized(), turn.xform(y), turn.xform(z)).orthonormalized();
+			_t = Transform3D(bb, palm[1] - bb.xform(gr));
+			_t_set = true;
+		}
+		hold_at[0] = to_world.xform(_t.xform(gl) - (palm[0] - wrist[0]));
 	}
 }
 
@@ -136,6 +201,10 @@ void TravHold::_place() {
 	Node3D *gl_n = Object::cast_to<Node3D>(_prop->get_node_or_null("grip_l"));
 	Vector3 gr = gr_n ? gr_n->get_position() : Vector3();
 	Vector3 gl = gl_n ? gl_n->get_position() : gr;
+	if (_t_set && (it.kind == BOX || it.kind == LONG)) {
+		_prop->set_transform(_t);          // (as worked out before the arms were solved onto it)
+		return;
+	}
 	// (the skeleton faces +Z in its own space; upright in the world is upright there)
 	Transform3D t;
 	if (it.kind == HANG) {
@@ -162,6 +231,7 @@ void TravHold::_place() {
 
 void TravHold::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_place"), &TravHold::_place);
+	ClassDB::bind_method(D_METHOD("_refit"), &TravHold::_refit);
 	ClassDB::bind_method(D_METHOD("count"), &TravHold::count);
 	ClassDB::bind_method(D_METHOD("label"), &TravHold::label);
 }

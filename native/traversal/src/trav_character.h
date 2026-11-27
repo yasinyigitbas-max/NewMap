@@ -168,6 +168,7 @@ protected:
 	String hold_take[2];
 	double hold_w[2] = { 0.0, 0.0 };
 	double hold_t[2] = { 0.0, 0.0 };
+	double item_w[2] = { 0.0, 0.0 };       // a hand held on the thing itself (a box's side, a gun's forend): [left, right]
 
 	Ref<AnimationNodeBlendTree> _make_tree();
 	void _head_frame(Vector3 &r_at, Basis &r_turn);

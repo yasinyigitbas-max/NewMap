@@ -41,6 +41,8 @@ protected:
 	Skeleton3D *_skel = nullptr;
 	Node3D *_prop = nullptr;
 	int _shown = 0;             // the item whose prop is made
+	Transform3D _t;             // where the thing is, in the skeleton's space, as worked out before the arms are solved
+	bool _t_set = false;
 	double _w = 0.0;            // how far the arms are on the hold
 	double _aim_w = 0.0;
 	int _bone[2][4] = { { -1, -1, -1, -1 }, { -1, -1, -1, -1 } };   // hand, middle, index, pinky knuckles; [0] left, [1] right
@@ -56,6 +58,7 @@ public:
 	void _ready() override;
 	void _physics_process(double dt) override;
 	void _place();
+	void _refit();
 	int count() const;
 	String label() const;
 };

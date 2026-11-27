@@ -204,6 +204,12 @@ bool TravCharacter::_set(const StringName &p_name, const Variant &p_value) {
 		arm_open_deg = p_value;
 		return true;
 	}
+	if (n == "item_hold_w") {
+		Array iw = p_value;
+		item_w[0] = iw[0];
+		item_w[1] = iw[1];
+		return true;
+	}
 	for (int k = 0; k < 2; k++) {
 		const char *pre = k == 0 ? "hold_r_" : "hold_b_";
 		if (n == String(pre) + "take") {
@@ -683,6 +689,12 @@ void TravCharacter::_phone_thumbs() {
 }
 
 void TravCharacter::_phone_refit() {
+	if (hands != nullptr && (item_w[0] > 0.0 || item_w[1] > 0.0)) {
+		Node *hold = body->get_node_or_null("Hold");
+		if (hold != nullptr) {
+			hold->call("_refit");
+		}
+	}
 	if (hands == nullptr || _phone_w <= 0.0) {
 		return;
 	}
@@ -1143,6 +1155,12 @@ void TravCharacter::_physics_process(double dt) {
 					w[f] = hw[f];
 					turned[f] = true;
 				}
+			}
+		}
+		// a hand on the thing he holds (its place is set at modifier time, from the finished pose: _phone_refit)
+		for (int f = 0; f < 2; f++) {
+			if (item_w[f] > 0.0 && w[f] <= 0.0) {
+				w[f] = item_w[f];
 			}
 		}
 		Array a_turned;
