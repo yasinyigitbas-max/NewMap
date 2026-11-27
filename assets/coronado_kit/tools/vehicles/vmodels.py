@@ -33,6 +33,8 @@ def stations_car(p):
 
     def st(y, zb, zbl, zt, wd, wtt, zone, **kw):
         d = dict(y=y, zb=zb, zbl=zbl, zt=zt, w=wd, wt=wtt, zone=zone)
+        if 'tb' in p:
+            d['tb'] = p['tb']
         d.update(kw)
         S.append(d)
     st(yF, zc + 0.14, bf - 0.12, bf - 0.12, W * 0.78, W * 0.60, 'bumper_f', sill=0.05)
@@ -648,22 +650,22 @@ FLEET = {
                     p=dict(style='minivan', L=5.10, W=0.99, H=1.76, belt=1.05, bonnet_f=0.98, wb=3.03, fo=0.95, r=0.36, zc=0.22, fdoor=1.05,
                            rdoor=0.95, rear_zone='slide', quarter_zone='side', slide_side='both', tail_run=0.20, screen_run=1.00, hip=0.40)),
     'van_panel': dict(build=car, cls='van', note='panel van, sliding side door, barn doors, no rear windows',
-                      p=dict(style='van', L=5.25, W=1.00, H=2.05, belt=1.08, bonnet_f=1.02, wb=3.30, fo=0.95, r=0.36, zc=0.25, fdoor=1.05,
+                      p=dict(style='van', roof_w=0.965, tb=0.006, L=5.25, W=1.00, H=2.05, belt=1.08, bonnet_f=1.02, wb=3.30, fo=0.95, r=0.36, zc=0.25, fdoor=1.05,
                              rdoor=1.10, screen_run=0.75, rear_zone='slide', quarter_zone='side', windows=False, cap_r=None, hip=0.42,
                              rear_seat=False, rim='rim_steel', extras=(vm.van_back, vm.bumpers_box))),
     'van_delivery': dict(build=car, cls='van', note='high-roof delivery van',
-                         p=dict(style='van', L=5.95, W=1.02, H=2.62, belt=1.10, bonnet_f=1.05, wb=3.65, fo=0.95, r=0.37, zc=0.26, fdoor=1.05,
+                         p=dict(style='van', roof_w=0.965, tb=0.006, L=5.95, W=1.02, H=2.62, belt=1.10, bonnet_f=1.05, wb=3.65, fo=0.95, r=0.37, zc=0.26, fdoor=1.05,
                                 rdoor=1.15, screen_run=0.80, rear_zone='slide', quarter_zone='side', windows=False, cap_r=None, hip=0.44,
                                 rear_seat=False, rim='rim_steel', extras=(vm.van_back, vm.bumpers_box))),
     'campaign_a': dict(build=car, cls='van', note='political campaign van: blue and white, loudspeakers on the roof (fictional candidate)',
-                       p=dict(style='van', L=5.25, W=1.00, H=2.05, belt=1.08, bonnet_f=1.02, wb=3.30, fo=0.95, r=0.36, zc=0.25, fdoor=1.05,
+                       p=dict(style='van', roof_w=0.965, tb=0.006, L=5.25, W=1.00, H=2.05, belt=1.08, bonnet_f=1.02, wb=3.30, fo=0.95, r=0.36, zc=0.25, fdoor=1.05,
                               rdoor=1.10, screen_run=0.75, rear_zone='slide', quarter_zone='side', windows=False, cap_r=None, hip=0.42,
                               rear_seat=False, livery=lambda n, c, nn: 'paint_blu' if c.z < 0.75 else 'paint_wht',
                               slogan='VOTE HALVERSON', slogan_sub='FOR MAYOR - A CITY THAT WORKS', slogan_back='HALVERSON',
                               slogan_key='paint_blu', slogan_key2='paint_red',
                               extras=(vm.van_back, vm.bumpers_box, vm.roof_speakers, vm.campaign_livery))),
     'campaign_b': dict(build=car, cls='van', note='political campaign van: red and white, roof billboard (fictional candidate)',
-                       p=dict(style='van', L=5.25, W=1.00, H=2.05, belt=1.08, bonnet_f=1.02, wb=3.30, fo=0.95, r=0.36, zc=0.25, fdoor=1.05,
+                       p=dict(style='van', roof_w=0.965, tb=0.006, L=5.25, W=1.00, H=2.05, belt=1.08, bonnet_f=1.02, wb=3.30, fo=0.95, r=0.36, zc=0.25, fdoor=1.05,
                               rdoor=1.10, screen_run=0.75, rear_zone='slide', quarter_zone='side', windows=False, cap_r=None, hip=0.42,
                               rear_seat=False, livery=lambda n, c, nn: 'paint_red' if c.z < 0.75 else 'paint_wht',
                               slogan='RE-ELECT OKAFOR', slogan_sub='COUNCIL DISTRICT 4', slogan_back='OKAFOR', slogan2='OKAFOR 4 COUNCIL',

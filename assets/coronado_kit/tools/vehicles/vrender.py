@@ -80,7 +80,7 @@ for vi, name in enumerate(names):
     shot('rear', (-0.8, 1.0, 0.45))
     for n, o in objs.items():
         o.rotation_mode = 'XYZ'
-        if n.startswith('door'):
+        if n.startswith(('door', 'busdoor')):
             s = 1 if '_l' in n[-2:] else -1
             o.rotation_euler.z += s * math.radians(-62)
         elif n == 'bonnet':

@@ -18,7 +18,7 @@ QUICK = '--quick' in argv
 names = [a for a in argv if not a.startswith('--')]
 if not names or names == ['all']:
     names = list(vmodels.FLEET)
-RES = 1024 if QUICK else 2048
+RES = 1024   # (final maps: colour 1024, normal and ORM 512; --quick only lowers the samples)
 WORK0 = os.environ.get('V_WORK', os.path.join(HERE, '_bake'))
 os.makedirs(os.path.join(OUT, 'tex'), exist_ok=True)
 t0 = time.time()
@@ -83,6 +83,12 @@ def build_one(name):
     log(name, 'low', total, 'tris', 'high', sum(w.tris(o) for o in highs))
     # unwrap: seams from the shell / primitives, one page for the whole vehicle
     lo_list = list(lows.values())
+    for o in lo_list:                                    # seams on every sharp crease too (closed boxes would fold)
+        bm = bmesh.new(); bm.from_mesh(o.data)
+        for e in bm.edges:
+            if len(e.link_faces) != 2 or e.calc_face_angle(0) > math.radians(55):
+                e.seam = True
+        bm.to_mesh(o.data); bm.free()
     for o in lo_list:
         edit([o])
         bpy.ops.uv.unwrap(method='ANGLE_BASED', fill_holes=True, correct_aspect=True, margin=0.0)
@@ -138,11 +144,11 @@ def build_one(name):
         bpy.data.images.remove(img)
         log(' baked', fname, '%.0fs' % (time.time() - t))
     S = (lambda q, f: q if QUICK else f)
-    do_bake('NORMAL', 'normal', S(4, 8))
-    do_bake('AO', 'ao', S(24, 64))
-    do_bake('EMIT', 'color', S(8, 16), emit='color')
-    do_bake('EMIT', 'rough', S(8, 16), emit='rough')
-    do_bake('EMIT', 'metal', S(8, 16), emit='metal')
+    do_bake('NORMAL', 'normal', S(4, 6))
+    do_bake('AO', 'ao', S(24, 40))
+    do_bake('EMIT', 'color', S(8, 12), emit='color')
+    do_bake('EMIT', 'rough', S(6, 8), emit='rough')
+    do_bake('EMIT', 'metal', S(6, 8), emit='metal')
     do_bake('EMIT', 'amask', 1, emit='amask', margin=S(6, 12))
     do_bake('EMIT', 'mask', 1, emit='mask', margin=0)
     w.bake_mode(None)
@@ -195,3 +201,4 @@ def build_one(name):
 
 for n in names:
     build_one(n)
+    import gc; gc.collect()
