@@ -880,6 +880,193 @@
   "res": 1024,
   "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
  },
+ "pickup": {
+  "name": "pickup",
+  "cls": "pickup",
+  "note": "full-size crew-cab pickup",
+  "tris": 3574,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_r_l": 40,
+   "door_r_r": 40,
+   "bonnet": 428,
+   "tailgate": 72,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "glass_rear": 20,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 512,
+   "body": 658,
+   "steering_wheel": 124
+  },
+  "pivots": {
+   "door_f_l": [
+    1.18,
+    1.085,
+    1.1718
+   ],
+   "door_f_r": [
+    -1.18,
+    1.085,
+    1.1718
+   ],
+   "door_r_l": [
+    0.98,
+    1.085,
+    -0.0182
+   ],
+   "door_r_r": [
+    -0.98,
+    1.085,
+    -0.0182
+   ],
+   "bonnet": [
+    0.0,
+    1.162,
+    1.19
+   ],
+   "tailgate": [
+    0.0,
+    0.4,
+    -2.6128
+   ],
+   "bumper_f": [
+    0.0,
+    0.696,
+    2.6625
+   ],
+   "bumper_r": [
+    0.0,
+    0.716,
+    -2.6575
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "glass_rear": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.775,
+    0.38,
+    1.725
+   ],
+   "wheel_fr": [
+    -0.775,
+    0.38,
+    1.725
+   ],
+   "wheel_rl": [
+    0.775,
+    0.38,
+    -1.625
+   ],
+   "wheel_rr": [
+    -0.775,
+    0.38,
+    -1.625
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.391,
+    1.08,
+    0.7618
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.391,
+    0.72,
+    0.3118
+   ],
+   "seat_fr": [
+    -0.391,
+    0.72,
+    0.3118
+   ],
+   "seat_rl": [
+    0.3704,
+    0.75,
+    -0.5382
+   ],
+   "seat_rr": [
+    -0.3704,
+    0.75,
+    -0.5382
+   ],
+   "entry_l": [
+    1.43,
+    0.0,
+    0.4418
+   ],
+   "head_l": [
+    0.7056,
+    0.95,
+    2.655
+   ],
+   "tail_l": [
+    0.735,
+    0.99,
+    -2.665
+   ],
+   "entry_r": [
+    -1.43,
+    0.0,
+    0.4418
+   ],
+   "head_r": [
+    -0.7056,
+    0.95,
+    2.655
+   ],
+   "tail_r": [
+    -0.735,
+    0.99,
+    -2.665
+   ],
+   "exhaust": [
+    -0.539,
+    0.38,
+    -2.655
+   ]
+  },
+  "axles": [
+   1.725,
+   -1.625
+  ],
+  "wheel_r": 0.38,
+  "size": [
+   2.36,
+   5.35,
+   1.822
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
  "saloon": {
   "name": "saloon",
   "cls": "saloon",
