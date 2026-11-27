@@ -167,5 +167,186 @@
   ],
   "res": 1024,
   "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "hatch": {
+  "name": "hatch",
+  "cls": "compact",
+  "note": "five-door family hatchback",
+  "tris": 3976,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_r_l": 112,
+   "door_r_r": 112,
+   "bonnet": 428,
+   "tailgate": 120,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 776,
+   "steering_wheel": 124,
+   "body": 624
+  },
+  "pivots": {
+   "door_f_l": [
+    1.075,
+    0.865,
+    0.8016
+   ],
+   "door_f_r": [
+    -1.075,
+    0.865,
+    0.8016
+   ],
+   "door_r_l": [
+    0.875,
+    0.865,
+    -0.3684
+   ],
+   "door_r_r": [
+    -0.875,
+    0.865,
+    -0.3684
+   ],
+   "bonnet": [
+    0.0,
+    0.932,
+    0.8174
+   ],
+   "tailgate": [
+    0.0,
+    1.482,
+    -1.8317
+   ],
+   "bumper_f": [
+    0.0,
+    0.491,
+    2.1125
+   ],
+   "bumper_r": [
+    0.0,
+    0.566,
+    -2.1075
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.67,
+    0.31,
+    1.275
+   ],
+   "wheel_fr": [
+    -0.67,
+    0.31,
+    1.275
+   ],
+   "wheel_rl": [
+    0.67,
+    0.31,
+    -1.345
+   ],
+   "wheel_rr": [
+    -0.67,
+    0.31,
+    -1.345
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.3491,
+    0.92,
+    0.4116
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.3491,
+    0.56,
+    -0.0384
+   ],
+   "seat_fr": [
+    -0.3491,
+    0.56,
+    -0.0384
+   ],
+   "seat_rl": [
+    0.3307,
+    0.59,
+    -0.8884
+   ],
+   "seat_rr": [
+    -0.3307,
+    0.59,
+    -0.8884
+   ],
+   "entry_l": [
+    1.325,
+    0.0,
+    0.0916
+   ],
+   "head_l": [
+    0.63,
+    0.64,
+    2.105
+   ],
+   "tail_l": [
+    0.6562,
+    0.79,
+    -2.115
+   ],
+   "entry_r": [
+    -1.325,
+    0.0,
+    0.0916
+   ],
+   "head_r": [
+    -0.63,
+    0.64,
+    2.105
+   ],
+   "tail_r": [
+    -0.6562,
+    0.79,
+    -2.115
+   ],
+   "exhaust": [
+    -0.4813,
+    0.28,
+    -2.105
+   ]
+  },
+  "axles": [
+   1.275,
+   -1.345
+  ],
+  "wheel_r": 0.31,
+  "size": [
+   2.15,
+   4.25,
+   1.484
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
  }
 }
