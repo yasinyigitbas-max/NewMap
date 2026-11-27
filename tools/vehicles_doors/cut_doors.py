@@ -18,7 +18,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 
 
 # ------------------------------------------------------------------ per car: the door outline and the cabin box
 CARS = {
-    'sakura': dict(
+    'sakura_trimsheet': dict(   # (the old trimmed Sakura of 27 Nov morning; the rebuilt one uses doors_zh.json)
         # left front door, side view (z, y), convex, front edge first; the right door is its mirror
         door=[(0.71, 0.35), (0.71, 0.99), (0.66, 1.02), (0.18, 1.29), (-0.294, 1.34), (-0.224, 0.97), (-0.224, 0.35)],
         skin_x=0.50,        # a triangle belongs to a side's skin when its centre is further out than this
