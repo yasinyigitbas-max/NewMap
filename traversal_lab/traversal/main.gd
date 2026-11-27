@@ -55,6 +55,10 @@ func _ready() -> void:
 		character = CharacterV1.new() if "--v1" in OS.get_cmdline_user_args() else Character.new()
 		character.name = "Character"
 		character.set(&"body", body)
+		# `-- --npc=npc_01`: the trial NPC body in the player's place (Yasin, 27 Nov: "yes go on, and make it")
+		for arg in OS.get_cmdline_user_args():
+			if arg.begins_with("--npc="):
+				character.set(&"model_path", "res://traversal/npc/%s.scn" % arg.trim_prefix("--npc="))
 		body.add_child(character)
 		body.call(&"show_capsule", false)
 	if body.has_method(&"begin_move"):

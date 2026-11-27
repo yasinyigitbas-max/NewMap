@@ -16,6 +16,7 @@ const FootOrient := preload("res://traversal/character/foot_orient.gd")
 const HandPlace := preload("res://traversal/character/hand_place.gd")
 const HandHold := preload("res://traversal/character/hand_hold.gd")
 const MODEL := "res://traversal/character/player_v4_rooted.scn"
+var model_path := MODEL        # another body on the same skeleton standard (an NPC made by tools/build_npc.gd): set before he is added to the scene
 const LIBRARY := "res://traversal/character/library.res"
 const SKEL := "Skeleton3D"
 # The loops of moving on foot. All three are lined up to begin with the left foot furthest forward (`start_offset`,
@@ -294,7 +295,7 @@ var _head_i := -1
 
 
 func _ready() -> void:
-	var model: Node3D = (load(MODEL) as PackedScene).instantiate()
+	var model: Node3D = (load(model_path) as PackedScene).instantiate()
 	model.rotation.y = PI      # the clips face +Z, the body faces -Z
 	_pivot = Node3D.new()      # turns about the feet, for the lean
 	add_child(_pivot)
