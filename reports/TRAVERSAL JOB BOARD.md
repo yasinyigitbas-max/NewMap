@@ -185,7 +185,27 @@ else, don't merge anything else that is involving play or npc movement".
       module (one library, so it also gets the Android build), the lab's runtime files copied to `res://traversal/`
       of the game (the lab is a nested project the game cannot read), the probe mask split from the capsule's
       (contract), Jolt on the PC too or the body proven on Godot Physics.
-      DONE SO FAR: nothing of (1) to (6).
+      DONE SO FAR (27 Nov, night):
+      - the traversal sources compile into the game's module (`native/build.sh`: `native/traversal/src/*.cpp` with
+        `-DTRAV_IN_GAME`; `register.cpp` gives `trav_register_classes()`, called from `register_types.cpp`). Built
+        for Linux in the cloud (to `native/bin`, not in git). NOT built: Windows and Android (his PC).
+      - `bash tools/traversal/sync_to_game.sh` copies the lab's run-time files to `res://traversal/` of the game
+        (55 MB, not in git; the clips' small data script goes with them). Run it before a bake or an export.
+      - `CityPlayer::set_traversal(true)` (city_player.cpp): a TravBody with its Character, Traverse, Interact and
+        Hold is made beside him on the player's layer (mask: world and cars, NOT people yet); CityPlayer keeps the
+        camera and the input, hands the tick's input over as `sample()`, follows the body, hides its own figure;
+        `set_riding` puts the body away, `stand_at` sets it down. Keys in this mode: as the lab (0 to 9, F, X, B,
+        Q, H); the game's own F / J combat is not asked for while it is on. `rig.gd`: `-- --trav` switches it on.
+      - `tests/game/test_trav_player.gd` RESULT PASS on a made-up street, on the game's own physics (Godot Physics,
+        not Jolt): 1.45 m/s, the node never more than 8 cm from the body, kerb, high step, wall (3 moves),
+        riding, set down, switched off again. test_native_load, test_damage, test_city_car still RESULT PASS.
+      - NOT DONE in (1): never run in the real city (no bake here); getting into a car still uses the game's own
+        take and its Rocketbox driver figure (he changes body in the car); the crowd does not collide with him;
+        the phone, talk gestures, the bicycle's hold points, his voice, swimming, the game's combat and being
+        knocked down are the old player's and do nothing in this mode; the camera is the old one, unchanged; the
+        touch stick is passed through but was not tried.
+      - the NPC parity run (`EXTRA="--npc=..."`) now FAILS by design: the C++ NPC has its own pace, the frozen
+        script NPC has not. The player's parity run still passes.
 
 ## CARRYING AND THINGS IN THE HAND (27 Nov evening, his words; after the C++ port)
 

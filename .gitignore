@@ -38,3 +38,6 @@ traversal_lab/out/
 /traversal_lab/bin/
 /traversal_lab/traversal.gdextension
 /traversal_lab/traversal.gdextension.uid
+
+# the traversal system's run-time files, copied from traversal_lab/traversal by tools/traversal/sync_to_game.sh
+/traversal/

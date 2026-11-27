@@ -102,12 +102,13 @@ build() {
   [ -x "$CXX" ] || [ -x "$CXX.exe" ] || die "compiler not found: $CXX"
   local B=$NATIVE/build/$1; mkdir -p "$B" "$NATIVE/bin"
   # an object is rebuilt when ANY file of src/ is newer than it (headers included): simple, and the module is small
-  local newest; newest=$(ls -t "$NATIVE"/src/*.cpp "$NATIVE"/src/*.h "$NATIVE/build.sh" | head -1)
+  # (the traversal system's sources, native/traversal/src, are compiled into this module too: TRAV_IN_GAME)
+  local newest; newest=$(ls -t "$NATIVE"/src/*.cpp "$NATIVE"/src/*.h "$NATIVE"/traversal/src/*.cpp "$NATIVE"/traversal/src/*.h "$NATIVE"/traversal/src/*.inc "$NATIVE/build.sh" | head -1)
   local objs="" n=0 pids="" f o
-  for f in "$NATIVE"/src/*.cpp; do
+  for f in "$NATIVE"/src/*.cpp "$NATIVE"/traversal/src/*.cpp; do
     o=$B/$(basename "${f%.cpp}").$OBJ; objs="$objs $o"
     if [ ! -f "$o" ] || [ "$newest" -nt "$o" ]; then
-      ( "$CXX" -o "$o" -c $CFLAGS $WARN $INC "$f" 2> "$o.log" || { cat "$o.log"; rm -f "$o"; exit 1; }; [ -s "$o.log" ] && cat "$o.log"; exit 0 ) &
+      ( "$CXX" -o "$o" -c $CFLAGS -DTRAV_IN_GAME $WARN $INC -I"$NATIVE/traversal/src" "$f" 2> "$o.log" || { cat "$o.log"; rm -f "$o"; exit 1; }; [ -s "$o.log" ] && cat "$o.log"; exit 0 ) &
       pids="$pids $!"; n=$((n + 1))
       if [ $((n % JOBS)) -eq 0 ]; then for p in $pids; do wait "$p" || FAIL=1; done; pids=""; fi
     fi

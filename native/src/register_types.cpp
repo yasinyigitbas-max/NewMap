@@ -1,3 +1,6 @@
+#ifdef TRAV_IN_GAME
+#include "trav_register.h"
+#endif
 #include "el_sfx.h"
 // coronado_city: the new map's native module (GDExtension). Traffic and people in C++ (docs/TRAFFIC_PEOPLE_PORT.md).
 // There is no script fall-back: the test app checks ClassDB.class_exists("CityNative") and says so when the module
@@ -77,6 +80,9 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(AnimRetarget);  // tool time: the Quaternius animation library's clips fitted to the game's figure
 	GDREGISTER_CLASS(PeopleBake);    // tool time: the far figures of the crowd, every body posed once
 	GDREGISTER_CLASS(PeoplePlaces);  // tool time: the places people go (doors, benches, bus stops ...), from the pieces and the shop list
+#ifdef TRAV_IN_GAME
+	trav_register_classes();         // the traversal system (native/traversal/src), compiled into this module: one library, every platform
+#endif
 }
 
 void uninitialize_coronado_city(ModuleInitializationLevel p_level) {

@@ -437,6 +437,11 @@ func _free_walk(start: Vector3, yaw: float) -> void:
 	var y_start := _ground(start, 0.0) + 0.05
 	pl.position = Vector3(start.x, y_start, start.z); pl.rotation.y = yaw
 	add_child(pl)
+	# `-- --trav`: his movement, figure and moves are the traversal system's (CityPlayer::set_traversal; 27 Nov). A switch:
+	# without it he is as he was.
+	if "--trav" in OS.get_cmdline_user_args():
+		pl.call(&"set_traversal", true)
+		_say("the player is on the traversal body: %s" % str(pl.call(&"get_traversal")))
 	if game:      # the shell sets him down (a new game: the pavement nearest the centre, with his bicycle and a car; or where he was saved)
 		pl.set(&"capture_mouse", false)
 		game.call(&"set_world", people, traffic)

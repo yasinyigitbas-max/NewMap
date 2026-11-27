@@ -20,10 +20,9 @@
 
 using namespace godot;
 
-static void trav_init(ModuleInitializationLevel p_level) {
-	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
-		return;
-	}
+// The classes, for whichever library holds them: the lab's own (traversal_init, below), or the game's module, which
+// compiles these sources in and calls this from its own start (native/src/register_types.cpp, with TRAV_IN_GAME).
+void trav_register_classes() {
 	GDREGISTER_CLASS(TravBody);
 	GDREGISTER_CLASS(TravDetector);
 	GDREGISTER_CLASS(TravArmOpen);
@@ -41,6 +40,14 @@ static void trav_init(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(TravHold);
 }
 
+#ifndef TRAV_IN_GAME
+static void trav_init(ModuleInitializationLevel p_level) {
+	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
+		return;
+	}
+	trav_register_classes();
+}
+
 static void trav_term(ModuleInitializationLevel p_level) {}
 
 extern "C" {
@@ -52,3 +59,4 @@ GDExtensionBool GDE_EXPORT traversal_init(GDExtensionInterfaceGetProcAddress p_g
 	return init_obj.init();
 }
 }
+#endif // TRAV_IN_GAME

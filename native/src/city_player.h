@@ -172,7 +172,19 @@ private:
 protected:
 	static void _bind_methods();
 
+	// THE TRAVERSAL BODY UNDER HIM (27 Nov 2026, Yasin: "wire the new npcs, cars and movement in"; "go for all of it").
+	// A switch, not a swap: with set_traversal(true) his movement, his figure and his moves are the traversal system's
+	// (native/traversal/src: TravBody and its Character, Traverse, Interact, Hold), and this node stays what the rest
+	// of the game talks to: it keeps the camera and reads the keys and the touch as before, hands them to the body
+	// each tick (sample()), and follows it. Off (the default), nothing here is changed.
+	CharacterBody3D *trav = nullptr;
+	Dictionary trav_s;
+	int trav_item = 0;
 public:
+	void set_traversal(bool p_on);
+	bool get_traversal() const { return trav != nullptr; }
+	Object *get_traversal_body() const { return trav; }
+	Dictionary sample() { return trav_s; }      // (the traversal body asks for the tick's input by this name)
 	void _ready() override;
 	void _exit_tree() override;
 	void _input(const Ref<InputEvent> &p_event) override;

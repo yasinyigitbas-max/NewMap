@@ -9,6 +9,8 @@
 #include "city_car.h"
 #include "car_models.h"
 #include "city_bike.h"
+#include <godot_cpp/variant/utility_functions.hpp>
+#include <godot_cpp/classes/class_db_singleton.hpp>
 #include <godot_cpp/classes/skeleton3d.hpp>
 
 #include <godot_cpp/classes/audio_effect_capture.hpp>
@@ -314,6 +316,25 @@ void CityPlayer::_physics_process(double p_delta) {
 	}
 	if (frozen || act_left > 0.0) mv = Vector2();
 	if (mv.length() > 1.0f) mv = mv.normalized();
+	if (trav) {
+		// his movement is the traversal body's: the tick's input handed over, and this node set where the body is
+		Vector2 st = mv;
+		if (st.length() > 0.05f && !run) st = st.normalized();     // (a key walks at the body's own walking pace; Shift runs)
+		Input *hk = Input::get_singleton();
+		for (int k = 0; k < 10; k++) if (hk->is_key_pressed((Key)(KEY_0 + k))) trav_item = k;
+		trav_s["mx"] = (double)st.x; trav_s["mz"] = (double)-st.y; trav_s["yaw"] = (double)cam_yaw;
+		trav_s["run"] = run; trav_s["jump"] = jump_want; trav_s["crouch"] = crouch; trav_s["act"] = e_was && !frozen;
+		trav_s["text"] = false; trav_s["call"] = false;
+		trav_s["item"] = trav_item; trav_s["aim"] = hk->is_key_pressed(KEY_F) && !frozen; trav_s["fire"] = hk->is_key_pressed(KEY_X) && !frozen;
+		trav_s["reload"] = hk->is_key_pressed(KEY_B) && !frozen; trav_s["drop"] = hk->is_key_pressed(KEY_Q) && !frozen; trav_s["hit"] = hk->is_key_pressed(KEY_H) && !frozen;
+		jump_want = false; combat_req = false; punch_req = false;
+		set_global_position(trav->get_global_position());
+		yaw = trav->get_rotation().y;
+		const Vector3 hv = trav->get("hvel");
+		set_velocity(hv); speed = hv.length();
+		clock_s += dt;
+		return;
+	}
 	// the way he goes: by the view (forward = away from the camera)
 	const Vector3 fwd(-std::sin(cam_yaw), 0, -std::cos(cam_yaw)), right(std::cos(cam_yaw), 0, -std::sin(cam_yaw));
 	// water: swimming begins where his feet are 1.15 m under the surface, and ends where the ground comes up to 0.9 m
@@ -900,7 +921,53 @@ Array CityPlayer::get_hand_points() const {
 	return a;
 }
 
+void CityPlayer::set_traversal(bool p_on) {
+	if (p_on == (trav != nullptr) || !is_inside_tree()) return;
+	if (!p_on) {
+		trav->queue_free(); trav = nullptr;
+		set_collision_layer(2); set_collision_mask(1 | 16 | 32);
+		if (fig) fig->set_visible(true);
+		return;
+	}
+	ClassDBSingleton *db = ClassDBSingleton::get_singleton();
+	if (!db->class_exists("TravBody") || !db->class_exists("TravCharacter")) {
+		UtilityFunctions::print("CityPlayer: the traversal classes are not in this build (TRAV_IN_GAME); he stays as he was");
+		return;
+	}
+	trav = Object::cast_to<CharacterBody3D>((Object *)db->instantiate("TravBody"));
+	trav_s = Dictionary();
+	trav->set("tape", this);
+	trav->set_name("TravBody");
+	get_parent()->add_child(trav);
+	trav->set_global_position(get_global_position());
+	trav->set_rotation(Vector3(0, yaw, 0));
+	// (the player's layer; the world and the cars. NOT the people's capsules yet: the body's probes use its own mask,
+	// and it would take a person for something to climb: docs/damage/WORLD_CONTRACT.md has the probes on 1|4|8)
+	trav->set_collision_layer(2);
+	trav->set_collision_mask(1 | 16);
+	const char *parts[4][2] = { { "TravCharacter", "Character" }, { "TravInteract", "Interact" }, { "TravTraverse", "Traverse" }, { "TravHold", "Hold" } };
+	for (int k = 0; k < 4; k++) {
+		if (!db->class_exists(parts[k][0])) continue;
+		Node *n = Object::cast_to<Node>((Object *)db->instantiate(parts[k][0]));
+		n->set_name(parts[k][1]);
+		n->set("body", trav);
+		trav->add_child(n);
+	}
+	// this node no longer stands in the world itself, and its own figure is not drawn
+	set_collision_layer(0); set_collision_mask(0);
+	if (fig) fig->set_visible(false);
+}
+
 void CityPlayer::set_riding(bool p_on) {
+	if (trav) {     // (in a car or on the bicycle the traversal body is put away, and brought back by stand_at)
+		trav->set_visible(!p_on);
+		trav->set_process_mode(p_on ? Node::PROCESS_MODE_DISABLED : Node::PROCESS_MODE_INHERIT);
+		trav->set_collision_layer(p_on ? 0 : 2);
+		trav->set_collision_mask(p_on ? 0 : (1 | 16));
+		frozen = p_on;
+		set_velocity(Vector3());
+		return;
+	}
 	frozen = p_on;
 	set_visible(!p_on);
 	set_collision_layer(p_on ? 0 : 2);
@@ -911,6 +978,10 @@ void CityPlayer::set_riding(bool p_on) {
 void CityPlayer::stand_at(const Vector3 &p_at, double p_yaw) {
 	set_global_position(p_at);
 	yaw = (float)p_yaw;
+	if (trav) {
+		if (trav->has_method("place")) trav->call("place", p_at); else trav->set_global_position(p_at);
+		trav->set_rotation(Vector3(0, (real_t)p_yaw, 0));
+	}
 	// (the view stays where it was: getting out of a car or off the bike it does not cut round behind him)
 	set_velocity(Vector3());
 	if (fig) fig->drive(Transform3D(Basis(Vector3(0, 1, 0), yaw), p_at), StringName("ual/Idle_Loop"), 1.0, -1.0);
@@ -1027,6 +1098,11 @@ void CityPlayer::act(const StringName &p_clip, double p_seconds, double p_yaw) {
 }
 
 void CityPlayer::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_traversal", "on"), &CityPlayer::set_traversal);
+	ClassDB::bind_method(D_METHOD("get_traversal"), &CityPlayer::get_traversal);
+	ClassDB::bind_method(D_METHOD("get_traversal_body"), &CityPlayer::get_traversal_body);
+	ClassDB::bind_method(D_METHOD("sample"), &CityPlayer::sample);
+	ClassDB::bind_method(D_METHOD("stand_at", "at", "yaw"), &CityPlayer::stand_at);     // (for the tests: set down by a car or the bicycle)
 	ClassDB::bind_method(D_METHOD("set_move", "direction", "run"), &CityPlayer::set_move);
 	ClassDB::bind_method(D_METHOD("get_speed"), &CityPlayer::get_speed);
 	ClassDB::bind_method(D_METHOD("talk_face", "on", "at"), &CityPlayer::talk_face);
