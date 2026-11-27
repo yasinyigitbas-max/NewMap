@@ -1,6 +1,8 @@
 // See trav_npc.h. Translated from traversal_lab/traversal/npc/body_fit.gd and npc_character.gd, line for line.
 #include "trav_npc.h"
 
+#include <cmath>
+
 #include "trav_math.h"
 
 #include <godot_cpp/classes/animation.hpp>
@@ -139,6 +141,14 @@ void TravNpcCharacter::_ready() {
 	skel->move_child(fit, 0);
 	fit->call("bind", skel);
 	leg = (double)fit->get("leg");
+	// His own pace (27 Nov; open since trav84: "the pace is still the player's"): by the square root of his leg's
+	// share of the player's. NOT in the study, mine: bodies of different sizes walk alike at the same speed over
+	// the square root of leg length (the usual rule of like gaits), and by his whole leg ratio a short body crawled.
+	// Found on npc_09 (legs 0.74 of the player's): at the player's pace his walk was the player's at 1.94 m/s, on
+	// the edge of the run, and both his feet were off the ground at each change of step.
+	if (body != nullptr) {
+		body->set("pace", std::sqrt(leg));
+	}
 }
 
 Vector2 TravNpcCharacter::_gait_for(double v) {

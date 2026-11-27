@@ -95,7 +95,7 @@ namespace godot {
 	X(move_landing) X(move_step) X(move_base) X(move_hand) X(move_soft) X(_wish_was_moving) X(narrow) X(stick_held) \
 	X(squeeze) X(stick_wish) X(squeeze_side) X(squeeze_w) X(ledge_wall) X(ledge_out) X(squeeze_mid) \
 	X(squeeze_across) X(_gap_mid) X(_gap_n) X(radius) X(stick_dir) X(cover_drop) X(act_held) X(act_now) X(phone) \
-	X(auto_on) X(auto_to) X(_text_was) X(_call_was) X(run_asked) X(crouched) X(last_sample)
+	X(auto_on) X(auto_to) X(_text_was) X(_call_was) X(run_asked) X(crouched) X(last_sample) X(pace)
 
 class TravBody : public CharacterBody3D {
 	GDCLASS(TravBody, CharacterBody3D)
@@ -172,6 +172,7 @@ public:
 	double radius = RADIUS;
 	Vector3 stick_dir;
 	double cover_drop = 0.0;
+	double pace = 1.0;              // a share of the walking, running and crouching pace (27 Nov, Yasin: "Yes to all"): 1 for the player; an NPC body sets its own (trav_npc.cpp)
 	bool act_held = false;
 	bool act_now = false;
 	int phone = 0;

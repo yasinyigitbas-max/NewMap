@@ -158,7 +158,34 @@ else, don't merge anything else that is involving play or npc movement".
   game's animation branches. The 25 old-game branches have no common history with this repo.
 - The story of First Gear (8 documents, one of them the music: cues and song lists; no sound files exist on any
   branch) was only on the old branch `claude/dazzling-babbage-p7itst`: copied in, additive.
-- [ ] WIRE IN: the new NPC bodies, the new cars and the traversal movement into the game itself. Not started.
+- [ ] WIRE IN (27 Nov, his words: "Okay go for all of it, go non stop unless something breaks"). The order agreed:
+      (1) the traversal player into the game, (2) the 7 new car models given their roles, (3) the game's C++
+      rebuilt on his PC, (4) re-bake, (5) export and PC test, (6) the phone run last.
+      WHAT THE GAME IS (surveyed 27 Nov; file and line in the survey's words):
+      - main scene `tools/city/rig/rig.tscn` (`rig.gd`); `--game` loads `game/boot.tscn` (CityGame). No autoloads,
+        no InputMap actions. Jolt only on Android; Godot Physics on the PC (the lab is Jolt everywhere).
+      - the player is `CityPlayer : CharacterBody3D` (`native/src/city_player.*`, made with ClassDB.instantiate in
+        `rig.gd` `_free_walk`), layer 2, mask 1|16|32; it OWNS the only Camera3D and all input (raw keys, touch
+        stick, sensors); about ten C++ files hold a `CityPlayer*` (bike, car door, hud, law, shops, crowd, talk,
+        damage, hand_grip).
+      - layers: 1 world, 2 player, 5 (16) cars, 6 (32) crowd capsules; `docs/damage/WORLD_CONTRACT.md`: traversal
+        probes use mask 1|4|8, the capsule 1|4|8|16|32; a punch's contact calls `strike(...)`.
+      - car entry: `CityCar::enter(CityPlayer*)` / `leave()` (`city_car_door.cpp`), driven from CityHud; it uses
+        `set_riding`, `stand_at`, `view_vehicle` / `take_view`, `figure()`.
+      - the crowd: far people are one MultiMesh of baked poses; only the nearest 12 (cap 18) are real `CityPed`
+        skeletons on Rocketbox bodies.
+      - car weights `native/src/car_models.h` (weight 0 = never in traffic: the 7 new models); police / ambulance
+        models hard-coded in `city_law.cpp:31-32`; bus model `CityTraffic.bus_model`.
+      - bake / export: `bash tools/city/rig/phone_rig.sh bake | export | install | run`; the baked runtime is not
+        in git (so the game cannot be started in a fresh cloud container without a bake).
+      THE PLAN FOR (1), a switch and not a swap: CityPlayer stays the object everything talks to (camera, input,
+      its calls); behind a switch it makes a TravBody under it, feeds it its input as the tape's `sample()`,
+      follows it, and draws the traversal character instead of its Rocketbox figure. The old player stays the
+      default until he has tried the new one in the game. Needs: the traversal sources compiled into the game's
+      module (one library, so it also gets the Android build), the lab's runtime files copied to `res://traversal/`
+      of the game (the lab is a nested project the game cannot read), the probe mask split from the capsule's
+      (contract), Jolt on the PC too or the body proven on Godot Physics.
+      DONE SO FAR: nothing of (1) to (6).
 
 ## CARRYING AND THINGS IN THE HAND (27 Nov evening, his words; after the C++ port)
 
@@ -318,7 +345,8 @@ to get in and out of cars". Order agreed: the fitting first, then the recipe fix
       piece. Meshy's rigger also adds bones of its own, different on each body: `build_npc.gd` prints them.
 - [ ] the texting grip on their hands; the woman's feet when seated (toes 7 cm up on the 0.45 m bench) and in the
       car; stairs up (a foot 3.2 cm off); the big toe at push-off (14 to 16 degrees).
-- [ ] an NPC's own walking and running pace (his stride is his own; the pace is still the player's 1.45 m/s).
+- [x] (27 Nov, at his "Yes to all") an NPC's own pace: the body has a `pace` setting (1 for the player), an NPC sets
+      the square root of its leg share (mine). npc_09's planted foot stays down now (rose 6.7 cm, now 3.2 at most).
 - [ ] the moves outside the civilian set refused to an NPC.
 - [ ] a brain that drives the body in place of the keys; an NPC on the course beside the player.
 - [ ] what a phone can afford (never measured).

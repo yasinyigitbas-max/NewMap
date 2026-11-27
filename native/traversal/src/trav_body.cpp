@@ -633,7 +633,7 @@ void TravBody::_physics_process(double dt) {
 	}
 	run_asked = (bool)s.get("run", false);
 	stick_held = D(stick.length()) > 0.2;
-	_wish = mul(stick.rotated(UP, (real_t)yaw), crouched ? CROUCH_SPEED : ((bool)s.get("run", false) ? RUN : WALK));
+	_wish = mul(stick.rotated(UP, (real_t)yaw), (crouched ? CROUCH_SPEED : ((bool)s.get("run", false) ? RUN : WALK)) * pace);
 	if (narrow > 0 && D(_wish.length()) > (narrow == 1 ? NARROW_SPEED : NARROW_SPEED_LEAST)) {
 		_wish = mul(_wish.normalized(), narrow == 1 ? NARROW_SPEED : NARROW_SPEED_LEAST);
 	}
