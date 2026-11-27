@@ -82,8 +82,11 @@ sc.render.resolution_x = sc.render.resolution_y = FACE
 sc.view_settings.view_transform = 'Standard'
 sc.view_settings.exposure = -0.3
 wd = bpy.data.worlds.new('W'); sc.world = wd; wd.use_nodes = True
-wd.node_tree.nodes['Background'].inputs[0].default_value = (0.78, 0.82, 0.88, 1)
-wd.node_tree.nodes['Background'].inputs[1].default_value = 1.6
+# the outside seen through the far windows: bright for the Sakura's picture; dimmer for the rebuilt cars (CABIN_SKY), so the
+# windows' bright parts do not speckle the glass edges in the game
+sky = float(os.environ.get('CABIN_SKY', '1.6'))
+wd.node_tree.nodes['Background'].inputs[0].default_value = (0.62, 0.66, 0.72, 1) if sky < 1.0 else (0.78, 0.82, 0.88, 1)
+wd.node_tree.nodes['Background'].inputs[1].default_value = sky
 ld = bpy.data.lights.new('dome', 'POINT'); ld.energy = 25; ld.shadow_soft_size = 0.4
 lo_ = bpy.data.objects.new('dome', ld); sc.collection.objects.link(lo_)
 lo_.location = meshio.g2b(centre + np.array([0, 0.25, 0]))
