@@ -79,7 +79,8 @@ How nothing breaks (the rules of the port):
       `pip install scons`); `native/traversal/` (its own small library, `bash native/traversal/build.sh linux`);
       one empty class, `TravBody`, loads in the lab and stage 0 still passes with the library present. Windows:
       the cross compiler installs in the cloud (`apt-get update; apt-get install g++-mingw-w64-x86-64`); godot-cpp's
-      Windows library was building when this was written: check `OUT/native_tools/godot_cpp_windows_build.log`.
+      Windows library and `traversal.windows.x86_64.dll` build here too (`bash native/traversal/build.sh windows`). Not yet
+      tried: the dll inside an exported exe on his PC.
       A fresh container has none of this: build godot-cpp again first (about 25 minutes each).
 - [ ] a. The body in C++, with its parity test.
 - [ ] b. Detection.

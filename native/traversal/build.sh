@@ -25,7 +25,7 @@ case $TARGET in
     GCLIB=$GODOT_CPP/bin/libgodot-cpp.linux.template_debug.x86_64.a
     OUT=$LAB/bin/libtraversal.linux.x86_64.so ;;
   windows)
-    CXX=${CXX:-x86_64-w64-mingw32-g++-posix}
+    CXX=${CXX:-x86_64-w64-mingw32-g++}      # (the compiler scons built godot-cpp with: the two must use the same thread model)
     CFLAGS="-std=c++17 -fno-exceptions -fvisibility=hidden -O2 -DWINDOWS_ENABLED -DTHREADS_ENABLED -DDEBUG_ENABLED -DNDEBUG -DGDEXTENSION"
     LFLAGS="-shared -fvisibility=hidden -Wl,--no-undefined -static -static-libgcc -static-libstdc++ -s"
     GCLIB=$GODOT_CPP/bin/libgodot-cpp.windows.template_debug.x86_64.a
