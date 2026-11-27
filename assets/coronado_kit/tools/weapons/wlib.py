@@ -313,6 +313,8 @@ MDEF = {
     'sight_org':  ((0.85, 0.25, 0.03), 0.50, 0.0, (0.85, 0.25, 0.03), 0.50, 0.0, 0.0, 0.10, 'none', 0.0),
 }
 MATS = {}
+VAR = {}       # (vehicles) colour variation range per key, default (0.82, 1.12)
+MASK = {}      # (vehicles) colour-map alpha per material key: 1 paint, 0.5 glass, 0 own colour
 SEED = [0]
 
 
@@ -411,7 +413,7 @@ def MAT(key):
     dirt = mr(math_('MULTIPLY', mr(cav, 0.0, 0.6), mr(noise(25.0, 4), 0.35, 0.7, 0.5, 1.0)), 0.0, 1.0, 0.0, da)
 
     # base colour with low-frequency variation (+ wood grain colour)
-    var = mr(noise(9.0, 5, 0.6), 0.3, 0.7, 0.82, 1.12)
+    var = mr(noise(9.0, 5, 0.6), 0.3, 0.7, *VAR.get(key, (0.82, 1.12)))
     bcol = N.new('ShaderNodeMix')
     bcol.data_type = 'RGBA'
     bcol.blend_type = 'MULTIPLY'
@@ -484,6 +486,37 @@ def MAT(key):
         mpb.inputs['Scale'].default_value = (900.0, 6.0, 900.0)
         L.new(obc, mpb.inputs['Vector'])
         height = mr(noise(1.0, 2, 0.5, mpb.outputs[0]), 0.3, 0.7)
+    elif relief == 'tread':                      # (tyres) grooves round the circumference and blocks across
+        a = N.new('ShaderNodeTexWave')
+        a.bands_direction = 'X'
+        a.wave_profile = 'SAW'
+        a.inputs['Scale'].default_value = 28.0
+        L.new(obc, a.inputs['Vector'])
+        r_ = N.new('ShaderNodeTexWave')
+        r_.wave_type = 'RINGS'
+        r_.rings_direction = 'X'
+        r_.inputs['Scale'].default_value = 90.0
+        L.new(obc, r_.inputs['Vector'])
+        height = math_('MULTIPLY', mr(a.outputs['Fac'], 0.1, 0.3), mr(r_.outputs['Fac'], 0.3, 0.5))
+    elif relief == 'lens':                       # (lamps) fine prism ribs
+        a = N.new('ShaderNodeTexWave')
+        a.bands_direction = 'X'
+        a.inputs['Scale'].default_value = 120.0
+        L.new(obc, a.inputs['Vector'])
+        height = a.outputs['Fac']
+    elif relief == 'mesh':                       # (grilles) a square mesh
+        a = N.new('ShaderNodeTexWave')
+        a.bands_direction = 'X'
+        a.wave_profile = 'SAW'
+        a.inputs['Scale'].default_value = 55.0
+        L.new(obc, a.inputs['Vector'])
+        b = N.new('ShaderNodeTexWave')
+        b.bands_direction = 'Z'
+        b.wave_profile = 'SAW'
+        b.inputs['Scale'].default_value = 55.0
+        L.new(obc, b.inputs['Vector'])
+        height = math_('MINIMUM', mr(a.outputs['Fac'], 0.0, 0.25), mr(b.outputs['Fac'], 0.0, 0.25))
+        col = mixc(math_('SUBTRACT', 1.0, height), col, (0.003, 0.003, 0.003))
     elif relief == 'fine':
         height = noise(500.0, 2, 0.5)
     col = mixc(wear, col, wc)
@@ -521,6 +554,9 @@ def bake_mode(channel):
                 L.remove(l)
             if channel == 'mask':
                 em.inputs['Color'].default_value = (1, 1, 1, 1)
+            elif channel == 'amask':
+                a = MASK.get(key, 0.0)
+                em.inputs['Color'].default_value = (a, a, a, 1)
             else:
                 L.new(socks[channel], em.inputs['Color'])
             L.new(em.outputs[0], out.inputs[0])
