@@ -50,7 +50,15 @@ func _process(_dt: float) -> void:
 		mode = ["live", "RECORDING  %d ticks" % (tape.get(&"tape") as Array).size(),
 				"REPLAY  %d / %d" % [tape.get(&"cursor"), (tape.get(&"tape") as Array).size()]][int(tape.get(&"mode"))]
 	var p := body.global_position
-	_text.text = "state   %s\nspeed   %.2f m/s\nheight  %.3f m\nbiggest height step  %.1f cm / tick\npos     %.2f  %.2f  %.2f\nstation %s\ninput   %s\n%s\n\nSpace jump   [ ] station   R reset   F5 record   F6 stop   F7 replay   F8 save   F9 load   Esc mouse" % [
+	# which version of the movement code is running (27 Nov: the C++ version is switched in with `-- --native`)
+	var cpp := 0
+	var parts := 0
+	for part: Node in [body, body.get_node_or_null(^"Character"), body.get_node_or_null(^"Traverse"), body.get_node_or_null(^"Interact")]:
+		if part != null:
+			parts += 1
+			cpp += 1 if part.get_script() == null else 0
+	var code := "C++ (all %d parts)" % parts if cpp == parts else ("scripts" if cpp == 0 else "MIXED: %d of %d parts in C++" % [cpp, parts])
+	_text.text = "code    " + code + "\n" + "state   %s\nspeed   %.2f m/s\nheight  %.3f m\nbiggest height step  %.1f cm / tick\npos     %.2f  %.2f  %.2f\nstation %s\ninput   %s\n%s\n\nSpace jump   [ ] station   R reset   F5 record   F6 stop   F7 replay   F8 save   F9 load   Esc mouse" % [
 			str(r.get("state", "?")), float(r.get("speed", 0.0)), float(r.get("height", p.y)), _max_step * 100.0,
 			p.x, p.y, p.z, station_label, mode, str(r.get("note", ""))]
 	_graph.queue_redraw()
