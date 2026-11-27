@@ -107,6 +107,22 @@ TravCharacter::TravCharacter() {
 	ACTS["car_in"] = "Entering_Car";
 	ACTS["car_out"] = "Exiting_Car";
 	ACTS["sit_down"] = "Stand_To_Sit";
+	// things in the hand and the fist fight (27 Nov; trav_hold.cpp begins these; NOT in the script version)
+	ACTS["pick_box"] = "KM_Pick_Box";
+	ACTS["put_box"] = "KM_Put_Box";
+	ACTS["pick_bag"] = "KM_Pick_Bag";
+	ACTS["put_bag"] = "KM_Put_Bag";
+	ACTS["fight_cross"] = "Fight_Cross";
+	ACTS["fight_hook_l"] = "Fight_Hook_Lead";
+	ACTS["fight_hook_r"] = "Fight_Hook_Rear";
+	ACTS["fight_combo"] = "Fight_Combo";
+	ACTS["fight_jab"] = "Fight_Jab_Elbow";
+	ACTS["fight_hit_ll"] = "Fight_Hit_Light_L";
+	ACTS["fight_hit_lr"] = "Fight_Hit_Light_R";
+	ACTS["fight_hit_m"] = "Fight_Hit_Medium_R";
+	ACTS["fight_hit_bl"] = "Fight_Hit_Big_L";
+	ACTS["fight_hit_br"] = "Fight_Hit_Big_R";
+	ACTS["fight_hit_body"] = "Fight_Hit_Body";
 	ACTS["sit_idle"] = "Sitting_Idle";
 	ACTS["sit_up"] = "Sit_To_Stand";
 	ACTS["sit_type"] = "Typing";
@@ -181,7 +197,7 @@ bool TravCharacter::_get(const StringName &p_name, Variant &r_ret) const {
 		r_ret = v; \
 		return true; \
 	}
-	G(body) G(skel) G(tree) G(player) G(model_path) G(note) G(landing_kind) G(lean) G(arm_open_deg) G(_mode) G(_act)
+	G(ACTS) G(body) G(skel) G(tree) G(player) G(model_path) G(note) G(landing_kind) G(lean) G(arm_open_deg) G(_mode) G(_act)
 	G(_act_t) G(_mode_t) G(_moving) G(_scale) G(_natural) G(_settled) G(_measured) G(feet) G(_leg_ik) G(_orient)
 	G(_stair_phase) G(_stair_on) G(_steep_on) G(_steep_up) G(_steep_phase) G(_steep_w) G(_arms) G(_sub) G(_sub_in)
 	G(hands) G(_slope) G(_hips_fit) G(_free) G(_soft) G(_low_w) G(_narrow_w) G(_squeeze_w) G(_side_t) G(_trunk)
