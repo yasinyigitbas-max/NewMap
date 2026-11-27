@@ -108,6 +108,7 @@ const SHOULDER_TURN_DEG := 40.0 # NOT in the study (it gives no angle), mine: ho
 # Yasin, 27 Nov: "Open the arms to both sides during squeeze in tight places. Also open arms to sides on sidle, head
 # should look towards the direction we are moving to instead of straight ahead in both moves".
 const SIDE_ARMS_DEG := 45.0     # NOT in the study, mine: sideways in a gap or on a ledge his arms are held this far out to his sides
+const SIDLE_ARMS_FWD_DEG := 14.0 # NOT in the study, mine: on a ledge his arms are swung this far forward of his chest, his wrists a palm's depth off the wall
 const SIDE_HEAD_DEG := 70.0     # NOT in the study, mine: and his head turned this far the way he goes (the study: "the neck turns 85 degrees each way")
 const SIDE_REST := 0.6          # NOT in the study, mine: standing still, the side step runs on at this share of its own pace to its end
 const BEAM_ARMS_DEG := 60.0     # NOT in the study, mine: standing still on something narrow his arms are held this far out (the
@@ -910,7 +911,9 @@ func _physics_process(dt: float) -> void:
 	# flicker when falling idle too long>fall animation plays")
 	_beam_arms = move_toward(_beam_arms, _narrow_w * (1.0 - _moving) if (_mode != "move" and int(body.get(&"squeeze")) < 2) else 0.0, dt / FADE)
 	# (in a gap between walls his arms are not held out from his body at all)
-	_arms.set(&"flat", _squeeze_w if int(body.get(&"squeeze")) == 2 else 0.0)    # (not on a ledge: there the plane of his chest is in the wall behind him)
+	_arms.set(&"palm_back", _squeeze_w)
+	_arms.set(&"flat", _squeeze_w)
+	_arms.set(&"fwd_deg", SIDLE_ARMS_FWD_DEG * _squeeze_w if int(body.get(&"squeeze")) == 3 else 0.0)
 	_arms.set(&"open_deg", arm_open_deg * (1.0 - maxf(absf(_turn_deg) / SHOULDER_TURN_DEG, _squeeze_w)) + SIDE_ARMS_DEG * _squeeze_w + (STEEP_ARMS_UP_DEG if _steep_up else STEEP_ARMS_DEG) * _steep_w + BEAM_ARMS_DEG * _beam_arms)
 	if hands:
 		# a move that puts a hand on something: [which hand (0 left, 1 right), where its wrist goes, how much]

@@ -7,6 +7,11 @@ extends SkeletonModifier3D
 
 var flat := 0.0                 # 0 to 1: his arms are laid into the plane of his chest (sideways in a gap or on a ledge: an elbow
                                 # the take holds 4 cm forward of it was that far into the wall of a 0.26 m gap). Set by character.gd
+var fwd_deg := 0.0              # each arm swung this far forward of the plane of his chest (set by character.gd)
+var palm_back := 0.0            # 0 to 1: his palms are turned to face behind him, onto the wall at his back (Yasin, 27 Nov:
+                                # "make the palms face the wall instead of ground on both ledge and squeeze in"). The forearm is
+                                # turned about its own length (the study: "Forearm twist happens in the forearm, not the wrist")
+var _hand_rest_inv := [Basis.IDENTITY, Basis.IDENTITY]
 var _fore := [-1, -1]
 var _hand := [-1, -1]
 var open_deg := 9.0             # NOT in the study: set by eye on his body
@@ -27,6 +32,8 @@ func _bind(sk: Skeleton3D) -> void:
 	_chest = sk.find_bone("mixamorig_Spine2")
 	_fore = [sk.find_bone("mixamorig_LeftForeArm"), sk.find_bone("mixamorig_RightForeArm")]
 	_hand = [sk.find_bone("mixamorig_LeftHand"), sk.find_bone("mixamorig_RightHand")]
+	for f in 2:
+		_hand_rest_inv[f] = sk.get_bone_global_rest(_hand[f]).basis.orthonormalized().inverse()
 	if _chest >= 0:
 		_chest_rest_inv = sk.get_bone_global_rest(_chest).basis.orthonormalized().inverse()
 
@@ -57,3 +64,22 @@ func _process_modification_with_delta(_delta: float) -> void:
 					continue
 				b.basis = Basis(axis.normalized(), d.angle_to(in_plane.normalized()) * flat) * b.basis
 				sk.set_bone_global_pose(int(pair[0]), b)
+		if fwd_deg != 0.0:
+			# each arm swung forward about the upright (on a ledge, laid into the plane of his chest, his wrists were
+			# 3 cm inside the wall behind him: they belong a palm's depth in front of it)
+			var up_arm := sk.get_bone_global_pose(_arm[side])
+			up_arm.basis = Basis(Vector3.UP, deg_to_rad(fwd_deg) * (-1.0 if side == 0 else 1.0)) * up_arm.basis
+			sk.set_bone_global_pose(_arm[side], up_arm)
+		if palm_back > 0.0:
+			# (in the rest pose, arms out to the sides, the palm faces the ground)
+			var fore := sk.get_bone_global_pose(_fore[side])
+			var hand := sk.get_bone_global_pose(_hand[side])
+			var along := (hand.origin - fore.origin).normalized()
+			var palm := (hand.basis.orthonormalized() * (_hand_rest_inv[side] as Basis)) * Vector3.DOWN
+			var back := -fwd.normalized()
+			var p0 := palm - along * palm.dot(along)
+			var p1 := back - along * back.dot(along)
+			if p0.length() > 0.1 and p1.length() > 0.1:
+				var ang := p0.normalized().signed_angle_to(p1.normalized(), along)
+				fore.basis = Basis(along, ang * palm_back) * fore.basis
+				sk.set_bone_global_pose(_fore[side], fore)

@@ -29,9 +29,13 @@ func ok(cond: bool, what: String) -> void:
 
 
 var head_fwd := Vector3.ZERO
+var palms := [Vector3.ZERO, Vector3.ZERO]        # the way each palm faces
 
 
 func _after() -> void:
+	for f in 2:
+		var hb := skel.find_bone("mixamorig_%sHand" % ["Left", "Right"][f])
+		palms[f] = skel.global_transform.basis * ((skel.get_bone_global_pose(hb).basis.orthonormalized() * skel.get_bone_global_rest(hb).basis.orthonormalized().inverse()) * Vector3.DOWN)
 	head_fwd = (skel.global_transform.basis * skel.get_bone_global_pose(skel.find_bone("mixamorig_Head")).basis).z.normalized()
 	for n: String in NAMES:
 		J[n] = (skel.global_transform * skel.get_bone_global_pose(skel.find_bone("mixamorig_" + n))).origin
@@ -51,7 +55,7 @@ func through(w: float, x: float, zc: float, run: bool, off: float, go := 0, rest
 		samples.append({"mx": 0.0, "mz": -1.0 if (go == 0 or i < go) else 0.0, "yaw": 0.0, "run": run, "jump": false, "crouch": false, "act": false})
 	tape.set(&"tape", samples)
 	tape.call(&"replay")
-	var out := {"kinds": {}, "slow": INF, "fast": 0.0, "turn_least": INF, "turn_most": 0.0, "from": INF, "in_wall": 0.0, "in_wall_at": "", "past": 0.0, "at_rest": {}, "face": 0.0, "head": 1.0, "arms": INF}
+	var out := {"kinds": {}, "slow": INF, "fast": 0.0, "turn_least": INF, "turn_most": 0.0, "from": INF, "in_wall": 0.0, "in_wall_at": "", "past": 0.0, "at_rest": {}, "face": 0.0, "head": 1.0, "arms": INF, "palm": 1.0}
 	var t := 0
 	while t < (go + rest if go > 0 else 860):
 		await physics_frame
@@ -73,6 +77,10 @@ func through(w: float, x: float, zc: float, run: bool, off: float, go := 0, rest
 					out["in_wall_at"] = n
 			if z < zc + 0.8 and z > zc - 0.8:
 				out["head"] = minf(float(out["head"]), -head_fwd.z)
+				# (behind him: away from where his toes point)
+				var behind := -signf((J["LeftToeBase"] as Vector3).x - (J["LeftFoot"] as Vector3).x)
+				for f in 2:
+					out["palm"] = minf(float(out["palm"]), (palms[f] as Vector3).x * behind)
 				out["arms"] = minf(float(out["arms"]), (J["LeftHand"] as Vector3).distance_to(J["RightHand"]))
 			# how far the line of his shoulders is turned from square to his way
 			var sh: Vector3 = (J["RightShoulder"] as Vector3) - (J["LeftShoulder"] as Vector3)
@@ -161,6 +169,7 @@ func _run() -> void:
 						ok(float(r["in_wall"]) <= IN_WALL_MOST, "%s: no joint is in a wall (the furthest %.3f m: %s)" % [how, float(r["in_wall"]), r["in_wall_at"]])
 						# (Yasin, 27 Nov: arms open to both sides, head looking the way he goes)
 						ok(float(r["arms"]) > 0.95, "%s: his arms are open to both sides (wrists at least %.2f m apart; 0.53 m standing)" % [how, float(r["arms"])])
+						ok(float(r["palm"]) > 0.7, "%s: his palms face the wall behind him (within %.0f degrees of it)" % [how, rad_to_deg(acos(clampf(float(r["palm"]), -1.0, 1.0)))])
 						ok(float(r["head"]) > 0.8, "%s: his head looks the way he goes (within %.0f degrees of it)" % [how, rad_to_deg(acos(clampf(float(r["head"]), -1.0, 1.0)))])
 		if band == 2:
 			# standing still in it: he stays sideways, his feet in the gap, and the side step runs on to feet together

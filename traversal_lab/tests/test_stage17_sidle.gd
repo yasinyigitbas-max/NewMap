@@ -28,9 +28,13 @@ func ok(cond: bool, what: String) -> void:
 
 
 var head_fwd := Vector3.ZERO
+var palms := [Vector3.ZERO, Vector3.ZERO]        # the way each palm faces
 
 
 func _after() -> void:
+	for f in 2:
+		var hb := skel.find_bone("mixamorig_%sHand" % ["Left", "Right"][f])
+		palms[f] = skel.global_transform.basis * ((skel.get_bone_global_pose(hb).basis.orthonormalized() * skel.get_bone_global_rest(hb).basis.orthonormalized().inverse()) * Vector3.DOWN)
 	head_fwd = (skel.global_transform.basis * skel.get_bone_global_pose(skel.find_bone("mixamorig_Head")).basis).z.normalized()
 	for n: String in NAMES:
 		J[n] = (skel.global_transform * skel.get_bone_global_pose(skel.find_bone("mixamorig_" + n))).origin
@@ -52,7 +56,7 @@ func along(face: float, wall: float, plan: Array) -> Dictionary:
 	tape.set(&"tape", samples)
 	tape.call(&"replay")
 	var out := {"kinds": {}, "fast": 0.0, "turn_least": INF, "low": INF, "ankle_least": INF, "ankle_most": 0.0, "hips_least": INF, "toes_out": true,
-			"far": INF, "moves": int(trav.get(&"plays")), "after": -1, "after_r": 0.0, "back": -INF, "head": 1.0, "arms": INF, "hand_least": INF}
+			"far": INF, "moves": int(trav.get(&"plays")), "after": -1, "after_r": 0.0, "back": -INF, "head": 1.0, "arms": INF, "hand_least": INF, "palm": 1.0}
 	var before := int(trav.get(&"plays"))
 	for t in samples.size() - 2:
 		await physics_frame
@@ -77,6 +81,8 @@ func along(face: float, wall: float, plan: Array) -> Dictionary:
 				out["toes_out"] = bool(out["toes_out"]) and ball > ankle
 			out["head"] = minf(float(out["head"]), head_fwd.z * (-1.0 if (body.get(&"hvel") as Vector3).z < 0.0 else 1.0)) if (body.get(&"hvel") as Vector3).length() > 0.3 and p.z < 9.5 + z_off else float(out["head"])
 			out["arms"] = minf(float(out["arms"]), (J["LeftHand"] as Vector3).distance_to(J["RightHand"])) if p.z < 9.5 + z_off else float(out["arms"])
+			for f in 2:
+				out["palm"] = minf(float(out["palm"]), (palms[f] as Vector3).x * wall) if p.z < 9.5 + z_off else float(out["palm"])
 			for hn: String in ["LeftHand", "RightHand"]:
 				out["hand_least"] = minf(float(out["hand_least"]), ((J[hn] as Vector3).x - face) * -wall)
 			out["hips_least"] = minf(float(out["hips_least"]), ((J["Hips"] as Vector3).x - face) * -wall)
@@ -144,6 +150,7 @@ func _run() -> void:
 		ok(float(r["ankle_least"]) > 0.01 and float(r["ankle_most"]) < 0.14, "%s: his heels to the wall (ankle joints %.2f to %.2f m out from it)" % [what, float(r["ankle_least"]), float(r["ankle_most"])])
 		ok(float(r["hips_least"]) > 0.10, "%s: his back on the wall, not in it (hip joints at least %.2f m out from it)" % [what, float(r["hips_least"])])
 		ok(float(r["arms"]) > 0.95 and float(r["hand_least"]) > 0.0, "%s: his arms are open to both sides, on the wall and not in it (wrists at least %.2f m apart, at least %.2f m out from the wall)" % [what, float(r["arms"]), float(r["hand_least"])])
+		ok(float(r["palm"]) > 0.7, "%s: his palms face the wall behind him (within %.0f degrees of it)" % [what, rad_to_deg(acos(clampf(float(r["palm"]), -1.0, 1.0)))])
 		ok(float(r["head"]) > 0.8, "%s: his head looks the way he goes (within %.0f degrees of it)" % [what, rad_to_deg(acos(clampf(float(r["head"]), -1.0, 1.0)))])
 		ok(int(r["after"]) == 0 and float(r["after_r"]) > 0.24 and int(r["moves"]) == 0, "%s: on the far platform he is as he was before (kind %d, his shape %.2f m, %d moves played)" % [what, int(r["after"]), float(r["after_r"]), int(r["moves"])])
 	# half way along, standing still for 12 s (no loss of balance: his back is on the wall), then back the way he came
