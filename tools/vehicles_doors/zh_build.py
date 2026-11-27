@@ -191,11 +191,13 @@ def dims(o):
 
 tmpl = wheel_objs[0]
 unwrap_alone(tmpl)
+own_uv = set()      # (part numbers of wheels with their own UVs)
 for i in range(1, len(wheel_objs)):
     o = wheel_objs[i]
     if any(abs(a - b) > 0.02 for a, b in zip(dims(o), dims(tmpl))):     # (a different wheel: twin rears on a truck) its own UVs
         log('wheel %d differs from the front one: own UVs' % i)
         unwrap_alone(o)
+        own_uv.add(i + 1)
         continue
     o.data = tmpl.data.copy()
     M = Matrix.Translation(w_c[i]) @ (Matrix.Rotation(math.pi, 4, 'Z') if (w_c[i].x > 0) != (w_c[0].x > 0) else Matrix.Identity(4)) @ Matrix.Translation(-w_c[0])
@@ -244,11 +246,17 @@ bpy.ops.object.mode_set(mode='OBJECT')
 # the shared wheel: 1.5 x the texel density of the body (scaled as a whole, about one point: its islands stay whole)
 uv = J.data.uv_layers['UV'].data
 pa = J.data.attributes['part'].data
-wl = [li for p in J.data.polygons if pa[p.index].value > 0 for li in p.loop_indices]
-if wl:
+# (and each UV set moved off the body's page and off the others: the pack merges only the wheels that share the
+# template's UVs, lying exactly on each other, never a wheel onto the body)
+groups = {}
+for p in J.data.polygons:
+    v = pa[p.index].value
+    if v > 0:
+        groups.setdefault(v if v in own_uv else 0, []).extend(p.loop_indices)
+for g, wl in groups.items():
     c0 = sum((uv[li].uv for li in wl), Vector((0, 0))) / len(wl)
     for li in set(wl):
-        uv[li].uv = c0 + (uv[li].uv - c0) * 1.5
+        uv[li].uv = c0 + (uv[li].uv - c0) * 1.5 + Vector((3.0 * (1 + g), 0.0))
 # (one texel density for all: shrinking single faces split them into thousands of islands and wasted the page)
 edit([J])
 bpy.ops.uv.pack_islands(udim_source='CLOSEST_UDIM', rotate=True, rotate_method='ANY', scale=True, merge_overlap=True,
