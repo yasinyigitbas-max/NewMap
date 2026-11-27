@@ -63,6 +63,30 @@ func phone(at_ear: bool) -> Dictionary:
 	return {"shown": box.visible, "at": xf.origin, "face": xf.basis.z.normalized(), "up": xf.basis.y.normalized()}
 
 
+## How his hands are on the phone, as lengths (m), to hold one moment against another. Texting: each wrist from the
+## phone's middle, the tips of each first and middle finger behind its back, each thumb tip over its face. A call:
+## his left wrist from its foot, the tips of his middle finger and thumb from its middle.
+func grip(at_ear: bool) -> Array:
+	var ph := phone(at_ear)
+	var at: Vector3 = ph["at"]
+	if at_ear:
+		return [(J["LeftHand"] as Vector3).distance_to(at - (ph["up"] as Vector3) * 0.074), (J["LeftHandMiddle4"] as Vector3).distance_to(at), (J["LeftHandThumb4"] as Vector3).distance_to(at)]
+	var out := [(J["LeftHand"] as Vector3).distance_to(at), (J["RightHand"] as Vector3).distance_to(at)]
+	for tn: String in ["LeftHandIndex4", "LeftHandMiddle4", "RightHandIndex4", "RightHandMiddle4"]:
+		out.append(-((J[tn] as Vector3) - at).dot(ph["face"] as Vector3))
+	for tn: String in ["LeftHandThumb4", "RightHandThumb4"]:
+		out.append(((J[tn] as Vector3) - at).dot(ph["face"] as Vector3))
+	return out
+
+
+## The most any of those lengths differs between two moments (m).
+func slack(a: Array, b: Array) -> float:
+	var most := 0.0
+	for i in a.size():
+		most = maxf(most, absf(float(a[i]) - float(b[i])))
+	return most
+
+
 func facing() -> Vector3:
 	var d: Vector3 = (J["RightUpLeg"] as Vector3) - (J["LeftUpLeg"] as Vector3)
 	return Vector3(d.z, 0.0, -d.x).normalized()
@@ -127,13 +151,20 @@ func _run() -> void:
 		closed = closed and behind > 0.0 and behind < 0.05 and own > 0.0 and own < 0.06
 		tips += " %.3f/%.3f" % [behind, own]
 	ok(closed, "standing text: his fingers are closed round its back, each hand from its own side (finger tips behind it / out from its middle line, m:%s; it is 0.072 m wide)" % tips)
+	# (Yasin, 27 Nov: "fix the seated and walking phone grabs too": the grip he stands with is the grip he walks and
+	# sits with; before, the phone moved in his hands by up to 7 cm as he set off, walked, sat down and got up)
+	var grip_t := grip(false)
+	var loose_t := 0.0
 	keys["mz"] = -1.0
-	await ticks(150)
+	for i in 150:
+		await ticks(1)
+		loose_t = maxf(loose_t, slack(grip_t, grip(false)))
 	var pace := (body.get(&"hvel") as Vector3).length()
 	var hi := -INF
 	var lo := INF
 	for i in 90:
 		await ticks(1)
+		loose_t = maxf(loose_t, slack(grip_t, grip(false)))
 		hi = maxf(hi, (J["RightHand"] as Vector3).y)
 		lo = minf(lo, (J["RightHand"] as Vector3).y)
 	ok(pace > 1.0 and pace <= float(body.get(&"PHONE_SPEED")) + 0.05 and lo > 1.0, "walking text: he walks at %.2f m/s with the phone up (right wrist %.2f to %.2f m up through the stride)" % [pace, lo, hi])
@@ -142,7 +173,10 @@ func _run() -> void:
 	ok((body.get(&"hvel") as Vector3).length() <= float(body.get(&"PHONE_SPEED")) + 0.05, "walking text, the run key held: no faster (%.2f m/s)" % (body.get(&"hvel") as Vector3).length())
 	keys["run"] = false
 	keys["mz"] = 0.0
-	await ticks(90)
+	for i in 90:
+		await ticks(1)
+		loose_t = maxf(loose_t, slack(grip_t, grip(false)))
+	ok(loose_t < 0.005, "walking text: setting off, walking and stopping, the phone stays in his hands as he holds it standing (wrists, finger tips and thumbs within %.1f mm of where they are on it standing)" % (loose_t * 1000.0))
 	await tap("call")
 	var ear := INF
 	for i in 300:                   # (one whole turn of the call take)
@@ -163,6 +197,15 @@ func _run() -> void:
 	var thumb_tip: Vector3 = (J["LeftHandThumb4"] as Vector3) - (pc["at"] as Vector3)
 	ok(absf(mid_tip.dot(pc["up"] as Vector3)) < 0.085 and mid_tip.length() < 0.09 and thumb_tip.length() < 0.09, "standing call: his fingers are closed round it (the tip of his middle finger %.3f m and of his thumb %.3f m from its middle; it is 0.148 by 0.072 m)" % [mid_tip.length(), thumb_tip.length()])
 	ok(int(body.get(&"phone")) == 2 and ear < 0.32, "standing call: G brings the phone to his ear (left wrist %.2f m from his head joint)" % ear)
+	var grip_c := grip(true)
+	var loose_c := 0.0
+	keys["mz"] = -1.0
+	for i in 240:
+		if i == 150:
+			keys["mz"] = 0.0
+		await ticks(1)
+		loose_c = maxf(loose_c, slack(grip_c, grip(true)))
+	ok(loose_c < 0.005, "walking call: setting off, walking and stopping, his hand stays on the phone as it is standing (wrist, middle finger and thumb within %.1f mm)" % (loose_c * 1000.0))
 	await tap("call")
 	await ticks(60)
 	ok(int(body.get(&"phone")) == 0 and ((J["RightHand"] as Vector3) - (J["Hips"] as Vector3)).distance_to(rest_r) < 0.10, "G again: the phone is put away, his arm as it was")
@@ -203,11 +246,16 @@ func _run() -> void:
 	await tap("text")
 	await ticks(150)
 	ok(String(inter.get(&"sit_phase")) == "idle" and (J["RightHand"] as Vector3).y > sat_r.y + 0.05 and (J["RightHand"] as Vector3).y > (J["Hips"] as Vector3).y + 0.08 and (J["LeftHand"] as Vector3).distance_to(J["RightHand"]) < 0.40, "sit messaging: seated, T brings both hands to the phone (right wrist %.2f m higher than at rest, wrists %.2f m apart)" % [(J["RightHand"] as Vector3).y - sat_r.y, (J["LeftHand"] as Vector3).distance_to(J["RightHand"])])
+	ok(slack(grip_t, grip(false)) < 0.005, "sit messaging: he holds the phone as he does standing (within %.1f mm)" % (slack(grip_t, grip(false)) * 1000.0))
 	await tap("call")
+	await ticks(60)
 	var ear2 := INF
+	var loose_s := 0.0
 	for i in 300:
 		await ticks(1)
 		ear2 = minf(ear2, (J["LeftHand"] as Vector3).distance_to(J["Head"]))
+		loose_s = maxf(loose_s, slack(grip_c, grip(true)))
+	ok(loose_s < 0.005, "sit phone talk: his hand is on the phone as it is standing (within %.1f mm)" % (loose_s * 1000.0))
 	ok(String(inter.get(&"sit_phase")) == "idle" and ear2 < 0.32, "sit phone talk: seated, G brings the phone to his ear (left wrist %.2f m from his head joint)" % ear2)
 	await tap("call")
 	await ticks(40)

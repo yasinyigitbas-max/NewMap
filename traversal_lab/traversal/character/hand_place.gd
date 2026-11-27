@@ -24,6 +24,7 @@ var hold_turned := [false, false]  # the held hand is turned to `hold_basis` (sk
 var hold_basis := [Basis.IDENTITY, Basis.IDENTITY]
 var hold_loose := [false, false]   # held in place, but the hand itself turns as the take turns it (the phone at his ear)
 var hold_flat: Array = [false, false]   # the held hand is laid flat on the top, fingers forward (the climbs): see hand_hold.gd
+var refit := Callable()         # called as the corrections run, to find the held places again from this tick's pose (the phone)
 var on := false                 # a take that puts hands down is showing
 var clip_slope := 0.0           # that take's own ground: its rise per metre forward
 var hand_low := 0.0             # how near the take's own ground its hands come at their lowest (m, at the wrist)
@@ -61,6 +62,8 @@ func _process_modification_with_delta(dt: float) -> void:
 		return
 	var xf := sk.global_transform
 	var inv := xf.affine_inverse()
+	if refit.is_valid():
+		refit.call()
 	# both hands held: bend the trunk forward just far enough for both arms to reach, before the arms are solved
 	var want_bend := 0.0
 	if _spine >= 0 and float(hold_w[0]) > 0.0 and float(hold_w[1]) > 0.0:
@@ -83,6 +86,8 @@ func _process_modification_with_delta(dt: float) -> void:
 		var g := sk.get_bone_global_pose(_spine)
 		g.basis = Basis(Vector3.RIGHT, deg_to_rad(bend_deg)) * g.basis
 		sk.set_bone_global_pose(_spine, g)
+		if refit.is_valid():
+			refit.call()            # (his head came forward with his trunk)
 	var grounded := int(body.get(&"state")) == 0
 	var short := -1.0           # the most any reaching arm is short of its ground (m; below 0 = none is)
 	var reaching := false

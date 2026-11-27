@@ -71,7 +71,10 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
   head shows over walls under 1.4 m while he moves; no take goes from standing into standing cover on his body (the
   take out of it is played backward); the high look round the end is `Standing Cover Turn`, the X Bot take; cover
   is taken only against a wall he faces within 2 m, with E; no cover-to-cover move, no corner turn.
-- Fingers do not curl on any hold (no finger correction).
+- Fingers do not curl on any hold but the phone (trav79 to trav81: `finger_grip.gd`). On the phone his little finger
+  is not under its bottom edge and his thumbs rest, they do not tap. On a call his elbow is out to the side at chin
+  height (his arm is too short to hang it lower with the hand at his ear). At the desk T is "hands to the keys", not
+  the phone. All grip angles and offsets are mine.
 - The sidle is taken to 0.30 m, not the study's 0.25 (mine); his arms hang, they are not spread on the wall; going
   back the way he came in a gap (not on a ledge) is not tested.
 - On a beam the walking feet are not brought onto it, only the standing feet.
@@ -80,6 +83,8 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
 
 ## Waiting on Yasin's eyes
 
+- trav80, trav81: the phone gripped (T text: a hand closed round each side; G call: fingers hooked over its edge),
+  standing, walking, sitting down, seated and getting up.
 - trav78: the car in and out (the jitter), the phone in his hand texting and at his ear on a call.
 - trav77: cover on the course's thin and deep walls (E facing a wall; the stick along it; held at its end to look
   round; E or the stick out from it to leave).

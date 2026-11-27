@@ -444,6 +444,7 @@ func _ready() -> void:
 		hands = HandPlace.new()
 		hands.name = "HandPlace"
 		hands.set(&"body", body)
+		hands.set(&"refit", _phone_refit)
 		hands.call(&"bind", skel)
 		skel.add_child(hands)
 		var h_targets: Array[Node3D] = []
@@ -707,6 +708,38 @@ func _phone_hold() -> Array:
 		var wrist2 := pc.origin + pc.basis.x * PHONE_CALL_HOLD.x - pc.basis.y * PHONE_CALL_HOLD.y - pc.basis.z * PHONE_CALL_HOLD.z
 		out[0] = [skel.global_transform * wrist2, _hand_turned(0, -pc.basis.x * PHONE_CALL_ALONG.x + pc.basis.y * PHONE_CALL_ALONG.y, pc.basis.z), calling]
 	return out
+
+
+## Where his thumbs are laid: texting, on the lower part of the phone's face, side by side; on a call, his left thumb
+## on the edge toward the front of his head.
+func _phone_thumbs() -> void:
+	if _grip == null:
+		return
+	if _phone_kind >= 0.5:
+		var pc := _call_phone()
+		_grip.set(&"thumb_to", [pc.origin + pc.basis.x * (PHONE_SIZE.x * 0.5) - pc.basis.y * 0.02 + pc.basis.z * 0.006, Vector3.ZERO])
+	else:
+		var pt := _text_phone()
+		var low := pt.origin - pt.basis.y * 0.035 + pt.basis.z * (PHONE_SIZE.z * 0.5 + 0.008)
+		_grip.set(&"thumb_to", [low - pt.basis.x * 0.014, low + pt.basis.x * 0.014])
+
+
+## The hold on the phone, found again from the pose of this very tick, as the corrections run (hand_place.gd calls it
+## just before it sets the arms). The places found in _physics_process are a tick old and are from before his hips
+## and trunk are corrected, so while he walked, sat down or got up the phone moved about in his hands by up to 7 cm
+## and his finger tips passed through it (Yasin, 27 Nov: "fix the seated and walking phone grabs too").
+func _phone_refit() -> void:
+	if hands == null or _phone_w <= 0.0:
+		return
+	var turned: Array = hands.get(&"hold_turned")
+	if not (bool(turned[0]) or bool(turned[1])):
+		return
+	var hold: Array = _phone_hold()
+	for f in 2:
+		if bool(turned[f]) and float(hold[f][2]) > 0.0:
+			(hands.get(&"hold_at") as Array)[f] = hold[f][0]
+			(hands.get(&"hold_basis") as Array)[f] = hold[f][1]
+	_phone_thumbs()
 
 
 ## The phone, placed on the finished pose (after every correction).
@@ -1137,13 +1170,7 @@ func _physics_process(dt: float) -> void:
 			# his thumbs: texting, on the lower part of its face, side by side (Yasin, 27 Nov: "fixed under the thumbs");
 			# on a call, his left thumb on the edge toward the front of his head
 			_grip.set(&"thumb_w", [float(w[0]) if turned[0] else 0.0, float(w[1]) if turned[1] else 0.0])
-			if calling >= texting:
-				var pc := _call_phone()
-				_grip.set(&"thumb_to", [pc.origin + pc.basis.x * (PHONE_SIZE.x * 0.5) - pc.basis.y * 0.02 + pc.basis.z * 0.006, Vector3.ZERO])
-			else:
-				var pt := _text_phone()
-				var low := pt.origin - pt.basis.y * 0.035 + pt.basis.z * (PHONE_SIZE.z * 0.5 + 0.008)
-				_grip.set(&"thumb_to", [low - pt.basis.x * 0.014, low + pt.basis.x * 0.014])
+			_phone_thumbs()
 		hands.set(&"hold_loose", loose)
 		hands.set(&"hold_w", w)
 		hands.set(&"hold_flat", flat)
