@@ -4,6 +4,7 @@
 // reference; a layer is a line-for-line translation and replaces nothing until it gives the same numbers.
 #include "trav_body.h"
 #include "trav_detector.h"
+#include "trav_foot_place.h"
 #include "trav_hand_place.h"
 #include "trav_mods.h"
 
@@ -26,6 +27,7 @@ static void trav_init(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(TravFootOrient);
 	GDREGISTER_CLASS(TravFingerGrip);
 	GDREGISTER_CLASS(TravHandPlace);
+	GDREGISTER_CLASS(TravFootPlace);
 }
 
 static void trav_term(ModuleInitializationLevel p_level) {}

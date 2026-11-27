@@ -89,7 +89,8 @@ How nothing breaks (the rules of the port):
       every stage test and the audit the same with `-- --native`.
 - [ ] c. The character and its corrections. DONE (trav89): arm_open, trunk_turn, hand_hold, foot_orient, finger_grip
       (`trav_mods.*`) and hand_place (`trav_hand_place.*`), every bone the same as the script over 121,600 ticks.
-      LEFT: foot_place.gd (439 lines), feet.gd, then character.gd itself (the animation tree, the gait, the acts,
+      (trav90) foot_place (`trav_foot_place.*`), the same. (feet.gd is the first version's, not used.)
+      LEFT: character.gd itself (the animation tree, the gait, the acts,
       the phone; 1,570 lines), then npc/body_fit.gd and npc_character.gd. Each is switched in by `_made()` in
       character.gd; add its numbers to `tests/parity_run.gd` if the pose number does not already cover it.
 - [ ] d. The traversal moves.

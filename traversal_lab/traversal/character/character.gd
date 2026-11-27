@@ -367,7 +367,7 @@ func _ready() -> void:
 	# head, `LimitAngularVelocityModifier3D` as a pop filter". (Arm IK and the twist disperser come with the first
 	# move that puts hands on something; they are NOT built yet.)
 	if body:
-		feet = FootPlace.new()
+		feet = _made(&"TravFootPlace", FootPlace)
 		feet.name = "FootPlace"
 		feet.set(&"body", body)
 		feet.call(&"bind", skel)
