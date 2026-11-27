@@ -168,7 +168,12 @@ for i, h in enumerate(sorted(hubs, key=lambda h: (-h[0].y, h[0].x))):
     wheel_objs.append(join(h[1], 'w%d' % i))
 # ONE wheel for all four (the front-left one, turned about for the right side): the four share their UVs, so the wheel
 # gets four times the texels (the white-wall ring and the lettering broke into blocks on a quarter share each)
-w_c = [sum((v.co for v in o.data.vertices), Vector()) / len(o.data.vertices) for o in wheel_objs]
+def bbox_c(o):      # (the axle: the middle of the bounds; a vertex mean leans to the busy outer face)
+    vs = [v.co for v in o.data.vertices]
+    return Vector([(max(v[k] for v in vs) + min(v[k] for v in vs)) / 2 for k in range(3)])
+
+
+w_c = [bbox_c(o) for o in wheel_objs]
 def unwrap_alone(o):
     while o.data.uv_layers:
         o.data.uv_layers.remove(o.data.uv_layers[0])
@@ -207,7 +212,7 @@ for pi, o in enumerate(parts_in):
     for d in o.data.attributes['part'].data:
         d.value = pi
     if pi:
-        hub_c.append(sum((v.co for v in o.data.vertices), Vector()) / len(o.data.vertices))
+        hub_c.append(bbox_c(o))
 J = join(parts_in, 'J')
 bm = bmesh.new(); bm.from_mesh(J.data)
 bmesh.ops.dissolve_degenerate(bm, dist=1e-5, edges=bm.edges)

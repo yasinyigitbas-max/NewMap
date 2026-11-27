@@ -16,10 +16,10 @@ for k, w in enumerate(info['wheels']):
     r = float(max(hi[1] - lo[1], hi[2] - lo[2]) / 2)
     V = V.copy(); V[:, 0:3] = P - c
     meshio.write(os.path.join(G, '%s_w%d' % (ID, k)), V, I, j)
-    lo = os.path.join(G, '%s_w%d_lo' % (ID, k))
-    if os.path.exists(lo + '.json'):      # (its light copy was written about the same wrong hub)
-        jl, VL, IL = meshio.read(lo); VL = VL.copy(); VL[:, 0:3] = VL[:, 0:3] + np.array(w['center'], np.float32) - c
-        meshio.write(lo, VL, IL, jl)
+    lp = os.path.join(G, '%s_w%d_lo' % (ID, k))
+    if os.path.exists(lp + '.json'):      # (its light copy was written about the same wrong hub)
+        jl, VL, IL = meshio.read(lp); VL = VL.copy(); VL[:, 0:3] = VL[:, 0:3] + np.array(w['center'], np.float32) - c
+        meshio.write(lp, VL, IL, jl)
     info['wheels'][k] = {'center': [float(x) for x in c], 'radius': r}
     print(ID, 'w%d' % k, 'hub', c.round(3), 'r %.3f' % r, 'width %.3f' % (hi[0] - lo[0]))
 json.dump(info, open(p, 'w'), indent=1)
