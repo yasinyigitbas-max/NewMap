@@ -33,7 +33,8 @@ class CityRooms : public Node3D {
 	static constexpr float COL_M = 40.0f;
 	// hold: 0 = by proximity, 1 = held open, 2 = held shut (interact_door; let go when nobody is within HOLD_M)
 	struct Leaf { uint64_t node = 0; Vector3 mid, out_dir; float sign = 1.0f, amount = 0.0f, dir = 1.0f, hp = 60.0f; int hold = 0; bool broken = false; String bid; };
-	struct Win { uint64_t node = 0; String bid; float hp = 25.0f; bool broken = false, cracked = false; Vector2 uv = Vector2(0.5f, 0.55f); };
+	struct Win { uint64_t node = 0; String bid; float hp = 25.0f; bool broken = false, cracked = false; Vector2 uv = Vector2(0.5f, 0.55f); std::vector<Vector2> holes; };   // (holes: bullet holes in the pane, CityDamage; MAX_HOLES)
+	static constexpr int MAX_HOLES = 8;
 	static constexpr float HOLD_M = 8.0f, DOOR_HP = 60.0f, WINDOW_HP = 25.0f, WINDOW_CRACK_HP = 15.0f;
 	struct Room {
 		String cell, scn, raw, col; uint64_t building = 0; Vector3 centre_local, centre_world;
@@ -77,6 +78,7 @@ class CityRooms : public Node3D {
 	// the sounds (glass_shatter_* / a tick for the crack) played from here
 	static Vector2 win_uv(Node3D *p_win, const Vector3 &p_at);
 	static void win_cracked(Node3D *p_win, const Vector2 &p_uv);
+	static void win_holes(Node3D *p_win, const std::vector<Vector2> &p_holes);      // the pane shader's holes (builtin_glass.gdshader holes0..3, hole_n)
 	void win_broken(Node3D *p_win, const Vector2 &p_uv, bool p_burst);
 		void add_col(const Vector3 &p_cam);      // the next piece of the nearest room's collision      // the building's near model: cut open (room in) or closed (no room)
 protected:
@@ -93,6 +95,10 @@ public:
 	//   returns the bid hit ("" none). Signals: door_toggled(bid, open), door_broken(bid, at), window_broken(bid, at)
 	bool interact_door(const Vector3 &p_at, float p_radius);
 	String damage_at(const Vector3 &p_at, float p_amount, float p_radius);
+	// CityDamage's way in (docs/damage/WORLD_CONTRACT.md: nothing else talks to windows and doors): as damage_at, and a bullet
+	// (p_hole) leaves a hole in a pane. Returns {bid, what: "window"|"door", state: intact|cracked|broken|closed, now: broke
+	// with this hit, holes} or {} when nothing was within p_radius
+	Dictionary hit_opening(const Vector3 &p_at, double p_amount, double p_radius, bool p_hole);
 	Dictionary get_breakables() const { return breakables.duplicate(true); }
 	void set_breakables(const Dictionary &p_d) { breakables = p_d.duplicate(true); }
 	// the rooms awake now: the room's name (its scene's, as interiors/room_people.json names it) and where it stands

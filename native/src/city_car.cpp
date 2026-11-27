@@ -1,6 +1,7 @@
 // CityCar: see city_car.h.
 #include "perf_marks.h"
 #include "city_car.h"
+#include "city_damage.h"
 #include <godot_cpp/classes/box_mesh.hpp>
 #include <godot_cpp/classes/geometry_instance3d.hpp>
 #include "city_crowd.h"
@@ -270,6 +271,9 @@ void CityCar::hit(const Vector3 &p_dv) {
 	const float depth = std::min(std::max((sev - 2.0f) * 0.022f, 0.02f), 0.22f);
 	const float rad = std::min(std::max(0.35f + sev * 0.035f, 0.4f), 0.9f);
 	add_dent(pt, ld * depth, rad);
+	// what it hit takes the mark (a scrape on a wall, a scar on a tree, sparks): the contract's hit(..., CAR, car), at the
+	// dent's place on the hull, pointing at the obstacle
+	if (CityDamage::the) { const Transform3D gx = get_global_transform(); const Vector3 wn = gx.basis.xform(ld).normalized(); CityDamage::the->hit(gx.xform(pt), wn, -wn, sev, CityDamage::CAR, this); }
 	health = std::max(0.0f, health - sev * sev * 0.0012f);
 	hits++;
 	apply_health();

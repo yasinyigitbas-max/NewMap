@@ -209,7 +209,9 @@ public:
 	bool skyline = true;      // the painted San Diego ring round the horizon (C++ CitySkyline; the Hospital / coordinator session's, 20 Nov)
 	void set_skyline(bool v) { skyline = v; } bool get_skyline() const { return skyline; }
 	bool breakables = true;   // B9: a CityBreakables child follows the cells (set before the node enters the tree)
+	bool damage = true;       // damage option B: a CityDamage child (the world's one; docs/damage)
 	void set_breakables(bool v) { breakables = v; } bool get_breakables() const { return breakables; }
+	void set_damage(bool v) { damage = v; } bool get_damage() const { return damage; }
 	int leaving_count() const;
 };
 

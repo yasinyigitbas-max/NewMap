@@ -29,6 +29,7 @@
 #include "city_sea.h"
 #include "city_skyline.h"
 #include "city_rooms.h"
+#include "city_damage.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/class_db.hpp>
@@ -65,6 +66,7 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(CityRooms);     // the shops' rooms woken by distance, their doors swung (B14)
 	GDREGISTER_CLASS(CitySkyline);   // the San Diego ring round the horizon (port of tools/city/look/skyline.gd)
 	GDREGISTER_CLASS(CitySea);       // the sea, drawn after the city (port of tools/city/look/sea.gd)
+	GDREGISTER_CLASS(CityDamage);       // the one damage node: hit / strike / surface_at, marks, particles (docs/damage)
 	GDREGISTER_CLASS(CityBreakables);   // small street props that cars knock over (B9)
 	GDREGISTER_CLASS(CityStream);    // the baked city streamed round the player (port of city_stream.gd, 20 Nov)
 	GDREGISTER_CLASS(EngineSound);   // a car's engine made sample by sample from its revs, gears and pedal (B4)

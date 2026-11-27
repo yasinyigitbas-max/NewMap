@@ -125,6 +125,9 @@ void CityRooms::finish(int i) {
 			const Array uv = st.get("uv", Array());
 			if (uv.size() == 2) wi.uv = Vector2((float)(double)uv[0], (float)(double)uv[1]);
 			const String sv = st.get("state", "");
+			const Array hs = st.get("holes", Array());
+			for (int h = 0; h + 1 < hs.size(); h += 2) wi.holes.push_back(Vector2((float)(double)hs[h], (float)(double)hs[h + 1]));
+			if (!wi.holes.empty() && sv != "broken" && !w->has_method("damage")) win_holes(w, wi.holes);
 			if (!w->has_method("damage")) {
 				if (sv == "broken") { wi.broken = true; win_broken(w, wi.uv, false); }
 				else if (sv == "cracked") { wi.cracked = true; win_cracked(w, wi.uv); }
@@ -391,7 +394,7 @@ void CityRooms::win_broken(Node3D *p_win, const Vector2 &p_uv, bool p_burst) {
 		sh->set_position(hit_local); sh->restart(); sh->set_emitting(true);
 	}
 	const Vector3 at = get_global_transform().affine_inverse().xform(p_win->get_global_transform().xform(hit_local));
-	elsfx::play(this, "res://audio/sfx/glass_shatter_", -3.0f, 0.06f, at, 35.0f);
+	elsfx::play(this, "res://audio/sfx/car/glass_shatter_", -3.0f, 0.06f, at, 35.0f);
 	shard_bursts++;
 }
 
@@ -422,7 +425,13 @@ bool CityRooms::interact_door(const Vector3 &p_at, float p_radius) {
 }
 
 String CityRooms::damage_at(const Vector3 &p_at, float p_amount, float p_radius) {
-	Leaf *bl = nullptr; Win *bw = nullptr; float bd = p_radius;
+	const Dictionary r = hit_opening(p_at, p_amount, p_radius, false);
+	return r.is_empty() ? String() : String(r.get("bid", ""));
+}
+
+Dictionary CityRooms::hit_opening(const Vector3 &p_at, double p_amount_d, double p_radius, bool p_hole) {
+	const float p_amount = (float)p_amount_d;
+	Leaf *bl = nullptr; Win *bw = nullptr; float bd = (float)p_radius;
 	for (Room &rm : rooms) {
 		if (rm.state != 2) continue;
 		for (Leaf &f : rm.leaves) {
@@ -441,16 +450,19 @@ String CityRooms::damage_at(const Vector3 &p_at, float p_amount, float p_radius)
 			if (d < bd) { bd = d; bw = &w; bl = nullptr; }
 		}
 	}
+	Dictionary r;
 	if (bl) {
 		bl->hp = std::max(0.0f, bl->hp - p_amount);
 		Dictionary st; st["hp"] = bl->hp; st["state"] = bl->hp <= 0.0f ? "broken" : "closed";
 		breakables[bl->bid] = st;
-		if (bl->hp <= 0.0f) {
+		const bool now = bl->hp <= 0.0f;
+		if (now) {
 			bl->broken = true; bl->amount = 0.0f;
 			if (Node3D *l = Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(bl->node)))) leaf_broken(l);
 			emit_signal("door_broken", bl->bid, p_at);
 		}
-		return bl->bid;
+		r["bid"] = bl->bid; r["what"] = "door"; r["state"] = st["state"]; r["now"] = now; r["hp"] = bl->hp;
+		return r;
 	}
 	if (bw) {
 		Node3D *n = Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(bw->node)));
@@ -458,12 +470,20 @@ String CityRooms::damage_at(const Vector3 &p_at, float p_amount, float p_radius)
 		const bool scripted = n && n->has_method("damage");
 		if (scripted) n->call("damage", p_amount, p_at);      // (a preview with its script: it does the crack, shards, sound)
 		if (!bw->cracked && !bw->broken && n) bw->uv = win_uv(n, p_at);
+		// a bullet: a hole where it went through (the pane holds MAX_HOLES; after that a new one replaces the oldest)
+		if (p_hole && n && bw->hp > 0.0f) {
+			if ((int)bw->holes.size() >= MAX_HOLES) bw->holes.erase(bw->holes.begin());
+			bw->holes.push_back(win_uv(n, p_at));
+			if (!scripted) win_holes(n, bw->holes);
+		}
+		bool now = false;
 		if (bw->hp <= 0.0f) {
-			bw->broken = true;
-			if (n && !scripted) win_broken(n, bw->uv, true);
+			bw->broken = true; now = true;
+			if (n && !scripted) win_broken(n, p_hole ? win_uv(n, p_at) : bw->uv, true);
 			emit_signal("window_broken", bw->bid, p_at);
 		} else if (bw->hp <= WINDOW_CRACK_HP && !bw->cracked) {
 			bw->cracked = true;
+			if (p_hole && n) bw->uv = win_uv(n, p_at);      // (the star round the hole that cracked it)
 			if (n && !scripted) {
 				win_cracked(n, bw->uv);
 				elsfx::play(this, "res://audio/sfx/door/door_glass_close_", -10.0f, 0.1f, get_global_transform().affine_inverse().xform(p_at), 20.0f);
@@ -472,10 +492,25 @@ String CityRooms::damage_at(const Vector3 &p_at, float p_amount, float p_radius)
 		}
 		Dictionary st; st["hp"] = bw->hp; st["state"] = bw->broken ? "broken" : (bw->cracked ? "cracked" : "intact");
 		Array uv; uv.push_back(bw->uv.x); uv.push_back(bw->uv.y); st["uv"] = uv;
+		Array hs; for (const Vector2 &h : bw->holes) { hs.push_back(h.x); hs.push_back(h.y); }
+		st["holes"] = hs;
 		breakables[bw->bid] = st;
-		return bw->bid;
+		r["bid"] = bw->bid; r["what"] = "window"; r["state"] = st["state"]; r["now"] = now; r["hp"] = bw->hp; r["holes"] = (int)bw->holes.size();
+		return r;
 	}
-	return String();
+	return r;
+}
+
+void CityRooms::win_holes(Node3D *p_win, const std::vector<Vector2> &p_holes) {
+	GeometryInstance3D *p = Object::cast_to<GeometryInstance3D>(p_win->get_node_or_null(NodePath("pane")));
+	if (!p) return;
+	for (int k = 0; k < 4; k++) {
+		Vector4 v(-9.0f, -9.0f, -9.0f, -9.0f);
+		if (2 * k < (int)p_holes.size()) { v.x = p_holes[2 * k].x; v.y = p_holes[2 * k].y; }
+		if (2 * k + 1 < (int)p_holes.size()) { v.z = p_holes[2 * k + 1].x; v.w = p_holes[2 * k + 1].y; }
+		p->set_instance_shader_parameter(StringName(vformat("holes%d", k)), v);
+	}
+	p->set_instance_shader_parameter("hole_n", (float)p_holes.size());
 }
 
 Dictionary CityRooms::get_state() const {
@@ -493,6 +528,7 @@ void CityRooms::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_state"), &CityRooms::get_state);
 	ClassDB::bind_method(D_METHOD("interact_door", "at", "radius"), &CityRooms::interact_door, DEFVAL(2.0));
 	ClassDB::bind_method(D_METHOD("damage_at", "at", "amount", "radius"), &CityRooms::damage_at, DEFVAL(1.0));
+	ClassDB::bind_method(D_METHOD("hit_opening", "at", "amount", "radius", "hole"), &CityRooms::hit_opening, DEFVAL(0.6), DEFVAL(false));
 	ClassDB::bind_method(D_METHOD("get_breakables"), &CityRooms::get_breakables);
 	ClassDB::bind_method(D_METHOD("set_breakables", "states"), &CityRooms::set_breakables);
 	ADD_SIGNAL(MethodInfo("door_toggled", PropertyInfo(Variant::STRING, "bid"), PropertyInfo(Variant::BOOL, "open")));
