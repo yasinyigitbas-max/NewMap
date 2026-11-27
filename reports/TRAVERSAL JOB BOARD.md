@@ -87,12 +87,13 @@ How nothing breaks (the rules of the port):
       26 of 114, the same lines. For the next layers: add that layer's numbers to `tests/parity_run.gd`.
 - [x] b. (trav88) Detection in C++ (`trav_detector.*`): about 146,000 records the same as the script byte for byte;
       every stage test and the audit the same with `-- --native`.
-- [ ] c. The character and its corrections. DONE (trav89): arm_open, trunk_turn, hand_hold, foot_orient, finger_grip
+- [x] c. The character and its corrections. (trav91) character.gd itself: `trav_character.*`, every bone the same.
+      TRAP FOUND: godot-cpp returns `Animation::get_length()` as a float; the engine and the script have a double:
+      read it with `a->get("length")`. Expect the same of other engine values that are doubles in 4.7.
+      Earlier (trav89): arm_open, trunk_turn, hand_hold, foot_orient, finger_grip
       (`trav_mods.*`) and hand_place (`trav_hand_place.*`), every bone the same as the script over 121,600 ticks.
       (trav90) foot_place (`trav_foot_place.*`), the same. (feet.gd is the first version's, not used.)
-      LEFT: character.gd itself (the animation tree, the gait, the acts,
-      the phone; 1,570 lines), then npc/body_fit.gd and npc_character.gd. Each is switched in by `_made()` in
-      character.gd; add its numbers to `tests/parity_run.gd` if the pose number does not already cover it.
+      LEFT in this layer: nothing. (npc/body_fit.gd and npc_character.gd are layer f.)
       HOW A LAYER IS TRANSLATED (learned on the first seven, all byte for byte the same; keep to it):
       (1) every GDScript `float` is a C++ `double`; every part of a Vector3 is widened with `D()` before it is used
       in arithmetic; a Vector3 times or over a scalar goes through `mul()` / `div()` (the scalar is narrowed to a

@@ -3,6 +3,7 @@
 // The rules of the port are in reports/TRAVERSAL JOB BOARD.md: the script version in traversal_lab/traversal is the
 // reference; a layer is a line-for-line translation and replaces nothing until it gives the same numbers.
 #include "trav_body.h"
+#include "trav_character.h"
 #include "trav_detector.h"
 #include "trav_foot_place.h"
 #include "trav_hand_place.h"
@@ -28,6 +29,7 @@ static void trav_init(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(TravFingerGrip);
 	GDREGISTER_CLASS(TravHandPlace);
 	GDREGISTER_CLASS(TravFootPlace);
+	GDREGISTER_CLASS(TravCharacter);
 }
 
 static void trav_term(ModuleInitializationLevel p_level) {}

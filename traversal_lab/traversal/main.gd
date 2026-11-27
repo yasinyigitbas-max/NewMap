@@ -53,6 +53,10 @@ func _ready() -> void:
 	add_child(body)
 	if body.has_method(&"show_capsule") and not ("--capsule" in OS.get_cmdline_user_args()):
 		character = CharacterV1.new() if "--v1" in OS.get_cmdline_user_args() else Character.new()
+		# (`-- --native`: the character translated to C++, native/traversal, where its library has been built)
+		if "--native" in OS.get_cmdline_user_args() and not ("--v1" in OS.get_cmdline_user_args()) and ClassDB.class_exists(&"TravCharacter"):
+			character.free()
+			character = ClassDB.instantiate(&"TravCharacter")
 		for arg in OS.get_cmdline_user_args():
 			if arg.begins_with("--npc="):
 				character.free()
