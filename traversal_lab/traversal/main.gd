@@ -79,7 +79,8 @@ func _ready() -> void:
 		interact.name = "Interact"
 		interact.set(&"body", body)
 		body.add_child(interact)
-		traverse = Traverse.new()
+		# (`-- --native`: the moves translated to C++, native/traversal, where its library has been built)
+		traverse = ClassDB.instantiate(&"TravTraverse") if ("--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(&"TravTraverse")) else Traverse.new()
 		traverse.name = "Traverse"
 		traverse.set(&"body", body)
 		body.add_child(traverse)

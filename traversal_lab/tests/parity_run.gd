@@ -51,6 +51,9 @@ func _run() -> void:
 	if chr != null and chr.get(&"skel") != null:
 		_skel = chr.get(&"skel")
 		_skel.skeleton_updated.connect(_pose_done)
+	var trav: Node = lab.get(&"traverse")
+	if trav != null:
+		print("moves are ", trav.get_class(), "  script: ", trav.get_script() != null)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_n
 	var st: Array = ((lab.get(&"course") as Node3D).get(&"stations") as Array) + ((lab.get(&"course") as Node3D).get(&"extras") as Array)
@@ -116,6 +119,12 @@ func _run() -> void:
 		for v3: Vector3 in _joints:
 			line.append(v3.x); line.append(v3.y); line.append(v3.z)
 		line.append(float(_pose_hash & 0xFFFFFF)); line.append(float((_pose_hash >> 24) & 0xFFFFFF))
+		# the moves: how many were begun, why the last was refused, and every number of the plan of the move in hand
+		if trav != null:
+			line.append(float(int(trav.get(&"plays"))))
+			line.append(float(String(trav.get(&"refused")).hash()))
+			_add_any(line, trav.get(&"_plan"))
+			_add_any(line, trav.get(&"record"))
 		f.store_var(line)
 		if keys["jump"] and hold < 5:
 			keys["jump"] = false
@@ -137,3 +146,26 @@ func _add(line: PackedFloat64Array, rec: Dictionary) -> void:
 			line.append(float((v as String).hash()))
 		else:
 			line.append(float(v))
+
+
+## Every number of anything a plan holds: a record within a record and a list are gone through in turn.
+func _add_any(line: PackedFloat64Array, v: Variant) -> void:
+	if v is Dictionary:
+		var keys := (v as Dictionary).keys()
+		keys.sort()
+		line.append(float(keys.size()))
+		for k: String in keys:
+			line.append(float(k.hash()))
+			_add_any(line, (v as Dictionary)[k])
+	elif v is Array:
+		line.append(float((v as Array).size()))
+		for e: Variant in (v as Array):
+			_add_any(line, e)
+	elif v is Vector3:
+		line.append((v as Vector3).x); line.append((v as Vector3).y); line.append((v as Vector3).z)
+	elif v is String or v is StringName:
+		line.append(float(String(v).hash()))
+	elif v is bool or v is int or v is float:
+		line.append(float(typeof(v))); line.append(float(v))
+	else:
+		line.append(-12345.0)
