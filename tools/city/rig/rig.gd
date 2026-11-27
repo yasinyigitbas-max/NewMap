@@ -439,7 +439,10 @@ func _free_walk(start: Vector3, yaw: float) -> void:
 	add_child(pl)
 	# `-- --trav`: his movement, figure and moves are the traversal system's (CityPlayer::set_traversal; 27 Nov). A switch:
 	# without it he is as he was.
-	if "--trav" in OS.get_cmdline_user_args():
+	# (28 Nov, Yasin: "i need to see the new npcs and the character in the game"): it is the DEFAULT now, on the phone too
+	# (no arguments there); `-- --oldplayer` gives the old player back. Without res://traversal/ (sync_to_game.sh) he stays
+	# as he was.
+	if not ("--oldplayer" in OS.get_cmdline_user_args()) and ResourceLoader.exists("res://traversal/character/library.res"):
 		pl.call(&"set_traversal", true)
 		_say("the player is on the traversal body: %s" % str(pl.call(&"get_traversal")))
 	if game:      # the shell sets him down (a new game: the pavement nearest the centre, with his bicycle and a car; or where he was saved)
