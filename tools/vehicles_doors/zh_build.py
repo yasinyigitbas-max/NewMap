@@ -30,7 +30,7 @@ def log(*a):
 
 
 DROP = re.compile(r'(suspension|badge|numberplate)', re.I)
-KINDS = [('wheel', re.compile(r'wheel', re.I), 4 * 400),
+KINDS = [('wheel', re.compile(r'wheel', re.I), 4 * 1100),   # (the wheels keep their own detail: trimmed ones baked white stripes)
          ('under', re.compile(r'bottom', re.I), 900),
          ('interior', re.compile(r'interior|steering', re.I), 1000),
          ('lights', re.compile(r'lightbar|headlights_glass|taillights|light|blinker|reverse', re.I), 450),
