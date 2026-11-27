@@ -33,3 +33,8 @@ traversal_lab/assets_src/
 
 # Traversal lab: exported builds (sent to Yasin, not kept in git)
 traversal_lab/out/
+
+# the traversal system's C++ library, built by native/traversal/build.sh (not in git: a checkout that has not built it runs the script version)
+/traversal_lab/bin/
+/traversal_lab/traversal.gdextension
+/traversal_lab/traversal.gdextension.uid

@@ -75,8 +75,12 @@ How nothing breaks (the rules of the port):
    same commit `native/build.sh` uses, in `OUT/native_tools/`, not in git). The Windows exe he play-tests needs the
    Windows library: built in the cloud if the cross compiler can be had there, else on his PC with `native/build.sh`.
 
-- [ ] 0. The toolchain: godot-cpp for Linux built in the cloud; one empty C++ class loaded by the lab; the Windows
-      library question settled.
+- [x] 0. The toolchain (27 Nov): godot-cpp built for Linux in the cloud (`OUT/native_tools/godot-cpp`, needs
+      `pip install scons`); `native/traversal/` (its own small library, `bash native/traversal/build.sh linux`);
+      one empty class, `TravBody`, loads in the lab and stage 0 still passes with the library present. Windows:
+      the cross compiler installs in the cloud (`apt-get update; apt-get install g++-mingw-w64-x86-64`); godot-cpp's
+      Windows library was building when this was written: check `OUT/native_tools/godot_cpp_windows_build.log`.
+      A fresh container has none of this: build godot-cpp again first (about 25 minutes each).
 - [ ] a. The body in C++, with its parity test.
 - [ ] b. Detection.
 - [ ] c. The character and its corrections.
@@ -110,6 +114,10 @@ to get in and out of cars". Order agreed: the fitting first, then the recipe fix
 - [x] (trav84) the fitting: hips at the height their legs need, their own stride, seated at the seat.
 - [ ] a civilian test of their own (`tests/` for NPC bodies; today the player's tests are run on them and some lines
       hold them to the player's size).
+- [x] (trav85, trav86) the cast: twelve more bodies (npc_05 to npc_16) and a second elderly woman (npc_17); who each
+      is: `assets/people/meshy/cast.json`. 57 Meshy credits left on 27 Nov (one more body); they reset on 23 Dec.
+- [ ] five bodies got no finger bones from Meshy though asked (npc_07, 08, 09, 11, 14, 17): their hands move as one
+      piece. Meshy's rigger also adds bones of its own, different on each body: `build_npc.gd` prints them.
 - [ ] the texting grip on their hands; the woman's feet when seated (toes 7 cm up on the 0.45 m bench) and in the
       car; stairs up (a foot 3.2 cm off); the big toe at push-off (14 to 16 degrees).
 - [ ] an NPC's own walking and running pace (his stride is his own; the pace is still the player's 1.45 m/s).
