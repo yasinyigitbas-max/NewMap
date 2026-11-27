@@ -174,6 +174,22 @@ and get to work on those animations."
     every rotation set to zero (his T-pose; scratch `kim2/character_tpose.fbx`) a test take stands right. 46
     takes ordered again with it: pick up / put down / stand / walk for a box and a bag, and for the pistol and the
     rifle: aim, shoot, reload, idle. To do: look at each, keep the least wrong, bake.
+  - THE TAKES, LOOKED AT ON HIS BODY IN FRAMES (27 Nov, night; small frames, six moments each):
+    - Kimodo, kept (4 of 46): KM_Pick_Box (pick_box seed 2: squats, both hands down, up with them at his waist),
+      KM_Put_Box (put_box seed 1), KM_Pick_Bag (pick_bag seed 3: bends and reaches down with one hand),
+      KM_Put_Bag (put_bag seed 3). Which hand the bag takes use is NOT yet checked: mirror if it is the left.
+    - Kimodo, dropped: standing and walking with a bag (one arm stuck out to the side, no hanging arm), standing
+      and walking with a box (arms low and apart, not holding anything), and EVERY gun take (aim, shoot, reload,
+      for pistol and rifle: open hands in a wide boxing stance, nothing like holding a gun).
+    - So for the guns: his own Mixamo takes for the holds and the reloads (Pistol_Idle, Rifle_Standing_Idle,
+      Walk_With_Rifle, Walking_While_Aiming_Rifle, Gun_Reload_While_Walking, Reloading_Rifle_While_Standing, all
+      in the library now); aiming down the sight and the shot are to be made from the weapon itself: the weapon
+      placed with its sight at his eye and pointing where he looks, the right hand on `grip_r`, the left on
+      `grip_l`, the arms solved to them, a short kick for the shot. No take of his body exists for a pistol aimed
+      or fired; Mixamo has them ("Shooting Gun", "Pistol Aim", "Firing Rifle"): his PC, if the made poses do not
+      look right.
+    - For carrying: the arms of Jogging_With_Box (two hands) and Walking_With_Shopping_Bag (one hand), his own.
+  - `library.res` as it stands: the 115 old animations the same key for key, 18 added.
   - The plan for the code (C++ only): the body takes new keys from the tape (which thing is in the hand, pick up
     / put down, aim, fire, reload); the character gets one more upper-body layer after the phone's (a filtered
     blend: arms and trunk from the hold take, legs from the movement as it is); the prop is a child placed at
