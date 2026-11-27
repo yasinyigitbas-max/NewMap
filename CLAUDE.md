@@ -12,6 +12,7 @@ ONLY the new map: hand-made, locked city-kit pieces, the kit assets they are bui
 5. Before building, checking, fixing or reporting anything: `.claude/skills/coronado-super-builder/SKILL.md` (19 Nov:
    no generators, one fix = one thing changed, what each check cannot see, the outdoor and indoor audits, the land).
 6. Player movement, traversal, animation clips (Mixamo, Kimodo) or the player character (Meshy): read
+   `reports/TRAVERSAL JOB BOARD.md` first (27 Nov: the queue of what is left, and Yasin's rules for the work), then
    `reports/TRAVERSAL HANDOVER.md` first (26 Nov, on the work branch `claude/intelligent-bardeen-errnbs`: the true state,
    where the build departs from the study, what went wrong), then `reports/TRAVERSAL STATUS.md` (on main since 25 Nov). It holds Yasin's
    rules for that work, the decisions made, what is waiting on him and the next steps (25 Nov).
