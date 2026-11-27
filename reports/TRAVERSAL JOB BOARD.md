@@ -160,7 +160,8 @@ and get to work on those animations."
 - [ ] NPC tuning alongside (from `reports/NPC cast civilian run.md`): npc_09 and npc_18 (planted foot rises 2 to
       4 cm walking), npc_18 and npc_31 (sit low), npc_09 (sits high), feet hanging when seated (22 bodies over
       5 cm), their own pace.
-- [ ] then an exe of only these moves (carry, pick up / put down, the weapons: hold, aim, shoot, reload).
+- [x] (trav100) the exe sent 27 Nov: `TraversalLab_trav100.zip` (Start.bat = C++, the default; the keys are on
+      screen). WAITS ON HIS EYES. NOT checked: the Windows library with the new code has never been run.
 - WHERE THIS STANDS (27 Nov, night; read before going on):
   - Takes for his body from the Drive are in `traversal_lab/assets_src/carry/` (not in git) and baked to
     `traversal/character/clips/` with a copy of `tools/build_clips.gd` whose SRC is that folder (so no existing
