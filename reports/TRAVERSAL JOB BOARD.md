@@ -204,6 +204,16 @@ else, don't merge anything else that is involving play or npc movement".
         the phone, talk gestures, the bicycle's hold points, his voice, swimming, the game's combat and being
         knocked down are the old player's and do nothing in this mode; the camera is the old one, unchanged; the
         touch stick is passed through but was not tried.
+      - (2) THE NEW CARS' ROLES (27 Nov, night): the police drive `police_e` (the patrol car; every other chase unit
+        the `police_x`), the ambulance is the `ambulance` model (`city_law.cpp`; before: stern_g in dark blue and
+        the white van). They carry their own livery, the paint colour does not show on them. `utility`, `tow`,
+        `flatbed` and `van_custom` are rare ambient traffic, weights 2, 1, 2, 3 of 108 (`car_models.h`; the
+        weights are mine). Seen in a frame: all 7 in white and in dark blue paint, as the game's car draws them.
+        After the rebuild (`bash tools/traversal/build_game_cloud.sh`, the cloud's Linux build of the game module):
+        test_city_car, test_native_load, test_damage, test_car_wall, test_trav_player, test_law RESULT PASS.
+        NOT checked: the trucks in moving traffic and as parked cars (needs the baked city); their far / light
+        models in a frame; the police lights' places on the new roofs. A cloud trap: after `git clean` the
+        pictures' `.import` files are gone and every car draws in patches: run `--import` again before a frame.
       - the NPC parity run (`EXTRA="--npc=..."`) now FAILS by design: the C++ NPC has its own pace, the frozen
         script NPC has not. The player's parity run still passes.
 

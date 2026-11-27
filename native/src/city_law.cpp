@@ -28,8 +28,11 @@
 using namespace godot;
 
 namespace {
-const int POLICE_MODEL = 2, POLICE_PAINT = 4;      // stern_g, dark blue
-const int AMBULANCE_MODEL = 6, AMBULANCE_PAINT = 0; // the van, white
+// (27 Nov, wiring the new cars in) the police and the ambulance drive their own models, which carry their own livery
+// (the paint colour does not show on them): the patrol car police_e, every other chase unit the police_x, and the
+// ambulance. Before: stern_g in dark blue, and the white van.
+const int POLICE_MODEL = 12, POLICE_MODEL_B = 13, POLICE_PAINT = 0;
+const int AMBULANCE_MODEL = 14, AMBULANCE_PAINT = 0;
 const float SEE_CAR = 60.0f, SEE_COP = 40.0f;
 float rnd() { return (float)UtilityFunctions::randf(); }
 } // namespace
@@ -565,8 +568,8 @@ void CityLaw::_process(double p_delta) {
 	if (wanted > 0 && police_on) {
 		int have = police_units();
 		while (have < std::min(wanted, 4)) {
-			Unit u; u.kind = U_POLICE; u.target = -2; u.model = POLICE_MODEL; u.goal = last_seen;
-			u.ticket = tr->spawn_driver(spawn_from(last_seen), last_seen, POLICE_MODEL, POLICE_PAINT);
+			Unit u; u.kind = U_POLICE; u.target = -2; u.model = (police_units() & 1) ? POLICE_MODEL_B : POLICE_MODEL; u.goal = last_seen;
+			u.ticket = tr->spawn_driver(spawn_from(last_seen), last_seen, u.model, POLICE_PAINT);
 			units.push_back(u); have++; n_cars++;
 		}
 	}

@@ -27,14 +27,15 @@ static const CarModel MODELS[N_MODELS] = {
 	{ "bus_city", 6.10f, 1.30f, 3.08f, 0.0f, 10 },   // (3.09 m wide as modelled; the old game drives it as 2.6 m)
 	{ "bus_mini", 3.71f, 1.19f, 2.65f, 0.0f, 11 },
 	// (27 Nov) the new models from Daniel Zhabotinsky's Sketchfab cars (CC BY 4.0, vehicles/CAR_CREDITS.md), rebuilt by
-	// tools/vehicles_doors (sizes from their builds' info). Weight 0: not ambient traffic until their roles are wired
+	// tools/vehicles_doors (sizes from their builds' info). Roles (27 Nov): the police cars and the ambulance come only
+	// when called (city_law.cpp), weight 0; the work trucks and the plain van are rare ambient traffic (8 in 108)
 	{ "police_e", 2.61f, 1.04f, 1.56f, 0.0f, 0 },
 	{ "police_x", 2.18f, 0.94f, 1.70f, 0.0f, 3 },
 	{ "ambulance", 2.51f, 1.17f, 2.26f, 0.0f, 6 },
-	{ "utility", 2.69f, 1.00f, 1.66f, 0.0f, 4 },
-	{ "tow", 2.77f, 0.99f, 1.83f, 0.0f, 4 },
-	{ "flatbed", 2.64f, 1.00f, 1.67f, 0.0f, 4 },
-	{ "van_custom", 2.50f, 1.17f, 2.02f, 0.0f, 6 },
+	{ "utility", 2.69f, 1.00f, 1.66f, 2.0f, 4 },
+	{ "tow", 2.77f, 0.99f, 1.83f, 1.0f, 4 },
+	{ "flatbed", 2.64f, 1.00f, 1.67f, 2.0f, 4 },
+	{ "van_custom", 2.50f, 1.17f, 2.02f, 3.0f, 6 },
 };
 
 // paint colours, about as common as on a real street: white, black, silver, grey, dark blue, red, beige, dark green,
