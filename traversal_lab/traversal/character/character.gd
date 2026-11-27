@@ -642,7 +642,7 @@ func _physics_process(dt: float) -> void:
 			var wish := (body.get(&"_wish") as Vector3).length()
 			var low := bool(body.get(&"crouched"))
 			# (on something narrow, as crouched: no start, stop or turn clips; they drop his arms, which are his balance there)
-			var plain := not in_air and st == 0 and int(body.get(&"terrain")) == 0 and not low and int(body.get(&"narrow")) == 0 and int(body.get(&"squeeze")) != 2
+			var plain := not in_air and st == 0 and int(body.get(&"terrain")) == 0 and not low and int(body.get(&"narrow")) == 0 and int(body.get(&"squeeze")) < 2
 			if low != _low_was:
 				_low_was = low
 				if speed < 0.3 and not in_air and not _stair_on and not _steep_on and (_act == "ground" or _sub == "crouch"):
@@ -1201,10 +1201,11 @@ func _ground(dt: float, speed: float) -> void:
 	tree.set(&"parameters/beam_speed/scale", clampf(maxf(speed, 0.2) / (float(_stride[BEAM_WALK]) / float(_length[BEAM_WALK])), SCALE_LEAST, SCALE_MOST))
 	# a gap between walls: sideways through the tightest, the shoulders turned in the next
 	var sq := int(body.get(&"squeeze")) if not low else 0
-	_squeeze_w = move_toward(_squeeze_w, 1.0 if sq == 2 else 0.0, dt / NARROW_FADE)
+	_squeeze_w = move_toward(_squeeze_w, 1.0 if sq >= 2 else 0.0, dt / NARROW_FADE)
 	tree.set(&"parameters/squeeze/blend_amount", _squeeze_w)
 	if feet:
 		feet.set(&"gap_fit", _squeeze_w if int(body.get(&"squeeze")) == 2 else 0.0)
+		feet.set(&"ledge_fit", _squeeze_w if int(body.get(&"squeeze")) == 3 else 0.0)
 	var side_len := float(_length[SIDE_STEP])
 	if speed > 0.05:
 		_side_t = fposmod(_side_t + dt * speed / (float(_stride[SIDE_STEP]) / side_len), side_len)
@@ -1215,7 +1216,7 @@ func _ground(dt: float, speed: float) -> void:
 	tree.set(&"parameters/seek_side/seek_request", _side_t)
 	tree.set(&"parameters/seek_side_m/seek_request", _side_t)
 	var turned := float(int(body.get(&"squeeze_side")))
-	if _squeeze_w <= 0.0 or sq == 2:
+	if _squeeze_w <= 0.0 or sq >= 2:
 		tree.set(&"parameters/side_pick/blend_amount", 0.0 if turned > 0.0 else 1.0)
 	_turn_deg = move_toward(_turn_deg, SHOULDER_TURN_DEG * turned if (sq == 1 and _mode == "ground") else 0.0, SHOULDER_TURN_DEG * dt / FADE)
 	_trunk.set(&"turn_deg", _turn_deg)

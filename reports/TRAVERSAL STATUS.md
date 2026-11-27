@@ -312,8 +312,10 @@ What stands at this commit, all play-tested or approved by him up to trav57, and
   before, no slowing; 0.25 to 0.45 m: sideways with a side-step take (`KM_Side_Step`, Kimodo, the only one of ten
   that does not cross its feet) at its own 0.67 m/s; under 0.25 m: blocked. His shape is made thinner in the gap
   (`body.radius`) and wider again only where it has room. `tests/test_stage18.gd`.
-- **Not built:** the wall-ledge sidle of stage 17 ("For a ledge with a wall behind, allow a sidle down to about
-  0.10 m"). `KM_Ledge_Sidle_Left` is baked and unused; it crosses its feet 0.6 m wide.
+- **The wall-ledge sidle (trav72):** on a ledge of 0.10 to 0.30 m with a wall behind (the study's band ends at
+  0.25; to 0.30 is mine, his shape has no ground under it there otherwise) he goes sideways with the same side step,
+  his back to the wall, heels to it, at 0.67 m/s; the other way without turning round; no balance loss there.
+  `tests/test_stage17_sidle.gd`. The squeeze goes either way round (trav71).
 - **His words for these:** "we should spread our arms to balance on a beam, only be able to walk on them standing
   and not crouched", "we should fall off losing balance if we dont move more than 10 seconds on the beam", "make him
   hard land instead of a hard fall when falling from lower than 3.1 meters and if above hard fall", "also fold

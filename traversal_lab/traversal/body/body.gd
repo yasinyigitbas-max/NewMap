@@ -117,6 +117,13 @@ const NARROW_STAY := 0.04          # NOT in the study, mine: see _narrow_now   #
 # Stage 18, gaps between walls. The study: "walk straight through at 0.60 m and wider, turn the shoulders from 0.45
 # to 0.60 m starting half a metre before, go fully sideways from 0.45 down to 0.25 m, and block below about 0.20 m",
 # and of the shoulder turn: people "begin turning about half a metre before it, and do not slow down".
+# Stage 17, the wall-ledge sidle. The study: "For a ledge with a wall behind, allow a sidle down to about 0.10 m"
+# (its band for narrow surfaces is 0.10 to 0.25 m wide; young adults "can sidle along a wall ledge as shallow as
+# 8.7 cm on average"). On such a ledge he goes sideways, his back to the wall, his shape thinned to stand on it.
+const LEDGE_BAND := [0.10, 0.30]    # from the study's 0.10 m. To 0.30 m, NOT the study's 0.25: mine. With a wall beside him his
+                                    # shape stands 0.25 m out from it, so on a ledge under 0.30 m he has no ground under him
+                                    # as he walks (measured on 0.24 and 0.26 m: he slid along its edge and fell)
+const LEDGE_PULL := 6.0             # NOT in the study, mine: he is drawn onto the middle line of the ledge at this rate (1/s)
 const SQUEEZE_BAND := [0.25, 0.45, 0.60]    # the study's: sideways from the first, shoulders turned from the second, plain from the third
 const SQUEEZE_AHEAD := 0.5          # the study's "half a metre before"
 const SQUEEZE_SLOW_TIME := 0.8    # NOT in the study, mine: see _find_squeeze (s)
@@ -187,9 +194,11 @@ var move_soft := 0.0            # 0..1: how much less than the clip he folds on 
 var _wish_was_moving := false
 var narrow := 0                 # he is on something narrow: 0 = no, 1 = under 0.25 m wide, 2 = under 0.10 m
 var stick_held := false         # the stick is off its rest (read by the moves that end differently when it is let go)
-var squeeze := 0                # in a gap between walls: 0 = no, 1 = shoulders turned (0.45 to 0.60 m), 2 = sideways (0.25 to 0.45 m)
+var squeeze := 0                # 0 = no; in a gap between walls: 1 = shoulders turned (0.45 to 0.60 m), 2 = sideways (0.25 to 0.45 m); 3 = on a ledge with a wall behind, sideways
 var squeeze_side := 1           # 1 = he turns to face the wall on his left, -1 = the wall on his right
 var squeeze_w := INF            # the free width of that gap (m)
+var ledge_wall := Vector3.ZERO    # the sidle: a point at the foot of the wall behind him, and the way out from the wall
+var ledge_out := Vector3.RIGHT
 var squeeze_mid := Vector3.ZERO  # a point on the middle line of that gap, and the way straight across it
 var squeeze_across := Vector3.RIGHT
 var _gap_mid := Vector3.ZERO
@@ -387,6 +396,35 @@ func _gap_at(at: Vector3, across: Vector3) -> float:
 	return least
 
 
+## A ledge with a wall behind, at `at` (his feet there): {wide, wall (a point at the foot of the wall), out (the way
+## out from the wall)}; wide is INF where the ground goes on 0.40 m from the wall; {} where there is not a wall to one
+## side only.
+func _ledge_at(at: Vector3, across: Vector3) -> Dictionary:
+	var space := get_world_3d().direct_space_state
+	var from := at + Vector3(0.0, 1.0, 0.0)
+	var a := space.intersect_ray(PhysicsRayQueryParameters3D.create(from, from + across * 0.6, collision_mask, [get_rid()]))
+	var b := space.intersect_ray(PhysicsRayQueryParameters3D.create(from, from - across * 0.6, collision_mask, [get_rid()]))
+	if a.is_empty() == b.is_empty():
+		return {}
+	var hit := b if a.is_empty() else a
+	var n: Vector3 = hit["normal"]
+	n = Vector3(n.x, 0.0, n.z)
+	if n.length() < 0.5:
+		return {}
+	n = n.normalized()
+	var foot := Vector3((hit["position"] as Vector3).x, at.y, (hit["position"] as Vector3).z)
+	var wide := 0.0
+	var s := 0.01
+	while s < 0.40:
+		var p := foot + n * s
+		var g := space.intersect_ray(PhysicsRayQueryParameters3D.create(p + Vector3(0.0, 0.3, 0.0), p - Vector3(0.0, 0.3, 0.0), collision_mask, [get_rid()]))
+		if g.is_empty() or absf((g["position"] as Vector3).y - at.y) > 0.10:
+			break
+		wide = s
+		s += 0.01
+	return {"wide": wide + 0.005 if s < 0.40 else INF, "wall": foot, "out": n}
+
+
 ## Stage 18: is he in, or coming up to, a gap between walls narrower than he walks through as he is? Sets `squeeze`,
 ## `squeeze_w` and his shape's radius. His shape is made thinner at once, and wider again only where the wider
 ## shape has room ("test that the standing capsule fits before standing up" is the study's rule for the crouch; the
@@ -430,6 +468,31 @@ func _find_squeeze() -> void:
 	if w >= float(SQUEEZE_BAND[0]) - SQUEEZE_SEEN and w < float(SQUEEZE_BAND[2]) - SQUEEZE_SEEN:
 		kind = 2 if w < float(SQUEEZE_BAND[1]) - SQUEEZE_SEEN else 1
 	var want_r := minf(RADIUS, w * 0.5 - SQUEEZE_PLAY) if kind > 0 else RADIUS
+	# the sidle: a ledge with a wall behind, where he is or within half a metre ahead
+	if kind == 0 and state == State.GROUND:
+		var led := _ledge_at(global_position, across)
+		if _wish.length() > 0.05:
+			for d: float in [SQUEEZE_AHEAD * 0.5, SQUEEZE_AHEAD]:
+				var l2 := _ledge_at(global_position + fwd * d, across)
+				if not l2.is_empty() and (led.is_empty() or float(l2["wide"]) < float(led["wide"])):
+					led = l2
+		if not led.is_empty() and float(led["wide"]) >= float(LEDGE_BAND[0]) - SQUEEZE_SEEN and float(led["wide"]) < float(LEDGE_BAND[1]):
+			kind = 3
+			w = float(led["wide"])
+			want_r = w * 0.5 - 0.01
+			ledge_wall = led["wall"]
+			ledge_out = led["out"]
+			mid = (led["wall"] as Vector3) + (led["out"] as Vector3) * (w * 0.5)
+			mid_n = led["out"]
+	if kind == 0 and squeeze == 3 and radius < RADIUS:
+		# off the ledge, still against its wall: his shape as wide as the wall lets it be, and he comes away from the wall
+		var lw := _ledge_at(global_position, across)
+		if not lw.is_empty():
+			var off_wall := (global_position - (lw["wall"] as Vector3)).dot(lw["out"])
+			if off_wall < RADIUS + 0.01:
+				_set_radius(clampf(off_wall - 0.01, radius, RADIUS))
+				_wish += (lw["out"] as Vector3) * 0.6
+				return
 	if want_r > radius:
 		# wider again only where there is room for it
 		var q := PhysicsShapeQueryParameters3D.new()
@@ -442,7 +505,19 @@ func _find_squeeze() -> void:
 		q.collision_mask = collision_mask
 		if not get_world_3d().direct_space_state.intersect_shape(q, 1).is_empty():
 			return                                  # he stays as he is, in whatever gap he is in
-	if kind > 0 and squeeze == 0:
+	if kind == 3:
+		# his back to the wall: he faces out from it
+		# (by the way his body is turned, not the way the stick asks: as he sets off back the way he came the two
+		# differ for a few ticks, and by the stick he was turned to face the wall for those)
+		var facing := -global_transform.basis.z
+		squeeze_side = -1 if (mid_n as Vector3).dot(Vector3(facing.x, 0.0, facing.z).cross(Vector3.UP)) > 0.0 else 1
+		# and is drawn onto the middle line of the ledge
+		# (and goes along it the more slowly the further he still is from that line: coming onto a 0.10 m ledge at
+		# the full pace he was past the platform's end before he was over the ledge, and sagged 4 cm)
+		var side_off := (mid - global_position).dot(mid_n)
+		_wish = _wish.limit_length(SQUEEZE_SPEED * clampf(1.0 - (absf(side_off) - 0.03) / 0.25, 0.25, 1.0))
+		_wish += mid_n * clampf(side_off * LEDGE_PULL, -0.6, 0.6)
+	elif kind > 0 and squeeze == 0:
 		# which way he turns: to face the wall he is further from (on the middle: to his left). Yasin, 27 Nov:
 		# "also mirror the squeeze in gap takes"
 		var off := (global_position - mid).dot(across)
@@ -551,8 +626,15 @@ func _physics_process(dt: float) -> void:
 	if narrow > 0 and _wish.length() > (NARROW_SPEED if narrow == 1 else NARROW_SPEED_LEAST):
 		_wish = _wish.normalized() * (NARROW_SPEED if narrow == 1 else NARROW_SPEED_LEAST)
 	# a gap between walls (stage 18): sideways through the tightest, at a side-step's pace
+	if squeeze >= 2 and _wish.length() > 0.05 and absf(wrapf(atan2(-_wish.x, -_wish.z) - rotation.y, -PI, PI)) > PI * 0.5:
+		# sideways in a gap or on a ledge he does not turn round to go back the way he came (turning on the spot he
+		# swept round through the wall): he goes the other way as he stands
+		rotation.y = wrapf(rotation.y + PI, -PI, PI)
+		squeeze_side = -squeeze_side
+		spot_total = 0.0
+		hvel = Vector3.ZERO
 	_find_squeeze()
-	if squeeze == 2:
+	if squeeze >= 2:
 		_wish = _wish.limit_length(SQUEEZE_SPEED)
 
 	# a way to go that keeps turning (a curve, not a corner) is walked more slowly
@@ -652,6 +734,10 @@ func _physics_process(dt: float) -> void:
 
 	if hvel.length() > 0.2 and state == State.GROUND and spot_total == 0.0:
 		var want := atan2(hvel.x, hvel.z) if face_in else atan2(-hvel.x, -hvel.z)
+		if squeeze >= 2 and absf(wrapf(want - rotation.y, -PI, PI)) > PI * 0.5:
+			# sideways in a gap or on a ledge he does not turn round to go back: he goes the other way as he stands
+			rotation.y = want
+			squeeze_side = -squeeze_side
 		rotation.y = rotate_toward(rotation.y, want, TURN_SPEED * dt)
 
 

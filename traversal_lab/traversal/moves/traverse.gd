@@ -471,7 +471,8 @@ func _physics_process(_dt: float) -> void:
 	var v: Vector3 = body.get(&"hvel")
 	var wish := (body.get(&"_wish") as Vector3).length()
 	# standing still on something narrow: after 10 s he loses his balance
-	if int(body.get(&"narrow")) > 0 and int(body.get(&"state")) == 0 and v.length() < 0.1:
+	# (not on a ledge with a wall behind him: his back is against it)
+	if int(body.get(&"narrow")) > 0 and int(body.get(&"squeeze")) != 3 and int(body.get(&"state")) == 0 and v.length() < 0.1:
 		_still += 1.0 / 60.0
 		if _still >= BALANCE_AFTER:
 			_still = 0.0

@@ -25,7 +25,7 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
 
 - [x] 1. (trav71) Mirror the takes of the squeeze through gaps (27 Nov: "also mirror the squeeze in gap takes"), so that he
       can go through facing either wall.
-- [ ] 2. Stage 17, what is left: the wall-ledge sidle (the study: "For a ledge with a wall behind, allow a sidle
+- [x] 2. (trav72) Stage 17, what is left: the wall-ledge sidle (the study: "For a ledge with a wall behind, allow a sidle
       down to about 0.10 m"). The course has no such ledge: build one in the test.
 - [ ] 3. Stage 19: ragdoll on hard impact and long fall, with get-up by lying direction.
 - [ ] 4. Stage 20: partial ragdoll hit reactions.
@@ -48,6 +48,8 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
 - Running-jump bands other than the vault are untested; the longer step over a shallow gap under 0.78 m was not
   run; running off the side of a beam was not run.
 - In a 0.26 m gap a forearm joint is 0.025 m into a wall. Fingers do not curl on any hold (no finger correction).
+- The sidle is taken to 0.30 m, not the study's 0.25 (mine); his arms hang, they are not spread on the wall; going
+  back the way he came in a gap (not on a ledge) is not tested.
 - On a beam the walking feet are not brought onto it, only the standing feet.
 - His open list, items 3 to 5 (stage 1 random-walk faults, the stops and the kerb step, the 26 audit lines):
   untouched by his rule ("if things dont improve by a 20% ... dont change anything").
@@ -55,4 +57,5 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
 ## Waiting on Yasin's eyes
 
 - trav69: feet on beams and wall tops, the arm flicker in the balance fall, hands on a wall met end on.
-- trav70: the squeeze through gaps. Whether "the character gets lost on many frames" is gone.
+- trav72: the sidle along a ledge with a wall behind (ledges are built only in its test, not on the course).
+- trav70, trav71: the squeeze through gaps, either way round. Whether "the character gets lost on many frames" is gone.

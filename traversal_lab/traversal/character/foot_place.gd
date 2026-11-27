@@ -76,6 +76,12 @@ var _in := [Vector3.ZERO, Vector3.ZERO]
 var gap_fit := 0.0              # 0 to 1: he is going sideways through a gap (set by character.gd)
 const SHOE_CLEAR := 0.04        # NOT in the study, mine: the ankle joint and the ball of the foot are kept this far off each wall (m)
 var _gap_in := [Vector3.ZERO, Vector3.ZERO]
+# On a ledge with a wall behind (the sidle of stage 17) he stands with his heels to the wall: each ankle joint is set
+# HEEL_OFF out from the wall, the toes over the edge where the ledge is shorter than his shoe.
+var ledge_fit := 0.0            # 0 to 1: he is on such a ledge (set by character.gd)
+const BACK_OFF := 0.13          # NOT in the study, mine: and his hip joints no nearer the wall than this (m): his back on it, not in it
+var _hips_out := Vector3.ZERO
+const HEEL_OFF := 0.07          # NOT in the study, mine: the ankle joint this far out from the wall (m): his heel just clear of it
 var pinning := true
 var grounding := true
 
@@ -212,10 +218,15 @@ func _process_modification_with_delta(dt: float) -> void:
 			else:
 				move = clampf(0.0, -half - minf(ca, cb), half - maxf(ca, cb))
 			_gap_in[f] = (_gap_in[f] as Vector3).lerp(n * move, 1.0 - exp(-dt / IN_TIME)) if is_finite(half) else Vector3.ZERO
+		elif ledge_fit > 0.0:
+			var out_n: Vector3 = body.get(&"ledge_out")
+			var from_wall := (ankle - (body.get(&"ledge_wall") as Vector3)).dot(out_n)
+			_gap_in[f] = (_gap_in[f] as Vector3).lerp(out_n * (HEEL_OFF - from_wall), 1.0 - exp(-dt / IN_TIME))
 		else:
 			_gap_in[f] = (_gap_in[f] as Vector3) * exp(-dt / IN_TIME)
-		ball += (_gap_in[f] as Vector3) * (gap_fit if gap_fit > 0.0 else 1.0)
-		ankle += (_gap_in[f] as Vector3) * (gap_fit if gap_fit > 0.0 else 1.0)
+		var fit_w := maxf(gap_fit, ledge_fit)
+		ball += (_gap_in[f] as Vector3) * (fit_w if fit_w > 0.0 else 1.0)
+		ankle += (_gap_in[f] as Vector3) * (fit_w if fit_w > 0.0 else 1.0)
 		# 2. the ground under this foot: the same height above it as the clip holds the foot above its own floor
 		var want_g := feet_y
 		var normal := Vector3.UP
@@ -338,10 +349,18 @@ func _process_modification_with_delta(dt: float) -> void:
 	# the pelvis offset: the only bone this modifier moves (the skeleton applies `influence` to it)
 	var hips_t := sk.get_bone_global_pose(_hips)
 	hips_t.origin.y += _pelvis
+	# on a ledge with a wall behind: his hips out from the wall far enough for his back to lie on it
+	var want_out := Vector3.ZERO
+	if ledge_fit > 0.0:
+		var out_n: Vector3 = body.get(&"ledge_out")
+		var hips_from := ((xf * hips_t.origin) - (body.get(&"ledge_wall") as Vector3)).dot(out_n)
+		want_out = out_n * maxf(BACK_OFF - hips_from, 0.0) * ledge_fit
+	_hips_out = _hips_out.lerp(want_out, 1.0 - exp(-dt / IN_TIME))
+	hips_t.origin += inv.basis * _hips_out
 	sk.set_bone_global_pose(_hips, hips_t)
 	for f in 2:
 		# a target never further than the leg can reach from where the hip now is
-		var hip: Vector3 = (hip_at[f] as Vector3) + Vector3(0.0, _pelvis, 0.0)
+		var hip: Vector3 = (hip_at[f] as Vector3) + Vector3(0.0, _pelvis, 0.0) + _hips_out
 		var to: Vector3 = (ankle_goal[f] as Vector3) - hip
 		var most: float = float(_leg_len[f]) * STRAIGHT
 		if to.length() > most:
