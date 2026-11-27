@@ -98,7 +98,7 @@ def stations_cabover(p):
     S = []
 
     def st(y, zb, zbl, zt, wd, wtt, zone, **kw):
-        d = dict(y=y, zb=zb, zbl=zbl, zt=zt, w=wd, wt=wtt, zone=zone, sill=0.06, tb=0.01, sh=0.03)
+        d = dict(y=y, zb=zb, zbl=zbl, zt=zt, w=wd, wt=wtt, zone=zone, sill=0.06, tb=0.01, sh=0.03, rail=0.10)
         d.update(kw)
         S.append(d)
     st(yF, zf + 0.02, belt - 0.02, belt - 0.02, W * 0.95, W * 0.90, 'tfront')
@@ -123,7 +123,7 @@ def stations_bus(p):
     S = []
 
     def st(y, zb, zbl, zt, wd, wtt, zone, **kw):
-        d = dict(y=y, zb=zb, zbl=zbl, zt=zt, w=wd, wt=wtt, zone=zone, sill=0.08, tb=0.01, sh=0.04)
+        d = dict(y=y, zb=zb, zbl=zbl, zt=zt, w=wd, wt=wtt, zone=zone, sill=0.08, tb=0.01, sh=0.04, rail=p.get('rail', 0.55))
         d.update(kw)
         S.append(d)
     st(yF, zc + 0.10, 0.95, 0.95, W * 0.94, W * 0.90, 'bfront')

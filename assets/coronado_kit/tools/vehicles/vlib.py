@@ -70,7 +70,7 @@ def half_ring(s):
     gh = zt - zbl
     xb = wd - s.get('tb', 0.025)                     # belt (top of the door skin)
     x5 = xb + (wt - xb) * 0.35
-    rail = min(0.05, gh * 0.25) if gh > 0.02 else 0.0
+    rail = s.get('rail', min(0.05, gh * 0.25)) if gh > 0.02 else 0.0
     x7 = wt - min(0.10, wt * 0.18)
     pts = [(0.0, zb), (wd * 0.93, zb), (wd, zb + sill), (wd, zbl - min(sh, (zbl - zb) * 0.3)), (xb, zbl),
            (x5, zbl + gh * 0.45), (wt, zt - rail), (x7, zt), (0.0, zt + s.get('cr', 0.012))]
