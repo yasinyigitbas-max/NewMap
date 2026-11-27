@@ -40,7 +40,10 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
 - [x] 8. (trav76) Sitting and phone use (27 Nov, his list): stand to sit, walk to sit, sitting idle, sit to stand, sitting
       phone talk, sitting messaging, sitting to type, walking text, standing text, standing call.
 - [x] 9. (trav76) Then an exe of all of the above for him.
-- [ ] 10. STOP HERE AND WAIT FOR HIS GO. On his go: take a checkpoint, then the ragdolls (27 Nov: "push the ragdolls
+- [x] 9b. (trav81) The phone grips while walking and seated (27 Nov: "fix the seated and walking phone grabs too").
+      Checkpoint 3 taken after it at his word ("after its done take a check point, dont move upto the ragdolls just
+      yet"): it is in `reports/TRAVERSAL STATUS.md`.
+- [ ] 10. STOP HERE AND WAIT FOR HIS GO (the checkpoint is taken: checkpoint 3). On his go: the ragdolls (27 Nov: "push the ragdolls
       to the end of the queue, add the other moves in succession until them then make another exe and them move onto
       the ragdolls after taking another checkpoint on my go"):
       stage 19, ragdoll on hard impact and long fall, with get-up by lying direction; stage 20, partial ragdoll hit

@@ -346,4 +346,22 @@ What stands at this commit, all play-tested or approved by him up to trav57, and
   `Left_Cover_Sneak` / `Right_Cover_Sneak` at 1.16 m/s; held on at the wall's end: a look round it (3.0 s). E or the
   stick out from the wall: out. The cover takes are turned at the bake into the wall's frame (`AIM_DEG`).
   `tests/test_stage21.gd`.
-- Stages 19 and 20 (ragdolls) wait for his go and a checkpoint first.
+- Stages 19 and 20 (ragdolls) wait for his go.
+
+## CHECKPOINT 3, 27 Nov 2026, after trav81 (commit edf508d0): Yasin: "after its done take a check point, dont move upto the ragdolls just yet"
+
+To fall back: `git checkout edf508d0 -- traversal_lab` (or reset the work branch to it, at his word only).
+The exe of this commit: `traversal_lab/out/TraversalLab_trav81.zip`.
+- Tests that pass here (run on this tree, read after the runs): `tests/test_stage0.gd`, `test_stage1.gd --
+  --minutes=10`, `test_stage7.gd` to `test_stage13.gd`, `test_stage15.gd` to `test_stage18.gd`,
+  `test_stage17_sidle.gd`, `test_stage21.gd` to `test_stage23.gd`, `test_sit_phone.gd`. Audit: 26 of 114 study
+  lines fail, the same lines as at checkpoint 2 (the list is in the commit message of edf508d0's parent, trav80).
+- What stands: stages 0 to 18 and 21 to 23. Since checkpoint 2: turn, hang and drop (15), jumps across gaps (16),
+  beams, the wall-ledge sidle with arms open and head turned (17), sideways through every gap under 0.60 m, both
+  ways round, palms to the wall (18), cover low and high (21), doors (22), the car in and out (23), sitting on the
+  bench and at the desk, the phone texting and on a call (standing, walking, seated), gripped.
+- Play-tested by him since checkpoint 2, by his messages: up to the phone grips of trav79. NOT yet seen by him:
+  trav80 (the grips rebuilt), trav81 (the grips while walking and seated), cover (trav77), and the rest of the
+  list under "Waiting on Yasin's eyes" in the job board.
+- Not built: stages 19 and 20 (ragdolls), the bonnet slide, the phone pass of every stage.
+- His words for what comes next: "dont move upto the ragdolls just yet". The ragdolls start only at his go.
