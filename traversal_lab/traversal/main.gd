@@ -53,6 +53,10 @@ func _ready() -> void:
 	add_child(body)
 	if body.has_method(&"show_capsule") and not ("--capsule" in OS.get_cmdline_user_args()):
 		character = CharacterV1.new() if "--v1" in OS.get_cmdline_user_args() else Character.new()
+		for arg in OS.get_cmdline_user_args():
+			if arg.begins_with("--npc="):
+				character.free()
+				character = (load("res://traversal/npc/npc_character.gd") as GDScript).new()
 		character.name = "Character"
 		character.set(&"body", body)
 		# `-- --npc=npc_01`: the trial NPC body in the player's place (Yasin, 27 Nov: "yes go on, and make it")
