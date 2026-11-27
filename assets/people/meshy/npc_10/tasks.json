@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21d14-82bc-77ac-8198-6eabe2830570",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795784213942,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is a male shop clerk of about 28, a South Asian man with brown skin, a slim build, short black hair and a short neat beard, no tattoos. He wears a plain light green short-sleeved polo shirt that fits close to his body, a short plain black shop apron tied at the waist that ends above the knees and lies flat against his thighs, straight-legged khaki trousers that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain dark grey sneakers with no logos. No name tag text, no logos. The person stands upright in a T-pose, the arms raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and the body and under each armpit, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21d14-e99c-7018-9ec8-133c4ea79e67",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795784240326,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21d15-cca9-779e-80f6-b76042730587",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795784301622,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.74,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}

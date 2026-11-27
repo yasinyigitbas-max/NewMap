@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21d14-6c67-745c-8466-b57b38de4a0a",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795784208256,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is a female shop clerk of about 22, an East Asian woman with fair skin, a slim build and straight black hair cut to the chin, no tattoos. She wears a plain red short-sleeved polo shirt that fits close to her body, a short plain dark green shop apron tied at the waist that ends above the knees and lies flat against her thighs, straight-legged black trousers that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain white sneakers with no logos. No name tag text, no logos. The person stands upright in a T-pose, the arms raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and the body and under each armpit, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21d14-d288-74b2-af48-fba571685c4c",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795784234640,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21d15-9c87-71aa-8944-c8e50e152d5b",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795784289168,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.6,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}

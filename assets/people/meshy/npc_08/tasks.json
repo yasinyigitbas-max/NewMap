@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21d14-52e1-7777-9c2d-3486612e7891",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795784201745,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is a female city police officer of about 30, a Latina woman with tan skin, an athletic build and dark hair tied back in a tight bun, no tattoos. She wears a plain dark navy blue short-sleeved uniform shirt tucked in, with plain blank shoulder patches and a plain blank metal badge on the chest with no text and no real emblem, a black duty belt with small closed pouches that sit close to the body, straight-legged dark navy blue uniform trousers that end at the ankle, and plain black flat low-cut shoes. No hat, no weapon, nothing in her hands. The person stands upright in a T-pose, the arms raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and the body and under each armpit, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21d14-a1f4-7719-bbaa-9a84e992181e",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795784222213,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21d15-839a-773b-aee3-5ec7db318d5e",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795784282666,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.65,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}

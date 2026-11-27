@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21d17-9cb2-77a9-a61f-94160c13e135",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795784417980,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is a male construction worker of about 40, a Latino man with tan skin, a strong stocky build, short black hair and a thick moustache, no tattoos. He wears a plain orange short-sleeved t-shirt that fits close to his body under a short yellow high-visibility vest with two grey reflective stripes that lies flat against his chest, a yellow hard hat on his head, straight-legged dusty blue work jeans that end at the ankle, and plain tan flat low-cut work shoes with no logos. Nothing in his hands. The person stands upright in a T-pose, the arms raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and the body and under each armpit, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21d17-d6bc-72ea-af97-4adfd3cd8c55",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795784432308,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21d18-d15c-7635-bac5-5227258b0fa0",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795784499452,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.76,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}

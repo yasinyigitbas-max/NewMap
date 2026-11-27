@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21d16-1075-733b-9068-648701115833",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795784315807,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is an elderly East Asian man of about 72 with a thin build, slightly rounded shoulders, thin white hair and glasses, no tattoos. He wears a plain light grey short-sleeved button-up shirt that fits close to his body, tucked into straight-legged brown trousers with a belt that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain brown shoes with no logos. The person stands upright in a T-pose, the arms raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and the body and under each armpit, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21d16-5eb2-76f1-92dc-f3159ab8f4f4",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795784335810,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21d17-40de-7737-a413-deac5f1075a1",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795784397032,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.7,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}
