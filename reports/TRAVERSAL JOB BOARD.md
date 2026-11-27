@@ -80,6 +80,7 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
 
 ## Waiting on Yasin's eyes
 
+- trav78: the car in and out (the jitter), the phone in his hand texting and at his ear on a call.
 - trav77: cover on the course's thin and deep walls (E facing a wall; the stick along it; held at its end to look
   round; E or the stick out from it to leave).
 - trav75, trav76: the door (both sides), the car (in and out), the bench and the desk, the phone (T text, G call)

@@ -20,6 +20,7 @@ var body: CharacterBody3D
 # (world), and how much (0 = not held).
 var hold_at: Array = [Vector3.ZERO, Vector3.ZERO]
 var hold_w: Array = [0.0, 0.0]
+var hold_loose := [false, false]   # held in place, but the hand itself turns as the take turns it (the phone at his ear)
 var hold_flat: Array = [false, false]   # the held hand is laid flat on the top, fingers forward (the climbs): see hand_hold.gd
 var on := false                 # a take that puts hands down is showing
 var clip_slope := 0.0           # that take's own ground: its rise per metre forward
@@ -125,6 +126,10 @@ func _process_modification_with_delta(dt: float) -> void:
 			square = back - line * back.dot(line)
 		pole[f].position = shoulder_s + to * 0.5 + square.normalized() * 0.5
 		ik[f].influence = reach[f]
+		# (with nothing to reach for the solver is switched off, not left on at no influence: left on, it threw the hand
+		# 7 to 19 cm for single ticks in takes with the arms held forward. Yasin, 27 Nov: "getting in and out of car is
+		# very jiterry"; measured: about 350 such ticks over getting in and out, 3 with this)
+		ik[f].active = float(reach[f]) > 0.0
 	# An arm that cannot reach the ground: the hips come down just far enough, as they do for a foot that cannot
 	# (foot_place.gd does it, with the legs; found a little at a time, since the shoulders come down with the hips)
 	if reaching:

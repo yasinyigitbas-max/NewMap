@@ -44,6 +44,23 @@ func tap(key: String) -> void:
 	await ticks(2)
 
 
+var _was := {}
+var _step := {}
+var thrown := 0.0               # the most a hand's step changed from one tick to the next (m)
+
+
+## Called every tick of a take: a hand thrown about shows as its step changing sharply from one tick to the next.
+func watch_hands() -> void:
+	for n: String in ["LeftHand", "RightHand"]:
+		var p: Vector3 = J[n]
+		if _was.has(n):
+			var v: Vector3 = p - (_was[n] as Vector3)
+			if _step.has(n):
+				thrown = maxf(thrown, (v - (_step[n] as Vector3)).length())
+			_step[n] = v
+		_was[n] = p
+
+
 func facing() -> Vector3:
 	var d: Vector3 = (J["RightUpLeg"] as Vector3) - (J["LeftUpLeg"] as Vector3)
 	return Vector3(d.z, 0.0, -d.x).normalized()
@@ -79,6 +96,9 @@ func _run() -> void:
 		await ticks(30)
 		await tap("act")
 		var began := -1
+		thrown = 0.0
+		_was = {}
+		_step = {}
 		var seated_at := -1
 		var door_most := 0.0
 		var walked := 0.0
@@ -89,6 +109,8 @@ func _run() -> void:
 				if bool(body.call(&"in_move")):
 					began = t
 			door_most = maxf(door_most, float(car.get(&"door_deg")))
+			if began >= 0 and String(inter.get(&"_plan").get("phase", "")) == "in":
+				watch_hands()
 			if bool(inter.get(&"in_car")):
 				seated_at = t
 				break
@@ -106,14 +128,21 @@ func _run() -> void:
 		var wheel := ((J["LeftHand"] as Vector3) + (J["RightHand"] as Vector3)) * 0.5
 		ok((wheel - seat).dot(ahead) > 0.2 and (wheel - seat).dot(ahead) < 0.5 and wheel.y > 1.0 and wheel.y < 1.25, "%s: his hands are at the wheel (%.2f m ahead of his hips, %.2f m up)" % [how, (wheel - seat).dot(ahead), wheel.y])
 		ok(door_most >= 40.0 and float(car.get(&"door_deg")) == 0.0, "%s: the door was opened (%.0f degrees) and is shut behind him" % [how, door_most])
+		# (OURS, how it is told. Yasin, 27 Nov: "getting in and out of car is very jiterry": a hand was thrown 7 to 19 cm
+		# for single ticks; in the takes themselves a hand's step changes by under 3 cm from one tick to the next)
+		ok(thrown <= 0.05, "%s: no jitter getting in (a hand's step changes by %.3f m at most from one tick to the next)" % [how, thrown])
 		# sits there until asked
 		await ticks(120)
 		ok(bool(inter.get(&"in_car")) and bool(body.call(&"in_move")), "%s: he stays in the car until E" % how)
 		await tap("act")
 		var out_at := -1
 		door_most = 0.0
+		thrown = 0.0
+		_was = {}
+		_step = {}
 		for t in 600:
 			await ticks(1)
+			watch_hands()
 			door_most = maxf(door_most, float(car.get(&"door_deg")))
 			if not bool(body.call(&"in_move")):
 				out_at = t
@@ -122,6 +151,7 @@ func _run() -> void:
 		var p := body.global_position
 		ok(out_at >= 0 and absf(p.y) < 0.02 and int(body.get(&"state")) == 0 and (p - seat).dot(left) > 1.5 and (J["Hips"] as Vector3).y > 0.9, "E: he gets out in %.1f s (the study: 5.8 s) and stands on the ground %.2f m to the left of the seat" % [out_at / 60.0, (p - seat).dot(left)])
 		ok(door_most >= 40.0 and float(car.get(&"door_deg")) == 0.0, "E: the door was opened (%.0f degrees) and is shut again" % door_most)
+		ok(thrown <= 0.05, "E: no jitter getting out (a hand's step changes by %.3f m at most from one tick to the next)" % thrown)
 	lab.call(&"place", Vector3(60.0, 0.0, 10.0))
 	await ticks(20)
 	var before := int(inter.get(&"plays"))

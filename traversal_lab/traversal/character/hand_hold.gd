@@ -19,7 +19,7 @@ func _process_modification_with_delta(_dt: float) -> void:
 	var world := sk.global_transform.basis.orthonormalized()
 	for f in 2:
 		var g := sk.get_bone_global_pose(_hand[f])
-		if float(w[f]) <= 0.0:
+		if float(w[f]) <= 0.0 or bool((place.get(&"hold_loose") as Array)[f]):
 			_on[f] = false
 			continue
 		if not _on[f]:

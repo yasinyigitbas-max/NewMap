@@ -25,7 +25,7 @@ func ok(cond: bool, what: String) -> void:
 
 
 func _after() -> void:
-	for n: String in ["Hips", "LeftHand", "RightHand", "Head", "LeftToeBase", "RightToeBase", "LeftLeg", "RightLeg", "LeftUpLeg", "RightUpLeg"]:
+	for n: String in ["HeadTop_End", "Hips", "LeftHand", "RightHand", "Head", "LeftToeBase", "RightToeBase", "LeftLeg", "RightLeg", "LeftUpLeg", "RightUpLeg"]:
 		J[n] = (skel.global_transform * skel.get_bone_global_pose(skel.find_bone("mixamorig_" + n))).origin
 
 
@@ -53,6 +53,14 @@ func until(cond: Callable, most: int) -> int:
 			return i
 		await ticks(1)
 	return -1
+
+
+## The phone as it is drawn: {shown, at (its middle), face (the way its lit face looks), up (toward its top)}, in the world.
+func phone(at_ear: bool) -> Dictionary:
+	var chr: Node = lab.get(&"character")
+	var box: MeshInstance3D = chr.get(&"_phone_box_l") if at_ear else chr.get(&"_phone_box")
+	var xf: Transform3D = skel.global_transform * box.transform
+	return {"shown": box.visible, "at": xf.origin, "face": xf.basis.z.normalized(), "up": xf.basis.y.normalized()}
 
 
 func facing() -> Vector3:
@@ -91,6 +99,11 @@ func _run() -> void:
 	await ticks(150)
 	var both := (J["LeftHand"] as Vector3).distance_to(J["RightHand"])
 	ok(int(body.get(&"phone")) == 1 and (J["RightHand"] as Vector3).y > 1.0 and (J["LeftHand"] as Vector3).y > 1.0 and both < 0.40, "standing text: T brings both hands up to the phone (wrists %.2f and %.2f m up, %.2f m apart)" % [(J["LeftHand"] as Vector3).y, (J["RightHand"] as Vector3).y, both])
+	# the phone itself (Yasin, 27 Nov: "it gets lokst in our hands while texting")
+	var ph := phone(false)
+	var eyes: Vector3 = (J["Head"] as Vector3) + Vector3(0.0, 0.10, 0.0) + facing() * 0.09
+	var to_eyes: Vector3 = (eyes - (ph["at"] as Vector3)).normalized()
+	ok(bool(ph["shown"]) and (ph["at"] as Vector3).distance_to(J["RightHand"]) < 0.13 and (ph["face"] as Vector3).dot(to_eyes) > 0.70, "standing text: the phone is in his right hand (its middle %.2f m from the wrist), its lit face turned to his eyes (%.0f degrees off them)" % [(ph["at"] as Vector3).distance_to(J["RightHand"]), rad_to_deg(acos(clampf((ph["face"] as Vector3).dot(to_eyes), -1.0, 1.0)))])
 	keys["mz"] = -1.0
 	await ticks(150)
 	var pace := (body.get(&"hvel") as Vector3).length()
@@ -112,6 +125,16 @@ func _run() -> void:
 	for i in 300:                   # (one whole turn of the call take)
 		await ticks(1)
 		ear = minf(ear, (J["LeftHand"] as Vector3).distance_to(J["Head"]))
+	# the phone at his ear (Yasin, 27 Nov: "never truly touches our face on a right angle during calls")
+	var pc := phone(true)
+	var head_side := (J["HeadTop_End"] as Vector3) - (J["Head"] as Vector3)        # (up the head: its own lean is in this)
+	var top_at: Vector3 = (pc["at"] as Vector3) + (pc["up"] as Vector3) * 0.044
+	var ear_at: Vector3 = (J["Head"] as Vector3) + head_side.normalized() * 0.105
+	var off_head := Vector2(top_at.x - ear_at.x, top_at.z - ear_at.z).length()
+	var tilt := absf((pc["face"] as Vector3).dot(head_side.normalized()))
+	var foot: Vector3 = (pc["at"] as Vector3) - (pc["up"] as Vector3) * 0.074
+	ok(bool(pc["shown"]) and off_head > 0.06 and off_head < 0.11 and tilt < 0.12 and absf(top_at.y - ear_at.y) < 0.04, "standing call: the phone lies flat on the side of his head at his ear (its ear end %.3f m out from the middle of his head, at ear height within %.3f m, its face %.0f degrees from upright along the head)" % [off_head, absf(top_at.y - ear_at.y), rad_to_deg(asin(clampf(tilt, 0.0, 1.0)))])
+	ok(foot.distance_to(J["LeftHand"]) < 0.09, "standing call: his left hand is on it (wrist %.3f m from its foot)" % foot.distance_to(J["LeftHand"]))
 	ok(int(body.get(&"phone")) == 2 and ear < 0.32, "standing call: G brings the phone to his ear (left wrist %.2f m from his head joint)" % ear)
 	await tap("call")
 	await ticks(60)

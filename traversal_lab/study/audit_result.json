@@ -68,14 +68,14 @@
     "limit.neck_fwd": 26.089,
     "limit.neck_side": 21.956,
     "limit.neck_turn": 29.385,
-    "limit.shoulder": 138.052,
+    "limit.shoulder": 134.853,
     "look.behind": 1.0,
     "look.head_most": 9.381,
     "look.speed": 35.709,
     "look.trunk_no_lead": 1.0,
     "run.ankle_down": 22.161,
     "run.ankle_up": 26.188,
-    "run.arms_opposite": 96.226,
+    "run.arms_opposite": 96.855,
     "run.bob": 8.814,
     "run.drift": 1.906,
     "run.flight": 1.0,
@@ -154,5 +154,5 @@
   "outside_off": [
     "x.steep45_up_feet"
   ],
-  "tree": "5b5eadbdd73bad6e190cbf3fd070af969b6db1be7a5f22fefba93b74c5ce2237"
+  "tree": "9329b751b234f7a088c6a06fd674ac5093da3ef38ef79614e451e2d17726b36e"
 }
