@@ -61,7 +61,5 @@ for lid in [ID] + ALSO:
         shutil.copy(os.path.join(P, 'o', f), os.path.join(LOD, f.replace(ID + '_', lid + '_', 1)))
 for k in ('albedo', 'normal', 'orm'):
     shutil.copy(os.path.join(G, 'tex', '%s_veh_%s.png' % (ID, k)), os.path.join(CTX, '%s_veh_%s.png' % (ID, k)))
-if os.path.exists(os.path.join(cut, ID + '_cabin.png')):
-    shutil.copy(os.path.join(cut, ID + '_cabin.png'), os.path.join(CTX, ID + '_cabin.png'))
 shutil.rmtree(P)
 print('INSTALLED', ID, ALSO)

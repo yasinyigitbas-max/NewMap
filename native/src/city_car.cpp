@@ -538,7 +538,9 @@ void CityCar::fit_doors(const Ref<Mesh> &p_body, const String &p_base) {
 	}
 	// the parallax cabin: the glass of the body and of the doors, and the box seen through an open door
 	const String cube = String("res://vehicles/models/cartex/") + cartex_id(cm::MODELS[std::min(std::max(model, 0), cm::N_MODELS - 1)].id) + String("_cabin.png");
-	const bool cab = real_doors && body->has_meta("cabin") && rl->exists(cube);
+	// (27 Nov, Yasin: "keep opaque glass everywhere ... parallax on the moving cars without people in them will be awkward"):
+	// the parallax cabin stays in the shader but is not switched on; an open door shows the modelled cabin
+	const bool cab = false && real_doors && body->has_meta("cabin") && rl->exists(cube);
 	Vector3 lo, hi;
 	Ref<Texture2D> tex;
 	if (cab) {
