@@ -295,3 +295,28 @@ What stands at this commit, all play-tested or approved by him up to trav57, and
   own default is unchanged.
 - **Stage 15** is asked for by going at an edge crouched; after he lets go it is his own fall and landing (trav62).
 - **Next in the study's order:** stage 17, narrow surfaces (beam walk and wall-ledge sidle, 0.10 to 0.25 m wide).
+
+## After trav70, 27 Nov 2026 (stages 17 and 18)
+
+- **trav64, trav65 (gaps, his corrections):** a shallow gap is not jumped: at a run he runs through it, at a walk he
+  takes one longer step only where one step spans it. Gaps between neighbouring blocks, and far sides a little lower
+  or higher, are measured with `detector.measure_edge`.
+- **Stage 17, narrow surfaces (trav66 to trav69):** on a top under 0.25 m wide he walks at 0.75 m/s (under 0.10 m:
+  0.40 m/s, mine) with the beam walk (`KM_Beam_Walk`) and his arms out; no crouch there; off its end or side as off
+  any edge, by the run key. Still for 10 s he loses his balance: from under 3.1 m he comes down off the side onto his
+  feet, a hard landing; from 3.1 m up he falls face down and gets up (`Falling_From_Losing_Balance`,
+  `Push_Up_To_Idle`). Thin walls: with the stick let go once the climb has begun he stays standing on the top.
+  Standing still, a foot with nothing under it is brought onto the beam or wall top (trav69); on a wall met end on
+  his hands rest on the top (trav69). `tests/test_stage17.gd`.
+- **Stage 18, gaps between walls (trav70):** 0.45 to 0.60 m: shoulders turned 40 degrees (mine), from half a metre
+  before, no slowing; 0.25 to 0.45 m: sideways with a side-step take (`KM_Side_Step`, Kimodo, the only one of ten
+  that does not cross its feet) at its own 0.67 m/s; under 0.25 m: blocked. His shape is made thinner in the gap
+  (`body.radius`) and wider again only where it has room. `tests/test_stage18.gd`.
+- **Not built:** the wall-ledge sidle of stage 17 ("For a ledge with a wall behind, allow a sidle down to about
+  0.10 m"). `KM_Ledge_Sidle_Left` is baked and unused; it crosses its feet 0.6 m wide.
+- **His words for these:** "we should spread our arms to balance on a beam, only be able to walk on them standing
+  and not crouched", "we should fall off losing balance if we dont move more than 10 seconds on the beam", "make him
+  hard land instead of a hard fall when falling from lower than 3.1 meters and if above hard fall", "also fold
+  squeezing into narrow openings into this one too".
+- **Next in the study's order:** stage 19, ragdoll on hard impact and long fall; then 20 hit reactions, 21 cover,
+  22 doors, 23 cars.

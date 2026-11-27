@@ -114,6 +114,16 @@ const NARROW_SPEED_LEAST := 0.40    # NOT in the study (it gives no pace for und
 const STEP_HEIGHT_FOR_NARROW := 0.25    # NOT in the study, mine: ground this far below his is not his surface
 const NARROW_SIDE := [0.115, 0.04]
 const NARROW_STAY := 0.04          # NOT in the study, mine: see _narrow_now   # NOT in the study, mine: no ground this far to BOTH sides of him = under 0.25 m wide, under 0.10 m wide
+# Stage 18, gaps between walls. The study: "walk straight through at 0.60 m and wider, turn the shoulders from 0.45
+# to 0.60 m starting half a metre before, go fully sideways from 0.45 down to 0.25 m, and block below about 0.20 m",
+# and of the shoulder turn: people "begin turning about half a metre before it, and do not slow down".
+const SQUEEZE_BAND := [0.25, 0.45, 0.60]    # the study's: sideways from the first, shoulders turned from the second, plain from the third
+const SQUEEZE_AHEAD := 0.5          # the study's "half a metre before"
+const SQUEEZE_SLOW_TIME := 0.8    # NOT in the study, mine: see _find_squeeze (s)
+const SQUEEZE_PLAY := 0.02          # NOT in the study, mine: his shape is kept this much clear of each wall (m)
+const SQUEEZE_SEEN := 0.01          # OURS: a gap is taken as under a band edge when it measures this much under it (m)
+const SQUEEZE_LOOK := [0.5, 1.0, 1.5]       # NOT in the study, mine: the gap is measured at these heights above his feet (m)
+const SQUEEZE_SPEED := 0.67         # NOT in the study (it gives no pace for going sideways through a gap): the pace of the side-step take itself
 const CROUCH_HEIGHT := 1.15         # feet to the top of the crouched body: under the course's 1.2 m overhang. His
                                     # crouch takes hold the top of the head under this (measured, see character.gd)
 const STAND_ROOM := 0.03            # NOT in the study: the standing shape is tried this much thinner than it is, so
@@ -177,10 +187,18 @@ var move_soft := 0.0            # 0..1: how much less than the clip he folds on 
 var _wish_was_moving := false
 var narrow := 0                 # he is on something narrow: 0 = no, 1 = under 0.25 m wide, 2 = under 0.10 m
 var stick_held := false         # the stick is off its rest (read by the moves that end differently when it is let go)
+var squeeze := 0                # in a gap between walls: 0 = no, 1 = shoulders turned (0.45 to 0.60 m), 2 = sideways (0.25 to 0.45 m)
+var squeeze_w := INF            # the free width of that gap (m)
+var squeeze_mid := Vector3.ZERO  # a point on the middle line of that gap, and the way straight across it
+var squeeze_across := Vector3.RIGHT
+var _gap_mid := Vector3.ZERO
+var _gap_n := Vector3.RIGHT
+var radius := RADIUS            # his shape's radius now: less than RADIUS only in such a gap
 var run_asked := false          # the run key is held (he may still be held to a slower pace, on something narrow)
 var crouched := false           # he is crouched: the smaller capsule, half walking speed, no run, no jump
 var _col: CollisionShape3D
 var _fit := CapsuleShape3D.new()
+var _skirt: CollisionShape3D
 
 
 func _ready() -> void:
@@ -204,6 +222,7 @@ func _ready() -> void:
 	skirt_shape.height = RADIUS + 0.06
 	var skirt := CollisionShape3D.new()
 	skirt.shape = skirt_shape
+	_skirt = skirt
 	skirt.position.y = FLOAT + skirt_shape.height * 0.5
 	add_child(skirt)
 	_probe.radius = PROBE_R
@@ -338,6 +357,106 @@ func start_jump() -> bool:
 	return true
 
 
+## The free width between two walls across the point `at` (his feet there), or INF where there are not walls to
+## both sides within reach. Measured straight across to the nearer wall (along its own facing), at three heights.
+func _gap_at(at: Vector3, across: Vector3) -> float:
+	var space := get_world_3d().direct_space_state
+	var least := INF
+	for h: float in SQUEEZE_LOOK:
+		var from := at + Vector3(0.0, h, 0.0)
+		var a := space.intersect_ray(PhysicsRayQueryParameters3D.create(from, from + across * 0.5, collision_mask, [get_rid()]))
+		var b := space.intersect_ray(PhysicsRayQueryParameters3D.create(from, from - across * 0.5, collision_mask, [get_rid()]))
+		if a.is_empty() or b.is_empty():
+			continue
+		# straight across: along the facing of the wall that was hit (he may stand at an angle to the gap)
+		var n: Vector3 = a["normal"]
+		n = Vector3(n.x, 0.0, n.z)
+		if n.length() < 0.5:
+			continue
+		n = n.normalized()
+		var a2 := space.intersect_ray(PhysicsRayQueryParameters3D.create(from, from - n * 0.6, collision_mask, [get_rid()]))
+		var b2 := space.intersect_ray(PhysicsRayQueryParameters3D.create(from, from + n * 0.6, collision_mask, [get_rid()]))
+		if a2.is_empty() or b2.is_empty():
+			continue
+		var wide := from.distance_to(a2["position"]) + from.distance_to(b2["position"])
+		if wide < least:
+			least = wide
+			_gap_mid = ((a2["position"] as Vector3) + (b2["position"] as Vector3)) * 0.5
+			_gap_n = n
+	return least
+
+
+## Stage 18: is he in, or coming up to, a gap between walls narrower than he walks through as he is? Sets `squeeze`,
+## `squeeze_w` and his shape's radius. His shape is made thinner at once, and wider again only where the wider
+## shape has room ("test that the standing capsule fits before standing up" is the study's rule for the crouch; the
+## same is done here).
+func _find_squeeze() -> void:
+	var fwd := -global_transform.basis.z
+	fwd = Vector3(fwd.x, 0.0, fwd.z).normalized()
+	if _wish.length() > 0.05 and state == State.GROUND:
+		fwd = _wish.normalized()
+	var across := fwd.cross(Vector3.UP).normalized()
+	var w := _gap_at(global_position, across)
+	var mid := _gap_mid
+	var mid_n := _gap_n
+	if _wish.length() > 0.05 and state == State.GROUND:
+		# ahead, as far as the way there is open
+		var space := get_world_3d().direct_space_state
+		for d: float in [SQUEEZE_AHEAD * 0.5, SQUEEZE_AHEAD]:
+			var from := global_position + Vector3(0.0, 1.0, 0.0)
+			if not space.intersect_ray(PhysicsRayQueryParameters3D.create(from, from + fwd * d, collision_mask, [get_rid()])).is_empty():
+				break
+			var wd := _gap_at(global_position + fwd * d, across)
+			if wd < w:
+				w = wd
+				mid = _gap_mid
+				mid_n = _gap_n
+		# At a run he must be down to a side-step's pace by the time he is in a gap he goes through sideways, and
+		# half a metre is not room for that: such a gap is looked for as far ahead as he covers in SQUEEZE_SLOW_TIME.
+		var far := hvel.length() * SQUEEZE_SLOW_TIME if hvel.length() > WALK + 0.1 else 0.0
+		var d2 := SQUEEZE_AHEAD + 0.25
+		while d2 <= far and w >= float(SQUEEZE_BAND[1]) - SQUEEZE_SEEN:
+			var from2 := global_position + Vector3(0.0, 1.0, 0.0)
+			if not space.intersect_ray(PhysicsRayQueryParameters3D.create(from2, from2 + fwd * d2, collision_mask, [get_rid()])).is_empty():
+				break
+			var wf := _gap_at(global_position + fwd * d2, across)
+			if wf < float(SQUEEZE_BAND[1]) - SQUEEZE_SEEN and wf >= float(SQUEEZE_BAND[0]) - SQUEEZE_SEEN:
+				w = wf
+				mid = _gap_mid
+				mid_n = _gap_n
+			d2 += 0.25
+	var kind := 0
+	if w >= float(SQUEEZE_BAND[0]) - SQUEEZE_SEEN and w < float(SQUEEZE_BAND[2]) - SQUEEZE_SEEN:
+		kind = 2 if w < float(SQUEEZE_BAND[1]) - SQUEEZE_SEEN else 1
+	var want_r := minf(RADIUS, w * 0.5 - SQUEEZE_PLAY) if kind > 0 else RADIUS
+	if want_r > radius:
+		# wider again only where there is room for it
+		var q := PhysicsShapeQueryParameters3D.new()
+		var trial := CapsuleShape3D.new()
+		trial.radius = want_r - 0.005
+		trial.height = (_col.shape as CapsuleShape3D).height
+		q.shape = trial
+		q.transform = Transform3D(Basis.IDENTITY, global_position + Vector3.UP * _col.position.y)
+		q.exclude = [get_rid()]
+		q.collision_mask = collision_mask
+		if not get_world_3d().direct_space_state.intersect_shape(q, 1).is_empty():
+			return                                  # he stays as he is, in whatever gap he is in
+	squeeze = kind
+	squeeze_w = w
+	squeeze_mid = mid
+	squeeze_across = mid_n
+	if not is_equal_approx(want_r, radius):
+		_set_radius(want_r)
+
+
+func _set_radius(r: float) -> void:
+	radius = r
+	(_col.shape as CapsuleShape3D).radius = r
+	(_skirt.shape as CylinderShape3D).radius = r - 0.004
+	if _look.size() > 0:
+		((_look[0] as MeshInstance3D).mesh as CapsuleMesh).radius = r
+
+
 ## Is he on something narrow? No ground near his own level to BOTH sides of him (across the way he faces).
 func _narrow_now() -> int:
 	if state != State.GROUND:
@@ -425,6 +544,10 @@ func _physics_process(dt: float) -> void:
 	# on something narrow he goes no faster than the study's pace for it, whatever is asked
 	if narrow > 0 and _wish.length() > (NARROW_SPEED if narrow == 1 else NARROW_SPEED_LEAST):
 		_wish = _wish.normalized() * (NARROW_SPEED if narrow == 1 else NARROW_SPEED_LEAST)
+	# a gap between walls (stage 18): sideways through the tightest, at a side-step's pace
+	_find_squeeze()
+	if squeeze == 2:
+		_wish = _wish.limit_length(SQUEEZE_SPEED)
 
 	# a way to go that keeps turning (a curve, not a corner) is walked more slowly
 	if _wish.length() > 0.05:

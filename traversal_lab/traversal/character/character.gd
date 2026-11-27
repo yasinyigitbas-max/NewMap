@@ -9,6 +9,7 @@ extends Node3D
 ## stairs and steep-ground clips. Until they are, he walks stairs and slopes with the plain walk.
 
 const ArmOpen := preload("res://traversal/character/arm_open.gd")
+const TrunkTurn := preload("res://traversal/character/trunk_turn.gd")
 const FootPlace := preload("res://traversal/character/foot_place.gd")
 const FootOrient := preload("res://traversal/character/foot_orient.gd")
 const HandPlace := preload("res://traversal/character/hand_place.gd")
@@ -97,6 +98,14 @@ const CROUCH_WALK := "KM_Crouch_Walk"
 # loops, as the crouch walk does when he crouches. The take is the study's own Kimodo one ("KM Beam Walk | 4.97 s |
 # 4.50 m forward, 0.91 m/s | slow walk, arms held out to the sides"), one stride cut from its middle.
 const BEAM_WALK := "KM_Beam_Walk"
+# Stage 18, gaps between walls (the study: "turn the shoulders from 0.45 to 0.60 m starting half a metre before, go
+# fully sideways from 0.45 down to 0.25 m"). The body tells which (body.gd `squeeze`). Sideways: a side-step take
+# (Kimodo, 26 Nov; see build_clips.gd), turned at the bake so that its travel is straight ahead: he faces the wall
+# to his left and goes to his own right. It is shown where the ground he has covered puts it, and standing still it
+# runs on to where its feet are together.
+const SIDE_STEP := "KM_Side_Step"
+const SHOULDER_TURN_DEG := 40.0 # NOT in the study (it gives no angle), mine: how far the shoulders are turned in a 0.45 to 0.60 m gap
+const SIDE_REST := 0.6          # NOT in the study, mine: standing still, the side step runs on at this share of its own pace to its end
 const BEAM_ARMS_DEG := 60.0     # NOT in the study, mine: standing still on something narrow his arms are held this far out (the
                                 # beam walk has them out by itself). Yasin, 26 Nov: "we should spread our arms to balance on a beam"
 const NARROW_FADE := 0.3        # NOT in the study: seconds to blend to and from the beam walk
@@ -240,6 +249,10 @@ var _jump_y0 := 0.0             # the height he jumped from
 var _soft := 0.0                # 0..1: how far a landing is eased toward standing
 var _low_w := 0.0               # 0 = the standing set, 1 = the crouched set
 var _narrow_w := 0.0            # 0 = as he is, 1 = the narrow set (the beam walk)
+var _squeeze_w := 0.0           # 0 = as he is, 1 = sideways (the side step)
+var _side_t := 0.0              # where the side step is (s)
+var _trunk: SkeletonModifier3D  # trunk_turn.gd
+var _turn_deg := 0.0
 var _beam_arms := 0.0           # 0 to 1: how far his arms are held out for standing on something narrow (not in a move)
 var _low_was := false
 var _head_i := -1
@@ -264,7 +277,7 @@ func _ready() -> void:
 	player.name = "AnimationPlayer"
 	model.add_child(player)
 	player.add_animation_library(&"", _lib)
-	for n: String in [WALK, JOG, RUN, "KM_Climb_Hard", "KMY_Down_Hands_Balance_Long", CROUCH_WALK, BEAM_WALK]:
+	for n: String in [WALK, JOG, RUN, "KM_Climb_Hard", "KMY_Down_Hands_Balance_Long", CROUCH_WALK, BEAM_WALK, SIDE_STEP]:
 		var a := _lib.get_animation(n)
 		_length[n] = a.length
 		var t := a.find_track(NodePath("%s:Root" % SKEL), Animation.TYPE_POSITION_3D)
@@ -351,6 +364,9 @@ func _ready() -> void:
 		_orient.name = "FootOrient"
 		_orient.set(&"place", feet)
 		skel.add_child(_orient)
+	_trunk = TrunkTurn.new()
+	_trunk.name = "TrunkTurn"
+	skel.add_child(_trunk)
 	var arms: SkeletonModifier3D = ArmOpen.new()
 	arms.name = "ArmOpen"
 	arms.set(&"open_deg", arm_open_deg)
@@ -473,7 +489,16 @@ func _make_tree() -> AnimationNodeBlendTree:
 	bt.add_node(&"narrow", AnimationNodeBlend2.new(), Vector2(700, -100))
 	bt.connect_node(&"narrow", 0, &"stance")
 	bt.connect_node(&"narrow", 1, &"beam_ground")
-	bt.connect_node(&"act", 0, &"narrow")
+	# and the set for going sideways through a gap: the side step, shown at the time set here each tick
+	var side_step := AnimationNodeAnimation.new()
+	side_step.animation = SIDE_STEP
+	bt.add_node(&"side_step", side_step, Vector2(0, -600))
+	bt.add_node(&"seek_side", AnimationNodeTimeSeek.new(), Vector2(200, -600))
+	bt.connect_node(&"seek_side", 0, &"side_step")
+	bt.add_node(&"squeeze", AnimationNodeBlend2.new(), Vector2(750, -200))
+	bt.connect_node(&"squeeze", 0, &"narrow")
+	bt.connect_node(&"squeeze", 1, &"seek_side")
+	bt.connect_node(&"act", 0, &"squeeze")
 	var fall := AnimationNodeAnimation.new()
 	fall.animation = FALL
 	bt.add_node(&"fall_anim", fall, Vector2(400, 300))
@@ -608,7 +633,7 @@ func _physics_process(dt: float) -> void:
 			var wish := (body.get(&"_wish") as Vector3).length()
 			var low := bool(body.get(&"crouched"))
 			# (on something narrow, as crouched: no start, stop or turn clips; they drop his arms, which are his balance there)
-			var plain := not in_air and st == 0 and int(body.get(&"terrain")) == 0 and not low and int(body.get(&"narrow")) == 0
+			var plain := not in_air and st == 0 and int(body.get(&"terrain")) == 0 and not low and int(body.get(&"narrow")) == 0 and int(body.get(&"squeeze")) != 2
 			if low != _low_was:
 				_low_was = low
 				if speed < 0.3 and not in_air and not _stair_on and not _steep_on and (_act == "ground" or _sub == "crouch"):
@@ -871,7 +896,8 @@ func _physics_process(dt: float) -> void:
 	# above all, they threw his arms from one place to another from tick to tick, up to 0.8 m. Yasin, 26 Nov: "arms
 	# flicker when falling idle too long>fall animation plays")
 	_beam_arms = move_toward(_beam_arms, _narrow_w * (1.0 - _moving) if _mode != "move" else 0.0, dt / FADE)
-	_arms.set(&"open_deg", arm_open_deg + (STEEP_ARMS_UP_DEG if _steep_up else STEEP_ARMS_DEG) * _steep_w + BEAM_ARMS_DEG * _beam_arms)
+	# (in a gap between walls his arms are not held out from his body at all)
+	_arms.set(&"open_deg", arm_open_deg * (1.0 - maxf(_turn_deg / SHOULDER_TURN_DEG, _squeeze_w)) + (STEEP_ARMS_UP_DEG if _steep_up else STEEP_ARMS_DEG) * _steep_w + BEAM_ARMS_DEG * _beam_arms)
 	if hands:
 		# a move that puts a hand on something: [which hand (0 left, 1 right), where its wrist goes, how much]
 		var mh: Array = body.get(&"move_hand") if bool(body.call(&"in_move")) else []
@@ -1164,6 +1190,22 @@ func _ground(dt: float, speed: float) -> void:
 	tree.set(&"parameters/narrow/blend_amount", _narrow_w)
 	tree.set(&"parameters/beam_ground/blend_amount", _moving)
 	tree.set(&"parameters/beam_speed/scale", clampf(maxf(speed, 0.2) / (float(_stride[BEAM_WALK]) / float(_length[BEAM_WALK])), SCALE_LEAST, SCALE_MOST))
+	# a gap between walls: sideways through the tightest, the shoulders turned in the next
+	var sq := int(body.get(&"squeeze")) if not low else 0
+	_squeeze_w = move_toward(_squeeze_w, 1.0 if sq == 2 else 0.0, dt / NARROW_FADE)
+	tree.set(&"parameters/squeeze/blend_amount", _squeeze_w)
+	if feet:
+		feet.set(&"gap_fit", _squeeze_w if int(body.get(&"squeeze")) == 2 else 0.0)
+	var side_len := float(_length[SIDE_STEP])
+	if speed > 0.05:
+		_side_t = fposmod(_side_t + dt * speed / (float(_stride[SIDE_STEP]) / side_len), side_len)
+	elif _side_t > 0.0:
+		_side_t = _side_t + dt * SIDE_REST
+		if _side_t >= side_len:
+			_side_t = 0.0
+	tree.set(&"parameters/seek_side/seek_request", _side_t)
+	_turn_deg = move_toward(_turn_deg, SHOULDER_TURN_DEG if (sq == 1 and _mode == "ground") else 0.0, SHOULDER_TURN_DEG * dt / FADE)
+	_trunk.set(&"turn_deg", _turn_deg)
 	var g := _gait_for(maxf(speed, 0.3))
 	tree.set(&"parameters/gait/blend_position", g.x)
 	_natural = g.y

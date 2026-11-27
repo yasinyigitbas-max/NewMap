@@ -69,6 +69,13 @@ const SHOE_EDGE := 0.04         # NOT in the study, mine: this much of it, each 
 const SHOE_LONG := 0.27         # NOT in the study, mine: the length of his shoe (m)
 const IN_TIME := 0.15           # NOT in the study, mine: seconds for a foot to be brought in, and let back out
 var _in := [Vector3.ZERO, Vector3.ZERO]
+# Going sideways through a gap between walls (stage 18) his feet point across it, and the side-step take sets them
+# up to 0.24 m off his middle line: in a gap of 0.25 to 0.45 m that is in the wall. Each foot is brought across so
+# that its ankle and the ball of it are both inside the gap, SHOE_CLEAR off each wall (in a gap too tight for that,
+# onto its middle). The study: "build them from clips you have plus procedure".
+var gap_fit := 0.0              # 0 to 1: he is going sideways through a gap (set by character.gd)
+const SHOE_CLEAR := 0.04        # NOT in the study, mine: the ankle joint and the ball of the foot are kept this far off each wall (m)
+var _gap_in := [Vector3.ZERO, Vector3.ZERO]
 var pinning := true
 var grounding := true
 
@@ -193,6 +200,22 @@ func _process_modification_with_delta(dt: float) -> void:
 			ankle += out
 		ball += _in[f]
 		ankle += _in[f]
+		if gap_fit > 0.0:
+			var n: Vector3 = body.get(&"squeeze_across")
+			var half := float(body.get(&"squeeze_w")) * 0.5 - SHOE_CLEAR
+			var mid_line: Vector3 = body.get(&"squeeze_mid")
+			var ca := (ankle - mid_line).dot(n)
+			var cb := (ball - mid_line).dot(n)
+			var move := 0.0
+			if absf(ca - cb) >= 2.0 * half:
+				move = -(ca + cb) * 0.5
+			else:
+				move = clampf(0.0, -half - minf(ca, cb), half - maxf(ca, cb))
+			_gap_in[f] = (_gap_in[f] as Vector3).lerp(n * move, 1.0 - exp(-dt / IN_TIME)) if is_finite(half) else Vector3.ZERO
+		else:
+			_gap_in[f] = (_gap_in[f] as Vector3) * exp(-dt / IN_TIME)
+		ball += (_gap_in[f] as Vector3) * (gap_fit if gap_fit > 0.0 else 1.0)
+		ankle += (_gap_in[f] as Vector3) * (gap_fit if gap_fit > 0.0 else 1.0)
 		# 2. the ground under this foot: the same height above it as the clip holds the foot above its own floor
 		var want_g := feet_y
 		var normal := Vector3.UP

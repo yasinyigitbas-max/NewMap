@@ -22,7 +22,11 @@ const CUTS := {"KM_Stairs_Walk_Down": [0.67, 1.53], "KM_Stairs_Run_Up": [0.67, 1
 		"KMY_Down_Hands_Balance_Long": [2.33, 4.57],
 		# Stage 6, crouch: one stride of the lowest crouch-walk take (left foot forward to left foot forward; the top
 		# of its head stays between 0.97 and 1.16 m), and three still seconds of the crouch idle
-		"KM_Crouch_Walk": [1.40, 2.95], "KM_Crouch_Idle": [0.50, 3.50]}
+		"KM_Crouch_Walk": [1.40, 2.95], "KM_Crouch_Idle": [0.50, 3.50],
+		# Stage 18, sideways through a gap (Kimodo take of 26 Nov, "side steps to the right with small steps, feet
+		# together then apart, body upright and thin, arms at the sides", seed 42: of ten takes the only one that
+		# shuffles without crossing its feet): one step out and one closing step, feet together to feet together
+		"KM_Side_Step": [1.37, 2.50]}
 const AUTO_CUT := ["KM_Walk", "KM_Run", "KM_Beam_Walk"]
 # A part of a take used as it is, not as a loop (seconds, from and to):
 #   the start and the stop of Yasin's own long downhill take (the loop above is its middle: 2.33 to 4.57 s);
