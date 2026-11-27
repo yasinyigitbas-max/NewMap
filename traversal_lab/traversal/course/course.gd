@@ -1,5 +1,6 @@
 extends Node3D
 const Door := preload("res://traversal/course/door.gd")
+const Car := preload("res://traversal/course/car.gd")
 ## Stage 0: the measured grey-box test course. Every obstacle is built at an exact, labelled size.
 ## Stations stand side by side along X; each is approached by walking toward -Z from its start point.
 ## `stations` lists them for the readout, the teleport keys and the tests.
@@ -52,6 +53,10 @@ func _ready() -> void:
 	_ledges(0.20, 0.12)
 	# Stage 22, a door (the study's opening: 0.815 m wide, 2.03 m high), also behind the start line and in `extras`
 	_door(236.0, 10.0)
+	# Sitting (Yasin, 27 Nov): a bench and a desk with a stool, also behind the start line and in `extras`
+	_seats(226.0, 10.0)
+	# Stage 23, a car (a van: see car.gd), pointing toward -X, its driver's door toward +Z; also in `extras`
+	_car(215.0, 9.0)
 
 
 # ---------------------------------------------------------------- building blocks
@@ -224,6 +229,56 @@ func _door(x: float, z: float) -> void:
 			"probe": Vector3(x, 0.0, z + 2.0)}
 	extras.append(s)
 	_label("door: pull from this side, push from the far side", Vector3(x, 2.6, z + 0.5))
+
+
+## A seat: a point on the ground under where his hips are when seated, and the way he faces there. `desk`: a seat
+## at a desk: he sits down onto it facing `side`, and turns on it to face the desk.
+func _seat(at: Vector3, facing: Vector3, desk := false, side := Vector3.ZERO) -> Node3D:
+	var n := Node3D.new()
+	n.position = at
+	n.basis = Basis.looking_at(-facing, Vector3.UP)        # its own +Z is the way he faces
+	n.add_to_group(&"tl_seat")
+	n.set_meta(&"desk", desk)
+	n.set_meta(&"side", side)
+	add_child(n)
+	return n
+
+
+## A bench (two places) facing +Z, and to its left a stool at a desk. The study: "Bench seat | 0.43 to 0.485 m",
+## "Tables and counters | 0.71 to 0.965 m". Approached from z + 3.
+func _seats(x: float, z: float) -> void:
+	var seat_h := 0.45
+	# the bench: its seat from 0.20 m behind his hips to 0.18 m in front, a back behind it
+	_box(Vector3(x + 1.2, seat_h * 0.5, z - 0.01), Vector3(1.5, seat_h, 0.38))
+	_box(Vector3(x + 1.2, 0.50, z - 0.26), Vector3(1.5, 1.0, 0.06))
+	var places := []
+	for off: float in [-0.38, 0.38]:
+		places.append(_seat(Vector3(x + 1.2 + off, 0.0, z), Vector3(0.0, 0.0, 1.0)))
+	# the stool and the desk: the desk's top at 0.72 m, its near edge 0.30 m in front of his hips; he faces -Z at it
+	_box(Vector3(x - 1.4, seat_h * 0.5, z), Vector3(0.38, seat_h, 0.38))
+	_box(Vector3(x - 1.4, 0.70, z - 0.62), Vector3(1.3, 0.04, 0.64))
+	for sx: float in [-0.63, 0.63]:
+		_box(Vector3(x - 1.4 + sx, 0.34, z - 0.62), Vector3(0.04, 0.68, 0.60))
+	# (a slab for a keyboard, where his hands come down)
+	_box(Vector3(x - 1.4, 0.725, z - 0.42), Vector3(0.44, 0.01, 0.14), _dark)
+	places.append(_seat(Vector3(x - 1.4, 0.0, z), Vector3(0.0, 0.0, -1.0), true, Vector3(1.0, 0.0, 0.0)))
+	var s := {"id": "seats_%02d" % (stations.size() + extras.size()), "kind": "seats", "label": "bench %.2f m, and a stool at a desk: E to sit and to get up; T text, G call" % seat_h,
+			"start": Vector3(x + 1.2, 0.0, z + 2.5), "x": x, "top": 0.0, "seats": places, "seat_high": seat_h,
+			"probe": Vector3(x, 0.0, z + 2.0)}
+	extras.append(s)
+	_label("bench and desk: E to sit and to get up; T text, G call", Vector3(x, 2.2, z - 0.4))
+
+
+## A car (car.gd) with the driver's hips over (`x`, `z`), pointing toward -X: its driver's door is on its +Z side.
+func _car(x: float, z: float) -> void:
+	var car: Node3D = Car.new()
+	car.position = Vector3(x, 0.0, z)
+	car.rotation.y = PI * 0.5           # its own -Z (the way it points) toward the world's -X
+	add_child(car)
+	var s := {"id": "car_%02d" % (stations.size() + extras.size()), "kind": "car", "label": "car: E by the driver's door to get in, E to get out",
+			"start": Vector3(x, 0.0, z + 3.2), "x": x, "top": 0.0, "car": car, "probe": Vector3(x, 0.0, z + 3.0)}
+	extras.append(s)
+	_label("car: E by the driver's door to get in, E to get out", Vector3(x, 2.6, z + 1.0))
 
 
 func _passage(w: float) -> void:

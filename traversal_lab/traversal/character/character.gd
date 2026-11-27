@@ -114,6 +114,9 @@ const SHOULDER_TURN_DEG := 40.0 # NOT in the study (it gives no angle), mine: ho
 const SIDE_ARMS_DEG := 45.0     # NOT in the study, mine: sideways in a gap or on a ledge his arms are held this far out to his sides
 const SIDLE_ARMS_FWD_DEG := 14.0 # NOT in the study, mine: on a ledge his arms are swung this far forward of his chest, his wrists a palm's depth off the wall
 const SIDE_HEAD_DEG := 70.0     # NOT in the study, mine: and his head turned this far the way he goes (the study: "the neck turns 85 degrees each way")
+const PHONE_TEXT := "Texting_While_Standing"
+const PHONE_CALL := "Male_Talking_On_The_Cell_Phone"
+const PHONE_FADE := 0.4         # NOT in the study, mine: seconds to bring the phone up, and to put it away
 const SIDE_REST := 0.6          # NOT in the study, mine: standing still, the side step runs on at this share of its own pace to its end
 const BEAM_ARMS_DEG := 60.0     # NOT in the study, mine: standing still on something narrow his arms are held this far out (the
                                 # beam walk has them out by itself). Yasin, 26 Nov: "we should spread our arms to balance on a beam"
@@ -262,6 +265,10 @@ var _squeeze_w := 0.0           # 0 = as he is, 1 = sideways (the side step)
 var _side_t := 0.0              # where the side step is (s)
 var _trunk: SkeletonModifier3D  # trunk_turn.gd
 var _turn_deg := 0.0
+var _phone_w := 0.0             # 0 = no phone, 1 = his arms and head are the phone take's
+var _phone_kind := 0.0          # 0 = texting, 1 = a call
+var _phone_box: MeshInstance3D
+var _phone_box_l: MeshInstance3D
 var _beam_arms := 0.0           # 0 to 1: how far his arms are held out for standing on something narrow (not in a move)
 var _low_was := false
 var _head_i := -1
@@ -373,6 +380,32 @@ func _ready() -> void:
 		_orient.name = "FootOrient"
 		_orient.set(&"place", feet)
 		skel.add_child(_orient)
+	# the phone itself: a small dark slab in his right hand, shown while it is out
+	var held := BoneAttachment3D.new()
+	held.name = "PhoneHand"
+	skel.add_child(held)
+	held.bone_name = "mixamorig_RightHand"
+	_phone_box = MeshInstance3D.new()
+	var slab := BoxMesh.new()
+	slab.size = Vector3(0.075, 0.15, 0.009)
+	_phone_box.mesh = slab
+	var black := StandardMaterial3D.new()
+	black.albedo_color = Color(0.05, 0.05, 0.06)
+	_phone_box.material_override = black
+	_phone_box.position = Vector3(0.0, 0.10, 0.035)
+	_phone_box.visible = false
+	held.add_child(_phone_box)
+	# (the call take holds it to his LEFT ear, measured: left wrist 0.27 to 0.30 m from his head joint throughout)
+	var held_l := BoneAttachment3D.new()
+	held_l.name = "PhoneHandLeft"
+	skel.add_child(held_l)
+	held_l.bone_name = "mixamorig_LeftHand"
+	_phone_box_l = MeshInstance3D.new()
+	_phone_box_l.mesh = slab
+	_phone_box_l.material_override = black
+	_phone_box_l.position = Vector3(0.0, 0.10, 0.035)
+	_phone_box_l.visible = false
+	held_l.add_child(_phone_box_l)
 	_trunk = TrunkTurn.new()
 	_trunk.name = "TrunkTurn"
 	skel.add_child(_trunk)
@@ -544,7 +577,28 @@ func _make_tree() -> AnimationNodeBlendTree:
 		else:
 			bt.connect_node(&"act", i, StringName("seek_" + key))
 		i += 1
-	bt.connect_node(&"output", 0, &"act")
+	# The phone (Yasin, 27 Nov: "sit phone tAlk, sit messaging ... walking text, standing text, standing call"): the
+	# arms, neck and head of a texting take or a call take laid over whatever the rest of him is doing: standing,
+	# walking, sitting. The study: "Bone filters on blend nodes give upper and lower body layering".
+	var p_text := AnimationNodeAnimation.new()
+	p_text.animation = PHONE_TEXT
+	bt.add_node(&"phone_text", p_text, Vector2(800, 400))
+	var p_call := AnimationNodeAnimation.new()
+	p_call.animation = PHONE_CALL
+	bt.add_node(&"phone_call", p_call, Vector2(800, 500))
+	bt.add_node(&"phone_pick", AnimationNodeBlend2.new(), Vector2(1000, 450))
+	bt.connect_node(&"phone_pick", 0, &"phone_text")
+	bt.connect_node(&"phone_pick", 1, &"phone_call")
+	var phone := AnimationNodeBlend2.new()
+	phone.filter_enabled = true
+	for b in skel.get_bone_count():
+		var bn := skel.get_bone_name(b)
+		if bn.contains("Arm") or bn.contains("Hand") or bn.contains("Shoulder") or bn.contains("Neck") or bn.contains("Head"):
+			phone.set_filter_path(NodePath("%s:%s" % [SKEL, bn]), true)
+	bt.add_node(&"phone", phone, Vector2(1200, 200))
+	bt.connect_node(&"phone", 0, &"act")
+	bt.connect_node(&"phone", 1, &"phone_pick")
+	bt.connect_node(&"output", 0, &"phone")
 	return bt
 
 
@@ -915,10 +969,23 @@ func _physics_process(dt: float) -> void:
 	# flicker when falling idle too long>fall animation plays")
 	_beam_arms = move_toward(_beam_arms, _narrow_w * (1.0 - _moving) if (_mode != "move" and int(body.get(&"squeeze")) < 2) else 0.0, dt / FADE)
 	# (in a gap between walls his arms are not held out from his body at all)
+	# the phone: on the ground or seated, not in a traversal move, not crouched, not on something narrow or squeezing
+	var ph := int(body.get(&"phone"))
+	var seated := _mode == "move" and _act in ["sit_idle", "sit_down", "sit_up"]
+	var phone_ok: bool = ph > 0 and (seated or (_mode == "ground" and not bool(body.get(&"crouched")) and int(body.get(&"narrow")) == 0 and int(body.get(&"squeeze")) < 2))
+	_phone_w = move_toward(_phone_w, 1.0 if phone_ok else 0.0, dt / PHONE_FADE)
+	if ph > 0 and _phone_w < 0.05:
+		_phone_kind = float(ph - 1)
+	_phone_kind = move_toward(_phone_kind, float(ph - 1) if ph > 0 else _phone_kind, dt / PHONE_FADE)
+	tree.set(&"parameters/phone/blend_amount", _phone_w)
+	tree.set(&"parameters/phone_pick/blend_amount", _phone_kind)
+	if _phone_box:
+		_phone_box.visible = _phone_w > 0.5 and _phone_kind < 0.5
+		_phone_box_l.visible = _phone_w > 0.5 and _phone_kind >= 0.5
 	_arms.set(&"palm_back", _squeeze_w)
 	_arms.set(&"flat", _squeeze_w)
 	_arms.set(&"fwd_deg", SIDLE_ARMS_FWD_DEG * _squeeze_w if int(body.get(&"squeeze")) == 3 else 0.0)
-	_arms.set(&"open_deg", arm_open_deg * (1.0 - maxf(absf(_turn_deg) / SHOULDER_TURN_DEG, _squeeze_w)) + SIDE_ARMS_DEG * _squeeze_w + (STEEP_ARMS_UP_DEG if _steep_up else STEEP_ARMS_DEG) * _steep_w + BEAM_ARMS_DEG * _beam_arms)
+	_arms.set(&"open_deg", arm_open_deg * (1.0 - maxf(maxf(absf(_turn_deg) / SHOULDER_TURN_DEG, _squeeze_w), _phone_w)) + SIDE_ARMS_DEG * _squeeze_w + (STEEP_ARMS_UP_DEG if _steep_up else STEEP_ARMS_DEG) * _steep_w + BEAM_ARMS_DEG * _beam_arms)
 	if hands:
 		# a move that puts a hand on something: [which hand (0 left, 1 right), where its wrist goes, how much]
 		var mh: Array = body.get(&"move_hand") if bool(body.call(&"in_move")) else []

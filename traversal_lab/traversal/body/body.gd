@@ -208,6 +208,16 @@ var squeeze_across := Vector3.RIGHT
 var _gap_mid := Vector3.ZERO
 var _gap_n := Vector3.RIGHT
 var radius := RADIUS            # his shape's radius now: less than RADIUS only in such a gap
+# Things done with keys other than the stick (interact.gd, and the phone in character.gd)
+var act_held := false           # the act key is down (E): sit, get in a car
+var act_now := false            # ... and went down this tick
+var phone := 0                  # 0 = away, 1 = texting, 2 = on a call (the T and G keys turn each on and off)
+var auto_on := false            # he is being walked to `auto_to` (to a seat, to a car door) instead of by the stick
+var auto_to := Vector3.ZERO
+var _text_was := false
+var _call_was := false
+const PHONE_SPEED := 1.3        # NOT in the study, mine: on the phone he goes no faster than an easy walk (m/s); the study's
+                                # comfortable walk is "about 1.27 to 1.46 m/s"
 var run_asked := false          # the run key is held (he may still be held to a slower pace, on something narrow)
 var crouched := false           # he is crouched: the smaller capsule, half walking speed, no run, no jump
 var _col: CollisionShape3D
@@ -606,6 +616,17 @@ func _run_move(dt: float) -> void:
 
 func _physics_process(dt: float) -> void:
 	var s: Dictionary = tape.call(&"sample") if tape else {}
+	var act := bool(s.get("act", false))
+	act_now = act and not act_held
+	act_held = act
+	var text := bool(s.get("text", false))
+	var call := bool(s.get("call", false))
+	if text and not _text_was:
+		phone = 0 if phone == 1 else 1
+	if call and not _call_was:
+		phone = 0 if phone == 2 else 2
+	_text_was = text
+	_call_was = call
 	if move_path.is_valid():
 		# (the stick is read and not obeyed: "cancelling is impossible mid-move")
 		stick_held = Vector2(float(s.get("mx", 0.0)), float(s.get("mz", 0.0))).length() > 0.2
@@ -637,6 +658,13 @@ func _physics_process(dt: float) -> void:
 		squeeze_side = -squeeze_side
 		spot_total = 0.0
 		hvel = Vector3.ZERO
+	if auto_on:
+		# walked to a spot: at a walk, straight to it, whatever the stick says (the stick itself ends it: interact.gd)
+		var to := auto_to - global_position
+		to.y = 0.0
+		_wish = to.normalized() * minf(WALK, maxf(to.length() * 4.0, 0.3)) if to.length() > 0.02 else Vector3.ZERO
+	if phone > 0:
+		_wish = _wish.limit_length(PHONE_SPEED)
 	stick_wish = _wish
 	_find_squeeze()
 	if squeeze >= 2:

@@ -322,3 +322,23 @@ What stands at this commit, all play-tested or approved by him up to trav57, and
   squeezing into narrow openings into this one too".
 - **Next in the study's order:** stage 19, ragdoll on hard impact and long fall; then 20 hit reactions, 21 cover,
   22 doors, 23 cars.
+
+## After trav76, 27 Nov 2026 (doors, cars, sitting, the phone)
+
+- **New code apart from the traversal moves:** `traversal_lab/traversal/moves/interact.gd` (doors, cars, sitting),
+  `traversal/course/door.gd`, `traversal/course/car.gd`; the phone is a layer in `character.gd`. Keys: E act, T text,
+  G call. The course's later stations are in `course.extras`, not `course.stations` (so stage 1's seeded random walk
+  keeps its path): wall ledges, a door, a bench and a desk, a car.
+- **Stage 22, doors (trav75):** walking at a shut door: pushed from one side (`Opening_Door_Inwards`, used to 4.45 s,
+  played 1.15 times as fast: 2.8 s more than walking), pulled from the other (`Open_Door_Outwards`, whole, 2.4 s
+  more than walking). The door follows his hand and shuts by itself. `tests/test_stage22.gd`.
+- **Stage 23, cars (trav76):** E by the driver's door: walked to the take's start, `Entering_Car`, seated with hands
+  at the wheel until E, `Exiting_Car`. The van is built round the take (hips 0.84 m, floor 0.28 m). No bonnet slide.
+  `tests/test_stage23.gd`.
+- **Sitting and the phone (trav76):** E within 2.5 m of a seat: walked to it, `Stand_To_Sit` (the X Bot take),
+  `Sitting_Idle`, `Sit_To_Stand` on E or the stick held. At the desk: onto the stool from its side, a turn to the
+  desk, `Type_To_Sit` backward, `Typing`; T takes his hands off the keys and back. T / G anywhere on the ground or
+  seated: arms, neck and head of `Texting_While_Standing` / `Male_Talking_On_The_Cell_Phone` over the rest of him,
+  a slab in his hand (right for text, left for the call), no faster than 1.3 m/s. `tests/test_sit_phone.gd`.
+- **Stage 21 (cover) is not built** and is not in his list of 27 Nov; stages 19 and 20 (ragdolls) wait for his go and
+  a checkpoint first.

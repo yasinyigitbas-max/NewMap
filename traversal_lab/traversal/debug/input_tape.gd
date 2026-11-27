@@ -22,6 +22,8 @@ func _ready() -> void:
 	_action(&"tl_jump", [KEY_SPACE])
 	_action(&"tl_crouch", [KEY_C])
 	_action(&"tl_act", [KEY_E])
+	_action(&"tl_text", [KEY_T])       # the phone: texting (Yasin, 27 Nov)
+	_action(&"tl_call", [KEY_G])       # the phone: a call
 	_axis(&"tl_left", JOY_AXIS_LEFT_X, -1.0)
 	_axis(&"tl_right", JOY_AXIS_LEFT_X, 1.0)
 	_axis(&"tl_fwd", JOY_AXIS_LEFT_Y, -1.0)
@@ -63,7 +65,7 @@ func sample() -> Dictionary:
 	var v := Input.get_vector(&"tl_left", &"tl_right", &"tl_fwd", &"tl_back")
 	var s := {"mx": v.x, "mz": v.y, "yaw": live_yaw, "run": Input.is_action_pressed(&"tl_run"),
 			"jump": Input.is_action_pressed(&"tl_jump"), "crouch": Input.is_action_pressed(&"tl_crouch"),
-			"act": Input.is_action_pressed(&"tl_act")}
+			"act": Input.is_action_pressed(&"tl_act"), "text": Input.is_action_pressed(&"tl_text"), "call": Input.is_action_pressed(&"tl_call")}
 	if mode == Mode.RECORD:
 		tape.append(s)
 	return s

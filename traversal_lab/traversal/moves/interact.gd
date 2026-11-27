@@ -33,6 +33,29 @@ const DOOR := {
 			"swing": [[2.45, 0.0], [3.10, 44.0], [3.50, 90.0]]}}
 const DOOR_NEAR := 0.25         # NOT in the study, mine: the move begins when he is within this of the take's own start (m)
 const DOOR_ASIDE := 0.45        # NOT in the study, mine: and no further than this to either side of its line (m)
+# Sitting (Yasin, 27 Nov: "stand to sit, walk to sit, sitting idle, sit to stand ... sit to type"). The study has no
+# section on sitting; of real seats it gives "Bench seat | 0.43 to 0.485 m". The takes (measured): Stand To Sit goes
+# 0.45 m back and down to hips at 0.55 m; Sit To Stand comes 0.47 m forward. At a desk he sits down onto the seat
+# from its side, turns on it to the desk, and puts his hands to the keys (Type To Sit, played backward); T takes his
+# hands off the keys and puts them back. Every figure here is mine or read off the takes.
+const SIT := {"down": {"input": "sit_down", "clip": "Stand_To_Sit"}, "idle": {"input": "sit_idle", "clip": "Sitting_Idle"},
+		"up": {"input": "sit_up", "clip": "Sit_To_Stand"}, "type": {"input": "sit_type", "clip": "Typing"},
+		"hands": {"input": "type_to_sit", "clip": "Type_To_Sit"}}
+const SIT_REACH := 2.5          # the act key takes him to a seat whose standing place is within this (m)
+const SIT_AT := 0.12            # he is at that place when within this of it (m)
+const SIT_WALK_MOST := 6.0      # seconds he is walked toward it before it is given up
+const TURN_TIME := 0.8          # seconds for half a turn on the spot before he sits (his standing turn: no steps)
+const SWIVEL_TIME := 0.7        # seconds to turn on the seat to the desk, or away from it
+const UP_HOLD := 0.25           # seconds the stick is held before it is taken as "get up"
+# Stage 23, cars. The study: "`Entering Car` (5.47 s) walks 1.9 m, turns 97 degrees and sits ... `Exiting Car` (5.8 s) is
+# the reverse. There is no bonnet slide." (and: "Cars come last because the human data for getting in and out could
+# not be sourced, so that stage will rest on clip measurement alone"). The act key by the driver's door: he is walked
+# to where the take starts, turned to it, and the take is played: he opens the door, gets in, shuts it, and sits with
+# his hands on the wheel until the act key again; then the other take: out, the door shut behind him.
+# The door's angle at each time is read off the takes' left hand in the lab, NOT in the study.
+const CAR := {"in": {"input": "car_in", "clip": "Entering_Car", "door": [[0.90, 0.0], [1.40, 31.0], [1.70, 48.0], [3.20, 48.0], [3.50, 23.0], [4.10, 0.0]]},
+		"out": {"input": "car_out", "clip": "Exiting_Car", "door": [[0.60, 0.0], [1.50, 85.0], [3.90, 85.0], [4.40, 0.0]]}}
+const CAR_REACH := 2.5          # NOT in the study, mine: the act key takes him to a car whose take starts within this (m)
 const ALIGN_TIME := 0.35        # NOT in the study, mine: seconds over which he is brought onto the take's start
 
 var body: CharacterBody3D
@@ -42,11 +65,24 @@ var last := ""                  # the key of the last one
 var _plan := {}
 var _along := {}                # clip name -> how far along its own line of travel the take has gone, frame by frame
 var _fps := 30.0
+var _len := {}                  # clip name -> its length (s)
+var _yaw := {}                  # clip name -> the take's own turning, frame by frame (radians, + = to his left)
+var _dir := {}                  # clip name -> the line the take travels along, in its own frame (x = to his left, z = ahead)
+var _to_car: Node3D             # the car he is being walked to
+var in_car := false             # he is in a car (for the tests)
+var _to_seat: Node3D            # the seat he is being walked to
+var _walked := 0.0
+var seated := false             # he is on a seat (for the tests and the readout)
+var sit_phase := ""
 
 
 func _ready() -> void:
 	for key: String in DOOR:
 		_load(String(DOOR[key]["clip"]))
+	for key: String in SIT:
+		_load(String(SIT[key]["clip"]))
+	for key: String in CAR:
+		_load(String(CAR[key]["clip"]))
 
 
 func _load(clip: String) -> void:
@@ -61,6 +97,9 @@ func _load(clip: String) -> void:
 		var rel := hips[f] - hips[0]
 		t.append(Vector3(rel.x, 0.0, rel.z).dot(dir))
 	_along[clip] = t
+	_dir[clip] = dir
+	_yaw[clip] = c.get(&"yaw")
+	_len[clip] = float(hips.size() - 1) / _fps
 
 
 func _at(table: PackedFloat32Array, t: float) -> float:
@@ -73,6 +112,14 @@ func _physics_process(_dt: float) -> void:
 	if body == null or not enabled or bool(body.call(&"in_move")):
 		return
 	if int(body.get(&"state")) != 0 or bool(body.get(&"crouched")):
+		return
+	if _to_seat != null:
+		_walk_to_seat(_dt)
+		return
+	if _to_car != null:
+		_walk_to_car(_dt)
+		return
+	if bool(body.get(&"act_now")) and (_try_seat() or _try_car()):
 		return
 	var wish: Vector3 = body.get(&"stick_wish")
 	if wish.length() > 0.05:
@@ -149,4 +196,258 @@ func _door(t: float) -> Dictionary:
 			"hand": [[int(p["hand"]), at, hold]]}
 	if done:
 		out["exit"] = into * float(pl["exit_speed"])
+	return out
+
+
+# -------------------------------------------------------------------------------------------------------- sitting
+
+## The way he faces as he sits down onto a seat, and where he stands to do it.
+func _seat_side(seat: Node3D) -> Vector3:
+	var f: Vector3 = seat.get_meta(&"side") if bool(seat.get_meta(&"desk")) else seat.global_transform.basis.z
+	return Vector3(f.x, 0.0, f.z).normalized()
+
+
+func _seat_stand(seat: Node3D) -> Vector3:
+	var back := _at(_along[String(SIT["down"]["clip"])], 99.0)
+	return seat.global_position + _seat_side(seat) * back
+
+
+## The act key: the nearest free seat he can be walked to.
+func _try_seat() -> bool:
+	var best: Node3D = null
+	var best_d := SIT_REACH
+	for seat: Node3D in get_tree().get_nodes_in_group(&"tl_seat"):
+		var d := body.global_position.distance_to(_seat_stand(seat))
+		if d < best_d and absf(seat.global_position.y - body.global_position.y) < 0.1:
+			best = seat
+			best_d = d
+	if best == null:
+		return false
+	_to_seat = best
+	_walked = 0.0
+	return true
+
+
+## "Walk to sit": he is walked to the seat's standing place; any push of the stick gives it up.
+func _walk_to_seat(dt: float) -> void:
+	_walked += dt
+	var stand := _seat_stand(_to_seat)
+	var off := stand - body.global_position
+	off.y = 0.0
+	if (bool(body.get(&"stick_held")) and _walked > 0.2) or _walked > SIT_WALK_MOST:
+		body.set(&"auto_on", false)
+		_to_seat = null
+		return
+	if off.length() > SIT_AT:
+		body.set(&"auto_on", true)
+		body.set(&"auto_to", stand)
+		return
+	body.set(&"auto_on", false)
+	var seat := _to_seat
+	_to_seat = null
+	var side := _seat_side(seat)
+	var face := seat.global_transform.basis.z
+	face = Vector3(face.x, 0.0, face.z).normalized()
+	var yaw_side := atan2(-side.x, -side.z)
+	var turn := absf(wrapf(yaw_side - body.rotation.y, -PI, PI))
+	_plan = {"key": "sit", "seat": seat, "at": seat.global_position, "stand": stand, "side": side, "desk": bool(seat.get_meta(&"desk")),
+			"from": body.global_position, "yaw0": body.rotation.y, "yaw_side": yaw_side, "yaw_face": atan2(-face.x, -face.z),
+			"turn_time": maxf(TURN_TIME * turn / PI, ALIGN_TIME), "phase": "turn", "t0": 0.0, "held": 0.0, "last_t": 0.0}
+	plays += 1
+	last = "sit"
+	seated = true
+	body.call(&"begin_move", _sit, String(SIT["down"]["input"]))
+
+
+func _sit(t: float) -> Dictionary:
+	var pl := _plan
+	var dt := t - float(pl["last_t"])
+	pl["last_t"] = t
+	var ph := String(pl["phase"])
+	var tau := t - float(pl["t0"])
+	var at: Vector3 = pl["at"]
+	var side: Vector3 = pl["side"]
+	var desk: bool = pl["desk"]
+	var out := {"done": false, "pos": at, "yaw": float(pl["yaw_face"]) if desk else float(pl["yaw_side"]), "clip": "sit_idle", "clip_t": 0.0, "air": false, "landed": true}
+	var next := ""
+	# getting up is asked for with the act key, or by holding the stick
+	pl["held"] = float(pl["held"]) + dt if bool(body.get(&"stick_held")) else 0.0
+	var up_asked := bool(body.get(&"act_now")) or float(pl["held"]) >= UP_HOLD
+	match ph:
+		"turn":
+			var u := smoothstep(0.0, float(pl["turn_time"]), tau)
+			out["pos"] = (pl["from"] as Vector3).lerp(pl["stand"], u)
+			out["yaw"] = lerp_angle(float(pl["yaw0"]), float(pl["yaw_side"]), u)
+			out["clip"] = "sit_down"
+			if tau >= float(pl["turn_time"]):
+				next = "down"
+		"down":
+			var clip := String(SIT["down"]["clip"])
+			out["pos"] = (pl["stand"] as Vector3) - side * _at(_along[clip], tau)
+			out["yaw"] = float(pl["yaw_side"])
+			out["clip"] = "sit_down"
+			out["clip_t"] = minf(tau, float(_len[clip]))
+			if tau >= float(_len[clip]):
+				next = "swivel_in" if desk else "idle"
+		"idle":
+			out["clip_t"] = fposmod(tau, float(_len[String(SIT["idle"]["clip"])]))
+			if up_asked and tau > 0.3:
+				next = "swivel_out" if desk else "up"
+			elif desk and int(body.get(&"phone")) == 1:
+				# (at the desk the text key is "hands to the keys", not the phone)
+				body.set(&"phone", 0)
+				next = "hands_on"
+		"swivel_in", "swivel_out":
+			var u2 := smoothstep(0.0, SWIVEL_TIME, tau)
+			out["yaw"] = lerp_angle(float(pl["yaw_side"]), float(pl["yaw_face"]), u2 if ph == "swivel_in" else 1.0 - u2)
+			if tau >= SWIVEL_TIME:
+				next = "hands_on" if ph == "swivel_in" else "up"
+		"hands_on", "hands_off":
+			var hl := float(_len[String(SIT["hands"]["clip"])])
+			out["clip"] = "type_to_sit"
+			out["clip_t"] = clampf(hl - tau if ph == "hands_on" else tau, 0.0, hl)
+			if tau >= hl:
+				next = "type" if ph == "hands_on" else ("swivel_out" if bool(pl.get("leaving", false)) else "idle")
+		"type":
+			out["clip"] = "sit_type"
+			out["clip_t"] = fposmod(tau, float(_len[String(SIT["type"]["clip"])]))
+			if int(body.get(&"phone")) != 0:
+				body.set(&"phone", 0)
+				pl["leaving"] = false
+				next = "hands_off"
+			elif up_asked and tau > 0.3:
+				pl["leaving"] = true
+				next = "hands_off"
+		"up":
+			var clip2 := String(SIT["up"]["clip"])
+			out["pos"] = at + side * _at(_along[clip2], tau)
+			out["yaw"] = float(pl["yaw_side"])
+			out["clip"] = "sit_up"
+			out["clip_t"] = minf(tau, float(_len[clip2]))
+			if tau >= float(_len[clip2]):
+				out["done"] = true
+				out["exit"] = Vector3.ZERO
+				seated = false
+	if next != "":
+		pl["phase"] = next
+		pl["t0"] = t
+	sit_phase = String(pl["phase"]) if not bool(out["done"]) else ""
+	return out
+
+
+# ----------------------------------------------------------------------------------------------------------- cars
+
+## Where a take that turns as it travels has got to at `t`: [how far along its own line, how far it has turned].
+func _travel(clip: String, t: float) -> Array:
+	var yaw: PackedFloat32Array = _yaw[clip]
+	var x := clampf(t * _fps, 0.0, yaw.size() - 1.001)
+	var i := int(x)
+	return [_at(_along[clip], t), lerpf(yaw[i], yaw[i + 1], x - i)]
+
+
+## The line a take travels along, in the world, for a man who starts it facing `fwd`.
+func _line(clip: String, fwd: Vector3) -> Vector3:
+	var d: Vector3 = _dir[clip]
+	var right := fwd.cross(Vector3.UP).normalized()
+	return (fwd * d.z - right * d.x).normalized()
+
+
+## Where the getting-in take starts for a car, and the way he faces there: so that it ends on the car's seat, facing
+## the way the car points.
+func _car_start(car: Node3D) -> Array:
+	var clip := String(CAR["in"]["clip"])
+	var ahead := -car.global_transform.basis.z
+	ahead = Vector3(ahead.x, 0.0, ahead.z).normalized()
+	var whole: Array = _travel(clip, 99.0)
+	var fwd := ahead.rotated(Vector3.UP, -float(whole[1]))
+	return [car.global_position - _line(clip, fwd) * float(whole[0]), fwd]
+
+
+func _try_car() -> bool:
+	for car: Node3D in get_tree().get_nodes_in_group(&"tl_car"):
+		var start: Vector3 = _car_start(car)[0]
+		if body.global_position.distance_to(start) < CAR_REACH and absf(start.y - body.global_position.y) < 0.1:
+			_to_car = car
+			_walked = 0.0
+			return true
+	return false
+
+
+func _walk_to_car(dt: float) -> void:
+	_walked += dt
+	var st: Array = _car_start(_to_car)
+	var start: Vector3 = st[0]
+	var off := start - body.global_position
+	off.y = 0.0
+	if (bool(body.get(&"stick_held")) and _walked > 0.2) or _walked > SIT_WALK_MOST:
+		body.set(&"auto_on", false)
+		_to_car = null
+		return
+	if off.length() > SIT_AT:
+		body.set(&"auto_on", true)
+		body.set(&"auto_to", start)
+		return
+	body.set(&"auto_on", false)
+	var car := _to_car
+	_to_car = null
+	var fwd: Vector3 = st[1]
+	var yaw_in := atan2(-fwd.x, -fwd.z)
+	var ahead := -car.global_transform.basis.z
+	ahead = Vector3(ahead.x, 0.0, ahead.z).normalized()
+	var turn := absf(wrapf(yaw_in - body.rotation.y, -PI, PI))
+	_plan = {"key": "car", "car": car, "start": start, "fwd": fwd, "ahead": ahead, "from": body.global_position, "yaw0": body.rotation.y,
+			"yaw_in": yaw_in, "yaw_seat": atan2(-ahead.x, -ahead.z), "turn_time": maxf(TURN_TIME * turn / PI, ALIGN_TIME), "phase": "turn", "t0": 0.0}
+	plays += 1
+	last = "car"
+	body.call(&"begin_move", _car, String(CAR["in"]["input"]))
+
+
+func _car(t: float) -> Dictionary:
+	var pl := _plan
+	var ph := String(pl["phase"])
+	var tau := t - float(pl["t0"])
+	var car: Node3D = pl["car"]
+	var seat := car.global_position
+	var c_in := String(CAR["in"]["clip"])
+	var c_out := String(CAR["out"]["clip"])
+	var out := {"done": false, "pos": seat, "yaw": float(pl["yaw_seat"]), "clip": "car_in", "clip_t": float(_len[c_in]), "air": false, "free": true}
+	var next := ""
+	match ph:
+		"turn":
+			var u := smoothstep(0.0, float(pl["turn_time"]), tau)
+			out["pos"] = (pl["from"] as Vector3).lerp(pl["start"], u)
+			out["yaw"] = lerp_angle(float(pl["yaw0"]), float(pl["yaw_in"]), u)
+			out["clip_t"] = 0.0
+			out["free"] = false
+			out["landed"] = true
+			if tau >= float(pl["turn_time"]):
+				next = "in"
+		"in":
+			var tr: Array = _travel(c_in, tau)
+			out["pos"] = (pl["start"] as Vector3) + _line(c_in, pl["fwd"]) * float(tr[0])
+			out["yaw"] = float(pl["yaw_in"]) + float(tr[1])
+			out["clip_t"] = minf(tau, float(_len[c_in]))
+			car.set(&"door_deg", _keyed(CAR["in"]["door"], tau))
+			car.set(&"held", true)
+			if tau >= float(_len[c_in]):
+				next = "seated"
+				in_car = true
+		"seated":
+			if bool(body.get(&"act_now")) and tau > 0.3:
+				next = "out"
+		"out":
+			var tr2: Array = _travel(c_out, tau)
+			out["pos"] = seat + _line(c_out, pl["ahead"]) * float(tr2[0])
+			out["yaw"] = float(pl["yaw_seat"]) + float(tr2[1])
+			out["clip"] = "car_out"
+			out["clip_t"] = minf(tau, float(_len[c_out]))
+			car.set(&"door_deg", _keyed(CAR["out"]["door"], tau))
+			car.set(&"held", true)
+			in_car = false
+			if tau >= float(_len[c_out]):
+				out["done"] = true
+				out["exit"] = Vector3.ZERO
+	if next != "":
+		pl["phase"] = next
+		pl["t0"] = t
 	return out
