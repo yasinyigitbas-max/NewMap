@@ -1,5 +1,6 @@
 // See trav_hand_place.h. Translated from traversal_lab/traversal/character/hand_place.gd, line for line.
 #include "trav_hand_place.h"
+#include "trav_probe.h"
 
 #include "trav_math.h"
 
@@ -144,7 +145,7 @@ void TravHandPlace::_process_modification_with_delta(double dt) {
 				Vector3 hand = xf.xform(hand_s);
 				TypedArray<RID> ex;
 				ex.push_back(bd->get_rid());
-				Dictionary hit = bd->get_world_3d()->get_direct_space_state()->intersect_ray(PhysicsRayQueryParameters3D::create(hand + V(0.0, 1.0, 0.0), hand - V(0.0, 1.5, 0.0), bd->get_collision_mask(), ex));
+				Dictionary hit = bd->get_world_3d()->get_direct_space_state()->intersect_ray(PhysicsRayQueryParameters3D::create(hand + V(0.0, 1.0, 0.0), hand - V(0.0, 1.5, 0.0), trav::probe_mask(bd), ex));
 				if (hit.is_empty()) {
 					want = 0.0;
 				} else {

@@ -2,6 +2,7 @@
 // A line-for-line translation of traversal_lab/traversal/moves/interact.gd (the script version, the reference): the
 // same names, the same numbers, the same order of work. The reasons for each thing are in the script.
 #include "trav_interact.h"
+#include "trav_probe.h"
 
 #include "trav_math.h"
 
@@ -550,7 +551,7 @@ Dictionary TravInteract::_car(double t) {
 Dictionary TravInteract::_ray(const Vector3 &from, const Vector3 &to) {
 	TypedArray<RID> ex;
 	ex.append(body->get_rid());
-	return body->get_world_3d()->get_direct_space_state()->intersect_ray(PhysicsRayQueryParameters3D::create(from, to, body->get_collision_mask(), ex));
+	return body->get_world_3d()->get_direct_space_state()->intersect_ray(PhysicsRayQueryParameters3D::create(from, to, trav::probe_mask(body), ex));
 }
 
 double TravInteract::_cover_wall(const Vector3 &at, const Vector3 &n) {

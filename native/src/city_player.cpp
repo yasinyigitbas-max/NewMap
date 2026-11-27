@@ -941,10 +941,9 @@ void CityPlayer::set_traversal(bool p_on) {
 	get_parent()->add_child(trav);
 	trav->set_global_position(get_global_position());
 	trav->set_rotation(Vector3(0, yaw, 0));
-	// (the player's layer; the world and the cars. NOT the people's capsules yet: the body's probes use its own mask,
-	// and it would take a person for something to climb: docs/damage/WORLD_CONTRACT.md has the probes on 1|4|8)
 	trav->set_collision_layer(2);
-	trav->set_collision_mask(1 | 16);
+	trav->set_collision_mask(1 | 16 | 32);          // the capsule: the world, cars and people, as the old player
+	trav->set_meta("probe_mask", 1 | 16);         // his probes (steps, walls, ledges, feet, hands) do not take a person for a wall: trav_probe.h
 	const char *parts[4][2] = { { "TravCharacter", "Character" }, { "TravInteract", "Interact" }, { "TravTraverse", "Traverse" }, { "TravHold", "Hold" } };
 	for (int k = 0; k < 4; k++) {
 		if (!db->class_exists(parts[k][0])) continue;
@@ -963,7 +962,7 @@ void CityPlayer::set_riding(bool p_on) {
 		trav->set_visible(!p_on);
 		trav->set_process_mode(p_on ? Node::PROCESS_MODE_DISABLED : Node::PROCESS_MODE_INHERIT);
 		trav->set_collision_layer(p_on ? 0 : 2);
-		trav->set_collision_mask(p_on ? 0 : (1 | 16));
+		trav->set_collision_mask(p_on ? 0 : (1 | 16 | 32));
 		frozen = p_on;
 		set_velocity(Vector3());
 		return;

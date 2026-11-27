@@ -214,6 +214,15 @@ else, don't merge anything else that is involving play or npc movement".
         NOT checked: the trucks in moving traffic and as parked cars (needs the baked city); their far / light
         models in a frame; the police lights' places on the new roofs. A cloud trap: after `git clean` the
         pictures' `.import` files are gone and every car draws in patches: run `--import` again before a frame.
+      - PEOPLE ARE SOLID TO HIM (27 Nov, night): his capsule now meets the crowd's capsules (mask 1|16|32, as the old
+        player), and his probes do not (`native/traversal/src/trav_probe.h`: a body with the meta `probe_mask` uses
+        it for every ray and shape test; without it, as in the lab, nothing changes). In the game the probes see
+        the world and cars (1|16). The contract's layers 4 and 8 (breakables, windows) are NOT in either mask yet:
+        the old player does not have them either. test_trav_player (now 12 lines, a person in his way: no nearer
+        than 0.55 m, no move begun against it) RESULT PASS; the lab's parity run PASS (203,200 ticks the same).
+        The Windows compile of the whole game module was tried in the cloud: all 59 files compile (the cloud's own
+        mingw needs `P_WAIT` set aside, a clash of its headers with traffic_sim.h; his PC's llvm-mingw built that
+        file before). Not linked here, not run: his PC.
       - the NPC parity run (`EXTRA="--npc=..."`) now FAILS by design: the C++ NPC has its own pace, the frozen
         script NPC has not. The player's parity run still passes.
 

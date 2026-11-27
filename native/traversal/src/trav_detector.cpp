@@ -1,5 +1,6 @@
 // See trav_detector.h. Translated from traversal_lab/traversal/detect/detector.gd, in the script's order.
 #include "trav_detector.h"
+#include "trav_probe.h"
 
 #include "trav_math.h"
 
@@ -46,7 +47,7 @@ Ref<PhysicsShapeQueryParameters3D> TravDetector::_q(double r, const Vector3 &at,
 	TypedArray<RID> ex;
 	ex.push_back(body->get_rid());
 	q->set_exclude(ex);
-	q->set_collision_mask(body->get_collision_mask());
+	q->set_collision_mask(trav::probe_mask(body));
 	q->set_transform(Transform3D(Basis(), at));
 	q->set_motion(motion);
 	queries += 1;
@@ -87,7 +88,7 @@ bool TravDetector::_fits(const Vector3 &feet, double tall) {
 	TypedArray<RID> ex;
 	ex.push_back(body->get_rid());
 	q->set_exclude(ex);
-	q->set_collision_mask(body->get_collision_mask());
+	q->set_collision_mask(trav::probe_mask(body));
 	q->set_transform(Transform3D(Basis(), feet + mul(UP, fl + (tall - fl) * 0.5)));
 	queries += 1;
 	return _space->intersect_shape(q, 1).is_empty();

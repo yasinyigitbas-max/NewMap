@@ -2,6 +2,7 @@
 // the script's order and each line stands where the script's line stands. Scalars are doubles and every part of a
 // Vector3 is widened to a double before it is used in arithmetic, as GDScript does (trav_math.h).
 #include "trav_body.h"
+#include "trav_probe.h"
 
 #include "trav_math.h"
 
@@ -150,7 +151,7 @@ void TravBody::_set_rot_y(double y) {
 Dictionary TravBody::_ray(const Vector3 &from, const Vector3 &to) {
 	TypedArray<RID> ex;
 	ex.push_back(get_rid());
-	return get_world_3d()->get_direct_space_state()->intersect_ray(PhysicsRayQueryParameters3D::create(from, to, get_collision_mask(), ex));
+	return get_world_3d()->get_direct_space_state()->intersect_ray(PhysicsRayQueryParameters3D::create(from, to, trav::probe_mask(this), ex));
 }
 
 void TravBody::_ready() {
@@ -238,7 +239,7 @@ bool TravBody::can_stand() {
 	TypedArray<RID> ex;
 	ex.push_back(get_rid());
 	q->set_exclude(ex);
-	q->set_collision_mask(get_collision_mask());
+	q->set_collision_mask(trav::probe_mask(this));
 	return get_world_3d()->get_direct_space_state()->intersect_shape(q, 1).is_empty();
 }
 
@@ -256,7 +257,7 @@ Dictionary TravBody::probe(const Vector3 &feet, double from_up, double reach) {
 	TypedArray<RID> ex;
 	ex.push_back(get_rid());
 	q->set_exclude(ex);
-	q->set_collision_mask(get_collision_mask());
+	q->set_collision_mask(trav::probe_mask(this));
 	Vector3 start = feet + mul(UP, from_up);
 	double length = from_up - PROBE_R + reach;
 	q->set_transform(Transform3D(Basis(), start));
@@ -487,7 +488,7 @@ void TravBody::_find_squeeze() {
 		TypedArray<RID> ex;
 		ex.push_back(get_rid());
 		q->set_exclude(ex);
-		q->set_collision_mask(get_collision_mask());
+		q->set_collision_mask(trav::probe_mask(this));
 		if (!space->intersect_shape(q, 1).is_empty()) {
 			return;
 		}

@@ -59,6 +59,20 @@ func _run() -> void:
 	pl.call(&"stand_at", Vector3(5.0, 0.0, 5.0), 1.0)
 	for i in 30: await physics_frame
 	_check(body.visible and body.global_position.distance_to(Vector3(5.0, 0.0, 5.0)) < 0.1 and pl.global_position.distance_to(body.global_position) < 0.05, "set down again where he was told (%.2f m off)" % body.global_position.distance_to(Vector3(5.0, 0.0, 5.0)))
+	# a person in his way (a capsule on the people's layer, 32): his body is stopped by it or goes round it, and none of
+	# his probes takes it for a wall to climb or a step to take
+	var man := StaticBody3D.new(); var mc := CollisionShape3D.new(); var ms := CapsuleShape3D.new(); ms.radius = 0.3; ms.height = 1.8; mc.shape = ms
+	man.add_child(mc); man.collision_layer = 32; man.collision_mask = 0; man.position = Vector3(5.0, 0.9, 7.0); root.add_child(man)
+	var plays_was := int(trav.get(&"plays")); var nearest := 9.0; var top := 0.0
+	pl.call(&"set_move", Vector2(0, 1), false)
+	for t in 300:
+		await physics_frame
+		nearest = minf(nearest, Vector2(body.global_position.x - 5.0, body.global_position.z - 7.0).length())
+		top = maxf(top, body.global_position.y)
+	pl.call(&"set_move", Vector2(0, 0), false)
+	_check(nearest > 0.45 and nearest < 1.0, "a person in his way is solid to him: he came no nearer than %.2f m to its middle" % nearest)
+	_check(int(trav.get(&"plays")) == plays_was and top < 0.05, "and he began no move against it (moves begun: %d, highest %.2f m)" % [int(trav.get(&"plays")) - plays_was, top])
+	man.queue_free()
 	pl.call(&"set_traversal", false)
 	for i in 5: await physics_frame
 	_check(not bool(pl.call(&"get_traversal")) and pl.collision_layer == 2, "switched off he is the old player again")

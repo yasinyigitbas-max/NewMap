@@ -1,5 +1,6 @@
 // See trav_character.h. Translated from traversal_lab/traversal/character/character.gd, in the script's order.
 #include "trav_character.h"
+#include "trav_probe.h"
 
 #include "trav_foot_place.h"
 #include "trav_hand_place.h"
@@ -1458,7 +1459,7 @@ bool TravCharacter::_steep_ahead() {
 	Vector3 at = body->get_global_position() + mul(v.normalized(), STEEP_STEP * std::cos(here));
 	TypedArray<RID> ex;
 	ex.push_back(body->get_rid());
-	Dictionary hit = body->get_world_3d()->get_direct_space_state()->intersect_ray(PhysicsRayQueryParameters3D::create(at + V(0.0, 1.5, 0.0), at - V(0.0, 1.5, 0.0), body->get_collision_mask(), ex));
+	Dictionary hit = body->get_world_3d()->get_direct_space_state()->intersect_ray(PhysicsRayQueryParameters3D::create(at + V(0.0, 1.5, 0.0), at - V(0.0, 1.5, 0.0), trav::probe_mask(body), ex));
 	if (hit.is_empty()) {
 		return false;
 	}

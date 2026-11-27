@@ -2,6 +2,7 @@
 // back)"). A line-for-line translation of traversal_lab/traversal/moves/traverse.gd (the script version, the
 // reference): the same names, the same numbers, the same order of work. The reasons for each thing are in the script.
 #include "trav_traverse.h"
+#include "trav_probe.h"
 
 #include "trav_math.h"
 
@@ -478,7 +479,7 @@ bool TravTraverse::_try_step_up(const Vector3 &v, const Vector3 &wish) {
 		Vector3 from = body->get_global_position() + mul(UP, F(UP_BAND[0]) + 0.03);
 		TypedArray<RID> ex;
 		ex.append(body->get_rid());
-		Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(from, from + mul(dir, UP_LOOK_RUN), body->get_collision_mask(), ex);
+		Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(from, from + mul(dir, UP_LOOK_RUN), trav::probe_mask(body), ex);
 		if (body->get_world_3d()->get_direct_space_state()->intersect_ray(q).is_empty()) {
 			return false;
 		}
@@ -1310,7 +1311,7 @@ bool TravTraverse::_try_air(const Vector3 &v) {
 	Vector3 here_p = body->get_global_position();
 	TypedArray<RID> ex;
 	ex.append(body->get_rid());
-	Ref<PhysicsRayQueryParameters3D> q_down = PhysicsRayQueryParameters3D::create(here_p + V(0.0, 0.6, 0.0), here_p - V(0.0, 6.0, 0.0), body->get_collision_mask(), ex);
+	Ref<PhysicsRayQueryParameters3D> q_down = PhysicsRayQueryParameters3D::create(here_p + V(0.0, 0.6, 0.0), here_p - V(0.0, 6.0, 0.0), trav::probe_mask(body), ex);
 	Dictionary below = body->get_world_3d()->get_direct_space_state()->intersect_ray(q_down);
 	double under_y = !below.is_empty() ? D(((Vector3)below["position"]).y) : D(here_p.y) - 3.0;
 	Dictionary rec = det()->call("measure", dir, under_y);
@@ -1961,7 +1962,7 @@ bool TravTraverse::_try_balance_fall() {
 		double way = ways[w];
 		Vector3 m0 = mul(face.cross(UP).normalized(), way);
 		Vector3 e0 = feet + mul(m0, BALANCE_OUT);
-		Dictionary g0 = body->get_world_3d()->get_direct_space_state()->intersect_ray(PhysicsRayQueryParameters3D::create(e0 + V(0.0, 0.5, 0.0), e0 - V(0.0, 6.0, 0.0), body->get_collision_mask(), ex));
+		Dictionary g0 = body->get_world_3d()->get_direct_space_state()->intersect_ray(PhysicsRayQueryParameters3D::create(e0 + V(0.0, 0.5, 0.0), e0 - V(0.0, 6.0, 0.0), trav::probe_mask(body), ex));
 		if (g0.is_empty()) {
 			continue;
 		}
@@ -1995,7 +1996,7 @@ bool TravTraverse::_try_balance_fall() {
 			double way = ways[w];
 			Vector3 m = mul(face.cross(UP).normalized(), way);
 			Vector3 end = feet + mul(m, D(last.y) * reach);
-			Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(end + V(0.0, 0.5, 0.0), end - V(0.0, 6.0, 0.0), body->get_collision_mask(), ex);
+			Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(end + V(0.0, 0.5, 0.0), end - V(0.0, 6.0, 0.0), trav::probe_mask(body), ex);
 			Dictionary hit = body->get_world_3d()->get_direct_space_state()->intersect_ray(q);
 			if (hit.is_empty()) {
 				continue;
