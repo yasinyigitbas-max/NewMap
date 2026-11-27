@@ -135,6 +135,31 @@ How nothing breaks (the rules of the port):
       "scripts" after the C++ start file, the dll did not load on his PC. Known: the readout's key line now lies
       over the top edge of the height graph (one more line of text).
 
+## THE MERGE (27 Nov, night, his words)
+
+"Okay go ahead with those two. Keep the damage line but double check it doesn't break anything. After those merge
+with main and wire the new npcs, cars and movement in." And before: "Your traversals paramount over everything
+else, don't merge anything else that is involving play or npc movement".
+
+- [x] Merged into the work branch and MAIN (main = 77bfa296, a fast-forward): the cars (`ccr-744faae9-jbjc01`: 16
+      rebuilt or new models with cabins and cut doors) and the damage work (`damage/option-b`). One clash,
+      `native/src/city_car.cpp` (includes; both kept). Our traversal files are untouched by both.
+- Checked after the merge, here in the cloud (game C++ built for Linux into `native/bin`, not in git): all 48 files
+  compile and link; `tests/damage/test_damage.gd` RESULT PASS; `tests/damage/test_car_wall.gd` RESULT PASS;
+  `tests/car/test_city_car.gd` RESULT PASS; `tests/car/test_real_doors.gd` RESULT PASS (in a window: headless it
+  has no picture to read); `tests/game/test_native_load.gd` RESULT PASS.
+  `tests/traffic/test_bus_people.gd` FAILS here before the merges and after them the same way (nobody boards a
+  bus; stops served 0 to 2 from run to run on both builds): not from the merge, cause not looked into.
+  `tests/game/test_start.gd` cannot run here: no baked city in this container.
+- The damage line in the crowd code (`city_crowd.cpp`) is kept at his word. It is marked TEMP in the code: "melee
+  test until the traversal lab's strike() arrives - remove then". It calls the damage node from the player's place
+  if there is one; it moves nobody.
+- NOT merged, by his rule (player or NPC movement): `lab/procedural`, `lab/layered`, `lab/checker`, and the old
+  game's animation branches. The 25 old-game branches have no common history with this repo.
+- The story of First Gear (8 documents, one of them the music: cues and song lists; no sound files exist on any
+  branch) was only on the old branch `claude/dazzling-babbage-p7itst`: copied in, additive.
+- [ ] WIRE IN: the new NPC bodies, the new cars and the traversal movement into the game itself. Not started.
+
 ## CARRYING AND THINGS IN THE HAND (27 Nov evening, his words; after the C++ port)
 
 His words: "we didnt add any of the carry moves yet, nor any combat moves... we are supposed to have a one hand
