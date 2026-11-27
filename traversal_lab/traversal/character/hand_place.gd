@@ -123,6 +123,11 @@ func _process_modification_with_delta(dt: float) -> void:
 		var line := to.normalized()
 		var bend := elbow_s - (shoulder_s + hand_s) * 0.5
 		var square := bend - line * bend.dot(line)
+		if float(hold_w[f]) > 0.0 and bool(hold_turned[f]):
+			# a hand brought to the phone: the elbow hangs down and a little out to its own side, as a man holds one
+			# (left to the take's own bend, the arm came to the phone at his ear from above, elbow at head height)
+			var hang := Vector3.DOWN + Vector3(0.35 if f == 0 else -0.35, 0.0, 0.0)
+			square = square.lerp(hang - line * hang.dot(line), clampf(float(hold_w[f]), 0.0, 1.0))
 		if square.length() < 0.02:
 			var back := sk.get_bone_global_pose(sk.get_bone_parent(_upper[f])).basis * Vector3(0.0, 0.0, -1.0) + Vector3.DOWN
 			square = back - line * back.dot(line)

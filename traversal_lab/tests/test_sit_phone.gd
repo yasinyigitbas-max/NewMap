@@ -25,7 +25,7 @@ func ok(cond: bool, what: String) -> void:
 
 
 func _after() -> void:
-	for n: String in ["LeftHandThumb4", "RightHandThumb4", "LeftHandMiddle4", "LeftHandIndex4", "HeadTop_End", "Hips", "LeftHand", "RightHand", "Head", "LeftToeBase", "RightToeBase", "LeftLeg", "RightLeg", "LeftUpLeg", "RightUpLeg"]:
+	for n: String in ["RightHandMiddle4", "RightHandIndex4", "LeftHandThumb4", "RightHandThumb4", "LeftHandMiddle4", "LeftHandIndex4", "HeadTop_End", "Hips", "LeftHand", "RightHand", "Head", "LeftToeBase", "RightToeBase", "LeftLeg", "RightLeg", "LeftUpLeg", "RightUpLeg"]:
 		J[n] = (skel.global_transform * skel.get_bone_global_pose(skel.find_bone("mixamorig_" + n))).origin
 
 
@@ -116,6 +116,17 @@ func _run() -> void:
 	var lw := (J["LeftHand"] as Vector3).distance_to(ph["at"])
 	var rw := (J["RightHand"] as Vector3).distance_to(ph["at"])
 	ok(both_ok and absf(lw - rw) < 0.03, "standing text: the phone is in the middle of both hands (wrists %.2f and %.2f m from its middle), both thumb tips over its face (%s m above it), inside its outline" % [lw, rw, thumbs])
+	# (Yasin, 27 Nov: "the hands dont close over it, and hands clip into each other": each hand's fingers are closed
+	# round the phone's back from its own side, and do not reach the other hand's)
+	var closed := true
+	var tips := ""
+	for tn: String in ["LeftHandMiddle4", "RightHandMiddle4", "LeftHandIndex4", "RightHandIndex4"]:
+		var rel2: Vector3 = (J[tn] as Vector3) - (ph["at"] as Vector3)
+		var behind := -rel2.dot(ph["face"] as Vector3)
+		var own := rel2.dot(px) * (1.0 if tn.begins_with("Right") else -1.0)        # toward that hand's own side of the phone
+		closed = closed and behind > 0.0 and behind < 0.05 and own > 0.0 and own < 0.06
+		tips += " %.3f/%.3f" % [behind, own]
+	ok(closed, "standing text: his fingers are closed round its back, each hand from its own side (finger tips behind it / out from its middle line, m:%s; it is 0.072 m wide)" % tips)
 	keys["mz"] = -1.0
 	await ticks(150)
 	var pace := (body.get(&"hvel") as Vector3).length()

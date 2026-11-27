@@ -123,9 +123,13 @@ const PHONE_TEXT := "Texting_While_Standing"
 const PHONE_CALL := "Male_Talking_On_The_Cell_Phone"
 const PHONE_SIZE := Vector3(0.072, 0.148, 0.008)        # a phone: wide, long, thick (m). NOT in the study
 const PHONE_TEXT_AT := Vector2(0.27, 0.20)      # NOT in the study, mine (where the texting take's own thumbs are, measured): below his head joint, ahead of his hips (m)
-const PHONE_TEXT_HOLD := Vector3(0.076, 0.070, 0.035)   # NOT in the study, mine: each wrist from the phone's middle: out to its side, toward its foot, behind it (m)
-const PHONE_TEXT_CURL := [35.0, 35.0, 20.0]     # NOT in the study, mine: his fingers' bend behind the phone, texting (degrees at the three joints)
-const PHONE_CALL_HOLD := Vector3(0.050, 0.035, 0.030)   # NOT in the study, mine: on a call, his left wrist from the phone's middle: toward the front of his head, toward its foot, out from its back (m)
+const PHONE_TEXT_HOLD := Vector3(0.090, 0.075, 0.020)   # NOT in the study, mine: each wrist from the phone's middle: out to its side, toward its foot, behind it (m)
+const PHONE_CALL_HOLD := Vector3(0.050, 0.085, 0.030)   # NOT in the study, mine: on a call, his left wrist from the phone's middle: toward the front of his head, toward its foot, out from its back (m)
+const PHONE_TEXT_CURL := [45.0, 70.0, 50.0]     # NOT in the study, mine: his fingers closed round the phone's back, texting (degrees at the three joints; the study's everyday grip is 61, 60, 39)
+const PHONE_TEXT_ALONG := Vector3(0.10, 0.92, -0.30)     # NOT in the study, mine: texting, the way each hand's fingers set off: in toward the phone, up it, behind it
+const PHONE_TEXT_PALM := Vector3(0.85, 0.0, 0.35)       # NOT in the study, mine: and the way its palm faces: in to the phone's edge, a little toward its face
+const PHONE_CALL_ALONG := Vector2(0.50, 0.85)           # NOT in the study, mine: on a call, the way his fingers set off across the phone's back: to its rear edge, and up it
+const PHONE_CALL_CURL := [10.0, 75.0, 35.0]             # NOT in the study, mine: his fingers on a call: flat across the back, closed round the rear edge at the middle and last knuckles
 const PHONE_CALL_OUT := 0.022   # NOT in the study, mine: on a call, the phone's middle this far out of his palm (m)
 const PHONE_CALL_UP := 0.030    # NOT in the study, mine: and this far up across his hand (m)
 const PHONE_IN_PALM := [0.065, 0.035, 0.035]   # NOT in the study, mine: its middle this far along his fingers from the wrist, out of the palm, and up across the hand (m)
@@ -675,8 +679,16 @@ func _hand_turned(f: int, along: Vector3, out: Vector3) -> Basis:
 
 
 ## How his hands hold the phone: for each hand [where its wrist goes (world), the turn of the hand (skeleton space),
-## how much]. Texting: both hands behind it, one to each side of its foot, palms to its back, fingers across it.
-## On a call: his left hand on its back, its fingers over the phone's rear edge.
+## how much]. Looked up, 27 Nov (Yasin: "can you check how people hold the phone during calls and texting on the net
+## please and try to replicate it"): of people typing with both thumbs, Hoober's count of 1,333 phone users says
+## "users cradle their mobile phone in their fingers and use both thumbs to provide input", nine in ten with the phone
+## upright; of a call, a handset patent: the user "grasps the telephone along the length of the device", the hand
+## between ear and mouth. So:
+## - texting: a hand at each long side of the phone's lower half, its palm turned in to the phone's edge, its fingers
+##   going up behind the phone and closing round its back from that side (they do not reach past its middle, so the
+##   two hands do not meet), its thumb over the face;
+## - a call: his left hand behind the phone, lying slantwise across its back from the front of its foot, the fingers
+##   reaching over to its rear edge and their last knuckles closed round that edge, the thumb on its front edge.
 func _phone_hold() -> Array:
 	var out := [[Vector3.ZERO, Basis.IDENTITY, 0.0], [Vector3.ZERO, Basis.IDENTITY, 0.0]]
 	var texting := _phone_w * (1.0 - _phone_kind)
@@ -686,12 +698,14 @@ func _phone_hold() -> Array:
 		for f in 2:
 			var side := -1.0 if f == 0 else 1.0             # (the phone's own +X is toward his right hand)
 			var wrist := ph.origin + ph.basis.x * (side * PHONE_TEXT_HOLD.x) - ph.basis.y * PHONE_TEXT_HOLD.y - ph.basis.z * PHONE_TEXT_HOLD.z
-			out[f] = [skel.global_transform * wrist, _hand_turned(f, -ph.basis.x * side * 0.9 + ph.basis.y * 0.45, ph.basis.z), texting]
+			var along := ph.basis.x * (-side * PHONE_TEXT_ALONG.x) + ph.basis.y * PHONE_TEXT_ALONG.y + ph.basis.z * PHONE_TEXT_ALONG.z
+			var palm := ph.basis.x * (-side * PHONE_TEXT_PALM.x) + ph.basis.y * PHONE_TEXT_PALM.y + ph.basis.z * PHONE_TEXT_PALM.z
+			out[f] = [skel.global_transform * wrist, _hand_turned(f, along, palm), texting]
 	elif calling > 0.0:
 		var pc := _call_phone()
 		# (its own +X is toward the front of his head, its back faces out from the head)
 		var wrist2 := pc.origin + pc.basis.x * PHONE_CALL_HOLD.x - pc.basis.y * PHONE_CALL_HOLD.y - pc.basis.z * PHONE_CALL_HOLD.z
-		out[0] = [skel.global_transform * wrist2, _hand_turned(0, -pc.basis.x * 0.8 + pc.basis.y * 0.6, pc.basis.z), calling]
+		out[0] = [skel.global_transform * wrist2, _hand_turned(0, -pc.basis.x * PHONE_CALL_ALONG.x + pc.basis.y * PHONE_CALL_ALONG.y, pc.basis.z), calling]
 	return out
 
 
@@ -1119,7 +1133,7 @@ func _physics_process(dt: float) -> void:
 			var calling := _phone_w * _phone_kind
 			var texting := _phone_w * (1.0 - _phone_kind)
 			_grip.set(&"w", [float(w[0]) if turned[0] else 0.0, float(w[1]) if turned[1] else 0.0])
-			_grip.set(&"deg", [[61.0, 60.0, 39.0] if calling >= texting else PHONE_TEXT_CURL, PHONE_TEXT_CURL])
+			_grip.set(&"deg", [PHONE_CALL_CURL if calling >= texting else PHONE_TEXT_CURL, PHONE_TEXT_CURL])
 			# his thumbs: texting, on the lower part of its face, side by side (Yasin, 27 Nov: "fixed under the thumbs");
 			# on a call, his left thumb on the edge toward the front of his head
 			_grip.set(&"thumb_w", [float(w[0]) if turned[0] else 0.0, float(w[1]) if turned[1] else 0.0])
