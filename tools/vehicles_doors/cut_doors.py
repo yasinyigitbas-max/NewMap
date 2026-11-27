@@ -76,6 +76,10 @@ def main(dump, out_dir, car):
     else:   # the Zhabotinsky cars: one entry each in doors_zh.json (outline, hinge, cabin box), their own colour map
         C = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'doors_zh.json')))[car]
         C.setdefault('skin_x', 0.5); C.setdefault('card', 0.05); C.setdefault('jamb', 0.06); C.setdefault('dark', (0.0, 0.6))
+        C.setdefault('albedo', os.path.join(os.path.dirname(dump), 'tex', car + '_veh_albedo.png'))
+        zs = [p[0] for p in C['door']]; ys = [p[1] for p in C['door']]
+        # the parallax cabin box: from behind the dash to the back of the rear seat, floor to under the roof
+        C.setdefault('cabin', dict(lo=(-0.68, min(ys) - 0.02, min(zs) - 0.95), hi=(0.68, max(ys) - 0.12, max(zs) - 0.35)))
     j, V, I = meshio.read(dump)
     tris = V[I].reshape(-1, 3, V.shape[1])
     outline = C['door']
@@ -164,11 +168,29 @@ def main(dump, out_dir, car):
             raise SystemExit('no door triangles on side ' + sd)
         inn = np.array([-s, 0.0, 0.0])
         # inner card: the skin pushed in, wound the other way, facing in
-        card = [np.array([new_vert(v[:3] + inn * C['card'], -s * np.array([1.0, 0, 0])) for v in (t[0], t[2], t[1])]) for t in skin]
+        if C.get('flat_card', car not in CARS):
+            # a flat card across the outline, just inside the skin's innermost point (a handful of triangles; the edge
+            # strip closes the gap to the curved skin)
+            sk = np.array([t[:, :3] for t in skin]).reshape(-1, 3)
+            xin = (np.abs(sk[:, 0]).min() - C['card']) * s
+            poly = [np.array([xin, y, z]) for z, y in outline]
+            nrm = -s * np.array([1.0, 0, 0])
+            card = []
+            for k in range(1, len(poly) - 1):
+                tri = [new_vert(poly[0], nrm), new_vert(poly[k], nrm), new_vert(poly[k + 1], nrm)]
+                if np.dot(np.cross(tri[1][:3] - tri[0][:3], tri[2][:3] - tri[0][:3]), nrm) < 0:
+                    tri = [tri[0], tri[2], tri[1]]
+                card.append(np.array(tri))
+        else:
+            card = [np.array([new_vert(v[:3] + inn * C['card'], -s * np.array([1.0, 0, 0])) for v in (t[0], t[2], t[1])]) for t in skin]
         strip = []
         rim = [(p, q) for p, q in boundary(skin) if on_outline(p, q)]
+        flat = C.get('flat_card', car not in CARS)
         for p, q in rim:
-            p2, q2 = p + inn * C['card'], q + inn * C['card']
+            if flat:
+                p2, q2 = p.copy(), q.copy(); p2[0] = xin; q2[0] = xin
+            else:
+                p2, q2 = p + inn * C['card'], q + inn * C['card']
             e = q - p
             n = np.cross(e, inn); nl = np.linalg.norm(n); n = n / nl if nl > 1e-9 else inn
             strip.append(np.array([new_vert(x, n) for x in (p, q, q2)]))

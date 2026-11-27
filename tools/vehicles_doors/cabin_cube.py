@@ -23,7 +23,8 @@ for o in list(bpy.data.objects):
     bpy.data.objects.remove(o)
 m = bpy.data.materials.new('m'); m.use_nodes = True; nt = m.node_tree
 bs = nt.nodes['Principled BSDF']
-tx = nt.nodes.new('ShaderNodeTexImage'); tx.image = bpy.data.images.load(os.path.join(ROOT, 'vehicles/models/cartex/trim_albedo.png'))
+TEX = os.environ.get('CABIN_TEX') or os.path.join(ROOT, 'vehicles/models/cartex/trim_albedo.png')   # (a Zhabotinsky car: its own colour map)
+tx = nt.nodes.new('ShaderNodeTexImage'); tx.image = bpy.data.images.load(TEX)
 pm = nt.nodes.new('ShaderNodeMath'); pm.operation = 'GREATER_THAN'; pm.inputs[1].default_value = 0.75
 nt.links.new(tx.outputs['Alpha'], pm.inputs[0])
 mx = nt.nodes.new('ShaderNodeMix'); mx.data_type = 'RGBA'
@@ -56,20 +57,24 @@ for name in (CAR + '_body', CAR + '_door_l', CAR + '_door_r'):
 sys.path.insert(0, os.path.join(ROOT, 'assets/coronado_kit/tools/vehicles'))
 import vlib as vl
 from vlib import box, extrude
-C = CABIN[CAR]
+C = CABIN.get(CAR)
 B = lambda x, y, z: meshio.g2b((x, y, z))
+if C is None:     # a car with a modelled cabin: the picture is of that cabin, nothing added
+    C = dict(hip=None)
 hip = C['hip']
-for s_ in (1, -1):
+for s_ in ((1, -1) if hip else ()):
     x, y, z = B(s_ * C['seat_x'], hip[1], hip[0])
     vl.seat('seat', (x, y, z), 0.50, True, back_h=0.55)
-x, y, z = B(0, hip[1] + 0.03, C['rear_z'])
-vl.seat('bench', (x, y, z), 1.30, True, bench=True, back_h=0.50)
-d0, d1 = C['dash_z']
-dash = extrude('dash', [(-d1, C['dash_y'] - 0.02), (-d0, C['dash_y'] + 0.03), (-d0 + 0.12, C['dash_y'] - 0.08),
-                        (-d0 + 0.10, C['dash_y'] - 0.35), (-d1, C['dash_y'] - 0.40)], -0.74, 0.74, 'int_plastic')
-vl.steering_wheel('sw', Vector(B(C['seat_x'], hip[1] + 0.42, hip[0] + 0.42)), math.radians(-25), 0.18, True)
-fl = box('floor', (-0.75, -0.6, 0.355), (0.75, 1.3, 0.365), 'int_carpet')
-cons = box('console', (-0.09, -(C['dash_z'][0] - 0.15), hip[1] - 0.20), (0.09, -(hip[0] + 0.15), hip[1] + 0.02), 'int_plastic')
+if hip:
+  x, y, z = B(0, hip[1] + 0.03, C['rear_z'])
+  vl.seat('bench', (x, y, z), 1.30, True, bench=True, back_h=0.50)
+if hip:
+  d0, d1 = C['dash_z']
+  dash = extrude('dash', [(-d1, C['dash_y'] - 0.02), (-d0, C['dash_y'] + 0.03), (-d0 + 0.12, C['dash_y'] - 0.08),
+                          (-d0 + 0.10, C['dash_y'] - 0.35), (-d1, C['dash_y'] - 0.40)], -0.74, 0.74, 'int_plastic')
+  vl.steering_wheel('sw', Vector(B(C['seat_x'], hip[1] + 0.42, hip[0] + 0.42)), math.radians(-25), 0.18, True)
+  fl = box('floor', (-0.75, -0.6, 0.355), (0.75, 1.3, 0.365), 'int_carpet')
+  cons = box('console', (-0.09, -(C['dash_z'][0] - 0.15), hip[1] - 0.20), (0.09, -(hip[0] + 0.15), hip[1] + 0.02), 'int_plastic')
 sc = bpy.context.scene
 sc.render.engine = 'CYCLES'; sc.cycles.samples = 64; sc.cycles.use_denoising = True
 sc.cycles.transparent_max_bounces = 8

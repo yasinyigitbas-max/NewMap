@@ -45,7 +45,7 @@ func _init() -> void:
 					for w in v: wl.append({"center": Vector3(w["center"][0], w["center"][1], w["center"][2]), "radius": float(w["radius"])})
 					v = wl
 				m.set_meta(k, v)
-	if a.size() > 2 and a[2].ends_with(".json"):
+	if a.size() > 2 and a[2].ends_with(".json") and not a[2].begins_with("--"):
 		var d: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(a[2]))
 		var doors := {}
 		for sd in d["doors"]:

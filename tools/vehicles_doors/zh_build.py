@@ -336,6 +336,7 @@ def part_obj(pi, name):
     bm = bmesh.new(); bm.from_mesh(me)
     lay = bm.faces.layers.int.get('part')
     bmesh.ops.delete(bm, geom=[f for f in bm.faces if f[lay] != pi], context='FACES')
+    bmesh.ops.delete(bm, geom=[v for v in bm.verts if not v.link_faces], context='VERTS')   # (the other parts' vertices)
     bm.to_mesh(me); bm.free()
     return o
 
@@ -353,7 +354,7 @@ def dump(o, name, origin=Vector()):
     uv = me.uv_layers['UV'].data
     rows = []
     for t in me.loop_triangles:
-        for li in t.loops:
+        for li in (t.loops[0], t.loops[2], t.loops[1]):   # (Godot's front faces wind clockwise: Blender's the other way)
             l = me.loops[li]
             p = me.vertices[l.vertex_index].co - origin
             n = l.normal
@@ -362,7 +363,7 @@ def dump(o, name, origin=Vector()):
             gp = meshio.b2g(p); gn = meshio.b2g(n); gt = meshio.b2g(tg)
             rows.append([*gp, *gn, *gt, l.bitangent_sign, u.x, 1.0 - u.y, u.x, 1.0 - u.y])
     V = np.array(rows, np.float32)
-    meshio.write(os.path.join(OUT, name), V, np.arange(len(V)), {'metas': {}, 'format': 0})
+    meshio.write(os.path.join(OUT, name), V, np.arange(len(V)), {'metas': {}, 'format': 0, 'winding': 'godot'})
     return len(V) // 3
 
 

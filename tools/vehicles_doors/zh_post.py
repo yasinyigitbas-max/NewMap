@@ -9,6 +9,11 @@ col, nor, ao, ro, me, am = (L(k) for k in ('color', 'normal', 'ao', 'rough', 'me
 cov = L('cover')[..., 0] > 0.5
 print('coverage %.1f %%' % (100 * cov.mean()))
 a = ao[..., 0]
+mk = np.round(am[..., 0] * 2) / 2
+paint, glass = mk > 0.75, (mk > 0.25) & (mk < 0.75)
+col = col.copy(); me = me.copy()
+col[..., :3][paint] = np.clip(col[..., :3][paint] / 0.8, 0, 1)    # (the paint was baked from a 0.8 grey: the game's paint colour shows true)
+me[..., 0][paint | glass] = 0.0     # (car_paint.gdshader gives the paint its own clear coat; a metallic paint read black)
 c = col[..., :3] * (0.3 + 0.7 * a[..., None])
 def srgb(x):
     x = np.clip(x, 0, 1)

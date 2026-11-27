@@ -228,10 +228,25 @@ void CityCar::set_car_maps() {
 	const String t = cartex_id(cm::MODELS[std::min(std::max(model, 0), cm::N_MODELS - 1)].id);
 	ResourceLoader *rl = ResourceLoader::get_singleton();
 	const Ref<Mesh> bm = mi_body->get_mesh();
+	// (27 Nov) a car rebuilt from its original with ONE material (tools/vehicles_doors/zh_build.py: the mesh's meta "vtex"):
+	// its own colour (alpha = paint / glass mask), normal and ORM maps, map_mode 1
+	const bool vt = bm.is_valid() && bm->has_meta("vtex") && rl->exists(base + t + String("_veh_albedo.png"));
+	if (vt) {
+		for (Ref<ShaderMaterial> m : { mat, mat_wheel }) {
+			if (m.is_null()) continue;
+			m->set_shader_parameter("map_mode", 1);
+			m->set_shader_parameter("use_maps", true);
+			m->set_shader_parameter("albedo_map", rl->load(base + t + String("_veh_albedo.png")));
+			m->set_shader_parameter("normal_map", rl->load(base + t + String("_veh_normal.png")));
+			m->set_shader_parameter("orm_map", rl->load(base + t + String("_veh_orm.png")));
+		}
+		return;
+	}
 	const bool ok = rl->exists(base + t + String("_car_normal.png")) && bm.is_valid() && bm->has_meta("cartex");
 	for (Ref<ShaderMaterial> m : { mat, mat_wheel }) {
 		if (m.is_null()) continue;
 		m->set_shader_parameter("map_mode", ok ? 2 : 0);
+		m->set_shader_parameter("use_maps", false);
 		if (!ok) continue;
 		m->set_shader_parameter("trim_albedo", rl->load(base + String("trim_albedo.png")));
 		m->set_shader_parameter("trim_normal", rl->load(base + String("trim_normal.png")));
@@ -351,7 +366,8 @@ void CityCar::crash_sound(float p_sev) {
 
 String CityCar::engine_class_for(int p_model) {
 	const std::string id = cm::MODELS[std::min(std::max(p_model, 0), cm::N_MODELS - 1)].id;
-	if (id.rfind("bus", 0) == 0 || id == "van" || id == "sakura_t") return "diesel";
+	if (id.rfind("bus", 0) == 0 || id.rfind("van", 0) == 0 || id == "sakura_t" || id == "ambulance" || id == "utility" || id == "tow" || id == "flatbed") return "diesel";
+	if (id.rfind("police", 0) == 0) return "v8";
 	if (id.rfind("fiamma", 0) == 0) return "v8";
 	if (id.rfind("volt", 0) == 0 || id == "stern_e") return "ev";
 	if (id == "sakura") return "compact";
@@ -361,7 +377,9 @@ String CityCar::engine_class_for(int p_model) {
 const char *CityCar::sound_class(bool p_horn) const {
 	const std::string id = cm::MODELS[std::min(std::max(model, 0), cm::N_MODELS - 1)].id;
 	if (id.rfind("bus", 0) == 0) return p_horn ? "bus" : "diesel";
-	if (id == "van") return p_horn ? "van" : "diesel";
+	if (id.rfind("van", 0) == 0 || id == "ambulance") return p_horn ? "van" : "diesel";
+	if (id == "utility" || id == "tow" || id == "flatbed") return p_horn ? "van" : "diesel";
+	if (id.rfind("police", 0) == 0) return p_horn ? "sedan" : "v8";
 	if (id.rfind("fiamma", 0) == 0) return p_horn ? "sport" : "v8";
 	if (id.rfind("volt", 0) == 0 || id == "stern_e") return p_horn ? (id == "volt_s" ? "compact" : "sedan") : "ev";
 	if (id == "sakura") return "compact";
@@ -538,7 +556,8 @@ void CityCar::fit_doors(const Ref<Mesh> &p_body, const String &p_base) {
 		m->set_shader_parameter("cabin_cube", tex);
 		m->set_shader_parameter("cabin_xf", Transform3D());
 	}
-	if (cab) {
+	// the box behind an open door only for a car whose cabin is a picture; a rebuilt car (meta vtex) has its modelled cabin
+	if (cab && !body->has_meta("vtex")) {
 		if (!cabin_vis) {
 			cabin_vis = memnew(MeshInstance3D);
 			cabin_vis->set_cast_shadows_setting(GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);
@@ -562,7 +581,7 @@ void CityCar::fit_doors(const Ref<Mesh> &p_body, const String &p_base) {
 			mat_cabin->set_shader_parameter("cabin_lo", (lo - hi) * 0.5f); mat_cabin->set_shader_parameter("cabin_hi", (hi - lo) * 0.5f);
 		}
 		mat_cabin->set_shader_parameter("cabin_cube", tex);
-	} else if (cabin_vis) cabin_vis->set_visible(false);
+	} else if (cabin_vis) { cabin_vis->set_visible(false); cabin_vis->set_mesh(Ref<Mesh>()); }   // (nothing for door_pose to show)
 	if (real_doors) door_pose();
 }
 

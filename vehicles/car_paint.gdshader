@@ -195,6 +195,9 @@ void fragment() {
 			vec2 nxy = texture(normal_map, UV).rg * 2.0 - 1.0;          // RG only: works with 2-channel (RGTC / ASTC) normal maps
 			vec3 nm = vec3(nxy * normal_strength, sqrt(max(1.0 - dot(nxy, nxy), 0.0)));
 			NORMAL = normalize(TANGENT * nm.x + BINORMAL * nm.y + NORMAL * nm.z);   // the reflections below see it too
+			if (cabin_on && gm > 0.01) {
+				ALBEDO = mix(ALBEDO, cabin_at(v_cp, v_cc) * cabin_tint, gm);   // the cabin behind the glass (parallax, as in map_mode 2)
+			}
 		}
 		float bare = 0.0;
 		if (dent_n > 0) {

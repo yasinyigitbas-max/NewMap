@@ -562,6 +562,17 @@ void CityTraffic::_ready() {
 			const String id = cm::MODELS[m].id, t = id == "stern_g" ? String("volt_x") : id;
 			const String base = String("res://vehicles/models/lod/") + id;
 			Ref<Mesh> qb = rl->exists(base + String("_q_body.res")) ? Ref<Mesh>(rl->load(base + String("_q_body.res"))) : Ref<Mesh>();
+			if (qb.is_valid() && qb->has_meta("vtex") && rl->exists(cx + t + String("_veh_albedo.png"))) {
+				// (27 Nov) rebuilt with one material (zh_build.py): its own three maps, near and light alike
+				Ref<ShaderMaterial> n = mat_near->duplicate();
+				n->set_shader_parameter("map_mode", 1);
+				n->set_shader_parameter("use_maps", true);
+				n->set_shader_parameter("albedo_map", rl->load(cx + t + String("_veh_albedo.png")));
+				n->set_shader_parameter("normal_map", rl->load(cx + t + String("_veh_normal.png")));
+				n->set_shader_parameter("orm_map", rl->load(cx + t + String("_veh_orm.png")));
+				mat_near_m[m] = n; mat_mid_m[m] = n->duplicate();
+				continue;
+			}
 			const bool ok = rl->exists(cx + t + String("_car_normal.png")) && rl->exists(cx + t + String("_far_albedo.png")) && qb.is_valid() && qb->has_meta("cartex");
 			if (!ok) { mat_near_m[m] = mat_near; mat_mid_m[m] = mesh_mid_light[m] ? mat_near : mat_mid; continue; }
 			Ref<ShaderMaterial> n = mat_near->duplicate(), f = mat_mid->duplicate();

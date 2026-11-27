@@ -22,4 +22,4 @@ for k in range(0, 31):
 if len(sys.argv) > 3 and sys.argv[3]:
     pts = [tuple(map(float, p.split(','))) for p in sys.argv[3].split(';')]
     d.line([px(*p) for p in pts + pts[:1]], fill=(255, 0, 0), width=3)
-im.crop((W // 2 - 1000, 60, W // 2 + 1000, 760)).resize((1400, 490)).save(sys.argv[2])
+im.crop((W // 2 - 1000, 260, W // 2 + 1000, 860)).resize((1400, 420)).save(sys.argv[2])
