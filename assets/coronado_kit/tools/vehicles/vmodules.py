@@ -349,3 +349,35 @@ def lightbar_cab(p, hi, put, parts):
 def utility_body_auto(p, hi, put, parts):
     p['box_y'] = (p['y_cab'] + 0.06, p['L'] / 2 - 0.12)
     utility_body(p, hi, put, parts)
+
+
+def roof_rails(p, hi, put, parts):
+    W, H = p['W'], p['H']
+    y0, y1 = p['y_roof_f'] + 0.15, p.get('y_roof_r', p['L'] / 2 - 0.3) - 0.10
+    for s in (1, -1):
+        x = s * p['W'] * p.get('roof_w', 0.80) * 0.80
+        put('body', box('rail', (x - 0.025, y0, H), (x + 0.025, y1, H + 0.05), 'trim_blk'))
+        for yy in (y0, y1 - 0.06):
+            put('body', box('foot', (x - 0.03, yy, H - 0.01), (x + 0.03, yy + 0.06, H + 0.06), 'trim_blk'))
+
+
+def front_detail(p, hi, put, parts):
+    """(high model) grille, plate and door handles for the flat-fronted vehicles; bus destination sign"""
+    if not hi:
+        return
+    W = p['W']
+    yF = p.get('front_face', -p['L'] / 2)
+    fz = p.get('head_z', (0.75, 0.95))
+    put('body', box('grille', (-W * 0.50, yF - 0.008, fz[0] - 0.05), (W * 0.50, yF + 0.02, fz[1] + 0.12), 'grille'))
+    put('bumper_f', box('plate', (-0.26, yF - 0.075, p.get('bumper_fz', (0.3, 0.5))[0] + 0.04), (0.26, yF - 0.06, p.get('bumper_fz', (0.3, 0.5))[0] + 0.16), 'plate'))
+    if p.get('family') == 'bus':
+        H = p['H']
+        put('body', box('dest', (-W * 0.70, yF - 0.008, H - 0.42), (W * 0.70, yF + 0.02, H - 0.12), 'gauge'))
+        import vmodels
+        put('body', vmodels.text_decal(p.get('route', '12  DOWNTOWN'), (0, yF - 0.012, H - 0.27), 0.16, 'f', 'lamp_ind'))
+    for s, side in ((1, 'l'), (-1, 'r')):
+        dn = 'door_f_' + side
+        if dn in parts:
+            x0, x1 = sorted((s * (W - 0.005), s * (W + 0.015)))
+            yy = p['y_bpil'] - 0.20
+            put(dn, box('handle', (x0, yy - 0.08, p['belt'] - 0.12), (x1, yy + 0.08, p['belt'] - 0.08), 'trim_blk'))
