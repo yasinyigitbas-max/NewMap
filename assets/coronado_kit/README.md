@@ -15,12 +15,13 @@ The finished, validated assets for the Coronado city, built to `SPEC.md` (model 
 | props/waterfront | waterfront set: quay / seawall edge (straight, bollards, stair, inside and outside corner, pier root), timber pier (straight, T-head, railed end, lamp, gangway), marina (float, finger, pile, dock box, pedestal), moored boats (sloop, express cruiser, troller, skiff), promenade (rail, rail to wall, boardwalk) and small props (life-ring stand, mooring buoy, nun and can markers, fuel pump, boat on trailer, kayak rack, beach shower, volleyball net, open and closed umbrellas) on the 0.5 m snap grid, page W atlas; see `props/waterfront/README.md` | 34 |
 | props/streetside | streetside / lot / motel / residential props (pylon and bus-stop signs, drive-thru menu, vending machines, ice chest, wheel stops, shopping cart and corral, balcony clutter, dingbat stair, buzzer panel, clothesline) on page W; see `props/streetside/README.md` | 14 |
 | props/indoor | indoor shop fixtures (shared, food, grocery, clothing, salon, gift, office, services, sport, venue) on page I, near+col only; see `props/indoor/README.md` | 62 |
+| props/weapons | hand-held weapons: service and polymer pistols, carbine rifle, pump shotgun and sawn-off, SMG, baseball bat, knife, golf club, crowbar, molotov, on page G, near+col only, grip / muzzle markers; see `props/weapons/README.md` | 11 |
 | props/house/{decor,furn,rugs} | interior house set: 36 decorative objects, 8 rugs and 26 furniture pieces on page H, near+col only; see `props/house/README.md` | 70 |
 | fences | fence and wall panels (2 m) + posts, manifest in props/manifest_fences.json | 22 |
 | foliage | trees, palms, shrubs, hedges (manifest_foliage.json) | 33 |
 | parks | park layouts (`park_*.json`: kit prop/foliage instances) + their ground meshes | 11 |
 | textures | shared building atlases (house `bld_*`, city `city_*`, far `far_color.png`, park ground `ground_*`) + layout JSONs | |
-| atlases | shared props (`props_color_clean`, `props_b_color_clean`, `props_c_*`, waterfront `props_w_*`, indoor `props_i_*`, house `props_h_*`, halved normals and ORM, `props_grime`) and tree atlases | |
+| atlases | shared props (`props_color_clean`, `props_b_color_clean`, `props_c_*`, waterfront `props_w_*`, indoor `props_i_*`, house `props_h_*`, weapons `props_g_*`, halved normals and ORM, `props_grime`) and tree atlases | |
 | shaders | `prop_wear.gdshader`: procedural worn/dirty overlay on the clean prop pages (wear 0 / 0.5 / 1) | |
 | modular | snap-in starter set: house and shop pieces, 5 merged example assemblies, `godot/export_layout.gd`, tools, validation report. Loose pieces are editor-only; finished assemblies are one mesh per tier. Snap-in houses use the 1650 / 500 / 40 cap and include a chimney and step railing. | |
 | previews | one near hero picture (JPEG) per building, park, prop and plant | |
