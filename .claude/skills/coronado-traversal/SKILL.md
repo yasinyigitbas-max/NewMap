@@ -60,8 +60,10 @@ Read in this order, every session and again after every context compression (Yas
 
 ## The C++ port (native/traversal/)
 
-Script and C++ live side by side. The script is the reference and the default; `-- --native` switches the C++ in
-(`main.gd`, `_made()` in character.gd). The readout's first line says which is running.
+Script and C++ live side by side. Since trav96 (27 Nov, his word) C++ is the default and `-- --script` asks for the
+scripts (`main.gd`, `_made()` in character.gd); without the built library the lab falls back to the scripts. The
+readout's first line says which is running. So "every test" is: plain (C++), then again with `-- --script`. New
+moves are written in C++ only; the scripts are the frozen fallback of what was approved up to trav95.
 
 **Build.** `bash native/traversal/build.sh linux|windows` -> `traversal_lab/bin/` + `traversal.gdextension` (not in
 git). A fresh container has no toolchain: `pip install --break-system-packages scons`; clone godot-cpp branch 4.5

@@ -50,7 +50,7 @@ func _process(_dt: float) -> void:
 		mode = ["live", "RECORDING  %d ticks" % (tape.get(&"tape") as Array).size(),
 				"REPLAY  %d / %d" % [tape.get(&"cursor"), (tape.get(&"tape") as Array).size()]][int(tape.get(&"mode"))]
 	var p := body.global_position
-	# which version of the movement code is running (27 Nov: the C++ version is switched in with `-- --native`)
+	# which version of the movement code is running (27 Nov: C++ is the default; `-- --script` asks for the scripts)
 	var cpp := 0
 	var parts := 0
 	for part: Node in [body, body.get_node_or_null(^"Character"), body.get_node_or_null(^"Traverse"), body.get_node_or_null(^"Interact")]:

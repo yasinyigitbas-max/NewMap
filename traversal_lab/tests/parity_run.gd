@@ -1,5 +1,5 @@
 extends SceneTree
-## The same input on the script version and on the C++ version (`-- --native`): every tick's numbers written to a file.
+## The same input on the script version and on the C++ version (the default; the script version is asked for with `-- --script`): every tick's numbers written to a file.
 ## Run by tools/traversal/parity.sh, which runs both and compares them. (The rules of the C++ port: reports/TRAVERSAL
 ## JOB BOARD.md. A layer is proven when the two files are the same, byte for byte.)
 var lab: Node3D
@@ -43,7 +43,7 @@ func _run() -> void:
 	body = lab.get(&"body")
 	tape = lab.get(&"tape")
 	print("body is ", body.get_class(), "  script: ", body.get_script() != null)
-	var det: RefCounted = ClassDB.instantiate(&"TravDetector") if ("--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(&"TravDetector")) else (load("res://traversal/detect/detector.gd") as GDScript).new()
+	var det: RefCounted = ClassDB.instantiate(&"TravDetector") if (not ("--script" in OS.get_cmdline_user_args()) and ClassDB.class_exists(&"TravDetector")) else (load("res://traversal/detect/detector.gd") as GDScript).new()
 	det.set(&"body", body)
 	print("detector is ", det.get_class(), "  script: ", det.get_script() != null)
 	# the finished pose of every bone, each tick (it can only be read when the skeleton says it is finished)

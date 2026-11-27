@@ -53,15 +53,15 @@ func _ready() -> void:
 	add_child(body)
 	if body.has_method(&"show_capsule") and not ("--capsule" in OS.get_cmdline_user_args()):
 		character = CharacterV1.new() if "--v1" in OS.get_cmdline_user_args() else Character.new()
-		# (`-- --native`: the character translated to C++, native/traversal, where its library has been built)
-		if "--native" in OS.get_cmdline_user_args() and not ("--v1" in OS.get_cmdline_user_args()) and ClassDB.class_exists(&"TravCharacter"):
+		# (the default since 27 Nov at his word; `-- --script` asks for the script: the character translated to C++, native/traversal, where its library has been built)
+		if not ("--script" in OS.get_cmdline_user_args()) and not ("--v1" in OS.get_cmdline_user_args()) and ClassDB.class_exists(&"TravCharacter"):
 			character.free()
 			character = ClassDB.instantiate(&"TravCharacter")
 		for arg in OS.get_cmdline_user_args():
 			if arg.begins_with("--npc="):
 				character.free()
 				character = (load("res://traversal/npc/npc_character.gd") as GDScript).new()
-				if "--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(&"TravNpcCharacter"):
+				if not ("--script" in OS.get_cmdline_user_args()) and ClassDB.class_exists(&"TravNpcCharacter"):
 					character.free()
 					character = ClassDB.instantiate(&"TravNpcCharacter")
 		character.name = "Character"
@@ -75,13 +75,13 @@ func _ready() -> void:
 	if body.has_method(&"begin_move"):
 		# Stage 8 onward: the traversal moves
 		# (before the traversal moves, so that a door he walks at is opened, not taken for a wall)
-		# (`-- --native`: doors, sitting, the car and cover translated to C++, native/traversal)
-		interact = ClassDB.instantiate(&"TravInteract") if ("--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(&"TravInteract")) else Interact.new()
+		# (the default since 27 Nov at his word; `-- --script` asks for the script: doors, sitting, the car and cover translated to C++, native/traversal)
+		interact = ClassDB.instantiate(&"TravInteract") if (not ("--script" in OS.get_cmdline_user_args()) and ClassDB.class_exists(&"TravInteract")) else Interact.new()
 		interact.name = "Interact"
 		interact.set(&"body", body)
 		body.add_child(interact)
-		# (`-- --native`: the moves translated to C++, native/traversal, where its library has been built)
-		traverse = ClassDB.instantiate(&"TravTraverse") if ("--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(&"TravTraverse")) else Traverse.new()
+		# (the default since 27 Nov at his word; `-- --script` asks for the script: the moves translated to C++, native/traversal, where its library has been built)
+		traverse = ClassDB.instantiate(&"TravTraverse") if (not ("--script" in OS.get_cmdline_user_args()) and ClassDB.class_exists(&"TravTraverse")) else Traverse.new()
 		traverse.name = "Traverse"
 		traverse.set(&"body", body)
 		body.add_child(traverse)
@@ -107,10 +107,10 @@ func _ready() -> void:
 func make_body() -> CharacterBody3D:
 	if "--plain" in OS.get_cmdline_user_args():
 		return PlainBody.new()
-	# `-- --native`: the body translated to C++ (native/traversal, TravBody), where its library has been built. The
+	# the default since 27 Nov at his word; `-- --script` asks for the script: the body translated to C++ (native/traversal, TravBody), where its library has been built. The
 	# script body stays the default until Yasin has play-tested the C++ one (27 Nov: "make all the code c plus plus
 	# and make god damn sure nothing ever breaks").
-	if "--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(&"TravBody"):
+	if not ("--script" in OS.get_cmdline_user_args()) and ClassDB.class_exists(&"TravBody"):
 		return ClassDB.instantiate(&"TravBody")
 	return Body.new()
 

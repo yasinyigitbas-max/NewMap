@@ -489,11 +489,11 @@ func _ready() -> void:
 		body.connect(&"landed", _on_landed)
 
 
-## A correction: its script, or with `-- --native` its translation to C++ (native/traversal) where the library has
+## A correction: its script, or with the default since 27 Nov at his word; `-- --script` asks for the script its translation to C++ (native/traversal) where the library has
 ## been built and has it. The script is the default until Yasin has play-tested the C++ version (27 Nov: "make all
 ## the code c plus plus and make god damn sure nothing ever breaks").
 func _made(native: StringName, script: GDScript) -> SkeletonModifier3D:
-	if "--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(native):
+	if not ("--script" in OS.get_cmdline_user_args()) and ClassDB.class_exists(native):
 		return ClassDB.instantiate(native)
 	return script.new()
 

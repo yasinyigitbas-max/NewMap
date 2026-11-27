@@ -342,8 +342,8 @@ var _o_high := 0.0              # the height the climb take goes up, on him
 
 
 func _ready() -> void:
-	# (`-- --native`: the detector translated to C++, native/traversal, where its library has been built)
-	detector = (ClassDB.instantiate(&"TravDetector") if ("--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(&"TravDetector")) else Detector.new())
+	# (the default since 27 Nov at his word; `-- --script` asks for the script: the detector translated to C++, native/traversal, where its library has been built)
+	detector = (ClassDB.instantiate(&"TravDetector") if (not ("--script" in OS.get_cmdline_user_args()) and ClassDB.class_exists(&"TravDetector")) else Detector.new())
 	detector.set(&"body", body)
 	for key: String in MOVES:
 		var c: Resource = load(String(MOVES[key]["res"]))
