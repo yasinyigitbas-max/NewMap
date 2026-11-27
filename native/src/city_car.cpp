@@ -494,13 +494,17 @@ void CityCar::door_pose() {
 // own cabin frame), the parallax cabin on, the cabin box made. Any other model: none of it, the shader's door as before.
 void CityCar::fit_doors(const Ref<Mesh> &p_body, const String &p_base) {
 	ResourceLoader *rl = ResourceLoader::get_singleton();
-	const String dl = p_base + String("_q_door_l.res"), dr = p_base + String("_q_door_r.res");
+	const String dl = p_base + String("_q_door_l.res"), dr = p_base + String("_q_door_r.res"), cb = p_base + String("_q_body_cut.res");
 	real_doors = false;
 	Dictionary dd;
-	if (split && p_body.is_valid() && p_body->has_meta("doors") && rl->exists(dl) && rl->exists(dr)) {
-		dd = p_body->get_meta("doors");
+	// the body with the door openings cut is its own file (<id>_q_body_cut.res): the traffic keeps drawing the whole body
+	Ref<Mesh> body_cut = (split && rl->exists(cb) && rl->exists(dl) && rl->exists(dr)) ? Ref<Mesh>(rl->load(cb)) : Ref<Mesh>();
+	if (body_cut.is_valid() && body_cut->has_meta("doors")) {
+		dd = body_cut->get_meta("doors");
 		real_doors = dd.has("l") && dd.has("r");
 	}
+	if (real_doors) mi_body->set_mesh(body_cut);
+	const Ref<Mesh> body = real_doors ? body_cut : p_body;
 	Ref<Mesh> dm[2];
 	if (real_doors) { dm[0] = rl->load(dl); dm[1] = rl->load(dr); real_doors = dm[0].is_valid() && dm[1].is_valid(); }
 	const char *key[2] = { "l", "r" };
@@ -516,11 +520,11 @@ void CityCar::fit_doors(const Ref<Mesh> &p_body, const String &p_base) {
 	}
 	// the parallax cabin: the glass of the body and of the doors, and the box seen through an open door
 	const String cube = String("res://vehicles/models/cartex/") + cartex_id(cm::MODELS[std::min(std::max(model, 0), cm::N_MODELS - 1)].id) + String("_cabin.png");
-	const bool cab = real_doors && p_body->has_meta("cabin") && rl->exists(cube);
+	const bool cab = real_doors && body->has_meta("cabin") && rl->exists(cube);
 	Vector3 lo, hi;
 	Ref<Texture2D> tex;
 	if (cab) {
-		const Dictionary c = p_body->get_meta("cabin");
+		const Dictionary c = body->get_meta("cabin");
 		lo = c.get("lo", Vector3()); hi = c.get("hi", Vector3());
 		tex = rl->load(cube);
 	}
@@ -543,11 +547,20 @@ void CityCar::fit_doors(const Ref<Mesh> &p_body, const String &p_base) {
 			mat_cabin->set_shader(rl->load("res://vehicles/cabin_box.gdshader"));
 			cabin_vis->set_material_override(mat_cabin);
 		}
-		Ref<BoxMesh> bx; bx.instantiate();
-		bx->set_size(hi - lo);
-		cabin_vis->set_mesh(bx);
-		cabin_vis->set_position((lo + hi) * 0.5f);
-		mat_cabin->set_shader_parameter("cabin_lo", (lo - hi) * 0.5f); mat_cabin->set_shader_parameter("cabin_hi", (hi - lo) * 0.5f);
+		// the model's own cabin hull (<id>_q_cabin.res: from under the dash, along the windscreen, to the rear seat; it fills
+		// the opening right to the hinge), else the plain cabin box
+		const String hull = p_base + String("_q_cabin.res");
+		if (rl->exists(hull)) {
+			cabin_vis->set_mesh(rl->load(hull));
+			cabin_vis->set_position(Vector3());
+			mat_cabin->set_shader_parameter("cabin_lo", lo); mat_cabin->set_shader_parameter("cabin_hi", hi);
+		} else {
+			Ref<BoxMesh> bx; bx.instantiate();
+			bx->set_size(hi - lo);
+			cabin_vis->set_mesh(bx);
+			cabin_vis->set_position((lo + hi) * 0.5f);
+			mat_cabin->set_shader_parameter("cabin_lo", (lo - hi) * 0.5f); mat_cabin->set_shader_parameter("cabin_hi", (hi - lo) * 0.5f);
+		}
 		mat_cabin->set_shader_parameter("cabin_cube", tex);
 	} else if (cabin_vis) cabin_vis->set_visible(false);
 	if (real_doors) door_pose();

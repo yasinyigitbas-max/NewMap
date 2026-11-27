@@ -26,6 +26,9 @@ CARS = {
         card=0.05, jamb=0.06,
         dark=(-0.33, 1.15),  # (z, y) of a black B-pillar texel: the new faces take its UVs
         cabin=dict(lo=(-0.74, 0.34, -1.10), hi=(0.74, 1.20, 0.25)),   # the parallax cabin box (Godot frame)
+        # the cabin seen through an open door: this side profile (z, y), from under the dash, along the windscreen, to the
+        # back of the rear seat, extruded across the cabin's width (it fills the opening right to the hinge)
+        hull=[(0.70, 0.34), (0.70, 0.96), (0.20, 1.22), (-1.10, 1.22), (-1.10, 0.34)], hull_x=0.74,
     ),
 }
 
@@ -184,6 +187,30 @@ def main(dump, out_dir, car):
         info['doors'][sd] = {'hinge': hinge.round(4).tolist(), 'axis': [0, 1, 0], 'opens': 'out', 'max_angle_deg': 68,
                              'tris': len(allf), 'skin_tris': len(skin), 'rim_edges': len(rim)}
         print('door', sd, 'skin', len(skin), 'rim edges', len(rim), 'all', len(allf), 'hinge', hinge.round(3))
+    # the cabin hull: the profile extruded across x, faces outward (cabin_box.gdshader draws its inside: cull_front)
+    hp = C['hull']; hx = C['hull_x']
+    hull = []
+    n = len(hp)
+    area_h = sum(hp[i][0] * hp[(i + 1) % n][1] - hp[(i + 1) % n][0] * hp[i][1] for i in range(n))
+    for i in range(n):
+        (z0, y0), (z1, y1) = hp[i], hp[(i + 1) % n]
+        e = np.array([0.0, y1 - y0, z1 - z0]); nn = np.cross(e, [1.0, 0, 0]) * (-1 if area_h > 0 else 1)
+        nn = nn / np.linalg.norm(nn)
+        a, b, c2, d = (hx, y0, z0), (hx, y1, z1), (-hx, y1, z1), (-hx, y0, z0)
+        for tri in ((a, b, c2), (a, c2, d)):
+            v = [new_vert(np.array(p), nn) for p in tri]
+            if np.dot(np.cross(v[1][:3] - v[0][:3], v[2][:3] - v[0][:3]), nn) < 0:
+                v = [v[0], v[2], v[1]]
+            hull.append(np.array(v))
+    for sx in (1.0, -1.0):
+        cap = [(sx * hx, y, z) for z, y in hp]
+        for k in range(1, n - 1):
+            v = [new_vert(np.array(p), np.array([sx, 0, 0])) for p in (cap[0], cap[k], cap[k + 1])]
+            if np.dot(np.cross(v[1][:3] - v[0][:3], v[2][:3] - v[0][:3]), [sx, 0, 0]) < 0:
+                v = [v[0], v[2], v[1]]
+            hull.append(np.array(v))
+    H = np.array(hull).reshape(-1, V.shape[1])
+    meshio.write(os.path.join(out_dir, '%s_cabin' % car), H, np.arange(len(H)), {'metas': {}, 'format': j['format']})
     B = np.array(body).reshape(-1, V.shape[1])
     meshio.write(os.path.join(out_dir, '%s_body' % car), B, np.arange(len(B)), meta)
     info['body_tris'] = len(body)

@@ -50,7 +50,7 @@ func _door(i: int) -> MeshInstance3D:
 
 func _cabin_box() -> MeshInstance3D:
 	for c in car.get_children():
-		if c is MeshInstance3D and (c as MeshInstance3D).mesh is BoxMesh: return c
+		if c is MeshInstance3D and (c as MeshInstance3D).material_override is ShaderMaterial and ((c as MeshInstance3D).material_override as ShaderMaterial).shader and ((c as MeshInstance3D).material_override as ShaderMaterial).shader.resource_path.ends_with("cabin_box.gdshader"): return c
 	return null
 
 func _shoot(from: Vector3, at: Vector3) -> void:
