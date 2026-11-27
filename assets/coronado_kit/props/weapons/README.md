@@ -14,10 +14,10 @@ a light game model. All generic: no maker's names, logos or part-for-part copies
 | `prop_shotgun_sawn_*` | the same shotgun cut down: short barrel and tube, stock cut to a rough grip | 344 (1,200) | 50 cm |
 | `prop_smg_*` | compact 9 mm sub-machine gun, magazine ahead of the grip, collapsed wire stock | 448 (1,200) | 45 cm |
 | `prop_bat_*` | wooden baseball bat, taped handle, stained barrel | 240 (300) | 84 cm |
-| `prop_knife_*` | fixed-blade utility knife, satin blade, rubber handle | 176 (300) | 24 cm |
+| `prop_knife_*` | fixed-blade utility knife, satin blade, rubber handle | 172 (300) | 24 cm |
 | `prop_golf_club_*` | 7-iron, chrome shaft, rubber grip | 170 (300) | 99 cm |
 | `prop_crowbar_*` | hex wrecking bar, red paint worn to steel | 140 (300) | 55 cm |
-| `prop_molotov_*` | amber bottle, torn label, rag in the neck (the flame is a game effect) | 204 (300) | 27 cm |
+| `prop_molotov_*` | amber bottle, aged printed label, rag in the neck (the flame is a game effect) | 204 (300) | 27 cm |
 
 Budgets are the kit's prop classes (SPEC.md section 4): handguns small (600), long guns medium (1,200), melee and
 thrown tiny (300). Everything is well inside, so a weapon held right in front of the camera stays cheap.

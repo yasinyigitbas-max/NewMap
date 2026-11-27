@@ -608,7 +608,7 @@ def molotov(hi):
         hp = [(0, 0)] + catmull(bp[1:-1], 3) + [(0.238, 0)]
         b = lathe('bottle', hp, seg, 'glass_amb', p0)
         lab = lathe('label', [(0.030, 0.0330), (0.0302, 0.0340), (0.0948, 0.0340), (0.095, 0.0330)], seg, 'label', p0)
-                ink = lathe('ink', [(0.052, 0.0338), (0.0522, 0.0343), (0.0698, 0.0343), (0.070, 0.0338)], seg, 'label_ink', p0)
+        ink = lathe('ink', [(0.052, 0.0338), (0.0522, 0.0343), (0.0698, 0.0343), (0.070, 0.0338)], seg, 'label_ink', p0)
         parts += [b, lab, ink]
     else:
         parts.append(lathe('bottle', [bp[0], bp[1], bp[3], bp[4], bp[5], bp[6], bp[8], bp[9], bp[11]], seg, 'glass_amb', p0))
@@ -667,5 +667,5 @@ WEAPONS = {
                     note='60 cm hex wrecking bar, red paint worn to steel'),
     'molotov': dict(build=molotov, kind='thrown', cls='tiny', budget=300, hold='throwable',
                     grips={'grip_r': (0, 0, 0)},
-                    note='amber glass bottle with a torn label and a rag in the neck (the flame is a game effect)'),
+                    note='amber glass bottle with an aged printed label and a rag in the neck (the flame is a game effect)'),
 }
