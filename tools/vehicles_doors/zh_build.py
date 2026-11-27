@@ -30,7 +30,7 @@ def log(*a):
 
 
 DROP = re.compile(r'(suspension|badge|numberplate)', re.I)
-KINDS = [('wheel', re.compile(r'wheel', re.I), 4 * 1100),   # (the wheels keep their own detail: trimmed ones baked white stripes)
+KINDS = [('wheel', re.compile(r'wheel', re.I), 4 * 500),    # (~500 a wheel: at 300 the trimmed tyre cut 3-6 cm inside the real one and baked white stripes)
          ('under', re.compile(r'bottom', re.I), 900),
          ('interior', re.compile(r'interior|steering', re.I), 1000),
          ('lights', re.compile(r'lightbar|headlights_glass|taillights|light|blinker|reverse', re.I), 450),
@@ -379,6 +379,14 @@ for i, o in enumerate(wheel_objs):
     r = max(hi_w.y - lo_w.y, hi_w.z - lo_w.z) / 2
     info['tris']['w%d' % i] = dump(o, '%s_w%d' % (ID, i), origin=c)
     info['wheels'].append({'center': list(meshio.b2g(c)), 'radius': r})
+    # the light tier's wheel (22-85 m): the same wheel reduced to ~120 triangles, its UVs (and so its bake) kept
+    lw = dup(o)
+    t = tris(lw)
+    if t > 120:
+        m = lw.modifiers.new('dec', 'DECIMATE'); m.decimate_type = 'COLLAPSE'; m.ratio = 120 / t; m.use_collapse_triangulate = True
+        with bpy.context.temp_override(object=lw, active_object=lw):
+            bpy.ops.object.modifier_apply(modifier=m.name)
+    info['tris']['w%d_lo' % i] = dump(lw, '%s_w%d_lo' % (ID, i), origin=c)
 lo, hi_b = bounds(lows)
 info['size_godot'] = [hi_b.x - lo.x, hi_b.z - lo.z, hi_b.y - lo.y]
 info['paint_materials'] = PAINT

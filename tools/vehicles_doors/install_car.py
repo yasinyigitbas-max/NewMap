@@ -42,7 +42,8 @@ def pack(src, name, extra=()):
 j, B, I = meshio.read(os.path.join(G, ID + '_body'))
 rows = [B]
 for k, w in enumerate(info['wheels']):
-    _, W, _ = meshio.read(os.path.join(G, '%s_w%d' % (ID, k)))
+    lo = os.path.join(G, '%s_w%d_lo' % (ID, k))     # (the light tier: the ~120-triangle wheels when the build made them)
+    _, W, _ = meshio.read(lo if os.path.exists(lo + '.json') else os.path.join(G, '%s_w%d' % (ID, k)))
     W = W.copy(); W[:, 0:3] += np.array(w['center'], np.float32)
     rows.append(W)
 Q = np.concatenate(rows)
