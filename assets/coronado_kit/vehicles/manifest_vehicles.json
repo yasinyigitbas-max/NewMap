@@ -1980,6 +1980,199 @@
   "res": 1024,
   "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
  },
+ "taxi": {
+  "name": "taxi",
+  "cls": "service",
+  "note": "yellow taxi on the saloon, roof sign, checker band",
+  "tris": 4100,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_r_l": 112,
+   "door_r_r": 112,
+   "bonnet": 428,
+   "boot": 104,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "glass_rear": 80,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 788,
+   "steering_wheel": 124,
+   "body": 660,
+   "roof_sign": 12
+  },
+  "pivots": {
+   "door_f_l": [
+    1.11,
+    0.85,
+    0.9288
+   ],
+   "door_f_r": [
+    -1.11,
+    0.85,
+    0.9288
+   ],
+   "door_r_l": [
+    0.91,
+    0.85,
+    -0.4112
+   ],
+   "door_r_r": [
+    -0.91,
+    0.85,
+    -0.4112
+   ],
+   "bonnet": [
+    0.0,
+    0.952,
+    0.945
+   ],
+   "boot": [
+    0.0,
+    1.012,
+    -1.8604
+   ],
+   "bumper_f": [
+    0.0,
+    0.501,
+    2.3625
+   ],
+   "bumper_r": [
+    0.0,
+    0.596,
+    -2.3575
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "glass_rear": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.705,
+    0.33,
+    1.425
+   ],
+   "wheel_fr": [
+    -0.705,
+    0.33,
+    1.425
+   ],
+   "wheel_rl": [
+    0.705,
+    0.33,
+    -1.375
+   ],
+   "wheel_rr": [
+    -0.705,
+    0.33,
+    -1.375
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.3631,
+    0.92,
+    0.3688
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "roof_sign": [
+    0.0,
+    1.47,
+    -0.1077
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.3631,
+    0.56,
+    -0.0812
+   ],
+   "seat_fr": [
+    -0.3631,
+    0.56,
+    -0.0812
+   ],
+   "seat_rl": [
+    0.344,
+    0.59,
+    -0.9312
+   ],
+   "seat_rr": [
+    -0.344,
+    0.59,
+    -0.9312
+   ],
+   "entry_l": [
+    1.36,
+    0.0,
+    0.0488
+   ],
+   "head_l": [
+    0.6552,
+    0.66,
+    2.355
+   ],
+   "tail_l": [
+    0.6825,
+    0.85,
+    -2.365
+   ],
+   "entry_r": [
+    -1.36,
+    0.0,
+    0.0488
+   ],
+   "head_r": [
+    -0.6552,
+    0.66,
+    2.355
+   ],
+   "tail_r": [
+    -0.6825,
+    0.85,
+    -2.365
+   ],
+   "exhaust": [
+    -0.5005,
+    0.28,
+    -2.355
+   ]
+  },
+  "axles": [
+   1.425,
+   -1.375
+  ],
+  "wheel_r": 0.33,
+  "size": [
+   2.22,
+   4.75,
+   1.642
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
  "wagon": {
   "name": "wagon",
   "cls": "saloon",
