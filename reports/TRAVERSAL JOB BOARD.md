@@ -51,6 +51,40 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
 - [ ] 11. The phone pass of every stage (the study: "Phone testing of each stage follows the desktop pass"). Never
       done for any stage. (The Redmi run comes last.)
 
+## EVERYTHING IN C++ (27 Nov, his ground rule; this comes before the NPC list below)
+
+His words: "gdscript translation really adds up over time and costs a lot, make it m c plus plus"; "writing every
+code in c plus plus was a ground rule in the first place. make all the code c plus plus and make god damn sure
+nothing ever breaks". So: the player's movement AND the NPCs', all of `traversal_lab/traversal/` that runs in a tick,
+goes to C++ in the native module (`native/src`). Tests and tool-time scripts may stay scripts.
+
+How nothing breaks (the rules of the port):
+1. **The script version is the reference and is not touched or deleted.** It stands at checkpoint 3 (edf508d0) plus
+   the NPC commits (to dd0d211b). It stays the default until he has play-tested the C++ version and says so.
+2. **One layer at a time, in the study's build order,** each proven before the next starts: (a) the body (stage 1);
+   (b) detection (stage 7); (c) the character: the animation tree, the gait, the corrections (feet, hands, trunk,
+   arms, fingers); (d) the traversal moves (stages 8 to 18); (e) doors, sitting, the phone, the car, cover; (f) the
+   NPC fitting. A layer is a translation, line for line: no behaviour is changed, no number is changed, nothing is
+   "improved" on the way.
+3. **Proof of a layer = three things, all read after the runs:** (i) a parity test: the same recorded input run on
+   the script and on the C++ version, compared tick by tick (the body's place, speed and state; later every bone);
+   (ii) every stage test passes with the C++ layer switched in; (iii) the audit on it is 26 of 114, the same lines.
+4. **A switch, not a swap:** the lab starts on the script; `-- --native` switches the proven C++ layers in. The
+   default changes only at his word, after his play-test.
+5. **Where it is built:** the cloud builds a Linux library to run the tests (godot-cpp branch 4.5 at 27d9dd2, the
+   same commit `native/build.sh` uses, in `OUT/native_tools/`, not in git). The Windows exe he play-tests needs the
+   Windows library: built in the cloud if the cross compiler can be had there, else on his PC with `native/build.sh`.
+
+- [ ] 0. The toolchain: godot-cpp for Linux built in the cloud; one empty C++ class loaded by the lab; the Windows
+      library question settled.
+- [ ] a. The body in C++, with its parity test.
+- [ ] b. Detection.
+- [ ] c. The character and its corrections.
+- [ ] d. The traversal moves.
+- [ ] e. Doors, sitting, the phone, the car, cover.
+- [ ] f. The NPC fitting.
+- [ ] His play-test of the C++ version; then, at his word, C++ becomes the default.
+
 ## NPCs (27 Nov, started at his word; the ragdolls still wait for his go)
 
 His words: "i need this system to apply to every npc"; "i dont think all the npcs need the full move set, they just
