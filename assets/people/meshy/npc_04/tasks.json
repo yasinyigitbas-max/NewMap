@@ -1,0 +1,42 @@
+{
+ "i2i.json": {
+  "id": "01a21cee-91c3-7323-81f4-13c566ce1e61",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795781727727,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT person, front view, on the same plain grey background. Keep exactly the same pose, the same framing and the same lighting, the head at the same place at the top of the frame and the feet at the same place at the bottom. The new person is an ordinary woman of about 35, noticeably shorter and smaller than the man in the picture, with a natural adult female build of average weight, shoulder-length dark brown hair tied back in a low ponytail, no tattoos. She wears a plain mustard-yellow short-sleeved t-shirt that fits close to her body with short sleeves that fit close round her upper arms, straight-legged dark blue jeans that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain white sneakers with no logos. Her arms are raised higher than in the picture: fully horizontal at shoulder height, so that both arms form one straight horizontal line from hand to hand, with a wide clear gap of background visible between each arm and her body and under each armpit. The person stands upright in a T-pose with both arms held straight out horizontally to the sides, palms down, fingers apart, feet shoulder-width apart, legs straight and apart so that the legs do not touch, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21cee-fb1f-7608-9d09-61e16c956e25",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795781754437,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true,
+   "target_formats": [
+    "glb"
+   ]
+  }
+ },
+ "rig.json": {
+  "id": "01a21cf0-16fd-70ed-bf8d-922da29df894",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795781830233,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.62,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}
