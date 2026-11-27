@@ -1,0 +1,138 @@
+{
+  "bag_paper_grocery": {
+    "hold": "one_hand_hang",
+    "size": [
+      0.36,
+      0.487,
+      0.248
+    ]
+  },
+  "bag_plastic_thankyou": {
+    "hold": "one_hand_hang",
+    "size": [
+      0.296,
+      0.495,
+      0.167
+    ]
+  },
+  "bat": {
+    "hold": "two_hand_swing",
+    "size": [
+      0.067,
+      0.064,
+      0.838
+    ]
+  },
+  "box_moving": {
+    "hold": "two_hand_sides",
+    "size": [
+      0.452,
+      0.352,
+      0.351
+    ]
+  },
+  "box_ship_small": {
+    "hold": "two_hand_sides",
+    "size": [
+      0.302,
+      0.162,
+      0.22
+    ]
+  },
+  "briefcase_aluminium": {
+    "hold": "one_hand_hang",
+    "size": [
+      0.468,
+      0.388,
+      0.138
+    ]
+  },
+  "briefcase_leather": {
+    "hold": "one_hand_hang",
+    "size": [
+      0.443,
+      0.379,
+      0.122
+    ]
+  },
+  "crowbar": {
+    "hold": "one_hand_melee",
+    "size": [
+      0.022,
+      0.109,
+      0.554
+    ]
+  },
+  "golf_club": {
+    "hold": "two_hand_swing",
+    "size": [
+      0.094,
+      0.042,
+      0.993
+    ]
+  },
+  "knife": {
+    "hold": "one_hand_melee",
+    "size": [
+      0.018,
+      0.032,
+      0.241
+    ]
+  },
+  "molotov": {
+    "hold": "throwable",
+    "size": [
+      0.071,
+      0.067,
+      0.267
+    ]
+  },
+  "pistol_polymer": {
+    "hold": "pistol",
+    "size": [
+      0.03,
+      0.131,
+      0.203
+    ]
+  },
+  "pistol_service": {
+    "hold": "pistol",
+    "size": [
+      0.036,
+      0.137,
+      0.224
+    ]
+  },
+  "rifle": {
+    "hold": "rifle",
+    "size": [
+      0.049,
+      0.29,
+      0.915
+    ]
+  },
+  "shotgun": {
+    "hold": "rifle",
+    "size": [
+      0.046,
+      0.202,
+      1.0
+    ]
+  },
+  "shotgun_sawn": {
+    "hold": "pistol_two_hand",
+    "size": [
+      0.046,
+      0.143,
+      0.497
+    ]
+  },
+  "smg": {
+    "hold": "rifle",
+    "size": [
+      0.054,
+      0.274,
+      0.454
+    ]
+  }
+}
