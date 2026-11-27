@@ -1949,7 +1949,7 @@ func _run() -> void:
 	print("BAKE routed %d pieces in %d ms: %s" % [k, Time.get_ticks_msec() - t0, str(stat)])
 	if not builtin_fail.is_empty():      # (a shop model whose interior, slots or door alignment are missing fails the build)
 		print("BAKE_FAIL built-in interiors: %d problems\n  %s" % [builtin_fail.size(), "\n  ".join(builtin_fail)]); quit(1); return
-	var routed: int = stat.merged + stat.instanced + stat.pass + stat.far + stat.far_dropped + stat.skipped_cell
+	var routed: int = stat.merged + stat.instanced + stat.pass + stat.far + stat.far_dropped + stat.skipped_cell + int(stat.get("brk", 0))      # (brk: the breakable props kept whole, B9)
 	print("BAKE check props in=%d routed=%d %s" % [stat.props_in, routed, "OK" if routed >= stat.props_in else "MISMATCH"])
 	if no_trees: print("BAKE trees out: %d trees and palms left out (%d trunk colliders), %d wells paved over, %d wells left open (odd shape or a bed)" % [int(stat.trees_out), int(stat.tree_cols_out), int(stat.wells_filled), int(stat.wells_left)])
 	# pass 2 needs the meshes again: reload pieces lazily through the cached PackedScenes (the Mesh objects are kept alive by the records)
