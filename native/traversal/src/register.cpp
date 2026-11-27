@@ -4,6 +4,8 @@
 // reference; a layer is a line-for-line translation and replaces nothing until it gives the same numbers.
 #include "trav_body.h"
 #include "trav_detector.h"
+#include "trav_hand_place.h"
+#include "trav_mods.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/class_db.hpp>
@@ -18,6 +20,12 @@ static void trav_init(ModuleInitializationLevel p_level) {
 	}
 	GDREGISTER_CLASS(TravBody);
 	GDREGISTER_CLASS(TravDetector);
+	GDREGISTER_CLASS(TravArmOpen);
+	GDREGISTER_CLASS(TravTrunkTurn);
+	GDREGISTER_CLASS(TravHandHold);
+	GDREGISTER_CLASS(TravFootOrient);
+	GDREGISTER_CLASS(TravFingerGrip);
+	GDREGISTER_CLASS(TravHandPlace);
 }
 
 static void trav_term(ModuleInitializationLevel p_level) {}

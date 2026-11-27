@@ -87,7 +87,11 @@ How nothing breaks (the rules of the port):
       26 of 114, the same lines. For the next layers: add that layer's numbers to `tests/parity_run.gd`.
 - [x] b. (trav88) Detection in C++ (`trav_detector.*`): about 146,000 records the same as the script byte for byte;
       every stage test and the audit the same with `-- --native`.
-- [ ] c. The character and its corrections.
+- [ ] c. The character and its corrections. DONE (trav89): arm_open, trunk_turn, hand_hold, foot_orient, finger_grip
+      (`trav_mods.*`) and hand_place (`trav_hand_place.*`), every bone the same as the script over 121,600 ticks.
+      LEFT: foot_place.gd (439 lines), feet.gd, then character.gd itself (the animation tree, the gait, the acts,
+      the phone; 1,570 lines), then npc/body_fit.gd and npc_character.gd. Each is switched in by `_made()` in
+      character.gd; add its numbers to `tests/parity_run.gd` if the pose number does not already cover it.
 - [ ] d. The traversal moves.
 - [ ] e. Doors, sitting, the phone, the car, cover.
 - [ ] f. The NPC fitting.
@@ -118,6 +122,8 @@ to get in and out of cars". Order agreed: the fitting first, then the recipe fix
 - [x] (trav84) the fitting: hips at the height their legs need, their own stride, seated at the seat.
 - [ ] a civilian test of their own (`tests/` for NPC bodies; today the player's tests are run on them and some lines
       hold them to the player's size).
+- [x] (trav89) the second cast: 34 more bodies (npc_18 to npc_51), 1,394 Meshy credits of the 1,500 he allowed. 50
+      NPC bodies in all. About 660 credits left on 27 Nov.
 - [x] (trav85, trav86) the cast: twelve more bodies (npc_05 to npc_16) and a second elderly woman (npc_17); who each
       is: `assets/people/meshy/cast.json`. 57 Meshy credits left on 27 Nov (one more body); they reset on 23 Dec.
 - [ ] five bodies got no finger bones from Meshy though asked (npc_07, 08, 09, 11, 14, 17): their hands move as one

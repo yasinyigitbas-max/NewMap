@@ -396,7 +396,7 @@ func _ready() -> void:
 		feet.set(&"target", targets)
 		feet.set(&"pole", poles)
 		_leg_ik = ik
-		_orient = FootOrient.new()
+		_orient = _made(&"TravFootOrient", FootOrient)
 		_orient.name = "FootOrient"
 		_orient.set(&"place", feet)
 		skel.add_child(_orient)
@@ -432,17 +432,17 @@ func _ready() -> void:
 		else:
 			_phone_box_l = box
 	skel.skeleton_updated.connect(_place_phones)
-	_trunk = TrunkTurn.new()
+	_trunk = _made(&"TravTrunkTurn", TrunkTurn)
 	_trunk.name = "TrunkTurn"
 	skel.add_child(_trunk)
-	var arms: SkeletonModifier3D = ArmOpen.new()
+	var arms: SkeletonModifier3D = _made(&"TravArmOpen", ArmOpen)
 	arms.name = "ArmOpen"
 	arms.set(&"open_deg", arm_open_deg)
 	skel.add_child(arms)
 	_arms = arms
 	if body:
 		# after the legs, the arms (the study's order), here for the takes that put hands on the ground
-		hands = HandPlace.new()
+		hands = _made(&"TravHandPlace", HandPlace)
 		hands.name = "HandPlace"
 		hands.set(&"body", body)
 		hands.set(&"refit", _phone_refit)
@@ -475,18 +475,27 @@ func _ready() -> void:
 		hands.set(&"target", h_targets)
 		hands.set(&"pole", h_poles)
 		hands.set(&"ik", h_ik)
-		var hand_hold: SkeletonModifier3D = HandHold.new()
+		var hand_hold: SkeletonModifier3D = _made(&"TravHandHold", HandHold)
 		hand_hold.name = "HandHold"
 		hand_hold.set(&"place", hands)
 		skel.add_child(hand_hold)       # (after the two arm IKs, which were added in the loop above)
 		feet.set(&"hands", hands)
 	# after the arms: his fingers, closed round what he holds (the phone)
-	_grip = FingerGrip.new()
+	_grip = _made(&"TravFingerGrip", FingerGrip)
 	_grip.name = "FingerGrip"
 	skel.add_child(_grip)
 	if body:
 		body.connect(&"jump_started", _on_jump_started)
 		body.connect(&"landed", _on_landed)
+
+
+## A correction: its script, or with `-- --native` its translation to C++ (native/traversal) where the library has
+## been built and has it. The script is the default until Yasin has play-tested the C++ version (27 Nov: "make all
+## the code c plus plus and make god damn sure nothing ever breaks").
+func _made(native: StringName, script: GDScript) -> SkeletonModifier3D:
+	if "--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(native):
+		return ClassDB.instantiate(native)
+	return script.new()
 
 
 ## The tree: standing and the gait loops, and beside them one input for each clip that code plays by its own clock.

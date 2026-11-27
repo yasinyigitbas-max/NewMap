@@ -3,6 +3,24 @@ extends SceneTree
 ## Run by tools/traversal/parity.sh, which runs both and compares them. (The rules of the C++ port: reports/TRAVERSAL
 ## JOB BOARD.md. A layer is proven when the two files are the same, byte for byte.)
 var lab: Node3D
+var _skel: Skeleton3D
+var _joints: Array[Vector3] = [Vector3.ZERO, Vector3.ZERO, Vector3.ZERO, Vector3.ZERO, Vector3.ZERO, Vector3.ZERO]
+var _pose_hash := 0
+const JOINTS := ["Hips", "Head", "LeftHand", "RightHand", "LeftFoot", "RightFoot"]
+
+
+func _pose_done() -> void:
+	for i in JOINTS.size():
+		_joints[i] = _skel.get_bone_global_pose(_skel.find_bone("mixamorig_" + JOINTS[i])).origin
+	var all := PackedFloat32Array()
+	for b in _skel.get_bone_count():
+		var g := _skel.get_bone_global_pose(b)
+		all.append(g.origin.x); all.append(g.origin.y); all.append(g.origin.z)
+		for c in 3:
+			var col := g.basis[c]
+			all.append(col.x); all.append(col.y); all.append(col.z)
+	_pose_hash = hash(all.to_byte_array())
+
 var body: CharacterBody3D
 var tape: Node
 func _initialize() -> void:
@@ -28,6 +46,11 @@ func _run() -> void:
 	var det: RefCounted = ClassDB.instantiate(&"TravDetector") if ("--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(&"TravDetector")) else (load("res://traversal/detect/detector.gd") as GDScript).new()
 	det.set(&"body", body)
 	print("detector is ", det.get_class(), "  script: ", det.get_script() != null)
+	# the finished pose of every bone, each tick (it can only be read when the skeleton says it is finished)
+	var chr: Node = lab.get(&"character")
+	if chr != null and chr.get(&"skel") != null:
+		_skel = chr.get(&"skel")
+		_skel.skeleton_updated.connect(_pose_done)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_n
 	var st: Array = ((lab.get(&"course") as Node3D).get(&"stations") as Array) + ((lab.get(&"course") as Node3D).get(&"extras") as Array)
@@ -89,6 +112,10 @@ func _run() -> void:
 				_add(line, det.call(&"measure", way))
 				_add(line, det.call(&"measure_edge", way))
 			line.append(1.0 if bool(det.call(&"_fits", body.global_position + Vector3(0.3, 0.0, 0.0), 1.80)) else 0.0)
+		# six joints as they are, and one number made of every bone's place and turn (the same number = the same pose)
+		for v3: Vector3 in _joints:
+			line.append(v3.x); line.append(v3.y); line.append(v3.z)
+		line.append(float(_pose_hash & 0xFFFFFF)); line.append(float((_pose_hash >> 24) & 0xFFFFFF))
 		f.store_var(line)
 		if keys["jump"] and hold < 5:
 			keys["jump"] = false
