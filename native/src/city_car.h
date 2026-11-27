@@ -66,6 +66,21 @@ class CityCar : public RigidBody3D {
 	Vector3 hub_local[4];        // the hubs at rest, node frame
 	// THE DRIVER'S DOOR (the car's left, +x): its part of the body, from the front-left wheel and the model's size; how far open
 	Vector3 door_lo, door_hi; Vector2 door_hinge; float door = 0.0f;
+	// REAL DOORS (27 Nov, Yasin: "make the doors off the existing cars truly openable"): a model whose body was cut by
+	// tools/vehicles_doors (its mesh has the meta "doors", and <id>_q_door_l / _r.res exist) has its two front doors as
+	// meshes of their own, each on its hinge (its node's origin), swung by set_door / set_door_right; the shader's door
+	// (door_open) is then off. Its glass shows the parallax cabin (car_paint.gdshader cabin_*), and an open door shows
+	// the cabin box (vehicles/cabin_box.gdshader), drawn only while a door is open.
+	bool real_doors = false;
+	MeshInstance3D *door_vis[2] = { nullptr, nullptr };   // 0 the driver's (left, +x), 1 the passenger's (right)
+	Ref<ShaderMaterial> mat_door[2];
+	Vector3 door_pivot[2];
+	float door_max_a[2] = { 1.19f, 1.19f };
+	float door_rv = 0.0f;                                  // the passenger's door, 0 shut .. 1 open
+	MeshInstance3D *cabin_vis = nullptr;
+	Ref<ShaderMaterial> mat_cabin;
+	void door_pose();
+	void fit_doors(const Ref<Mesh> &p_body, const String &p_base);
 	// GETTING IN AND OUT (city_car_door.cpp): the driver figure and where it is in the sequence
 	enum { DR_NONE, DR_WALK, DR_FACE, DR_OPEN_IN, DR_SIT_IN, DR_TURN_IN, DR_CLOSE_IN, DR_SEATED, DR_OPEN_OUT, DR_TURN_OUT, DR_STAND_OUT, DR_CLOSE_OUT, DR_MX_IN, DR_MX_OUT };
 	// (Yasin, 21 Nov: "make player get in out animations too") Mixamo's Entering_Car and Exiting_Car, each one clip: the root
@@ -151,6 +166,9 @@ public:
 	// the player gets in (the wheel, the pedals and the chase camera are his) / out (the handbrake on, its camera off)
 	void take_wheel(bool p_on);
 	void set_door(float p_open);   // 0 shut .. 1 open
+	void set_door_right(float p_open);   // the passenger's door (cars with real doors), 0 shut .. 1 open
+	float get_door_right() const { return door_rv; }
+	bool has_real_doors() const { return real_doors; }
 	bool enter(CityPlayer *p_player);   // he walks to the door, opens it, sits in, closes it: then the wheel is his
 	bool leave();                       // stopped: the door opens, he gets out, stands by it as the player
 	bool enter_node(Node3D *p_player);

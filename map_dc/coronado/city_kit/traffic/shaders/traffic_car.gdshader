@@ -25,6 +25,11 @@ uniform sampler2D car_orm : hint_default_white, filter_linear_mipmap;
 uniform sampler2D albedo_map : source_color, filter_linear_mipmap;
 uniform sampler2D orm_map : hint_default_white, filter_linear_mipmap;
 uniform float parked_cut = 35.0;
+// (28 Nov, Yasin: "spin the far wheels in the shader") the light model's wheels: vertices with UV2.x = 10 + k belong to
+// wheel k (tools/vehicles_doors/install_car.py), turned about its hub by the row's custom x (roll, rad) and, the front
+// ones, about the vertical by custom y (steer, rad, + = left). No wheel batch, no extra draw
+uniform bool wheel_spin = false;
+uniform vec4 wheel_hub[4];
 
 // B6 (Yasin 20 Nov: "everything inluding cars and trees snap in lod tiers"): a car crossing from one model to the next is
 // drawn by both batches for a few metres, each keeping the pixels of a complementary 4x4 dither (CityTraffic sets the row
@@ -46,6 +51,18 @@ void ck_fade_discard(float fa, vec2 frag) {
 }
 
 void vertex() {
+	if (wheel_spin && UV2.x > 9.5 && UV2.x < 13.5) {
+		int k = clamp(int(UV2.x - 9.5), 0, 3);
+		vec3 hub = wheel_hub[k].xyz;
+		float a = INSTANCE_CUSTOM.x, st = hub.z > 0.0 ? INSTANCE_CUSTOM.y : 0.0;
+		float ca = cos(a), sa = sin(a), cs = cos(st), ss = sin(st);
+		// roll about the axle (x): the top goes forward (+z); then the steer about up (y): + turns the front to the left (+x)
+		mat3 roll = mat3(vec3(1.0, 0.0, 0.0), vec3(0.0, ca, sa), vec3(0.0, -sa, ca));
+		mat3 steer = mat3(vec3(cs, 0.0, -ss), vec3(0.0, 1.0, 0.0), vec3(ss, 0.0, cs));
+		mat3 m = steer * roll;
+		VERTEX = hub + m * (VERTEX - hub);
+		NORMAL = m * NORMAL; TANGENT = m * TANGENT; BINORMAL = m * BINORMAL;
+	}
 	// (the main camera's place, also in the shadow passes, as the bake's tier shaders take it)
 	v_fade = COLOR.a;
 	if (INSTANCE_CUSTOM.w > 0.5) {   // a parked car: this (the light model) nearer than parked_cut, fading out over PARK_BAND

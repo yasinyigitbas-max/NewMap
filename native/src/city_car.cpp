@@ -1,6 +1,8 @@
 // CityCar: see city_car.h.
 #include "perf_marks.h"
 #include "city_car.h"
+#include <godot_cpp/classes/box_mesh.hpp>
+#include <godot_cpp/classes/geometry_instance3d.hpp>
 #include "city_crowd.h"
 #include "engine_sound.h"
 #include "ui_plate.h"
@@ -201,6 +203,7 @@ void CityCar::fit() {
 		if (mat.is_valid()) { mat->set_shader_parameter("door_lo", door_lo); mat->set_shader_parameter("door_hi", door_hi); mat->set_shader_parameter("door_hinge", door_hinge); }
 		set_door(0.0f);
 	}
+	fit_doors(body_mesh, base);
 	// the hull the dents are placed on: the drawn body
 	if (body_mesh.is_valid()) { const AABB a = body_mesh->get_aabb(); if (a.size.length() > 1.0f) hull = a; }
 	base_torque = car.s.torque;
@@ -225,10 +228,25 @@ void CityCar::set_car_maps() {
 	const String t = cartex_id(cm::MODELS[std::min(std::max(model, 0), cm::N_MODELS - 1)].id);
 	ResourceLoader *rl = ResourceLoader::get_singleton();
 	const Ref<Mesh> bm = mi_body->get_mesh();
+	// (27 Nov) a car rebuilt from its original with ONE material (tools/vehicles_doors/zh_build.py: the mesh's meta "vtex"):
+	// its own colour (alpha = paint / glass mask), normal and ORM maps, map_mode 1
+	const bool vt = bm.is_valid() && bm->has_meta("vtex") && rl->exists(base + t + String("_veh_albedo.png"));
+	if (vt) {
+		for (Ref<ShaderMaterial> m : { mat, mat_wheel }) {
+			if (m.is_null()) continue;
+			m->set_shader_parameter("map_mode", 1);
+			m->set_shader_parameter("use_maps", true);
+			m->set_shader_parameter("albedo_map", rl->load(base + t + String("_veh_albedo.png")));
+			m->set_shader_parameter("normal_map", rl->load(base + t + String("_veh_normal.png")));
+			m->set_shader_parameter("orm_map", rl->load(base + t + String("_veh_orm.png")));
+		}
+		return;
+	}
 	const bool ok = rl->exists(base + t + String("_car_normal.png")) && bm.is_valid() && bm->has_meta("cartex");
 	for (Ref<ShaderMaterial> m : { mat, mat_wheel }) {
 		if (m.is_null()) continue;
 		m->set_shader_parameter("map_mode", ok ? 2 : 0);
+		m->set_shader_parameter("use_maps", false);
 		if (!ok) continue;
 		m->set_shader_parameter("trim_albedo", rl->load(base + String("trim_albedo.png")));
 		m->set_shader_parameter("trim_normal", rl->load(base + String("trim_normal.png")));
@@ -348,7 +366,8 @@ void CityCar::crash_sound(float p_sev) {
 
 String CityCar::engine_class_for(int p_model) {
 	const std::string id = cm::MODELS[std::min(std::max(p_model, 0), cm::N_MODELS - 1)].id;
-	if (id.rfind("bus", 0) == 0 || id == "van" || id == "sakura_t") return "diesel";
+	if (id.rfind("bus", 0) == 0 || id.rfind("van", 0) == 0 || id == "sakura_t" || id == "ambulance" || id == "utility" || id == "tow" || id == "flatbed") return "diesel";
+	if (id.rfind("police", 0) == 0) return "v8";
 	if (id.rfind("fiamma", 0) == 0) return "v8";
 	if (id.rfind("volt", 0) == 0 || id == "stern_e") return "ev";
 	if (id == "sakura") return "compact";
@@ -358,7 +377,9 @@ String CityCar::engine_class_for(int p_model) {
 const char *CityCar::sound_class(bool p_horn) const {
 	const std::string id = cm::MODELS[std::min(std::max(model, 0), cm::N_MODELS - 1)].id;
 	if (id.rfind("bus", 0) == 0) return p_horn ? "bus" : "diesel";
-	if (id == "van") return p_horn ? "van" : "diesel";
+	if (id.rfind("van", 0) == 0 || id == "ambulance") return p_horn ? "van" : "diesel";
+	if (id == "utility" || id == "tow" || id == "flatbed") return p_horn ? "van" : "diesel";
+	if (id.rfind("police", 0) == 0) return p_horn ? "sedan" : "v8";
 	if (id.rfind("fiamma", 0) == 0) return p_horn ? "sport" : "v8";
 	if (id.rfind("volt", 0) == 0 || id == "stern_e") return p_horn ? (id == "volt_s" ? "compact" : "sedan") : "ev";
 	if (id == "sakura") return "compact";
@@ -463,7 +484,107 @@ void CityCar::set_door(float p_open) {
 	door = std::min(std::max(p_open, 0.0f), 1.0f);
 	if (!door_was_open && door > 0.04f) { door_was_open = true; elsfx::play(this, "res://audio/sfx/car/car_door_open_", -4.0f, 0.04f, Vector3(0.9f, 0.9f, 0.3f), 25.0f); }
 	else if (door_was_open && door < 0.02f) { door_was_open = false; elsfx::play(this, "res://audio/sfx/car/car_door_close_", -2.0f, 0.04f, Vector3(0.9f, 0.9f, 0.3f), 35.0f); }
+	if (real_doors) { door_pose(); return; }
 	if (mat.is_valid()) mat->set_shader_parameter("door_open", door * door * (3.0f - 2.0f * door));
+}
+
+void CityCar::set_door_right(float p_open) {
+	door_rv = std::min(std::max(p_open, 0.0f), 1.0f);
+	if (real_doors) door_pose();
+}
+
+// The two real doors on their hinges (the left one's back edge swings out to +x: a turn of minus the angle about +y), their
+// glass's cabin frame, and the cabin box while either is open.
+void CityCar::door_pose() {
+	const float v[2] = { door, door_rv };
+	for (int i = 0; i < 2; i++) {
+		if (!door_vis[i]) continue;
+		const float e = v[i] * v[i] * (3.0f - 2.0f * v[i]);
+		const float a = (i == 0 ? -1.0f : 1.0f) * e * door_max_a[i];
+		const Transform3D t(Basis(Vector3(0.0f, 1.0f, 0.0f), a), door_pivot[i]);
+		door_vis[i]->set_transform(t);
+		if (mat_door[i].is_valid()) mat_door[i]->set_shader_parameter("cabin_xf", t);
+	}
+	if (cabin_vis) cabin_vis->set_visible(door > 0.01f || door_rv > 0.01f);
+}
+
+// A model with real doors: its door meshes on their hinges, their own copies of the car's material (the glass needs its
+// own cabin frame), the parallax cabin on, the cabin box made. Any other model: none of it, the shader's door as before.
+void CityCar::fit_doors(const Ref<Mesh> &p_body, const String &p_base) {
+	ResourceLoader *rl = ResourceLoader::get_singleton();
+	const String dl = p_base + String("_q_door_l.res"), dr = p_base + String("_q_door_r.res"), cb = p_base + String("_q_body_cut.res");
+	real_doors = false;
+	Dictionary dd;
+	// the body with the door openings cut is its own file (<id>_q_body_cut.res): the traffic keeps drawing the whole body
+	Ref<Mesh> body_cut = (split && rl->exists(cb) && rl->exists(dl) && rl->exists(dr)) ? Ref<Mesh>(rl->load(cb)) : Ref<Mesh>();
+	if (body_cut.is_valid() && body_cut->has_meta("doors")) {
+		dd = body_cut->get_meta("doors");
+		real_doors = dd.has("l") && dd.has("r");
+	}
+	if (real_doors) mi_body->set_mesh(body_cut);
+	const Ref<Mesh> body = real_doors ? body_cut : p_body;
+	Ref<Mesh> dm[2];
+	if (real_doors) { dm[0] = rl->load(dl); dm[1] = rl->load(dr); real_doors = dm[0].is_valid() && dm[1].is_valid(); }
+	const char *key[2] = { "l", "r" };
+	for (int i = 0; i < 2; i++) {
+		if (!real_doors) { if (door_vis[i]) door_vis[i]->set_visible(false); continue; }
+		const Dictionary d = dd[key[i]];
+		door_pivot[i] = d.get("hinge", Vector3());
+		door_max_a[i] = (float)(double)d.get("max_angle_deg", 68.0) * 0.017453293f;
+		if (!door_vis[i]) { door_vis[i] = memnew(MeshInstance3D); add_child(door_vis[i]); }
+		if (mat.is_valid()) { mat_door[i] = mat->duplicate(); door_vis[i]->set_material_override(mat_door[i]); }
+		door_vis[i]->set_mesh(dm[i]);
+		door_vis[i]->set_visible(true);
+	}
+	// the parallax cabin: the glass of the body and of the doors, and the box seen through an open door
+	const String cube = String("res://vehicles/models/cartex/") + cartex_id(cm::MODELS[std::min(std::max(model, 0), cm::N_MODELS - 1)].id) + String("_cabin.png");
+	// (27 Nov, Yasin: "keep opaque glass everywhere ... parallax on the moving cars without people in them will be awkward"):
+	// the parallax cabin stays in the shader but is not switched on; an open door shows the modelled cabin
+	const bool cab = false && real_doors && body->has_meta("cabin") && rl->exists(cube);
+	Vector3 lo, hi;
+	Ref<Texture2D> tex;
+	if (cab) {
+		const Dictionary c = body->get_meta("cabin");
+		lo = c.get("lo", Vector3()); hi = c.get("hi", Vector3());
+		tex = rl->load(cube);
+	}
+	Ref<ShaderMaterial> ms[3] = { mat, mat_door[0], mat_door[1] };
+	for (Ref<ShaderMaterial> m : ms) {
+		if (m.is_null()) continue;
+		m->set_shader_parameter("cabin_on", cab);
+		m->set_shader_parameter("door_open", 0.0f);
+		if (!cab) continue;
+		m->set_shader_parameter("cabin_lo", lo); m->set_shader_parameter("cabin_hi", hi);
+		m->set_shader_parameter("cabin_cube", tex);
+		m->set_shader_parameter("cabin_xf", Transform3D());
+	}
+	// the box behind an open door only for a car whose cabin is a picture; a rebuilt car (meta vtex) has its modelled cabin
+	if (cab && !body->has_meta("vtex")) {
+		if (!cabin_vis) {
+			cabin_vis = memnew(MeshInstance3D);
+			cabin_vis->set_cast_shadows_setting(GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);
+			add_child(cabin_vis);
+			mat_cabin.instantiate();
+			mat_cabin->set_shader(rl->load("res://vehicles/cabin_box.gdshader"));
+			cabin_vis->set_material_override(mat_cabin);
+		}
+		// the model's own cabin hull (<id>_q_cabin.res: from under the dash, along the windscreen, to the rear seat; it fills
+		// the opening right to the hinge), else the plain cabin box
+		const String hull = p_base + String("_q_cabin.res");
+		if (rl->exists(hull)) {
+			cabin_vis->set_mesh(rl->load(hull));
+			cabin_vis->set_position(Vector3());
+			mat_cabin->set_shader_parameter("cabin_lo", lo); mat_cabin->set_shader_parameter("cabin_hi", hi);
+		} else {
+			Ref<BoxMesh> bx; bx.instantiate();
+			bx->set_size(hi - lo);
+			cabin_vis->set_mesh(bx);
+			cabin_vis->set_position((lo + hi) * 0.5f);
+			mat_cabin->set_shader_parameter("cabin_lo", (lo - hi) * 0.5f); mat_cabin->set_shader_parameter("cabin_hi", (hi - lo) * 0.5f);
+		}
+		mat_cabin->set_shader_parameter("cabin_cube", tex);
+	} else if (cabin_vis) { cabin_vis->set_visible(false); cabin_vis->set_mesh(Ref<Mesh>()); }   // (nothing for door_pose to show)
+	if (real_doors) door_pose();
 }
 
 Vector3 CityCar::door_spot() const {
@@ -736,6 +857,9 @@ void CityCar::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("hit", "dv"), &CityCar::hit);
 	ClassDB::bind_method(D_METHOD("take_wheel", "on"), &CityCar::take_wheel);
 	ClassDB::bind_method(D_METHOD("set_door", "open"), &CityCar::set_door);
+	ClassDB::bind_method(D_METHOD("set_door_right", "open"), &CityCar::set_door_right);
+	ClassDB::bind_method(D_METHOD("get_door_right"), &CityCar::get_door_right);
+	ClassDB::bind_method(D_METHOD("has_real_doors"), &CityCar::has_real_doors);
 	ClassDB::bind_method(D_METHOD("enter", "player"), &CityCar::enter_node);
 	ClassDB::bind_method(D_METHOD("leave"), &CityCar::leave);
 	ClassDB::bind_method(D_METHOD("get_entry_state"), &CityCar::get_entry_state);

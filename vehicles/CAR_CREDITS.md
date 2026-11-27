@@ -21,6 +21,27 @@ Traffic, parked and player cars now use these models. They were converted with B
 
 Licence: https://creativecommons.org/licenses/by/4.0/. The table below is the previous (pre-2026-10-24) set, kept for history.
 
+## Rebuilt from the originals with cabins and real doors (27 Nov 2026), CC BY 4.0, credit required
+Yasin (27 Nov): every car gets its cabin and becomes drivable; the doors open. The nine Daniel Zhabotinsky cars above
+were downloaded again from Sketchfab (the same models and licence) and rebuilt by `tools/vehicles_doors/zh_build.py`:
+trimmed to about 6,100 triangles with their modelled cabin kept (underside and suspension reduced, badges and plates
+dropped), everything baked onto ONE material (`vehicles/models/cartex/<id>_veh_albedo / _normal / _orm.png`), the two
+front doors cut out of the body on their real panel lines and hung on hinges (`cut_doors.py`). Changes: trimmed,
+re-textured (baked), doors cut, plates and badges removed, no names. Seven more of his models were added the same way:
+
+| id | in-game | source model | source (URL) | author | licence |
+|---|---|---|---|---|---|
+| police_e | Police cruiser | Illinois '90 Police cruiser - Low poly model | https://sketchfab.com/3d-models/dc81625478a744649b210c7f248b0b6a | Daniel Zhabotinsky | CC BY 4.0 |
+| police_x | Police SUV | Urban '10 Cop Enforcer - Low poly model | https://sketchfab.com/3d-models/745830362bb342128ef6509345606ffe | Daniel Zhabotinsky | CC BY 4.0 |
+| ambulance | Ambulance | Shvan '92 Ambulance - Low Poly model | https://sketchfab.com/3d-models/old-ambulance-van-low-poly-model-2856dd3c61f940909dced9a5c0379484 | Daniel Zhabotinsky | CC BY 4.0 |
+| utility | Utility truck | Lightbody '90 MD Utility - Low poly model | https://sketchfab.com/3d-models/d3aca50a8f2b4917bb9f4ce2bf1ccfe5 | Daniel Zhabotinsky | CC BY 4.0 |
+| tow | Tow truck | Lightbody '90 MD Tow Truck - Low poly model | https://sketchfab.com/3d-models/5cba208001c64e8ea164f89e4dde91e7 | Daniel Zhabotinsky | CC BY 4.0 |
+| flatbed | Flatbed truck | Lightbody '90 MD Flatbed - Low poly model | https://sketchfab.com/3d-models/39195e554c7a41a2884186c10d5079c0 | Daniel Zhabotinsky | CC BY 4.0 |
+| van_custom | Custom van | Shvan 92 Custom - Low poly model | https://sketchfab.com/3d-models/46ebb084bed64843b8311d87fb0459d4 | Daniel Zhabotinsky | CC BY 4.0 |
+
+Licence: https://creativecommons.org/licenses/by/4.0/. The city bus and the midibus are not rebuilt (the city bus model
+has no cabin).
+
 ## Models in the game (previous set)
 Every car is one merged mesh using ONE shared material: `vehicles/car_paint.gdshader` on the 1024 atlas `vehicles/models/Textures/car_atlas.png`, built by `tools/red_gen_car_atlas.py`. The atlas alpha is an area mask (1 = paint, 0.5 = glass with low roughness and a fake sky reflection, 0 = other), so only the body paint takes the per-car random paint colour; glass (dark, slightly blue), lights, trim and tyres keep their own colours.
 The CC0 GLBs were built with Blender 4.5 by `tools/red_build_car_models_blender.py` (sources in `/workspace/sports_dl`; renames parts generically, centres each car with the front at +Z, bakes flat material colours into swatch cells, decimates to mobile budget).

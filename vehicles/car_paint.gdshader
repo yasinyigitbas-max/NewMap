@@ -73,6 +73,43 @@ vec3 env_at(vec3 dw, float lod) {
 	vec3 n = textureLod(env_pano, vec2(u, v + 0.5), lod).rgb * 0.45;   // night: lamp-lit street, dimmer
 	return mix(n, d, clamp(refl_env.x, 0.0, 1.0));
 }
+// THE CABIN BEHIND THE GLASS (Yasin, 27 Nov: "we don't have a real cabin ... make it look like it exists with some parallax
+// effect"): interior mapping. A glass pixel follows the view ray into the cabin box (cabin_lo .. cabin_hi, the body's mesh
+// frame) to where it leaves the box, and shows the cabin picture there: cabin_cube = six 90-degree views from the box
+// centre, packed 3 x 2 (+X -X +Y / -Y +Z -Z; tools/vehicles_doors/cabin_cube.py renders it). The picture shifts with the
+// camera as a real cabin would. cabin_xf takes this mesh's frame to the body's (identity on the body; a door's own
+// hinge transform on a door, kept up to date by CityCar as it swings). Off (cabin_on = false): the old tinted glass.
+uniform bool cabin_on = false;
+uniform vec3 cabin_lo = vec3(-0.7, 0.35, -1.0);
+uniform vec3 cabin_hi = vec3(0.7, 1.2, 0.3);
+uniform mat4 cabin_xf = mat4(1.0);
+uniform sampler2D cabin_cube : source_color, filter_linear, repeat_disable;
+uniform float cabin_tint = 0.62;   // how much of the cabin the tinted glass lets through
+varying vec3 v_cp;                 // this pixel, cabin frame
+varying vec3 v_cc;                 // the camera, cabin frame
+vec3 cabin_face(vec3 d) {
+	vec3 a = abs(d);
+	vec3 f; vec3 u; float i;
+	if (a.x >= a.y && a.x >= a.z) { f = vec3(sign(d.x), 0.0, 0.0); u = vec3(0.0, 1.0, 0.0); i = d.x > 0.0 ? 0.0 : 1.0; }
+	else if (a.y >= a.z) { f = vec3(0.0, sign(d.y), 0.0); u = vec3(0.0, 0.0, -sign(d.y)); i = d.y > 0.0 ? 2.0 : 3.0; }
+	else { f = vec3(0.0, 0.0, sign(d.z)); u = vec3(0.0, 1.0, 0.0); i = d.z > 0.0 ? 4.0 : 5.0; }
+	vec3 r = cross(f, u);
+	float df = dot(d, f);
+	vec2 st = clamp(vec2(dot(d, r), dot(d, u)) / df, -0.995, 0.995);
+	vec2 fuv = vec2(st.x + 1.0, 1.0 - st.y) * 0.5;
+	return texture(cabin_cube, (vec2(mod(i, 3.0), floor(i / 3.0)) + fuv) / vec2(3.0, 2.0)).rgb;
+}
+vec3 cabin_at(vec3 p, vec3 cam) {
+	vec3 d = normalize(p - cam);
+	vec3 dd = mix(d, vec3(1e-5), vec3(equal(d, vec3(0.0))));
+	vec3 t1 = (cabin_lo - p) / dd, t2 = (cabin_hi - p) / dd;
+	vec3 tn = min(t1, t2), tf = max(t1, t2);
+	float t_far = min(min(tf.x, tf.y), tf.z);
+	float t_near = max(max(tn.x, tn.y), tn.z);
+	if (t_far < max(t_near, 0.0)) return vec3(0.015);   // (the ray misses the cabin: dark)
+	vec3 h = p + d * t_far;
+	return cabin_face(normalize(h - (cabin_lo + cabin_hi) * 0.5));
+}
 const float DMG_TILE = 0.45;     // m per repeat of the crumple / scratch / chip photos
 const float CRACK_TILE = 0.55;   // m per repeat of the crack web
 varying vec3 v_mp;               // mesh-space position before the dent (stable texture space)
@@ -103,6 +140,10 @@ void vertex() {
 		VERTEX = steer_center + p * c + cross(ax, p) * s + ax * dot(ax, p) * (1.0 - c);
 		NORMAL = NORMAL * c + cross(ax, NORMAL) * s + ax * dot(ax, NORMAL) * (1.0 - c);
 	}
+	if (cabin_on) {
+		v_cp = (cabin_xf * vec4(VERTEX, 1.0)).xyz;
+		v_cc = (cabin_xf * (inverse(MODEL_MATRIX) * vec4(CAMERA_POSITION_WORLD, 1.0))).xyz;
+	}
 }
 void fragment() {
 	float lm = 0.0;
@@ -129,7 +170,11 @@ void fragment() {
 			// road film: darker, warmer, duller; heavier on the paint than on the black trim
 			ALBEDO = mix(ALBEDO, ALBEDO * vec3(0.62, 0.58, 0.52) + vec3(0.075, 0.065, 0.05), clamp(g * 0.9, 0.0, 1.0));
 			ALBEDO = mix(ALBEDO, ALBEDO * 0.45, gm);   // B17 (20 Nov): tinted glass is dark; at 0.14 + the cabin's 0.26 the windows read pale and see-through
-			ALBEDO += gm * co.b * vec3(0.07, 0.07, 0.075);   // the cabin behind the tinted glass, a hint of it
+			if (cabin_on && gm > 0.01) {
+				ALBEDO = mix(ALBEDO, cabin_at(v_cp, v_cc) * cabin_tint, gm);   // the cabin, seen through the tinted glass (parallax)
+			} else {
+				ALBEDO += gm * co.b * vec3(0.07, 0.07, 0.075);   // the cabin behind the tinted glass, a hint of it
+			}
 			float aoc = co.r * orm.r;
 			ALBEDO *= mix(1.0, co.r, 0.2 * ao_strength);                     // gap cavities read as lines, not only in shade
 			ROUGHNESS = clamp(orm.g + g * 0.35 + (co.b - 0.5) * 0.22 * pm * (1.0 - gm), 0.03, 1.0);   // B on paint: clear-coat roughness variation
@@ -150,6 +195,9 @@ void fragment() {
 			vec2 nxy = texture(normal_map, UV).rg * 2.0 - 1.0;          // RG only: works with 2-channel (RGTC / ASTC) normal maps
 			vec3 nm = vec3(nxy * normal_strength, sqrt(max(1.0 - dot(nxy, nxy), 0.0)));
 			NORMAL = normalize(TANGENT * nm.x + BINORMAL * nm.y + NORMAL * nm.z);   // the reflections below see it too
+			if (cabin_on && gm > 0.01) {
+				ALBEDO = mix(ALBEDO, cabin_at(v_cp, v_cc) * cabin_tint, gm);   // the cabin behind the glass (parallax, as in map_mode 2)
+			}
 		}
 		float bare = 0.0;
 		if (dent_n > 0) {

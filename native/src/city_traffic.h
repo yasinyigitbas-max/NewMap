@@ -168,6 +168,7 @@ private:
 	std::vector<float> odo_now, odo_prev, steer_now, steer_prev;   // (the step's thread) per place in the core
 	std::vector<int32_t> odo_id;
 	static void put_wheels(float *w, const float *car_row, const WheelSet &ws, float steer, float odo);
+	void mid_wheels(float *row, const Row &r, float t) const;   // (the light model: roll and steer into the row's custom x, y)
 	Batch box_moving, box_parked;
 	// THE CYCLISTS: one batch of bicycles (a mesh made here: frame in the rider's colour, black tyres), the riders are the
 	// crowd's far figures in their riding poses (CityCrowd reads bike_draw: x, y, z, yaw, lean, crank turns, id)

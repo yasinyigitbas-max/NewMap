@@ -1,5 +1,6 @@
 // The physical car: see veh_dyn.h for the model. Plain C++.
 #include "veh_dyn.h"
+#include "car_models.h"
 
 #include <algorithm>
 
@@ -292,6 +293,8 @@ const float BOX_FINAL[4] = { 4.05f, 3.20f, 3.85f, 5.60f };
 }
 
 Spec make_spec(int model, int feel) {
+	// (27 Nov) the later models drive like one of the first twelve (car_models.h `like`)
+	if (model >= 0 && model < cm::N_MODELS) model = cm::MODELS[model].like;
 	const Base &b = BASE[model < 0 || model > 11 ? 2 : model];
 	Spec s;
 	s.mass = b.mass; s.length = b.length; s.width = b.width; s.height = b.height; s.cg_h = b.cg;

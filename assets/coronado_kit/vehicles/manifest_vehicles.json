@@ -1,0 +1,3479 @@
+{
+ "campaign_a": {
+  "name": "campaign_a",
+  "cls": "van",
+  "note": "political campaign van: blue and white, loudspeakers on the roof (fictional candidate)",
+  "tris": 3778,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_s_r": 36,
+   "bonnet": 428,
+   "bumper_f": 46,
+   "glass_front": 20,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 724,
+   "steering_wheel": 124,
+   "body": 700,
+   "back_door_l": 12,
+   "back_door_r": 12,
+   "bumper_r": 12,
+   "speakers": 96
+  },
+  "pivots": {
+   "door_f_l": [
+    1.2,
+    1.175,
+    1.1446
+   ],
+   "door_f_r": [
+    -1.2,
+    1.175,
+    1.1446
+   ],
+   "door_s_r": [
+    -1.0,
+    1.175,
+    0.0046
+   ],
+   "bonnet": [
+    0.0,
+    1.092,
+    1.1637
+   ],
+   "bumper_f": [
+    0.0,
+    0.656,
+    2.6125
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.795,
+    0.36,
+    1.675
+   ],
+   "wheel_fr": [
+    -0.795,
+    0.36,
+    1.675
+   ],
+   "wheel_rl": [
+    0.795,
+    0.36,
+    -1.625
+   ],
+   "wheel_rr": [
+    -0.795,
+    0.36,
+    -1.625
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.399,
+    1.03,
+    0.7846
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "back_door_l": [
+    0.916,
+    1.17,
+    -2.617
+   ],
+   "back_door_r": [
+    -0.916,
+    1.17,
+    -2.617
+   ],
+   "bumper_r": [
+    0.0,
+    0.41,
+    -2.615
+   ],
+   "speakers": [
+    0.0,
+    2.06,
+    -0.2854
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.399,
+    0.67,
+    0.3346
+   ],
+   "seat_fr": [
+    -0.399,
+    0.67,
+    0.3346
+   ],
+   "seat_rl": [
+    0.378,
+    0.7,
+    -0.5154
+   ],
+   "seat_rr": [
+    -0.378,
+    0.7,
+    -0.5154
+   ],
+   "entry_l": [
+    1.45,
+    0.0,
+    0.4646
+   ],
+   "head_l": [
+    0.72,
+    0.92,
+    2.605
+   ],
+   "tail_l": [
+    0.75,
+    0.97,
+    -2.615
+   ],
+   "entry_r": [
+    -1.45,
+    0.0,
+    0.4646
+   ],
+   "head_r": [
+    -0.72,
+    0.92,
+    2.605
+   ],
+   "tail_r": [
+    -0.75,
+    0.97,
+    -2.615
+   ],
+   "exhaust": [
+    -0.55,
+    0.33,
+    -2.605
+   ]
+  },
+  "axles": [
+   1.675,
+   -1.625
+  ],
+  "wheel_r": 0.36,
+  "size": [
+   2.4,
+   5.33,
+   2.421
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "campaign_b": {
+  "name": "campaign_b",
+  "cls": "van",
+  "note": "political campaign van: red and white, roof billboard (fictional candidate)",
+  "tris": 3706,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_s_r": 36,
+   "bonnet": 428,
+   "bumper_f": 46,
+   "glass_front": 20,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 724,
+   "steering_wheel": 124,
+   "body": 700,
+   "back_door_l": 12,
+   "back_door_r": 12,
+   "bumper_r": 12,
+   "speakers": 24
+  },
+  "pivots": {
+   "door_f_l": [
+    1.2,
+    1.175,
+    1.1446
+   ],
+   "door_f_r": [
+    -1.2,
+    1.175,
+    1.1446
+   ],
+   "door_s_r": [
+    -1.0,
+    1.175,
+    0.0046
+   ],
+   "bonnet": [
+    0.0,
+    1.092,
+    1.1637
+   ],
+   "bumper_f": [
+    0.0,
+    0.656,
+    2.6125
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.795,
+    0.36,
+    1.675
+   ],
+   "wheel_fr": [
+    -0.795,
+    0.36,
+    1.675
+   ],
+   "wheel_rl": [
+    0.795,
+    0.36,
+    -1.625
+   ],
+   "wheel_rr": [
+    -0.795,
+    0.36,
+    -1.625
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.399,
+    1.03,
+    0.7846
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "back_door_l": [
+    0.916,
+    1.17,
+    -2.617
+   ],
+   "back_door_r": [
+    -0.916,
+    1.17,
+    -2.617
+   ],
+   "bumper_r": [
+    0.0,
+    0.41,
+    -2.615
+   ],
+   "speakers": [
+    0.0,
+    2.05,
+    -0.9552
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.399,
+    0.67,
+    0.3346
+   ],
+   "seat_fr": [
+    -0.399,
+    0.67,
+    0.3346
+   ],
+   "seat_rl": [
+    0.378,
+    0.7,
+    -0.5154
+   ],
+   "seat_rr": [
+    -0.378,
+    0.7,
+    -0.5154
+   ],
+   "entry_l": [
+    1.45,
+    0.0,
+    0.4646
+   ],
+   "head_l": [
+    0.72,
+    0.92,
+    2.605
+   ],
+   "tail_l": [
+    0.75,
+    0.97,
+    -2.615
+   ],
+   "entry_r": [
+    -1.45,
+    0.0,
+    0.4646
+   ],
+   "head_r": [
+    -0.72,
+    0.92,
+    2.605
+   ],
+   "tail_r": [
+    -0.75,
+    0.97,
+    -2.615
+   ],
+   "exhaust": [
+    -0.55,
+    0.33,
+    -2.605
+   ]
+  },
+  "axles": [
+   1.675,
+   -1.625
+  ],
+  "wheel_r": 0.36,
+  "size": [
+   2.4,
+   5.33,
+   2.791
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "compact": {
+  "name": "compact",
+  "cls": "compact",
+  "note": "small three-door hatchback",
+  "tris": 3720,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "bonnet": 428,
+   "tailgate": 120,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 744,
+   "steering_wheel": 124,
+   "body": 624
+  },
+  "pivots": {
+   "door_f_l": [
+    1.04,
+    0.855,
+    0.718
+   ],
+   "door_f_r": [
+    -1.04,
+    0.855,
+    0.718
+   ],
+   "bonnet": [
+    0.0,
+    0.912,
+    0.7338
+   ],
+   "tailgate": [
+    0.0,
+    1.462,
+    -1.6627
+   ],
+   "bumper_f": [
+    0.0,
+    0.491,
+    1.8875
+   ],
+   "bumper_r": [
+    0.0,
+    0.556,
+    -1.8825
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.635,
+    0.3,
+    1.18
+   ],
+   "wheel_fr": [
+    -0.635,
+    0.3,
+    1.18
+   ],
+   "wheel_rl": [
+    0.635,
+    0.3,
+    -1.24
+   ],
+   "wheel_rr": [
+    -0.635,
+    0.3,
+    -1.24
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.3352,
+    0.92,
+    0.108
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.3352,
+    0.56,
+    -0.342
+   ],
+   "seat_fr": [
+    -0.3352,
+    0.56,
+    -0.342
+   ],
+   "seat_rl": [
+    0.3175,
+    0.59,
+    -1.042
+   ],
+   "seat_rr": [
+    -0.3175,
+    0.59,
+    -1.042
+   ],
+   "entry_l": [
+    1.29,
+    0.0,
+    -0.212
+   ],
+   "head_l": [
+    0.6048,
+    0.64,
+    1.88
+   ],
+   "tail_l": [
+    0.63,
+    0.77,
+    -1.89
+   ],
+   "entry_r": [
+    -1.29,
+    0.0,
+    -0.212
+   ],
+   "head_r": [
+    -0.6048,
+    0.64,
+    1.88
+   ],
+   "tail_r": [
+    -0.63,
+    0.77,
+    -1.89
+   ],
+   "exhaust": [
+    -0.462,
+    0.28,
+    -1.88
+   ]
+  },
+  "axles": [
+   1.18,
+   -1.24
+  ],
+  "wheel_r": 0.3,
+  "size": [
+   2.08,
+   3.8,
+   1.464
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "coupe": {
+  "name": "coupe",
+  "cls": "sports",
+  "note": "two-door coupe",
+  "tris": 3824,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "bonnet": 428,
+   "boot": 176,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "glass_rear": 104,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 692,
+   "steering_wheel": 124,
+   "body": 620
+  },
+  "pivots": {
+   "door_f_l": [
+    1.11,
+    0.805,
+    0.8288
+   ],
+   "door_f_r": [
+    -1.11,
+    0.805,
+    0.8288
+   ],
+   "bonnet": [
+    0.0,
+    0.912,
+    0.845
+   ],
+   "boot": [
+    0.0,
+    0.962,
+    -1.6006
+   ],
+   "bumper_f": [
+    0.0,
+    0.481,
+    2.2625
+   ],
+   "bumper_r": [
+    0.0,
+    0.571,
+    -2.2575
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "glass_rear": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.705,
+    0.33,
+    1.325
+   ],
+   "wheel_fr": [
+    -0.705,
+    0.33,
+    1.325
+   ],
+   "wheel_rl": [
+    0.705,
+    0.33,
+    -1.325
+   ],
+   "wheel_rr": [
+    -0.705,
+    0.33,
+    -1.325
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.3631,
+    0.92,
+    0.1688
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.3631,
+    0.56,
+    -0.2812
+   ],
+   "seat_fr": [
+    -0.3631,
+    0.56,
+    -0.2812
+   ],
+   "seat_rl": [
+    0.344,
+    0.59,
+    -0.9812
+   ],
+   "seat_rr": [
+    -0.344,
+    0.59,
+    -0.9812
+   ],
+   "entry_l": [
+    1.36,
+    0.0,
+    -0.1512
+   ],
+   "head_l": [
+    0.6552,
+    0.62,
+    2.255
+   ],
+   "tail_l": [
+    0.6825,
+    0.8,
+    -2.265
+   ],
+   "entry_r": [
+    -1.36,
+    0.0,
+    -0.1512
+   ],
+   "head_r": [
+    -0.6552,
+    0.62,
+    2.255
+   ],
+   "tail_r": [
+    -0.6825,
+    0.8,
+    -2.265
+   ],
+   "exhaust": [
+    -0.5005,
+    0.28,
+    -2.255
+   ]
+  },
+  "axles": [
+   1.325,
+   -1.325
+  ],
+  "wheel_r": 0.33,
+  "size": [
+   2.22,
+   4.55,
+   1.364
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "crossover": {
+  "name": "crossover",
+  "cls": "suv",
+  "note": "compact crossover",
+  "tris": 4000,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_r_l": 136,
+   "door_r_r": 136,
+   "bonnet": 428,
+   "tailgate": 120,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 768,
+   "steering_wheel": 124,
+   "body": 608
+  },
+  "pivots": {
+   "door_f_l": [
+    1.11,
+    0.945,
+    0.826
+   ],
+   "door_f_r": [
+    -1.11,
+    0.945,
+    0.826
+   ],
+   "door_r_l": [
+    0.91,
+    0.945,
+    -0.364
+   ],
+   "door_r_r": [
+    -0.91,
+    0.945,
+    -0.364
+   ],
+   "bonnet": [
+    0.0,
+    1.032,
+    0.8426
+   ],
+   "tailgate": [
+    0.0,
+    1.602,
+    -1.7624
+   ],
+   "bumper_f": [
+    0.0,
+    0.571,
+    2.2125
+   ],
+   "bumper_r": [
+    0.0,
+    0.636,
+    -2.2075
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.705,
+    0.35,
+    1.345
+   ],
+   "wheel_fr": [
+    -0.705,
+    0.35,
+    1.345
+   ],
+   "wheel_rl": [
+    0.705,
+    0.35,
+    -1.305
+   ],
+   "wheel_rr": [
+    -0.705,
+    0.35,
+    -1.305
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.3631,
+    0.98,
+    0.416
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.3631,
+    0.62,
+    -0.034
+   ],
+   "seat_fr": [
+    -0.3631,
+    0.62,
+    -0.034
+   ],
+   "seat_rl": [
+    0.344,
+    0.65,
+    -0.884
+   ],
+   "seat_rr": [
+    -0.344,
+    0.65,
+    -0.884
+   ],
+   "entry_l": [
+    1.36,
+    0.0,
+    0.096
+   ],
+   "head_l": [
+    0.6552,
+    0.76,
+    2.205
+   ],
+   "tail_l": [
+    0.6825,
+    0.89,
+    -2.215
+   ],
+   "entry_r": [
+    -1.36,
+    0.0,
+    0.096
+   ],
+   "head_r": [
+    -0.6552,
+    0.76,
+    2.205
+   ],
+   "tail_r": [
+    -0.6825,
+    0.89,
+    -2.215
+   ],
+   "exhaust": [
+    -0.5005,
+    0.32,
+    -2.205
+   ]
+  },
+  "axles": [
+   1.345,
+   -1.305
+  ],
+  "wheel_r": 0.35,
+  "size": [
+   2.22,
+   4.45,
+   1.603
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "hatch": {
+  "name": "hatch",
+  "cls": "compact",
+  "note": "five-door family hatchback",
+  "tris": 3976,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_r_l": 112,
+   "door_r_r": 112,
+   "bonnet": 428,
+   "tailgate": 120,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 776,
+   "steering_wheel": 124,
+   "body": 624
+  },
+  "pivots": {
+   "door_f_l": [
+    1.075,
+    0.865,
+    0.8016
+   ],
+   "door_f_r": [
+    -1.075,
+    0.865,
+    0.8016
+   ],
+   "door_r_l": [
+    0.875,
+    0.865,
+    -0.3684
+   ],
+   "door_r_r": [
+    -0.875,
+    0.865,
+    -0.3684
+   ],
+   "bonnet": [
+    0.0,
+    0.932,
+    0.8174
+   ],
+   "tailgate": [
+    0.0,
+    1.482,
+    -1.8317
+   ],
+   "bumper_f": [
+    0.0,
+    0.491,
+    2.1125
+   ],
+   "bumper_r": [
+    0.0,
+    0.566,
+    -2.1075
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.67,
+    0.31,
+    1.275
+   ],
+   "wheel_fr": [
+    -0.67,
+    0.31,
+    1.275
+   ],
+   "wheel_rl": [
+    0.67,
+    0.31,
+    -1.345
+   ],
+   "wheel_rr": [
+    -0.67,
+    0.31,
+    -1.345
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.3491,
+    0.92,
+    0.4116
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.3491,
+    0.56,
+    -0.0384
+   ],
+   "seat_fr": [
+    -0.3491,
+    0.56,
+    -0.0384
+   ],
+   "seat_rl": [
+    0.3307,
+    0.59,
+    -0.8884
+   ],
+   "seat_rr": [
+    -0.3307,
+    0.59,
+    -0.8884
+   ],
+   "entry_l": [
+    1.325,
+    0.0,
+    0.0916
+   ],
+   "head_l": [
+    0.63,
+    0.64,
+    2.105
+   ],
+   "tail_l": [
+    0.6562,
+    0.79,
+    -2.115
+   ],
+   "entry_r": [
+    -1.325,
+    0.0,
+    0.0916
+   ],
+   "head_r": [
+    -0.63,
+    0.64,
+    2.105
+   ],
+   "tail_r": [
+    -0.6562,
+    0.79,
+    -2.115
+   ],
+   "exhaust": [
+    -0.4813,
+    0.28,
+    -2.105
+   ]
+  },
+  "axles": [
+   1.275,
+   -1.345
+  ],
+  "wheel_r": 0.31,
+  "size": [
+   2.15,
+   4.25,
+   1.484
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "minivan": {
+  "name": "minivan",
+  "cls": "van",
+  "note": "seven-seat minivan, sliding doors both sides",
+  "tris": 4000,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_s_l": 40,
+   "door_s_r": 40,
+   "bonnet": 428,
+   "tailgate": 120,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "glass_side": 256,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 720,
+   "steering_wheel": 124,
+   "body": 592
+  },
+  "pivots": {
+   "door_f_l": [
+    1.19,
+    1.015,
+    1.0696
+   ],
+   "door_f_r": [
+    -1.19,
+    1.015,
+    1.0696
+   ],
+   "door_s_l": [
+    0.99,
+    1.015,
+    -0.0704
+   ],
+   "door_s_r": [
+    -0.99,
+    1.015,
+    -0.0704
+   ],
+   "bonnet": [
+    0.0,
+    1.062,
+    1.0884
+   ],
+   "tailgate": [
+    0.0,
+    1.762,
+    -2.3306
+   ],
+   "bumper_f": [
+    0.0,
+    0.621,
+    2.5375
+   ],
+   "bumper_r": [
+    0.0,
+    0.641,
+    -2.5325
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "glass_side": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.785,
+    0.36,
+    1.6
+   ],
+   "wheel_fr": [
+    -0.785,
+    0.36,
+    1.6
+   ],
+   "wheel_rl": [
+    0.785,
+    0.36,
+    -1.43
+   ],
+   "wheel_rr": [
+    -0.785,
+    0.36,
+    -1.43
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.395,
+    0.98,
+    0.7096
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.395,
+    0.62,
+    0.2596
+   ],
+   "seat_fr": [
+    -0.395,
+    0.62,
+    0.2596
+   ],
+   "seat_rl": [
+    0.3742,
+    0.65,
+    -0.5904
+   ],
+   "seat_rr": [
+    -0.3742,
+    0.65,
+    -0.5904
+   ],
+   "entry_l": [
+    1.44,
+    0.0,
+    0.3896
+   ],
+   "head_l": [
+    0.7128,
+    0.88,
+    2.53
+   ],
+   "tail_l": [
+    0.7425,
+    0.92,
+    -2.54
+   ],
+   "entry_r": [
+    -1.44,
+    0.0,
+    0.3896
+   ],
+   "head_r": [
+    -0.7128,
+    0.88,
+    2.53
+   ],
+   "tail_r": [
+    -0.7425,
+    0.92,
+    -2.54
+   ],
+   "exhaust": [
+    -0.5445,
+    0.3,
+    -2.53
+   ]
+  },
+  "axles": [
+   1.6,
+   -1.43
+  ],
+  "wheel_r": 0.36,
+  "size": [
+   2.38,
+   5.1,
+   1.763
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "muscle": {
+  "name": "muscle",
+  "cls": "sports",
+  "note": "long-bonnet two-door muscle car",
+  "tris": 3824,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "bonnet": 428,
+   "boot": 212,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "glass_rear": 92,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 680,
+   "steering_wheel": 124,
+   "body": 608
+  },
+  "pivots": {
+   "door_f_l": [
+    1.14,
+    0.79,
+    0.8674
+   ],
+   "door_f_r": [
+    -1.14,
+    0.79,
+    0.8674
+   ],
+   "bonnet": [
+    0.0,
+    0.932,
+    0.8861
+   ],
+   "boot": [
+    0.0,
+    0.992,
+    -1.5622
+   ],
+   "bumper_f": [
+    0.0,
+    0.541,
+    2.4125
+   ],
+   "bumper_r": [
+    0.0,
+    0.586,
+    -2.4075
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "glass_rear": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.735,
+    0.34,
+    1.375
+   ],
+   "wheel_fr": [
+    -0.735,
+    0.34,
+    1.375
+   ],
+   "wheel_rl": [
+    0.735,
+    0.34,
+    -1.425
+   ],
+   "wheel_rr": [
+    -0.735,
+    0.34,
+    -1.425
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.3751,
+    0.92,
+    0.1574
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.3751,
+    0.56,
+    -0.2926
+   ],
+   "seat_fr": [
+    -0.3751,
+    0.56,
+    -0.2926
+   ],
+   "seat_rl": [
+    0.3553,
+    0.59,
+    -1.1426
+   ],
+   "seat_rr": [
+    -0.3553,
+    0.59,
+    -1.1426
+   ],
+   "entry_l": [
+    1.39,
+    0.0,
+    -0.1626
+   ],
+   "head_l": [
+    0.6768,
+    0.74,
+    2.405
+   ],
+   "tail_l": [
+    0.705,
+    0.83,
+    -2.415
+   ],
+   "entry_r": [
+    -1.39,
+    0.0,
+    -0.1626
+   ],
+   "head_r": [
+    -0.6768,
+    0.74,
+    2.405
+   ],
+   "tail_r": [
+    -0.705,
+    0.83,
+    -2.415
+   ],
+   "exhaust": [
+    -0.517,
+    0.28,
+    -2.405
+   ]
+  },
+  "axles": [
+   1.375,
+   -1.425
+  ],
+  "wheel_r": 0.34,
+  "size": [
+   2.28,
+   4.85,
+   1.333
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "pickup": {
+  "name": "pickup",
+  "cls": "pickup",
+  "note": "full-size crew-cab pickup",
+  "tris": 3574,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_r_l": 40,
+   "door_r_r": 40,
+   "bonnet": 428,
+   "tailgate": 72,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "glass_rear": 20,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 512,
+   "body": 658,
+   "steering_wheel": 124
+  },
+  "pivots": {
+   "door_f_l": [
+    1.18,
+    1.085,
+    1.1718
+   ],
+   "door_f_r": [
+    -1.18,
+    1.085,
+    1.1718
+   ],
+   "door_r_l": [
+    0.98,
+    1.085,
+    -0.0182
+   ],
+   "door_r_r": [
+    -0.98,
+    1.085,
+    -0.0182
+   ],
+   "bonnet": [
+    0.0,
+    1.162,
+    1.19
+   ],
+   "tailgate": [
+    0.0,
+    0.4,
+    -2.6128
+   ],
+   "bumper_f": [
+    0.0,
+    0.696,
+    2.6625
+   ],
+   "bumper_r": [
+    0.0,
+    0.716,
+    -2.6575
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "glass_rear": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.775,
+    0.38,
+    1.725
+   ],
+   "wheel_fr": [
+    -0.775,
+    0.38,
+    1.725
+   ],
+   "wheel_rl": [
+    0.775,
+    0.38,
+    -1.625
+   ],
+   "wheel_rr": [
+    -0.775,
+    0.38,
+    -1.625
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.391,
+    1.08,
+    0.7618
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.391,
+    0.72,
+    0.3118
+   ],
+   "seat_fr": [
+    -0.391,
+    0.72,
+    0.3118
+   ],
+   "seat_rl": [
+    0.3704,
+    0.75,
+    -0.5382
+   ],
+   "seat_rr": [
+    -0.3704,
+    0.75,
+    -0.5382
+   ],
+   "entry_l": [
+    1.43,
+    0.0,
+    0.4418
+   ],
+   "head_l": [
+    0.7056,
+    0.95,
+    2.655
+   ],
+   "tail_l": [
+    0.735,
+    0.99,
+    -2.665
+   ],
+   "entry_r": [
+    -1.43,
+    0.0,
+    0.4418
+   ],
+   "head_r": [
+    -0.7056,
+    0.95,
+    2.655
+   ],
+   "tail_r": [
+    -0.735,
+    0.99,
+    -2.665
+   ],
+   "exhaust": [
+    -0.539,
+    0.38,
+    -2.655
+   ]
+  },
+  "axles": [
+   1.725,
+   -1.625
+  ],
+  "wheel_r": 0.38,
+  "size": [
+   2.36,
+   5.35,
+   1.822
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "police": {
+  "name": "police",
+  "cls": "emergency",
+  "note": "police cruiser: black and white, light bar, push bar",
+  "tris": 4148,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_r_l": 88,
+   "door_r_r": 88,
+   "bonnet": 428,
+   "boot": 104,
+   "bumper_f": 82,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "glass_rear": 80,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 796,
+   "steering_wheel": 124,
+   "body": 676,
+   "lightbar": 48
+  },
+  "pivots": {
+   "door_f_l": [
+    1.11,
+    0.85,
+    0.9788
+   ],
+   "door_f_r": [
+    -1.11,
+    0.85,
+    0.9788
+   ],
+   "door_r_l": [
+    0.91,
+    0.85,
+    -0.3612
+   ],
+   "door_r_r": [
+    -0.91,
+    0.85,
+    -0.3612
+   ],
+   "bonnet": [
+    0.0,
+    0.952,
+    0.9952
+   ],
+   "boot": [
+    0.0,
+    1.012,
+    -1.8106
+   ],
+   "bumper_f": [
+    0.0,
+    0.52,
+    2.5175
+   ],
+   "bumper_r": [
+    0.0,
+    0.596,
+    -2.4575
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "glass_rear": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.705,
+    0.33,
+    1.475
+   ],
+   "wheel_fr": [
+    -0.705,
+    0.33,
+    1.475
+   ],
+   "wheel_rl": [
+    0.705,
+    0.33,
+    -1.425
+   ],
+   "wheel_rr": [
+    -0.705,
+    0.33,
+    -1.425
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.3631,
+    0.92,
+    0.4188
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lightbar": [
+    0.0,
+    1.45,
+    -0.0077
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.3631,
+    0.56,
+    -0.0312
+   ],
+   "seat_fr": [
+    -0.3631,
+    0.56,
+    -0.0312
+   ],
+   "seat_rl": [
+    0.344,
+    0.59,
+    -0.8812
+   ],
+   "seat_rr": [
+    -0.344,
+    0.59,
+    -0.8812
+   ],
+   "entry_l": [
+    1.36,
+    0.0,
+    0.0988
+   ],
+   "head_l": [
+    0.6552,
+    0.66,
+    2.455
+   ],
+   "tail_l": [
+    0.6825,
+    0.85,
+    -2.465
+   ],
+   "entry_r": [
+    -1.36,
+    0.0,
+    0.0988
+   ],
+   "head_r": [
+    -0.6552,
+    0.66,
+    2.455
+   ],
+   "tail_r": [
+    -0.6825,
+    0.85,
+    -2.465
+   ],
+   "exhaust": [
+    -0.5005,
+    0.28,
+    -2.455
+   ]
+  },
+  "axles": [
+   1.475,
+   -1.425
+  ],
+  "wheel_r": 0.33,
+  "size": [
+   2.22,
+   5.06,
+   1.592
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "saloon": {
+  "name": "saloon",
+  "cls": "saloon",
+  "note": "mid-size four-door saloon",
+  "tris": 4088,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_r_l": 112,
+   "door_r_r": 112,
+   "bonnet": 428,
+   "boot": 104,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "glass_rear": 80,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 788,
+   "steering_wheel": 124,
+   "body": 660
+  },
+  "pivots": {
+   "door_f_l": [
+    1.11,
+    0.85,
+    0.9288
+   ],
+   "door_f_r": [
+    -1.11,
+    0.85,
+    0.9288
+   ],
+   "door_r_l": [
+    0.91,
+    0.85,
+    -0.4112
+   ],
+   "door_r_r": [
+    -0.91,
+    0.85,
+    -0.4112
+   ],
+   "bonnet": [
+    0.0,
+    0.952,
+    0.945
+   ],
+   "boot": [
+    0.0,
+    1.012,
+    -1.8604
+   ],
+   "bumper_f": [
+    0.0,
+    0.501,
+    2.3625
+   ],
+   "bumper_r": [
+    0.0,
+    0.596,
+    -2.3575
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "glass_rear": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.705,
+    0.33,
+    1.425
+   ],
+   "wheel_fr": [
+    -0.705,
+    0.33,
+    1.425
+   ],
+   "wheel_rl": [
+    0.705,
+    0.33,
+    -1.375
+   ],
+   "wheel_rr": [
+    -0.705,
+    0.33,
+    -1.375
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.3631,
+    0.92,
+    0.3688
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.3631,
+    0.56,
+    -0.0812
+   ],
+   "seat_fr": [
+    -0.3631,
+    0.56,
+    -0.0812
+   ],
+   "seat_rl": [
+    0.344,
+    0.59,
+    -0.9312
+   ],
+   "seat_rr": [
+    -0.344,
+    0.59,
+    -0.9312
+   ],
+   "entry_l": [
+    1.36,
+    0.0,
+    0.0488
+   ],
+   "head_l": [
+    0.6552,
+    0.66,
+    2.355
+   ],
+   "tail_l": [
+    0.6825,
+    0.85,
+    -2.365
+   ],
+   "entry_r": [
+    -1.36,
+    0.0,
+    0.0488
+   ],
+   "head_r": [
+    -0.6552,
+    0.66,
+    2.355
+   ],
+   "tail_r": [
+    -0.6825,
+    0.85,
+    -2.365
+   ],
+   "exhaust": [
+    -0.5005,
+    0.28,
+    -2.355
+   ]
+  },
+  "axles": [
+   1.425,
+   -1.375
+  ],
+  "wheel_r": 0.33,
+  "size": [
+   2.22,
+   4.75,
+   1.454
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "saloon_exec": {
+  "name": "saloon_exec",
+  "cls": "saloon",
+  "note": "long executive saloon, chrome handles",
+  "tris": 4088,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_r_l": 112,
+   "door_r_r": 112,
+   "bonnet": 428,
+   "boot": 104,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "glass_rear": 80,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 788,
+   "steering_wheel": 124,
+   "body": 660
+  },
+  "pivots": {
+   "door_f_l": [
+    1.135,
+    0.86,
+    1.0174
+   ],
+   "door_f_r": [
+    -1.135,
+    0.86,
+    1.0174
+   ],
+   "door_r_l": [
+    0.935,
+    0.86,
+    -0.3726
+   ],
+   "door_r_r": [
+    -0.935,
+    0.86,
+    -0.3726
+   ],
+   "bonnet": [
+    0.0,
+    0.972,
+    1.0343
+   ],
+   "boot": [
+    0.0,
+    1.042,
+    -1.9219
+   ],
+   "bumper_f": [
+    0.0,
+    0.521,
+    2.5125
+   ],
+   "bumper_r": [
+    0.0,
+    0.611,
+    -2.5075
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "glass_rear": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.73,
+    0.34,
+    1.525
+   ],
+   "wheel_fr": [
+    -0.73,
+    0.34,
+    1.525
+   ],
+   "wheel_rl": [
+    0.73,
+    0.34,
+    -1.475
+   ],
+   "wheel_rr": [
+    -0.73,
+    0.34,
+    -1.475
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.3731,
+    0.92,
+    0.4074
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.3731,
+    0.56,
+    -0.0426
+   ],
+   "seat_fr": [
+    -0.3731,
+    0.56,
+    -0.0426
+   ],
+   "seat_rl": [
+    0.3534,
+    0.59,
+    -0.8926
+   ],
+   "seat_rr": [
+    -0.3534,
+    0.59,
+    -0.8926
+   ],
+   "entry_l": [
+    1.385,
+    0.0,
+    0.0874
+   ],
+   "head_l": [
+    0.6732,
+    0.7,
+    2.505
+   ],
+   "tail_l": [
+    0.7013,
+    0.88,
+    -2.515
+   ],
+   "entry_r": [
+    -1.385,
+    0.0,
+    0.0874
+   ],
+   "head_r": [
+    -0.6732,
+    0.7,
+    2.505
+   ],
+   "tail_r": [
+    -0.7013,
+    0.88,
+    -2.515
+   ],
+   "exhaust": [
+    -0.5143,
+    0.28,
+    -2.505
+   ]
+  },
+  "axles": [
+   1.525,
+   -1.475
+  ],
+  "wheel_r": 0.34,
+  "size": [
+   2.27,
+   5.05,
+   1.473
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "sports": {
+  "name": "sports",
+  "cls": "sports",
+  "note": "low two-seat sports car",
+  "tris": 3784,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "bonnet": 428,
+   "boot": 104,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "glass_rear": 116,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 684,
+   "steering_wheel": 124,
+   "body": 648
+  },
+  "pivots": {
+   "door_f_l": [
+    1.16,
+    0.685,
+    0.7288
+   ],
+   "door_f_r": [
+    -1.16,
+    0.685,
+    0.7288
+   ],
+   "bonnet": [
+    0.0,
+    0.832,
+    0.745
+   ],
+   "boot": [
+    0.0,
+    0.872,
+    -1.7501
+   ],
+   "bumper_f": [
+    0.0,
+    0.411,
+    2.1625
+   ],
+   "bumper_r": [
+    0.0,
+    0.496,
+    -2.1575
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "glass_rear": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.755,
+    0.33,
+    1.225
+   ],
+   "wheel_fr": [
+    -0.755,
+    0.33,
+    1.225
+   ],
+   "wheel_rl": [
+    0.755,
+    0.33,
+    -1.325
+   ],
+   "wheel_rr": [
+    -0.755,
+    0.33,
+    -1.325
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.383,
+    0.74,
+    0.1188
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.383,
+    0.38,
+    -0.3312
+   ],
+   "seat_fr": [
+    -0.383,
+    0.38,
+    -0.3312
+   ],
+   "entry_l": [
+    1.41,
+    0.0,
+    -0.2012
+   ],
+   "head_l": [
+    0.6912,
+    0.54,
+    2.155
+   ],
+   "tail_l": [
+    0.72,
+    0.71,
+    -2.165
+   ],
+   "entry_r": [
+    -1.41,
+    0.0,
+    -0.2012
+   ],
+   "head_r": [
+    -0.6912,
+    0.54,
+    2.155
+   ],
+   "tail_r": [
+    -0.72,
+    0.71,
+    -2.165
+   ],
+   "exhaust": [
+    -0.528,
+    0.22,
+    -2.155
+   ]
+  },
+  "axles": [
+   1.225,
+   -1.325
+  ],
+  "wheel_r": 0.33,
+  "size": [
+   2.32,
+   4.35,
+   1.184
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "suv": {
+  "name": "suv",
+  "cls": "suv",
+  "note": "mid-size SUV",
+  "tris": 4140,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_r_l": 112,
+   "door_r_r": 112,
+   "bonnet": 428,
+   "tailgate": 120,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "glass_side": 120,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 776,
+   "steering_wheel": 124,
+   "body": 668
+  },
+  "pivots": {
+   "door_f_l": [
+    1.14,
+    1.025,
+    0.9082
+   ],
+   "door_f_r": [
+    -1.14,
+    1.025,
+    0.9082
+   ],
+   "door_r_l": [
+    0.94,
+    1.025,
+    -0.3318
+   ],
+   "door_r_r": [
+    -0.94,
+    1.025,
+    -0.3318
+   ],
+   "bonnet": [
+    0.0,
+    1.112,
+    0.9251
+   ],
+   "tailgate": [
+    0.0,
+    1.722,
+    -2.1125
+   ],
+   "bumper_f": [
+    0.0,
+    0.636,
+    2.3375
+   ],
+   "bumper_r": [
+    0.0,
+    0.696,
+    -2.3325
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "glass_side": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.735,
+    0.37,
+    1.45
+   ],
+   "wheel_fr": [
+    -0.735,
+    0.37,
+    1.45
+   ],
+   "wheel_rl": [
+    0.735,
+    0.37,
+    -1.35
+   ],
+   "wheel_rr": [
+    -0.735,
+    0.37,
+    -1.35
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.3751,
+    1.04,
+    0.4482
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.3751,
+    0.68,
+    -0.0018
+   ],
+   "seat_fr": [
+    -0.3751,
+    0.68,
+    -0.0018
+   ],
+   "seat_rl": [
+    0.3553,
+    0.71,
+    -0.8518
+   ],
+   "seat_rr": [
+    -0.3553,
+    0.71,
+    -0.8518
+   ],
+   "entry_l": [
+    1.39,
+    0.0,
+    0.1282
+   ],
+   "head_l": [
+    0.6768,
+    0.85,
+    2.33
+   ],
+   "tail_l": [
+    0.705,
+    0.97,
+    -2.34
+   ],
+   "entry_r": [
+    -1.39,
+    0.0,
+    0.1282
+   ],
+   "head_r": [
+    -0.6768,
+    0.85,
+    2.33
+   ],
+   "tail_r": [
+    -0.705,
+    0.97,
+    -2.34
+   ],
+   "exhaust": [
+    -0.517,
+    0.36,
+    -2.33
+   ]
+  },
+  "axles": [
+   1.45,
+   -1.35
+  ],
+  "wheel_r": 0.37,
+  "size": [
+   2.28,
+   4.7,
+   1.771
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "suv_large": {
+  "name": "suv_large",
+  "cls": "suv",
+  "note": "large boxy SUV",
+  "tris": 4140,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_r_l": 112,
+   "door_r_r": 112,
+   "bonnet": 428,
+   "tailgate": 120,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "glass_side": 120,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 776,
+   "steering_wheel": 124,
+   "body": 668
+  },
+  "pivots": {
+   "door_f_l": [
+    1.19,
+    1.115,
+    1.0354
+   ],
+   "door_f_r": [
+    -1.19,
+    1.115,
+    1.0354
+   ],
+   "door_r_l": [
+    0.99,
+    1.115,
+    -0.2546
+   ],
+   "door_r_r": [
+    -0.99,
+    1.115,
+    -0.2546
+   ],
+   "bonnet": [
+    0.0,
+    1.192,
+    1.0529
+   ],
+   "tailgate": [
+    0.0,
+    1.882,
+    -2.3751
+   ],
+   "bumper_f": [
+    0.0,
+    0.696,
+    2.5375
+   ],
+   "bumper_r": [
+    0.0,
+    0.746,
+    -2.5325
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "glass_side": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.785,
+    0.39,
+    1.6
+   ],
+   "wheel_fr": [
+    -0.785,
+    0.39,
+    1.6
+   ],
+   "wheel_rl": [
+    0.785,
+    0.39,
+    -1.4
+   ],
+   "wheel_rr": [
+    -0.785,
+    0.39,
+    -1.4
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.395,
+    1.08,
+    0.5254
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.395,
+    0.72,
+    0.0754
+   ],
+   "seat_fr": [
+    -0.395,
+    0.72,
+    0.0754
+   ],
+   "seat_rl": [
+    0.3742,
+    0.75,
+    -0.7746
+   ],
+   "seat_rr": [
+    -0.3742,
+    0.75,
+    -0.7746
+   ],
+   "entry_l": [
+    1.44,
+    0.0,
+    0.2054
+   ],
+   "head_l": [
+    0.7128,
+    0.95,
+    2.53
+   ],
+   "tail_l": [
+    0.7425,
+    1.05,
+    -2.54
+   ],
+   "entry_r": [
+    -1.44,
+    0.0,
+    0.2054
+   ],
+   "head_r": [
+    -0.7128,
+    0.95,
+    2.53
+   ],
+   "tail_r": [
+    -0.7425,
+    1.05,
+    -2.54
+   ],
+   "exhaust": [
+    -0.5445,
+    0.38,
+    -2.53
+   ]
+  },
+  "axles": [
+   1.6,
+   -1.4
+  ],
+  "wheel_r": 0.39,
+  "size": [
+   2.38,
+   5.1,
+   1.93
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "taxi": {
+  "name": "taxi",
+  "cls": "service",
+  "note": "yellow taxi on the saloon, roof sign, checker band",
+  "tris": 4100,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_r_l": 112,
+   "door_r_r": 112,
+   "bonnet": 428,
+   "boot": 104,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "glass_rear": 80,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 788,
+   "steering_wheel": 124,
+   "body": 660,
+   "roof_sign": 12
+  },
+  "pivots": {
+   "door_f_l": [
+    1.11,
+    0.85,
+    0.9288
+   ],
+   "door_f_r": [
+    -1.11,
+    0.85,
+    0.9288
+   ],
+   "door_r_l": [
+    0.91,
+    0.85,
+    -0.4112
+   ],
+   "door_r_r": [
+    -0.91,
+    0.85,
+    -0.4112
+   ],
+   "bonnet": [
+    0.0,
+    0.952,
+    0.945
+   ],
+   "boot": [
+    0.0,
+    1.012,
+    -1.8604
+   ],
+   "bumper_f": [
+    0.0,
+    0.501,
+    2.3625
+   ],
+   "bumper_r": [
+    0.0,
+    0.596,
+    -2.3575
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "glass_rear": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.705,
+    0.33,
+    1.425
+   ],
+   "wheel_fr": [
+    -0.705,
+    0.33,
+    1.425
+   ],
+   "wheel_rl": [
+    0.705,
+    0.33,
+    -1.375
+   ],
+   "wheel_rr": [
+    -0.705,
+    0.33,
+    -1.375
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.3631,
+    0.92,
+    0.3688
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "roof_sign": [
+    0.0,
+    1.47,
+    -0.1077
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.3631,
+    0.56,
+    -0.0812
+   ],
+   "seat_fr": [
+    -0.3631,
+    0.56,
+    -0.0812
+   ],
+   "seat_rl": [
+    0.344,
+    0.59,
+    -0.9312
+   ],
+   "seat_rr": [
+    -0.344,
+    0.59,
+    -0.9312
+   ],
+   "entry_l": [
+    1.36,
+    0.0,
+    0.0488
+   ],
+   "head_l": [
+    0.6552,
+    0.66,
+    2.355
+   ],
+   "tail_l": [
+    0.6825,
+    0.85,
+    -2.365
+   ],
+   "entry_r": [
+    -1.36,
+    0.0,
+    0.0488
+   ],
+   "head_r": [
+    -0.6552,
+    0.66,
+    2.355
+   ],
+   "tail_r": [
+    -0.6825,
+    0.85,
+    -2.365
+   ],
+   "exhaust": [
+    -0.5005,
+    0.28,
+    -2.355
+   ]
+  },
+  "axles": [
+   1.425,
+   -1.375
+  ],
+  "wheel_r": 0.33,
+  "size": [
+   2.22,
+   4.75,
+   1.642
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "van_delivery": {
+  "name": "van_delivery",
+  "cls": "van",
+  "note": "high-roof delivery van",
+  "tris": 3682,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_s_r": 36,
+   "bonnet": 428,
+   "bumper_f": 46,
+   "glass_front": 20,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 724,
+   "steering_wheel": 124,
+   "body": 700,
+   "back_door_l": 12,
+   "back_door_r": 12,
+   "bumper_r": 12
+  },
+  "pivots": {
+   "door_f_l": [
+    1.22,
+    1.465,
+    1.4832
+   ],
+   "door_f_r": [
+    -1.22,
+    1.465,
+    1.4832
+   ],
+   "door_s_r": [
+    -1.02,
+    1.465,
+    0.3432
+   ],
+   "bonnet": [
+    0.0,
+    1.112,
+    1.5025
+   ],
+   "bumper_f": [
+    0.0,
+    0.676,
+    2.9625
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.815,
+    0.37,
+    2.025
+   ],
+   "wheel_fr": [
+    -0.815,
+    0.37,
+    2.025
+   ],
+   "wheel_rl": [
+    0.815,
+    0.37,
+    -1.625
+   ],
+   "wheel_rr": [
+    -0.815,
+    0.37,
+    -1.625
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.407,
+    1.06,
+    1.1232
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "back_door_l": [
+    0.9344,
+    1.46,
+    -2.967
+   ],
+   "back_door_r": [
+    -0.9344,
+    1.46,
+    -2.967
+   ],
+   "bumper_r": [
+    0.0,
+    0.41,
+    -2.965
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.407,
+    0.7,
+    0.6732
+   ],
+   "seat_fr": [
+    -0.407,
+    0.7,
+    0.6732
+   ],
+   "seat_rl": [
+    0.3856,
+    0.73,
+    -0.1768
+   ],
+   "seat_rr": [
+    -0.3856,
+    0.73,
+    -0.1768
+   ],
+   "entry_l": [
+    1.47,
+    0.0,
+    0.8032
+   ],
+   "head_l": [
+    0.7344,
+    0.95,
+    2.955
+   ],
+   "tail_l": [
+    0.765,
+    0.99,
+    -2.965
+   ],
+   "entry_r": [
+    -1.47,
+    0.0,
+    0.8032
+   ],
+   "head_r": [
+    -0.7344,
+    0.95,
+    2.955
+   ],
+   "tail_r": [
+    -0.765,
+    0.99,
+    -2.965
+   ],
+   "exhaust": [
+    -0.561,
+    0.34,
+    -2.955
+   ]
+  },
+  "axles": [
+   2.025,
+   -1.625
+  ],
+  "wheel_r": 0.37,
+  "size": [
+   2.44,
+   6.03,
+   2.623
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "van_panel": {
+  "name": "van_panel",
+  "cls": "van",
+  "note": "panel van, sliding side door, barn doors, no rear windows",
+  "tris": 3682,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_s_r": 36,
+   "bonnet": 428,
+   "bumper_f": 46,
+   "glass_front": 20,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 724,
+   "steering_wheel": 124,
+   "body": 700,
+   "back_door_l": 12,
+   "back_door_r": 12,
+   "bumper_r": 12
+  },
+  "pivots": {
+   "door_f_l": [
+    1.2,
+    1.175,
+    1.1446
+   ],
+   "door_f_r": [
+    -1.2,
+    1.175,
+    1.1446
+   ],
+   "door_s_r": [
+    -1.0,
+    1.175,
+    0.0046
+   ],
+   "bonnet": [
+    0.0,
+    1.092,
+    1.1637
+   ],
+   "bumper_f": [
+    0.0,
+    0.656,
+    2.6125
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.795,
+    0.36,
+    1.675
+   ],
+   "wheel_fr": [
+    -0.795,
+    0.36,
+    1.675
+   ],
+   "wheel_rl": [
+    0.795,
+    0.36,
+    -1.625
+   ],
+   "wheel_rr": [
+    -0.795,
+    0.36,
+    -1.625
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.399,
+    1.03,
+    0.7846
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "back_door_l": [
+    0.916,
+    1.17,
+    -2.617
+   ],
+   "back_door_r": [
+    -0.916,
+    1.17,
+    -2.617
+   ],
+   "bumper_r": [
+    0.0,
+    0.41,
+    -2.615
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.399,
+    0.67,
+    0.3346
+   ],
+   "seat_fr": [
+    -0.399,
+    0.67,
+    0.3346
+   ],
+   "seat_rl": [
+    0.378,
+    0.7,
+    -0.5154
+   ],
+   "seat_rr": [
+    -0.378,
+    0.7,
+    -0.5154
+   ],
+   "entry_l": [
+    1.45,
+    0.0,
+    0.4646
+   ],
+   "head_l": [
+    0.72,
+    0.92,
+    2.605
+   ],
+   "tail_l": [
+    0.75,
+    0.97,
+    -2.615
+   ],
+   "entry_r": [
+    -1.45,
+    0.0,
+    0.4646
+   ],
+   "head_r": [
+    -0.72,
+    0.92,
+    2.605
+   ],
+   "tail_r": [
+    -0.75,
+    0.97,
+    -2.615
+   ],
+   "exhaust": [
+    -0.55,
+    0.33,
+    -2.605
+   ]
+  },
+  "axles": [
+   1.675,
+   -1.625
+  ],
+  "wheel_r": 0.36,
+  "size": [
+   2.4,
+   5.33,
+   2.053
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
+ "wagon": {
+  "name": "wagon",
+  "cls": "saloon",
+  "note": "estate car (station wagon)",
+  "tris": 4068,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_r_l": 112,
+   "door_r_r": 112,
+   "bonnet": 428,
+   "tailgate": 120,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "glass_side": 120,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 776,
+   "steering_wheel": 124,
+   "body": 596
+  },
+  "pivots": {
+   "door_f_l": [
+    1.11,
+    0.875,
+    0.9788
+   ],
+   "door_f_r": [
+    -1.11,
+    0.875,
+    0.9788
+   ],
+   "door_r_l": [
+    0.91,
+    0.875,
+    -0.3612
+   ],
+   "door_r_r": [
+    -0.91,
+    0.875,
+    -0.3612
+   ],
+   "bonnet": [
+    0.0,
+    0.952,
+    0.995
+   ],
+   "tailgate": [
+    0.0,
+    1.502,
+    -2.2058
+   ],
+   "bumper_f": [
+    0.0,
+    0.501,
+    2.4125
+   ],
+   "bumper_r": [
+    0.0,
+    0.576,
+    -2.4075
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "glass_side": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.705,
+    0.33,
+    1.475
+   ],
+   "wheel_fr": [
+    -0.705,
+    0.33,
+    1.475
+   ],
+   "wheel_rl": [
+    0.705,
+    0.33,
+    -1.345
+   ],
+   "wheel_rr": [
+    -0.705,
+    0.33,
+    -1.345
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.3631,
+    0.92,
+    0.4188
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.3631,
+    0.56,
+    -0.0312
+   ],
+   "seat_fr": [
+    -0.3631,
+    0.56,
+    -0.0312
+   ],
+   "seat_rl": [
+    0.344,
+    0.59,
+    -0.8812
+   ],
+   "seat_rr": [
+    -0.344,
+    0.59,
+    -0.8812
+   ],
+   "entry_l": [
+    1.36,
+    0.0,
+    0.0988
+   ],
+   "head_l": [
+    0.6552,
+    0.66,
+    2.405
+   ],
+   "tail_l": [
+    0.6825,
+    0.81,
+    -2.415
+   ],
+   "entry_r": [
+    -1.36,
+    0.0,
+    0.0988
+   ],
+   "head_r": [
+    -0.6552,
+    0.66,
+    2.405
+   ],
+   "tail_r": [
+    -0.6825,
+    0.81,
+    -2.415
+   ],
+   "exhaust": [
+    -0.5005,
+    0.28,
+    -2.405
+   ]
+  },
+  "axles": [
+   1.475,
+   -1.345
+  ],
+  "wheel_r": 0.33,
+  "size": [
+   2.22,
+   4.85,
+   1.504
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ }
+}
