@@ -30,7 +30,7 @@ def log(*a):
 
 
 DROP = re.compile(r'(suspension|badge|numberplate)', re.I)
-KINDS = [('wheel', re.compile(r'wheel', re.I), 4 * 300),
+KINDS = [('wheel', re.compile(r'wheel', re.I), 4 * 400),
          ('under', re.compile(r'bottom', re.I), 900),
          ('interior', re.compile(r'interior|steering', re.I), 1000),
          ('lights', re.compile(r'lightbar|headlights_glass|taillights|light|blinker|reverse', re.I), 450),
@@ -248,7 +248,7 @@ img_node = bmat.node_tree.nodes.new('ShaderNodeTexImage'); bmat.node_tree.nodes.
 bake_lo.data.materials.clear(); bake_lo.data.materials.append(bmat)
 B = sc.render.bake
 B.use_selected_to_active = True; B.use_cage = False
-B.cage_extrusion = 0.03; B.max_ray_distance = 0.08
+B.cage_extrusion = 0.05; B.max_ray_distance = 0.12
 B.margin_type = 'EXTEND'; B.use_clear = True; B.normal_space = 'TANGENT'
 
 
