@@ -705,6 +705,193 @@
   "res": 1024,
   "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
  },
+ "minivan": {
+  "name": "minivan",
+  "cls": "van",
+  "note": "seven-seat minivan, sliding doors both sides",
+  "tris": 4000,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_s_l": 40,
+   "door_s_r": 40,
+   "bonnet": 428,
+   "tailgate": 120,
+   "bumper_f": 46,
+   "bumper_r": 46,
+   "glass_front": 20,
+   "glass_side": 256,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 720,
+   "steering_wheel": 124,
+   "body": 592
+  },
+  "pivots": {
+   "door_f_l": [
+    1.19,
+    1.015,
+    1.0696
+   ],
+   "door_f_r": [
+    -1.19,
+    1.015,
+    1.0696
+   ],
+   "door_s_l": [
+    0.99,
+    1.015,
+    -0.0704
+   ],
+   "door_s_r": [
+    -0.99,
+    1.015,
+    -0.0704
+   ],
+   "bonnet": [
+    0.0,
+    1.062,
+    1.0884
+   ],
+   "tailgate": [
+    0.0,
+    1.762,
+    -2.3306
+   ],
+   "bumper_f": [
+    0.0,
+    0.621,
+    2.5375
+   ],
+   "bumper_r": [
+    0.0,
+    0.641,
+    -2.5325
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "glass_side": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.785,
+    0.36,
+    1.6
+   ],
+   "wheel_fr": [
+    -0.785,
+    0.36,
+    1.6
+   ],
+   "wheel_rl": [
+    0.785,
+    0.36,
+    -1.43
+   ],
+   "wheel_rr": [
+    -0.785,
+    0.36,
+    -1.43
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.395,
+    0.98,
+    0.7096
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.395,
+    0.62,
+    0.2596
+   ],
+   "seat_fr": [
+    -0.395,
+    0.62,
+    0.2596
+   ],
+   "seat_rl": [
+    0.3742,
+    0.65,
+    -0.5904
+   ],
+   "seat_rr": [
+    -0.3742,
+    0.65,
+    -0.5904
+   ],
+   "entry_l": [
+    1.44,
+    0.0,
+    0.3896
+   ],
+   "head_l": [
+    0.7128,
+    0.88,
+    2.53
+   ],
+   "tail_l": [
+    0.7425,
+    0.92,
+    -2.54
+   ],
+   "entry_r": [
+    -1.44,
+    0.0,
+    0.3896
+   ],
+   "head_r": [
+    -0.7128,
+    0.88,
+    2.53
+   ],
+   "tail_r": [
+    -0.7425,
+    0.92,
+    -2.54
+   ],
+   "exhaust": [
+    -0.5445,
+    0.3,
+    -2.53
+   ]
+  },
+  "axles": [
+   1.6,
+   -1.43
+  ],
+  "wheel_r": 0.36,
+  "size": [
+   2.38,
+   5.1,
+   1.763
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
  "muscle": {
   "name": "muscle",
   "cls": "sports",
