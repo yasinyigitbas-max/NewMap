@@ -5,8 +5,9 @@ extends SceneTree
 ## Meshy's rig (skeleton_template "mixamo", include_fingers) has the player's bone names, but its bones are turned
 ## differently at rest and its arms rest lower than a T-pose, and (the study) "In Godot 4 a bone's pose includes its
 ## rest position, so clips can be shared only between skeletons whose bone names and rest poses both match". So:
-## 1. his arms, legs and fingers are turned, joint by joint, until each bone lies along the line the player's bone
-##    lies along at rest, and the mesh is carried along by its own skin weights (the pose is baked into the mesh);
+## 1. each arm (shoulder joint to wrist), each leg (hip joint to ankle), each hand and each finger bone is turned
+##    until it lies along the line the player's lies along at rest, and the mesh is carried along by its own skin
+##    weights (the pose is baked into the mesh);
 ## 2. a new skeleton is made: the player's bones, each turned at rest exactly as the player's is, each at the NPC's
 ##    own joint. The mesh is bound to it.
 ## His bone lengths stay his own. Writes traversal/npc/<name>.scn and <name>_basecolor.jpg.
@@ -16,7 +17,14 @@ extends SceneTree
 const PLAYER := "res://traversal/character/player_v4_rooted.scn"
 const TEX_SIZE := 1024          # NOT in the study, mine: the NPC's texture, pixels a side (the player's is 2048)
 # the bones laid along the player's own: [bone, the child it points at]
-const LIMBS := [["Arm", "ForeArm"], ["ForeArm", "Hand"], ["Hand", "HandMiddle1"], ["UpLeg", "Leg"], ["Leg", "Foot"]]
+# A whole arm is laid along the player's by the line from its shoulder joint to its wrist, a whole leg by the line from
+# its hip joint to its ankle: NOT bone by bone. Meshy's rigger can put an elbow or a knee joint off the middle of a
+# straight limb (the elderly woman, npc_14: her elbow joints 4 cm under her straight arms); straightening the BONES
+# then bends the MESH at that joint the other way (Yasin, 27 Nov: "old womans arms look broken").
+const LIMBS := [["Arm", "Hand"], ["Hand", "HandMiddle1"], ["UpLeg", "Foot"]]
+const SAME_PLACE := 0.05       # NOT in the study, mine: one of Meshy's own bones this near a joint of the player's skeleton stands for it (m)
+const HAND_MOST_DEG := 30.0     # NOT in the study, mine: a hand or finger bone that would have to be turned further than
+                                # this is left as it is: its joints are misplaced, not posed (her right hand: 65.7 degrees)
 const FINGERS := ["Thumb", "Index", "Middle", "Ring", "Pinky"]
 
 
@@ -67,6 +75,7 @@ func _initialize() -> void:
 	turn.resize(nb)
 	put.resize(nb)
 	var most_deg := 0.0
+	var left_alone := []
 	for i in nb:                # (a parent always comes before its children)
 		var p := b.get_bone_parent(i)
 		var q := Basis.IDENTITY if p < 0 else (turn[p] as Basis)
@@ -76,11 +85,16 @@ func _initialize() -> void:
 			var now := (q * ((at[b.find_bone(pairs[n])] as Vector3) - (at[i] as Vector3))).normalized()
 			var want := (a.get_bone_global_rest(a.find_bone(pairs[n])).origin - a.get_bone_global_rest(a.find_bone(n)).origin).normalized()
 			var axis := now.cross(want)
-			if axis.length() > 0.00001:
+			var hand_part := "Hand" in n.trim_prefix("mixamorig_").trim_prefix("Left").trim_prefix("Right")
+			if hand_part and rad_to_deg(now.angle_to(want)) > HAND_MOST_DEG:
+				left_alone.append("%s (%.0f)" % [n.trim_prefix("mixamorig_"), rad_to_deg(now.angle_to(want))])
+			elif axis.length() > 0.00001:
 				q = Basis(axis.normalized(), now.angle_to(want)) * q
 				most_deg = maxf(most_deg, rad_to_deg(now.angle_to(want)))
 		turn[i] = q
 	print("the furthest a bone was turned to lie along the player's: %.1f degrees" % most_deg)
+	if not left_alone.is_empty():
+		print("hand and finger bones left as Meshy placed them (degrees off): ", ", ".join(left_alone))
 
 	# ---- 2. the new skeleton: the player's bones and rest turns, the NPC's joints
 	var sk := Skeleton3D.new()
@@ -118,15 +132,45 @@ func _initialize() -> void:
 
 	# ---- the mesh, carried along by its own weights, and bound to the new skeleton
 	var skin := mi.skin
-	var to_new := []            # the old skin's bind -> [the old bone, the new bone]
+	# A bone the player has not got. Meshy's rigger adds some of its own, never the same from body to body (27 Nov:
+	# 32 to 74 bones over sixteen bodies): a second chain down each arm from the chest on the elderly woman, carrying
+	# up to 43 % of her upper arms; bones in the face, the toes, the hands. Its share of the mesh goes to the
+	# player's bone whose joint is at the same place if there is one (her second arm chain lies on her arm), else
+	# to the nearest bone above it that the player has. (Yasin, 27 Nov: "old womans arms look broken": her second
+	# chain had gone to her chest, so half of each arm stayed where it was when the arm came down.)
+	var stand_in := []          # for each of Meshy's bones: the one of Meshy's bones that stands for it
+	var extras := []
+	for i in nb:
+		var who := i
+		if sk.find_bone(b.get_bone_name(i)) < 0:
+			var near := -1
+			var near_d := SAME_PLACE
+			for j in nb:
+				if sk.find_bone(b.get_bone_name(j)) >= 0 and (at[j] as Vector3).distance_to(at[i]) < near_d:
+					near = j
+					near_d = (at[j] as Vector3).distance_to(at[i])
+			who = near
+			if who < 0:
+				who = i
+				while who >= 0 and sk.find_bone(b.get_bone_name(who)) < 0:
+					who = b.get_bone_parent(who)
+			extras.append("%s -> %s" % [b.get_bone_name(i), b.get_bone_name(who).trim_prefix("mixamorig_") if who >= 0 else "?"])
+		stand_in.append(who)
+	if not extras.is_empty():
+		print("Meshy's own bones and who takes their share: ", ", ".join(extras))
+	var missing := []
+	for i in na:
+		if b.find_bone(a.get_bone_name(i)) < 0 and a.get_bone_name(i) != "Root" and not a.get_bone_name(i).ends_with("_End") and not a.get_bone_name(i).ends_with("4"):
+			missing.append(a.get_bone_name(i).trim_prefix("mixamorig_"))
+	if not missing.is_empty():
+		print("the player's bones Meshy did not give this body (%d; nothing of the mesh moves with them): %s" % [missing.size(), ", ".join(missing)])
+	var to_new := []            # the old skin's bind -> [the old bone that stands for it, the new bone]
 	for k in skin.get_bind_count():
 		var ob := skin.get_bind_bone(k)
 		if ob < 0:
 			ob = b.find_bone(skin.get_bind_name(k))
-		var up := ob
-		while up >= 0 and sk.find_bone(b.get_bone_name(up)) < 0:
-			up = b.get_bone_parent(up)      # (a bone the player has not got: its parent takes its share)
-		to_new.append([ob, sk.find_bone(b.get_bone_name(up))])
+		var up := int(stand_in[ob])
+		to_new.append([up, sk.find_bone(b.get_bone_name(up))])
 	var mesh := ArrayMesh.new()
 	var tris := 0
 	for s in mi.mesh.get_surface_count():

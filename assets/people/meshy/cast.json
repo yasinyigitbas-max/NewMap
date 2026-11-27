@@ -1,14 +1,80 @@
 [
- ["npc_05", 1.83, "young_black_man", "The new person is a young Black man of about 25 with dark brown skin, a slim athletic build, short black hair in a tight fade and a clean-shaven face, no tattoos. He wears a plain white short-sleeved t-shirt that fits close to his body, straight-legged light blue jeans that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain black sneakers with no logos."],
- ["npc_06", 1.66, "black_woman_office", "The new person is a Black woman of about 40 with dark brown skin, an average build and black hair in a neat low bun, no tattoos. She wears a plain cream short-sleeved blouse that fits close to her body, straight-legged charcoal grey office trousers that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain black shoes with no logos."],
- ["npc_07", 1.80, "police_officer_man", "The new person is a male city police officer of about 35 with light brown skin, a sturdy build, short dark hair and a clean-shaven face, no tattoos. He wears a plain dark navy blue short-sleeved uniform shirt tucked in, with plain blank shoulder patches and a plain blank metal badge on the chest with no text and no real emblem, a black duty belt with small closed pouches that sit close to the body, straight-legged dark navy blue uniform trousers that end at the ankle, and plain black flat low-cut shoes. No hat, no weapon, nothing in his hands."],
- ["npc_08", 1.65, "police_officer_woman", "The new person is a female city police officer of about 30, a Latina woman with tan skin, an athletic build and dark hair tied back in a tight bun, no tattoos. She wears a plain dark navy blue short-sleeved uniform shirt tucked in, with plain blank shoulder patches and a plain blank metal badge on the chest with no text and no real emblem, a black duty belt with small closed pouches that sit close to the body, straight-legged dark navy blue uniform trousers that end at the ankle, and plain black flat low-cut shoes. No hat, no weapon, nothing in her hands."],
- ["npc_09", 1.60, "shop_clerk_woman", "The new person is a female shop clerk of about 22, an East Asian woman with fair skin, a slim build and straight black hair cut to the chin, no tattoos. She wears a plain red short-sleeved polo shirt that fits close to her body, a short plain dark green shop apron tied at the waist that ends above the knees and lies flat against her thighs, straight-legged black trousers that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain white sneakers with no logos. No name tag text, no logos."],
- ["npc_10", 1.74, "shop_clerk_man", "The new person is a male shop clerk of about 28, a South Asian man with brown skin, a slim build, short black hair and a short neat beard, no tattoos. He wears a plain light green short-sleeved polo shirt that fits close to his body, a short plain black shop apron tied at the waist that ends above the knees and lies flat against his thighs, straight-legged khaki trousers that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain dark grey sneakers with no logos. No name tag text, no logos."],
- ["npc_11", 1.82, "beach_goer_man", "The new person is a male beach goer of about 30 with tanned skin, an average build with a slight belly, sun-bleached messy blond hair and light stubble, no tattoos. He wears a plain sleeveless light blue tank top that fits close to his body, knee-length orange swim shorts that are not baggy, with bare lower legs, and flat plain black flip-flop sandals on bare feet."],
- ["npc_12", 1.68, "beach_goer_woman", "The new person is a female beach goer of about 27, a Black woman with medium brown skin, an athletic build and curly black hair tied up in a high puff, no tattoos. She wears a plain sleeveless coral pink tank top that fits close to her body, short plain white denim shorts with bare legs, and flat plain tan sandals on bare feet."],
- ["npc_13", 1.70, "elderly_man", "The new person is an elderly East Asian man of about 72 with a thin build, slightly rounded shoulders, thin white hair and glasses, no tattoos. He wears a plain light grey short-sleeved button-up shirt that fits close to his body, tucked into straight-legged brown trousers with a belt that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain brown shoes with no logos."],
- ["npc_14", 1.57, "elderly_woman", "The new person is an elderly white woman of about 70 with a soft, slightly heavy build and short curly grey hair, no tattoos. She wears a plain lilac short-sleeved knit top that fits close to her body, straight-legged navy blue trousers that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain beige shoes with no logos."],
- ["npc_15", 1.76, "construction_worker", "The new person is a male construction worker of about 40, a Latino man with tan skin, a strong stocky build, short black hair and a thick moustache, no tattoos. He wears a plain orange short-sleeved t-shirt that fits close to his body under a short yellow high-visibility vest with two grey reflective stripes that lies flat against his chest, a yellow hard hat on his head, straight-legged dusty blue work jeans that end at the ankle, and plain tan flat low-cut work shoes with no logos. Nothing in his hands."],
- ["npc_16", 1.78, "businessman", "The new person is a businessman of about 45, a Middle Eastern man with olive skin, an average build, short black hair greying at the temples and a short trimmed beard, no tattoos. He wears a plain white short-sleeved dress shirt that fits close to his body with a plain dark red tie, tucked into straight-legged dark grey suit trousers with a black belt that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain black leather shoes with no logos."]
+ [
+  "npc_05",
+  1.83,
+  "young_black_man",
+  "The new person is a young Black man of about 25 with dark brown skin, a slim athletic build, short black hair in a tight fade and a clean-shaven face, no tattoos. He wears a plain white short-sleeved t-shirt that fits close to his body, straight-legged light blue jeans that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain black sneakers with no logos."
+ ],
+ [
+  "npc_06",
+  1.66,
+  "black_woman_office",
+  "The new person is a Black woman of about 40 with dark brown skin, an average build and black hair in a neat low bun, no tattoos. She wears a plain cream short-sleeved blouse that fits close to her body, straight-legged charcoal grey office trousers that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain black shoes with no logos."
+ ],
+ [
+  "npc_07",
+  1.8,
+  "police_officer_man",
+  "The new person is a male city police officer of about 35 with light brown skin, a sturdy build, short dark hair and a clean-shaven face, no tattoos. He wears a plain dark navy blue short-sleeved uniform shirt tucked in, with plain blank shoulder patches and a plain blank metal badge on the chest with no text and no real emblem, a black duty belt with small closed pouches that sit close to the body, straight-legged dark navy blue uniform trousers that end at the ankle, and plain black flat low-cut shoes. No hat, no weapon, nothing in his hands."
+ ],
+ [
+  "npc_08",
+  1.65,
+  "police_officer_woman",
+  "The new person is a female city police officer of about 30, a Latina woman with tan skin, an athletic build and dark hair tied back in a tight bun, no tattoos. She wears a plain dark navy blue short-sleeved uniform shirt tucked in, with plain blank shoulder patches and a plain blank metal badge on the chest with no text and no real emblem, a black duty belt with small closed pouches that sit close to the body, straight-legged dark navy blue uniform trousers that end at the ankle, and plain black flat low-cut shoes. No hat, no weapon, nothing in her hands."
+ ],
+ [
+  "npc_09",
+  1.6,
+  "shop_clerk_woman",
+  "The new person is a female shop clerk of about 22, an East Asian woman with fair skin, a slim build and straight black hair cut to the chin, no tattoos. She wears a plain red short-sleeved polo shirt that fits close to her body, a short plain dark green shop apron tied at the waist that ends above the knees and lies flat against her thighs, straight-legged black trousers that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain white sneakers with no logos. No name tag text, no logos."
+ ],
+ [
+  "npc_10",
+  1.74,
+  "shop_clerk_man",
+  "The new person is a male shop clerk of about 28, a South Asian man with brown skin, a slim build, short black hair and a short neat beard, no tattoos. He wears a plain light green short-sleeved polo shirt that fits close to his body, a short plain black shop apron tied at the waist that ends above the knees and lies flat against his thighs, straight-legged khaki trousers that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain dark grey sneakers with no logos. No name tag text, no logos."
+ ],
+ [
+  "npc_11",
+  1.82,
+  "beach_goer_man",
+  "The new person is a male beach goer of about 30 with tanned skin, an average build with a slight belly, sun-bleached messy blond hair and light stubble, no tattoos. He wears a plain sleeveless light blue tank top that fits close to his body, knee-length orange swim shorts that are not baggy, with bare lower legs, and flat plain black flip-flop sandals on bare feet."
+ ],
+ [
+  "npc_12",
+  1.68,
+  "beach_goer_woman",
+  "The new person is a female beach goer of about 27, a Black woman with medium brown skin, an athletic build and curly black hair tied up in a high puff, no tattoos. She wears a plain sleeveless coral pink tank top that fits close to her body, short plain white denim shorts with bare legs, and flat plain tan sandals on bare feet."
+ ],
+ [
+  "npc_13",
+  1.7,
+  "elderly_man",
+  "The new person is an elderly East Asian man of about 72 with a thin build, slightly rounded shoulders, thin white hair and glasses, no tattoos. He wears a plain light grey short-sleeved button-up shirt that fits close to his body, tucked into straight-legged brown trousers with a belt that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain brown shoes with no logos."
+ ],
+ [
+  "npc_14",
+  1.57,
+  "elderly_woman",
+  "The new person is an elderly white woman of about 70 with a soft, slightly heavy build and short curly grey hair, no tattoos. She wears a plain lilac short-sleeved knit top that fits close to her body, straight-legged navy blue trousers that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain beige shoes with no logos."
+ ],
+ [
+  "npc_15",
+  1.76,
+  "construction_worker",
+  "The new person is a male construction worker of about 40, a Latino man with tan skin, a strong stocky build, short black hair and a thick moustache, no tattoos. He wears a plain orange short-sleeved t-shirt that fits close to his body under a short yellow high-visibility vest with two grey reflective stripes that lies flat against his chest, a yellow hard hat on his head, straight-legged dusty blue work jeans that end at the ankle, and plain tan flat low-cut work shoes with no logos. Nothing in his hands."
+ ],
+ [
+  "npc_16",
+  1.78,
+  "businessman",
+  "The new person is a businessman of about 45, a Middle Eastern man with olive skin, an average build, short black hair greying at the temples and a short trimmed beard, no tattoos. He wears a plain white short-sleeved dress shirt that fits close to his body with a plain dark red tie, tucked into straight-legged dark grey suit trousers with a black belt that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain black leather shoes with no logos."
+ ],
+ [
+  "npc_17",
+  1.57,
+  "elderly_woman_slim",
+  "The new person is an elderly white woman of about 70 with an average build, narrow shoulders and slim arms, and short curly grey hair, no tattoos. She wears a plain lilac short-sleeved t-shirt that fits close to her body with short sleeves that fit close round her slim upper arms, straight-legged navy blue trousers that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain beige shoes with no logos."
+ ]
 ]
