@@ -1,0 +1,31 @@
+// The constants of traversal_lab/traversal/moves/interact.gd, by the script's names and with the script's values
+// (made from the script by a tool, so that no figure is copied by hand; the reason for each is in the script).
+	String CLIPS;
+	static constexpr double PALM = 0.08;
+	static constexpr double HAND_FADE = 0.15;
+	Dictionary DOOR;
+	static constexpr double DOOR_NEAR = 0.25;
+	static constexpr double DOOR_ASIDE = 0.45;
+	Dictionary SIT;
+	static constexpr double SIT_REACH = 2.5;
+	static constexpr double SIT_AT = 0.12;
+	static constexpr double SIT_WALK_MOST = 6.0;
+	static constexpr double TURN_TIME = 0.8;
+	static constexpr double SWIVEL_TIME = 0.7;
+	static constexpr double UP_HOLD = 0.25;
+	Dictionary CAR;
+	static constexpr double CAR_REACH = 2.5;
+	Dictionary COVER;
+	Dictionary COVER_AIM;
+	static constexpr double COVER_LOW = 0.80;
+	static constexpr double COVER_HIGH = 1.85;
+	static constexpr double COVER_OFF = 0.30;
+	static constexpr double COVER_REACH = 2.0;
+	static constexpr double COVER_PACE = 1.16;
+	static constexpr double COVER_SIDE_LEN = 1.1333;
+	static constexpr double COVER_DROP_MOST = 0.25;
+	static constexpr double COVER_HEAD_ROOM = 0.03;
+	static constexpr double PEEK_AFTER = 0.3;
+	static constexpr double PEEK_HOLD = 1.0;
+	static constexpr double ALIGN_TIME = 0.35;
+	static constexpr double COVER_END = 0.22;
