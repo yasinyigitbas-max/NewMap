@@ -1,0 +1,39 @@
+{
+ "i2i.json": {
+  "id": "01a21cda-cbae-73f0-9c7c-fd58d7645a9c",
+  "type": "image-to-image",
+  "status": "SUCCEEDED",
+  "created_at": 1795780431672,
+  "consumed_credits": 6,
+  "ai_model": "nano-banana-2",
+  "prompt": "Redraw this picture as a full-body character reference of a DIFFERENT man, front view, on the same plain grey background. Keep exactly the same pose, the same height in the frame, the same body proportions (crotch at half of his total height, knees at a quarter), the same framing and the same lighting. The new man is an ordinary middle-aged city resident of average slim build, about 45 years old, with short greying brown hair, a clean-shaven face, no tattoos and bare forearms. He wears a plain dark blue short-sleeved polo shirt, straight-legged beige chino trousers that end at the ankle so the ankles are clearly visible, and thin-soled, low-cut, flat plain brown leather shoes with no logos. He stands upright in a T-pose with both arms held straight out to the sides exactly as in the picture, palms down, fingers apart, feet shoulder-width apart, whole body from head to feet in frame.",
+  "reference": "assets/people/meshy/player_v4/concept.png"
+ },
+ "i3d.json": {
+  "id": "01a21cdb-a9ab-77d2-becd-fd1ab98bae46",
+  "type": "image-to-3d",
+  "status": "SUCCEEDED",
+  "created_at": 1795780488435,
+  "consumed_credits": 30,
+  "request": {
+   "ai_model": "latest",
+   "pose_mode": "t-pose",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 5000,
+   "should_texture": true
+  }
+ },
+ "rig.json": {
+  "id": "01a21cdc-b818-77cd-9008-ce32b00419ef",
+  "type": "rig",
+  "status": "SUCCEEDED",
+  "created_at": 1795780560750,
+  "consumed_credits": 5,
+  "request": {
+   "height_meters": 1.8,
+   "skeleton_template": "mixamo",
+   "include_fingers": true
+  }
+ }
+}
