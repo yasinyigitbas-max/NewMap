@@ -17,7 +17,8 @@ var _tick := 0
 
 func _ready() -> void:
 	top_level = true
-	detector = Detector.new()
+	# (`-- --native`: the detector translated to C++, native/traversal, where its library has been built)
+	detector = (ClassDB.instantiate(&"TravDetector") if ("--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(&"TravDetector")) else Detector.new())
 	detector.set(&"body", body)
 	_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	_mat.vertex_color_use_as_albedo = true

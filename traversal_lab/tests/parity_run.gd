@@ -25,6 +25,9 @@ func _run() -> void:
 	body = lab.get(&"body")
 	tape = lab.get(&"tape")
 	print("body is ", body.get_class(), "  script: ", body.get_script() != null)
+	var det: RefCounted = ClassDB.instantiate(&"TravDetector") if ("--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(&"TravDetector")) else (load("res://traversal/detect/detector.gd") as GDScript).new()
+	det.set(&"body", body)
+	print("detector is ", det.get_class(), "  script: ", det.get_script() != null)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_n
 	var st: Array = ((lab.get(&"course") as Node3D).get(&"stations") as Array) + ((lab.get(&"course") as Node3D).get(&"extras") as Array)
@@ -79,9 +82,31 @@ func _run() -> void:
 				line.append((v as Vector3).x); line.append((v as Vector3).y); line.append((v as Vector3).z)
 			else:
 				line.append(float(v))
+		if t % 5 == 0:
+			# the measuring routine, asked the way he faces and a little to each side: every number of its records
+			for turn: float in [0.0, 0.5, -0.5]:
+				var way := (-body.global_transform.basis.z).rotated(Vector3.UP, turn)
+				_add(line, det.call(&"measure", way))
+				_add(line, det.call(&"measure_edge", way))
+			line.append(1.0 if bool(det.call(&"_fits", body.global_position + Vector3(0.3, 0.0, 0.0), 1.80)) else 0.0)
 		f.store_var(line)
 		if keys["jump"] and hold < 5:
 			keys["jump"] = false
 	f.close()
 	print("written ", ticks, " ticks")
 	quit()
+
+
+## Every number of a record, in the order of its keys sorted by name (a text counts by its hash).
+func _add(line: PackedFloat64Array, rec: Dictionary) -> void:
+	var keys := rec.keys()
+	keys.sort()
+	line.append(float(keys.size()))
+	for k: String in keys:
+		var v: Variant = rec[k]
+		if v is Vector3:
+			line.append((v as Vector3).x); line.append((v as Vector3).y); line.append((v as Vector3).z)
+		elif v is String:
+			line.append(float((v as String).hash()))
+		else:
+			line.append(float(v))

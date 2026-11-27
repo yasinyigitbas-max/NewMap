@@ -11,7 +11,7 @@ run() { name=$1; shift
   timeout 1700 godot --headless --fixed-fps 60 --path . -s res://tests/parity_run.gd -- --out="$OUT/${name}_script.bin" "$@" > "$OUT/${name}_script.log" 2>&1 &
   timeout 1700 godot --headless --fixed-fps 60 --path . -s res://tests/parity_run.gd -- --out="$OUT/${name}_native.bin" --native "$@" > "$OUT/${name}_native.log" 2>&1
   wait
-  grep -h "body is" "$OUT/${name}_script.log" "$OUT/${name}_native.log" | tr '\n' ' '; echo; }
+  grep -h "body is\|detector is" "$OUT/${name}_script.log" "$OUT/${name}_native.log" | tr '\n' ' '; echo; }
 run lanes --lanes
 run r11 --seed=11 --ticks=20000 --noact
 run r23 --seed=23 --ticks=20000

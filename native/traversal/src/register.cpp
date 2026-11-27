@@ -3,6 +3,7 @@
 // The rules of the port are in reports/TRAVERSAL JOB BOARD.md: the script version in traversal_lab/traversal is the
 // reference; a layer is a line-for-line translation and replaces nothing until it gives the same numbers.
 #include "trav_body.h"
+#include "trav_detector.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/class_db.hpp>
@@ -16,6 +17,7 @@ static void trav_init(ModuleInitializationLevel p_level) {
 		return;
 	}
 	GDREGISTER_CLASS(TravBody);
+	GDREGISTER_CLASS(TravDetector);
 }
 
 static void trav_term(ModuleInitializationLevel p_level) {}

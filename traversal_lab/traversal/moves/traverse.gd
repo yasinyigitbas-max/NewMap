@@ -342,7 +342,8 @@ var _o_high := 0.0              # the height the climb take goes up, on him
 
 
 func _ready() -> void:
-	detector = Detector.new()
+	# (`-- --native`: the detector translated to C++, native/traversal, where its library has been built)
+	detector = (ClassDB.instantiate(&"TravDetector") if ("--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(&"TravDetector")) else Detector.new())
 	detector.set(&"body", body)
 	for key: String in MOVES:
 		var c: Resource = load(String(MOVES[key]["res"]))

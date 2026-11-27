@@ -85,7 +85,8 @@ How nothing breaks (the rules of the port):
 - [x] a. (trav87) The body in C++ (`native/traversal/src/trav_body.*`): 121,600 ticks the same as the script byte for
       byte (`bash tools/traversal/parity.sh <folder>`), every stage test passes with `-- --native`, the audit on it is
       26 of 114, the same lines. For the next layers: add that layer's numbers to `tests/parity_run.gd`.
-- [ ] b. Detection.
+- [x] b. (trav88) Detection in C++ (`trav_detector.*`): about 146,000 records the same as the script byte for byte;
+      every stage test and the audit the same with `-- --native`.
 - [ ] c. The character and its corrections.
 - [ ] d. The traversal moves.
 - [ ] e. Doors, sitting, the phone, the car, cover.

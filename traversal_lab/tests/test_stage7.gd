@@ -71,7 +71,8 @@ func _run() -> void:
 	# "Detection only. No clips.": the traversal moves are off while it is tested
 	if lab.get(&"traverse") != null:
 		(lab.get(&"traverse") as Node).set(&"enabled", false)
-	det = Detector.new()
+	# (`-- --native`: the detector translated to C++, native/traversal, where its library has been built)
+	det = (ClassDB.instantiate(&"TravDetector") if ("--native" in OS.get_cmdline_user_args() and ClassDB.class_exists(&"TravDetector")) else Detector.new())
 	det.set(&"body", body)
 	for s: Dictionary in stations:
 		var kind := String(s["kind"])
