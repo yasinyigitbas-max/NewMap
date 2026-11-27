@@ -152,6 +152,15 @@ and get to work on those animations."
 - [ ] the same on the NPCs.
 - [ ] each weapon in the player's hand, looking right (no logic behind them yet: the look only).
 - [ ] combat moves: NOT asked for yet beyond being named; ask him what the set is before building any.
+- 27 Nov, later, his words: "if the takes dont fit our character or npcs, order new ones from kimodo"; "okay tune
+  them [the NPCs] while going on with carry and guns. get shooting aiming down sight reload for both single and two
+  handed weapons. after they are done make another exe regarding only these moves."
+- [ ] guns: aim down the sight, shoot, reload, for a one-handed weapon (pistol) and a two-handed one (rifle /
+      shotgun). The look only; no hit logic.
+- [ ] NPC tuning alongside (from `reports/NPC cast civilian run.md`): npc_09 and npc_18 (planted foot rises 2 to
+      4 cm walking), npc_18 and npc_31 (sit low), npc_09 (sits high), feet hanging when seated (22 bodies over
+      5 cm), their own pace.
+- [ ] then an exe of only these moves (carry, pick up / put down, the weapons: hold, aim, shoot, reload).
 - New code for these is written in C++ from the start (his ground rule), with a script only where a test needs one.
 
 ## NPCs (27 Nov, started at his word; the ragdolls still wait for his go)
