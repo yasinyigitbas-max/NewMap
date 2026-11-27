@@ -55,6 +55,8 @@ func _physics_process(_d: float) -> bool:
 			shot_states[want] = -1.0; shots.append(root.get_texture().get_image())
 	match step:
 		0:
+			# `-- --trav` (28 Nov): he is the traversal character; at the wheel he is drawn in the driver figure's pose
+			if t > 0.3 and "--trav" in OS.get_cmdline_user_args() and not bool(player.call(&"get_traversal")): player.call(&"set_traversal", true)
 			if t < 1.5: return false
 			_check(bool(car.call(&"enter", player)), "he goes to get in (from the car's far side)"); step = 1; t0 = t
 		1:
@@ -65,6 +67,13 @@ func _physics_process(_d: float) -> bool:
 			step = 2; t0 = t
 		2:
 			if t - t0 < 1.0: return false
+			if bool(player.call(&"get_traversal")):
+				var body: Node3D = player.call(&"get_traversal_body")
+				var sk: Skeleton3D = body.get_node("Character").get(&"skel")
+				var hips: Vector3 = sk.global_transform * sk.get_bone_global_pose(sk.find_bone("mixamorig_Hips")).origin
+				var head: Vector3 = sk.global_transform * sk.get_bone_global_pose(sk.find_bone("mixamorig_Head")).origin
+				var dh: Vector3 = car.call(&"get_driver_hips")
+				_check(body.visible and hips.distance_to(dh) < 0.15, "seated, the traversal character is drawn where the driver figure sits (hips %.2f m apart; his head %.2f m over his hips)" % [hips.distance_to(dh), head.y - hips.y])
 			_check(bool(car.call(&"leave")), "stopped, he gets out"); step = 3; t0 = t
 		3:
 			if int(car.call(&"get_entry_state")) != 0:

@@ -244,6 +244,29 @@ else, don't merge anything else that is involving play or npc movement".
       - STILL TO BRING IN, in this order: NPC acts on the new bodies; the far crowd from the new bodies; into a car
         as the new character; touch buttons for the new moves; the old player's phone / talk / bicycle / swimming /
         combat on the new character; the traversal's own strike in place of the TEMP line.
+      - 28 Nov, EVERYTHING IN (his words: "i told i want everything new in the new build"; "get the npcs working with
+        every action"; "i especially need the new player character and all of its moves in"; "i need a release
+        build, i can only download the new builds. i dont have cables now"):
+        PEOPLE: a bench seat = the new body's own sit-down / seated / get-up takes; phone and carried bag, box, case =
+        its own holds; every other act and being shoved or knocked down = THE POSE COPY (`native/src/trav_mirror.*`:
+        the old figure goes on playing, not drawn; its pose is put on the new skeleton bone by bone). Seen in frames
+        beside the old figures: ground sit, lying, fight stance, phone up, duck. Not seen: knocked down, the bench.
+        PLAYER: six touch buttons in traversal mode (USE, HANDS, AIM, FIRE, RELOAD, DROP; touch screens or
+        `-- --travbuttons`; their places are mine, not tried beside the HUD's buttons); at the wheel and on the
+        bicycle he is drawn in the driver's / rider's pose by the pose copy (`set_ride_figure`, `ride_pose`):
+        `test_car_entry.gd -- --trav` RESULT PASS, hips 6 cm from the driver's, seen in 4 frames walking to the door
+        and getting in; the bicycle NOT run. The four nearest free benches are seats for his own take
+        (`CityCrowd::trav_benches`; `tests/people/test_trav_bench.gd` RESULT PASS on a flat floor at the bench's
+        height: in the city the bench's own height is not tried). The game's phone (CityHud) = the body's phone
+        hold; the game's fight = fists up, the HUD's punch = the fire key (whether blows land is the crowd's count
+        as before: not tried). Swimming, talk gestures, his voice: still nothing in this mode.
+        THE BUILD: `bash tools/city/rig/publish_build.sh` on his PC (sync, bake, C++, export, GitHub release to
+        download). The bake is needed for the damage update (surface names, ground map). NOT run after the bake:
+        the traffic's `make_streets.gd` (the map's pieces were not changed by this work).
+        Tests on the last module: test_trav_player, test_trav_people, test_trav_bench, test_crowd_game,
+        test_native_load, test_car_entry, test_city_car, test_damage, test_player_fight RESULT PASS.
+        test_acts RESULT FAIL (2 clip-order lines of the OLD figures; trav people are off there; not checked
+        against before this work).
       - the NPC parity run (`EXTRA="--npc=..."`) now FAILS by design: the C++ NPC has its own pace, the frozen
         script NPC has not. The player's parity run still passes.
 

@@ -31,6 +31,7 @@
 #include <godot_cpp/variant/vector3.hpp>
 
 #include <vector>
+#include "trav_mirror.h"
 
 namespace godot {
 
@@ -127,19 +128,15 @@ private:
 	struct TravNb { class CharacterBody3D *body = nullptr; class CityTravTape *tape = nullptr; bool on = false, going = false, failed = false; int walker = -1; float base_pace = 1.0f;
 		// sitting with the body's own take: 0 not, 1 asked (its seat is the one seat in the group "tl_seat"), 2 seated, 3 getting up
 		int sit = 0; float sit_t = 0.0f; class Node3D *seat = nullptr;
-		// the pose copy (an act the new bodies have no take for): the old figure's pose put on the new skeleton
-		bool mirror = false, map_ok = false; class Skeleton3D *sk = nullptr;
-		std::vector<int> m_old;            // per new bone: the old figure's bone, or -1
-		std::vector<Basis> m_fix;          // per new bone: A * F * its rest, in the body's frame
-		std::vector<Basis> m_old_rest_inv; // per new bone: the old bone's rest in the old figure's frame, inverted
-		float m_scale = 1.0f; };
+		TravMirror mir; };      // the pose copy (an act the new bodies have no take for): trav_mirror.h
 	std::vector<TravNb> trav_pool;
 	std::vector<String> trav_ids;
 	bool trav_people = false;
 	void trav_make(int k);
-	bool trav_map(TravNb &t, Near &nb);
-	void trav_mirror(TravNb &t, Near &nb, bool p_on);
 	int trav_seat_busy = -1;
+	// the benches near the player as seats his own sitting take can use (the lab's group "tl_seat"): the nearest four
+	class Node3D *trav_bench[4] = { nullptr, nullptr, nullptr, nullptr }; int trav_bench_t = 0;
+	void trav_benches();
 	void trav_people_update();
 public:
 	void set_trav_people(bool p_on);

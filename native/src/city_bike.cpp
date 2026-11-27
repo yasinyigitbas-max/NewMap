@@ -257,6 +257,7 @@ void CityBike::mount() {
 		fallen = false;
 	}
 	if (pl) { pl->set_riding(true); pl->view_vehicle(this); }   // (his own camera frames the bike: the one camera)
+	if (pl && rider) pl->set_ride_figure(rider);   // (the traversal character is drawn in the rider figure's pose)
 	// the rider is the player as he looks (Yasin, 20 Nov: "when we get on it our character becomes a grey person"): his
 	// body and clothes taken over from his own figure
 	if (pl && rider && pl->figure()) {
@@ -843,6 +844,7 @@ void CityBike::_process(double p_delta) {
 			if (Control *off = hud->get_child_count() > 3 ? Object::cast_to<Control>(hud->get_child(3)) : nullptr) off->set_visible(std::fabs(speed) < 1.5f);   // (the Use plate's "Get off": only when it can be done)
 		}
 	}
+	if (CityPlayer *rp = the_player()) rp->ride_pose();   // (after the rider figure has been posed this frame)
 }
 
 Dictionary CityBike::get_state() const {

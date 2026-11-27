@@ -825,6 +825,7 @@ void CityCar::_process(double p_delta) {
 		cam->set_global_transform(Transform3D(Basis(), cam_pos).looking_at(cam_look, Vector3(0, 1, 0)));
 		cam->set_fov(62.0 + std::min(sp, 60.0f) * 0.22);
 	}
+	if (CityPlayer *rp = door_player()) rp->ride_pose();   // (after the driver figure has been posed this frame)
 }
 
 Dictionary CityCar::get_state() const {

@@ -7,6 +7,7 @@
 //  - `set_move` drives it instead of the keys (tests).
 #pragma once
 
+#include "trav_mirror.h"
 #include <algorithm>
 #include <vector>
 
@@ -180,6 +181,9 @@ protected:
 	CharacterBody3D *trav = nullptr;
 	Dictionary trav_s;
 	int trav_item = 0;
+#ifdef TRAV_IN_GAME
+	TravMirror ride_mir; uint64_t ride_fig = 0;
+#endif
 	// the traversal moves' touch buttons (28 Nov; drawn by a small layer of its own, read in _input): 0 USE (the act key),
 	// 1 HANDS (the next thing in his hands), 2 AIM (on / off), 3 FIRE (held), 4 RELOAD (with fists: the jab), 5 DROP
 	enum { TB_N = 6 };
@@ -209,6 +213,8 @@ public:
 	String get_act() const { return act_left > 0.0 ? String(act_clip) : String(); }
 	int get_acts() const { return acts; }
 	void set_crouch(bool p_on) { crouch = p_on; }
+	void set_use(bool p_on) { cmd_use = p_on; }   // (tests) the act key held, in traversal mode
+	bool cmd_use = false;
 	// combat: asked for (a swing / F) and punches (a back tap / J / click) are taken by the crowd
 	void request_combat() { combat_req = true; }
 	void punch() { if (combat) punch_req = true; }
@@ -254,6 +260,16 @@ public:
 	// on a bicycle (CityBike): he is not there as a body while he rides (no collision, not drawn, no keys); back on his
 	// feet at a place facing a way, with his own view again
 	void set_riding(bool p_on);
+#ifdef TRAV_IN_GAME
+	// (28 Nov) at the wheel and on the bicycle the new character is drawn in the pose of the vehicle's own driver / rider
+	// figure (trav_mirror.h), which is no longer drawn: he stays the person he is. The vehicle names its figure when he
+	// gets in and calls ride_pose() each frame after it has posed it.
+	void set_ride_figure(class CityPed *p_fig);
+	void ride_pose();
+#else
+	void set_ride_figure(class CityPed *) {}
+	void ride_pose() {}
+#endif
 	void stand_at(const Vector3 &p_at, double p_yaw);
 	float get_yaw() const { return yaw; }
 	Array get_view() const { Array a; a.push_back(yaw); a.push_back(cam_yaw); a.push_back(cam_pitch); return a; }

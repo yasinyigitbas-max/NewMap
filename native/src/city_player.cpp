@@ -341,13 +341,18 @@ void CityPlayer::_physics_process(double p_delta) {
 		Input *hk = Input::get_singleton();
 		for (int k = 0; k < 10; k++) if (hk->is_key_pressed((Key)(KEY_0 + k))) trav_item = k;
 		trav_s["mx"] = (double)st.x; trav_s["mz"] = (double)-st.y; trav_s["yaw"] = (double)cam_yaw;
-		trav_s["run"] = run; trav_s["jump"] = jump_want; trav_s["crouch"] = crouch; trav_s["act"] = (e_was || tb_down(0)) && !frozen;
+		trav_s["run"] = run; trav_s["jump"] = jump_want; trav_s["crouch"] = crouch; trav_s["act"] = (e_was || tb_down(0) || cmd_use) && !frozen;
 		trav_s["text"] = false; trav_s["call"] = false;
-		trav_s["item"] = trav_item; trav_s["aim"] = (hk->is_key_pressed(KEY_F) || tb_aim) && !frozen; trav_s["fire"] = (hk->is_key_pressed(KEY_X) || tb_down(3)) && !frozen;
+		// the game's phone (CityHud: 1 in his hand, 2 at his ear, 3 held up) is the body's own phone hold (1 text, 2 call)
+		{ const int ph = phone_kind == 2 ? 2 : (phone_kind != 0 ? 1 : 0); if ((int)(int64_t)trav->get("phone") != ph) trav->set("phone", ph); }
+		// the game's fight (locked on somebody: `combat`): his fists come up if his hands are empty, and the game's punch
+		// (the HUD's tap, punch()) is the fire key for a tick. Whether the blow lands is the crowd's own count, as before.
+		const int item_eff = (combat && trav_item == 0) ? 9 : trav_item;
+		trav_s["item"] = item_eff; trav_s["aim"] = (hk->is_key_pressed(KEY_F) || tb_aim) && !frozen; trav_s["fire"] = (hk->is_key_pressed(KEY_X) || tb_down(3) || punch_req) && !frozen;
 		trav_s["reload"] = (hk->is_key_pressed(KEY_B) || tb_down(4)) && !frozen; trav_s["drop"] = (hk->is_key_pressed(KEY_Q) || tb_down(5)) && !frozen;
 		if (tb_layer) {      // the buttons show what is held and what is on
 			static const char *const THINGS[10] = { "HANDS", "CASE", "BAG", "BOX", "PISTOL", "RIFLE", "SHOTGUN", "SMG", "SAWN-OFF", "FISTS" };
-			if (tb_label[1]) tb_label[1]->set_text(THINGS[std::min(std::max(trav_item, 0), 9)]);
+			if (tb_label[1]) tb_label[1]->set_text(THINGS[std::min(std::max(item_eff, 0), 9)]);
 			for (int k = 0; k < TB_N; k++) if (tb_box[k]) tb_box[k]->set_color((tb_down(k) || (k == 2 && tb_aim)) ? Color(1, 1, 1, 0.42f) : Color(0, 0, 0, 0.30f));
 		} trav_s["hit"] = hk->is_key_pressed(KEY_H) && !frozen;
 		jump_want = false; combat_req = false; punch_req = false;
@@ -1013,8 +1018,28 @@ void CityPlayer::set_traversal(bool p_on) {
 	if (fig) fig->set_visible(false);
 }
 
+#ifdef TRAV_IN_GAME
+void CityPlayer::set_ride_figure(CityPed *p_fig) { ride_fig = p_fig ? p_fig->get_instance_id() : 0; }
+
+void CityPlayer::ride_pose() {
+	if (!trav || !frozen || !ride_fig) return;
+	CityPed *rf = Object::cast_to<CityPed>(ObjectDB::get_instance(ObjectID(ride_fig)));
+	if (!rf || !rf->is_visible_in_tree() || !rf->skeleton()) { if (ride_mir.on) { ride_mir.set(trav, nullptr, nullptr, false); trav->set_process_mode(Node::PROCESS_MODE_DISABLED); trav->set_visible(false); } return; }
+	trav->set_visible(true);
+	if (ride_mir.set(trav, rf, rf->skeleton(), true)) rf->set_drawn(false);
+	else { trav->set_visible(false); rf->set_drawn(true); }
+}
+#endif
+
 void CityPlayer::set_riding(bool p_on) {
 	if (trav) {     // (in a car or on the bicycle the traversal body is put away, and brought back by stand_at)
+#ifdef TRAV_IN_GAME
+		if (!p_on) {
+			if (ride_mir.on) ride_mir.set(trav, nullptr, nullptr, false);
+			if (CityPed *rf = ride_fig ? Object::cast_to<CityPed>(ObjectDB::get_instance(ObjectID(ride_fig))) : nullptr) rf->set_drawn(true);
+			ride_fig = 0;
+		}
+#endif
 		trav->set_visible(!p_on);
 		trav->set_process_mode(p_on ? Node::PROCESS_MODE_DISABLED : Node::PROCESS_MODE_INHERIT);
 		trav->set_collision_layer(p_on ? 0 : 2);
@@ -1154,6 +1179,7 @@ void CityPlayer::act(const StringName &p_clip, double p_seconds, double p_yaw) {
 
 void CityPlayer::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_traversal", "on"), &CityPlayer::set_traversal);
+	ClassDB::bind_method(D_METHOD("set_use", "on"), &CityPlayer::set_use);
 	ClassDB::bind_method(D_METHOD("get_traversal"), &CityPlayer::get_traversal);
 	ClassDB::bind_method(D_METHOD("get_traversal_body"), &CityPlayer::get_traversal_body);
 	ClassDB::bind_method(D_METHOD("sample"), &CityPlayer::sample);
