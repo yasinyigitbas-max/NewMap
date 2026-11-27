@@ -93,6 +93,21 @@ How nothing breaks (the rules of the port):
       LEFT: character.gd itself (the animation tree, the gait, the acts,
       the phone; 1,570 lines), then npc/body_fit.gd and npc_character.gd. Each is switched in by `_made()` in
       character.gd; add its numbers to `tests/parity_run.gd` if the pose number does not already cover it.
+      HOW A LAYER IS TRANSLATED (learned on the first seven, all byte for byte the same; keep to it):
+      (1) every GDScript `float` is a C++ `double`; every part of a Vector3 is widened with `D()` before it is used
+      in arithmetic; a Vector3 times or over a scalar goes through `mul()` / `div()` (the scalar is narrowed to a
+      float there, as GDScript does); wrapf, lerpf, clampf, rotate_toward, move_toward, smoothstep are the engine's
+      own formulas in doubles (`native/traversal/src/trav_math.h`), never godot-cpp's float versions.
+      (2) the same names; every variable the other scripts read or set by name is served by `_get` / `_set`; an
+      array the scripts change in place stays a godot `Array`.
+      (3) the script is not edited beyond the one line where the thing is made (`_made(&"TravX", X)` in
+      character.gd; `-- --native` picks the C++ one).
+      (4) proof before commit: `bash tools/traversal/parity.sh <folder>` says PARITY RESULT PASS (the files the
+      same byte for byte); every stage test and the audit with `-- --native` (scratch `suite_native.sh`); then the
+      same with the scripts; then build for Windows too (`bash native/traversal/build.sh windows`).
+      (5) a fresh container: `pip install scons`, clone godot-cpp branch 4.5 into `OUT/native_tools/godot-cpp`,
+      `scons -j4 platform=linux arch=x86_64 target=template_debug` (25 minutes), then `build.sh linux`, then
+      `godot --headless --path traversal_lab --import` once so the lab sees the library.
 - [ ] d. The traversal moves.
 - [ ] e. Doors, sitting, the phone, the car, cover.
 - [ ] f. The NPC fitting.
