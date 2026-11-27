@@ -74,7 +74,16 @@ def main(dump, out_dir, car):
     if car in CARS:
         C = CARS[car]
     else:   # the Zhabotinsky cars: one entry each in doors_zh.json (outline, hinge, cabin box), their own colour map
-        C = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'doors_zh.json')))[car]
+        allc = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'doors_zh.json')))
+        C = dict(allc[car])
+        if 'like' in C:      # the same body as another car: its outline, moved by the difference of the front hubs
+            base = C.pop('like')
+            hub = lambda cid: max(w['center'][2] for w in json.load(open(os.path.join(os.path.dirname(dump), cid + '_info.json')))['wheels'])
+            dz = hub(car) - hub(base)
+            B = dict(allc[base]); B.update(C); C = B
+            C['door'] = [(z + dz, y) for z, y in C['door']]
+            C['hinge_z'] = C['hinge_z'] + dz
+            print('outline of', base, 'moved %.3f m' % dz)
         C.setdefault('skin_x', 0.5); C.setdefault('card', 0.05); C.setdefault('jamb', 0.06); C.setdefault('dark', (0.0, 0.6))
         C.setdefault('albedo', os.path.join(os.path.dirname(dump), 'tex', car + '_veh_albedo.png'))
         zs = [p[0] for p in C['door']]; ys = [p[1] for p in C['door']]

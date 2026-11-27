@@ -48,6 +48,12 @@ func _door(i: int) -> MeshInstance3D:
 	ds.sort_custom(func(a, b): return a.position.x > b.position.x)
 	return ds[i] if i < ds.size() else null
 
+func _modelled_cabin() -> bool:
+	# a car rebuilt from its original (meta vtex) has its cabin modelled: no picture box behind its doors
+	for c in car.get_children():
+		if c is MeshInstance3D and (c as MeshInstance3D).mesh and (c as MeshInstance3D).mesh.has_meta("vtex"): return true
+	return false
+
 func _cabin_box() -> MeshInstance3D:
 	for c in car.get_children():
 		if c is MeshInstance3D and (c as MeshInstance3D).material_override is ShaderMaterial and ((c as MeshInstance3D).material_override as ShaderMaterial).shader and ((c as MeshInstance3D).material_override as ShaderMaterial).shader.resource_path.ends_with("cabin_box.gdshader"): return c
@@ -69,7 +75,8 @@ func _process(delta: float) -> bool:
 				_check(dl.position.x > 0.6 and dr.position.x < -0.6, "doors on their hinges (x %.2f, %.2f)" % [dl.position.x, dr.position.x])
 				_check(dl.basis.is_equal_approx(Basis()) and dr.basis.is_equal_approx(Basis()), "shut: unturned")
 			var cb := _cabin_box()
-			_check(cb != null and not cb.visible, "cabin box hidden while shut")
+			if _modelled_cabin(): _check(cb == null or not cb.visible, "modelled cabin: no picture box")
+			else: _check(cb != null and not cb.visible, "cabin box hidden while shut")
 			_shoot(Vector3(4.2, 1.6, 2.6), Vector3(0, 0.7, 0))
 		1:
 			shots.append(root.get_texture().get_image())
@@ -85,7 +92,8 @@ func _process(delta: float) -> bool:
 				_check(back_l.x > dl.position.x + 0.6, "driver's door open outwards (back edge x %.2f vs hinge %.2f)" % [back_l.x, dl.position.x])
 				_check(back_r.x < dr.position.x - 0.6, "passenger's door open outwards (back edge x %.2f vs hinge %.2f)" % [back_r.x, dr.position.x])
 			var cb := _cabin_box()
-			_check(cb != null and cb.visible, "cabin box shown while open")
+			if _modelled_cabin(): _check(cb == null or not cb.visible, "modelled cabin: no picture box while open")
+			else: _check(cb != null and cb.visible, "cabin box shown while open")
 			shots.append(root.get_texture().get_image())
 			_shoot(Vector3(-4.2, 1.6, 2.6), Vector3(0, 0.7, 0))
 		4:
