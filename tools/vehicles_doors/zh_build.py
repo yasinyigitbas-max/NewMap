@@ -166,8 +166,40 @@ body = join(body_parts, 'body')
 wheel_objs = []
 for i, h in enumerate(sorted(hubs, key=lambda h: (-h[0].y, h[0].x))):
     wheel_objs.append(join(h[1], 'w%d' % i))
+# ONE wheel for all four (the front-left one, turned about for the right side): the four share their UVs, so the wheel
+# gets four times the texels (the white-wall ring and the lettering broke into blocks on a quarter share each)
+w_c = [sum((v.co for v in o.data.vertices), Vector()) / len(o.data.vertices) for o in wheel_objs]
+def unwrap_alone(o):
+    while o.data.uv_layers:
+        o.data.uv_layers.remove(o.data.uv_layers[0])
+    o.data.uv_layers.new(name='UV')
+    bpy.ops.object.select_all(action='DESELECT'); o.select_set(True); bpy.context.view_layer.objects.active = o
+    bpy.ops.object.mode_set(mode='EDIT'); bpy.ops.mesh.select_all(action='SELECT')
+    bpy.ops.uv.smart_project(angle_limit=math.radians(60), island_margin=0.0, area_weight=0.0, correct_aspect=True, scale_to_bounds=False)
+    bpy.ops.object.mode_set(mode='OBJECT')
+
+
+def dims(o):
+    vs = [v.co for v in o.data.vertices]
+    return sorted(max(v[k] for v in vs) - min(v[k] for v in vs) for k in range(3))
+
+
+tmpl = wheel_objs[0]
+unwrap_alone(tmpl)
+for i in range(1, len(wheel_objs)):
+    o = wheel_objs[i]
+    if any(abs(a - b) > 0.02 for a, b in zip(dims(o), dims(tmpl))):     # (a different wheel: twin rears on a truck) its own UVs
+        log('wheel %d differs from the front one: own UVs' % i)
+        unwrap_alone(o)
+        continue
+    o.data = tmpl.data.copy()
+    M = Matrix.Translation(w_c[i]) @ (Matrix.Rotation(math.pi, 4, 'Z') if (w_c[i].x > 0) != (w_c[0].x > 0) else Matrix.Identity(4)) @ Matrix.Translation(-w_c[0])
+    o.data.transform(M)
 # one mesh for unwrapping, packing and baking (a multi-object pack laid every part over the whole page); a face
 # attribute 'part' (0 body, 1.. the wheels) splits it again afterwards
+while body.data.uv_layers:      # (one UV layer named 'UV' on every part, or the join keeps them apart)
+    body.data.uv_layers.remove(body.data.uv_layers[0])
+body.data.uv_layers.new(name='UV')
 parts_in = [body] + wheel_objs
 hub_c = []
 for pi, o in enumerate(parts_in):
@@ -193,16 +225,28 @@ def edit(obs):
     bpy.ops.mesh.select_all(action='SELECT')
 
 
-while J.data.uv_layers:
-    J.data.uv_layers.remove(J.data.uv_layers[0])
-J.data.uv_layers.new(name='UV')
+# the body is unwrapped here; the wheels keep the template's UVs (shared by all four)
 edit([J])
+bm = bmesh.from_edit_mesh(J.data)
+lay = bm.faces.layers.int.get('part')
+for f in bm.faces:
+    f.select = f[lay] == 0
+bmesh.update_edit_mesh(J.data)
 bpy.ops.uv.smart_project(angle_limit=math.radians(60), island_margin=0.0, area_weight=0.0, correct_aspect=True, scale_to_bounds=False)
+bpy.ops.mesh.select_all(action='SELECT')
 bpy.ops.uv.average_islands_scale()
 bpy.ops.object.mode_set(mode='OBJECT')
+# the shared wheel: 1.5 x the texel density of the body (scaled as a whole, about one point: its islands stay whole)
+uv = J.data.uv_layers['UV'].data
+pa = J.data.attributes['part'].data
+wl = [li for p in J.data.polygons if pa[p.index].value > 0 for li in p.loop_indices]
+if wl:
+    c0 = sum((uv[li].uv for li in wl), Vector((0, 0))) / len(wl)
+    for li in set(wl):
+        uv[li].uv = c0 + (uv[li].uv - c0) * 1.5
 # (one texel density for all: shrinking single faces split them into thousands of islands and wasted the page)
 edit([J])
-bpy.ops.uv.pack_islands(udim_source='CLOSEST_UDIM', rotate=True, rotate_method='ANY', scale=True, merge_overlap=False,
+bpy.ops.uv.pack_islands(udim_source='CLOSEST_UDIM', rotate=True, rotate_method='ANY', scale=True, merge_overlap=True,
                         margin_method='FRACTION', margin=0.003, pin=False, shape_method='CONCAVE')
 bpy.ops.object.mode_set(mode='OBJECT')
 lows = [J]
