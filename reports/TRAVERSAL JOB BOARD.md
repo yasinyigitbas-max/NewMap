@@ -35,7 +35,7 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
 - [x] 4b. (trav74) (27 Nov: "make the palms face the wall instead of ground on both ledge and squeeze in").
 - [ ] 5. Stage 21: cover, low and high: enter, peek, exit. NOT in his list of 27 Nov ("doors, cars, then the sitting
       and phone list, do al of them then make the exe"): left here, after those, until he says.
-- [ ] 6. Stage 22: doors: push, then pull.
+- [x] 6. (trav75) Stage 22: doors: push, then pull.
 - [ ] 7. Stage 23: cars: bonnet slide, then entry and exit. (No bonnet slide clip exists.)
 - [ ] 8. Sitting and phone use (27 Nov, his list): stand to sit, walk to sit, sitting idle, sit to stand, sitting
       phone talk, sitting messaging, sitting to type, walking text, standing text, standing call.

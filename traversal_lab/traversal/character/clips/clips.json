@@ -65,6 +65,28 @@
     ],
     "turn_deg": 0.0000102452837550191
   },
+  "Entering_Car": {
+    "length": 5.46666666666667,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 0.348318858844478,
+    "travel": [
+      -0.134100064635277,
+      1.8994152545929
+    ],
+    "turn_deg": 96.7858705769667
+  },
+  "Exiting_Car": {
+    "length": 5.8,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 0.335963491735787,
+    "travel": [
+      1.93971765041351,
+      0.185719102621078
+    ],
+    "turn_deg": 87.4516930760923
+  },
   "Falling_From_Losing_Balance": {
     "length": 6.66666666666667,
     "loop": false,
@@ -582,6 +604,39 @@
     ],
     "turn_deg": 90.0001049573157
   },
+  "Male_Talking_On_The_Cell_Phone": {
+    "length": 4.8,
+    "loop": true,
+    "phase_offset": 1.53333333333333,
+    "speed": 0.0,
+    "travel": [
+      0.0,
+      0.0
+    ],
+    "turn_deg": 0.0
+  },
+  "Open_Door_Outwards": {
+    "length": 4.1,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 0.530523090827756,
+    "travel": [
+      -0.00000000468571670353413,
+      2.1751446723938
+    ],
+    "turn_deg": -0.000000640330234688695
+  },
+  "Opening_Door_Inwards": {
+    "length": 6.36666666666667,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 0.270810089810356,
+    "travel": [
+      0.0000000081199686974287,
+      1.7241575717926
+    ],
+    "turn_deg": 0.000016862029513469
+  },
   "Push_Up_To_Idle": {
     "length": 3.1,
     "loop": false,
@@ -692,6 +747,28 @@
     ],
     "turn_deg": -179.964037232787
   },
+  "Sit_To_Stand": {
+    "length": 2.26666666666667,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 0.206735493505702,
+    "travel": [
+      0.00256892503239214,
+      0.468593418598175
+    ],
+    "turn_deg": 3.65978312381432
+  },
+  "Sitting_Idle": {
+    "length": 4.3,
+    "loop": true,
+    "phase_offset": 3.2,
+    "speed": 0.0,
+    "travel": [
+      0.0,
+      0.0
+    ],
+    "turn_deg": 0.0
+  },
   "Slow_Run": {
     "length": 0.733333333333333,
     "loop": true,
@@ -724,6 +801,17 @@
       3.26217031478882
     ],
     "turn_deg": 19.7343357953236
+  },
+  "Stand_To_Sit": {
+    "length": 2.23333333333333,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 0.202635700133309,
+    "travel": [
+      -0.00193966284859926,
+      -0.452548921108246
+    ],
+    "turn_deg": 4.01442105967337
   },
   "Standing_Idle": {
     "length": 6.0,
@@ -791,6 +879,17 @@
     ],
     "turn_deg": -10.4900350461901
   },
+  "Texting_While_Standing": {
+    "length": 23.5666666666667,
+    "loop": true,
+    "phase_offset": 19.0666666666667,
+    "speed": 0.0000000490845366049687,
+    "travel": [
+      0.00000114343129098415,
+      -0.00000017508864402771
+    ],
+    "turn_deg": 0.00000298820776188058
+  },
   "Turn_To_Running": {
     "length": 1.7,
     "loop": false,
@@ -801,6 +900,28 @@
       -0.0609933622181416
     ],
     "turn_deg": -113.382779467612
+  },
+  "Type_To_Sit": {
+    "length": 0.933333333333333,
+    "loop": false,
+    "phase_offset": 0.0,
+    "speed": 0.0,
+    "travel": [
+      0.0,
+      0.0
+    ],
+    "turn_deg": -0.890105290076743
+  },
+  "Typing": {
+    "length": 16.4666666666667,
+    "loop": true,
+    "phase_offset": 9.3,
+    "speed": 0.00000105845012387679,
+    "travel": [
+      0.000000581028871238232,
+      0.0000174194574356079
+    ],
+    "turn_deg": 0.00164292729965252
   },
   "Vault_1_Hand": {
     "length": 1.16666666666667,

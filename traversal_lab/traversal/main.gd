@@ -9,6 +9,7 @@ const Body := preload("res://traversal/body/body.gd")
 const Character := preload("res://traversal/character/character.gd")
 const CharacterV1 := preload("res://traversal/character/character_v1.gd")       # the code-posed one, kept to compare: -- --v1
 const Traverse := preload("res://traversal/moves/traverse.gd")
+const Interact := preload("res://traversal/moves/interact.gd")
 const DetectView := preload("res://traversal/detect/detect_view.gd")
 const TAPE_FILE := "user://tapes/last.json"
 
@@ -19,6 +20,7 @@ var tape: Node
 var readout: CanvasLayer
 var detect: Node3D
 var traverse: Node
+var interact: Node              # doors, cars, sitting (see interact.gd)
 var cam: Camera3D
 var station := 0
 var _yaw := 0.0
@@ -57,6 +59,11 @@ func _ready() -> void:
 		body.call(&"show_capsule", false)
 	if body.has_method(&"begin_move"):
 		# Stage 8 onward: the traversal moves
+		# (before the traversal moves, so that a door he walks at is opened, not taken for a wall)
+		interact = Interact.new()
+		interact.name = "Interact"
+		interact.set(&"body", body)
+		body.add_child(interact)
 		traverse = Traverse.new()
 		traverse.name = "Traverse"
 		traverse.set(&"body", body)

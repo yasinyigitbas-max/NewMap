@@ -1,4 +1,5 @@
 extends Node3D
+const Door := preload("res://traversal/course/door.gd")
 ## Stage 0: the measured grey-box test course. Every obstacle is built at an exact, labelled size.
 ## Stations stand side by side along X; each is approached by walking toward -Z from its start point.
 ## `stations` lists them for the readout, the teleport keys and the tests.
@@ -49,6 +50,8 @@ func _ready() -> void:
 	# as a 65th station it changed the path of stage 1's random walk, which then met two things that were there
 	# before (see reports/TRAVERSAL JOB BOARD.md).
 	_ledges(0.20, 0.12)
+	# Stage 22, a door (the study's opening: 0.815 m wide, 2.03 m high), also behind the start line and in `extras`
+	_door(236.0, 10.0)
 
 
 # ---------------------------------------------------------------- building blocks
@@ -201,6 +204,26 @@ func _ledges(w_a: float, w_b: float) -> void:
 			"probe": Vector3(x + 0.5 + w_a * 0.5, 0.0, 9.5)}
 	extras.append(s)
 	_label("wall ledges: %.2f m (this side), %.2f m (far side)" % [w_a, w_b], Vector3(x + 1.1, 1.8, 14.8))
+
+
+## A wall along X at z = `z` with one hinged door in it (door.gd): pulled from the +Z side, pushed from the -Z side.
+## The wall is 3.2 m high: one he could climb (to 3.0 m) would be climbed where he walks at it beside the door.
+func _door(x: float, z: float) -> void:
+	var wide := float(Door.WIDE)
+	var high := float(Door.HIGH)
+	var wall_h := 3.2
+	var hinge_x := x + wide * 0.5
+	_box(Vector3(hinge_x + 1.5, wall_h * 0.5, z), Vector3(3.0, wall_h, 0.2))
+	_box(Vector3(hinge_x - wide - 1.5, wall_h * 0.5, z), Vector3(3.0, wall_h, 0.2))
+	_box(Vector3(x, high + (wall_h - high) * 0.5, z), Vector3(wide, wall_h - high, 0.2))
+	var door: Node3D = Door.new()
+	door.position = Vector3(hinge_x, 0.0, z)
+	add_child(door)
+	var s := {"id": "door_%02d" % (stations.size() + extras.size()), "kind": "door", "label": "door %.3f x %.2f m: pull from this side, push from the far side" % [wide, high],
+			"start": Vector3(hinge_x - 0.35, 0.0, z + 3.0), "x": x, "top": 0.0, "hinge": Vector3(hinge_x, 0.0, z), "door": door,
+			"probe": Vector3(x, 0.0, z + 2.0)}
+	extras.append(s)
+	_label("door: pull from this side, push from the far side", Vector3(x, 2.6, z + 0.5))
 
 
 func _passage(w: float) -> void:

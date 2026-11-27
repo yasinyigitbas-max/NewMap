@@ -62,7 +62,11 @@ const RUN_FROM := 2.5           # a fall that began faster than this uses the ru
 const SOFT_DROP := 0.30         # the study: "up to 0.30 m, step down in stride; 0.30 to 1.0 m, step or hop off with a
 const HARD_DROP := 1.0          # soft landing; 1.0 to 2.0 m, a heavy landing"
 # the inputs of the tree's Transition node, and the clip each one plays under its own TimeSeek
-const ACTS := {"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling_To_Landing", "land_heavy": "Hard_Landing",
+const ACTS := {
+		# Stage 22, doors; stage 23, cars; sitting (Yasin, 27 Nov): see traversal/moves/interact.gd
+		"door_pull": "Open_Door_Outwards", "door_push": "Opening_Door_Inwards", "car_in": "Entering_Car", "car_out": "Exiting_Car",
+		"sit_down": "Stand_To_Sit", "sit_idle": "Sitting_Idle", "sit_up": "Sit_To_Stand", "sit_type": "Typing", "type_to_sit": "Type_To_Sit",
+		"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling_To_Landing", "land_heavy": "Hard_Landing",
 		"drop_walk": "KM_Ledge_Walk_Off", "drop_run": "KM_Ledge_Run_Off", "drop_roll": "KM_Land_Roll", "step_up": "KM_Step_Up", "step_up_m": "KM_Step_Up_M", "vault": "Vault_1_Hand", "vault_m": "Vault_1_Hand_M",
 		"vault_tuck": "KM_Vault_Stand", "climb_up": "KM_Climb_Up", "grab_jump": "Jump_To_Braced_Hang", "wallrun": "Sprint_To_Wall_Climb", "climb_down": "Climbing_Down", "balance_fall": "Falling_From_Losing_Balance", "get_up_front": "Push_Up_To_Idle", "grab_climb": "Braced_Hang_To_Crouch", "vault_jump": "KM_Jump_Over", "step_on": "Step_Onto_Platform", "step_on_m": "Step_Onto_Platform_M", "jump_on": "Running_Jump_Climb", "jump_on_m": "Running_Jump_Climb_M",
 		"stairs_up_walk": "Ascending_Stairs", "stairs_up_run": "KM_Stairs_Run_Up_D",
