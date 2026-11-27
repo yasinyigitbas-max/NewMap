@@ -2553,6 +2553,187 @@
   "res": 1024,
   "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
  },
+ "van_panel": {
+  "name": "van_panel",
+  "cls": "van",
+  "note": "panel van, sliding side door, barn doors, no rear windows",
+  "tris": 3682,
+  "parts_tris": {
+   "door_f_l": 76,
+   "door_f_r": 76,
+   "door_s_r": 36,
+   "bonnet": 428,
+   "bumper_f": 46,
+   "glass_front": 20,
+   "lamps": 72,
+   "wheel_fl": 336,
+   "wheel_fr": 336,
+   "wheel_rl": 336,
+   "wheel_rr": 336,
+   "interior": 724,
+   "steering_wheel": 124,
+   "body": 700,
+   "back_door_l": 12,
+   "back_door_r": 12,
+   "bumper_r": 12
+  },
+  "pivots": {
+   "door_f_l": [
+    1.2,
+    1.175,
+    1.1446
+   ],
+   "door_f_r": [
+    -1.2,
+    1.175,
+    1.1446
+   ],
+   "door_s_r": [
+    -1.0,
+    1.175,
+    0.0046
+   ],
+   "bonnet": [
+    0.0,
+    1.092,
+    1.1637
+   ],
+   "bumper_f": [
+    0.0,
+    0.656,
+    2.6125
+   ],
+   "glass_front": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "lamps": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "wheel_fl": [
+    0.795,
+    0.36,
+    1.675
+   ],
+   "wheel_fr": [
+    -0.795,
+    0.36,
+    1.675
+   ],
+   "wheel_rl": [
+    0.795,
+    0.36,
+    -1.625
+   ],
+   "wheel_rr": [
+    -0.795,
+    0.36,
+    -1.625
+   ],
+   "interior": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "steering_wheel": [
+    0.399,
+    1.03,
+    0.7846
+   ],
+   "body": [
+    0.0,
+    0.0,
+    -0.0
+   ],
+   "back_door_l": [
+    0.916,
+    1.17,
+    -2.617
+   ],
+   "back_door_r": [
+    -0.916,
+    1.17,
+    -2.617
+   ],
+   "bumper_r": [
+    0.0,
+    0.41,
+    -2.615
+   ]
+  },
+  "markers": {
+   "seat_fl": [
+    0.399,
+    0.67,
+    0.3346
+   ],
+   "seat_fr": [
+    -0.399,
+    0.67,
+    0.3346
+   ],
+   "seat_rl": [
+    0.378,
+    0.7,
+    -0.5154
+   ],
+   "seat_rr": [
+    -0.378,
+    0.7,
+    -0.5154
+   ],
+   "entry_l": [
+    1.45,
+    0.0,
+    0.4646
+   ],
+   "head_l": [
+    0.72,
+    0.92,
+    2.605
+   ],
+   "tail_l": [
+    0.75,
+    0.97,
+    -2.615
+   ],
+   "entry_r": [
+    -1.45,
+    0.0,
+    0.4646
+   ],
+   "head_r": [
+    -0.72,
+    0.92,
+    2.605
+   ],
+   "tail_r": [
+    -0.75,
+    0.97,
+    -2.615
+   ],
+   "exhaust": [
+    -0.55,
+    0.33,
+    -2.605
+   ]
+  },
+  "axles": [
+   1.675,
+   -1.625
+  ],
+  "wheel_r": 0.36,
+  "size": [
+   2.4,
+   5.33,
+   2.053
+  ],
+  "res": 1024,
+  "frame": "glTF / Godot: metres, Y up, front +Z, left +X, origin on the ground under the car"
+ },
  "wagon": {
   "name": "wagon",
   "cls": "saloon",
