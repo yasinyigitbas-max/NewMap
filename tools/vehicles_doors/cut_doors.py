@@ -71,7 +71,11 @@ def fan(poly):
 
 
 def main(dump, out_dir, car):
-    C = CARS[car]
+    if car in CARS:
+        C = CARS[car]
+    else:   # the Zhabotinsky cars: one entry each in doors_zh.json (outline, hinge, cabin box), their own colour map
+        C = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'doors_zh.json')))[car]
+        C.setdefault('skin_x', 0.5); C.setdefault('card', 0.05); C.setdefault('jamb', 0.06); C.setdefault('dark', (0.0, 0.6))
     j, V, I = meshio.read(dump)
     tris = V[I].reshape(-1, 3, V.shape[1])
     outline = C['door']
@@ -83,7 +87,8 @@ def main(dump, out_dir, car):
     cen = tris[:, :, :3].mean(1)
     # black plastic: a trim-sheet texel that is neither paint (alpha > 0.75) nor glass (0.3 .. 0.75) nor a lamp, and dark
     from PIL import Image
-    trim = np.asarray(Image.open(os.path.join(ROOT, 'vehicles/models/cartex/trim_albedo.png')).convert('RGBA')).astype(np.float32) / 255
+    tex = C.get('albedo') or os.path.join(ROOT, 'vehicles/models/cartex/trim_albedo.png')
+    trim = np.asarray(Image.open(tex).convert('RGBA')).astype(np.float32) / 255
     th, tw = trim.shape[:2]
     uvc = tris[:, :, UV:UV + 2].mean(1)
     px = trim[np.clip((uvc[:, 1] % 1) * th, 0, th - 1).astype(int), np.clip((uvc[:, 0] % 1) * tw, 0, tw - 1).astype(int)]
@@ -122,7 +127,7 @@ def main(dump, out_dir, car):
         else:
             body.append(t)
     meta = {'metas': j['metas'], 'format': j['format']}
-    info = {'car': car, 'doors': {}, 'cabin': C['cabin']}
+    info = {'car': car, 'doors': {}, 'cabin': C.get('cabin')}
 
     def new_vert(p, n):
         v = np.zeros(V.shape[1], np.float32)
@@ -188,10 +193,12 @@ def main(dump, out_dir, car):
                              'tris': len(allf), 'skin_tris': len(skin), 'rim_edges': len(rim)}
         print('door', sd, 'skin', len(skin), 'rim edges', len(rim), 'all', len(allf), 'hinge', hinge.round(3))
     # the cabin hull: the profile extruded across x, faces outward (cabin_box.gdshader draws its inside: cull_front)
-    hp = C['hull']; hx = C['hull_x']
+    hp = C.get('hull'); hx = C.get('hull_x', 0.7)
+    if not hp:                       # (a car with a modelled cabin needs no hull)
+        hp = None
     hull = []
-    n = len(hp)
-    area_h = sum(hp[i][0] * hp[(i + 1) % n][1] - hp[(i + 1) % n][0] * hp[i][1] for i in range(n))
+    n = len(hp) if hp else 0
+    area_h = sum(hp[i][0] * hp[(i + 1) % n][1] - hp[(i + 1) % n][0] * hp[i][1] for i in range(n)) if n else 0
     for i in range(n):
         (z0, y0), (z1, y1) = hp[i], hp[(i + 1) % n]
         e = np.array([0.0, y1 - y0, z1 - z0]); nn = np.cross(e, [1.0, 0, 0]) * (-1 if area_h > 0 else 1)
@@ -202,15 +209,16 @@ def main(dump, out_dir, car):
             if np.dot(np.cross(v[1][:3] - v[0][:3], v[2][:3] - v[0][:3]), nn) < 0:
                 v = [v[0], v[2], v[1]]
             hull.append(np.array(v))
-    for sx in (1.0, -1.0):
+    for sx in ((1.0, -1.0) if n else ()):
         cap = [(sx * hx, y, z) for z, y in hp]
         for k in range(1, n - 1):
             v = [new_vert(np.array(p), np.array([sx, 0, 0])) for p in (cap[0], cap[k], cap[k + 1])]
             if np.dot(np.cross(v[1][:3] - v[0][:3], v[2][:3] - v[0][:3]), [sx, 0, 0]) < 0:
                 v = [v[0], v[2], v[1]]
             hull.append(np.array(v))
-    H = np.array(hull).reshape(-1, V.shape[1])
-    meshio.write(os.path.join(out_dir, '%s_cabin' % car), H, np.arange(len(H)), {'metas': {}, 'format': j['format']})
+    if hull:
+        H = np.array(hull).reshape(-1, V.shape[1])
+        meshio.write(os.path.join(out_dir, '%s_cabin' % car), H, np.arange(len(H)), {'metas': {}, 'format': j['format']})
     B = np.array(body).reshape(-1, V.shape[1])
     meshio.write(os.path.join(out_dir, '%s_body' % car), B, np.arange(len(B)), meta)
     info['body_tris'] = len(body)

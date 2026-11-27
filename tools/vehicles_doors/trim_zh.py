@@ -26,6 +26,8 @@ def tris(o):
 
 
 def kind_of(n):
+    if re.search(r'interior|steering', n, re.I):      # (a steering wheel is not a wheel)
+        return 'interior'
     for k, rx, _ in KINDS:
         if rx.search(n):
             return k
