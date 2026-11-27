@@ -78,7 +78,10 @@ double TravDetector::_step_down(const Vector3 &from, const Vector3 &to, double r
 }
 
 bool TravDetector::_fits(const Vector3 &feet, double tall) {
-	_space = body->get_world_3d()->get_direct_space_state();
+	_space = TRAV_SPACE(body);
+	if (!_space) {
+		return false;
+	}
 	double fl = (double)body->get("FLOAT");
 	_capsule->set_radius((double)body->get("RADIUS") - 0.03);
 	_capsule->set_height(maxf(tall - fl - 0.03, 2.0 * D(_capsule->get_radius())));
@@ -96,7 +99,12 @@ bool TravDetector::_fits(const Vector3 &feet, double tall) {
 
 Dictionary TravDetector::measure(Vector3 dir, double from_y, double gap_most) {
 	queries = 0;
-	_space = body->get_world_3d()->get_direct_space_state();
+	_space = TRAV_SPACE(body);
+	if (!_space) {
+		Dictionary none;
+		none["kind"] = "none";
+		return none;
+	}
 	dir = V(D(dir.x), 0.0, D(dir.z));
 	if (D(dir.length()) < 0.001) {
 		Dictionary none;
@@ -128,7 +136,10 @@ Dictionary TravDetector::measure(Vector3 dir, double from_y, double gap_most) {
 }
 
 Dictionary TravDetector::measure_edge(Vector3 dir, double gap_most, double step, double far_down) {
-	_space = body->get_world_3d()->get_direct_space_state();
+	_space = TRAV_SPACE(body);
+	if (!_space) {
+		return Dictionary();
+	}
 	dir = V(D(dir.x), 0.0, D(dir.z));
 	if (D(dir.length()) < 0.001) {
 		return Dictionary();

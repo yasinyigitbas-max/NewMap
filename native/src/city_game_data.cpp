@@ -25,6 +25,20 @@
 
 namespace godot {
 
+// The player set down by the shell. On the traversal body (CityPlayer::set_traversal, the default since 28 Nov) his node
+// follows that body every tick: moving the node alone left him where the rig had put him, 15 m from his bicycle and
+// car (tests/game/test_start.gd, 28 Nov). The body is placed too.
+static Node3D *player_trav_body(Node3D *pl) {
+	if (!pl->has_method("get_traversal_body")) return nullptr;
+	return Object::cast_to<Node3D>((Object *)pl->call("get_traversal_body"));
+}
+static void put_player(Node3D *pl, const Vector3 &p) {
+	pl->set_global_position(p);
+	if (Node3D *tb = player_trav_body(pl)) { if (tb->has_method("place")) tb->call("place", p); else tb->set_global_position(p); }
+}
+static void put_player_yaw(Node3D *pl, float yaw) {
+	if (Node3D *tb = player_trav_body(pl)) tb->set_rotation(Vector3(0, yaw, 0));
+}
 CityGame *CityGame::one = nullptr;
 std::map<std::string, std::pair<String, String>> CityGame::strings;
 bool CityGame::text_loaded = false;
@@ -254,7 +268,7 @@ void CityGame::apply_snapshot(const Dictionary &st) {
 	if (!pl && p.has("pos")) pending_player = p;   // (the world gives the player later)
 	if (pl && p.has("pos")) {
 		const Array a = p["pos"];
-		if (a.size() == 3) pl->set_global_position(Vector3((float)(double)a[0], (float)(double)a[1], (float)(double)a[2]));
+		if (a.size() == 3) put_player(pl, Vector3((float)(double)a[0], (float)(double)a[1], (float)(double)a[2]));
 		const Array v = p.get("view", Array());
 		if (v.size() == 3 && pl->has_method("set_view")) pl->call("set_view", v[0], v[1], v[2]);
 	}
@@ -430,11 +444,11 @@ void CityGame::hold_start(double p_delta) {
 		}
 	}
 	if (gy < -1e8f && start_hold < 20.0) {   // not yet: keep him on the spot
-		pl->set_global_position(start_at + Vector3(0, 0.05f, 0));
+		put_player(pl, start_at + Vector3(0, 0.05f, 0));
 		if (CharacterBody3D *cb = Object::cast_to<CharacterBody3D>(pl)) cb->set_velocity(Vector3());
 		return;
 	}
-	if (gy > -1e8f) pl->set_global_position(Vector3(start_at.x, gy + 0.05f, start_at.z));
+	if (gy > -1e8f) put_player(pl, Vector3(start_at.x, gy + 0.05f, start_at.z));
 	if (bike && ss) {   // the bicycle's own spot must have ground under it too (a corner between pavement stretches may have none): else along to one that has
 		auto ground_at = [&](const Vector3 &p) -> float {
 			Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(p + Vector3(0, 2.0f, 0), p - Vector3(0, 2.0f, 0), 1);
@@ -510,8 +524,9 @@ void CityGame::place_start() {
 		const bool a_pave = (bool)a.get("ok", false), b_pave = (bool)b.get("ok", false);
 		if (a_pave && !b_pave) side = -side;
 	}
-	pl->set_global_position(at + Vector3(0, 0.05f, 0));
+	put_player(pl, at + Vector3(0, 0.05f, 0));
 	pl->set_global_rotation(Vector3(0, yaw, 0));
+	put_player_yaw(pl, yaw);
 	Node *parent = pl->get_parent();
 	Node3D *bike = Object::cast_to<Node3D>(ClassDB::instantiate("CityBike"));
 	if (bike && parent) {

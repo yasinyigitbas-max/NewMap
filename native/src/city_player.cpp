@@ -1,6 +1,7 @@
 // CityPlayer: see city_player.h.
 #include "perf_marks.h"
 #include "city_player.h"
+#include "trav_probe.h"
 #include "el_sfx.h"
 #include "foot_steps.h"
 
@@ -371,7 +372,7 @@ void CityPlayer::_physics_process(double p_delta) {
 		if (!swimming && here.y < water_y - 1.15) swimming = true;
 		else if (swimming) {
 			Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(here + Vector3(0, 0.6f, 0), here - Vector3(0, 3.0f, 0), 1);
-			const Dictionary hit = get_world_3d()->get_direct_space_state()->intersect_ray(q);
+			const Dictionary hit = TRAV_RAY(this, q);
 			if (!hit.is_empty() && water_y - (double)Vector3(hit["position"]).y < 0.9) swimming = false;
 		}
 	} else swimming = false;

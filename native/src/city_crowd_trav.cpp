@@ -10,6 +10,7 @@
 #include "city_crowd.h"
 #include "city_ped.h"
 #include "trav_mirror.h"
+#include "trav_probe.h"
 #include "ped_crowd.h"
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/class_db_singleton.hpp>
@@ -108,7 +109,7 @@ void CityCrowd::trav_benches() {
 		const pc::Place &P = crowd->places[(size_t)pick[q]];
 		float y = P.y;
 		Ref<PhysicsRayQueryParameters3D> rq = PhysicsRayQueryParameters3D::create(Vector3(P.ax, P.y + 1.5f, P.az), Vector3(P.ax, P.y - 2.0f, P.az), 1);
-		const Dictionary hit = get_world_3d()->get_direct_space_state()->intersect_ray(rq);
+		const Dictionary hit = TRAV_RAY(this, rq);
 		if (!hit.is_empty()) y = ((Vector3)hit["position"]).y;
 		const Vector3 f(std::sin(P.yaw), 0, std::cos(P.yaw));
 		trav_bench[q]->set_global_transform(Transform3D(Basis::looking_at(-f, Vector3(0, 1, 0)), Vector3(P.x, y, P.z)));
@@ -116,7 +117,7 @@ void CityCrowd::trav_benches() {
 	}
 }
 
-// after near_update, every frame: each new body is led to where its old figure stands, sits where it sits (its own
+// every physics step (CityCrowd::_physics_process): each new body is led to where its old figure stands, sits where it sits (its own
 // take), or is given its pose (the pose copy)
 void CityCrowd::trav_people_update() {
 	if (!trav_people) return;
@@ -179,7 +180,7 @@ void CityCrowd::trav_people_update() {
 			// set down where the old figure stands, if the ground is there (the streamer's collision reaches less far than
 			// the figures do: without ground under him he would fall out of the world)
 			Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(at.origin + Vector3(0, 1.0f, 0), at.origin - Vector3(0, 2.0f, 0), 1);
-			const Dictionary hit = get_world_3d()->get_direct_space_state()->intersect_ray(q);
+			const Dictionary hit = TRAV_RAY(this, q);
 			if (hit.is_empty()) show = false;
 			else {
 				const Vector3 p = hit["position"];

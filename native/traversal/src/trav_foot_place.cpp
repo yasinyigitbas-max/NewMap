@@ -106,7 +106,7 @@ void TravFootPlace::bind(Skeleton3D *sk) {
 Dictionary TravFootPlace::_ground(CharacterBody3D *bd, const Vector3 &at, double feet_y) {
 	TypedArray<RID> ex;
 	ex.push_back(bd->get_rid());
-	return bd->get_world_3d()->get_direct_space_state()->intersect_ray(PhysicsRayQueryParameters3D::create(V(D(at.x), feet_y + REACH, D(at.z)), V(D(at.x), feet_y - REACH, D(at.z)), trav::probe_mask(bd), ex));
+	return TRAV_RAY(bd, PhysicsRayQueryParameters3D::create(V(D(at.x), feet_y + REACH, D(at.z)), V(D(at.x), feet_y - REACH, D(at.z)), trav::probe_mask(bd), ex));
 }
 
 void TravFootPlace::_process_modification_with_delta(double dt) {
@@ -244,7 +244,7 @@ void TravFootPlace::_process_modification_with_delta(double dt) {
 				Vector3 at = _to_p[f];
 				TypedArray<RID> ex;
 				ex.push_back(bd->get_rid());
-				Dictionary gl = bd->get_world_3d()->get_direct_space_state()->intersect_ray(PhysicsRayQueryParameters3D::create(V(D(at.x), feet_y + 2.0 * REACH, D(at.z)), V(D(at.x), feet_y - 2.0 * REACH, D(at.z)), trav::probe_mask(bd), ex));
+				Dictionary gl = TRAV_RAY(bd, PhysicsRayQueryParameters3D::create(V(D(at.x), feet_y + 2.0 * REACH, D(at.z)), V(D(at.x), feet_y - 2.0 * REACH, D(at.z)), trav::probe_mask(bd), ex));
 				_to_g[f] = !gl.is_empty() ? D(((Vector3)gl["position"]).y) : _from_g[f];
 			}
 		}

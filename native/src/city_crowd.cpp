@@ -1249,9 +1249,6 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 		}
 	}
 	cnt.near += n_near;
-#ifdef TRAV_IN_GAME
-	trav_people_update();
-#endif
 }
 
 void CityCrowd::_process(double p_delta) {

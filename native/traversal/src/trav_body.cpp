@@ -151,7 +151,7 @@ void TravBody::_set_rot_y(double y) {
 Dictionary TravBody::_ray(const Vector3 &from, const Vector3 &to) {
 	TypedArray<RID> ex;
 	ex.push_back(get_rid());
-	return get_world_3d()->get_direct_space_state()->intersect_ray(PhysicsRayQueryParameters3D::create(from, to, trav::probe_mask(this), ex));
+	return TRAV_RAY(this, PhysicsRayQueryParameters3D::create(from, to, trav::probe_mask(this), ex));
 }
 
 void TravBody::_ready() {
@@ -240,7 +240,8 @@ bool TravBody::can_stand() {
 	ex.push_back(get_rid());
 	q->set_exclude(ex);
 	q->set_collision_mask(trav::probe_mask(this));
-	return get_world_3d()->get_direct_space_state()->intersect_shape(q, 1).is_empty();
+	PhysicsDirectSpaceState3D *space = TRAV_SPACE(this);
+	return space ? space->intersect_shape(q, 1).is_empty() : false;      // (no space outside the physics step: not known, he stays as he is)
 }
 
 void TravBody::show_capsule(bool on) {
@@ -250,7 +251,12 @@ void TravBody::show_capsule(bool on) {
 }
 
 Dictionary TravBody::probe(const Vector3 &feet, double from_up, double reach) {
-	PhysicsDirectSpaceState3D *space = get_world_3d()->get_direct_space_state();
+	PhysicsDirectSpaceState3D *space = TRAV_SPACE(this);
+	if (!space) {
+		Dictionary none;
+		none["hit"] = false;
+		return none;
+	}
 	Ref<PhysicsShapeQueryParameters3D> q;
 	q.instantiate();
 	q->set_shape(_probe);
@@ -396,7 +402,10 @@ Dictionary TravBody::_ledge_at(const Vector3 &at, const Vector3 &across) {
 }
 
 void TravBody::_find_squeeze() {
-	PhysicsDirectSpaceState3D *space = get_world_3d()->get_direct_space_state();
+	PhysicsDirectSpaceState3D *space = TRAV_SPACE(this);
+	if (!space) {
+		return;
+	}
 	Vector3 gp = get_global_position();
 	Vector3 fwd = -get_global_transform().basis.get_column(2);
 	fwd = V(D(fwd.x), 0.0, D(fwd.z)).normalized();

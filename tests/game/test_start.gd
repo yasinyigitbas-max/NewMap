@@ -56,6 +56,7 @@ func _process(delta: float) -> bool:
 				if n == null: _check(false, "%s is there" % pair[0]); continue
 				var skip := [n.get_rid()] if n is CollisionObject3D else []
 				for o in [pl, bike, car]: if o is CollisionObject3D: skip.append(o.get_rid())
+				if pl.get_traversal_body() is CollisionObject3D: skip.append(pl.get_traversal_body().get_rid())      # (28 Nov: on the traversal body the ray met his own capsule's top)
 				var top := _sky(n.global_position, skip)
 				_check(top > -900.0 and absf(top - n.global_position.y) < 0.8, "%s stands on the ground with nothing over it: ground %.2f, it at %.2f" % [pair[0], top, n.global_position.y])
 			if OS.get_cmdline_user_args().has("--probe") and pl:
@@ -130,7 +131,7 @@ func _process(delta: float) -> bool:
 			_check(int(bike.get_ride_state()) == 0 and pl.visible, "off again, on foot")
 			# to the car's door
 			var side := car.global_basis.x.normalized()
-			pl.global_position = car.global_position + side * 1.6 + Vector3(0, 0.15, 0)
+			pl.stand_at(car.global_position + side * 1.6 + Vector3(0, 0.15, 0), float(pl.get_view()[0]))      # (stand_at: on the traversal body the node alone does not move him, 28 Nov)
 			step = 7; t0 = t
 		7:
 			var hud: Node = game.get_hud(); var car: Node3D = current_scene.get_node_or_null(^"StartCar")

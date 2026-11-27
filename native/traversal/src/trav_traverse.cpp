@@ -480,7 +480,7 @@ bool TravTraverse::_try_step_up(const Vector3 &v, const Vector3 &wish) {
 		TypedArray<RID> ex;
 		ex.append(body->get_rid());
 		Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(from, from + mul(dir, UP_LOOK_RUN), trav::probe_mask(body), ex);
-		if (body->get_world_3d()->get_direct_space_state()->intersect_ray(q).is_empty()) {
+		if (TRAV_RAY(body, q).is_empty()) {
 			return false;
 		}
 	}
@@ -1312,7 +1312,7 @@ bool TravTraverse::_try_air(const Vector3 &v) {
 	TypedArray<RID> ex;
 	ex.append(body->get_rid());
 	Ref<PhysicsRayQueryParameters3D> q_down = PhysicsRayQueryParameters3D::create(here_p + V(0.0, 0.6, 0.0), here_p - V(0.0, 6.0, 0.0), trav::probe_mask(body), ex);
-	Dictionary below = body->get_world_3d()->get_direct_space_state()->intersect_ray(q_down);
+	Dictionary below = TRAV_RAY(body, q_down);
 	double under_y = !below.is_empty() ? D(((Vector3)below["position"]).y) : D(here_p.y) - 3.0;
 	Dictionary rec = det()->call("measure", dir, under_y);
 	if ((String)rec["kind"] != "obstacle" || (bool)rec["blocked"] || F(rec["top"]) == (double)INFINITY) {
@@ -1962,7 +1962,7 @@ bool TravTraverse::_try_balance_fall() {
 		double way = ways[w];
 		Vector3 m0 = mul(face.cross(UP).normalized(), way);
 		Vector3 e0 = feet + mul(m0, BALANCE_OUT);
-		Dictionary g0 = body->get_world_3d()->get_direct_space_state()->intersect_ray(PhysicsRayQueryParameters3D::create(e0 + V(0.0, 0.5, 0.0), e0 - V(0.0, 6.0, 0.0), trav::probe_mask(body), ex));
+		Dictionary g0 = TRAV_RAY(body, PhysicsRayQueryParameters3D::create(e0 + V(0.0, 0.5, 0.0), e0 - V(0.0, 6.0, 0.0), trav::probe_mask(body), ex));
 		if (g0.is_empty()) {
 			continue;
 		}
@@ -1997,7 +1997,7 @@ bool TravTraverse::_try_balance_fall() {
 			Vector3 m = mul(face.cross(UP).normalized(), way);
 			Vector3 end = feet + mul(m, D(last.y) * reach);
 			Ref<PhysicsRayQueryParameters3D> q = PhysicsRayQueryParameters3D::create(end + V(0.0, 0.5, 0.0), end - V(0.0, 6.0, 0.0), trav::probe_mask(body), ex);
-			Dictionary hit = body->get_world_3d()->get_direct_space_state()->intersect_ray(q);
+			Dictionary hit = TRAV_RAY(body, q);
 			if (hit.is_empty()) {
 				continue;
 			}

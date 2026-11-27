@@ -214,6 +214,12 @@ void CityCrowd::_physics_process(double p_delta) {
 		const float gy = ground_y(Vector3(crowd->x[i], crowd->y[i], crowd->z[i]), crowd->y[i]);
 		if (std::fabs(gy - crowd->y[i]) < 1.0f) { crowd->y[i] = gy; crowd->py[i] = gy; }
 	}
+#ifdef TRAV_IN_GAME
+	// the new bodies (city_crowd_trav.cpp): here, not after near_update in the drawn frame: they ask the ground where a body is
+	// set down, and on the phone the world's collision answers only in the physics step (28 Nov: asked in the frame, no new
+	// body was ever shown there)
+	if (ready) trav_people_update();
+#endif
 	if (!extras || !ready) return;
 	cap_steps++;
 	PhysicsServer3D *ps = PhysicsServer3D::get_singleton();

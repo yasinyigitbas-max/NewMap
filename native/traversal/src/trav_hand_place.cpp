@@ -145,7 +145,7 @@ void TravHandPlace::_process_modification_with_delta(double dt) {
 				Vector3 hand = xf.xform(hand_s);
 				TypedArray<RID> ex;
 				ex.push_back(bd->get_rid());
-				Dictionary hit = bd->get_world_3d()->get_direct_space_state()->intersect_ray(PhysicsRayQueryParameters3D::create(hand + V(0.0, 1.0, 0.0), hand - V(0.0, 1.5, 0.0), trav::probe_mask(bd), ex));
+				Dictionary hit = TRAV_RAY(bd, PhysicsRayQueryParameters3D::create(hand + V(0.0, 1.0, 0.0), hand - V(0.0, 1.5, 0.0), trav::probe_mask(bd), ex));
 				if (hit.is_empty()) {
 					want = 0.0;
 				} else {
