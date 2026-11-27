@@ -232,6 +232,12 @@ and get to work on those animations."
     `carry_props.json`), the left hand held on `grip_l` by hand_place, fingers closed by finger_grip; picking up
     and putting down are moves (begin_move) like sitting. With nothing in the hand the new layer's weight is 0,
     and parity against the scripts must still pass: that is the proof the player is untouched.
+- 27 Nov, late, his words: "correct all of them then let me see them in an exe"; then: "actually let me see it after
+  the fist fight animations come too". So the next exe holds: the carry and gun fixes, the shot / reload / aim,
+  pick up and put down, AND the fist fight. He did not name the fight's moves: built from what exists for his body
+  (Drive: the boxing idle, cross, two hooks, a combo, jab to elbow, the side step and the walk back in a fight
+  stance, being hit: light, medium, big, to the face); tell him the set when it is shown.
+- [ ] the fist fight: stance, punches, being hit, moving in the stance.
 - New code for these is written in C++ from the start (his ground rule), with a script only where a test needs one.
 
 ## NPCs (27 Nov, started at his word; the ragdolls still wait for his go)
