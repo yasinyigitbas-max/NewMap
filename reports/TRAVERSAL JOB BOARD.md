@@ -190,6 +190,26 @@ and get to work on those animations."
       look right.
     - For carrying: the arms of Jogging_With_Box (two hands) and Walking_With_Shopping_Bag (one hand), his own.
   - `library.res` as it stands: the 115 old animations the same key for key, 18 added.
+  - THE PROPS ARE IN THE LAB (trav98): `traversal_lab/tools/build_props.gd` reads the kit's .glb files and writes
+    `traversal/props/<name>.scn` (17: the 11 weapons, 2 briefcases, 2 bags, 2 boxes; under 1 MB with their two
+    atlas pages), each with its hand points as child nodes (`grip_r`, `grip_l`, `muzzle`) and its hold as meta.
+  - WHERE A THING SITS IN HIS HAND, TRIED AND SEEN IN FRAMES (`tools/traversal/try_hold.gd`, run with
+    `xvfb-run -a godot --path traversal_lab --rendering-driver vulkan -s <full path> -- --out=<folder>`; three
+    views). The rules that looked right, to be written into the C++ as they are:
+    - a hand's frame from its joints: along = wrist to middle knuckle; across = pinky knuckle to index knuckle,
+      squared to along; out of the palm = along x across (right hand; the left the other way); the palm point =
+      three quarters of the way from wrist to knuckle, 3 cm out of the palm (all four figures mine);
+    - a bag or a briefcase: upright in the world, turned side-on to the way he faces, its `grip_r` at the right
+      palm point;
+    - a box: upright, facing as he does, the middle of its two grips at the middle of his two palm points;
+    - a gun: muzzle (+Z) along the right hand, up (+Y) across it, `grip_r` at the right palm point; a long gun is
+      then turned so that its own line from `grip_r` to `grip_l` lies on the line from his right palm to his left.
+    - Seen: briefcase and plastic bag hanging at his side on the shopping-bag walk; the box between his hands on
+      the box jog; the pistol level in his right hand on Pistol_Idle; the rifle across him pointing down-left on
+      the rifle idle, and at his shoulder pointing ahead on Walking_While_Aiming_Rifle. NOT seen yet: fingers
+      closed on anything, the left hand on a forend, any of it moving.
+  - Also kept: `tools/traversal/view_takes.gd` (six moments of any takes of the library on his body) and
+    `tools/traversal/npc_cast_run.gd` (the civilian run of one body; `-- --npc=<name>`).
   - The plan for the code (C++ only): the body takes new keys from the tape (which thing is in the hand, pick up
     / put down, aim, fire, reload); the character gets one more upper-body layer after the phone's (a filtered
     blend: arms and trunk from the hold take, legs from the movement as it is); the prop is a child placed at
