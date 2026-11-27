@@ -23,6 +23,10 @@
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/os.hpp>
 
+#include <godot_cpp/classes/canvas_layer.hpp>
+#include <godot_cpp/classes/color_rect.hpp>
+#include <godot_cpp/classes/display_server.hpp>
+#include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/capsule_shape3d.hpp>
 #include <godot_cpp/classes/collision_shape3d.hpp>
 #include <godot_cpp/classes/engine.hpp>
@@ -108,6 +112,19 @@ void CityPlayer::_input(const Ref<InputEvent> &p_event) {
 		const int id = t->get_index();
 		const Vector2 p = t->get_position();
 		if (id < 0 || id >= 16) return;
+		if (trav && tb_layer) {      // the traversal moves' buttons: a touch on one is that button's, not the stick's or the view's
+			if (!t->is_pressed()) { for (int k = 0; k < TB_N; k++) if (tb_touch[k] == id) tb_touch[k] = -1; }
+			else {
+				tb_layout(sz);
+				for (int k = 0; k < TB_N; k++) {
+					if (!tb_rect[k].has_point(p)) continue;
+					tb_touch[k] = id;
+					if (k == 1) trav_item = (trav_item + 1) % 10;
+					if (k == 2) tb_aim = !tb_aim;
+					return;
+				}
+			}
+		}
 		if (t->is_pressed()) {
 			if (on_button(p)) return;
 			const int half = p.x < sz.x * 0.5f ? 0 : 1;
@@ -126,6 +143,7 @@ void CityPlayer::_input(const Ref<InputEvent> &p_event) {
 	}
 	if (const InputEventScreenDrag *d = Object::cast_to<InputEventScreenDrag>(p_event.ptr())) {
 		const int id = d->get_index();
+		for (int k = 0; k < TB_N; k++) if (tb_touch[k] == id) return;      // (a thumb sliding on a button does not turn the view)
 		if (id >= 0 && id < 16 && move_on[id]) { touch_mv = ((d->get_position() - move_start[id]) / 80.0f).limit_length(1.0f); return; }
 		Vector2 rel = d->get_relative() * 1.2f * sens();   // the look: 0.25 deg a pixel, x1.2 for a thumb
 		if (inv()) rel.y = -rel.y;
@@ -323,10 +341,15 @@ void CityPlayer::_physics_process(double p_delta) {
 		Input *hk = Input::get_singleton();
 		for (int k = 0; k < 10; k++) if (hk->is_key_pressed((Key)(KEY_0 + k))) trav_item = k;
 		trav_s["mx"] = (double)st.x; trav_s["mz"] = (double)-st.y; trav_s["yaw"] = (double)cam_yaw;
-		trav_s["run"] = run; trav_s["jump"] = jump_want; trav_s["crouch"] = crouch; trav_s["act"] = e_was && !frozen;
+		trav_s["run"] = run; trav_s["jump"] = jump_want; trav_s["crouch"] = crouch; trav_s["act"] = (e_was || tb_down(0)) && !frozen;
 		trav_s["text"] = false; trav_s["call"] = false;
-		trav_s["item"] = trav_item; trav_s["aim"] = hk->is_key_pressed(KEY_F) && !frozen; trav_s["fire"] = hk->is_key_pressed(KEY_X) && !frozen;
-		trav_s["reload"] = hk->is_key_pressed(KEY_B) && !frozen; trav_s["drop"] = hk->is_key_pressed(KEY_Q) && !frozen; trav_s["hit"] = hk->is_key_pressed(KEY_H) && !frozen;
+		trav_s["item"] = trav_item; trav_s["aim"] = (hk->is_key_pressed(KEY_F) || tb_aim) && !frozen; trav_s["fire"] = (hk->is_key_pressed(KEY_X) || tb_down(3)) && !frozen;
+		trav_s["reload"] = (hk->is_key_pressed(KEY_B) || tb_down(4)) && !frozen; trav_s["drop"] = (hk->is_key_pressed(KEY_Q) || tb_down(5)) && !frozen;
+		if (tb_layer) {      // the buttons show what is held and what is on
+			static const char *const THINGS[10] = { "HANDS", "CASE", "BAG", "BOX", "PISTOL", "RIFLE", "SHOTGUN", "SMG", "SAWN-OFF", "FISTS" };
+			if (tb_label[1]) tb_label[1]->set_text(THINGS[std::min(std::max(trav_item, 0), 9)]);
+			for (int k = 0; k < TB_N; k++) if (tb_box[k]) tb_box[k]->set_color((tb_down(k) || (k == 2 && tb_aim)) ? Color(1, 1, 1, 0.42f) : Color(0, 0, 0, 0.30f));
+		} trav_s["hit"] = hk->is_key_pressed(KEY_H) && !frozen;
 		jump_want = false; combat_req = false; punch_req = false;
 		set_global_position(trav->get_global_position());
 		yaw = trav->get_rotation().y;
@@ -921,10 +944,41 @@ Array CityPlayer::get_hand_points() const {
 	return a;
 }
 
+// The buttons' places: two columns of three at the right edge, between a third and three quarters of the way down
+// (sizes by the screen's height; the places are mine, not tried on a phone beside the HUD's own buttons).
+void CityPlayer::tb_layout(const Vector2 &p_size) {
+	const float bw = p_size.y * 0.17f, bh = p_size.y * 0.115f, gap = p_size.y * 0.018f;
+	for (int k = 0; k < TB_N; k++) {
+		const int col = k % 2, row = k / 2;
+		tb_rect[k] = Rect2(p_size.x - gap - (float)(2 - col) * (bw + gap) + gap, p_size.y * 0.30f + (float)row * (bh + gap), bw, bh);
+		if (tb_box[k]) { tb_box[k]->set_position(tb_rect[k].position); tb_box[k]->set_size(tb_rect[k].size); }
+		if (tb_label[k]) { tb_label[k]->set_position(tb_rect[k].position); tb_label[k]->set_size(tb_rect[k].size); }
+	}
+}
+
+void CityPlayer::tb_make() {
+	if (tb_layer) return;
+	CanvasLayer *cl = memnew(CanvasLayer);
+	cl->set_layer(4);
+	add_child(cl);
+	tb_layer = cl;
+	static const char *const NAMES[TB_N] = { "USE", "HANDS", "AIM", "FIRE", "RELOAD", "DROP" };
+	for (int k = 0; k < TB_N; k++) {
+		tb_box[k] = memnew(ColorRect); tb_box[k]->set_color(Color(0, 0, 0, 0.30f)); tb_box[k]->set_mouse_filter(Control::MOUSE_FILTER_IGNORE); cl->add_child(tb_box[k]);
+		tb_label[k] = memnew(Label); tb_label[k]->set_text(NAMES[k]); tb_label[k]->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+		tb_label[k]->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER); tb_label[k]->set_vertical_alignment(VERTICAL_ALIGNMENT_CENTER);
+		tb_label[k]->add_theme_font_size_override("font_size", 22);
+		cl->add_child(tb_label[k]);
+	}
+	Viewport *vp = get_viewport();
+	tb_layout(vp ? vp->get_visible_rect().size : Vector2(1152, 648));
+}
+
 void CityPlayer::set_traversal(bool p_on) {
 	if (p_on == (trav != nullptr) || !is_inside_tree()) return;
 	if (!p_on) {
 		trav->queue_free(); trav = nullptr;
+		if (tb_layer) { tb_layer->queue_free(); tb_layer = nullptr; for (int k = 0; k < TB_N; k++) { tb_box[k] = nullptr; tb_label[k] = nullptr; tb_touch[k] = -1; } tb_aim = false; }
 		set_collision_layer(2); set_collision_mask(1 | 16 | 32);
 		if (fig) fig->set_visible(true);
 		return;
@@ -952,6 +1006,7 @@ void CityPlayer::set_traversal(bool p_on) {
 		n->set("body", trav);
 		trav->add_child(n);
 	}
+	if (DisplayServer::get_singleton()->is_touchscreen_available() || OS::get_singleton()->get_cmdline_user_args().has("--travbuttons")) tb_make();
 	if (trav->has_method("show_capsule")) trav->call("show_capsule", false);   // (the lab draws the body's capsule: not in the game)
 	// this node no longer stands in the world itself, and its own figure is not drawn
 	set_collision_layer(0); set_collision_mask(0);

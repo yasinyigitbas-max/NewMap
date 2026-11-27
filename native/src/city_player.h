@@ -180,6 +180,14 @@ protected:
 	CharacterBody3D *trav = nullptr;
 	Dictionary trav_s;
 	int trav_item = 0;
+	// the traversal moves' touch buttons (28 Nov; drawn by a small layer of its own, read in _input): 0 USE (the act key),
+	// 1 HANDS (the next thing in his hands), 2 AIM (on / off), 3 FIRE (held), 4 RELOAD (with fists: the jab), 5 DROP
+	enum { TB_N = 6 };
+	Rect2 tb_rect[TB_N]; int tb_touch[TB_N] = { -1, -1, -1, -1, -1, -1 }; bool tb_aim = false;
+	Node *tb_layer = nullptr; class ColorRect *tb_box[TB_N] = {}; class Label *tb_label[TB_N] = {};
+	void tb_layout(const Vector2 &p_size);
+	void tb_make();
+	bool tb_down(int k) const { return tb_touch[k] >= 0; }
 public:
 	void set_traversal(bool p_on);
 	bool get_traversal() const { return trav != nullptr; }
