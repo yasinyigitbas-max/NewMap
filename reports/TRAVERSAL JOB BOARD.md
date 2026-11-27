@@ -33,8 +33,8 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
 - [x] 4. (trav73) (27 Nov: "also play the sideway squeeze in any passage smaller than 60cms"): sideways in every gap under
       0.60 m. His word over the study's shoulder turn for 0.45 to 0.60 m.
 - [x] 4b. (trav74) (27 Nov: "make the palms face the wall instead of ground on both ledge and squeeze in").
-- [ ] 5. Stage 21: cover, low and high: enter, peek, exit. NOT in his list of 27 Nov ("doors, cars, then the sitting
-      and phone list, do al of them then make the exe"): left here, after those, until he says.
+- [x] 5. (trav77) Stage 21: cover, low and high: enter, peek, exit (27 Nov: "Oh I forgot about covers, add them in
+      too").
 - [x] 6. (trav75) Stage 22: doors: push, then pull.
 - [x] 7. (trav76) Stage 23: cars: entry and exit. The bonnet slide is NOT built: no clip exists for it.
 - [x] 8. (trav76) Sitting and phone use (27 Nov, his list): stand to sit, walk to sit, sitting idle, sit to stand, sitting
@@ -66,6 +66,11 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
   still stops and plays the same take. Cars: no bonnet slide; the car is a van with no roof, built round the take.
   Sitting: Stand To Sit is the X Bot take (none was downloaded for his body). The phone holds him to 1.3 m/s (mine);
   there is no take for taking the phone out or putting it away, it fades in over 0.4 s.
+- Cover: behind a 0.80 m wall the top of his head shows 0.28 m (his hips are down the most they go; the study says
+  these takes show the head behind 0.8 to 1.1 m cover); side-stepping along low cover he rises to 1.41 m, so his
+  head shows over walls under 1.4 m while he moves; no take goes from standing into standing cover on his body (the
+  take out of it is played backward); the high look round the end is `Standing Cover Turn`, the X Bot take; cover
+  is taken only against a wall he faces within 2 m, with E; no cover-to-cover move, no corner turn.
 - Fingers do not curl on any hold (no finger correction).
 - The sidle is taken to 0.30 m, not the study's 0.25 (mine); his arms hang, they are not spread on the wall; going
   back the way he came in a gap (not on a ledge) is not tested.
@@ -75,6 +80,8 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
 
 ## Waiting on Yasin's eyes
 
+- trav77: cover on the course's thin and deep walls (E facing a wall; the stick along it; held at its end to look
+  round; E or the stick out from it to leave).
 - trav75, trav76: the door (both sides), the car (in and out), the bench and the desk, the phone (T text, G call)
   standing, walking and seated. Stations after the wall ledges: `[` from the first station goes back through them.
 

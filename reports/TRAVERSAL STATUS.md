@@ -340,5 +340,10 @@ What stands at this commit, all play-tested or approved by him up to trav57, and
   desk, `Type_To_Sit` backward, `Typing`; T takes his hands off the keys and back. T / G anywhere on the ground or
   seated: arms, neck and head of `Texting_While_Standing` / `Male_Talking_On_The_Cell_Phone` over the rest of him,
   a slab in his hand (right for text, left for the call), no faster than 1.3 m/s. `tests/test_sit_phone.gd`.
-- **Stage 21 (cover) is not built** and is not in his list of 27 Nov; stages 19 and 20 (ragdolls) wait for his go and
-  a checkpoint first.
+- **Stage 21, cover (trav77):** E facing a wall 0.80 m or higher within 2 m: he is walked to the take's start and
+  takes cover, his back to it, hips 0.30 m out: crouched (`Stand_To_Cover`, `Crouch_Cover_Idle`) behind a wall under
+  1.85 m, standing (`Cover_To_Stand_High` backward, `Cover_Idle`) behind a higher one. The stick along the wall:
+  `Left_Cover_Sneak` / `Right_Cover_Sneak` at 1.16 m/s; held on at the wall's end: a look round it (3.0 s). E or the
+  stick out from the wall: out. The cover takes are turned at the bake into the wall's frame (`AIM_DEG`).
+  `tests/test_stage21.gd`.
+- Stages 19 and 20 (ragdolls) wait for his go and a checkpoint first.

@@ -59,7 +59,7 @@ const TRIMS := {"KM_Slope_Down_Start": [0.60, 2.33], "KM_Slope_Down_Stop": [4.57
 		# the climb up onto a wall (Kimodo, Yasin's words "vaulting over a wall. landing on the other side", seed 1,
 		# 26 Nov): a short run in, both hands on the top, up onto it; he is standing on top by 3.0 s
 		"KM_Climb_Up": [0.20, 3.40]}
-const LOOPS := ["Sitting_Idle", "Typing", "Texting_While_Standing", "Male_Talking_On_The_Cell_Phone", "Standing_Idle", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
+const LOOPS := ["Cover_Idle", "Crouch_Cover_Idle", "Left_Cover_Sneak", "Right_Cover_Sneak", "Sitting_Idle", "Typing", "Texting_While_Standing", "Male_Talking_On_The_Cell_Phone", "Standing_Idle", "Running_3", "Running", "Sprint", "Slow_Run", "Falling_Idle", "Crouched_Walking", "Ascending_Stairs", "Crouching_Idle"]
 
 
 func _skeleton(n: Node) -> Skeleton3D:

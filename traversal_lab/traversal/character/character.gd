@@ -64,6 +64,10 @@ const HARD_DROP := 1.0          # soft landing; 1.0 to 2.0 m, a heavy landing"
 # the inputs of the tree's Transition node, and the clip each one plays under its own TimeSeek
 const ACTS := {
 		# Stage 22, doors; stage 23, cars; sitting (Yasin, 27 Nov): see traversal/moves/interact.gd
+		# Stage 21, cover
+		"cover_in": "Stand_To_Cover", "cover_out": "Cover_To_Stand", "cover_out_high": "Cover_To_Stand_High", "cover_idle": "Cover_Idle",
+		"cover_idle_low": "Crouch_Cover_Idle", "cover_left": "Left_Cover_Sneak", "cover_right": "Right_Cover_Sneak",
+		"cover_peek": "Crouch_Look_Around_Corner", "cover_peek_high": "Standing_Cover_Turn", "cover_peek_m": "Crouch_Look_Around_Corner_M", "cover_peek_high_m": "Standing_Cover_Turn_M",
 		"door_pull": "Open_Door_Outwards", "door_push": "Opening_Door_Inwards", "car_in": "Entering_Car", "car_out": "Exiting_Car",
 		"sit_down": "Stand_To_Sit", "sit_idle": "Sitting_Idle", "sit_up": "Sit_To_Stand", "sit_type": "Typing", "type_to_sit": "Type_To_Sit",
 		"jump": "Jump", "run_jump": "Running_Jump", "land_soft": "Falling_To_Landing", "land_heavy": "Hard_Landing",
@@ -953,6 +957,8 @@ func _physics_process(dt: float) -> void:
 		if _low_w > 0.0 and _act == "ground":
 			var top := (skel.global_transform * skel.get_bone_global_pose(_head_i).origin).y - body.global_position.y + HEAD_OVER_JOINT
 			want_fit -= maxf(top - (float(body.get(&"CROUCH_HEIGHT")) - HEAD_ROOM), 0.0) * _low_w
+		# (in low cover: his hips brought down so that his head is under the top of what he is behind)
+		want_fit -= float(body.get(&"cover_drop"))
 		_hips_fit += (want_fit - _hips_fit) * minf(dt / FADE, 1.0)
 		feet.set(&"hips_fit", _hips_fit)
 		# the fitting fades out in the air and back in on the ground; the three modifiers go together

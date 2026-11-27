@@ -467,6 +467,11 @@ func _at(table: PackedFloat32Array, t: float) -> float:
 func _physics_process(_dt: float) -> void:
 	if body == null or not enabled or bool(body.call(&"in_move")):
 		return
+	# (walked to a seat, a car door or a place in cover by interact.gd: walking toward a wall he is about to take cover
+	# against is not walking at it to climb it; he mantled a 1.10 m wall on his way to cover behind it)
+	if bool(body.get(&"auto_on")):
+		record = {}
+		return
 	_tick += 1
 	var v: Vector3 = body.get(&"hvel")
 	var wish := (body.get(&"_wish") as Vector3).length()

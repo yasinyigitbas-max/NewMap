@@ -209,6 +209,8 @@ var _gap_mid := Vector3.ZERO
 var _gap_n := Vector3.RIGHT
 var radius := RADIUS            # his shape's radius now: less than RADIUS only in such a gap
 # Things done with keys other than the stick (interact.gd, and the phone in character.gd)
+var stick_dir := Vector3.ZERO    # the way the stick is pushed, in the world (length 0 to 1), also during a move
+var cover_drop := 0.0            # in low cover: how far his hips are brought down for his head to be under its top (m; interact.gd)
 var act_held := false           # the act key is down (E): sit, get in a car
 var act_now := false            # ... and went down this tick
 var phone := 0                  # 0 = away, 1 = texting, 2 = on a call (the T and G keys turn each on and off)
@@ -627,6 +629,7 @@ func _physics_process(dt: float) -> void:
 		phone = 0 if phone == 2 else 2
 	_text_was = text
 	_call_was = call
+	stick_dir = Vector3(float(s.get("mx", 0.0)), 0.0, float(s.get("mz", 0.0))).rotated(Vector3.UP, float(s.get("yaw", 0.0))).limit_length(1.0)
 	if move_path.is_valid():
 		# (the stick is read and not obeyed: "cancelling is impossible mid-move")
 		stick_held = Vector2(float(s.get("mx", 0.0)), float(s.get("mz", 0.0))).length() > 0.2

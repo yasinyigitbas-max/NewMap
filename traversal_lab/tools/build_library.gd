@@ -17,7 +17,12 @@ const DIR := "res://traversal/character/clips/"
 const MODEL := "res://traversal/character/player_v4_rooted.scn"
 const OUT := "res://traversal/character/library.res"
 const SKEL := "Skeleton3D"
-const MIRRORED := ["KM_Side_Step", "Female_Stop_Walking", "Run_To_Stop", "Left_Turn_90", "Walking_Turn_180", "Running_Turn_180", "Female_Start_Walking", "Idle_To_Sprint",
+# Stage 21, cover: the cover takes were each made facing their own way. They are turned at the bake so that in all of
+# them straight ahead (+Z) is straight out from the wall he is in cover against (measured in the lab: the idles stand
+# 5 and 26 degrees to the left of that, as their takes do). Without it he spun as one take gave way to the next.
+# The side steps go to his left (+X) and to his right, not ahead. (interact.gd turns its own tables the same way.)
+const AIM_DEG := {"Stand_To_Cover": 47.0, "Cover_To_Stand_High": 180.0, "Left_Cover_Sneak": 90.0, "Right_Cover_Sneak": -90.0}
+const MIRRORED := ["Crouch_Look_Around_Corner", "Standing_Cover_Turn", "KM_Side_Step", "Female_Stop_Walking", "Run_To_Stop", "Left_Turn_90", "Walking_Turn_180", "Running_Turn_180", "Female_Start_Walking", "Idle_To_Sprint",
 		"KM_Stop_Walk", "KM_Walk_To_Run", "KM_Run_To_Walk", "KM_Turn_180", "KM_Step_Up", "Vault_1_Hand", "Step_Onto_Platform", "Running_Jump_Climb"]
 # Starts, stops and changes of gait are chosen "by which foot is forward" (the study, Stage 5): for these clips how far
 # the left ankle is ahead of the right, frame by frame, is noted on the animation ("lead", metres).
@@ -189,6 +194,8 @@ func _animation(c: Resource, name: String, stand_y: float) -> Animation:
 	var aim := Quaternion.IDENTITY
 	if loop and total >= 0.02:
 		aim = Quaternion(Vector3.UP, -atan2(dir.x, dir.z))
+	if AIM_DEG.has(name):
+		aim = Quaternion(Vector3.UP, deg_to_rad(float(AIM_DEG[name]))) * aim
 	var turning: bool = not loop and not yaw.is_empty() and absf(rad_to_deg(yaw[frames - 1])) >= TURN_LEAST_DEG and not STRAIGHT_ON.has(name)
 	var hips_i := bones.find("mixamorig_Hips")
 	var t_root_p := a.add_track(Animation.TYPE_POSITION_3D)

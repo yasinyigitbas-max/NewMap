@@ -56,6 +56,35 @@ const UP_HOLD := 0.25           # seconds the stick is held before it is taken a
 const CAR := {"in": {"input": "car_in", "clip": "Entering_Car", "door": [[0.90, 0.0], [1.40, 31.0], [1.70, 48.0], [3.20, 48.0], [3.50, 23.0], [4.10, 0.0]]},
 		"out": {"input": "car_out", "clip": "Exiting_Car", "door": [[0.60, 0.0], [1.50, 85.0], [3.90, 85.0], [4.40, 0.0]]}}
 const CAR_REACH := 2.5          # NOT in the study, mine: the act key takes him to a car whose take starts within this (m)
+# Stage 21, cover: "cover: low and high, enter, peek, exit | low 0.8 to 1.1 m, high above head". The study: "look and
+# fire around the side of cover, not over the top; stay 30 to 46 cm or an arm's length off the wall; come out lower
+# than expected ...; keep exposure between positions to 3 to 5 seconds"; and of the takes: "in crouch cover the head
+# is at 1.28 m, so behind the 0.8 to 1.1 m low cover the head shows by 0.2 m or more. Low cover for these clips needs
+# to be about 1.3 m, or the pose lowered".
+# The act key facing a wall 0.8 m high or more, within reach: he takes cover against it, his back to it. A wall he
+# can be seen over standing (under COVER_HIGH) is low cover, crouched; a higher one is high cover, standing.
+# In cover: the stick along the wall side-steps him along it; held on at the wall's end, he looks round it (never
+# over it); the act key, or the stick held out from the wall, brings him out.
+const COVER := {
+	"low": {"in": "Stand_To_Cover", "in_key": "cover_in", "in_back": false, "idle": "cover_idle_low", "idle_clip": "Crouch_Cover_Idle",
+			"out": "Cover_To_Stand", "out_key": "cover_out", "peek": "Crouch_Look_Around_Corner", "peek_key": "cover_peek", "peek_to": 1.0,
+			"head": 1.33, "head_side": 1.68},
+	# (no take of his goes from standing into standing cover: the take out of it is played backward)
+	"high": {"in": "Cover_To_Stand_High", "in_key": "cover_out_high", "in_back": true, "idle": "cover_idle", "idle_clip": "Cover_Idle",
+			"out": "Cover_To_Stand_High", "out_key": "cover_out_high", "peek": "Standing_Cover_Turn", "peek_key": "cover_peek_high", "peek_to": -1.0,
+			"head": 1.66, "head_side": 1.68}}
+const COVER_AIM := {"Stand_To_Cover": 47.0, "Cover_To_Stand_High": 180.0}      # as tools/build_library.gd AIM_DEG turns these takes
+const COVER_LOW := 0.80         # the study's lowest cover
+const COVER_HIGH := 1.85        # "high above head": he is 1.80 m tall
+const COVER_OFF := 0.30         # the study's "stay 30 to 46 cm ... off the wall": his hips this far out from it
+const COVER_REACH := 2.0        # NOT in the study, mine: a wall this near in front of him is taken cover against (m)
+const COVER_PACE := 1.16        # the side-step takes' own pace on his body (m/s; the study: "1.34 m per loop at 1.18 m/s" on X Bot)
+const COVER_SIDE_LEN := 1.1333  # their length (s)
+const COVER_DROP_MOST := 0.25   # NOT in the study, mine: the most his hips are brought down to keep his head under the top (m)
+const COVER_HEAD_ROOM := 0.03   # NOT in the study, mine: his head is kept this far under the top (m)
+const PEEK_AFTER := 0.3         # NOT in the study, mine: seconds the stick is held on at the wall's end before he looks round it
+const PEEK_HOLD := 1.0          # NOT in the study, mine: seconds he stays out round the end of high cover (out 1 s, back 1 s: 3 s
+                                # of exposure in all, the study's "3 to 5 seconds"; the low take is 3.0 s long by itself)
 const ALIGN_TIME := 0.35        # NOT in the study, mine: seconds over which he is brought onto the take's start
 
 var body: CharacterBody3D
@@ -70,6 +99,9 @@ var _yaw := {}                  # clip name -> the take's own turning, frame by 
 var _dir := {}                  # clip name -> the line the take travels along, in its own frame (x = to his left, z = ahead)
 var _to_car: Node3D             # the car he is being walked to
 var in_car := false             # he is in a car (for the tests)
+var _to_cover := {}              # the cover he is being walked to (a plan), or empty
+var in_cover := ""              # "" , "low" or "high": he is in cover (for the tests)
+var cover_phase := ""
 var _to_seat: Node3D            # the seat he is being walked to
 var _walked := 0.0
 var seated := false             # he is on a seat (for the tests and the readout)
@@ -83,6 +115,9 @@ func _ready() -> void:
 		_load(String(SIT[key]["clip"]))
 	for key: String in CAR:
 		_load(String(CAR[key]["clip"]))
+	for kind: String in COVER:
+		for part: String in ["in", "out", "peek", "idle_clip"]:
+			_load(String(COVER[kind][part]))
 
 
 func _load(clip: String) -> void:
@@ -97,7 +132,8 @@ func _load(clip: String) -> void:
 		var rel := hips[f] - hips[0]
 		t.append(Vector3(rel.x, 0.0, rel.z).dot(dir))
 	_along[clip] = t
-	_dir[clip] = dir
+	# (the line in the frame the take is baked in: some cover takes are turned at the bake)
+	_dir[clip] = dir.rotated(Vector3.UP, deg_to_rad(float(COVER_AIM[clip]))) if COVER_AIM.has(clip) else dir
 	_yaw[clip] = c.get(&"yaw")
 	_len[clip] = float(hips.size() - 1) / _fps
 
@@ -119,7 +155,10 @@ func _physics_process(_dt: float) -> void:
 	if _to_car != null:
 		_walk_to_car(_dt)
 		return
-	if bool(body.get(&"act_now")) and (_try_seat() or _try_car()):
+	if not _to_cover.is_empty():
+		_walk_to_cover(_dt)
+		return
+	if bool(body.get(&"act_now")) and (_try_seat() or _try_car() or _try_cover()):
 		return
 	var wish: Vector3 = body.get(&"stick_wish")
 	if wish.length() > 0.05:
@@ -450,4 +489,224 @@ func _car(t: float) -> Dictionary:
 	if next != "":
 		pl["phase"] = next
 		pl["t0"] = t
+	return out
+
+
+# ---------------------------------------------------------------------------------------------------------- cover
+
+func _ray(from: Vector3, to: Vector3) -> Dictionary:
+	return body.get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(from, to, body.collision_mask, [body.get_rid()]))
+
+
+## Is there a wall to take cover against behind the spot `at` (a point on the ground, COVER_OFF out from it), whose
+## outward facing is `n`? Returns its height above the ground there, or 0.
+func _cover_wall(at: Vector3, n: Vector3) -> float:
+	var hit := _ray(at + Vector3(0.0, 0.5, 0.0), at + Vector3(0.0, 0.5, 0.0) - n * (COVER_OFF + 0.25))
+	if hit.is_empty() or (hit["normal"] as Vector3).dot(n) < 0.9:
+		return 0.0
+	var inside: Vector3 = (hit["position"] as Vector3) - n * 0.05
+	var top := _ray(Vector3(inside.x, at.y + 3.5, inside.z), Vector3(inside.x, at.y + 0.3, inside.z))
+	return ((top["position"] as Vector3).y - at.y) if not top.is_empty() else 3.5
+
+
+## May he side-step on from `at` the way `way` (a unit vector along the wall)? The wall goes on COVER_END further than
+## a step from here, and nothing stands in his way.
+const COVER_END := 0.22         # NOT in the study, mine: he stops with his hips this far inside the end of the wall (m)
+func _cover_on(at: Vector3, way: Vector3, n: Vector3) -> bool:
+	return _cover_wall(at + way * (COVER_END + 0.03), n) >= COVER_LOW - 0.02 \
+			and _ray(at + Vector3(0.0, 0.6, 0.0), at + Vector3(0.0, 0.6, 0.0) + way * 0.5).is_empty()
+
+
+## The act key, facing a wall: where he would be in cover against it, and what kind of cover it is.
+func _try_cover() -> bool:
+	var face := -body.global_transform.basis.z
+	face = Vector3(face.x, 0.0, face.z).normalized()
+	var feet := body.global_position
+	var hit := _ray(feet + Vector3(0.0, 0.5, 0.0), feet + Vector3(0.0, 0.5, 0.0) + face * COVER_REACH)
+	if hit.is_empty():
+		return false
+	var n: Vector3 = hit["normal"]
+	n = Vector3(n.x, 0.0, n.z)
+	if n.length() < 0.9 or n.normalized().dot(face) > -0.7:
+		return false
+	n = n.normalized()
+	var at := Vector3((hit["position"] as Vector3).x, feet.y, (hit["position"] as Vector3).z) + n * COVER_OFF
+	var high := _cover_wall(at, n)
+	if high < COVER_LOW - 0.02:
+		return false
+	var kind := "high" if high >= COVER_HIGH else "low"
+	var c: Dictionary = COVER[kind]
+	var clip := String(c["in"])
+	# where the take into cover starts, and the way his body is turned there (the take's own frame: see AIM_DEG)
+	var yaw_n := atan2(-n.x, -n.z)
+	var whole: Array = _travel(clip, 99.0)
+	var start: Vector3
+	var yaw_start: float
+	if bool(c["in_back"]):
+		# (the take out of cover, backward: it starts where that take ends)
+		start = at + _line(clip, n) * float(whole[0])
+		yaw_start = yaw_n + float(whole[1])
+	else:
+		yaw_start = yaw_n - float(whole[1])
+		var fwd0 := Vector3(-sin(yaw_start), 0.0, -cos(yaw_start))
+		start = at - _line(clip, fwd0) * float(whole[0])
+	if _ray(start + Vector3(0.0, 1.0, 0.0), start + Vector3(0.0, -0.3, 0.0)).is_empty():
+		return false
+	_to_cover = {"key": "cover", "kind": kind, "c": c, "at": at, "n": n, "high": high, "yaw_n": yaw_n, "start": start, "yaw_start": yaw_start}
+	_walked = 0.0
+	return true
+
+
+func _walk_to_cover(dt: float) -> void:
+	_walked += dt
+	var start: Vector3 = _to_cover["start"]
+	var off := start - body.global_position
+	off.y = 0.0
+	if (bool(body.get(&"stick_held")) and _walked > 0.2) or _walked > SIT_WALK_MOST:
+		body.set(&"auto_on", false)
+		_to_cover = {}
+		return
+	if off.length() > SIT_AT:
+		body.set(&"auto_on", true)
+		body.set(&"auto_to", start)
+		return
+	body.set(&"auto_on", false)
+	_plan = _to_cover
+	_to_cover = {}
+	var turn := absf(wrapf(float(_plan["yaw_start"]) - body.rotation.y, -PI, PI))
+	_plan.merge({"from": body.global_position, "yaw0": body.rotation.y, "turn_time": maxf(TURN_TIME * turn / PI, ALIGN_TIME), "phase": "turn", "t0": 0.0,
+			"last_t": 0.0, "pos": _plan["at"], "side_t": 0.0, "pushed": 0.0, "away": 0.0, "peek_side": 1.0})
+	plays += 1
+	last = "cover_" + String(_plan["kind"])
+	body.call(&"begin_move", _cover, String(_plan["c"]["in_key"]))
+
+
+## How far his hips are brought down so that a head `head` m up is under the top of a wall `high` m high.
+func _drop_for(head: float, high: float) -> float:
+	return clampf(head - (high - COVER_HEAD_ROOM), 0.0, COVER_DROP_MOST)
+
+
+func _cover(t: float) -> Dictionary:
+	var pl := _plan
+	var c: Dictionary = pl["c"]
+	var dt := t - float(pl["last_t"])
+	pl["last_t"] = t
+	var ph := String(pl["phase"])
+	var tau := t - float(pl["t0"])
+	var n: Vector3 = pl["n"]
+	var left := Vector3.UP.cross(n).normalized()            # his own left as he stands with his back to the wall
+	var at: Vector3 = pl["pos"]
+	var yaw_n := float(pl["yaw_n"])
+	var kind := String(pl["kind"])
+	var out := {"done": false, "pos": at, "yaw": yaw_n, "clip": String(c["idle"]), "clip_t": 0.0, "air": false, "landed": true}
+	var next := ""
+	var drop := 0.0
+	# the stick, in the wall's own frame: along it to his left (+) or right (-), and out from it
+	var stick: Vector3 = body.get(&"stick_dir")
+	var along := stick.dot(left)
+	var outward := stick.dot(n)
+	pl["away"] = float(pl["away"]) + dt if outward > 0.6 else 0.0
+	var out_asked := bool(body.get(&"act_now")) or float(pl["away"]) >= UP_HOLD
+	match ph:
+		"turn":
+			var u := smoothstep(0.0, float(pl["turn_time"]), tau)
+			out["pos"] = (pl["from"] as Vector3).lerp(pl["start"], u)
+			out["yaw"] = lerp_angle(float(pl["yaw0"]), float(pl["yaw_start"]), u)
+			out["clip"] = String(c["in_key"])
+			out["clip_t"] = float(_len[String(c["in"])]) if bool(c["in_back"]) else 0.0
+			if tau >= float(pl["turn_time"]):
+				next = "in"
+		"in":
+			var clip := String(c["in"])
+			var l := float(_len[clip])
+			var ct := clampf(l - tau if bool(c["in_back"]) else tau, 0.0, l)
+			var tr: Array = _travel(clip, ct)
+			if bool(c["in_back"]):
+				out["pos"] = (pl["at"] as Vector3) + _line(clip, n) * float(tr[0])
+				out["yaw"] = yaw_n + float(tr[1])
+			else:
+				var fwd0 := Vector3(-sin(float(pl["yaw_start"])), 0.0, -cos(float(pl["yaw_start"])))
+				out["pos"] = (pl["start"] as Vector3) + _line(clip, fwd0) * float(tr[0])
+				out["yaw"] = float(pl["yaw_start"]) + float(tr[1])
+			out["clip"] = String(c["in_key"])
+			out["clip_t"] = ct
+			drop = _drop_for(float(c["head"]), float(pl["high"])) * smoothstep(0.0, l, tau)
+			if tau >= l:
+				next = "idle"
+				in_cover = kind
+		"idle":
+			out["clip_t"] = fposmod(tau, float(_len[String(c["idle_clip"])]))
+			drop = _drop_for(float(c["head"]), float(pl["high"]))
+			if out_asked and tau > 0.3:
+				next = "out"
+			elif absf(along) > 0.5:
+				var way := signf(along)
+				if _cover_on(at, left * way, n):
+					pl["side"] = way
+					pl["pushed"] = 0.0
+					next = "side"
+				else:
+					# at the wall's end: held on, he looks round it
+					pl["pushed"] = float(pl["pushed"]) + dt
+					if float(pl["pushed"]) >= PEEK_AFTER and _cover_wall(at + left * (way * 0.6), n) < COVER_LOW - 0.02:
+						pl["peek_side"] = way
+						next = "peek"
+			else:
+				pl["pushed"] = 0.0
+		"side":
+			var way2 := float(pl["side"])
+			pl["side_t"] = fposmod(float(pl["side_t"]) + dt, COVER_SIDE_LEN)
+			out["clip"] = "cover_left" if way2 > 0.0 else "cover_right"
+			out["clip_t"] = float(pl["side_t"])
+			drop = _drop_for(float(c["head_side"]), float(pl["high"])) if kind == "low" else 0.0
+			var step := left * (way2 * COVER_PACE * dt)
+			var on := signf(along) == way2 and absf(along) > 0.5
+			if on and _cover_on(at, left * way2, n):
+				at += step
+				pl["pos"] = at
+				out["pos"] = at
+				pl["high"] = _cover_wall(at, n)
+			else:
+				next = "idle"
+		"peek":
+			# round the end of the wall on the side the stick was held: the low take looks to his left, the high one
+			# steps out to his right; their mirrors do the other
+			var clip2 := String(c["peek"])
+			var l2 := float(_len[clip2])
+			var mirrored := signf(float(pl["peek_side"])) != float(c["peek_to"])
+			out["clip"] = String(c["peek_key"]) + ("_m" if mirrored else "")
+			drop = _drop_for(float(c["head"]), float(pl["high"]))
+			if kind == "low":
+				out["clip_t"] = minf(tau, l2)
+				if tau >= l2:
+					next = "idle"
+			else:
+				# out, a hold, and back the way he came
+				var ct2 := clampf(tau, 0.0, l2) if tau < l2 + PEEK_HOLD else clampf(2.0 * l2 + PEEK_HOLD - tau, 0.0, l2)
+				var tr2: Array = _travel(clip2, ct2)
+				var m := -1.0 if mirrored else 1.0
+				var d2: Vector3 = _dir[clip2]
+				out["pos"] = at + (n * d2.z - left * (-d2.x) * m).normalized() * float(tr2[0]) if float(tr2[0]) > 0.0 else at
+				out["yaw"] = yaw_n + float(tr2[1]) * m
+				out["clip_t"] = ct2
+				if tau >= 2.0 * l2 + PEEK_HOLD:
+					next = "idle"
+		"out":
+			var clip3 := String(c["out"])
+			var l3 := float(_len[clip3])
+			var tr3: Array = _travel(clip3, minf(tau, l3))
+			out["pos"] = at + _line(clip3, n) * float(tr3[0])
+			out["yaw"] = yaw_n + float(tr3[1])
+			out["clip"] = String(c["out_key"])
+			out["clip_t"] = minf(tau, l3)
+			drop = _drop_for(float(c["head"]), float(pl["high"])) * (1.0 - smoothstep(0.0, l3 * 0.5, tau))
+			in_cover = ""
+			if tau >= l3:
+				out["done"] = true
+				out["exit"] = Vector3.ZERO
+	body.set(&"cover_drop", drop)
+	if next != "":
+		pl["phase"] = next
+		pl["t0"] = t
+	cover_phase = String(pl["phase"]) if not bool(out["done"]) else ""
 	return out
