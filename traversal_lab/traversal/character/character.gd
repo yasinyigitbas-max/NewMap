@@ -497,7 +497,16 @@ func _make_tree() -> AnimationNodeBlendTree:
 	bt.connect_node(&"seek_side", 0, &"side_step")
 	bt.add_node(&"squeeze", AnimationNodeBlend2.new(), Vector2(750, -200))
 	bt.connect_node(&"squeeze", 0, &"narrow")
-	bt.connect_node(&"squeeze", 1, &"seek_side")
+	# (and its mirror, for going through facing the other wall)
+	var side_step_m := AnimationNodeAnimation.new()
+	side_step_m.animation = SIDE_STEP + "_M"
+	bt.add_node(&"side_step_m", side_step_m, Vector2(0, -700))
+	bt.add_node(&"seek_side_m", AnimationNodeTimeSeek.new(), Vector2(200, -700))
+	bt.connect_node(&"seek_side_m", 0, &"side_step_m")
+	bt.add_node(&"side_pick", AnimationNodeBlend2.new(), Vector2(450, -650))
+	bt.connect_node(&"side_pick", 0, &"seek_side")
+	bt.connect_node(&"side_pick", 1, &"seek_side_m")
+	bt.connect_node(&"squeeze", 1, &"side_pick")
 	bt.connect_node(&"act", 0, &"squeeze")
 	var fall := AnimationNodeAnimation.new()
 	fall.animation = FALL
@@ -897,7 +906,7 @@ func _physics_process(dt: float) -> void:
 	# flicker when falling idle too long>fall animation plays")
 	_beam_arms = move_toward(_beam_arms, _narrow_w * (1.0 - _moving) if _mode != "move" else 0.0, dt / FADE)
 	# (in a gap between walls his arms are not held out from his body at all)
-	_arms.set(&"open_deg", arm_open_deg * (1.0 - maxf(_turn_deg / SHOULDER_TURN_DEG, _squeeze_w)) + (STEEP_ARMS_UP_DEG if _steep_up else STEEP_ARMS_DEG) * _steep_w + BEAM_ARMS_DEG * _beam_arms)
+	_arms.set(&"open_deg", arm_open_deg * (1.0 - maxf(absf(_turn_deg) / SHOULDER_TURN_DEG, _squeeze_w)) + (STEEP_ARMS_UP_DEG if _steep_up else STEEP_ARMS_DEG) * _steep_w + BEAM_ARMS_DEG * _beam_arms)
 	if hands:
 		# a move that puts a hand on something: [which hand (0 left, 1 right), where its wrist goes, how much]
 		var mh: Array = body.get(&"move_hand") if bool(body.call(&"in_move")) else []
@@ -1204,7 +1213,11 @@ func _ground(dt: float, speed: float) -> void:
 		if _side_t >= side_len:
 			_side_t = 0.0
 	tree.set(&"parameters/seek_side/seek_request", _side_t)
-	_turn_deg = move_toward(_turn_deg, SHOULDER_TURN_DEG if (sq == 1 and _mode == "ground") else 0.0, SHOULDER_TURN_DEG * dt / FADE)
+	tree.set(&"parameters/seek_side_m/seek_request", _side_t)
+	var turned := float(int(body.get(&"squeeze_side")))
+	if _squeeze_w <= 0.0 or sq == 2:
+		tree.set(&"parameters/side_pick/blend_amount", 0.0 if turned > 0.0 else 1.0)
+	_turn_deg = move_toward(_turn_deg, SHOULDER_TURN_DEG * turned if (sq == 1 and _mode == "ground") else 0.0, SHOULDER_TURN_DEG * dt / FADE)
 	_trunk.set(&"turn_deg", _turn_deg)
 	var g := _gait_for(maxf(speed, 0.3))
 	tree.set(&"parameters/gait/blend_position", g.x)

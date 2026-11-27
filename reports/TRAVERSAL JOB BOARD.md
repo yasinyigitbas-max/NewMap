@@ -23,7 +23,7 @@ The state of what is built is in `reports/TRAVERSAL STATUS.md`; this file is wha
 
 ## Queue
 
-- [ ] 1. Mirror the takes of the squeeze through gaps (27 Nov: "also mirror the squeeze in gap takes"), so that he
+- [x] 1. (trav71) Mirror the takes of the squeeze through gaps (27 Nov: "also mirror the squeeze in gap takes"), so that he
       can go through facing either wall.
 - [ ] 2. Stage 17, what is left: the wall-ledge sidle (the study: "For a ledge with a wall behind, allow a sidle
       down to about 0.10 m"). The course has no such ledge: build one in the test.

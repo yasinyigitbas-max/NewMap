@@ -46,7 +46,7 @@ func through(w: float, x: float, zc: float, run: bool, off: float, go := 0, rest
 		samples.append({"mx": 0.0, "mz": -1.0 if (go == 0 or i < go) else 0.0, "yaw": 0.0, "run": run, "jump": false, "crouch": false, "act": false})
 	tape.set(&"tape", samples)
 	tape.call(&"replay")
-	var out := {"kinds": {}, "slow": INF, "fast": 0.0, "turn_least": INF, "turn_most": 0.0, "from": INF, "in_wall": 0.0, "in_wall_at": "", "past": 0.0, "at_rest": {}}
+	var out := {"kinds": {}, "slow": INF, "fast": 0.0, "turn_least": INF, "turn_most": 0.0, "from": INF, "in_wall": 0.0, "in_wall_at": "", "past": 0.0, "at_rest": {}, "face": 0.0}
 	var t := 0
 	while t < (go + rest if go > 0 else 860):
 		await physics_frame
@@ -69,6 +69,7 @@ func through(w: float, x: float, zc: float, run: bool, off: float, go := 0, rest
 			# how far the line of his shoulders is turned from square to his way
 			var sh: Vector3 = (J["RightShoulder"] as Vector3) - (J["LeftShoulder"] as Vector3)
 			var a := absf(rad_to_deg(atan2(sh.z, sh.x)))
+			out["face"] = float(out["face"]) + sh.z        # which way he is turned: the sign of this, summed
 			a = minf(a, 180.0 - a)
 			out["turn_least"] = minf(float(out["turn_least"]), a)
 			out["turn_most"] = maxf(float(out["turn_most"]), a)
@@ -154,5 +155,23 @@ func _run() -> void:
 			var a: Dictionary = st["at_rest"]
 			ok(int(a["kind"]) == 2 and bool(a["feet_in"]) and float(a["side_t"]) == 0.0 and absf(float(a["z"])) < 1.4,
 					"%s, standing still in it: he stays sideways, his feet inside it, the side step at its end (kind %d, feet inside %s, the step at %.2f s, %.2f m from its middle, his ankles %.2f m apart along it)" % [g[3], int(a["kind"]), a["feet_in"], float(a["side_t"]), float(a["z"]), float(a["apart"])])
+	# Either way round (Yasin, 27 Nov: "also mirror the squeeze in gap takes"): he turns to face the wall he is further
+	# from, so from the two sides of the middle he goes through turned opposite ways.
+	for g: Array in gaps:
+		var w := float(g[0])
+		if absf(w - 0.4) > 0.001 and absf(w - 0.5) > 0.001:
+			continue
+		var faces := []
+		var walls := 0.0
+		var kinds := []
+		for off: float in [-0.08, 0.08]:
+			var r := await through(w, float(g[1]), float(g[2]), false, off)
+			faces.append(float(r["face"]))
+			walls = maxf(walls, float(r["in_wall"]))
+			kinds.append_array((r["kinds"] as Dictionary).keys())
+			ok(float(r["past"]) > 0.3, "%s, at a walk, %+.2f m off its middle: he goes through" % [g[3], off])
+		ok(float(faces[0]) * float(faces[1]) < 0.0, "%s, from 0.08 m to each side of its middle: he is turned opposite ways (%s)" % [g[3], faces])
+		if w < 0.45:
+			ok(walls <= IN_WALL_MOST, "%s, either way round: no joint is in a wall (the furthest %.3f m)" % [g[3], walls])
 	print("RESULT ", "PASS" if fails == 0 else "FAIL (%d)" % fails)
 	quit(1 if fails else 0)

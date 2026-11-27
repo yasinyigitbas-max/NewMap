@@ -188,6 +188,7 @@ var _wish_was_moving := false
 var narrow := 0                 # he is on something narrow: 0 = no, 1 = under 0.25 m wide, 2 = under 0.10 m
 var stick_held := false         # the stick is off its rest (read by the moves that end differently when it is let go)
 var squeeze := 0                # in a gap between walls: 0 = no, 1 = shoulders turned (0.45 to 0.60 m), 2 = sideways (0.25 to 0.45 m)
+var squeeze_side := 1           # 1 = he turns to face the wall on his left, -1 = the wall on his right
 var squeeze_w := INF            # the free width of that gap (m)
 var squeeze_mid := Vector3.ZERO  # a point on the middle line of that gap, and the way straight across it
 var squeeze_across := Vector3.RIGHT
@@ -441,6 +442,11 @@ func _find_squeeze() -> void:
 		q.collision_mask = collision_mask
 		if not get_world_3d().direct_space_state.intersect_shape(q, 1).is_empty():
 			return                                  # he stays as he is, in whatever gap he is in
+	if kind > 0 and squeeze == 0:
+		# which way he turns: to face the wall he is further from (on the middle: to his left). Yasin, 27 Nov:
+		# "also mirror the squeeze in gap takes"
+		var off := (global_position - mid).dot(across)
+		squeeze_side = -1 if off < -0.01 else 1
 	squeeze = kind
 	squeeze_w = w
 	squeeze_mid = mid
