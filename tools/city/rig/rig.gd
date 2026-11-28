@@ -144,6 +144,12 @@ func _ready() -> void:
 	elif OS.has_feature("android") and OS.get_cmdline_user_args().is_empty(): args.append("--game")
 	# --game (Yasin, 20 Nov: "cant you just inject skipping the rig?"): the rig app opens the game's menu instead of a measuring
 	# run (game/boot.tscn; the game then loads this scene as its world, with its own Game node at the root)
+	# --autoplay (28 Nov night): the game played by itself for a phone test (tools/city/rig/autoplay.gd): it lives on the root
+	# across the change to the game's menu and presses New game itself
+	if "--autoplay" in args and get_tree().root.get_node_or_null(^"Game") == null and get_tree().root.get_node_or_null(^"Autoplay") == null:
+		var ap: Node = load("res://tools/city/rig/autoplay.gd").new(); ap.name = "Autoplay"
+		get_tree().root.add_child.call_deferred(ap)
+		args.append("--game")
 	if "--game" in args and get_tree().root.get_node_or_null(^"Game") == null:
 		get_tree().change_scene_to_file.call_deferred("res://game/boot.tscn")
 		return
