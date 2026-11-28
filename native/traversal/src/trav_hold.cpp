@@ -1,6 +1,7 @@
 // The things he holds, and his fists. See trav_hold.h.
 #include "trav_hold.h"
 #include "trav_probe.h"
+#include "trav_body.h"
 
 #include "trav_math.h"
 
@@ -190,7 +191,8 @@ void TravHold::_physics_process(double dt) {
 		return;
 	}
 	_clock += dt;
-	Dictionary s = body->get("last_sample");
+	TravBody *tb = Object::cast_to<TravBody>(body);      // (28 Nov: read directly; a script body by name as before)
+	Dictionary s = tb ? tb->last_sample : (Dictionary)body->get("last_sample");
 	bool in_move = (bool)body->call("in_move");
 	const char *names[4] = { "fire", "reload", "drop", "hit" };
 	bool now[4];
@@ -210,7 +212,7 @@ void TravHold::_physics_process(double dt) {
 	const Item *it = (_shown > 0 && _shown == item && _w >= 1.0) ? &ITEMS[_shown - 1] : nullptr;
 	bool gun = it != nullptr && (it->kind == PISTOL || it->kind == LONG);
 	aiming = (bool)s.get("aim", false) && gun && !in_move && _reload_t < 0.0;
-	bool grounded = (int64_t)body->get("state") == 0 && !(bool)body->get("crouched");
+	bool grounded = (tb ? tb->state == 0 && !tb->crouched : ((int64_t)body->get("state") == 0 && !(bool)body->get("crouched")));
 	if (it != nullptr && !in_move) {
 		if (gun) {
 			if (now[0] && _reload_t < 0.0) {

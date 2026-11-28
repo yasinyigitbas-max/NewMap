@@ -1,6 +1,7 @@
 // See trav_hand_place.h. Translated from traversal_lab/traversal/character/hand_place.gd, line for line.
 #include "trav_hand_place.h"
 #include "trav_probe.h"
+#include "trav_body.h"
 
 #include "trav_math.h"
 
@@ -146,7 +147,8 @@ void TravHandPlace::_process_modification_with_delta(double dt) {
 			refit.call();
 		}
 	}
-	bool grounded = (int)(int64_t)bd->get("state") == 0;
+	TravBody *tb = Object::cast_to<TravBody>(bd);      // (28 Nov: read directly; a script body by name as before)
+	bool grounded = (tb ? tb->state : (int)(int64_t)bd->get("state")) == 0;
 	double short_ = -1.0;
 	bool reaching = false;
 	for (int f = 0; f < 2; f++) {

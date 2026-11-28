@@ -1,6 +1,7 @@
 // See trav_foot_place.h. Translated from traversal_lab/traversal/character/foot_place.gd, line for line.
 #include "trav_foot_place.h"
 #include "trav_probe.h"
+#include "trav_body.h"
 
 #include "trav_math.h"
 
@@ -131,15 +132,16 @@ void TravFootPlace::_process_modification_with_delta(double dt) {
 		}
 		_last_frame = fr;
 	}
-	bool on_ground = (int)(int64_t)bd->get("state") == 0;
+	TravBody *tb = Object::cast_to<TravBody>(bd);      // (28 Nov: its fields read directly; a script body: by name as before)
+	bool on_ground = (tb ? tb->state : (int)(int64_t)bd->get("state")) == 0;
 	weight = move_toward(weight, on_ground ? 1.0 : 0.0, dt / WEIGHT_TIME);
-	if (on_ground && bd->has_method("in_move") && (bool)bd->call("in_move") && (bool)bd->get("move_landed")) {
+	if (on_ground && (tb ? (tb->in_move() && tb->move_landed) : (bd->has_method("in_move") && (bool)bd->call("in_move") && (bool)bd->get("move_landed")))) {
 		weight = 1.0;
 	}
 	Transform3D xf = sk->get_global_transform();
 	Transform3D inv = xf.affine_inverse();
 	double feet_y = D(bd->get_global_position().y) + base;
-	double pace = D(((Vector3)bd->get("hvel")).length());
+	double pace = D((tb ? tb->hvel : (Vector3)bd->get("hvel")).length());
 	double let_go = 1.0 - std::exp(-dt / LET_GO);
 	double want_pelvis = 0.0;
 	Vector3 ankle_goal[2];

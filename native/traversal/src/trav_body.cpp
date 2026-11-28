@@ -664,7 +664,7 @@ void TravBody::_physics_process(double dt) {
 		stick = stick.normalized();
 	}
 	bool want_low = (bool)s.get("crouch", false);
-	narrow = _narrow_now();
+	narrow = lite ? 0 : _narrow_now();
 	if (want_low && !crouched && state == GROUND && jump_timer <= 0.0 && narrow == 0) {
 		_set_crouched(true);
 	} else if (crouched && (!want_low || narrow > 0) && can_stand()) {
@@ -691,7 +691,12 @@ void TravBody::_physics_process(double dt) {
 		_wish = limit(_wish, PHONE_SPEED);
 	}
 	stick_wish = _wish;
-	_find_squeeze();
+	if (!lite) {
+		_find_squeeze();
+	} else {
+		squeeze = 0;
+		squeeze_w = INFINITY;
+	}
 	if (squeeze >= 2) {
 		_wish = limit(_wish, SQUEEZE_SPEED);
 	}

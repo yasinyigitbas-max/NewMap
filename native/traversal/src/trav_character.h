@@ -76,6 +76,7 @@ public:
 	static constexpr double STAIR_RUN = 0.4;
 	static constexpr double STAIR_PULL = 3.0;
 
+	class TravBody *_tb = nullptr;      // the body as the C++ TravBody (28 Nov: read directly), or null
 	CharacterBody3D *body = nullptr;
 	Skeleton3D *skel = nullptr;
 	AnimationTree *tree = nullptr;
