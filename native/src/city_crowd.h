@@ -128,6 +128,8 @@ private:
 	struct TravNb { class CharacterBody3D *body = nullptr; class CityTravTape *tape = nullptr; bool on = false, going = false, failed = false; int walker = -1; float base_pace = 1.0f;
 		// sitting with the body's own take: 0 not, 1 asked (its seat is the one seat in the group "tl_seat"), 2 seated, 3 getting up
 		int sit = 0; float sit_t = 0.0f; class Node3D *seat = nullptr;
+		// his walker's own motion, as drawn (28 Nov night: followed by its velocity, not by stop-and-go on the gap)
+		Vector3 prev_at, wv; double prev_t = 0.0; bool prev_set = false;
 		TravMirror mir; };      // the pose copy (an act the new bodies have no take for): trav_mirror.h
 	std::vector<TravNb> trav_pool;
 	std::vector<String> trav_ids;

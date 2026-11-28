@@ -44,7 +44,7 @@ public:
 	static constexpr double BUTT_DOWN = 0.02;   // ... this far under it
 	static constexpr double BUTT_AHEAD = 0.07;  // ... and this far ahead of it (the joint is inside his shoulder; the butt is on its front)
 	static constexpr double LONG_AHEAD = 0.17;  // aimed from the eye, a short long gun's grip this far ahead of his head joint (m)
-	static constexpr double PISTOL_AHEAD = 0.50; // aimed, a pistol's grip this far ahead of his head joint (m): his arms nearly straight
+	static constexpr double PISTOL_AHEAD = 0.55; // aimed, a pistol's grip this far ahead of his head joint (m): his arms nearly straight (0.50 folded both arms up in front of his face, 0.60 bent his trunk to reach: 28 Nov night)
 	static constexpr double KICK_TIME = 0.14;   // seconds a shot's kick takes to die away
 	static constexpr double KICK_BACK = 0.03;   // ... how far the gun comes back (m)
 	static constexpr double KICK_UP_DEG = 7.0;  // ... and how far its muzzle rises

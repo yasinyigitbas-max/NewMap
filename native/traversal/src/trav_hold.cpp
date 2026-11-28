@@ -563,9 +563,11 @@ void TravHold::_refit() {
 		lay(0, _t.xform(fore), gz * 0.5f - gx * 0.85f, gy);
 		lay(1, _t.xform(gr) - gx * 0.015f, gz * 0.75f - gy * 0.65f, gx);
 	} else {
-		// a pistol aimed: the right hand on its grip, the left closed round the right from the other side
-		lay(1, _t.xform(gr) - gx * 0.015f, gz * 0.75f - gy * 0.65f, gx);
-		lay(0, _t.xform(gl) + gx * 0.02f, gz * 0.75f - gy * 0.65f, -gx);
+		// a pistol aimed: the right hand on its grip, the left closed round the right from the other side; the fingers
+		// 20 degrees under the barrel, as a pistol's grip leans (28 Nov night, Yasin: "our hands look broken from the wrist":
+		// at 41 degrees, gz * 0.75 - gy * 0.65, the wrist took the whole bend down from the forearm)
+		lay(1, _t.xform(gr) - gx * 0.015f, gz * 0.94f - gy * 0.34f, gx);
+		lay(0, _t.xform(gl) + gx * 0.02f, gz * 0.94f - gy * 0.34f, -gx);
 	}
 }
 

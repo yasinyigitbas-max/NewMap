@@ -2,6 +2,7 @@
 #include "perf_marks.h"
 #include "city_rooms.h"
 #include "el_sfx.h"
+#include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/classes/audio_stream_player3d.hpp>
 #include "city_stream.h"
 #include <godot_cpp/classes/camera3d.hpp>
@@ -231,6 +232,13 @@ void CityRooms::room_tone(const Vector3 &cam) {
 }
 
 void CityRooms::doors(double p_delta, const Vector3 &cam) {
+	// (28 Nov night, Yasin: "shops doors don't automatically open for npcs, they climb over the door") the people's new bodies
+	// open them too: every seen node of the group "door_opener" (CityCrowd::trav_make) counts as one more who comes near
+	std::vector<Vector3> ops;
+	if (is_inside_tree()) {
+		const TypedArray<Node> g = get_tree()->get_nodes_in_group("door_opener");
+		for (int i = 0; i < g.size(); i++) if (Node3D *n = Object::cast_to<Node3D>((Object *)g[i])) if (n->is_visible_in_tree()) ops.push_back(n->get_global_position() + Vector3(0, 1.0f, 0));
+	}
 	for (Room &rm : rooms) {
 		if (rm.state != 2) continue;
 		for (Leaf &f : rm.leaves) {
@@ -240,10 +248,12 @@ void CityRooms::doors(double p_delta, const Vector3 &cam) {
 			if (f.broken) continue;
 			const Vector3 mid = par->get_global_transform().xform(l->get_position() + f.mid);
 			if (f.hold != 0 && cam.distance_to(mid) > HOLD_M) f.hold = 0;
-			const float want = f.hold == 1 ? 1.0f : (f.hold == 2 ? 0.0f : (cam.distance_to(mid) < DOOR_TRIGGER ? 1.0f : 0.0f));
-			if (f.amount <= 0.001f && want > 0.0f) {   // the side: away from the viewer (kept until shut again)
+			Vector3 near_who = cam; float near_d = cam.distance_to(mid);      // (the nearest who opens it: him or a person)
+			for (const Vector3 &o : ops) { const float od = o.distance_to(mid); if (od < near_d) { near_d = od; near_who = o; } }
+			const float want = f.hold == 1 ? 1.0f : (f.hold == 2 ? 0.0f : (near_d < DOOR_TRIGGER ? 1.0f : 0.0f));
+			if (f.amount <= 0.001f && want > 0.0f) {   // the side: away from the one who comes (kept until shut again)
 				const Vector3 outw = par->get_global_transform().basis.xform(f.out_dir);
-				f.dir = (cam - mid).dot(outw) > 0.0f ? -1.0f : 1.0f;
+				f.dir = (near_who - mid).dot(outw) > 0.0f ? -1.0f : 1.0f;
 			}
 			const float step = DOOR_SPEED * (float)p_delta;
 			const float was = f.amount;

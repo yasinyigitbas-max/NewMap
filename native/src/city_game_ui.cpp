@@ -6,6 +6,8 @@
 #include "ui_plate.h"
 #include "city_hud.h"
 
+#include <godot_cpp/classes/display_server.hpp>
+#include <godot_cpp/classes/os.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/file_access.hpp>
 #include <godot_cpp/classes/grid_container.hpp>
@@ -50,6 +52,22 @@ void CityGame::_ready() {
 	set_process_mode(PROCESS_MODE_ALWAYS);
 	load_text();
 	settings_defaults(); load_device(); apply_settings();
+	{   // (Yasin, 28 Nov: "dpi settings are too high on phones, menu looks very very small. some of my friends couldnt read
+		// what was written at all") the menus, the pause screen, the phone and every panel are laid out in fixed pixels:
+		// on a phone 1080 px high they were drawn a third of the size they were made for. The whole 2D layer is scaled so the
+		// shorter side of the screen counts as 480 px. The HUD lays itself out from the visible rectangle (ui_plate's ui_k),
+		// which the scale shrinks by the same factor, so its plates keep their size on the screen (480 px: the Redmi 2.25x). `-- --uiscale=X` tries a
+		// factor on a PC.
+		Window *root = get_tree()->get_root();
+		double f = 0.0;
+		const PackedStringArray ua = OS::get_singleton()->get_cmdline_user_args();
+		for (int i = 0; i < ua.size(); i++) if (ua[i].begins_with("--uiscale=")) f = ua[i].trim_prefix("--uiscale=").to_float();
+		if (f <= 0.0 && OS::get_singleton()->has_feature("android")) {
+			const Vector2i ws = DisplayServer::get_singleton()->window_get_size();
+			f = std::max(1.0, (double)std::min(ws.x, ws.y) / 480.0);
+		}
+		if (f > 0.0 && root) root->set_content_scale_factor((float)f);
+	}
 	build_loading(); build_menu(); build_pause(); build_over();
 	hud = memnew(CityHud);   // (the HUD shows itself only in play: CityHud::_process asks is_playing)
 	add_child(hud);

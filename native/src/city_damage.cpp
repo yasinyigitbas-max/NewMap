@@ -364,7 +364,9 @@ Dictionary CityDamage::hit(const Vector3 &p_at, const Vector3 &p_normal, const V
 	}
 	if (node) r["target_id"] = String(node->get_name());
 	// a mark: on the static world only (a car, a person, a door or a piece of debris moves and keeps its own damage)
-	const bool static_world = !col || (Object::cast_to<CollisionObject3D>(col) && Object::cast_to<CollisionObject3D>(col)->is_class("StaticBody3D"));
+	// (28 Nov night) only on a surface the rays met: with nothing met (a car's jolt on a bump, a hit in the open) the mark
+	// was laid where the hit was asked, in the air, and stayed there: the white squares and lines over the streets (Yasin)
+	const bool static_world = !rh.is_empty() && (!col || (Object::cast_to<CollisionObject3D>(col) && Object::cast_to<CollisionObject3D>(col)->is_class("StaticBody3D")));
 	const bool pooled_prop = !col && !rh.is_empty();   // (CityBreakables' pooled props: knocked over later, so no mark)
 	if (static_world && !pooled_prop) {
 		int tile = -1; float size = 0.22f;

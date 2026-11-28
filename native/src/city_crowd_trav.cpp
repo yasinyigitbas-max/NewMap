@@ -21,6 +21,7 @@
 #include <godot_cpp/classes/physics_ray_query_parameters3d.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/world3d.hpp>
+#include <godot_cpp/classes/time.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <cmath>
 
@@ -75,9 +76,13 @@ void CityCrowd::trav_make(int k) {
 		n->set_name(parts[j][1]);
 		n->set("body", t.body);
 		if (j == 0) n->set("model_path", String("res://traversal/npc/") + trav_ids[(size_t)((k * 7 + 3) % (int)trav_ids.size())] + String(".scn"));
+		// (28 Nov night, Yasin: people "climb over the door", "climb onto tables") no climbing, vaulting or stepping up onto
+		// things for a person: they walk where their walker walks. Kerbs still pass under the body's float (0.32 m).
+		if (j == 2) n->set("enabled", false);
 		t.body->add_child(n);
 	}
 	if (t.body->has_method("show_capsule")) t.body->call("show_capsule", false);   // (the lab draws the body's capsule: not in the game)
+	t.body->add_to_group("door_opener");      // (the shops' doors open for him as for the player: CityRooms::doors)
 	t.base_pace = (float)(double)t.body->get("pace");   // (the body's own pace, set by its character from its legs)
 	if (!(t.base_pace > 0.1f)) t.base_pace = 1.0f;
 	t.body->set_visible(false);
@@ -154,7 +159,11 @@ void CityCrowd::trav_people_update() {
 		const bool seated_now = inter && (bool)inter->get("seated");
 		bool copy = !own || !(plain || seat_act || t->sit != 0);
 		if (t->sit != 0 && !own) { copy = true; }      // (knocked off his seat)
-		if (seat_act && t->sit == 0 && own) {
+		// (28 Nov night, Yasin: people "sit on tables instead of chairs") the lab's sit move is a street bench's: stand in front
+		// of it, sit back. In a shop or a cafe "in front" is the table, and he walked onto it; there the pose copy sits him on
+		// the shop's own seat (where the old figure sits, at the floor's height)
+		if (seat_act && t->sit == 0 && own && is_actor(nb.walker)) copy = true;
+		else if (seat_act && t->sit == 0 && own) {
 			// a seat of his own where the old figure sits, the only one in the lab's group while he takes it (two on a
 			// bench would each take the nearer); if his take cannot be begun in 4 s, the pose copy sits him
 			if (t->sit_t > 4.0f) copy = true;
@@ -190,7 +199,7 @@ void CityCrowd::trav_people_update() {
 				t->body->set_process_mode(Node::PROCESS_MODE_INHERIT);
 				t->body->call("place", p + Vector3(0, 0.02f, 0));
 				t->body->set_rotation(Vector3(0, std::atan2(at.basis.get_column(2).x, at.basis.get_column(2).z), 0));
-				t->on = true; t->walker = nb.walker; t->going = false;
+				t->on = true; t->walker = nb.walker; t->going = false; t->prev_set = false; t->wv = Vector3();
 				if (t->sit) { if (trav_seat_busy == k) { trav_seat_busy = -1; if (t->seat) t->seat->remove_from_group("tl_seat"); } t->sit = 0; }
 			}
 		}
@@ -229,12 +238,24 @@ void CityCrowd::trav_people_update() {
 		if (b.y < at.origin.y - 4.0f || d > 6.0f) { t->on = false; continue; }
 		// he sets off when the place is 0.4 m ahead of him and stops within 0.12 m of it; the further behind, the faster
 		// his walk (0.85 to 1.5 of his own pace, so that he keeps up with a walker of any pace); left 4 m behind he runs
-		if (!t->going && d > 0.4f) t->going = true;
-		if (t->going && d < 0.12f) t->going = false;
-		t->body->set("pace", (double)(t->base_pace * std::min(std::max(0.85f + d * 0.6f, 0.85f), 1.5f)));
+		// (28 Nov night, Yasin: "they walk 3-4 steps, stop then continue walking again") he follows his walker's own motion:
+		// its velocity as drawn (smoothed), plus a pull on the gap; he stops only when the walker stops. Before, he set off at
+		// 0.4 m behind and stopped at 0.12 m at a pace faster than the walker's: catch up, stop, wait, set off.
+		{
+			const double now = (double)Time::get_singleton()->get_ticks_usec() * 1e-6;
+			Vector3 wv;
+			if (t->prev_set && now - t->prev_t > 0.001) { wv = (at.origin - t->prev_at) / (float)(now - t->prev_t); wv.y = 0.0f; if (wv.length() > 3.5f) wv = Vector3(); }
+			t->wv = t->prev_set ? t->wv.lerp(wv, 0.25f) : wv;
+			t->prev_at = at.origin; t->prev_t = now; t->prev_set = true;
+		}
+		const Vector3 want = t->wv + Vector3(dx, 0.0f, dz) * 1.2f;
+		const float wsp = t->wv.length(), sp = want.length();
+		if (!t->going && (wsp > 0.15f || d > 0.4f)) t->going = true;
+		if (t->going && wsp < 0.05f && d < 0.12f) t->going = false;
+		t->body->set("pace", (double)std::min(std::max(sp / 1.45f, 0.5f), 1.6f));      // (the body walks at WALK 1.45 m/s x pace)
 		s["mz"] = t->going ? -1.0 : 0.0;
-		// (the stick pushed ahead, mz -1, goes along -Z of the view: the view is turned so that -Z points at the place)
-		if (t->going) s["yaw"] = (double)std::atan2(-dx, -dz);
+		// (the stick pushed ahead, mz -1, goes along -Z of the view: the view is turned so that -Z points where he heads)
+		if (t->going && sp > 0.02f) s["yaw"] = (double)std::atan2(-want.x, -want.z);
 		s["run"] = t->going && d > 4.0f;
 		// a phone: at his ear on a call, in front of him for a text (the body's own phone holds); a thing carried: the
 		// plastic bag, the box or the briefcase in his hand (trav_hold: 2, 3, 1), put away while he is on the phone

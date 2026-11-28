@@ -245,6 +245,7 @@ func _ready() -> void:
 	cam = Camera3D.new(); cam.fov = 74.0; cam.near = 0.08; cam.far = 900.0; add_child(cam); cam.current = true      # the game's driving camera
 	var layer := CanvasLayer.new(); add_child(layer)
 	hud = Label.new(); hud.position = Vector2(24, 24); hud.add_theme_font_size_override("font_size", 26); hud.add_theme_color_override("font_outline_color", Color.BLACK); hud.add_theme_constant_override("outline_size", 8); layer.add_child(hud)
+	if game: hud.visible = false      # (28 Nov night: the rig's own speed / note line sat under the game's money box: "0.0 m/s" in every picture)
 	_run.call_deferred()
 
 func _pts(route: String) -> Array:

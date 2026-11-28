@@ -3,7 +3,7 @@ shader_type spatial;
 // marks are one draw. Multiplied onto what is behind them (white = no change): a hole darkens a sunlit wall and a wall
 // at night by the same share, with no light of its own, so it needs no lighting (unshaded) and casts nothing.
 //  INSTANCE_CUSTOM.x = the tile on marks.png (4 x 4, tools/damage/make_mark_sheet.py), .y = how strong (the oldest fade)
-render_mode blend_mul, unshaded, depth_draw_never, cull_disabled, shadows_disabled, fog_disabled;
+render_mode blend_mix, unshaded, depth_draw_never, cull_disabled, shadows_disabled, fog_disabled;
 uniform sampler2D sheet : source_color, filter_linear_mipmap, repeat_disable;
 uniform float far = 70.0;          // gone by here (a mark is a few centimetres: nothing to see farther)
 varying vec2 v_uv;
@@ -20,11 +20,10 @@ void vertex() {
 	VERTEX = (inverse(MODEL_MATRIX) * vec4(wp + to_cam * (0.004 + d * 0.0006), 1.0)).xyz;
 }
 void fragment() {
+	// (28 Nov night) drawn over what is behind it, by how dark the tile is: white (no damage) is fully clear. The multiply
+	// with its doubling for the Mobile renderer's half-range buffer came out as a flat pale quad on the phone (Yasin's
+	// pictures: the same colour over sky and pavement alike).
 	vec3 m = texture(sheet, v_uv).rgb;
-	ALBEDO = mix(vec3(1.0), m, v_a);
-#if CURRENT_RENDERER == RENDERER_MOBILE
-	// the Mobile renderer keeps its colour buffer at half (its luminance multiplier, for range in 10 bits) and halves what
-	// a shader writes: a multiply would halve the wall under the whole quad. Doubled back, white leaves it as it was.
-	ALBEDO *= 2.0;
-#endif
+	ALBEDO = m;
+	ALPHA = clamp((1.0 - dot(m, vec3(0.299, 0.587, 0.114))) * 1.4, 0.0, 1.0) * clamp(v_a, 0.0, 1.0);
 }

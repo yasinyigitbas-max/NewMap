@@ -127,6 +127,7 @@ func _process(delta: float) -> void:
 		0:
 			game = get_tree().root.find_child("Game", true, false)
 			if game == null or t < 3.0: return
+			_shot("menu")      # (the menu as the player sees it first: its text size on this screen)
 			# its own empty saves (with saves, New game opens the slot picker first; and the player's own saves stay untouched)
 			game.set(&"saves_dir", "user://autoplay_saves/")
 			DirAccess.make_dir_recursive_absolute("user://autoplay_saves")
