@@ -17,7 +17,10 @@ cd "$(dirname "$0")/../../.." || exit 1
 ROOT=$(pwd)
 GAME=${GAME:-/c/coronado_b17int19_hud_onelap_rebake1_treevis1_mobilevk1_actprobe1_src6_source}
 GAME_P=${GAME_P:-$GAME/coronado-actprobe1-source/project}
-GODOT=${GODOT:-/c/Users/yasin/Downloads/Godot_v4.7.2-stable_win64.exe/Godot_v4.7.2-stable_win64_console.exe}
+GODOT_DL=/c/Users/yasin/Downloads/Godot_v4.7.2-stable_win64.exe/Godot_v4.7.2-stable_win64_console.exe
+# (28 Nov: that folder was deleted; the same 4.7.2 stays at C:/Users/yasin/Godot_v4.7.2-stable_win64.exe)
+[ -f "$GODOT_DL" ] || GODOT_DL=/c/Users/yasin/Godot_v4.7.2-stable_win64.exe
+GODOT=${GODOT:-$GODOT_DL}
 ED_ALL3=$GAME/engine_bins/ed_all3/Godot_v4.7.2-coronado_ed_all3_win64_console.exe
 GODOT_EXPORT=${GODOT_EXPORT:-$([ -f "$ED_ALL3" ] && echo "$ED_ALL3" || echo "$GODOT")}
 ADB=${ADB:-/c/Users/yasin/AppData/Local/Android/Sdk/platform-tools/adb.exe}

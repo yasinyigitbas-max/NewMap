@@ -23,7 +23,11 @@ GAME=${GAME:-/c/coronado_b17int19_hud_onelap_rebake1_treevis1_mobilevk1_actprobe
 NATIVE_TOOLS=${NATIVE_TOOLS:-/c/Users/yasin/NewMap/OUT/native_tools}
 GODOT_CPP=${GODOT_CPP:-$NATIVE_TOOLS/godot-cpp}
 GODOT_CPP_COMMIT=27d9dd2
-MINGW=${MINGW:-$GAME/tools_native/llvm-mingw-20261104-ucrt-x86_64/bin}
+# (28 Nov: the game folder and its copy were deleted; the same release, mstorsjo/llvm-mingw 20261104, downloaded again
+# with Yasin's OK to C:/Users/yasin/tools_native)
+MINGW_HOME=/c/Users/yasin/tools_native/llvm-mingw-20261104-ucrt-x86_64/bin
+[ -d "$MINGW_HOME" ] || MINGW_HOME=$GAME/tools_native/llvm-mingw-20261104-ucrt-x86_64/bin
+MINGW=${MINGW:-$MINGW_HOME}
 ANDROID_HOME=${ANDROID_HOME:-/c/Users/yasin/AppData/Local/Android/Sdk}
 NDK_VERSION=${NDK_VERSION:-29.0.14206865}
 # Windows programs (the compilers) get C:/... paths from here on: phone_rig.sh runs with MSYS_NO_PATHCONV=1, under

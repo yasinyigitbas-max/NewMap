@@ -182,10 +182,27 @@ void CityCrowd::trav_people_update() {
 			}
 		}
 		if (!seat_act && t->sit == 0) t->sit_t = 0.0f;
+		// (28 Nov, Yasin's phone pictures: people sitting in the air, folded on a doorstep, sunk into a sofa) the pose copy
+		// sits him where the old figure sits, at its height; the old figures' seats (places.bin, 21 Nov) are not always where
+		// a seat is now. Once per walker: a ray down at the seat. A surface 0.25 to 0.7 m over his feet: a seat, and he is
+		// set onto it (its height against the 0.45 m the sitting pose is made for, at most 0.2 m either way). None: he
+		// stands where the walker sits (no sitting in the air or on the ground).
+		if (seat_act && copy) {
+			if (t->seat_chk != nb.walker) {
+				t->seat_chk = nb.walker; t->seat_ok = true; t->seat_dy = 0.0f;
+				Ref<PhysicsRayQueryParameters3D> sq = PhysicsRayQueryParameters3D::create(at.origin + Vector3(0, 1.1f, 0), at.origin - Vector3(0, 0.3f, 0), 1);
+				const Dictionary sh = TRAV_RAY(this, sq);
+				const float h = sh.is_empty() ? -1.0f : ((Vector3)sh["position"]).y - at.origin.y;
+				if (h >= 0.25f && h <= 0.7f) t->seat_dy = std::min(std::max(h - 0.45f, -0.2f), 0.2f);
+				else t->seat_ok = false;
+			}
+			if (!t->seat_ok && t->sit == 0) copy = false;
+		} else if (!seat_act) t->seat_chk = -1;
 		if (copy) {
 			if (t->sit) { if (trav_seat_busy == k) { trav_seat_busy = -1; if (t->seat) t->seat->remove_from_group("tl_seat"); } t->sit = 0; }
 			if (!t->body->is_visible()) t->body->set_visible(true);
 			t->mir.set(t->body, nb.ped, nb.ped->skeleton(), true);
+			if (t->mir.on && seat_act && t->seat_dy != 0.0f) t->body->set_global_position(t->body->get_global_position() + Vector3(0, t->seat_dy, 0));
 			if (t->mir.on) { nb.ped->set_drawn(false); if (nb.phone) nb.phone->set_visible(false); if (nb.phone2) nb.phone2->set_visible(false); }
 			else { t->body->set_visible(false); nb.ped->set_drawn(false); }
 			t->walker = nb.walker;
