@@ -13,6 +13,8 @@ uniform float parked_cut = 35.0;
 // cross at parked_cut the same way, by their distance here (PARK_BAND metres).
 const float PARK_BAND = 4.0;
 varying float v_fade;
+varying vec3 v_lp;      // the shape's own point and normal (look uplift: the far car drawn from its shape)
+varying vec3 v_ln;
 float ck_dither(vec2 p) {
 	int x = int(mod(p.x, 4.0)), y = int(mod(p.y, 4.0));
 	int i = x + y * 4;
@@ -28,6 +30,7 @@ void ck_fade_discard(float fa, vec2 frag) {
 
 void vertex() {
 	v_fade = COLOR.a;
+	v_lp = VERTEX; v_ln = NORMAL;
 	if (INSTANCE_CUSTOM.w > 0.5) {   // a parked car: this (the far shape) from parked_cut on, fading in over PARK_BAND
 		float dc = distance(MAIN_CAM_INV_VIEW_MATRIX[3].xyz, (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz);
 		if (dc < parked_cut - 0.5 * PARK_BAND) VERTEX = vec3(0.0);
@@ -37,9 +40,13 @@ void vertex() {
 
 void fragment() {
 	ck_fade_discard(v_fade, FRAGCOORD.xy);
-	vec4 t = texture(atlas, UV);
-	float pm = smoothstep(0.75, 0.95, t.a);
-	float gm = (1.0 - smoothstep(0.62, 0.75, t.a)) * smoothstep(0.3, 0.42, t.a);
-	ALBEDO = mix(t.rgb * mix(vec3(1.0), COLOR.rgb, pm), vec3(0.035, 0.045, 0.055), gm);   // (glass: dark from afar, as the model's reads)
+	// (look uplift, 28 Nov; Yasin: the far cars "look terrible") the shape is stern_g's and the picture volt_x's: the two
+	// did not line up and every far car came out in white and coloured patches. From parked_cut on a car is its paint, a
+	// dark glass band at window height (the shape: 0.32-1.52 m) and a dark sill line, read from the shape itself.
+	vec3 n = normalize(v_ln);
+	float glass = smoothstep(0.97, 1.03, v_lp.y) * (1.0 - smoothstep(1.37, 1.42, v_lp.y)) * (1.0 - step(0.8, n.y));
+	float sill = 1.0 - smoothstep(0.38, 0.5, v_lp.y);
+	ALBEDO = mix(COLOR.rgb, vec3(0.035, 0.045, 0.055), glass);
+	ALBEDO = mix(ALBEDO, vec3(0.03, 0.03, 0.032), sill * 0.85);
 	ROUGHNESS = 0.6;
 }

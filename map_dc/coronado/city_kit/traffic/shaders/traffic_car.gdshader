@@ -78,6 +78,10 @@ void fragment() {
 	vec4 t = map_mode == 2 ? texture(trim_albedo, UV) : (map_mode == 1 ? texture(albedo_map, UV) : texture(atlas, UV));
 	float pm = smoothstep(0.75, 0.95, t.a);
 	float gm = (1.0 - smoothstep(0.62, 0.75, t.a)) * smoothstep(0.3, 0.42, t.a);
+	// (look uplift, 28 Nov; Yasin: "lots of white spots" on the cars) paint is WHITE in the pictures and the mask in alpha;
+	// where paint meets trim the filtered mask drops under the threshold while the colour stays white: a white line on
+	// every panel edge up close, white blocks on far cars (blurrier mip levels). White texels are paint too
+	pm = max(pm, smoothstep(0.72, 0.9, min(t.r, min(t.g, t.b))) * (1.0 - gm));      // (the far maps have white paint with no mask at all)
 	ALBEDO = t.rgb * mix(vec3(1.0), COLOR.rgb, pm);
 	ROUGHNESS = mix(mix(0.6, 0.34, pm), 0.08, gm);
 	METALLIC = 0.0;
@@ -98,7 +102,15 @@ void fragment() {
 		lm = smoothstep(0.08, 0.14, t.a) * (1.0 - smoothstep(0.24, 0.30, t.a));   // lamp lenses / gloss trim
 	} else if (map_mode == 1) {
 		vec3 o = texture(orm_map, UV).rgb;
-		ROUGHNESS = o.g; METALLIC = o.b;
+		// (look uplift, 28 Nov; Yasin: "near cars look terrible ... lots of white spots on them") the rebuilt cars' paint is
+		// a 0.14 clear coat: on their flat facets every facet mirrored its own patch of the bright sky, white and beige
+		// blocks on a dark car. Paint stays satin (0.42 at least), the trim keeps its own
+		ROUGHNESS = mix(o.g, max(o.g, 0.42), pm); METALLIC = o.b;
+		SPECULAR = mix(SPECULAR, 0.32, pm);
+		// chrome trim (grille, bumpers, sills) is smaller than a pixel a few metres off and sparkled white: the smaller the
+		// picture on screen, the rougher and less metal it gets
+		float tiny = clamp(length(fwidth(UV)) * 220.0, 0.0, 1.0);
+		ROUGHNESS = max(ROUGHNESS, tiny * 0.7); METALLIC *= 1.0 - tiny * 0.8;
 		AO = o.r; AO_LIGHT_AFFECT = 0.55;
 	}
 	// rubber: near-black, not paint, not glass, not a lens: matte (else the sky's reflection turns the tyres white)

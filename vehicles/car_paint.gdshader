@@ -161,6 +161,8 @@ void fragment() {
 		vec4 t = m2 ? texture(trim_albedo, UV) : (m1 ? texture(albedo_map, UV) : texture(atlas, UV));
 		float pm = smoothstep(0.75, 0.95, t.a);
 		float gm = (1.0 - smoothstep(0.62, 0.75, t.a)) * smoothstep(0.3, 0.42, t.a);
+		// (look uplift, 28 Nov: white lines on every panel edge) white texels are paint even where the filtered mask drops
+		pm = max(pm, smoothstep(0.72, 0.9, min(t.r, min(t.g, t.b))) * (1.0 - gm));
 		ALBEDO = t.rgb * mix(vec3(1.0), COLOR.rgb * paint.rgb, pm);
 		ROUGHNESS = mix(mix(0.55, 0.32, pm), 0.04, gm);
 		vec3 orm = vec3(1.0, ROUGHNESS, 0.0);
@@ -191,7 +193,9 @@ void fragment() {
 			NORMAL = normalize(TANGENT * nxy.x + BINORMAL * nxy.y + NORMAL * sqrt(max(1.0 - dot(nxy, nxy), 0.04)));
 		} else if (m1) {
 			orm = texture(orm_map, UV).rgb;
-			ROUGHNESS = orm.g;
+			// (look uplift, 28 Nov: white spots) the 0.14 clear coat on the rebuilt cars' flat facets mirrored the sky facet by
+			// facet; the paint keeps a soft sheen (0.3 at least), the street still reads in it
+			ROUGHNESS = mix(orm.g, max(orm.g, 0.3), pm);
 			AO = mix(1.0, orm.r, ao_strength);
 			AO_LIGHT_AFFECT = 0.55 * ao_strength;   // baked AO also darkens sun light a little (gaps, arches, under the sills)
 			vec2 nxy = texture(normal_map, UV).rg * 2.0 - 1.0;          // RG only: works with 2-channel (RGTC / ASTC) normal maps
@@ -254,6 +258,7 @@ void fragment() {
 		// streetR: the street reflected in the clear coat and the glass (photo panorama; see env_at)
 		float refl = pm * (1.0 - rub) * ENV_PAINT + gm * ENV_GLASS + lm * ENV_LENS;
 		float mref = (m1 || m2) ? orm.b * (1.0 - pm) : 0.0;   // chrome / rims / lamp reflectors mirror the street, tinted by their colour
+		mref *= 1.0 - clamp(length(fwidth(UV)) * 220.0, 0.0, 1.0) * 0.8;   // (look uplift: trim smaller than a pixel sparkled white)
 		refl = max(refl, mref);
 		if (refl > 0.01) {
 			float nv = clamp(dot(NORMAL, VIEW), 0.0, 1.0);
