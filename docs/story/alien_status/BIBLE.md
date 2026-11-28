@@ -137,7 +137,7 @@ you get the strong shot.** The words are the camp guard's.
 | **Stopper** | freezes one person or car for 2 s | **"Stop!"**: 5 s, and everything near it | 2.1 |
 | **Puddler** | a person becomes a green puddle for 20 s and comes back confused, with empty hands | **"Puddle!"**: a group | 2.5 |
 | **Lifter** | pick up a thing and throw it | **"Up!" / "Down!"**: a car | 3.3 |
-| **Hummer** | a push of sound: people fall over, glass breaks | **"Go away!"**: cars slide | 3.6 |
+| **Hummer** | a push of sound: people fall over, glass breaks | **"Go away!"**: cars slide | 3.7 |
 | **Shrinker** | a car or a person is toy-sized for 15 s | **"Small!"**: the truck too | 3.9 |
 | **Goo bombs** | sticky green on the road: feet and tyres stay | **"Stay!"**: a whole junction | 4.2 |
 
