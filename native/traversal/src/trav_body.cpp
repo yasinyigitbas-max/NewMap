@@ -153,6 +153,16 @@ Dictionary TravBody::_ray(const Vector3 &from, const Vector3 &to) {
 	return TRAV_RAY_FROM(this, from, to);
 }
 
+trav::Hit TravBody::_hit(const Vector3 &from, const Vector3 &to) {
+	return TRAV_HIT_FROM(this, from, to);
+}
+
+// two independent rays in one engine call (docs/FAST_RAYS.md): the same as _hit(f0, t0) and _hit(f1, t1)
+void TravBody::_hit2(const Vector3 &f0, const Vector3 &t0, const Vector3 &f1, const Vector3 &t1, trav::Hit *out) {
+	const Vector3 pr[4] = { f0, t0, f1, t1 };
+	TRAV_RAYS_FROM(this, pr, 2, out);
+}
+
 void TravBody::_ready() {
 	if (Engine::get_singleton()->is_editor_hint()) {
 		return;
@@ -303,9 +313,9 @@ bool TravBody::_is_steep(const Dictionary &g) {
 		return false;
 	}
 	Vector3 gp = get_global_position();
-	Dictionary under = _ray_down(V(D(gp.x), (double)g["y"], D(gp.z)));
+	trav::Hit under = _hit_down(V(D(gp.x), (double)g["y"], D(gp.z)));
 	if (!under.is_empty()) {
-		return std::acos(clampf(D(((Vector3)under["normal"]).y), -1.0, 1.0)) > deg_to_rad(SLOPE_LIMIT_DEG);
+		return std::acos(clampf(D(under.normal.y), -1.0, 1.0)) > deg_to_rad(SLOPE_LIMIT_DEG);
 	}
 	down = down.normalized();
 	double rise = std::tan(angle) * 0.2;
@@ -343,26 +353,30 @@ double TravBody::_gap_at(const Vector3 &at, const Vector3 &across) {
 	for (int k = 0; k < 3; k++) {
 		double h = SQUEEZE_LOOK[k];
 		Vector3 from = at + V(0.0, h, 0.0);
-		Dictionary a = _ray(from, from + mul(across, 0.5));
-		Dictionary b = _ray(from, from - mul(across, 0.5));
+		trav::Hit ab[2];
+		_hit2(from, from + mul(across, 0.5), from, from - mul(across, 0.5), ab);
+		const trav::Hit &a = ab[0];
+		const trav::Hit &b = ab[1];
 		if (a.is_empty() || b.is_empty()) {
 			continue;
 		}
-		Vector3 n = a["normal"];
+		Vector3 n = a.normal;
 		n = V(D(n.x), 0.0, D(n.z));
 		if (D(n.length()) < 0.5) {
 			continue;
 		}
 		n = n.normalized();
-		Dictionary a2 = _ray(from, from - mul(n, 0.6));
-		Dictionary b2 = _ray(from, from + mul(n, 0.6));
+		trav::Hit ab2[2];
+		_hit2(from, from - mul(n, 0.6), from, from + mul(n, 0.6), ab2);
+		const trav::Hit &a2 = ab2[0];
+		const trav::Hit &b2 = ab2[1];
 		if (a2.is_empty() || b2.is_empty()) {
 			continue;
 		}
-		double wide = D(from.distance_to((Vector3)a2["position"])) + D(from.distance_to((Vector3)b2["position"]));
+		double wide = D(from.distance_to(a2.position)) + D(from.distance_to(b2.position));
 		if (wide < least) {
 			least = wide;
-			_gap_mid = mul((Vector3)a2["position"] + (Vector3)b2["position"], 0.5);
+			_gap_mid = mul(a2.position + b2.position, 0.5);
 			_gap_n = n;
 		}
 	}
@@ -371,26 +385,28 @@ double TravBody::_gap_at(const Vector3 &at, const Vector3 &across) {
 
 Dictionary TravBody::_ledge_at(const Vector3 &at, const Vector3 &across) {
 	Vector3 from = at + V(0.0, 1.0, 0.0);
-	Dictionary a = _ray(from, from + mul(across, 0.6));
-	Dictionary b = _ray(from, from - mul(across, 0.6));
+	trav::Hit ab[2];
+	_hit2(from, from + mul(across, 0.6), from, from - mul(across, 0.6), ab);
+	const trav::Hit &a = ab[0];
+	const trav::Hit &b = ab[1];
 	if (a.is_empty() == b.is_empty()) {
 		return Dictionary();
 	}
-	Dictionary hit = a.is_empty() ? b : a;
-	Vector3 n = hit["normal"];
+	const trav::Hit &hit = a.is_empty() ? b : a;
+	Vector3 n = hit.normal;
 	n = V(D(n.x), 0.0, D(n.z));
 	if (D(n.length()) < 0.5) {
 		return Dictionary();
 	}
 	n = n.normalized();
-	Vector3 hp = hit["position"];
+	Vector3 hp = hit.position;
 	Vector3 foot = V(D(hp.x), D(at.y), D(hp.z));
 	double wide = 0.0;
 	double s = 0.01;
 	while (s < 0.40) {
 		Vector3 p = foot + mul(n, s);
-		Dictionary g = _ray(p + V(0.0, 0.3, 0.0), p - V(0.0, 0.3, 0.0));
-		if (g.is_empty() || absf(D(((Vector3)g["position"]).y) - D(at.y)) > 0.10) {
+		trav::Hit g = _hit(p + V(0.0, 0.3, 0.0), p - V(0.0, 0.3, 0.0));
+		if (g.is_empty() || absf(D(g.position.y) - D(at.y)) > 0.10) {
 			break;
 		}
 		wide = s;
@@ -447,7 +463,7 @@ void TravBody::_find_squeeze() {
 		for (int k = 0; k < 2; k++) {
 			double d = ahead[k];
 			Vector3 from = gp + V(0.0, 1.0, 0.0);
-			if (!_ray(from, from + mul(fwd, d)).is_empty()) {
+			if (!_hit(from, from + mul(fwd, d)).is_empty()) {
 				break;
 			}
 			double wd = _gap_at(gp + mul(fwd, d), across);
@@ -461,7 +477,7 @@ void TravBody::_find_squeeze() {
 		double d2 = SQUEEZE_AHEAD + 0.25;
 		while (d2 <= far && w >= SQUEEZE_BAND[1] - SQUEEZE_SEEN) {
 			Vector3 from2 = gp + V(0.0, 1.0, 0.0);
-			if (!_ray(from2, from2 + mul(fwd, d2)).is_empty()) {
+			if (!_hit(from2, from2 + mul(fwd, d2)).is_empty()) {
 				break;
 			}
 			double wf = _gap_at(gp + mul(fwd, d2), across);
@@ -572,8 +588,8 @@ int TravBody::_narrow_now() {
 		double reach = NARROW_SIDE[k] + (narrow > k ? NARROW_STAY : 0.0);
 		const double ways[2] = { 1.0, -1.0 };
 		for (int j = 0; j < 2; j++) {
-			Dictionary hit = _ray_down(gp + mul(side, ways[j] * reach));
-			if (!hit.is_empty() && D(((Vector3)hit["position"]).y) > D(gp.y) - STEP_HEIGHT_FOR_NARROW) {
+			trav::Hit hit = _hit_down(gp + mul(side, ways[j] * reach));
+			if (!hit.is_empty() && D(hit.position.y) > D(gp.y) - STEP_HEIGHT_FOR_NARROW) {
 				return out;
 			}
 		}
@@ -896,14 +912,31 @@ Dictionary TravBody::_ray_down(const Vector3 &at) {
 	return _ray(at + V(0.0, 0.6, 0.0), at - V(0.0, 0.8, 0.0));
 }
 
+trav::Hit TravBody::_hit_down(const Vector3 &at) {
+	return _hit(at + V(0.0, 0.6, 0.0), at - V(0.0, 0.8, 0.0));
+}
+
 void TravBody::_find_stairs(double dt) {
 	TRAV_PM(TB_STAIRS);
 	Vector3 gp = get_global_position();
 	double speed = D(hvel.length());
 	Vector3 dir = speed > 0.2 ? div(hvel, speed) : (D(_wish.length()) > 0.05 ? _wish.normalized() : ZERO);
-	Dictionary here = _ray_down(gp);
-	if (state == GROUND && !here.is_empty() && absf(D(((Vector3)here["position"]).y) - ground_y) < 0.05) {
-		_stood_y = D(((Vector3)here["position"]).y);
+	// (docs/FAST_RAYS.md) on the ground and on the way, the two rays ahead (a, b) are cast with this one in one engine
+	// call: they are used only when this one hits, and casting them changes nothing; otherwise only this one is cast
+	trav::Hit hab[3];
+	const bool ahead_too = state == GROUND && dir != ZERO;
+	if (ahead_too) {
+		const Vector3 at_a = gp + mul(dir, 0.35);
+		const Vector3 at_b = gp + mul(dir, 0.70);
+		const Vector3 pr[6] = { gp + V(0.0, 0.6, 0.0), gp - V(0.0, 0.8, 0.0), at_a + V(0.0, 0.6, 0.0), at_a - V(0.0, 0.8, 0.0),
+			at_b + V(0.0, 0.6, 0.0), at_b - V(0.0, 0.8, 0.0) };
+		TRAV_RAYS_FROM(this, pr, 3, hab);
+	} else {
+		hab[0] = _hit_down(gp);
+	}
+	const trav::Hit &here = hab[0];
+	if (state == GROUND && !here.is_empty() && absf(D(here.position.y) - ground_y) < 0.05) {
+		_stood_y = D(here.position.y);
 	}
 	if (state != GROUND || here.is_empty() || dir == ZERO) {
 		stairs = 0;
@@ -914,10 +947,10 @@ void TravBody::_find_stairs(double dt) {
 		}
 		return;
 	}
-	double y = D(((Vector3)here["position"]).y);
-	_read_slope((Vector3)here["normal"], dir);
+	double y = D(here.position.y);
+	_read_slope(here.normal, dir);
 	_since_edge += speed * dt;
-	if (_ray_ok && absf(y - _ray_y) > 0.06 && D(((Vector3)here["normal"]).y) > 0.98) {
+	if (_ray_ok && absf(y - _ray_y) > 0.06 && D(here.normal.y) > 0.98) {
 		if (_since_edge > 0.15 && _since_edge < 0.45 && stairs != 0) {
 			stair_tread = _since_edge;
 		}
@@ -928,12 +961,12 @@ void TravBody::_find_stairs(double dt) {
 	}
 	_ray_y = y;
 	_ray_ok = true;
-	Dictionary a = _ray_down(gp + mul(dir, 0.35));
-	Dictionary b = _ray_down(gp + mul(dir, 0.70));
+	const trav::Hit &a = hab[1];
+	const trav::Hit &b = hab[2];
 	int way = 0;
-	if (!a.is_empty() && !b.is_empty() && D(((Vector3)a["normal"]).y) > 0.98 && D(((Vector3)b["normal"]).y) > 0.98) {
-		double d1 = D(((Vector3)a["position"]).y) - y;
-		double d2 = D(((Vector3)b["position"]).y) - D(((Vector3)a["position"]).y);
+	if (!a.is_empty() && !b.is_empty() && D(a.normal.y) > 0.98 && D(b.normal.y) > 0.98) {
+		double d1 = D(a.position.y) - y;
+		double d2 = D(b.position.y) - D(a.position.y);
 		if (d1 > 0.08 && d2 > 0.08) {
 			way = 1;
 		} else if (d1 < -0.08 && d2 < -0.08) {
@@ -950,8 +983,8 @@ void TravBody::_find_stairs(double dt) {
 			stair_edge = gp;
 			double last_y = y;
 			for (int i = 1; i < 26; i++) {
-				Dictionary r = _ray_down(gp + mul(dir, i * 0.02));
-				if (!r.is_empty() && absf(D(((Vector3)r["position"]).y) - last_y) > 0.06) {
+				trav::Hit r = _hit_down(gp + mul(dir, i * 0.02));
+				if (!r.is_empty() && absf(D(r.position.y) - last_y) > 0.06) {
 					stair_edge = gp + mul(dir, i * 0.02 - TREAD);
 					break;
 				}
@@ -961,7 +994,7 @@ void TravBody::_find_stairs(double dt) {
 		stairs = way;
 		stair_dir = dir;
 	} else if (stairs != 0) {
-		bool level_ahead = !a.is_empty() && absf(D(((Vector3)a["position"]).y) - y) < 0.03;
+		bool level_ahead = !a.is_empty() && absf(D(a.position.y) - y) < 0.03;
 		if ((level_ahead && _since_edge > 0.06) || _since_edge > stair_tread * 1.3) {
 			stairs = 0;
 		}
@@ -1088,9 +1121,9 @@ void TravBody::_update_ground(double dt) {
 		state = _is_steep(g) ? STEEP : GROUND;
 		double err = ground_y - D(feet.y);
 		if (stairs < 0) {
-			Dictionary ahead = _ray_down(feet + mul(stair_dir, stair_tread));
+			trav::Hit ahead = _hit_down(feet + mul(stair_dir, stair_tread));
 			if (!ahead.is_empty()) {
-				double drop = ground_y - D(((Vector3)ahead["position"]).y);
+				double drop = ground_y - D(ahead.position.y);
 				if (drop > 0.02 && drop < 0.3) {
 					err = ground_y - drop * clampf(_since_edge / stair_tread, 0.0, 1.0) - D(feet.y);
 				}
@@ -1132,11 +1165,11 @@ void TravBody::_update_ground(double dt) {
 
 Dictionary TravBody::landing_ahead() {
 	Vector3 gp = get_global_position();
-	Dictionary hit = _ray(gp + V(0.0, 0.3, 0.0), gp - V(0.0, 6.0, 0.0));
+	trav::Hit hit = _hit(gp + V(0.0, 0.3, 0.0), gp - V(0.0, 6.0, 0.0));
 	if (hit.is_empty()) {
 		return Dictionary();
 	}
-	double y = D(((Vector3)hit["position"]).y);
+	double y = D(hit.position.y);
 	double d = maxf(D(gp.y) - y, 0.0);
 	double down = -vy;
 	Dictionary out;

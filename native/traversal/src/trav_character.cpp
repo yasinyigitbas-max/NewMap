@@ -1460,11 +1460,11 @@ bool TravCharacter::_steep_ahead() {
 	}
 	double here = deg_to_rad((_tb ? (double)_tb->slope_deg : (double)body->get("slope_deg")));
 	Vector3 at = body->get_global_position() + mul(v.normalized(), STEEP_STEP * std::cos(here));
-	Dictionary hit = TRAV_RAY_FROM(body, at + V(0.0, 1.5, 0.0), at - V(0.0, 1.5, 0.0));
+	trav::Hit hit = TRAV_HIT_FROM(body, at + V(0.0, 1.5, 0.0), at - V(0.0, 1.5, 0.0));
 	if (hit.is_empty()) {
 		return false;
 	}
-	return rad_to_deg(std::acos(clampf(D(((Vector3)hit["normal"]).y), -1.0, 1.0))) > (_tb ? (double)_tb->SLOPE_HANDS_DEG : (double)body->get("SLOPE_HANDS_DEG"));
+	return rad_to_deg(std::acos(clampf(D((hit.normal).y), -1.0, 1.0))) > (_tb ? (double)_tb->SLOPE_HANDS_DEG : (double)body->get("SLOPE_HANDS_DEG"));
 }
 
 void TravCharacter::_steep(double dt, double speed) {

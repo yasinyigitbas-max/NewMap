@@ -1,0 +1,7 @@
+[configuration]
+entry_symbol = "bench_rays_init"
+compatibility_minimum = "4.5"
+
+[libraries]
+linux.debug.x86_64 = "res://libbench_rays.so"
+linux.release.x86_64 = "res://libbench_rays.so"

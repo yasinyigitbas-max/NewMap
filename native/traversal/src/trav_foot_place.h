@@ -7,6 +7,7 @@
 #include <godot_cpp/classes/skeleton_modifier3d.hpp>
 #include <godot_cpp/variant/array.hpp>
 #include <godot_cpp/variant/dictionary.hpp>
+#include "trav_probe.h"
 
 namespace godot {
 
@@ -82,7 +83,7 @@ private:
 	bool _bound[2] = { false, false };
 	uint64_t _last_frame = 0;      // (the physics frame of the last call: a long gap is a fresh start, see the .cpp)
 
-	Dictionary _ground(CharacterBody3D *bd, const Vector3 &at, double feet_y);
+	trav::Hit _ground(CharacterBody3D *bd, const Vector3 &at, double feet_y);
 	void _onto(CharacterBody3D *bd, Skeleton3D *sk, const Transform3D &xf, double feet_y, Vector3 out[2]);
 
 protected:

@@ -162,11 +162,11 @@ void TravHandPlace::_process_modification_with_delta(double dt) {
 			want = clampf(1.0 - over / BAND, 0.0, 1.0);
 			if (want > 0.0) {
 				Vector3 hand = xf.xform(hand_s);
-				Dictionary hit = TRAV_RAY_FROM(bd, hand + V(0.0, 1.0, 0.0), hand - V(0.0, 1.5, 0.0));
+				trav::Hit hit = TRAV_HIT_FROM(bd, hand + V(0.0, 1.0, 0.0), hand - V(0.0, 1.5, 0.0));
 				if (hit.is_empty()) {
 					want = 0.0;
 				} else {
-					goal = inv.xform((Vector3)hit["position"] + mul((Vector3)hit["normal"], PALM));
+					goal = inv.xform(hit.position + mul(hit.normal, PALM));
 				}
 			}
 		}

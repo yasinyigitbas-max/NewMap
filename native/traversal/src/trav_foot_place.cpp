@@ -105,8 +105,8 @@ void TravFootPlace::bind(Skeleton3D *sk) {
 	_ankle_rest = D(sk->get_bone_global_rest(_foot[0]).origin.y);
 }
 
-Dictionary TravFootPlace::_ground(CharacterBody3D *bd, const Vector3 &at, double feet_y) {
-	return TRAV_RAY_FROM(bd, V(D(at.x), feet_y + REACH, D(at.z)), V(D(at.x), feet_y - REACH, D(at.z)));
+trav::Hit TravFootPlace::_ground(CharacterBody3D *bd, const Vector3 &at, double feet_y) {
+	return TRAV_HIT_FROM(bd, V(D(at.x), feet_y + REACH, D(at.z)), V(D(at.x), feet_y - REACH, D(at.z)));
 }
 
 void TravFootPlace::_process_modification_with_delta(double dt) {
@@ -226,17 +226,22 @@ void TravFootPlace::_process_modification_with_delta(double dt) {
 		double want_g = feet_y;
 		Vector3 normal = UP;
 		if (grounding && on_ground) {
-			Dictionary gb = _ground(bd, ball, feet_y);
-			Dictionary ga = _ground(bd, ankle, feet_y);
+			// the ball's and the ankle's ground rays, independent: one engine call (_ground's rays, docs/FAST_RAYS.md)
+			const Vector3 pr[4] = { V(D(ball.x), feet_y + REACH, D(ball.z)), V(D(ball.x), feet_y - REACH, D(ball.z)),
+				V(D(ankle.x), feet_y + REACH, D(ankle.z)), V(D(ankle.x), feet_y - REACH, D(ankle.z)) };
+			trav::Hit g2[2];
+			TRAV_RAYS_FROM(bd, pr, 2, g2);
+			const trav::Hit &gb = g2[0];
+			const trav::Hit &ga = g2[1];
 			if (!gb.is_empty()) {
-				want_g = D(((Vector3)gb["position"]).y);
-				normal = gb["normal"];
-				if (!ga.is_empty() && D(normal.y) > 0.98 && D(((Vector3)ga["normal"]).y) > 0.98) {
-					want_g = maxf(want_g, D(((Vector3)ga["position"]).y));
+				want_g = D((gb.position).y);
+				normal = gb.normal;
+				if (!ga.is_empty() && D(normal.y) > 0.98 && D((ga.normal).y) > 0.98) {
+					want_g = maxf(want_g, D((ga.position).y));
 				}
 			} else if (!ga.is_empty()) {
-				want_g = D(((Vector3)ga["position"]).y);
-				normal = ga["normal"];
+				want_g = D((ga.position).y);
+				normal = ga.normal;
 			}
 		}
 		if (!_g_ok || !on_ground) {
@@ -260,8 +265,8 @@ void TravFootPlace::_process_modification_with_delta(double dt) {
 			}
 			if (_bound[f]) {
 				Vector3 at = _to_p[f];
-				Dictionary gl = TRAV_RAY_FROM(bd, V(D(at.x), feet_y + 2.0 * REACH, D(at.z)), V(D(at.x), feet_y - 2.0 * REACH, D(at.z)));
-				_to_g[f] = !gl.is_empty() ? D(((Vector3)gl["position"]).y) : _from_g[f];
+				trav::Hit gl = TRAV_HIT_FROM(bd, V(D(at.x), feet_y + 2.0 * REACH, D(at.z)), V(D(at.x), feet_y - 2.0 * REACH, D(at.z)));
+				_to_g[f] = !gl.is_empty() ? D((gl.position).y) : _from_g[f];
 			}
 		}
 		if (!stride_fit || !on_ground) {
@@ -293,21 +298,21 @@ void TravFootPlace::_process_modification_with_delta(double dt) {
 		}
 		Vector3 ball_goal = ball + V(0.0, lift, 0.0);
 		if (grounding && on_ground && !stepping) {
-			Dictionary gt = _ground(bd, ball_goal, feet_y);
-			if (!gt.is_empty() && D(((Vector3)gt["normal"]).y) > 0.3) {
-				double off_t = D((ball_goal - (Vector3)gt["position"]).dot((Vector3)gt["normal"]));
+			trav::Hit gt = _ground(bd, ball_goal, feet_y);
+			if (!gt.is_empty() && D((gt.normal).y) > 0.3) {
+				double off_t = D((ball_goal - gt.position).dot(gt.normal));
 				if (off_t < _toe_rest) {
-					ball_goal.y = (real_t)(D(ball_goal.y) + (_toe_rest - off_t) / D(((Vector3)gt["normal"]).y));
+					ball_goal.y = (real_t)(D(ball_goal.y) + (_toe_rest - off_t) / D((gt.normal).y));
 				}
 			}
 		}
 		ankle_goal[f] = ball_goal + tilt.xform(ankle - ball);
 		if (grounding && on_ground && !stepping) {
-			Dictionary gh = _ground(bd, ankle_goal[f], feet_y);
-			if (!gh.is_empty() && D(((Vector3)gh["normal"]).y) > 0.3) {
-				double off = D((ankle_goal[f] - (Vector3)gh["position"]).dot((Vector3)gh["normal"]));
+			trav::Hit gh = _ground(bd, ankle_goal[f], feet_y);
+			if (!gh.is_empty() && D((gh.normal).y) > 0.3) {
+				double off = D((ankle_goal[f] - gh.position).dot(gh.normal));
 				if (off < _ankle_rest) {
-					ankle_goal[f] = ankle_goal[f] + V(0.0, (_ankle_rest - off) / D(((Vector3)gh["normal"]).y), 0.0);
+					ankle_goal[f] = ankle_goal[f] + V(0.0, (_ankle_rest - off) / D((gh.normal).y), 0.0);
 				}
 			}
 		}

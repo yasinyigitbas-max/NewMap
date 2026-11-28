@@ -549,18 +549,18 @@ Dictionary TravInteract::_car(double t) {
 
 // ---------------------------------------------------------------------------------------------------------- cover
 
-Dictionary TravInteract::_ray(const Vector3 &from, const Vector3 &to) {
-	return TRAV_RAY_FROM(body, from, to);
+trav::Hit TravInteract::_ray(const Vector3 &from, const Vector3 &to) {
+	return TRAV_HIT_FROM(body, from, to);
 }
 
 double TravInteract::_cover_wall(const Vector3 &at, const Vector3 &n) {
-	Dictionary hit = _ray(at + V(0.0, 0.5, 0.0), at + V(0.0, 0.5, 0.0) - mul(n, COVER_OFF + 0.25));
-	if (hit.is_empty() || D(((Vector3)hit["normal"]).dot(n)) < 0.9) {
+	trav::Hit hit = _ray(at + V(0.0, 0.5, 0.0), at + V(0.0, 0.5, 0.0) - mul(n, COVER_OFF + 0.25));
+	if (hit.is_empty() || D((hit.normal).dot(n)) < 0.9) {
 		return 0.0;
 	}
-	Vector3 inside = (Vector3)hit["position"] - mul(n, 0.05);
-	Dictionary top = _ray(V(D(inside.x), D(at.y) + 3.5, D(inside.z)), V(D(inside.x), D(at.y) + 0.3, D(inside.z)));
-	return !top.is_empty() ? D(((Vector3)top["position"]).y) - D(at.y) : 3.5;
+	Vector3 inside = hit.position - mul(n, 0.05);
+	trav::Hit top = _ray(V(D(inside.x), D(at.y) + 3.5, D(inside.z)), V(D(inside.x), D(at.y) + 0.3, D(inside.z)));
+	return !top.is_empty() ? D((top.position).y) - D(at.y) : 3.5;
 }
 
 bool TravInteract::_cover_on(const Vector3 &at, const Vector3 &way, const Vector3 &n) {
@@ -571,17 +571,17 @@ bool TravInteract::_try_cover() {
 	Vector3 face = -body->get_global_transform().basis.get_column(2);
 	face = V(D(face.x), 0.0, D(face.z)).normalized();
 	Vector3 feet = body->get_global_position();
-	Dictionary hit = _ray(feet + V(0.0, 0.5, 0.0), feet + V(0.0, 0.5, 0.0) + mul(face, COVER_REACH));
+	trav::Hit hit = _ray(feet + V(0.0, 0.5, 0.0), feet + V(0.0, 0.5, 0.0) + mul(face, COVER_REACH));
 	if (hit.is_empty()) {
 		return false;
 	}
-	Vector3 n = hit["normal"];
+	Vector3 n = hit.normal;
 	n = V(D(n.x), 0.0, D(n.z));
 	if (D(n.length()) < 0.9 || D(n.normalized().dot(face)) > -0.7) {
 		return false;
 	}
 	n = n.normalized();
-	Vector3 at = V(D(((Vector3)hit["position"]).x), D(feet.y), D(((Vector3)hit["position"]).z)) + mul(n, COVER_OFF);
+	Vector3 at = V(D((hit.position).x), D(feet.y), D((hit.position).z)) + mul(n, COVER_OFF);
 	double high = _cover_wall(at, n);
 	if (high < COVER_LOW - 0.02) {
 		return false;

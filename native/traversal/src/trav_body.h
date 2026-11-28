@@ -15,6 +15,7 @@
 #include <godot_cpp/variant/array.hpp>
 #include <godot_cpp/variant/callable.hpp>
 #include <godot_cpp/variant/dictionary.hpp>
+#include "trav_probe.h"
 #include <godot_cpp/variant/string.hpp>
 #include <godot_cpp/variant/variant.hpp>
 #include <godot_cpp/variant/vector3.hpp>
@@ -217,6 +218,8 @@ private:
 	void _slow_for_rising_ground();
 	void _update_ground(double dt);
 	Dictionary _ray(const Vector3 &from, const Vector3 &to);
+	trav::Hit _hit(const Vector3 &from, const Vector3 &to);
+	void _hit2(const Vector3 &f0, const Vector3 &t0, const Vector3 &f1, const Vector3 &t1, trav::Hit *out);
 	double _rot_y() const;
 	void _set_rot_y(double y);
 
@@ -237,6 +240,7 @@ public:
 	bool in_move() const;
 	double stop_distance();
 	Dictionary _ray_down(const Vector3 &at);
+	trav::Hit _hit_down(const Vector3 &at);
 	Dictionary landing_ahead();
 	Dictionary get_readout();
 	void place(const Vector3 &at);

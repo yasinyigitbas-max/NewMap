@@ -8,6 +8,7 @@
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/variant/array.hpp>
 #include <godot_cpp/variant/dictionary.hpp>
+#include "trav_probe.h"
 #include <godot_cpp/variant/packed_float32_array.hpp>
 #include <godot_cpp/variant/vector3.hpp>
 
@@ -53,7 +54,7 @@ protected:
 	Vector3 _line(const String &clip, const Vector3 &fwd);
 	bool _try_car();
 	void _walk_to_car(double dt);
-	Dictionary _ray(const Vector3 &from, const Vector3 &to);
+	trav::Hit _ray(const Vector3 &from, const Vector3 &to);
 	double _cover_wall(const Vector3 &at, const Vector3 &n);
 	bool _cover_on(const Vector3 &at, const Vector3 &way, const Vector3 &n);
 	bool _try_cover();

@@ -1,0 +1,5 @@
+; The rays microbenchmark (docs/FAST_RAYS.md): a project of its own, not part of the game.
+config_version=5
+
+[application]
+config/name="bench_rays"
