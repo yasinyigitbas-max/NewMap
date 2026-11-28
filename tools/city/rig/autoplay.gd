@@ -31,6 +31,8 @@ var ph_proc := 0.0        # the engine's own: process, physics (ms), the GPU (ms
 var ph_phys := 0.0
 var ph_gpu := 0.0
 var ph_draws := 0.0
+var ph_tris := 0.0         # (28 Nov) triangles drawn, summed over the phase
+var ph_ft: PackedFloat32Array = []   # every frame time of the phase (ms): its median and 95th percentile
 # people
 var old_most := 0
 var old_where := ""
@@ -69,14 +71,17 @@ func _key(k: Key, down: bool) -> void:
 
 func _phase(name: String) -> void:
 	if ph != "" and ph_frames > 0:
-		_say("frames %s: %d frames, mean %.1f ms, worst %.0f ms, over 33 ms %d, over 50 ms %d" % [ph, ph_frames, ph_sum / ph_frames, ph_worst, ph_over33, ph_over50])
+		var sft := ph_ft.duplicate(); sft.sort()
+		var med := sft[sft.size() / 2] if not sft.is_empty() else 0.0
+		var p95 := sft[mini(sft.size() - 1, int(sft.size() * 0.95))] if not sft.is_empty() else 0.0
+		_say("frames %s: %d frames, mean %.1f ms, median %.1f ms, p95 %.1f ms, worst %.0f ms, over 33 ms %d, over 50 ms %d" % [ph, ph_frames, ph_sum / ph_frames, med, p95, ph_worst, ph_over33, ph_over50])
 		var f := float(ph_frames)
 		var top: Array = ph_sys.keys(); top.sort_custom(func(a, b) -> bool: return float(ph_sys[a]) > float(ph_sys[b]))
 		var parts: PackedStringArray = []
 		for k in top.slice(0, 14): parts.append("%s %.2f" % [k, float(ph_sys[k]) / f])
-		_say("cost %s (ms a frame): process %.1f, physics %.1f, gpu %.1f, draw calls %.0f | systems: %s" % [ph, ph_proc / f, ph_phys / f, ph_gpu / f, ph_draws / f, ", ".join(parts)])
+		_say("cost %s (ms a frame): process %.1f, physics %.1f, gpu %.1f, draw calls %.0f, triangles %.0fk | systems: %s" % [ph, ph_proc / f, ph_phys / f, ph_gpu / f, ph_draws / f, ph_tris / f / 1000.0, ", ".join(parts)])
 	ph = name; ph_frames = 0; ph_over33 = 0; ph_over50 = 0; ph_worst = 0.0; ph_sum = 0.0
-	ph_sys = {}; ph_proc = 0.0; ph_phys = 0.0; ph_gpu = 0.0; ph_draws = 0.0
+	ph_sys = {}; ph_proc = 0.0; ph_phys = 0.0; ph_gpu = 0.0; ph_draws = 0.0; ph_tris = 0.0; ph_ft = []
 
 func _people() -> void:
 	far_most = maxi(far_most, int((crowd.call(&"stats") as Dictionary).get("drawn", 0))) if crowd else far_most
@@ -111,7 +116,7 @@ func _process(delta: float) -> void:
 	t += delta
 	if ph != "":
 		var ms := delta * 1000.0
-		ph_frames += 1; ph_sum += ms; ph_worst = maxf(ph_worst, ms)
+		ph_frames += 1; ph_sum += ms; ph_worst = maxf(ph_worst, ms); ph_ft.append(ms)
 		if ms > 33.4: ph_over33 += 1
 		if ms > 50.0: ph_over50 += 1
 		ph_proc += Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0
@@ -120,6 +125,7 @@ func _process(delta: float) -> void:
 		if ph_frames % 30 == 1:
 			ph_gpu += RenderingServer.viewport_get_measured_render_time_gpu(get_viewport().get_viewport_rid()) * 30.0
 		ph_draws += Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)
+		ph_tris += Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME)
 		if st and st.has_method(&"perf_take"):
 			var d: Dictionary = st.call(&"perf_take")
 			for k in d: ph_sys[k] = float(ph_sys.get(k, 0.0)) + float(d[k])

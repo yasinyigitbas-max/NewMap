@@ -88,6 +88,11 @@ var kept_trees := {}         # the hand-placed trees (t_* pieces), world: Vector
 const BRK_KINDS := ["prop_bus_stop_sign", "prop_beach_sign", "prop_cone_", "prop_mailbox_post", "prop_bollard_steel", "prop_bollard_iron", "prop_trash_bin", "prop_newsbox", "prop_parking_meter"]
 var brk_on := true           # --nobreak: bake as before
 var cur_brk: Array = []      # this piece's breakables, world: [position, claimed] (each claims ONE collider, the nearest)
+## (28 Nov night, Yasin: "remove collision from small plants, we are climbing onto flowers") the small plants that had a
+## collider: low agaves, the bird of paradise, the potted plants. Nobody bumps into them or climbs onto them now; hedges,
+## the bougainvillea (walls of it), palms and trees keep theirs.
+const NO_COL_PLANTS := ["plant_agave_americana", "plant_bird_of_paradise", "plant_potted_leafy", "plant_potted_succulent"]
+var cur_plants: PackedVector3Array = []      # this piece's small plants, world positions (their colliders are left out by place)
 var rooms_on := true          # --norooms: buildings stay closed (as before 20 Nov)
 var rooms_idx := {}           # "piece|label" -> Array of room file names (interiors/rooms/<name>.scn)
 var room_meta_cache := {}     # room file name -> {"cut": [...], "centre": Vector3}
@@ -1062,6 +1067,15 @@ func _brk_key(p: Vector3) -> Vector3i: return Vector3i(roundi(p.x * 2.0), roundi
 ## before a piece is walked: where its breakables stand (their colliders are found by place in _body)
 func _brk_scan(root: Node) -> void:
 	cur_brk = []
+	cur_plants = PackedVector3Array()
+	for n: Node in root.find_children("*", "MultiMeshInstance3D", true, false):
+		var pm := n as MultiMeshInstance3D
+		var pn := String(pm.name)
+		if not pn.ends_with("_near") or pm.multimesh == null: continue
+		var small := false
+		for b: String in NO_COL_PLANTS: if pn.begins_with(b): small = true
+		if not small: continue
+		for i in pm.multimesh.instance_count: cur_plants.append((pm.global_transform * pm.multimesh.get_instance_transform(i)).origin)
 	if not brk_on: return
 	for n: Node in root.find_children("*", "MultiMeshInstance3D", true, false):
 		var mmi := n as MultiMeshInstance3D
@@ -1285,6 +1299,13 @@ func _body(body: StaticBody3D) -> void:
 	for cs in body.get_children():
 		if not (cs is CollisionShape3D) or (cs as CollisionShape3D).shape == null: continue
 		var s := cs as CollisionShape3D
+		# a small plant's collider (props' colliders only, by place: within 40 cm across, from its foot to 2 m up)
+		if not cur_plants.is_empty() and String(body.name) == "PropCol":
+			var sp := s.global_position
+			var plant := false
+			for pp: Vector3 in cur_plants:
+				if sp.y >= pp.y - 0.3 and sp.y <= pp.y + 2.0 and Vector2(sp.x - pp.x, sp.z - pp.z).length_squared() < 0.16: plant = true; break
+			if plant: stat["plant_cols_out"] = int(stat.get("plant_cols_out", 0)) + 1; continue
 		if s.shape is ConcavePolygonShape3D:      # ground trimesh of a whole piece: in small pieces, each to the cell it lies in
 			var gsh: ConcavePolygonShape3D = s.shape
 			if not cur_wells.is_empty(): gsh = _lift_wells(gsh, s.global_transform)
@@ -1989,6 +2010,7 @@ func _run() -> void:
 	print("BAKE check first use: %d texture / shader / material files the cells need were not held from the start, now on the keep list: %s" % [late.size(), str(late.keys()).substr(0, 600)])
 	var man := {"version": VERSION, "keep": keep.keys(), "warm": wi, "layout_sha": FileAccess.get_sha256(LAYOUT), "area": area, "tint": tint_on, "no_trees": no_trees, "wells_filled": well_fill and no_trees, "cells": manifest_cells, "far": fw, "stat": stat, "cell_m": CELL}
 	var f := FileAccess.open(out + "manifest.json", FileAccess.WRITE); f.store_string(JSON.stringify(man, " ")); f.close()
+	print("BAKE small plants: %d colliders left out (NO_COL_PLANTS)" % int(stat.get("plant_cols_out", 0)))
 	print("BAKE collision: %d triangle shapes cut into pieces, %d pieces in all, largest %d triangles; shape kinds left out: %s" % [int(stat.col_split), int(stat.col_pieces), int(stat.col_piece_max), str(stat.get("col_unknown", {}))])
 	print("BAKE_DONE cells=%d draw nodes=%d nodes=%d lib meshes=%d shapes=%d materials=%d in %d ms" % [cells.size(), tot.draw_nodes, tot.nodes, lib_mesh.size(), int(stat.get("col_shapes", 0)), mats.size(), Time.get_ticks_msec() - t0])
 	quit()
