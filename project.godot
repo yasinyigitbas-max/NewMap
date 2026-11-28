@@ -45,6 +45,10 @@ sensors/enable_gyroscope=true
 ; the phone test rig runs the game's physics setup (Jolt on its own thread); the PC tools keep the default engine
 3d/physics_engine.android="Jolt Physics"
 3d/run_on_separate_thread.android=true
+; (28 Nov night) at most 4 physics steps a drawn frame on the phone (Godot's default 8): a frame that ran long was
+; followed by up to 8 steps of the new bodies' physics, which made the next frame long too (a spiral seen on the Redmi:
+; 133 ms frames, 8 steps each). With 4, a slow moment slows the game a little instead of locking it there.
+common/max_physics_steps_per_frame.android=4
 
 [shader_globals]
 ; city kit runtime shaders (map_dc/coronado/city_kit/shaders/rt): the game drives these (day cycle, weather)
