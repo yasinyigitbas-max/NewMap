@@ -121,6 +121,7 @@ void CityCar::make() {
 	}
 	if (chase_camera) {
 		cam = memnew(Camera3D);
+		cam->set_physics_interpolation_mode(Node::PHYSICS_INTERPOLATION_MODE_OFF);      // (set every drawn frame)
 		cam->set_as_top_level(true);
 		cam->set_fov(62.0); cam->set_near(0.2); cam->set_far(1500.0);
 		add_child(cam);
@@ -461,6 +462,7 @@ void CityCar::take_wheel(bool p_on) {
 		chase_camera = true;
 		if (!cam) {
 			cam = memnew(Camera3D);
+			cam->set_physics_interpolation_mode(Node::PHYSICS_INTERPOLATION_MODE_OFF);      // (set every drawn frame)
 			cam->set_as_top_level(true);
 			cam->set_fov(62.0); cam->set_near(0.2); cam->set_far(1500.0);
 			add_child(cam);
@@ -639,6 +641,7 @@ void CityCar::put_away(const Vector3 &p_where) {
 
 void CityCar::_ready() {
 	if (Engine::get_singleton()->is_editor_hint()) return;
+	set_physics_interpolation_mode(Node::PHYSICS_INTERPOLATION_MODE_ON);      // (drawn between its physics steps: CityPlayer::_ready)
 	make();
 	set_process(true);
 	set_physics_process(true);

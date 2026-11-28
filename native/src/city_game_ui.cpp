@@ -55,7 +55,7 @@ void CityGame::_ready() {
 	{   // (Yasin, 28 Nov: "dpi settings are too high on phones, menu looks very very small. some of my friends couldnt read
 		// what was written at all") the menus, the pause screen, the phone and every panel are laid out in fixed pixels:
 		// on a phone 1080 px high they were drawn a third of the size they were made for. The whole 2D layer is scaled so the
-		// shorter side of the screen counts as 480 px. The HUD lays itself out from the visible rectangle (ui_plate's ui_k),
+		// shorter side of the screen counts as 720 px (first 480: too big). The HUD lays itself out from the visible rectangle (ui_plate's ui_k),
 		// which the scale shrinks by the same factor, so its plates keep their size on the screen (480 px: the Redmi 2.25x). `-- --uiscale=X` tries a
 		// factor on a PC.
 		Window *root = get_tree()->get_root();
@@ -64,7 +64,7 @@ void CityGame::_ready() {
 		for (int i = 0; i < ua.size(); i++) if (ua[i].begins_with("--uiscale=")) f = ua[i].trim_prefix("--uiscale=").to_float();
 		if (f <= 0.0 && OS::get_singleton()->has_feature("android")) {
 			const Vector2i ws = DisplayServer::get_singleton()->window_get_size();
-			f = std::max(1.0, (double)std::min(ws.x, ws.y) / 480.0);
+			f = std::max(1.0, (double)std::min(ws.x, ws.y) / 720.0);      // (28 Nov: 480 was too big, Yasin: "the menu ... too big for the phone screen, i couldnt see anything beyond load game"; the menu is laid out for a 720 px high screen)
 		}
 		if (f > 0.0 && root) root->set_content_scale_factor((float)f);
 	}

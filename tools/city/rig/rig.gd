@@ -152,6 +152,10 @@ func _ready() -> void:
 		var ap: Node = load("res://tools/city/rig/autoplay.gd").new(); ap.name = "Autoplay"
 		get_tree().root.add_child.call_deferred(ap)
 		args.append("--game")
+	# the play session's cost in the log every 10 s (tools/city/rig/perflog.gd), with the file user://perflog_on
+	if FileAccess.file_exists("user://perflog_on") and get_tree().root.get_node_or_null(^"PerfLog") == null:
+		var pf: Node = load("res://tools/city/rig/perflog.gd").new(); pf.name = "PerfLog"
+		get_tree().root.add_child.call_deferred(pf)
 	if "--game" in args and get_tree().root.get_node_or_null(^"Game") == null:
 		get_tree().change_scene_to_file.call_deferred("res://game/boot.tscn")
 		return

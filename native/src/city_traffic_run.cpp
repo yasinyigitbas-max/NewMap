@@ -1215,11 +1215,43 @@ int32_t CityTraffic::car_to_take(const Vector3 &p_at, double p_r, double p_max_v
 		const float d2 = ox * ox + oz * oz;
 		if (d2 < bd) { bd = d2; best = r.id; }
 	}
+	// (28 Nov, Yasin: "i couldnt hijack any parked cars") a parked car by him is taken too: answered as -2 - its stall
+	// (the stalls near the camera are the ones drawn with a model: mid_parked)
+	for (int m = 0; m < cm::N_MODELS; m++) {
+		for (int32_t k : mid_parked[m]) {
+			if (stall_car[k].model == 255) continue;
+			const float *f = &streets.stall_f[(size_t)k * 8];
+			if (std::fabs(f[1] - (float)p_at.y) > 2.5f) continue;
+			const cm::CarModel &cmod = cm::MODELS[std::min((int)stall_car[k].model, cm::N_MODELS - 1)];
+			const float sx = std::sin(f[3]), cz = std::cos(f[3]);
+			const float dx = (float)p_at.x - f[0], dz = (float)p_at.z - f[2];
+			const float along = dx * sx + dz * cz, side = dx * cz - dz * sx;
+			const float ox = std::max(std::fabs(side) - cmod.half_w, 0.0f), oz = std::max(std::fabs(along) - cmod.half_len, 0.0f);
+			const float d2 = ox * ox + oz * oz;
+			if (d2 < bd) { bd = d2; best = -2 - k; }
+		}
+	}
 	return best;
 }
 
 Object *CityTraffic::take_car(int32_t p_id, bool p_fight) {
 	if (!loose[0].car) return nullptr;
+	if (p_id <= -2) {      // a parked car (car_to_take): made a loose car where it stands, nobody in it, his
+		const int32_t k = -2 - p_id;
+		if (k >= (int32_t)stall_car.size() || stall_car[k].model == 255) return nullptr;
+		const float *f = &streets.stall_f[(size_t)k * 8];
+		BodyWant pw{ 0.0f, f[0], f[1], f[2], f[3], f[4], (int)stall_car[k].model, -1, k, 0.0f, 0.0f, stall_car[k].colour };
+		if (!knock(pw)) return nullptr;
+		int ps = -1;
+		for (int q = 0; q < LOOSE; q++) if (loose[q].on && loose[q].serial == loose_serial) ps = q;
+		if (ps < 0) return nullptr;
+		LooseCar &P = loose[ps];
+		P.taken = true; P.by_player = false; P.hit_by = -1; P.alarm_rang = true;      // (his now: no alarm as he drives off)
+		P.car->set_meta("takeable", true);
+		if (!P.car->is_in_group("vehicles")) P.car->add_to_group("vehicles");
+		cars_taken++;
+		return P.car;
+	}
 	const Row *row = nullptr;
 	for (int k = 0; k < now.n; k++) if (now.rows[k].id == p_id) row = &now.rows[k];
 	if (!row || row->kind != tc::K_AMBIENT) return nullptr;

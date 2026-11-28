@@ -5,10 +5,10 @@
 // read the same. Based on assets/coronado_kit/shaders/prop_wear.gdshader. One extra texture read per pixel.
 shader_type spatial;
 render_mode cull_back, diffuse_burley, specular_schlick_ggx;
-uniform sampler2D albedo_tex : source_color, filter_linear_mipmap_anisotropic, repeat_disable;
-uniform sampler2D normal_tex : hint_normal, filter_linear_mipmap_anisotropic, repeat_disable;      // (anisotropic, 28 Nov night: as albedo_tex; relief does not shimmer at grazing angles)
-uniform sampler2D orm_tex : filter_linear_mipmap, repeat_disable;
-uniform sampler2D emission_tex : source_color, filter_linear_mipmap, repeat_disable;
+uniform sampler2D albedo_tex : source_color, filter_linear_mipmap_anisotropic, repeat_enable;
+uniform sampler2D normal_tex : hint_normal, filter_linear_mipmap_anisotropic, repeat_enable;      // (anisotropic, 28 Nov night: as albedo_tex; relief does not shimmer at grazing angles)
+uniform sampler2D orm_tex : filter_linear_mipmap, repeat_enable;
+uniform sampler2D emission_tex : source_color, filter_linear_mipmap, repeat_enable;
 uniform sampler2D grime_tex : source_color, filter_linear_mipmap, repeat_enable;
 uniform bool has_normal = true;
 uniform bool has_orm = true;

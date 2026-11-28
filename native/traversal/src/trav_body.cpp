@@ -157,6 +157,9 @@ void TravBody::_ready() {
 	if (Engine::get_singleton()->is_editor_hint()) {
 		return;
 	}
+	// (28 Nov, the game's, not in the study: Yasin, "character himself moves extremely jittery") drawn between its physics
+	// steps when the project has physics interpolation on (the game: CityPlayer::_ready); without it (the lab) no change
+	set_physics_interpolation_mode(Node::PHYSICS_INTERPOLATION_MODE_ON);
 	_probe.instantiate();
 	_fit.instantiate();
 	set_motion_mode(CharacterBody3D::MOTION_MODE_FLOATING);
@@ -1148,6 +1151,7 @@ Dictionary TravBody::get_readout() {
 
 void TravBody::place(const Vector3 &at) {
 	set_global_position(at);
+	reset_physics_interpolation();      // (set down somewhere new: not drawn sliding there)
 	hvel = ZERO;
 	vy = 0.0;
 	set_velocity(ZERO);

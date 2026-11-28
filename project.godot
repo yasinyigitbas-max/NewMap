@@ -49,6 +49,10 @@ sensors/enable_gyroscope=true
 ; followed by up to 8 steps of the new bodies' physics, which made the next frame long too (a spiral seen on the Redmi:
 ; 133 ms frames, 8 steps each). With 4, a slow moment slows the game a little instead of locking it there.
 common/max_physics_steps_per_frame.android=4
+; (28 Nov, Yasin: "car camera jitter still there, and now character himself moves extremely jittery") the physics steps
+; (60 a second) and the drawn frames do not line up: what physics moves is drawn between its last two steps. On only for
+; him, the people's bodies and the car he drives (CityPlayer::_ready turns the root off); the camera follows the drawn places.
+common/physics_interpolation=true
 
 [shader_globals]
 ; city kit runtime shaders (map_dc/coronado/city_kit/shaders/rt): the game drives these (day cycle, weather)

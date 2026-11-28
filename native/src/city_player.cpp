@@ -50,6 +50,11 @@ namespace godot {
 
 void CityPlayer::_ready() {
 	if (Engine::get_singleton()->is_editor_hint()) return;
+	// (28 Nov, the jitter: physics interpolation, project.godot) on only for what the physics step moves: him, his traversal
+	// body, the people's bodies (TravBody), the car he drives (CityCar). Everything moved in the drawn frame (doors, the old
+	// figures, the HUD's markers, the streamer's nodes) keeps its own place as set: the root is off, those nodes inherit it.
+	if (get_tree() && get_tree()->get_root()) get_tree()->get_root()->set_physics_interpolation_mode(Node::PHYSICS_INTERPOLATION_MODE_OFF);
+	set_physics_interpolation_mode(Node::PHYSICS_INTERPOLATION_MODE_ON);
 	Ref<CapsuleShape3D> sh; sh.instantiate();
 	sh->set_radius(0.3f); sh->set_height(1.75f);
 	CollisionShape3D *cs = memnew(CollisionShape3D);
@@ -1081,6 +1086,7 @@ void CityPlayer::set_riding(bool p_on) {
 
 void CityPlayer::stand_at(const Vector3 &p_at, double p_yaw) {
 	set_global_position(p_at);
+	reset_physics_interpolation();      // (a jump to a new place: not drawn sliding there)
 	yaw = (float)p_yaw;
 	if (trav) {
 		if (trav->has_method("place")) trav->call("place", p_at); else trav->set_global_position(p_at);
@@ -1100,13 +1106,19 @@ void CityPlayer::_process(double p_delta) {
 	// what it frames: him (his head), his body on its way into or out of a vehicle, or the vehicle he drives
 	Node3D *veh = view_id ? Object::cast_to<Node3D>(ObjectDB::get_instance(ObjectID(view_id))) : nullptr;
 	if (view_id && !veh) view_id = 0;
-	Vector3 pivot = get_global_position() + Vector3(0, 1.5f, 0);   // (his shoulders: the God of War framing, close over the right shoulder, him in the left third)
+	// (28 Nov, Yasin: "car camera jitter still there, and now character himself moves extremely jittery") the physics runs at
+	// its own 60 steps a second (on its own thread on the phone) and the drawn frames do not line up with it: a frame with
+	// no step, then one with two. With physics interpolation on (project.godot) everything moved in the physics step is drawn
+	// between its last two steps; the camera, set here every drawn frame, follows those same drawn (interpolated) places
+	// and is not interpolated itself.
+	if (cam->get_physics_interpolation_mode() != Node::PHYSICS_INTERPOLATION_MODE_OFF) cam->set_physics_interpolation_mode(Node::PHYSICS_INTERPOLATION_MODE_OFF);
+	Vector3 pivot = get_global_transform_interpolated().origin + Vector3(0, 1.5f, 0);   // (his shoulders: the God of War framing, close over the right shoulder, him in the left third)
 	float want_d = 1.7f, want_side = 0.72f, want_fov = 56.0f, spd = 0.0f, roll = 0.0f, bob = 0.0f;
 	bool driving = false;
 	Vector3 heading;
 	RID skip;
 	if (CityCar *c = Object::cast_to<CityCar>(veh)) {
-		const Transform3D t = c->get_global_transform();
+		const Transform3D t = c->get_global_transform_interpolated();
 
 		if (c->get_player() || c->view_in_car()) {   // (sitting in, at the wheel, getting up out of it: the car's framing)
 			const cm::CarModel &m = cm::MODELS[std::min(std::max(c->get_model(), 0), cm::N_MODELS - 1)];
@@ -1121,7 +1133,7 @@ void CityPlayer::_process(double p_delta) {
 			want_d = 2.7f; want_side = 0.7f; want_fov = 58.0f;   // (a little back: the car round him)
 		}
 	} else if (CityBike *b = Object::cast_to<CityBike>(veh)) {
-		const Transform3D t = b->get_global_transform();
+		const Transform3D t = b->get_global_transform_interpolated();
 		skip = b->get_rid();
 		const int st = b->get_ride_state();
 		spd = std::fabs(b->get_speed());

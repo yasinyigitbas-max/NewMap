@@ -525,7 +525,7 @@ void CityHud::use_find(CityPlayer *pl) {
 		CityGame *g = CityGame::get();
 		CityTraffic *trf = traffic_id ? Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(traffic_id))) : nullptr;
 		if (!trf && g) trf = Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(g->get_traffic_id())));
-		if (trf) { const int32_t id = trf->car_to_take(pp, 1.3, 2.5); if (id >= 0) { use_kind = 5; use_row = id; } }
+		if (trf) { const int32_t id = trf->car_to_take(pp, 1.3, 2.5); if (id != -1) { use_kind = 5; use_row = id; } }      // (-2 - stall: a parked car)
 	}
 }
 

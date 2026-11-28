@@ -216,12 +216,12 @@ func _process(delta: float) -> void:
 		9:      # a traffic car near him, taken twice in a row: the second take must give nothing
 			if trf == null: _say("no traffic: hijack not tried"); _end(); return
 			var id := int(trf.call(&"car_to_take", pl.global_position, 60.0, 40.0))
-			if id < 0:
+			if id == -1:      # (-2 - stall: a parked car, 28 Nov: parked cars can be taken too)
 				if t - t0 < 30.0: return
 				_say("no traffic car within 60 m in 30 s: hijack not tried"); _end(); return
 			var a: Object = trf.call(&"take_car", id, false)
 			var b: Object = trf.call(&"take_car", id, false)
-			_check(a != null, "a traffic car is taken (row %d)" % id)
+			_check(a != null, ("a parked car is taken (stall %d)" % (-2 - id)) if id <= -2 else ("a traffic car is taken (row %d)" % id))
 			_check(b == null, "taking the same car again gives nothing (one car per hijack)")
 			_end(); return
 
