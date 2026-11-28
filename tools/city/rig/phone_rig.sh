@@ -22,6 +22,8 @@ GODOT_DL=/c/Users/yasin/Downloads/Godot_v4.7.2-stable_win64.exe/Godot_v4.7.2-sta
 [ -f "$GODOT_DL" ] || GODOT_DL=/c/Users/yasin/Godot_v4.7.2-stable_win64.exe
 GODOT=${GODOT:-$GODOT_DL}
 ED_ALL3=$GAME/engine_bins/ed_all3/Godot_v4.7.2-coronado_ed_all3_win64_console.exe
+# (28 Nov: the game folder was deleted; the same editor from coronado-source branch engine-bin/ed_all3, sha256 checked)
+[ -f "$ED_ALL3" ] || ED_ALL3=/c/Users/yasin/tools_native/ed_all3/Godot_v4.7.2-coronado_ed_all3_win64_console.exe
 GODOT_EXPORT=${GODOT_EXPORT:-$([ -f "$ED_ALL3" ] && echo "$ED_ALL3" || echo "$GODOT")}
 ADB=${ADB:-/c/Users/yasin/AppData/Local/Android/Sdk/platform-tools/adb.exe}
 DEV=${DEV:-FEMFRK8PYDMBKBAQ}
