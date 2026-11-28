@@ -84,6 +84,7 @@ void CityCrowd::trav_make(int k) {
 		t.body->add_child(n);
 	}
 	if (t.body->has_method("show_capsule")) t.body->call("show_capsule", false);   // (the lab draws the body's capsule: not in the game)
+	t.body->set("lite", true);      // (no narrow / squeeze probes for a person of the crowd: trav_body.h)
 	t.body->add_to_group("door_opener");      // (the shops' doors open for him as for the player: CityRooms::doors)
 	t.base_pace = (float)(double)t.body->get("pace");   // (the body's own pace, set by its character from its legs)
 	if (!(t.base_pace > 0.1f)) t.base_pace = 1.0f;
