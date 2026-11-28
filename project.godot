@@ -114,6 +114,14 @@ ck_look_signs={
 }
 ; city light (look uplift, 28 Nov; shaders/rt/rt_city_light.gdshaderinc): the island's baked sky / height maps.
 ; look.gd loads them from runtime/far and turns ck_city_light on; 0 = off (nothing read)
+ck_look_ground={
+"type": "float",
+"value": 1.0
+}
+ck_look_noise={
+"type": "sampler2D",
+"value": "res://tools/city/look/sky_noise.png"
+}
 ck_city_light={
 "type": "float",
 "value": 0.0
