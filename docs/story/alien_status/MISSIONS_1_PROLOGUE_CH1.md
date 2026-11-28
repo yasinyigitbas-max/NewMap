@@ -176,11 +176,11 @@ police come.
    `(old)` *"Do you like pizza?"* `(old)` → *"Yes, I do. I like pizza."* / *"No, I don't. I don't like pizza."*
    `(old)` **YOU:** *"Do you like tacos?"* `(old)` **{H}:** *"Yes, I do! I love tacos. But I don't like fish."*
    `(old)` *"So, what do you want? Pizza or tacos?"* `(old)`
-   **{H}:** *"Great! Here, call them. You order. Good practice!"* `(old)` (Gus' Pizza or Rosa's Taqueria.)
-5. **The call.** *"Hello! What can I get you?"* `(old)` **YOU:** *"Can I have a large pepperoni pizza, please?"*
+   **{H}:** *"Great! Here, call them. You order. Good practice!"* `(old pattern)` (Gus' Pizza or Rosa's Taqueria.)
+5. **The call.** *"Hello! What can I get you?"* `(old pattern)` **YOU:** *"Can I have a large pepperoni pizza, please?"*
    or *"Can I have four tacos and a quesadilla, please?"* `(old)` *"Sure. Anything to drink?"* `(old)`
    **YOU:** *"Yes, a soda, please."* `(old)` **YOU:** *"My address is 15 Tenth Street."* `(old pattern)`
-   *"OK! That's 24 dollars. It's on the way."* `(old)` *"Hmm. I only have twenty dollars..."* `(old)`
+   *"OK! That's 24 dollars. It's on the way."* `(old pattern)` *"Hmm. I only have twenty dollars..."* `(old)`
    **YOU:** *"I can pay!"* `(old)` **{H}:** *"No, no. It's on me tonight! You pay next time."* `(old)`
 6. **The lost courier (new).** The phone rings again. A courier on a bike, somewhere on 10th St in the dark:
    *"Hi! I'm on Tenth Street. Which house is it?"* You go to the window, or out to the gate, and tell him what is
@@ -271,7 +271,7 @@ interview.
    **Barista:** *"Hi there! What can I get you?"* `(old)` **YOU:** *"Can I have two lattes, please?"* `(old)`
    *"Sure. Small or large?"* `(old)` **YOU:** *"Large, please."* `(old)` *"Anything else?"* `(old)`
    **YOU:** *"Yes. I'd like two cookies, please."* / *"No, thank you. That's all."* `(old)`
-   *"That's 14 dollars, please."* `(old pattern)` *"Oh no! I only have ... dollars in cash."* `(old)`
+   *"That's 14 dollars, please."* `(old pattern)` *"Oh no! I only have ... dollars in cash."* `(old pattern)`
    **Barista:** *"No worries. You can pay by QR code."* `(old)` Phone, bank, pay. *"Thank you! Here you go."*
    `(old)`
 4. **The tray.** Two full cups, a busy room. Tilt to balance. Bump someone: **YOU:** *"Sorry!"*
@@ -309,7 +309,7 @@ day eleven.
 2. **{H}:** *"We should celebrate! Let's go for a drink!"* `(old)` **YOU:** *"Good idea! Let's go!"* `(old)`
    *"Great! Let's go tonight at seven. There's a nice bar near here: The Gull Tavern."* `(old pattern)`
    **{H}** looks at your camp clothes. *"Not in that."* A shirt is thrown at you: your first other outfit.
-   *"OK. Time to get ready."* `(old)` *"I'll go first and get a table. See you at The Gull Tavern!"* `(old)`
+   *"OK. Time to get ready."* `(old)` *"I'll go first and get a table. See you at The Gull Tavern!"* `(old pattern)`
 3. **The bar.** *"Hey! Over here!"* `(old)` *"This is a nice place, right?"* `(old)` **YOU:** *"Yes, it is! The
    first round is on me."* `(old)` *"Thanks! Let's order at the bar."* `(old)`
    **Bartender:** *"Good evening! What can I get you?"* `(old)` **YOU:** *"Two lemonades, please."* / *"Two iced
@@ -347,16 +347,16 @@ purpose.
    **YOU:** *"It's seven o'clock! Time to get up."* `(old)` (If you fought the sailor it is ten past eight, and
    the line is shorter.)
 3. **{H}:** *"Good morning! How do you feel today?"* `(old)` **YOU:** *"A bit tired, but I'm OK!"* `(old)`
-   *"What time do you start work?"* `(old)` **YOU:** *"I start at nine o'clock."* `(old)` *"How do you get
+   *"What time do you start work?"* `(old)` **YOU:** *"I start at nine o'clock."* `(old pattern)` *"How do you get
    there?"* `(old)` → *"I usually take the bus."* / *"I usually walk. It's good exercise!"* / *"I sometimes take
    a taxi."* `(old)` **{H}:** *"Have a great first day! Good luck!"* `(old)`
 4. **The way to work.** Today something is in the way: the road at the construction site is shut, the first bus is
    full, a cyclist is down on Amber. Find another way. The clock runs.
 5. **Mr. Dunn:** *"Good morning! Welcome to your first day!"* `(old)` **YOU:** *"Good morning! I'm ready."* `(old)`
    - *"You're early! Very good."* `(old)`
-   - or *"You're late! We start at nine o'clock."* `(old)` **YOU:** *"I'm sorry! It won't happen again."* `(old)`
+   - or *"You're late! We start at nine o'clock."* `(old pattern)` **YOU:** *"I'm sorry! It won't happen again."* `(old)`
      He writes it down. It is read back to you in 2.2.
-   *"This is Sam. Sam works here too."* `(old pattern)` **Sam:** *"Hi! I'm Sam. Nice to meet you!"* `(old)`
+   *"This is Sam. Sam works here too."* `(old pattern)` **Sam:** *"Hi! I'm Sam. Nice to meet you!"* `(old pattern)`
 6. **The rules.** *"OK, listen. Wash your hands. Put on your name badge. Smile at the customers. And don't use
    your phone at work!"* `(old)` He says it once and walks away. Now do it: the sink, the badge on its hook, the
    first customer. Then your phone rings in your pocket (it is Sal, he wants to know if you got the job).

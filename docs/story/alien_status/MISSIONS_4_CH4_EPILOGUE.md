@@ -41,7 +41,7 @@ Bay off the marina's fuel dock; the east ring up to 10th St; home. **Giver:** th
    **YOU:** *"{H}. This is Orla. This is Zib."*
    **Orla**, who has heard this scene in a Report and practised it: *"Hi! You must be my new flatmate. Nice to
    meet you!"* `(H's own old lines)`
-   **{H}**, from far away: *"...Welcome home. Make yourself... at home."* `(old)` Then: *"The jelly. The jelly
+   **{H}**, from far away: *"...Welcome home. Make yourself... at home."* `(old words, slower)` Then: *"The jelly. The jelly
    was REAL."* From the kitchen sink: *"Blub."*
 7. **Upstairs.** The attic studio. The forms come off the wall. The recorder goes in a box. Two aliens sit on the
    floor under the roof window.
@@ -182,7 +182,7 @@ officer.
    **YOU:** *"Next question, please."* `(old)`
    Zib laughs. It is the first sound Zib has made.
 2. **Orla:** *"We cannot land again. He knows the bay."* She turns from the window and asks it the way {H} asked
-   it on a sofa with a bandaged hand: *"What should we do now?"* `(old)`
+   it on a sofa with a bandaged hand: *"What should we do now?"* `(old, with "we")`
    - **YOU:** *"You should go home."* They go. It is forty light years. **Orla:** *"You're right. We should go."*
      Goo is asked, and chooses the sink.
    - **YOU:** *"You should stay."* The attic, the locked door, the jacket and the hat. **Orla:** *"OK. We should
@@ -190,7 +190,7 @@ officer.
    - **YOU:** *"You should ask."* The slow way. The papers. *"I tried legal ways, but I was rejected."* `(old)`
      **YOU:** *"It is slow. You should ask anyway."* **Orla:** *"Zib will write the form. Zib writes very well."*
 3. They set you down on your own roof at first light, by the attic window. **Orla:** *"Good human."* `(old)`
-   **YOU:** *"Not 'human'. {NAME}."* **Orla:** *"Good {NAME}. Sleep well!"* `(old)`
+   **YOU:** *"Not 'human'. {NAME}."* **Orla:** *"Good {NAME}. Sleep well!"* `(old words)`
 
 **Carries:** *it means ...*; *should*, as a real choice.
 **Gold:** none. Nobody gets a medal for this one.
@@ -234,7 +234,7 @@ Aid; Coronado County Courthouse. **Giver:** O. **Length:** 15 min.
      gentler.)
 8. The steps outside. **Reyes:** *"You made it."* `(old: "I really hope you make it.")`
    Sal's taxi at the kerb. **Sal:** *"Where to?"* `(old)` **YOU:** *"Home."*
-   **Sal:** *"On Uncle Sam?"* **YOU:** *"No. This one is on me."* `(old)`
+   **Sal:** *"On Uncle Sam?"* **YOU:** *"No. This one is on me."* `(old gold line)`
 
 **Carries:** everything. It is the only test in the game, and the player wrote the questions.
 **Gold:** a full bench.
@@ -250,7 +250,7 @@ Aid; Coronado County Courthouse. **Giver:** O. **Length:** 15 min.
 2. The kitchen. Goo in the sink, the size of a cat, with a certificate of its own on the fridge next to yours.
    {H} at the cooker, two hands working.
    **{H}:** *"Quick question!"* `(old)` You wait for it.
-   **{H}:** *"What do you want for dinner? Pizza or tacos?"* `(old)`
+   **{H}:** *"So, what do you want? Pizza or tacos?"* `(old)`
 3. What the choice in 4.4 left behind:
    - **Go home:** every third night, at three, for one second, a green light crosses your ceiling. Nothing else.
    - **Stay:** two more for dinner. The attic door is never quite shut. Orla wants a job. The Hum meter is yours

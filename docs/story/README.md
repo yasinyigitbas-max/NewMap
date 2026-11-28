@@ -1,6 +1,26 @@
 # The story
 
-## Current: *The Long Way Round*, A1 edition: `long_way_round_a1/`
+## Current: *Alien Status* (working title): `alien_status/`
+Yasin, 28 Nov: "check coronado source and its story first, then adapt it to work with the map ... make it much more
+game like. this is an english learning game, but it shouldn't make it that obvious and play like a real and great game
+first", and: "disregard the new map drafts".
+
+This is the old game's own story (the camp, the gate, the flatmate, the job, the aliens, Goo, fired, the argument,
+the hospital drive) kept in its order, set in the new map's real places, and rebuilt as missions:
+- **Kept:** the old people, events and jokes, and 323 of the old lines word for word (checked against
+  `i18n/strings.csv` and the camp playthrough).
+- **Changed:** no lesson screens, quizzes or "let me check my phone" on the story path. English is how you act:
+  you say a thing and it happens.
+- **New:** chapters 3 and 4, made from what the old story left open (the officer's tests, the rent, Grace, Ivan, the
+  locked room, the aliens' return), and one new person, Commander Rhodes.
+- **Places:** every room named is in `docs/INDOORS.md`. Three sets come from the old game (camp, interrogation
+  room, ship) and the base gate needs the kit's unused gatehouse placed.
+
+Start with `alien_status/BIBLE.md`, then the four `MISSIONS_*.md` files, then `OPEN_WORLD.md`.
+
+The drafts below were set aside on 28 Nov and were not used for it.
+
+## Set aside: *The Long Way Round*, A1 edition: `long_way_round_a1/`
 Yasin, 20 Nov: "fit the A1 syllabus to your first draft with my scenario … use as few non-existing places and props as
 possible, our game has many locations now".
 

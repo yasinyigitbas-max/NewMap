@@ -19,7 +19,7 @@ Goo. **Length:** 25 min.
 **Beats**
 1. *"What... what is THAT?! A green... jelly?"* `(old)` **YOU:** *"Hello? Who are you?"* `(old)`
    **Goo:** *"Hello, student! I am Goo, your teacher. The aliens say your English needs more practice. Today:
-   school!"* `(old)` **YOU:** *"But I have to go to work at nine o'clock!"* `(old)`
+   school!"* `(old)` **YOU:** *"But I have to go to work at nine o'clock!"* `(old pattern)`
    **Goo:** *"No work today. School first! Let's start. Answer my questions!"* `(old)`
 2. **The house is shut.** A green skin over every door and window. Goo sits in the stairway, as wide as the
    stairs. It asks. Any answer makes Goo stop and think about it, very pleased, for three seconds, and for those
@@ -114,8 +114,8 @@ Mr. Dunn, then F. **Length:** 20 min.
    going to do here?"* `(old)`
    **YOU:** *"I'm going to help the people here."* / *"I'm going to learn fast and work hard."* / *"I'm going to
    be on time every day!"* `(old)` (She remembers which one you said, and holds you to it.)
-   *"OK. You can be our new assistant. You're hired!"* `(old)` **YOU:** *"Thank you so much! I'm not going to be
-   late. I promise!"* `(old)` *"Start tomorrow at nine o'clock. See you then!"* `(old)`
+   *"OK. You can be our new assistant. You're hired!"* `(old pattern)` **YOU:** *"Thank you so much! I'm not going to be
+   late. I promise!"* `(old)` *"Start tomorrow at nine o'clock. See you then!"* `(old pattern)`
 7. **The book bike (new).** **{F}:** *"One thing. Can you ride a bike?"* The library's old beach cruiser with a
    wooden box on the front. Three books, three paper slips, each with a name and a place. Read them and go:
    - Hilltop Elementary: a book about sharks, for a class. Thirty children say thank you at once.
@@ -314,7 +314,7 @@ version.
    pressure. We'll be keeping an eye out. You take it easy now."*
    **Goo:** *"Blub... too fast. I have: 'jelly'. I have: 'brain'. I have: 'an eye'. He wants your brain and an
    eye?"*
-   **YOU:** *"Sorry. Please speak slowly."* `(old)`
+   **YOU:** *"Sorry. Please speak slowly."* `(old, from the taxi)`
    He smiles, and says it all again at exactly the same speed. A card: **CMDR. D. RHODES. SPECIAL PROJECTS.**
 9. Reyes is at his door, watching him go. To you, slowly, the way he spoke at the gate: *"Be careful. He is not
    my office."*
