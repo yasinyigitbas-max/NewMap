@@ -1384,6 +1384,13 @@ func _props(mmi: MultiMeshInstance3D) -> void:
 		elif nm.begins_with("prop_lamp_") or nm.begins_with("prop_pier_lamp"): lamp = [Vector3(ab.get_center().x, top - 0.35, ab.get_center().z), 11.0, Color(1.0, 0.82, 0.58), 0]
 		elif nm.begins_with("prop_lot_light_pole"): lamp = [Vector3(ab.get_center().x, top - 0.3, ab.get_center().z), 18.0, Color(0.86, 0.93, 1.0), 0]
 		elif nm.begins_with("prop_porch_light"): lamp = [ab.get_center(), 5.0, Color(1.0, 0.78, 0.5), 1]
+		# look uplift (28 Nov, Yasin: "lights dont cost us almost anything"): the strip's and the city's lit things at night,
+		# kind 2 (city_lights.gd ranks them after the street lamps, before the porches): a pylon sign and a billboard lit
+		# from in front of their face, a neon sign's own colour, the white canopy light over a fuel pump
+		elif nm.begins_with("prop_pylon_sign"): lamp = [Vector3(ab.get_center().x, top * 0.72, ab.get_center().z), 9.0, Color(1.0, 0.92, 0.8), 2]
+		elif nm.begins_with("prop_billboard"): lamp = [Vector3(ab.get_center().x, top - ab.size.y * 0.3, ab.get_center().z), 12.0, Color(1.0, 0.95, 0.85), 2]
+		elif nm.begins_with("prop_neon_wall_sign"): lamp = [ab.get_center(), 6.0, Color(1.0, 0.35, 0.6), 2]
+		elif nm.begins_with("prop_fuel_pump"): lamp = [Vector3(ab.get_center().x, top + 2.6, ab.get_center().z), 13.0, Color(0.92, 0.97, 1.0), 2]
 	for i in mm.instance_count:
 		stat.props_in += 1
 		var xf := mmi.global_transform * mm.get_instance_transform(i)

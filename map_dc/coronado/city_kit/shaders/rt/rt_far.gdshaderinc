@@ -64,6 +64,17 @@ void fragment() {
 	float paint = smoothstep(0.28, 0.55, lum) * (1.0 - smoothstep(0.18, 0.4, sat));
 	vec3 bld = mix(t.rgb, ck_far_sky.rgb, (1.0 - t.a) * far_glass * (1.0 - 0.94 * ck_night)) * mix(vec3(1.0), COLOR.rgb, paint) * far_wear;
 	ALBEDO = mix(bld, COLOR.rgb, v_flat);
+	// look uplift (28 Nov): a far building's windows at night. Its glass (alpha = 1 - glass) lit like the near ones,
+	// window by window (a 3.4 x 3.2 m grid on the wall, hashed): about half on, warm or white. No texture read.
+	if (ck_night > 0.01 && v_flat < 0.5) {
+		vec3 fwp = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
+		vec3 fwn = (INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz;
+		vec2 wc = floor(vec2(abs(fwn.x) > abs(fwn.z) ? fwp.z : fwp.x, fwp.y) / vec2(3.4, 3.2));
+		float hw = fract(sin(dot(wc, vec2(12.9898, 78.233)) + COLOR.r * 41.0) * 43758.5453);
+		float on = step(0.5, hw) * (1.0 - t.a) * (1.0 - step(0.6, abs(fwn.y)));
+		vec3 lamp = mix(vec3(1.0, 0.62, 0.3), vec3(1.0, 0.86, 0.66), step(0.8, hw));
+		EMISSION = lamp * on * mix(0.5, 1.0, fract(hw * 9.0)) * 1.6 * smoothstep(0.2, 0.7, ck_night);
+	}
 #endif
 	ROUGHNESS = 0.9;
 	SPECULAR = 0.3;

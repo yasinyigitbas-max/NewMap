@@ -29,6 +29,8 @@ uniform float max_off = 1600.0;              // the near layer's parallax follow
 varying float v_near;
 varying float v_kind;
 varying float v_dist;
+varying vec3 v_wp;      // a solid's world point (its windows, look uplift)
+varying vec3 v_wn;
 
 void vertex() {
 	vec3 cam = INV_VIEW_MATRIX[3].xyz;
@@ -53,6 +55,7 @@ void vertex() {
 	v_near = step(0.5, kind);
 	v_kind = kind;
 	v_dist = length(d);
+	v_wp = VERTEX; v_wn = NORMAL;
 }
 
 void fragment() {
@@ -66,6 +69,18 @@ void fragment() {
 		float h = 1.0 - exp(-v_dist / 25000.0);
 		t = vec4(mix(base, vec3(0.604, 0.571, 0.462), h), 1.0);      // (the day haze 0.80, 0.78, 0.71 in linear)
 		lit = COLOR.a * 0.5;
+		// look uplift (28 Nov): the towers were plain boxes, flat beige by day and one even glow by night. Now a grid of
+		// windows from the world point: floors 3.2 m, bays 3.6 m; dark glass bands by day, every window its own lamp
+		// (about half lit) by night. Walls only (not roofs), and only where the box is tall enough to be a tower.
+		if (abs(v_wn.y) < 0.5 && COLOR.a > 0.01) {
+			float along = abs(v_wn.x) > abs(v_wn.z) ? v_wp.z : v_wp.x;
+			vec2 cell = vec2(along / 3.6, v_wp.y / 3.2);
+			vec2 f = fract(cell);
+			float win = step(0.18, f.x) * step(f.x, 0.82) * step(0.28, f.y) * step(f.y, 0.86);
+			float hsh = fract(sin(dot(floor(cell), vec2(12.9898, 78.233)) + floor(v_wp.x * 0.01) * 3.1) * 43758.5453);
+			t.rgb = mix(t.rgb, t.rgb * vec3(0.55, 0.6, 0.68), win * 0.8);
+			lit = win * step(0.48, hsh) * mix(0.6, 1.0, fract(hsh * 7.0)) * 1.4;
+		}
 	} else {
 		t = texture(day_tex, UV);
 		lit = texture(lights_tex, UV).r;
