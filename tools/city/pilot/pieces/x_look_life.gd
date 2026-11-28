@@ -5,7 +5,8 @@ extends SceneTree
 ## "why"} (assets/coronado_kit/props/<model>_near.glb, collision <prop>_col.glb) or {"kind": "decal", "tile", "pos",
 ## "yaw", "w", "l", "alpha", "why"} (kit_lib Decals, the photo atlas the pieces' wear uses). Not a generator: it decides
 ## nothing, it builds the list. Placed at [0, 0, 0] (a layout row). Rebuild after editing the list:
-##   godot --headless --path . -s res://tools/city/pilot/pieces/x_look_life.gd
+##   godot --path . --rendering-method mobile --resolution 320x180 -s res://tools/city/pilot/pieces/x_look_life.gd
+## NEVER --headless: its dummy renderer drops every MultiMesh instance transform (all props saved at 0, 0, 0)
 const K := preload("res://tools/city/pilot/kit_lib.gd")
 const P := "res://assets/coronado_kit/props/"
 
