@@ -293,6 +293,12 @@ void TravHold::_physics_process(double dt) {
 	}
 	_layer = move_toward(_layer, (bool)body->call("in_move") ? 0.0 : 1.0, dt / FADE);
 	_aim_w = move_toward(_aim_w, aiming ? 1.0 : 0.0, dt / AIM_TIME);
+	// aimed from the shoulder, his trunk turned to his right (only then: with anything else it is left untouched)
+	Object *hp = (Object *)_chr->get("hands");
+	if (hp != nullptr) {
+		bool shouldered = _shown > 0 && ITEMS[_shown - 1].kind == LONG && _has_butt && _reload_t < 0.0;
+		hp->set("twist_deg", shouldered ? -TWIST_DEG * smooth(_aim_w) * _w * _layer : 0.0);
+	}
 	double w[2] = { 0.0, 0.0 };
 	Array iw;
 	Array itn;
@@ -496,22 +502,64 @@ void TravHold::_refit() {
 	Vector3 wrist[2] = { _skel->get_bone_global_pose(_bone[0][0]).origin, _skel->get_bone_global_pose(_bone[1][0]).origin };
 	// A hand laid on the thing: turned so that its fingers run `fingers` and its palm faces `into`, and placed so
 	// that its palm point is on `at` (27 Nov, Yasin: "it lands on the side of that hand instead of in the palm").
-	auto lay = [&](int f, const Vector3 &at, const Vector3 &fingers, const Vector3 &into) {
+	// where a hand's wrist goes for its palm point to be on `at` (skeleton space)
+	auto wrist_for = [&](int f, const Vector3 &at, const Vector3 &fingers, const Vector3 &into) -> Vector3 {
 		Vector3 a = fingers.normalized();
 		Vector3 o = (into - a * into.dot(a)).normalized();
 		double reach = (double)(_skel->get_bone_global_pose(_bone[f][1]).origin - wrist[f]).length();
-		Vector3 w = at - a * (real_t)(PALM_ALONG * reach) - o * (real_t)PALM_OUT;
-		hold_at[f] = to_world.xform(w);
+		return at - a * (real_t)(PALM_ALONG * reach) - o * (real_t)PALM_OUT;
+	};
+	auto lay = [&](int f, const Vector3 &at, const Vector3 &fingers, const Vector3 &into) {
+		Vector3 a = fingers.normalized();
+		Vector3 o = (into - a * into.dot(a)).normalized();
+		hold_at[f] = to_world.xform(wrist_for(f, at, fingers, into));
 		hold_basis[f] = _chr->call("hand_turned", f, a, o);
 	};
+	// each arm's shoulder joint and length (shoulder to elbow to wrist), as the take has them
+	Vector3 arm_sh[2];
+	double arm_len[2] = { 0.0, 0.0 };
+	for (int f = 0; f < 2; f++) {
+		int ua = _skel->find_bone(f == 0 ? "mixamorig_LeftArm" : "mixamorig_RightArm");
+		int fa = _skel->find_bone(f == 0 ? "mixamorig_LeftForeArm" : "mixamorig_RightForeArm");
+		if (ua >= 0 && fa >= 0) {
+			arm_sh[f] = _skel->get_bone_global_pose(ua).origin;
+			Vector3 el = _skel->get_bone_global_pose(fa).origin;
+			arm_len[f] = (double)(el - arm_sh[f]).length() + (double)(wrist[f] - el).length();
+		}
+	}
+	// held out in front (a pistol, or a long gun with no stock), the hands' fingers run along the gun and a little
+	// down, so that each wrist stays nearly in line with its forearm (28 Nov, Yasin's frames: the wrists bent sharply)
+	const Vector3 GX(1, 0, 0), GY(0, 1, 0), GZ(0, 0, 1);
+	const Vector3 out_r = GZ * 0.94f - GY * (real_t)FINGERS_DOWN;
+	const Vector3 out_l = GZ * 0.87f - GY * (real_t)CUP_DOWN;
+	bool held_out = it.kind == PISTOL || (it.kind == LONG && !_has_butt);
 	if (!_t_set) {
 		_t = _held_pose(it, palm, along, across, gr, gl, gl_n != nullptr);
 		if ((it.kind == LONG || it.kind == PISTOL) && _aim_w > 0.0 && _head >= 0) {
-			// aimed: its sights at his eye, pointing the way he faces (the skeleton faces +Z; his right is -X)
+			// aimed: pointing the way he faces (the skeleton faces +Z; his right is -X)
 			Vector3 head = _skel->get_bone_global_pose(_head).origin;
 			Vector3 mz = mz_n ? mz_n->get_position() : Vector3(0, 0.05f, 0.2f);
-			Vector3 at((real_t)(head.x - (it.kind == LONG ? 0.03 : 0.0)), (real_t)(head.y + EYE_UP - ((double)mz.y + SIGHT_OVER)), (real_t)(head.z + (it.kind == LONG ? LONG_AHEAD : PISTOL_AHEAD)));
-			Transform3D aimed(Basis(), at - gr);
+			Transform3D aimed;
+			if (held_out) {
+				// a pistol: its sights at his eye, centred in front of his face; a long gun with no stock: at his chin and a
+				// little to his right. Both held out with his arms nearly straight: the grip is brought back from
+				// AHEAD_MOST until each wrist is within OUT_REACH of its shoulder (no further, or the hands bend his trunk)
+				bool pistol = it.kind == PISTOL;
+				double y = head.y + EYE_UP - (pistol ? 0.0 : SHORT_DOWN) - ((double)mz.y + SIGHT_OVER);
+				double x = head.x - (pistol ? 0.0 : SHORT_RIGHT);
+				for (double ahead = AHEAD_MOST;; ahead -= 0.01) {
+					aimed = Transform3D(Basis(), Vector3((real_t)x, (real_t)y, (real_t)(head.z + ahead)) - gr);
+					Vector3 wr = wrist_for(1, aimed.xform(gr) - GX * 0.015f, out_r, GX);
+					Vector3 wl = pistol ? wrist_for(0, aimed.xform(gl) + GX * 0.02f, out_l, -GX) : wrist_for(0, aimed.xform(gl), GZ * 0.5f - GX * 0.85f, GY);
+					bool fits = (double)(wr - arm_sh[1]).length() <= OUT_REACH * arm_len[1] && (double)(wl - arm_sh[0]).length() <= OUT_REACH * arm_len[0];
+					if (fits || ahead <= AHEAD_LEAST) {
+						break;
+					}
+				}
+			} else {
+				Vector3 at((real_t)(head.x - 0.03), (real_t)(head.y + EYE_UP - ((double)mz.y + SIGHT_OVER)), (real_t)(head.z + 0.17));
+				aimed = Transform3D(Basis(), at - gr);
+			}
 			if (it.kind == LONG && _has_butt && _shoulder >= 0) {
 				// a long gun with a stock: its butt on his right shoulder, the gun level and pointing the way he faces
 				// (27 Nov, Yasin: "rifle goes into his face when aiming ... place the butt of the rifle onto his
@@ -554,20 +602,24 @@ void TravHold::_refit() {
 			for (int k = 0; k < 30; k++) {
 				Vector3 fingers = (gz * 0.5f - gx * 0.85f).normalized();
 				Vector3 w_at = _t.xform(fore) - fingers * (real_t)hand_len - gy * (real_t)PALM_OUT;
-				if ((double)(w_at - sh_l).length() <= arm * REACH_MOST || (double)(fore.z - gr.z) <= FORE_LEAST) {
+				// (aimed from the shoulder, further along: 28 Nov, the left hand was back by the magazine)
+				double most = REACH_MOST + (REACH_AIMED - REACH_MOST) * (_has_butt ? smooth(_aim_w) : 0.0);
+				if ((double)(w_at - sh_l).length() <= arm * most || (double)(fore.z - gr.z) <= FORE_LEAST) {
 					break;
 				}
 				fore.z -= 0.01f;
 			}
 		}
 		lay(0, _t.xform(fore), gz * 0.5f - gx * 0.85f, gy);
-		lay(1, _t.xform(gr) - gx * 0.015f, gz * 0.75f - gy * 0.65f, gx);
+		if (held_out) {
+			lay(1, _t.xform(gr) - gx * 0.015f, _t.basis.xform(out_r), gx);
+		} else {
+			lay(1, _t.xform(gr) - gx * 0.015f, gz * 0.75f - gy * 0.65f, gx);
+		}
 	} else {
-		// a pistol aimed: the right hand on its grip, the left closed round the right from the other side; the fingers
-		// 20 degrees under the barrel, as a pistol's grip leans (28 Nov night, Yasin: "our hands look broken from the wrist":
-		// at 41 degrees, gz * 0.75 - gy * 0.65, the wrist took the whole bend down from the forearm)
-		lay(1, _t.xform(gr) - gx * 0.015f, gz * 0.94f - gy * 0.34f, gx);
-		lay(0, _t.xform(gl) + gx * 0.02f, gz * 0.94f - gy * 0.34f, -gx);
+		// a pistol aimed: the right hand on its grip, the left closed round the right from the other side
+		lay(1, _t.xform(gr) - gx * 0.015f, _t.basis.xform(out_r), gx);
+		lay(0, _t.xform(gl) + gx * 0.02f, _t.basis.xform(out_l), -gx);
 	}
 }
 

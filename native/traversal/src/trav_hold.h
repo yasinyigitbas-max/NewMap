@@ -40,11 +40,26 @@ public:
 	static constexpr double REACH_MOST = 0.90;  // a hand is laid no further off than this share of his arm's length
 	static constexpr double FORE_LEAST = 0.09;  // ... and the left hand never nearer the grip than this along the gun (m)
 	static constexpr double BUTT_LEAST = 0.20;  // a gun whose butt is this far behind its grip is aimed from the shoulder (m); a shorter one from the eye
-	static constexpr double BUTT_IN = 0.035;    // its butt this far in toward his chest from his shoulder joint, (m)
-	static constexpr double BUTT_DOWN = 0.02;   // ... this far under it
+	static constexpr double BUTT_IN = 0.07;     // its butt this far in toward his chest from his shoulder joint, (m): in the pocket, under his cheek (28 Nov: was 0.035)
+	static constexpr double BUTT_DOWN = -0.10;  // ... this far under it (under 0: over it; 28 Nov: was 0.02, the gun at his chest, his head far over the stock)
 	static constexpr double BUTT_AHEAD = 0.07;  // ... and this far ahead of it (the joint is inside his shoulder; the butt is on its front)
-	static constexpr double LONG_AHEAD = 0.17;  // aimed from the eye, a short long gun's grip this far ahead of his head joint (m)
-	static constexpr double PISTOL_AHEAD = 0.55; // aimed, a pistol's grip this far ahead of his head joint (m): his arms nearly straight (0.50 folded both arms up in front of his face, 0.60 bent his trunk to reach: 28 Nov night)
+	// Aimed and held out in front (a pistol, and a long gun with no stock: the smg, the sawn-off). 28 Nov, Yasin: "SMG,
+	// shotgun, pistol holds are still terrible, need a good fix". The grip was set a fixed way ahead of his head joint:
+	// 0.50 m for the pistol was past his reach (the hands bent his trunk 17 degrees forward, and the gun, placed at his
+	// eye before the bend, ended over his head), 0.17 m for the short long guns put his hands at his mouth.
+	// Now the grip is brought back from AHEAD_MOST until both wrists are within OUT_REACH of his arm from their shoulders.
+	static constexpr double AHEAD_MOST = 0.60;  // the furthest a held-out gun's grip is tried ahead of his head joint (m)
+	static constexpr double AHEAD_LEAST = 0.25; // ... and the nearest
+	static constexpr double OUT_REACH = 0.90;   // held out, each wrist this share of his arm's length from its shoulder: a slight bend left
+	static constexpr double SHORT_DOWN = 0.08;  // a long gun with no stock: its sights this far under his eye (at his chin, not at his eye)
+	static constexpr double SHORT_RIGHT = 0.05; // ... and its grip this far to his right of his head joint (m)
+	static constexpr double REACH_AIMED = 0.97; // aimed from the shoulder, the left hand goes along the forend to this share of his arm
+	static constexpr double TWIST_DEG = 35.0;   // aimed from the shoulder, his trunk turned this far to his right (his left shoulder forward,
+	                                            // his head kept facing ahead): the left hand cannot reach the forend of a gun on his right
+	                                            // shoulder with his chest square (his arm, shoulder to wrist, is 0.465 m; the shotgun's forend
+	                                            // is 0.40 m ahead of its grip)
+	static constexpr double FINGERS_DOWN = 0.34; // a hand held out on a pistol grip: its knuckles this far down per 0.94 forward (about 20 degrees), the wrist nearly straight with the forearm
+	static constexpr double CUP_DOWN = 0.50;    // ... the left hand cupped round the right: steeper (about 30 degrees)
 	static constexpr double KICK_TIME = 0.14;   // seconds a shot's kick takes to die away
 	static constexpr double KICK_BACK = 0.03;   // ... how far the gun comes back (m)
 	static constexpr double KICK_UP_DEG = 7.0;  // ... and how far its muzzle rises

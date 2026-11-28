@@ -38,7 +38,7 @@ void TravHandPlace::_bind_methods() {
 }
 
 #define HP_VARS(X) X(body) X(hold_at) X(hold_w) X(hold_turned) X(hold_basis) X(hold_loose) X(hold_flat) X(refit) X(on) \
-	X(clip_slope) X(hand_low) X(target) X(pole) X(ik) X(hips_down) X(reach) X(bend_deg)
+	X(clip_slope) X(hand_low) X(target) X(pole) X(ik) X(hips_down) X(reach) X(bend_deg) X(twist_deg)
 
 static inline void take(double &d, const Variant &v) { d = (double)v; }
 static inline void take(bool &d, const Variant &v) { d = (bool)v; }
@@ -86,6 +86,10 @@ void TravHandPlace::bind(Skeleton3D *sk) {
 		_len[f] = D(sk->get_bone_rest(_fore[f]).origin.length()) + D(sk->get_bone_rest(_hand[f]).origin.length());
 	}
 	_spine = sk->find_bone("mixamorig_Spine");
+	const char *tw[4] = { "mixamorig_Spine", "mixamorig_Spine1", "mixamorig_Spine2", "mixamorig_Neck" };
+	for (int k = 0; k < 4; k++) {
+		_twist_bone[k] = sk->find_bone(tw[k]);
+	}
 }
 
 void TravHandPlace::_process_modification_with_delta(double dt) {
@@ -97,6 +101,18 @@ void TravHandPlace::_process_modification_with_delta(double dt) {
 	}
 	Transform3D xf = sk->get_global_transform();
 	Transform3D inv = xf.affine_inverse();
+	if (twist_deg != 0.0 && _twist_bone[0] >= 0 && _twist_bone[1] >= 0 && _twist_bone[2] >= 0 && _twist_bone[3] >= 0) {
+		// (before anything is placed: the thing in his hands is placed from his shoulders and head as they end up)
+		Basis share(Vector3(0, 1, 0), (real_t)deg_to_rad(twist_deg / 3.0));
+		for (int k = 0; k < 3; k++) {
+			Transform3D g = sk->get_bone_global_pose(_twist_bone[k]);
+			g.basis = share * g.basis;
+			sk->set_bone_global_pose(_twist_bone[k], g);
+		}
+		Transform3D g = sk->get_bone_global_pose(_twist_bone[3]);
+		g.basis = Basis(Vector3(0, 1, 0), (real_t)deg_to_rad(-twist_deg)) * g.basis;
+		sk->set_bone_global_pose(_twist_bone[3], g);
+	}
 	if (refit.is_valid()) {
 		refit.call();
 	}
