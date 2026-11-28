@@ -66,16 +66,6 @@
    "by": "Yasin",
    "date": "2026-11-17"
   },
-  "d_cc": {
-   "sha256": "c5b1e5ed4659503a70717d22af1d133371fae2e05af350892a2df1573dbd4033",
-   "by": "Yasin",
-   "date": "2026-11-17"
-  },
-  "d_pilot": {
-   "sha256": "61d3c7e939714f5efa41e6b51f79418a87d9771a34463c784347a8d5a8a4ac66",
-   "by": "Yasin",
-   "date": "2026-11-17"
-  },
   "s_apt": {
    "sha256": "43c88887202e1dcb48e997d44581257d48533a30b4539841de9cce14c76b1c47",
    "by": "Yasin",
@@ -3325,6 +3315,16 @@
    "sha256": "c2101e871887c558a1413a1d2ba008059e3b4be6cd397b0ae658d6fdaf6cd839",
    "by": "Yasin",
    "date": "2026-11-22"
+  },
+  "d_cc": {
+   "sha256": "ce206db701bbed95c53419e3d9d1b1f61453189c1c4a0f08dd9e6d2b54bfea79",
+   "by": "Yasin",
+   "date": "2026-11-28"
+  },
+  "d_pilot": {
+   "sha256": "ed30f80ef72e6ce3bbd3e036e093ac973183beda7e4a1ddcabd27f7a59eb48de",
+   "by": "Yasin",
+   "date": "2026-11-28"
   }
  },
  "files": {

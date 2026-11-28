@@ -1,0 +1,6364 @@
+{
+ "fixes": [
+  {
+   "at": [
+    -25.8999996185303,
+    9.64999961853027,
+    59.2999992370605
+   ],
+   "base": "prop_solar_panel_x3",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 1.0,
+   "op": "move",
+   "reason": "prop_solar_panel_x3 hangs 0.50 m over what is under it",
+   "to": [
+    -25.8999996185303,
+    9.14981499314308,
+    59.2999992370605
+   ]
+  },
+  {
+   "at": [
+    -21.9839992523193,
+    9.44999980926514,
+    -74.6110000610352
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 31.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 1.11 m over what is under it",
+   "to": [
+    -21.9839992523193,
+    8.33649529694082,
+    -74.6110000610352
+   ]
+  },
+  {
+   "at": [
+    -21.7110004425049,
+    9.44999980926514,
+    -76.7669982910156
+   ],
+   "base": "prop_vent_box",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 38.0,
+   "op": "move",
+   "reason": "prop_vent_box hangs 1.18 m over what is under it",
+   "to": [
+    -21.7110004425049,
+    8.26785001784888,
+    -76.7669982910156
+   ]
+  },
+  {
+   "at": [
+    -23.1089992523193,
+    9.44999980926514,
+    -78.7929992675781
+   ],
+   "base": "prop_vent_box",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 39.0,
+   "op": "move",
+   "reason": "prop_vent_box hangs 1.19 m over what is under it",
+   "to": [
+    -23.1089992523193,
+    8.26071060728855,
+    -78.7929992675781
+   ]
+  },
+  {
+   "at": [
+    23.3659992218018,
+    12.4499998092651,
+    -90.9240036010742
+   ],
+   "base": "prop_vent_plumbing",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 76.0,
+   "op": "move",
+   "reason": "prop_vent_plumbing hangs 0.70 m over what is under it",
+   "to": [
+    23.3659992218018,
+    11.7452538627159,
+    -90.9240036010742
+   ]
+  },
+  {
+   "at": [
+    24.7339992523193,
+    12.4499998092651,
+    -84.620002746582
+   ],
+   "base": "prop_vent_turbine",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 87.0,
+   "op": "move",
+   "reason": "prop_vent_turbine hangs 0.71 m over what is under it",
+   "to": [
+    24.7339992523193,
+    11.7416609004983,
+    -84.620002746582
+   ]
+  },
+  {
+   "at": [
+    -22.6229991912842,
+    9.64999961853027,
+    55.1790008544922
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 167.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.50 m over what is under it",
+   "to": [
+    -22.6229991912842,
+    9.14981499314308,
+    55.1790008544922
+   ]
+  },
+  {
+   "at": [
+    -21.6189994812012,
+    9.64999961853027,
+    48.8120002746582
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 170.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.50 m over what is under it",
+   "to": [
+    -21.6189994812012,
+    9.14981499314308,
+    48.8120002746582
+   ]
+  },
+  {
+   "at": [
+    -20.4939994812012,
+    9.64999961853027,
+    53.4249992370605
+   ],
+   "base": "prop_vent_box",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 185.0,
+   "op": "move",
+   "reason": "prop_vent_box hangs 0.50 m over what is under it",
+   "to": [
+    -20.4939994812012,
+    9.14981499314308,
+    53.4249992370605
+   ]
+  },
+  {
+   "at": [
+    -19.80299949646,
+    9.64999961853027,
+    48.693000793457
+   ],
+   "base": "prop_vent_box",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 187.0,
+   "op": "move",
+   "reason": "prop_vent_box hangs 0.50 m over what is under it",
+   "to": [
+    -19.80299949646,
+    9.14981499314308,
+    48.693000793457
+   ]
+  },
+  {
+   "at": [
+    -19.7320003509521,
+    9.64999961853027,
+    57.9630012512207
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 208.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.50 m over what is under it",
+   "to": [
+    -19.7320003509521,
+    9.14981499314308,
+    57.9630012512207
+   ]
+  },
+  {
+   "at": [
+    -24.1690006256104,
+    9.64999961853027,
+    55.2389984130859
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 210.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.50 m over what is under it",
+   "to": [
+    -24.1690006256104,
+    9.14981499314308,
+    55.2389984130859
+   ]
+  },
+  {
+   "at": [
+    -24.4869995117188,
+    9.64999961853027,
+    52.9290008544922
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 211.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.50 m over what is under it",
+   "to": [
+    -24.4869995117188,
+    9.14981499314308,
+    52.9290008544922
+   ]
+  },
+  {
+   "at": [
+    -24.4860000610352,
+    9.64999961853027,
+    50.0670013427734
+   ],
+   "base": "prop_vent_plumbing",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 238.0,
+   "op": "move",
+   "reason": "prop_vent_plumbing hangs 0.50 m over what is under it",
+   "to": [
+    -24.4860000610352,
+    9.14981499314308,
+    50.0670013427734
+   ]
+  },
+  {
+   "at": [
+    -23.6380004882813,
+    9.64999961853027,
+    47.8940010070801
+   ],
+   "base": "prop_vent_plumbing",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 239.0,
+   "op": "move",
+   "reason": "prop_vent_plumbing hangs 0.50 m over what is under it",
+   "to": [
+    -23.6380004882813,
+    9.14981499314308,
+    47.8940010070801
+   ]
+  },
+  {
+   "at": [
+    -22.7779998779297,
+    9.64999961853027,
+    51.3610000610351
+   ],
+   "base": "prop_ac_condenser_compact",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 253.0,
+   "op": "move",
+   "reason": "prop_ac_condenser_compact hangs 0.50 m over what is under it",
+   "to": [
+    -22.7779998779297,
+    9.14981499314308,
+    51.3610000610351
+   ]
+  },
+  {
+   "at": [
+    -21.6270008087158,
+    9.64999961853027,
+    46.4939994812012
+   ],
+   "base": "prop_ac_condenser_compact",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 254.0,
+   "op": "move",
+   "reason": "prop_ac_condenser_compact hangs 0.50 m over what is under it",
+   "to": [
+    -21.6270008087158,
+    9.14981499314308,
+    46.4939994812012
+   ]
+  },
+  {
+   "at": [
+    -22.4759998321533,
+    9.64999961853027,
+    57.9809989929199
+   ],
+   "base": "prop_ac_condenser_compact",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 265.0,
+   "op": "move",
+   "reason": "prop_ac_condenser_compact hangs 0.50 m over what is under it",
+   "to": [
+    -22.4759998321533,
+    9.14981499314308,
+    57.9809989929199
+   ]
+  },
+  {
+   "at": [
+    -20.3950004577637,
+    9.64999961853027,
+    51.9119987487793
+   ],
+   "base": "prop_vent_plumbing",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 283.0,
+   "op": "move",
+   "reason": "prop_vent_plumbing hangs 0.50 m over what is under it",
+   "to": [
+    -20.3950004577637,
+    9.14981499314308,
+    51.9119987487793
+   ]
+  },
+  {
+   "at": [
+    -25.8390007019043,
+    9.64999961853027,
+    49.3810005187988
+   ],
+   "base": "prop_vent_plumbing",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 284.0,
+   "op": "move",
+   "reason": "prop_vent_plumbing hangs 0.50 m over what is under it",
+   "to": [
+    -25.8390007019043,
+    9.14981499314308,
+    49.3810005187988
+   ]
+  },
+  {
+   "at": [
+    -25.8889999389648,
+    9.64999961853027,
+    46.7159996032715
+   ],
+   "base": "prop_vent_box",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 296.0,
+   "op": "move",
+   "reason": "prop_vent_box hangs 0.50 m over what is under it",
+   "to": [
+    -25.8889999389648,
+    9.14981499314308,
+    46.7159996032715
+   ]
+  },
+  {
+   "at": [
+    -19.0590000152588,
+    9.64999961853027,
+    47.1599998474121
+   ],
+   "base": "prop_vent_box",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 297.0,
+   "op": "move",
+   "reason": "prop_vent_box hangs 0.50 m over what is under it",
+   "to": [
+    -19.0590000152588,
+    9.14981499314308,
+    47.1599998474121
+   ]
+  },
+  {
+   "at": [
+    -19.863000869751,
+    9.64999961853027,
+    45.5530014038086
+   ],
+   "base": "prop_vent_box",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 298.0,
+   "op": "move",
+   "reason": "prop_vent_box hangs 0.50 m over what is under it",
+   "to": [
+    -19.863000869751,
+    9.14981499314308,
+    45.5530014038086
+   ]
+  },
+  {
+   "at": [
+    22.5109996795654,
+    12.4499998092651,
+    -86.2369995117188
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 301.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.95 m over what is under it",
+   "to": [
+    22.5109996795654,
+    11.4995179798107,
+    -86.2369995117188
+   ]
+  },
+  {
+   "at": [
+    25.2959995269775,
+    12.4499998092651,
+    -81.943000793457
+   ],
+   "base": "prop_ac_condenser",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 323.0,
+   "op": "move",
+   "reason": "prop_ac_condenser hangs 0.94 m over what is under it",
+   "to": [
+    25.2959995269775,
+    11.5096344908054,
+    -81.943000793457
+   ]
+  },
+  {
+   "at": [
+    23.8309993743896,
+    12.4499998092651,
+    -88.6640014648438
+   ],
+   "base": "prop_vent_plumbing",
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "auto",
+   "n": 333.0,
+   "op": "move",
+   "reason": "prop_vent_plumbing hangs 0.50 m over what is under it",
+   "to": [
+    23.8309993743896,
+    11.945019548859,
+    -88.6640014648438
+   ]
+  },
+  {
+   "at": [
+    -25.8999996185303,
+    7.25,
+    42.2999992370605
+   ],
+   "base": "prop_solar_panel_x3",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 2.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_solar_panel_x3 hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    20.5,
+    30.4500007629395,
+    -71.6999969482422
+   ],
+   "base": "prop_patio_set_4",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 3.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_patio_set_4 hangs 24.02 m over what is under it]"
+  },
+  {
+   "at": [
+    20.5,
+    30.4500007629395,
+    -53.7000007629395
+   ],
+   "base": "prop_patio_set_4",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 4.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_patio_set_4 hangs 24.02 m over what is under it]"
+  },
+  {
+   "at": [
+    28.6000003814697,
+    30.4500007629395,
+    -71.6999969482422
+   ],
+   "base": "prop_patio_set_4",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 5.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_patio_set_4 hangs 24.11 m over what is under it]"
+  },
+  {
+   "at": [
+    28.6000003814697,
+    30.4500007629395,
+    -53.7000007629395
+   ],
+   "base": "prop_patio_set_4",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 6.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_patio_set_4 hangs 24.11 m over what is under it]"
+  },
+  {
+   "at": [
+    20.5,
+    30.4500007629395,
+    -71.6999969482422
+   ],
+   "base": "prop_shade_sail",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 7.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_shade_sail hangs 24.02 m over what is under it]"
+  },
+  {
+   "at": [
+    20.5,
+    30.4500007629395,
+    -53.7000007629395
+   ],
+   "base": "prop_shade_sail",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 8.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_shade_sail hangs 24.02 m over what is under it]"
+  },
+  {
+   "at": [
+    28.6000003814697,
+    30.4500007629395,
+    -71.6999969482422
+   ],
+   "base": "prop_shade_sail",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 9.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_shade_sail hangs 24.11 m over what is under it]"
+  },
+  {
+   "at": [
+    28.6000003814697,
+    30.4500007629395,
+    -53.7000007629395
+   ],
+   "base": "prop_shade_sail",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 10.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_shade_sail hangs 24.11 m over what is under it]"
+  },
+  {
+   "at": [
+    20.5,
+    30.4500007629395,
+    -69.5
+   ],
+   "base": "plant_potted_leafy",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 11.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [plant_potted_leafy hangs 24.02 m over what is under it]"
+  },
+  {
+   "at": [
+    20.5,
+    30.4500007629395,
+    -51.5
+   ],
+   "base": "plant_potted_leafy",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 12.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [plant_potted_leafy hangs 24.02 m over what is under it]"
+  },
+  {
+   "at": [
+    28.6000003814697,
+    30.4500007629395,
+    -69.5
+   ],
+   "base": "plant_potted_leafy",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 13.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [plant_potted_leafy hangs 24.11 m over what is under it]"
+  },
+  {
+   "at": [
+    28.6000003814697,
+    30.4500007629395,
+    -51.5
+   ],
+   "base": "plant_potted_leafy",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 14.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [plant_potted_leafy hangs 24.11 m over what is under it]"
+  },
+  {
+   "at": [
+    19.8999996185303,
+    30.4500007629395,
+    -73.8999938964844
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 15.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs 24.29 m over what is under it]"
+  },
+  {
+   "at": [
+    19.8999996185303,
+    30.4500007629395,
+    -55.9000015258789
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 16.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs 24.29 m over what is under it]"
+  },
+  {
+   "at": [
+    28.0,
+    30.4500007629395,
+    -73.8999938964844
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 17.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs 23.85 m over what is under it]"
+  },
+  {
+   "at": [
+    28.0,
+    30.4500007629395,
+    -55.9000015258789
+   ],
+   "base": "plant_potted_succulent",
+   "chosen": true,
+   "cond": "normal",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 18.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [plant_potted_succulent hangs 23.85 m over what is under it]"
+  },
+  {
+   "at": [
+    22.7000007629395,
+    30.4500007629395,
+    -70.2999954223633
+   ],
+   "base": "prop_adirondack_white",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 19.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_adirondack_white hangs 23.06 m over what is under it]"
+  },
+  {
+   "at": [
+    22.7000007629395,
+    30.4500007629395,
+    -52.2999992370605
+   ],
+   "base": "prop_adirondack_white",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 20.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_adirondack_white hangs 23.06 m over what is under it]"
+  },
+  {
+   "at": [
+    30.8000011444092,
+    30.4500007629395,
+    -70.2999954223633
+   ],
+   "base": "prop_adirondack_white",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 21.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_adirondack_white hangs 25.07 m over what is under it]"
+  },
+  {
+   "at": [
+    30.8000011444092,
+    30.4500007629395,
+    -52.2999992370605
+   ],
+   "base": "prop_adirondack_white",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 22.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_adirondack_white hangs 25.07 m over what is under it]"
+  },
+  {
+   "at": [
+    22.7000007629395,
+    30.4500007629395,
+    -73.0999984741211
+   ],
+   "base": "prop_adirondack_wood",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 23.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_adirondack_wood hangs 23.06 m over what is under it]"
+  },
+  {
+   "at": [
+    22.7000007629395,
+    30.4500007629395,
+    -55.1000022888184
+   ],
+   "base": "prop_adirondack_wood",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 24.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_adirondack_wood hangs 23.06 m over what is under it]"
+  },
+  {
+   "at": [
+    30.8000011444092,
+    30.4500007629395,
+    -73.0999984741211
+   ],
+   "base": "prop_adirondack_wood",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 25.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_adirondack_wood hangs 25.07 m over what is under it]"
+  },
+  {
+   "at": [
+    30.8000011444092,
+    30.4500007629395,
+    -55.1000022888184
+   ],
+   "base": "prop_adirondack_wood",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 26.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_adirondack_wood hangs 25.07 m over what is under it]"
+  },
+  {
+   "at": [
+    18.7000007629395,
+    30.4500007629395,
+    -69.0999984741211
+   ],
+   "base": "prop_bbq_gas_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 27.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_bbq_gas_cart hangs 24.85 m over what is under it]"
+  },
+  {
+   "at": [
+    18.7000007629395,
+    30.4500007629395,
+    -51.1000022888184
+   ],
+   "base": "prop_bbq_gas_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 28.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_bbq_gas_cart hangs 24.85 m over what is under it]"
+  },
+  {
+   "at": [
+    26.8000011444092,
+    30.4500007629395,
+    -69.0999984741211
+   ],
+   "base": "prop_bbq_gas_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 29.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_bbq_gas_cart hangs 23.29 m over what is under it]"
+  },
+  {
+   "at": [
+    26.8000011444092,
+    30.4500007629395,
+    -51.1000022888184
+   ],
+   "base": "prop_bbq_gas_cart",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 30.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_bbq_gas_cart hangs 23.29 m over what is under it]"
+  },
+  {
+   "at": [
+    -19.2019996643066,
+    9.44999980926514,
+    -74.5839996337891
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 32.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 2.12 m over what is under it]"
+  },
+  {
+   "at": [
+    -27.4379997253418,
+    9.44999980926514,
+    -78.6360015869141
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 33.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 2.78 m over what is under it]"
+  },
+  {
+   "at": [
+    18.8010005950928,
+    30.4500007629395,
+    -62.4379997253418
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 34.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 24.75 m over what is under it]"
+  },
+  {
+   "at": [
+    -21.8780002593994,
+    9.44999980926514,
+    -72.072998046875
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 35.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 1.88 m over what is under it]"
+  },
+  {
+   "at": [
+    -27.8390007019043,
+    9.44999980926514,
+    -76.2799987792969
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 36.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 2.88 m over what is under it]"
+  },
+  {
+   "at": [
+    -25.1879997253418,
+    9.44999980926514,
+    -75.6760025024414
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 37.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 1.94 m over what is under it]"
+  },
+  {
+   "at": [
+    -21.5890007019043,
+    9.44999980926514,
+    -84.3840026855469
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 40.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 1.54 m over what is under it]"
+  },
+  {
+   "at": [
+    18.443000793457,
+    30.4500007629395,
+    -71.5139999389648
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 41.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 24.95 m over what is under it]"
+  },
+  {
+   "at": [
+    18.0100002288818,
+    30.4500007629395,
+    -64.0830001831055
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 42.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 25.14 m over what is under it]"
+  },
+  {
+   "at": [
+    18.69700050354,
+    30.4500007629395,
+    -60.8240013122559
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 43.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 24.83 m over what is under it]"
+  },
+  {
+   "at": [
+    21.6079998016357,
+    12.4499998092651,
+    -88.7170028686523
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 44.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 1.31 m over what is under it]"
+  },
+  {
+   "at": [
+    18.2740001678467,
+    12.4499998092651,
+    -87.4850006103516
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 45.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 2.51 m over what is under it]"
+  },
+  {
+   "at": [
+    19.2859992980957,
+    12.4499998092651,
+    -84.7620010375977
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 46.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 2.14 m over what is under it]"
+  },
+  {
+   "at": [
+    18.2849998474121,
+    12.4499998092651,
+    -80.8359985351563
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 47.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 2.50 m over what is under it]"
+  },
+  {
+   "at": [
+    -27.121000289917,
+    9.44999980926514,
+    -72.2089996337891
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 48.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 2.63 m over what is under it]"
+  },
+  {
+   "at": [
+    -25.6669998168945,
+    9.44999980926514,
+    -72.4189987182617
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 49.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 2.11 m over what is under it]"
+  },
+  {
+   "at": [
+    -18.3190002441406,
+    9.44999980926514,
+    -71.911003112793
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 50.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 2.40 m over what is under it]"
+  },
+  {
+   "at": [
+    -18.8339996337891,
+    9.44999980926514,
+    -78.6800003051758
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 51.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 2.19 m over what is under it]"
+  },
+  {
+   "at": [
+    -28.1770000457764,
+    9.44999980926514,
+    -82.9089965820313
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 52.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 9.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -20.423999786377,
+    9.44999980926514,
+    -82.9240036010742
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 53.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 1.68 m over what is under it]"
+  },
+  {
+   "at": [
+    -24.9750003814697,
+    9.44999980926514,
+    -85.7419967651367
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 54.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 2.06 m over what is under it]"
+  },
+  {
+   "at": [
+    18.4720001220703,
+    30.4500007629395,
+    -75.9720001220703
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 55.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 30.30 m over what is under it]"
+  },
+  {
+   "at": [
+    20.4190006256104,
+    30.4500007629395,
+    -66.6679992675781
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 56.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 24.06 m over what is under it]"
+  },
+  {
+   "at": [
+    18.246000289917,
+    30.4500007629395,
+    -66.0800018310547
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 57.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 25.07 m over what is under it]"
+  },
+  {
+   "at": [
+    18.0219993591309,
+    30.4500007629395,
+    -53.7550010681152
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 58.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 25.10 m over what is under it]"
+  },
+  {
+   "at": [
+    20.3369998931885,
+    12.4499998092651,
+    -92.7259979248047
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 59.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 1.79 m over what is under it]"
+  },
+  {
+   "at": [
+    19.1889991760254,
+    12.4499998092651,
+    -91.302001953125
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 60.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 2.18 m over what is under it]"
+  },
+  {
+   "at": [
+    19.5170001983643,
+    12.4499998092651,
+    -88.7160034179688
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 61.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 2.03 m over what is under it]"
+  },
+  {
+   "at": [
+    21.0559997558594,
+    12.4499998092651,
+    -85.3809967041016
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 62.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 1.50 m over what is under it]"
+  },
+  {
+   "at": [
+    -24.8610000610352,
+    9.44999980926514,
+    -82.995002746582
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 63.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 1.82 m over what is under it]"
+  },
+  {
+   "at": [
+    -19.3460006713867,
+    9.44999980926514,
+    -85.1579971313477
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 64.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 2.03 m over what is under it]"
+  },
+  {
+   "at": [
+    20.7180004119873,
+    30.4500007629395,
+    -62.4309997558594
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 65.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 23.92 m over what is under it]"
+  },
+  {
+   "at": [
+    18.0429992675781,
+    12.4499998092651,
+    -94.2259979248047
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 66.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 2.59 m over what is under it]"
+  },
+  {
+   "at": [
+    21.2740001678467,
+    12.4499998092651,
+    -81.9309997558594
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 67.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 1.43 m over what is under it]"
+  },
+  {
+   "at": [
+    -23.7509994506836,
+    9.44999980926514,
+    -84.9400024414063
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 68.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 1.77 m over what is under it]"
+  },
+  {
+   "at": [
+    20.3929996490479,
+    30.4500007629395,
+    -68.3789978027344
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 69.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 24.07 m over what is under it]"
+  },
+  {
+   "at": [
+    20.9549999237061,
+    30.4500007629395,
+    -65.1589965820313
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 70.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 23.86 m over what is under it]"
+  },
+  {
+   "at": [
+    20.1060009002686,
+    30.4500007629395,
+    -57.3019981384277
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 71.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 24.16 m over what is under it]"
+  },
+  {
+   "at": [
+    19.4729995727539,
+    12.4499998092651,
+    -82.0709991455078
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 72.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 2.04 m over what is under it]"
+  },
+  {
+   "at": [
+    -18.7189998626709,
+    9.44999980926514,
+    -76.9520034790039
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 73.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 2.26 m over what is under it]"
+  },
+  {
+   "at": [
+    27.7569999694824,
+    30.4500007629395,
+    -75.5930023193359
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 74.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 30.30 m over what is under it]"
+  },
+  {
+   "at": [
+    17.8729991912842,
+    30.4500007629395,
+    -55.7220001220703
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 75.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 25.20 m over what is under it]"
+  },
+  {
+   "at": [
+    27.8150005340576,
+    12.4499998092651,
+    -80.7740020751953
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 77.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 1.82 m over what is under it]"
+  },
+  {
+   "at": [
+    -24.1849994659424,
+    9.44999980926514,
+    -76.8610000610352
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 78.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 1.58 m over what is under it]"
+  },
+  {
+   "at": [
+    -21.4069995880127,
+    9.44999980926514,
+    -78.1750030517578
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 79.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 1.29 m over what is under it]"
+  },
+  {
+   "at": [
+    -27.7660007476807,
+    9.44999980926514,
+    -80.5879974365234
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 80.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 2.88 m over what is under it]"
+  },
+  {
+   "at": [
+    -18.8939990997314,
+    9.44999980926514,
+    -81.2470016479492
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 81.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 2.20 m over what is under it]"
+  },
+  {
+   "at": [
+    -27.2789993286133,
+    9.44999980926514,
+    -84.8270034790039
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 82.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 2.69 m over what is under it]"
+  },
+  {
+   "at": [
+    21.0739994049072,
+    30.4500007629395,
+    -59.435001373291
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 83.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 23.76 m over what is under it]"
+  },
+  {
+   "at": [
+    20.6760005950928,
+    12.4499998092651,
+    -80.6269989013672
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 84.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 1.64 m over what is under it]"
+  },
+  {
+   "at": [
+    -21.1639995574951,
+    9.44999980926514,
+    -80.4779968261719
+   ],
+   "base": "prop_vent_turbine",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 85.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_turbine hangs 1.38 m over what is under it]"
+  },
+  {
+   "at": [
+    26.1989994049072,
+    12.4499998092651,
+    -86.8479995727539
+   ],
+   "base": "prop_vent_turbine",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 86.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_turbine hangs 1.24 m over what is under it]"
+  },
+  {
+   "at": [
+    22.2000007629395,
+    45.4500007629395,
+    46.3000030517578
+   ],
+   "base": "prop_adirondack_white",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 88.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_adirondack_white hangs 45.30 m over what is under it]"
+  },
+  {
+   "at": [
+    -29.5,
+    12.4499998092651,
+    23.8850002288818
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 89.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 12.30 m over what is under it]"
+  },
+  {
+   "at": [
+    -18.4589996337891,
+    12.4499998092651,
+    22.7189998626709
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 90.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -18.0769996643066,
+    12.4499998092651,
+    14.3699998855591
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 91.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -39.8409996032715,
+    7.25,
+    36.7569999694824
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 92.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -36.9010009765625,
+    7.25,
+    33.7680015563965
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 93.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -28.7110004425049,
+    7.25,
+    33.5740013122559
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 94.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -22.1940002441406,
+    7.25,
+    33.4080009460449
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 95.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -40.1689987182617,
+    7.25,
+    31.992000579834
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 96.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -28.6569995880127,
+    7.25,
+    32.0439987182617
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 97.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -21.7509994506836,
+    7.25,
+    31.8549995422363
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 98.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -25.253999710083,
+    12.4499998092651,
+    21.6270008087158
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 99.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -28.0230007171631,
+    12.4499998092651,
+    18.181999206543
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 100.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 12.30 m over what is under it]"
+  },
+  {
+   "at": [
+    -23.875,
+    12.4499998092651,
+    15.9689998626709
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 101.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -39.6940002441406,
+    7.25,
+    33.7729988098145
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 102.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -34.7099990844727,
+    4.34999990463257,
+    14.9099998474121
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 103.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 4.20 m over what is under it]"
+  },
+  {
+   "at": [
+    -29.8990001678467,
+    12.4499998092651,
+    25.2369995117188
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 104.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 12.30 m over what is under it]"
+  },
+  {
+   "at": [
+    -27.4909992218018,
+    12.4499998092651,
+    25.9559993743896
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 105.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 12.30 m over what is under it]"
+  },
+  {
+   "at": [
+    -21.4939994812012,
+    12.4499998092651,
+    25.257999420166
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 106.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -18.4500007629395,
+    12.4499998092651,
+    25.6569995880127
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 107.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -20.4540004730225,
+    12.4499998092651,
+    23.681999206543
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 108.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -30.1140003204346,
+    12.4499998092651,
+    21.5890007019043
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 109.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 12.30 m over what is under it]"
+  },
+  {
+   "at": [
+    -28.2110004425049,
+    12.4499998092651,
+    21.1840000152588
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 110.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 12.30 m over what is under it]"
+  },
+  {
+   "at": [
+    -23.8490009307861,
+    12.4499998092651,
+    21.4829998016357
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 111.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 5.38 m over what is under it]"
+  },
+  {
+   "at": [
+    -29.6940002441406,
+    12.4499998092651,
+    18.9340000152588
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 112.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 12.30 m over what is under it]"
+  },
+  {
+   "at": [
+    -21.4589996337891,
+    12.4499998092651,
+    18.496000289917
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 113.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -18.9200000762939,
+    12.4499998092651,
+    16.9459991455078
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 114.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -25.9409999847412,
+    12.4499998092651,
+    11.7959995269775
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 115.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -21.2329998016357,
+    12.4499998092651,
+    12.9680004119873
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 116.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -19.5939998626709,
+    12.4499998092651,
+    11.6540002822876
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 117.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -34.4029998779297,
+    7.25,
+    33.5970001220703
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 118.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -20.5520000457764,
+    7.25,
+    33.5509986877441
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 119.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -36.8709983825684,
+    7.25,
+    31.5459995269775
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 120.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -33.1349983215332,
+    7.25,
+    31.7490005493164
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 121.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -30.1399993896484,
+    7.25,
+    32.0629997253418
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 122.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -25.8889999389648,
+    7.25,
+    31.5930004119873
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 123.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -34.576000213623,
+    4.34999990463257,
+    16.617000579834
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 124.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 4.20 m over what is under it]"
+  },
+  {
+   "at": [
+    -36.1479988098145,
+    4.34999990463257,
+    12.3299999237061
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 125.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 4.20 m over what is under it]"
+  },
+  {
+   "at": [
+    -40.0950012207031,
+    4.34999990463257,
+    16.5739994049072
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 126.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 4.20 m over what is under it]"
+  },
+  {
+   "at": [
+    -24.875,
+    12.4499998092651,
+    25.0629997253418
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 127.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -23.6119995117188,
+    12.4499998092651,
+    23.4409999847412
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 128.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -21.2600002288818,
+    12.4499998092651,
+    16.5100002288818
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 129.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -24.92799949646,
+    12.4499998092651,
+    14.1549997329712
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 130.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -22.4009990692139,
+    12.4499998092651,
+    11.8420000076294
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 131.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -36.7190017700195,
+    4.34999990463257,
+    16.9610004425049
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 132.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 4.20 m over what is under it]"
+  },
+  {
+   "at": [
+    -42.5200004577637,
+    7.25,
+    33.5270004272461
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 133.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -38.8120002746582,
+    4.34999990463257,
+    15.8660001754761
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 134.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 4.20 m over what is under it]"
+  },
+  {
+   "at": [
+    -29.8479995727539,
+    12.4499998092651,
+    14.1879997253418
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 135.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 12.30 m over what is under it]"
+  },
+  {
+   "at": [
+    -19.6709995269775,
+    7.25,
+    37.9589996337891
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 136.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -20.2089996337891,
+    7.25,
+    36.2249984741211
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 137.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -26.1889991760254,
+    7.25,
+    34.1150016784668
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 138.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -42.056999206543,
+    7.25,
+    31.3560009002686
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 139.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -35.4640007019043,
+    7.25,
+    31.2220001220703
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 140.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -23.9740009307861,
+    7.25,
+    31.7159996032715
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 141.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -38.4389991760254,
+    4.34999990463257,
+    19.8449993133545
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 142.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 4.20 m over what is under it]"
+  },
+  {
+   "at": [
+    -38.548999786377,
+    4.34999990463257,
+    17.4209995269775
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 143.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 4.20 m over what is under it]"
+  },
+  {
+   "at": [
+    -40.3759994506836,
+    4.34999990463257,
+    18.8519992828369
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 144.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 4.20 m over what is under it]"
+  },
+  {
+   "at": [
+    -40.7729988098145,
+    4.34999990463257,
+    14.8400001525879
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 145.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 4.20 m over what is under it]"
+  },
+  {
+   "at": [
+    -20.2880001068115,
+    12.4499998092651,
+    20.7250003814697
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 146.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -24.1480007171631,
+    7.25,
+    35.382999420166
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 147.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -32.3899993896484,
+    7.25,
+    34.0229988098145
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 148.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -18.7569999694824,
+    12.4499998092651,
+    20.5820007324219
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 149.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -30.2980003356934,
+    12.4499998092651,
+    16.2240009307861
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 150.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 12.30 m over what is under it]"
+  },
+  {
+   "at": [
+    -28.2569999694824,
+    12.4499998092651,
+    12.8889999389648
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 151.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 12.30 m over what is under it]"
+  },
+  {
+   "at": [
+    -28.9650001525879,
+    7.25,
+    36.3139991760254
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 152.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -34.4210014343262,
+    4.34999990463257,
+    12.7399997711182
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 153.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 4.20 m over what is under it]"
+  },
+  {
+   "at": [
+    -35.9609985351563,
+    4.34999990463257,
+    19.7110004425049
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 154.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 4.20 m over what is under it]"
+  },
+  {
+   "at": [
+    -38.7470016479492,
+    4.34999990463257,
+    12.8269996643066
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 155.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 4.20 m over what is under it]"
+  },
+  {
+   "at": [
+    -27.2210006713867,
+    12.4499998092651,
+    15.16100025177
+   ],
+   "base": "prop_vent_turbine",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 156.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_turbine hangs 5.13 m over what is under it]"
+  },
+  {
+   "at": [
+    -23.1079998016357,
+    12.4499998092651,
+    19.6000003814697
+   ],
+   "base": "prop_vent_turbine",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 157.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_turbine hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -25.8680000305176,
+    12.4499998092651,
+    16.4050006866455
+   ],
+   "base": "prop_vent_turbine",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 158.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_turbine hangs 6.00 m over what is under it]"
+  },
+  {
+   "at": [
+    19.931999206543,
+    30.5900001525879,
+    75.7020034790039
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 159.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 20.07 m over what is under it]"
+  },
+  {
+   "at": [
+    18.3799991607666,
+    30.5900001525879,
+    83.1689987182617
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 160.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -22.5900001525879,
+    7.25,
+    72.8919982910156
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 161.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -23.9200000762939,
+    7.25,
+    71.8359985351563
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 162.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -30.5809993743896,
+    7.25,
+    68.4039993286133
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 163.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -41.1570014953613,
+    7.25,
+    65.2089996337891
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 164.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -35.2919998168945,
+    7.25,
+    64.1330032348633
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 165.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -22.2670001983643,
+    7.25,
+    62.2109985351563
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 166.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -39.0379981994629,
+    7.25,
+    53.2750015258789
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 168.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -42.1599998474121,
+    7.25,
+    51.9150009155273
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 169.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -41.8089981079102,
+    7.25,
+    41.9710006713867
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 171.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -36.8639984130859,
+    7.25,
+    73.9980010986328
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 172.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -31.5200004577637,
+    7.25,
+    71.7559967041016
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 173.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -32.7890014648438,
+    7.25,
+    68.3349990844727
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 174.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -24.3449993133545,
+    7.25,
+    68.5469970703125
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 175.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -22.5709991455078,
+    7.25,
+    68.6149978637695
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 176.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -40.1100006103516,
+    7.25,
+    67.3050003051758
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 177.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -28.7849998474121,
+    7.25,
+    61.8839988708496
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 178.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -41.6780014038086,
+    7.25,
+    60.1650009155273
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 179.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -37.201000213623,
+    7.25,
+    60.4410018920898
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 180.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -33.2220001220703,
+    7.25,
+    60.4700012207031
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 181.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -30.3330001831055,
+    7.25,
+    58.4109992980957
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 182.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -40.0229988098145,
+    7.25,
+    55.7770004272461
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 183.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -32.8269996643066,
+    7.25,
+    55.2000007629395
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 184.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -33.390998840332,
+    7.25,
+    48.5029983520508
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 186.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -41.5340003967285,
+    7.25,
+    39.9339981079102
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 188.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -21.5149993896484,
+    7.25,
+    40.7700004577637
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 189.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    19.9820003509521,
+    30.5900001525879,
+    77.6859970092773
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 190.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    19.996000289917,
+    30.5900001525879,
+    87.0459976196289
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 191.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -42.0690002441406,
+    7.25,
+    73.8359985351563
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 192.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -41.1780014038086,
+    7.25,
+    72.0459976196289
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 193.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -27.9449996948242,
+    7.25,
+    72.0260009765625
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 194.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -19.4839992523193,
+    7.25,
+    70.7969970703125
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 195.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -29.1119995117188,
+    7.25,
+    68.5920028686523
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 196.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -42.1980018615723,
+    7.25,
+    67.6999969482422
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 197.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -28.0020008087158,
+    7.25,
+    67.3720016479492
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 198.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -26.4009990692139,
+    7.25,
+    66.8830032348633
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 199.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -27.9580001831055,
+    7.25,
+    65.2160034179688
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 200.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -39.7509994506836,
+    7.25,
+    62.3009986877441
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 201.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -24.0109996795654,
+    7.25,
+    62.0299987792969
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 202.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -19.3589992523193,
+    7.25,
+    62.8440017700195
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 203.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -28.82200050354,
+    7.25,
+    59.9000015258789
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 204.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -20.0130004882813,
+    7.25,
+    61.0559997558594
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 205.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -41.3460006713867,
+    7.25,
+    57.3129997253418
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 206.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -35.7919998168945,
+    7.25,
+    58.4679985046387
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 207.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -30.826000213623,
+    7.25,
+    55.1860008239746
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 209.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -40.1290016174316,
+    7.25,
+    52.1769981384277
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 212.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -37.5870018005371,
+    7.25,
+    51.625
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 213.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -39.4910011291504,
+    7.25,
+    49.2830009460449
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 214.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -30.5849990844727,
+    7.25,
+    48.6080017089844
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 215.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -33.0670013427734,
+    7.25,
+    46.8250007629395
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 216.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -35.6839981079102,
+    7.25,
+    44.7299995422363
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 217.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -30.3390007019043,
+    7.25,
+    42.0839996337891
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 218.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -38.9539985656738,
+    7.25,
+    40.8009986877441
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 219.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -39.5699996948242,
+    7.25,
+    38.439998626709
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 220.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -37.5330009460449,
+    7.25,
+    38.2410011291504
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 221.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -35.6969985961914,
+    7.25,
+    38.2630004882813
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 222.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -32.423999786377,
+    7.25,
+    37.9480018615723
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 223.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -28.3619995117188,
+    7.25,
+    38.7169990539551
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 224.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -23.6319999694824,
+    7.25,
+    37.5219993591309
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 225.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -30.798999786377,
+    7.25,
+    36.1030006408691
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 226.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    17.7490005493164,
+    30.5900001525879,
+    78.3659973144531
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 227.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    18.4400005340576,
+    30.5900001525879,
+    86.5699996948242
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 228.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -21.8780002593994,
+    7.25,
+    71.4059982299805
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 229.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -26.4389991760254,
+    7.25,
+    69.0970001220703
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 230.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -33.5499992370605,
+    7.25,
+    66.8249969482422
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 231.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -30.9009990692139,
+    7.25,
+    66.2080001831055
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 232.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -22.4950008392334,
+    7.25,
+    67.1520004272461
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 233.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -21.4360008239746,
+    7.25,
+    64.2570037841797
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 234.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -37.6110000610351,
+    7.25,
+    62.9589996337891
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 235.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -42.2809982299805,
+    7.25,
+    55.4220008850098
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 236.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -35.2229995727539,
+    7.25,
+    48.6599998474121
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 237.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -41.867000579834,
+    7.25,
+    44.882999420166
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 240.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -30.3169994354248,
+    7.25,
+    44.7620010375977
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 241.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -40.3240013122559,
+    7.25,
+    42.1790008544922
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 242.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -32.5789985656738,
+    7.25,
+    40.1080017089844
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 243.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -22.0219993591309,
+    7.25,
+    38.3330001831055
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 244.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -41.0880012512207,
+    7.25,
+    35.8810005187988
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 245.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -26.2999992370605,
+    7.25,
+    36.3549995422363
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 246.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -22.6720008850098,
+    7.25,
+    36.1370010375977
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 247.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    18.9769992828369,
+    30.5900001525879,
+    81.0770034790039
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 248.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -24.2509994506836,
+    7.25,
+    73.4990005493164
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 249.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -30.7679996490479,
+    7.25,
+    64.427001953125
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 250.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -19.8719997406006,
+    7.25,
+    65.0719985961914
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 251.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -41.298999786377,
+    7.25,
+    62.1419982910156
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 252.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -37.5169982910156,
+    7.25,
+    42.4189987182617
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 255.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -20.4629993438721,
+    7.25,
+    42.2999992370605
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 256.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -33.1119995117188,
+    7.25,
+    35.5789985656738
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 257.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    20.5130004882813,
+    30.5900001525879,
+    84.8259963989258
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 258.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -19.9209995269775,
+    7.25,
+    73.3730010986328
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 259.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -37.1259994506836,
+    7.25,
+    71.9380035400391
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 260.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -35.3800010681152,
+    7.25,
+    70.5810012817383
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 261.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -39.2470016479492,
+    7.25,
+    69.6460037231445
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 262.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -32.9669990539551,
+    7.25,
+    64.5429992675781
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 263.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -33.6629981994629,
+    7.25,
+    62.9980010986328
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 264.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -35.9860000610352,
+    7.25,
+    55.7430000305176
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 266.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -35.9539985656738,
+    7.25,
+    53.9169998168945
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 267.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -33.0190010070801,
+    7.25,
+    53.6780014038086
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 268.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -30.1350002288818,
+    7.25,
+    53.1459999084473
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 269.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -41.9469985961914,
+    7.25,
+    46.3699989318848
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 270.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -34.7890014648438,
+    7.25,
+    47.0870018005371
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 271.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -31.2199993133545,
+    7.25,
+    46.3359985351563
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 272.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -35.7410011291504,
+    7.25,
+    42.7649993896484
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 273.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    24.4160003662109,
+    30.5900001525879,
+    75.3970031738281
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 274.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 30.44 m over what is under it]"
+  },
+  {
+   "at": [
+    25.7189998626709,
+    30.5900001525879,
+    84.0039978027344
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 275.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -19.3040008544922,
+    7.25,
+    66.8539962768555
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 276.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -31.30299949646,
+    7.25,
+    62.9199981689453
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 277.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -34.8930015563965,
+    7.25,
+    60.923999786377
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 278.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -30.7329998016357,
+    7.25,
+    60.185001373291
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 279.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -32.9700012207031,
+    7.25,
+    57.4599990844727
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 280.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -35.8170013427734,
+    7.25,
+    51.4249992370605
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 281.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -32.7830009460449,
+    7.25,
+    51.0379981994629
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 282.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -34.8839988708496,
+    7.25,
+    40.9519996643066
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 285.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -28.5629997253418,
+    7.25,
+    40.273998260498
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 286.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    20.548999786377,
+    30.5900001525879,
+    80.7190017700195
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 287.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    -39.0519981384277,
+    7.25,
+    73.5250015258789
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 288.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -34.4119987487793,
+    7.25,
+    73.2160034179688
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 289.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -32.7980003356934,
+    7.25,
+    73.2259979248047
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 290.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -30.371000289917,
+    7.25,
+    72.802001953125
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 291.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -25.7919998168945,
+    7.25,
+    71.6559982299805
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 292.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -42.4939994812012,
+    7.25,
+    69.1490020751953
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 293.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -37.6769981384277,
+    7.25,
+    65.4609985351563
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 294.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -41.890998840332,
+    7.25,
+    48.9230003356934
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 295.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    -33.3800010681152,
+    7.25,
+    43.4519996643066
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 299.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 7.10 m over what is under it]"
+  },
+  {
+   "at": [
+    29.6229991912842,
+    30.4500007629395,
+    -73.9749984741211
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 300.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 24.61 m over what is under it]"
+  },
+  {
+   "at": [
+    23.1639995574951,
+    12.4499998092651,
+    -80.1520004272461
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 302.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 1.57 m over what is under it]"
+  },
+  {
+   "at": [
+    32.4790000915527,
+    30.4500007629395,
+    -68.806999206543
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 303.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 30.30 m over what is under it]"
+  },
+  {
+   "at": [
+    29.2530002593994,
+    30.4500007629395,
+    -67.2239990234375
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 304.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 24.41 m over what is under it]"
+  },
+  {
+   "at": [
+    25.7700004577637,
+    34.5499992370605,
+    -63.7169990539551
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 305.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 26.94 m over what is under it]"
+  },
+  {
+   "at": [
+    25.923999786377,
+    34.5499992370605,
+    -60.5270004272461
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 306.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 27.01 m over what is under it]"
+  },
+  {
+   "at": [
+    22.8719997406006,
+    30.4500007629395,
+    -57.5629997253418
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 307.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 22.96 m over what is under it]"
+  },
+  {
+   "at": [
+    29.5200004577637,
+    12.4499998092651,
+    -90.5169982910156
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 308.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 2.43 m over what is under it]"
+  },
+  {
+   "at": [
+    28.2220001220703,
+    12.4499998092651,
+    -86.4339981079102
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 309.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 1.96 m over what is under it]"
+  },
+  {
+   "at": [
+    29.0769996643066,
+    12.4499998092651,
+    -82.2979965209961
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 310.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 2.27 m over what is under it]"
+  },
+  {
+   "at": [
+    31.3969993591309,
+    30.4500007629395,
+    -75.620002746582
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 311.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 30.30 m over what is under it]"
+  },
+  {
+   "at": [
+    25.2490005493164,
+    30.4500007629395,
+    -75.1179962158203
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 312.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 30.30 m over what is under it]"
+  },
+  {
+   "at": [
+    22.5510005950928,
+    30.4500007629395,
+    -75.0500030517578
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 313.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 23.10 m over what is under it]"
+  },
+  {
+   "at": [
+    32.4140014648438,
+    30.4500007629395,
+    -67.359001159668
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 314.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 30.30 m over what is under it]"
+  },
+  {
+   "at": [
+    26.8090000152588,
+    34.5499992370605,
+    -65.1729965209961
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 315.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 27.44 m over what is under it]"
+  },
+  {
+   "at": [
+    26.9459991455078,
+    30.4500007629395,
+    -55.314998626709
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 316.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 23.37 m over what is under it]"
+  },
+  {
+   "at": [
+    32.2980003356934,
+    30.4500007629395,
+    -53.4189987182617
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 317.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 30.30 m over what is under it]"
+  },
+  {
+   "at": [
+    25.0,
+    30.4500007629395,
+    -52.7890014648438
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 318.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 22.46 m over what is under it]"
+  },
+  {
+   "at": [
+    30.181999206543,
+    12.4499998092651,
+    -93.7050018310547
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 319.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 2.70 m over what is under it]"
+  },
+  {
+   "at": [
+    30.3939990997314,
+    12.4499998092651,
+    -87.3160018920898
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 320.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 2.72 m over what is under it]"
+  },
+  {
+   "at": [
+    29.492000579834,
+    12.4499998092651,
+    -85.3970031738281
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 321.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 2.45 m over what is under it]"
+  },
+  {
+   "at": [
+    27.242000579834,
+    12.4499998092651,
+    -85.2509994506836
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 322.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 1.64 m over what is under it]"
+  },
+  {
+   "at": [
+    25.1389999389648,
+    30.4500007629395,
+    -72.7269973754883
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 324.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 22.56 m over what is under it]"
+  },
+  {
+   "at": [
+    24.6700000762939,
+    30.4500007629395,
+    -70.9980010986328
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 325.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 22.34 m over what is under it]"
+  },
+  {
+   "at": [
+    22.5930004119873,
+    30.4500007629395,
+    -71.7710037231445
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 326.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 23.08 m over what is under it]"
+  },
+  {
+   "at": [
+    31.0970001220703,
+    30.4500007629395,
+    -61.8919982910156
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 327.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 25.24 m over what is under it]"
+  },
+  {
+   "at": [
+    27.5410003662109,
+    34.5499992370605,
+    -61.5340003967285
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 328.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 27.74 m over what is under it]"
+  },
+  {
+   "at": [
+    29.3409996032715,
+    30.4500007629395,
+    -57.7900009155273
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 329.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 24.45 m over what is under it]"
+  },
+  {
+   "at": [
+    25.3519992828369,
+    12.4499998092651,
+    -93.8809967041016
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 330.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 1.77 m over what is under it]"
+  },
+  {
+   "at": [
+    23.746000289917,
+    12.4499998092651,
+    -93.6630020141602
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 331.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 1.69 m over what is under it]"
+  },
+  {
+   "at": [
+    29.628999710083,
+    12.4499998092651,
+    -88.6370010375977
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 332.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 2.47 m over what is under it]"
+  },
+  {
+   "at": [
+    26.6019992828369,
+    30.4500007629395,
+    -73.6719970703125
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 334.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 23.25 m over what is under it]"
+  },
+  {
+   "at": [
+    24.4979991912842,
+    30.4500007629395,
+    -69.0920028686523
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 335.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 22.27 m over what is under it]"
+  },
+  {
+   "at": [
+    27.4029998779297,
+    12.4499998092651,
+    -93.8809967041016
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 336.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 1.74 m over what is under it]"
+  },
+  {
+   "at": [
+    31.5230007171631,
+    30.4500007629395,
+    -64.056999206543
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 337.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 25.39 m over what is under it]"
+  },
+  {
+   "at": [
+    31.5590000152588,
+    30.4500007629395,
+    -56.3819999694824
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 338.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 25.41 m over what is under it]"
+  },
+  {
+   "at": [
+    29.8810005187988,
+    30.4500007629395,
+    -56.492000579834
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 339.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 24.73 m over what is under it]"
+  },
+  {
+   "at": [
+    24.8770008087158,
+    30.4500007629395,
+    -55.0960006713867
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 340.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 22.47 m over what is under it]"
+  },
+  {
+   "at": [
+    26.8330001831055,
+    12.4499998092651,
+    -88.7490005493164
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 341.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 1.46 m over what is under it]"
+  },
+  {
+   "at": [
+    32.4529991149902,
+    30.4500007629395,
+    -57.5950012207031
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 342.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 30.30 m over what is under it]"
+  },
+  {
+   "at": [
+    30.4340000152588,
+    12.4499998092651,
+    -80.5410003662109
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 343.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 2.76 m over what is under it]"
+  },
+  {
+   "at": [
+    22.746000289917,
+    30.5900001525879,
+    87.620002746582
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 344.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 20.07 m over what is under it]"
+  },
+  {
+   "at": [
+    22.5310001373291,
+    30.5900001525879,
+    76.4240036010742
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 345.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    29.9969997406006,
+    30.5900001525879,
+    78.3249969482422
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 346.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 20.07 m over what is under it]"
+  },
+  {
+   "at": [
+    24.7900009155273,
+    30.5900001525879,
+    77.427001953125
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 347.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    29.6609992980957,
+    30.5900001525879,
+    85.4830017089844
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 348.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    33.375,
+    30.5900001525879,
+    87.6689987182617
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 349.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 30.44 m over what is under it]"
+  },
+  {
+   "at": [
+    33.1510009765625,
+    30.5900001525879,
+    75.9020004272461
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 350.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 30.44 m over what is under it]"
+  },
+  {
+   "at": [
+    23.0200004577637,
+    30.5900001525879,
+    78.2730026245117
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 351.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    26.6100006103516,
+    30.5900001525879,
+    79.9800033569336
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 352.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    22.7549991607666,
+    30.5900001525879,
+    80.7570037841797
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 353.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    23.2849998474121,
+    30.5900001525879,
+    82.9779968261719
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 354.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    26.8980007171631,
+    30.5900001525879,
+    85.072998046875
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 355.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    31.2919998168945,
+    30.5900001525879,
+    87.4619979858398
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 356.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 30.44 m over what is under it]"
+  },
+  {
+   "at": [
+    24.9050006866455,
+    30.5900001525879,
+    86.5920028686523
+   ],
+   "base": "prop_ac_condenser",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 357.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    27.6669998168945,
+    30.5900001525879,
+    76.1650009155273
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 358.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    31.8490009307861,
+    30.5900001525879,
+    80.9290008544922
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 359.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 30.44 m over what is under it]"
+  },
+  {
+   "at": [
+    22.3920001983643,
+    30.5900001525879,
+    85.1750030517578
+   ],
+   "base": "prop_vent_plumbing",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 360.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_plumbing hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    27.7180004119873,
+    30.5900001525879,
+    78.6139984130859
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 361.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    31.367000579834,
+    30.5900001525879,
+    84.1880035400391
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 362.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 30.29 m over what is under it]"
+  },
+  {
+   "at": [
+    34.3300018310547,
+    30.5900001525879,
+    79.7580032348633
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 363.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 30.44 m over what is under it]"
+  },
+  {
+   "at": [
+    25.173999786377,
+    30.5900001525879,
+    81.0070037841797
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 364.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    34.2529983520508,
+    30.5900001525879,
+    82.6849975585938
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 365.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 30.44 m over what is under it]"
+  },
+  {
+   "at": [
+    32.1380004882813,
+    30.5900001525879,
+    82.6989974975586
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 366.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 30.44 m over what is under it]"
+  },
+  {
+   "at": [
+    29.6000003814697,
+    30.5900001525879,
+    82.1129989624023
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 367.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    26.4340000152588,
+    30.5900001525879,
+    81.870002746582
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 368.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    27.9080009460449,
+    30.5900001525879,
+    86.6859970092773
+   ],
+   "base": "prop_ac_condenser_compact",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 369.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_ac_condenser_compact hangs 21.00 m over what is under it]"
+  },
+  {
+   "at": [
+    29.8470001220703,
+    30.5900001525879,
+    76.2360000610352
+   ],
+   "base": "prop_vent_box",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "in_air",
+   "mode": "choose",
+   "n": 370.0,
+   "op": "remove",
+   "reason": "erased (in doubt): in_air: no plainly safe place (Yasin: delete when unsure) [prop_vent_box hangs 20.07 m over what is under it]"
+  },
+  {
+   "at": [
+    -32.0200004577637,
+    1.19999384880066,
+    26.1000022888184
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 371.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -32.0200004577637,
+    1.19999384880066,
+    25.6800003051758
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 372.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -32.0200004577637,
+    1.19999384880066,
+    25.2600021362305
+   ],
+   "base": "prop_meter_electric",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 373.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_electric is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -32.0200004577637,
+    0.349993884563446,
+    24.4000015258789
+   ],
+   "base": "prop_meter_gas",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 374.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_meter_gas is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -30.1200008392334,
+    2.24999380111694,
+    -85.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 376.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_ac_window is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -30.1200008392334,
+    8.2499942779541,
+    -85.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 377.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_ac_window is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -30.1200008392334,
+    8.24996376037598,
+    -76.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 378.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_ac_window is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -30.1200008392334,
+    2.24996328353882,
+    -73.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 379.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_ac_window is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -30.1200008392334,
+    5.24996328353882,
+    -73.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 380.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_ac_window is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -31.8798999786377,
+    5.24999380111694,
+    -71.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 385.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    -31.8798999786377,
+    8.24996376037598,
+    -74.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 387.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    -31.8798999786377,
+    8.2499942779541,
+    -80.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 390.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    -31.8798999786377,
+    5.24999380111694,
+    -83.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 392.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    -31.8798999786377,
+    8.2499942779541,
+    -83.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 394.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    -37.0,
+    8.2499942779541,
+    -87.820198059082
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 397.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    -30.1200008392334,
+    5.24999380111694,
+    -79.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 400.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_ac_window is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -30.1200008392334,
+    8.24996376037598,
+    -73.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 401.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_ac_window is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -42.0,
+    5.24999380111694,
+    -69.5800933837891
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 409.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    21.0,
+    2.25002431869507,
+    -77.7001953125
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 412.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_ac_window is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -32.1200981140137,
+    11.2499942779541,
+    17.7000007629395
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 414.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of ck_svc_cinema_fast]"
+  },
+  {
+   "at": [
+    -32.0200996398926,
+    11.2499942779541,
+    20.7000007629395
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 415.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of ck_svc_cinema_fast]"
+  },
+  {
+   "at": [
+    -24.0,
+    8.2499942779541,
+    9.6800012588501
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 417.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of urb_brick_corner]"
+  },
+  {
+   "at": [
+    -30.0,
+    2.24999380111694,
+    9.58010101318359
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 420.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_ac_window is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -30.0000019073486,
+    8.2499942779541,
+    27.8201999664307
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 421.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_ac_window is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -24.0000019073486,
+    11.2499942779541,
+    27.7201023101807
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 424.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of urb_brick_corner]"
+  },
+  {
+   "at": [
+    -32.1200981140137,
+    11.2499942779541,
+    11.7000007629395
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 426.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of ck_svc_cinema_fast]"
+  },
+  {
+   "at": [
+    -32.1200981140137,
+    11.249963760376,
+    14.7000007629395
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 427.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of ck_svc_cinema_fast]"
+  },
+  {
+   "at": [
+    -18.0,
+    11.2499942779541,
+    9.58010101318359
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 428.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of urb_brick_corner]"
+  },
+  {
+   "at": [
+    -21.0,
+    11.2499942779541,
+    9.58010101318359
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 430.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of urb_brick_corner]"
+  },
+  {
+   "at": [
+    -27.0,
+    11.2499942779541,
+    9.58010101318359
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 433.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of urb_brick_corner]"
+  },
+  {
+   "at": [
+    -30.0,
+    11.2499942779541,
+    9.58010101318359
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 435.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_ac_window is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    -30.0000019073486,
+    11.2499942779541,
+    27.8201999664307
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 436.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_ac_window is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    32.1200981140137,
+    5.24999380111694,
+    -79.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 438.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    32.1200981140137,
+    11.2499942779541,
+    -82.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 440.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    32.1200981140137,
+    8.2499942779541,
+    -85.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 443.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    32.1200981140137,
+    11.2499942779541,
+    -85.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 445.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    32.0200996398926,
+    5.24999380111694,
+    -88.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 447.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    32.1200981140137,
+    5.24999380111694,
+    -91.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 448.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    24.0,
+    5.25002431869507,
+    -77.6799926757813
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 450.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_ac_window is a wall item with no wall behind it]"
+  },
+  {
+   "at": [
+    31.8798999786377,
+    5.24999380111694,
+    -93.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 455.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    31.8798999786377,
+    5.24999380111694,
+    -87.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 458.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    31.8798999786377,
+    8.2499942779541,
+    -87.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 460.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    31.8798999786377,
+    5.24999380111694,
+    -81.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 462.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    34.0,
+    8.25002479553223,
+    -77.5797958374023
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "worn",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 464.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    32.1200981140137,
+    5.24999380111694,
+    -82.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 466.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    32.1200981140137,
+    8.2499942779541,
+    -82.6999969482422
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "over_roof",
+   "mode": "choose",
+   "n": 467.0,
+   "op": "remove",
+   "reason": "erased (in doubt): over_roof: no plainly safe place (Yasin: delete when unsure) [prop_ac_window hangs above the roof line of mod_apt_row]"
+  },
+  {
+   "at": [
+    24.0,
+    2.25002431869507,
+    -77.7001953125
+   ],
+   "base": "prop_ac_window",
+   "chosen": true,
+   "cond": "rusty",
+   "kind": "no_wall",
+   "mode": "choose",
+   "n": 468.0,
+   "op": "remove",
+   "reason": "erased (in doubt): no_wall: no plainly safe place (Yasin: delete when unsure) [prop_ac_window is a wall item with no wall behind it]"
+  }
+ ],
+ "scene": "d_cc"
+}
