@@ -1,5 +1,6 @@
 // See trav_character.h. Translated from traversal_lab/traversal/character/character.gd, in the script's order.
 #include "trav_character.h"
+#include "trav_body.h"
 #include "trav_probe.h"
 
 #include "trav_foot_place.h"
@@ -212,6 +213,7 @@ bool TravCharacter::_set(const StringName &p_name, const Variant &p_value) {
 	String n = p_name;
 	if (n == "body") {
 		body = Object::cast_to<CharacterBody3D>((Object *)p_value);
+		_tb = Object::cast_to<TravBody>(body);      // (28 Nov: its fields read directly, not by name; null for a script body: by name as before)
 		return true;
 	}
 	if (n == "model_path") {
@@ -765,12 +767,12 @@ double TravCharacter::_phase_offset(const String &n) {
 }
 
 void TravCharacter::_on_jump_started(double push) {
-	_jump_still = (bool)body->get("_jump_still");
+	_jump_still = (_tb ? (bool)_tb->_jump_still : (bool)body->get("_jump_still"));
 	_jump = _jump_still ? &JUMP : &RUN_JUMP;
 	_jump_e = 0.0;
 	_jump_y0 = D(body->get_global_position().y);
-	double rise = _jump_still ? (double)body->get("JUMP_RISE") : (double)body->get("JUMP_RISE_RUN");
-	_flight = 2.0 * std::sqrt(2.0 * rise / (double)body->get("GRAVITY"));
+	double rise = _jump_still ? (_tb ? (double)_tb->JUMP_RISE : (double)body->get("JUMP_RISE")) : (_tb ? (double)_tb->JUMP_RISE_RUN : (double)body->get("JUMP_RISE_RUN"));
+	_flight = 2.0 * std::sqrt(2.0 * rise / (_tb ? (double)_tb->GRAVITY : (double)body->get("GRAVITY")));
 	_set_mode("jump");
 	_show(_jump_still ? "jump" : "run_jump", 0.0);
 }
@@ -832,15 +834,15 @@ void TravCharacter::_physics_process(double dt) {
 	if (body == nullptr) {
 		return;
 	}
-	bool in_air = (int)(int64_t)body->get("state") >= 2;
-	double speed = D(((Vector3)body->get("hvel")).length());
+	bool in_air = (_tb ? (int)_tb->state : (int)(int64_t)body->get("state")) >= 2;
+	double speed = D(((_tb ? _tb->hvel : (Vector3)body->get("hvel"))).length());
 	_mode_t += dt;
 	_settled += dt;
 	_measure(dt);
 	double lead = _lead_now();
 	_lead_rising = lead > _lead_last;
 	_lead_last = lead;
-	if ((bool)body->call("in_move")) {
+	if ((_tb ? _tb->in_move() : (bool)body->call("in_move"))) {
 		if (_mode != "move") {
 			_set_mode("move");
 			_sub = "";
@@ -848,9 +850,9 @@ void TravCharacter::_physics_process(double dt) {
 			_stair_on = false;
 			_steep_on = false;
 		}
-		_show((String)body->get("move_clip"), (double)body->get("move_clip_t"));
-		_soft = (double)body->get("move_soft");
-		landing_kind = (bool)body->get("move_landed") ? (String)body->get("move_landing") : String("");
+		_show((_tb ? (String)_tb->move_clip : (String)body->get("move_clip")), (_tb ? (double)_tb->move_clip_t : (double)body->get("move_clip_t")));
+		_soft = (_tb ? (double)_tb->move_soft : (double)body->get("move_soft"));
+		landing_kind = (_tb ? (bool)_tb->move_landed : (bool)body->get("move_landed")) ? (_tb ? (String)_tb->move_landing : (String)body->get("move_landing")) : String("");
 	} else if (_mode == "move") {
 		_set_mode("ground");
 		_to_loops();
@@ -863,10 +865,10 @@ void TravCharacter::_physics_process(double dt) {
 		tree->set(StringName(vformat("parameters/hold_%s/seek_request", SOFTEN_KEY[k])), SOFTEN_AT[k]);
 	}
 	if (_mode == "ground") {
-		int st = (int)(int64_t)body->get("stairs");
-		double wish = D(((Vector3)body->get("_wish")).length());
-		bool low = (bool)body->get("crouched");
-		bool plain = !in_air && st == 0 && (int)(int64_t)body->get("terrain") == 0 && !low && (int)(int64_t)body->get("narrow") == 0 && (int)(int64_t)body->get("squeeze") < 2;
+		int st = (_tb ? (int)_tb->stairs : (int)(int64_t)body->get("stairs"));
+		double wish = D(((_tb ? _tb->_wish : (Vector3)body->get("_wish"))).length());
+		bool low = (_tb ? (bool)_tb->crouched : (bool)body->get("crouched"));
+		bool plain = !in_air && st == 0 && (_tb ? (int)_tb->terrain : (int)(int64_t)body->get("terrain")) == 0 && !low && (_tb ? (int)_tb->narrow : (int)(int64_t)body->get("narrow")) == 0 && (_tb ? (int)_tb->squeeze : (int)(int64_t)body->get("squeeze")) < 2;
 		if (low != _low_was) {
 			_low_was = low;
 			if (speed < 0.3 && !in_air && !_stair_on && !_steep_on && (_act == "ground" || _sub == "crouch")) {
@@ -914,9 +916,9 @@ void TravCharacter::_physics_process(double dt) {
 		} else if (_sub != "") {
 			_start_or_stop(dt, speed, wish);
 		} else if (plain && _act == "ground" && !_stair_on && !_steep_on) {
-			double spot = (double)body->get("spot_total");
+			double spot = (_tb ? (double)_tb->spot_total : (double)body->get("spot_total"));
 			if (spot != 0.0) {
-				String kind = (bool)body->get("spot_run") ? "turn_180_run" : (absf(spot) > deg_to_rad(TURN_BIG_DEG) ? "turn_180_walk" : "turn_90");
+				String kind = (_tb ? (bool)_tb->spot_run : (bool)body->get("spot_run")) ? "turn_180_run" : (absf(spot) > deg_to_rad(TURN_BIG_DEG) ? "turn_180_walk" : "turn_90");
 				PackedFloat32Array base = _yaw[kind];
 				_sub = "turn";
 				_sub_in = (D(base[base.size() - 1]) > 0.0) == (spot > 0.0) ? kind : kind + String("_m");
@@ -958,12 +960,12 @@ void TravCharacter::_physics_process(double dt) {
 			}
 		}
 		if (_sub != "") {
-		} else if (_slope_sub == "stop" && !in_air && (int)(int64_t)body->get("terrain") == 2 && wish < 0.05) {
+		} else if (_slope_sub == "stop" && !in_air && (_tb ? (int)_tb->terrain : (int)(int64_t)body->get("terrain")) == 2 && wish < 0.05) {
 			_slope_stop(dt, speed);
 		} else if (!in_air && st != 0 && speed > 0.15 && !low) {
 			_steep_on = false;
 			_stairs(dt, st, speed);
-		} else if (!in_air && (int)(int64_t)body->get("terrain") == 2 && speed > 0.1 && !low && _steep_ahead()) {
+		} else if (!in_air && (_tb ? (int)_tb->terrain : (int)(int64_t)body->get("terrain")) == 2 && speed > 0.1 && !low && _steep_ahead()) {
 			_stair_on = false;
 			if (_steep_on && wish < 0.05 && _slope_sub == "" && (_act == "steep_down" || _act == "steep_up")) {
 				_slope_sub = "stop";
@@ -996,17 +998,17 @@ void TravCharacter::_physics_process(double dt) {
 	} else if (_mode == "jump") {
 		_jump_e += dt;
 		if (in_air) {
-			double air = clampf((double)body->get("air_time") / _flight, 0.0, 1.0);
+			double air = clampf((_tb ? (double)_tb->air_time : (double)body->get("air_time")) / _flight, 0.0, 1.0);
 			_act_t = lerpf(_jump->off, _jump->land, air);
-			if ((double)body->get("air_time") > _flight + 0.3 || D(body->get_global_position().y) < _jump_y0 - JUMP_BELOW) {
+			if ((_tb ? (double)_tb->air_time : (double)body->get("air_time")) > _flight + 0.3 || D(body->get_global_position().y) < _jump_y0 - JUMP_BELOW) {
 				_drop = nullptr;
 				_set_mode("fall");
 				_show("fall", 0.0);
 			}
-		} else if ((double)body->get("jump_timer") > 0.0) {
+		} else if ((_tb ? (double)_tb->jump_timer : (double)body->get("jump_timer")) > 0.0) {
 			if (_jump_still) {
-				double dip = (double)body->get("JUMP_DIP_STAND");
-				double push = (double)body->get("JUMP_PUSH_STAND");
+				double dip = (_tb ? (double)_tb->JUMP_DIP_STAND : (double)body->get("JUMP_DIP_STAND"));
+				double push = (_tb ? (double)_tb->JUMP_PUSH_STAND : (double)body->get("JUMP_PUSH_STAND"));
 				if (_jump_e < dip) {
 					_act_t = _jump_low * _jump_e / dip;
 				} else {
@@ -1071,14 +1073,14 @@ void TravCharacter::_physics_process(double dt) {
 		double want_slope = ((_stair_on || _steep_on) && ACTS.has(_act)) ? (double)_lib->get_animation((String)ACTS[_act])->get_meta("slope", 0.0) : 0.0;
 		feet->set("by_speed", _steep_on);
 		Array st_m;
-		if ((bool)body->call("in_move")) {
-			st_m = body->get("move_step");
+		if ((_tb ? _tb->in_move() : (bool)body->call("in_move"))) {
+			st_m = (_tb ? Variant(_tb->move_step) : body->get("move_step"));
 		}
 		feet->set("step_high", st_m.size() >= 3 ? (double)st_m[1] : 0.0);
 		feet->set("step_edge", st_m.size() >= 3 ? (double)st_m[0] : 0.0);
 		feet->set("step_rise", st_m.size() >= 3 ? (double)st_m[2] : 0.0);
 		feet->set("step_real", st_m.size() >= 4 ? (double)st_m[3] : 0.0);
-		feet->set("base", (bool)body->call("in_move") ? (double)body->get("move_base") : 0.0);
+		feet->set("base", (_tb ? _tb->in_move() : (bool)body->call("in_move")) ? (_tb ? (double)_tb->move_base : (double)body->get("move_base")) : 0.0);
 		feet->set("stand_wide", _act == "ground" ? STAND_WIDE * (1.0 - _moving) * (1.0 - _low_w) : 0.0);
 		feet->set("stand_on", _act == "ground" ? (1.0 - _moving) : 0.0);
 		if (want_slope != _slope_to) {
@@ -1089,15 +1091,15 @@ void TravCharacter::_physics_process(double dt) {
 		_slope_t += dt;
 		_slope = lerpf(_slope_from, _slope_to, clampf(_slope_t / FADE, 0.0, 1.0));
 		feet->set("clip_slope", _slope);
-		double riser = (double)body->get("stair_riser");
+		double riser = (_tb ? (double)_tb->stair_riser : (double)body->get("stair_riser"));
 		bool on_stairs = _stair_on && riser > 0.0 && ACTS.has(_act);
 		double want_fit = 0.0;
 		if (on_stairs) {
 			Ref<Animation> a = _lib->get_animation((String)ACTS[_act]);
-			double real = signf((double)(int)(int64_t)body->get("stairs")) * riser / (double)body->get("stair_tread");
+			double real = signf((double)(_tb ? (int)_tb->stairs : (int)(int64_t)body->get("stairs"))) * riser / (_tb ? (double)_tb->stair_tread : (double)body->get("stair_tread"));
 			want_fit = -(want_slope - real) * (double)a->get_meta("pivot", 0.0);
-			double tread = (double)body->get("stair_tread");
-			Vector3 dir = body->get("stair_dir");
+			double tread = (_tb ? (double)_tb->stair_tread : (double)body->get("stair_tread"));
+			Vector3 dir = (_tb ? Variant(_tb->stair_dir) : body->get("stair_dir"));
 			double down = _phase_offset((String)ACTS[_act]) / len(a);
 			Array lands;
 			for (int f = 0; f < 2; f++) {
@@ -1110,23 +1112,23 @@ void TravCharacter::_physics_process(double dt) {
 		feet->set("stride_fit", on_stairs);
 		if (_low_w > 0.0 && _act == "ground") {
 			double top = D(skel->get_global_transform().xform(skel->get_bone_global_pose(_head_i).origin).y) - D(body->get_global_position().y) + HEAD_OVER_JOINT;
-			want_fit -= maxf(top - ((double)body->get("CROUCH_HEIGHT") - HEAD_ROOM), 0.0) * _low_w;
+			want_fit -= maxf(top - ((_tb ? (double)_tb->CROUCH_HEIGHT : (double)body->get("CROUCH_HEIGHT")) - HEAD_ROOM), 0.0) * _low_w;
 		}
-		want_fit -= (double)body->get("cover_drop");
+		want_fit -= (_tb ? (double)_tb->cover_drop : (double)body->get("cover_drop"));
 		_hips_fit += (want_fit - _hips_fit) * minf(dt / FADE, 1.0);
 		feet->set("hips_fit", _hips_fit);
 		double w = (double)feet->get("weight");
-		_free = move_toward(_free, ((bool)body->call("in_move") && (bool)body->get("move_free")) ? 1.0 : 0.0, dt / 0.15);
+		_free = move_toward(_free, ((_tb ? _tb->in_move() : (bool)body->call("in_move")) && (_tb ? (bool)_tb->move_free : (bool)body->get("move_free"))) ? 1.0 : 0.0, dt / 0.15);
 		w *= 1.0 - _free;
 		feet->set_influence(1.0 - _free);
 		_leg_ik->set_influence(w);
 		_orient->set_influence(w);
 	}
 	_steep_w = move_toward(_steep_w, _steep_on ? 1.0 : 0.0, dt / FADE);
-	_beam_arms = move_toward(_beam_arms, (_mode != "move" && (int)(int64_t)body->get("squeeze") < 2) ? _narrow_w * (1.0 - _moving) : 0.0, dt / FADE);
-	int ph = (int)(int64_t)body->get("phone");
+	_beam_arms = move_toward(_beam_arms, (_mode != "move" && (_tb ? (int)_tb->squeeze : (int)(int64_t)body->get("squeeze")) < 2) ? _narrow_w * (1.0 - _moving) : 0.0, dt / FADE);
+	int ph = (_tb ? (int)_tb->phone : (int)(int64_t)body->get("phone"));
 	bool seated = _mode == "move" && (_act == "sit_idle" || _act == "sit_down" || _act == "sit_up");
-	bool phone_ok = ph > 0 && (seated || (_mode == "ground" && !(bool)body->get("crouched") && (int)(int64_t)body->get("narrow") == 0 && (int)(int64_t)body->get("squeeze") < 2));
+	bool phone_ok = ph > 0 && (seated || (_mode == "ground" && !(_tb ? (bool)_tb->crouched : (bool)body->get("crouched")) && (_tb ? (int)_tb->narrow : (int)(int64_t)body->get("narrow")) == 0 && (_tb ? (int)_tb->squeeze : (int)(int64_t)body->get("squeeze")) < 2));
 	phone_ok = phone_ok && hold_w[0] <= 0.0 && hold_w[1] <= 0.0;       // (not with something else in his hands)
 	_phone_w = move_toward(_phone_w, phone_ok ? 1.0 : 0.0, dt / PHONE_FADE);
 	if (ph > 0 && _phone_w < 0.05) {
@@ -1149,12 +1151,12 @@ void TravCharacter::_physics_process(double dt) {
 	}
 	_arms->set("palm_back", _squeeze_w);
 	_arms->set("flat", _squeeze_w);
-	_arms->set("fwd_deg", (int)(int64_t)body->get("squeeze") == 3 ? SIDLE_ARMS_FWD_DEG * _squeeze_w : 0.0);
+	_arms->set("fwd_deg", (_tb ? (int)_tb->squeeze : (int)(int64_t)body->get("squeeze")) == 3 ? SIDLE_ARMS_FWD_DEG * _squeeze_w : 0.0);
 	_arms->set("open_deg", arm_open_deg * (1.0 - maxf(maxf(absf(_turn_deg) / SHOULDER_TURN_DEG, _squeeze_w), _phone_w)) + SIDE_ARMS_DEG * _squeeze_w + (_steep_up ? STEEP_ARMS_UP_DEG : STEEP_ARMS_DEG) * _steep_w + BEAM_ARMS_DEG * _beam_arms);
 	if (hands) {
 		Array mh;
-		if ((bool)body->call("in_move")) {
-			mh = body->get("move_hand");
+		if ((_tb ? _tb->in_move() : (bool)body->call("in_move"))) {
+			mh = (_tb ? Variant(_tb->move_hand) : body->get("move_hand"));
 		}
 		double w[2] = { 0.0, 0.0 };
 		Array held;
@@ -1256,12 +1258,12 @@ void TravCharacter::_physics_process(double dt) {
 }
 
 void TravCharacter::_stairs(double dt, int st, double speed) {
-	double tread = (double)body->get("stair_tread");
-	bool run = D(((Vector3)body->get("_wish")).length()) > tread / STAIR_RUN;
+	double tread = (_tb ? (double)_tb->stair_tread : (double)body->get("stair_tread"));
+	bool run = D(((_tb ? _tb->_wish : (Vector3)body->get("_wish"))).length()) > tread / STAIR_RUN;
 	String input = vformat("stairs_%s_%s", st > 0 ? "up" : "down", run ? "run" : "walk");
 	Ref<Animation> a = _lib->get_animation((String)ACTS[input]);
-	double along = D((body->get_global_position() - (Vector3)body->get("stair_edge")).dot((Vector3)body->get("stair_dir")));
-	double steps = (double)(int)(int64_t)body->get("stair_count") + clampf(along / tread, 0.0, 1.0);
+	double along = D((body->get_global_position() - (_tb ? _tb->stair_edge : (Vector3)body->get("stair_edge"))).dot((_tb ? _tb->stair_dir : (Vector3)body->get("stair_dir"))));
+	double steps = (double)(_tb ? (int)_tb->stair_count : (int)(int64_t)body->get("stair_count")) + clampf(along / tread, 0.0, 1.0);
 	double lands = 0.5 - (double)a->get_meta("reach", 0.0) / tread;
 	if (st < 0) {
 		lands += 0.5 * _foot_len / tread;
@@ -1296,7 +1298,7 @@ double TravCharacter::_time_for(const String &input, double d) {
 
 void TravCharacter::_to_loops() {
 	_sub = "";
-	double speed = D(((Vector3)body->get("hvel")).length());
+	double speed = D(((_tb ? _tb->hvel : (Vector3)body->get("hvel"))).length());
 	PackedFloat32Array loop = _lib->get_animation(speed < SWITCH ? WALK : JOG)->get_meta("lead", PackedFloat32Array());
 	double now = _lead_now();
 	double at = now > 0.0 ? 0.0 : 0.5;
@@ -1328,16 +1330,16 @@ double TravCharacter::_time_for_yaw(const String &input, double angle) {
 }
 
 void TravCharacter::_turn(double dt, double wish) {
-	double total = (double)body->get("spot_total");
+	double total = (_tb ? (double)_tb->spot_total : (double)body->get("spot_total"));
 	if (total == 0.0) {
-		if (_sub_in.begins_with("turn_180_run") || (bool)body->get("spot_walk")) {
+		if (_sub_in.begins_with("turn_180_run") || (_tb ? (bool)_tb->spot_walk : (bool)body->get("spot_walk"))) {
 			_moving = 1.0;
 		}
 		_to_loops();
 		return;
 	}
 	PackedFloat32Array table = _yaw[_sub_in];
-	double done = 1.0 - absf((double)body->get("spot_left")) / maxf(absf(total), 0.001);
+	double done = 1.0 - absf((_tb ? (double)_tb->spot_left : (double)body->get("spot_left"))) / maxf(absf(total), 0.001);
 	double want = _time_for_yaw(_sub_in, absf(D(table[table.size() - 1])) * clampf(done, 0.0, 1.0));
 	_act_t = clampf(want, _act_t + dt * TURN_PACE[0], _act_t + dt * TURN_PACE[1]);
 	_seek();
@@ -1452,21 +1454,21 @@ void TravCharacter::_slope_stop(double dt, double speed) {
 }
 
 bool TravCharacter::_steep_ahead() {
-	Vector3 v = body->get("hvel");
+	Vector3 v = (_tb ? Variant(_tb->hvel) : body->get("hvel"));
 	if (D(v.length()) < 0.05) {
 		return true;
 	}
-	double here = deg_to_rad((double)body->get("slope_deg"));
+	double here = deg_to_rad((_tb ? (double)_tb->slope_deg : (double)body->get("slope_deg")));
 	Vector3 at = body->get_global_position() + mul(v.normalized(), STEEP_STEP * std::cos(here));
 	Dictionary hit = TRAV_RAY_FROM(body, at + V(0.0, 1.5, 0.0), at - V(0.0, 1.5, 0.0));
 	if (hit.is_empty()) {
 		return false;
 	}
-	return rad_to_deg(std::acos(clampf(D(((Vector3)hit["normal"]).y), -1.0, 1.0))) > (double)body->get("SLOPE_HANDS_DEG");
+	return rad_to_deg(std::acos(clampf(D(((Vector3)hit["normal"]).y), -1.0, 1.0))) > (_tb ? (double)_tb->SLOPE_HANDS_DEG : (double)body->get("SLOPE_HANDS_DEG"));
 }
 
 void TravCharacter::_steep(double dt, double speed) {
-	double grade = (double)body->get("grade");
+	double grade = (_tb ? (double)_tb->grade : (double)body->get("grade"));
 	if (!_steep_on) {
 		_steep_up = grade >= 0.0;
 	} else if (absf(grade) > STEEP_TURN) {
@@ -1507,23 +1509,23 @@ void TravCharacter::_ground(double dt, double speed) {
 	double want = speed > 0.15 ? 1.0 : 0.0;
 	_moving = move_toward(_moving, want, dt / FADE);
 	tree->set("parameters/ground/blend_amount", _moving);
-	bool low = (bool)body->get("crouched");
+	bool low = (_tb ? (bool)_tb->crouched : (bool)body->get("crouched"));
 	if (_sub != "crouch") {
 		_low_w = move_toward(_low_w, low ? 1.0 : 0.0, dt / CROUCH_FADE);
 	}
 	tree->set("parameters/stance/blend_amount", _low_w);
 	tree->set("parameters/crouch_ground/blend_amount", _moving);
 	tree->set("parameters/crouch_speed/scale", clampf(maxf(speed, 0.3) / ((double)_stride[String(CROUCH_WALK)] / (double)_length[String(CROUCH_WALK)]), SCALE_LEAST, SCALE_MOST));
-	_narrow_w = move_toward(_narrow_w, ((int)(int64_t)body->get("narrow") > 0 && !low) ? 1.0 : 0.0, dt / NARROW_FADE);
+	_narrow_w = move_toward(_narrow_w, ((_tb ? (int)_tb->narrow : (int)(int64_t)body->get("narrow")) > 0 && !low) ? 1.0 : 0.0, dt / NARROW_FADE);
 	tree->set("parameters/narrow/blend_amount", _narrow_w);
 	tree->set("parameters/beam_ground/blend_amount", _moving);
 	tree->set("parameters/beam_speed/scale", clampf(maxf(speed, 0.2) / ((double)_stride[String(BEAM_WALK)] / (double)_length[String(BEAM_WALK)]), SCALE_LEAST, SCALE_MOST));
-	int sq = !low ? (int)(int64_t)body->get("squeeze") : 0;
+	int sq = !low ? (_tb ? (int)_tb->squeeze : (int)(int64_t)body->get("squeeze")) : 0;
 	_squeeze_w = move_toward(_squeeze_w, sq >= 2 ? 1.0 : 0.0, dt / NARROW_FADE);
 	tree->set("parameters/squeeze/blend_amount", _squeeze_w);
 	if (feet) {
-		feet->set("gap_fit", (int)(int64_t)body->get("squeeze") == 2 ? _squeeze_w : 0.0);
-		feet->set("ledge_fit", (int)(int64_t)body->get("squeeze") == 3 ? _squeeze_w : 0.0);
+		feet->set("gap_fit", (_tb ? (int)_tb->squeeze : (int)(int64_t)body->get("squeeze")) == 2 ? _squeeze_w : 0.0);
+		feet->set("ledge_fit", (_tb ? (int)_tb->squeeze : (int)(int64_t)body->get("squeeze")) == 3 ? _squeeze_w : 0.0);
 	}
 	double side_len = (double)_length[String(SIDE_STEP)];
 	if (speed > 0.05) {
@@ -1536,7 +1538,7 @@ void TravCharacter::_ground(double dt, double speed) {
 	}
 	tree->set("parameters/seek_side/seek_request", _side_t);
 	tree->set("parameters/seek_side_m/seek_request", _side_t);
-	double turned = (double)(int)(int64_t)body->get("squeeze_side");
+	double turned = (double)(_tb ? (int)_tb->squeeze_side : (int)(int64_t)body->get("squeeze_side"));
 	if (_squeeze_w <= 0.0 || sq >= 2) {
 		tree->set("parameters/side_pick/blend_amount", turned > 0.0 ? 0.0 : 1.0);
 	}
@@ -1585,10 +1587,10 @@ void TravCharacter::_measure(double dt) {
 }
 
 void TravCharacter::_lean(double dt, bool on_ground) {
-	Vector3 v = body->get("hvel");
+	Vector3 v = (_tb ? Variant(_tb->hvel) : body->get("hvel"));
 	double speed = D(v.length());
 	double raw = 0.0;
-	double most = deg_to_rad(_lean_most(D(((Vector3)body->get("_wish")).length())));
+	double most = deg_to_rad(_lean_most(D(((_tb ? _tb->_wish : (Vector3)body->get("_wish"))).length())));
 	Vector3 chest = skel->get_bone_global_pose(_chest_i).origin;
 	double own = std::atan2(D(chest.x), D(chest.y));
 	if (on_ground && speed > 0.5) {
@@ -1612,7 +1614,7 @@ void TravCharacter::_lean(double dt, bool on_ground) {
 }
 
 double TravCharacter::_lean_most(double pace) {
-	double walk = (double)body->get("WALK");
+	double walk = (_tb ? (double)_tb->WALK : (double)body->get("WALK"));
 	if (pace <= walk) {
 		return lerpf(LEAN_SLOW_DEG, LEAN_WALK_DEG, clampf((pace - 0.8 * walk) / (0.2 * walk), 0.0, 1.0));
 	}
