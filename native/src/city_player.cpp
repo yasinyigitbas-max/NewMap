@@ -1042,6 +1042,11 @@ void CityPlayer::set_riding(bool p_on) {
 		}
 #endif
 		trav->set_visible(!p_on);
+		// (28 Nov, the phone: "the textures dont load until we get out of the car") this node hidden too, as without the
+		// traversal body: hidden is how the streamer (CityStream::update_focus), the crowd and the rig know he rides and
+		// follow the camera; seen, the city kept loading round the spot where he got in. The buttons of his moves go with it.
+		set_visible(!p_on);
+		if (CanvasLayer *cl = Object::cast_to<CanvasLayer>(tb_layer)) cl->set_visible(!p_on);
 		trav->set_process_mode(p_on ? Node::PROCESS_MODE_DISABLED : Node::PROCESS_MODE_INHERIT);
 		trav->set_collision_layer(p_on ? 0 : 2);
 		trav->set_collision_mask(p_on ? 0 : (1 | 16 | 32));

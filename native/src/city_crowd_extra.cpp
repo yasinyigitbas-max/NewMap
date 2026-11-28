@@ -4,6 +4,7 @@
 #include "perf_marks.h"
 #include "city_crowd.h"
 
+#include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/file_access.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 
@@ -231,6 +232,13 @@ void CityCrowd::_physics_process(double p_delta) {
 			if (!crowd->alive[i] || (crowd->flags[i] & pc::F_HIDDEN)) continue;
 			const float dx = crowd->x[i] - crowd->pl_x, dz = crowd->z[i] - crowd->pl_z, d2 = dx * dx + dz * dz;
 			if (d2 > 64.0f) continue;
+#ifdef TRAV_IN_GAME
+			if (trav_people) {   // (with the new people only the seen ones are there to bump into: an unseen walker has no capsule)
+				bool seen = false;
+				for (size_t k = 0; k < near_pool.size() && k < trav_pool.size(); k++) if (near_pool[k].walker == crowd->id[i] && trav_pool[k].body && trav_pool[k].body->is_visible()) seen = true;
+				if (!seen) continue;
+			}
+#endif
 			int at = n < CAPSULES ? n++ : -1;
 			if (at < 0) { int worst = 0; for (int q = 1; q < CAPSULES; q++) if (pd[q] > pd[worst]) worst = q; if (pd[worst] > d2) at = worst; }
 			if (at >= 0) { pick[at] = i; pd[at] = d2; }

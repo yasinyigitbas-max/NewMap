@@ -121,6 +121,9 @@ void CityCrowd::trav_benches() {
 // take), or is given its pose (the pose copy)
 void CityCrowd::trav_people_update() {
 	if (!trav_people) return;
+	// (Yasin, 28 Nov: "there are still npcs from the old version, i need them to be out of the game entirely"; "some near
+	// people are also old npcs") with the new people on, an old figure is never drawn: a body not made, not set down or
+	// whose pose cannot be copied leaves its walker unseen (set_drawn(false) below), as the far crowd is (CityCrowd::draw)
 	trav_benches();
 	const int n = (int)near_pool.size();
 	for (int k = 0; k < n; k++) {
@@ -131,13 +134,13 @@ void CityCrowd::trav_people_update() {
 		const bool shown = i >= 0 && nb.ped->is_visible();
 		if (shown) trav_make(k);
 		TravNb *t = k < (int)trav_pool.size() ? &trav_pool[(size_t)k] : nullptr;
-		if (!t || !t->body) { nb.ped->set_drawn(true); continue; }
+		if (!t || !t->body) { nb.ped->set_drawn(false); continue; }
 		if (!shown) {
 			if (t->mir.on) t->mir.set(t->body, nb.ped, nb.ped->skeleton(), false), t->on = false;
 			if (t->sit && trav_seat_busy == k) trav_seat_busy = -1;
 			t->sit = 0;
 			if (t->on || t->body->is_visible()) { t->body->set_visible(false); t->body->set_process_mode(Node::PROCESS_MODE_DISABLED); t->on = false; t->walker = -1; }
-			nb.ped->set_drawn(true);
+			nb.ped->set_drawn(false);
 			continue;
 		}
 		// what his walker does. Walking, standing, waiting, talking, looking, a phone, a thing carried: the new body's own
@@ -170,7 +173,7 @@ void CityCrowd::trav_people_update() {
 			if (!t->body->is_visible()) t->body->set_visible(true);
 			t->mir.set(t->body, nb.ped, nb.ped->skeleton(), true);
 			if (t->mir.on) { nb.ped->set_drawn(false); if (nb.phone) nb.phone->set_visible(false); if (nb.phone2) nb.phone2->set_visible(false); }
-			else { t->body->set_visible(false); nb.ped->set_drawn(true); }
+			else { t->body->set_visible(false); nb.ped->set_drawn(false); }
 			t->walker = nb.walker;
 			continue;
 		}
@@ -193,7 +196,7 @@ void CityCrowd::trav_people_update() {
 		}
 		if (!show) {
 			if (t->on || t->body->is_visible()) { t->body->set_visible(false); t->body->set_process_mode(Node::PROCESS_MODE_DISABLED); t->on = false; t->walker = -1; }
-			nb.ped->set_drawn(true);
+			nb.ped->set_drawn(false);
 			continue;
 		}
 		t->body->set_visible(true);

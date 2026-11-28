@@ -1223,6 +1223,9 @@ Object *CityTraffic::take_car(int32_t p_id, bool p_fight) {
 	const Row *row = nullptr;
 	for (int k = 0; k < now.n; k++) if (now.rows[k].id == p_id) row = &now.rows[k];
 	if (!row || row->kind != tc::K_AMBIENT) return nullptr;
+	// (28 Nov, the phone: "another one of the car gets copied over that car") a row already taken is hidden until the sim
+	// drops it on its next step: taken again in that time (a second call, e.g. one tap read twice) it made a second car
+	for (const Hidden &h : hidden) if (h.id == p_id) return nullptr;
 	BodyWant w{ 0.0f, row->x, row->y, row->z, row->yaw, row->pitch, (int)row->model, row->id, -1, 0.0f, 0.0f, row->colour };
 	if (!knock(w)) return nullptr;
 	int slot = -1;

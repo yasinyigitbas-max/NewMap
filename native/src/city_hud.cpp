@@ -541,6 +541,7 @@ void CityHud::use_do() {
 		if (!trf && g) trf = Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(g->get_traffic_id())));
 		CityCar *c = trf ? Object::cast_to<CityCar>(trf->take_car(use_row, UtilityFunctions::randf() < 0.4)) : nullptr;
 		if (!c) return;
+		use_kind = 0; use_row = -1;      // (taken: nothing more to take until the next scan)
 		feedback(); uses++; cars_taken++;
 		const cm::CarModel &m = cm::MODELS[std::min(std::max(c->get_model(), 0), cm::N_MODELS - 1)];
 		if (c->enter(pl)) trf->set_player_car(c, m.half_len, m.half_w);
@@ -673,7 +674,9 @@ void CityHud::_input(const Ref<InputEvent> &p_event) {
 	Vector2 p; bool tap = false;
 	if (const InputEventScreenTouch *t = Object::cast_to<InputEventScreenTouch>(p_event.ptr())) { if (t->is_pressed()) { p = t->get_position(); tap = true; } }
 	else if (const InputEventMouseButton *mb = Object::cast_to<InputEventMouseButton>(p_event.ptr())) {
-		if (mb->is_pressed() && mb->get_button_index() == MOUSE_BUTTON_LEFT && Input::get_singleton()->get_mouse_mode() != Input::MOUSE_MODE_CAPTURED && !mb->is_echo()) { p = mb->get_position(); tap = true; }
+		// (28 Nov: a touch also makes a click of its own, Godot's mouse made from touch, device -1: read as a second tap it
+		// did every button twice: a hijack took the car twice, two cars one over the other)
+		if (mb->get_device() != -1 && mb->is_pressed() && mb->get_button_index() == MOUSE_BUTTON_LEFT && Input::get_singleton()->get_mouse_mode() != Input::MOUSE_MODE_CAPTURED && !mb->is_echo()) { p = mb->get_position(); tap = true; }
 	} else if (const InputEventKey *k = Object::cast_to<InputEventKey>(p_event.ptr())) {
 		if (k->is_pressed() && !k->is_echo()) {
 			if (k->get_keycode() == KEY_M) { touch(0); get_viewport()->set_input_as_handled(); }
