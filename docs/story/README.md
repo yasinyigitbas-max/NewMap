@@ -7,16 +7,22 @@ first", and: "disregard the new map drafts".
 
 This is the old game's own story (the camp, the gate, the flatmate, the job, the aliens, Goo, fired, the argument,
 the hospital drive) kept in its order, set in the new map's real places, and rebuilt as missions:
-- **Kept:** the old people, events and jokes, and 323 of the old lines word for word (checked against
-  `i18n/strings.csv` and the camp playthrough).
+- **Kept:** the old people, events and jokes; about 290 of the old lines word for word (checked against
+  `i18n/strings.csv`, the camp playthrough and the dream data); the old job minigames and the old alien dream
+  with its past-tense scramble, as they were.
 - **Changed:** no lesson screens, quizzes or "let me check my phone" on the story path. English is how you act:
   you say a thing and it happens.
+- **Version 2 (28 Nov, Yasin: "i want it to play much more like gta"):** 39 missions and 115 cutscenes; alien
+  weapons; five wanted stars, busted and wasted; taking cars; races; eleven hobby clubs; strangers in every
+  neighbourhood; the birds (cameras, unkillable, six horror games) and the bird watcher; sharks nine times in ten
+  past the buoys and the edge of the sky the tenth.
 - **New:** chapters 3 and 4, made from what the old story left open (the officer's tests, the rent, Grace, Ivan, the
-  locked room, the aliens' return), and one new person, Commander Rhodes.
+  locked room, the aliens' return), and three new people: Commander Rhodes, Vince Marlow and Walter Finch.
 - **Places:** every room named is in `docs/INDOORS.md`. Three sets come from the old game (camp, interrogation
   room, ship) and the base gate needs the kit's unused gatehouse placed.
 
-Start with `alien_status/BIBLE.md`, then the four `MISSIONS_*.md` files, then `OPEN_WORLD.md`.
+Start with `alien_status/BIBLE.md`, then the four `MISSIONS_*.md` files, then `OPEN_WORLD.md` and `CUTSCENES.md`
+(the cutscenes mapped to the clips that exist, and the 24 new takes they need).
 
 The drafts below were set aside on 28 Nov and were not used for it.
 

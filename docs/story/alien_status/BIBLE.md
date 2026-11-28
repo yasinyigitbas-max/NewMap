@@ -52,8 +52,8 @@ with the same problem: no papers, no words, a test coming.
 
 ## 3. What is kept from the old story
 
-Same people, same order of events, same jokes. 300 and more of the old lines are used word for word (marked
-`(old)` in the mission files).
+Same people, same order of events, same jokes. About 290 of the old lines are used word for word (marked
+`(old)` in the mission files, checked against the old `strings.csv`, the camp playthrough and the dream data).
 
 | Old game | Here |
 |---|---|
@@ -320,15 +320,16 @@ Names as written in the map data (`docs/INDOORS.md`; some signs say Crownado, so
 
 | Part | Days | Missions | Hours | On the screen |
 |---|---|---|---|---|
-| Prologue: **They Caught Us** | 1–10 | P1–P5 | 0.8 | Get out |
-| Chapter 1: **Make Yourself at Home** | 10–12 | 1.1–1.6, W1 | 3 | A room, a job |
-| Chapter 2: **Forty Light Years** | 13–20 | 2.1–2.7, W2 | 3.5 | Keep the job. What is in the attic? |
-| Chapter 3: **The Rent** | 21–30 | 3.1–3.11, W3 | 5.5 | Pay Vince. Then make Vince pay. |
-| Chapter 4: **Make It** | 31–40 | 4.1–4.5, W4 | 3 | Get everyone home |
-| Epilogue: **Day 41** | 41– | E1 | 0.2 | — |
+| Prologue: **They Caught Us** | 1–10 | P1–P5 | 0.7 | Get out |
+| Chapter 1: **Make Yourself at Home** | 10–12 | 1.1–1.6, W1 | 2.5 | A room, a job |
+| Chapter 2: **Forty Light Years** | 13–20 | 2.1–2.7, W2 | 2.3 | Keep the job. What is in the attic? |
+| Chapter 3: **The Rent** | 21–30 | 3.1–3.11, W3 | 4.6 | Pay Vince. Then make Vince pay. |
+| Chapter 4: **Make It** | 31–40 | 4.1–4.5, W4 | 2.1 | Get everyone home |
+| Epilogue: **Day 41** | 41– | E1 | 0.1 | — |
 
-42 missions, about 16 hours by the times written on them (not yet played). The open world is at least as much
-again.
+39 missions and 115 cutscenes. The times written on the missions add up to about 12 hours; with the driving,
+the nights and a few shifts between them, about 15. Nothing has been played yet, so these are paper numbers. The
+open world is at least as much again.
 
 ### The story in one paragraph each
 - **Prologue.** The old sketches. Then you are over the side of a ship at night and running through a container
