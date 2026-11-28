@@ -4,6 +4,7 @@
 
 #include "trav_math.h"
 
+#include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/physics_direct_space_state3d.hpp>
 #include <godot_cpp/classes/physics_ray_query_parameters3d.hpp>
@@ -104,9 +105,7 @@ void TravFootPlace::bind(Skeleton3D *sk) {
 }
 
 Dictionary TravFootPlace::_ground(CharacterBody3D *bd, const Vector3 &at, double feet_y) {
-	TypedArray<RID> ex;
-	ex.push_back(bd->get_rid());
-	return TRAV_RAY(bd, PhysicsRayQueryParameters3D::create(V(D(at.x), feet_y + REACH, D(at.z)), V(D(at.x), feet_y - REACH, D(at.z)), trav::probe_mask(bd), ex));
+	return TRAV_RAY_FROM(bd, V(D(at.x), feet_y + REACH, D(at.z)), V(D(at.x), feet_y - REACH, D(at.z)));
 }
 
 void TravFootPlace::_process_modification_with_delta(double dt) {
@@ -115,6 +114,22 @@ void TravFootPlace::_process_modification_with_delta(double dt) {
 	CharacterBody3D *bd = Object::cast_to<CharacterBody3D>((Object *)body);
 	if (sk == nullptr || bd == nullptr || _hips < 0 || target.size() < 2) {
 		return;
+	}
+	// (28 Nov night, not in the study, the game's: a far person's foot fitting is switched off, CityCrowd::trav_lod) after a
+	// gap of more than 8 physics frames what it kept (the last ball positions, the ground heights, the pins) is from
+	// another place: start afresh as on the first call, so that the feet do not reach for where he was
+	{
+		const uint64_t fr = Engine::get_singleton()->get_physics_frames();
+		if (_last_frame != 0 && fr > _last_frame + 8) {
+			_was_ok = false;
+			_g_ok = false;
+			for (int f = 0; f < 2; f++) {
+				_planted[f] = false;
+				_corr[f] = Vector3();
+				_bound[f] = false;
+			}
+		}
+		_last_frame = fr;
 	}
 	bool on_ground = (int)(int64_t)bd->get("state") == 0;
 	weight = move_toward(weight, on_ground ? 1.0 : 0.0, dt / WEIGHT_TIME);
@@ -243,9 +258,7 @@ void TravFootPlace::_process_modification_with_delta(double dt) {
 			}
 			if (_bound[f]) {
 				Vector3 at = _to_p[f];
-				TypedArray<RID> ex;
-				ex.push_back(bd->get_rid());
-				Dictionary gl = TRAV_RAY(bd, PhysicsRayQueryParameters3D::create(V(D(at.x), feet_y + 2.0 * REACH, D(at.z)), V(D(at.x), feet_y - 2.0 * REACH, D(at.z)), trav::probe_mask(bd), ex));
+				Dictionary gl = TRAV_RAY_FROM(bd, V(D(at.x), feet_y + 2.0 * REACH, D(at.z)), V(D(at.x), feet_y - 2.0 * REACH, D(at.z)));
 				_to_g[f] = !gl.is_empty() ? D(((Vector3)gl["position"]).y) : _from_g[f];
 			}
 		}

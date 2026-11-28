@@ -35,7 +35,32 @@ inline godot::Dictionary ray_at(godot::Node3D *n, const godot::Ref<godot::Physic
 	godot::PhysicsDirectSpaceState3D *s = space_at(n, file, line);
 	return s ? s->intersect_ray(q) : godot::Dictionary();
 }
+// A ray from a body that leaves the body itself out, on the world's probe mask: the same query as
+// PhysicsRayQueryParameters3D::create(from, to, probe_mask(b), [b's RID]) (the same defaults: bodies, no areas, back
+// faces hit, not from inside), but one query object per thread is reused instead of a new one made and freed for every
+// ray (28 Nov night: the bodies cast hundreds of rays a frame on the phone; each new query was an object, an array and
+// four calls into the engine). The object is never freed (it must outlive the engine's teardown of the thread).
+inline godot::Dictionary ray_from(godot::CollisionObject3D *b, const godot::Vector3 &from, const godot::Vector3 &to, const char *file, int line) {
+	thread_local godot::Ref<godot::PhysicsRayQueryParameters3D> *q = nullptr;
+	thread_local uint64_t ex_id = 0;
+	if (q == nullptr) {
+		q = new godot::Ref<godot::PhysicsRayQueryParameters3D>();
+		q->instantiate();
+	}
+	const godot::RID r = b->get_rid();
+	if (r.get_id() != ex_id) {
+		godot::TypedArray<godot::RID> ex;
+		ex.push_back(r);
+		(*q)->set_exclude(ex);
+		ex_id = r.get_id();
+	}
+	(*q)->set_from(from);
+	(*q)->set_to(to);
+	(*q)->set_collision_mask(probe_mask(b));
+	return ray_at(b, *q, file, line);
+}
 } // namespace trav
+#define TRAV_RAY_FROM(b, from, to) trav::ray_from((b), (from), (to), __FILE__, __LINE__)
 #define TRAV_SPACE(n) trav::space_at((n), __FILE__, __LINE__)
 #define TRAV_RAY(n, q) trav::ray_at((n), (q), __FILE__, __LINE__)
 // the game's per-system frame timers (native/src/perf_marks.h; 28 Nov night: what the new bodies cost on the phone);

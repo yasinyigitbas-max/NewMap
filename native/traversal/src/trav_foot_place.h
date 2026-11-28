@@ -80,6 +80,7 @@ private:
 	double _to_g[2] = { 0.0, 0.0 };
 	double _lump[2] = { 0.0, 0.0 };
 	bool _bound[2] = { false, false };
+	uint64_t _last_frame = 0;      // (the physics frame of the last call: a long gap is a fresh start, see the .cpp)
 
 	Dictionary _ground(CharacterBody3D *bd, const Vector3 &at, double feet_y);
 	void _onto(CharacterBody3D *bd, Skeleton3D *sk, const Transform3D &xf, double feet_y, Vector3 out[2]);

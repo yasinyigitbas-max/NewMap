@@ -1458,9 +1458,7 @@ bool TravCharacter::_steep_ahead() {
 	}
 	double here = deg_to_rad((double)body->get("slope_deg"));
 	Vector3 at = body->get_global_position() + mul(v.normalized(), STEEP_STEP * std::cos(here));
-	TypedArray<RID> ex;
-	ex.push_back(body->get_rid());
-	Dictionary hit = TRAV_RAY(body, PhysicsRayQueryParameters3D::create(at + V(0.0, 1.5, 0.0), at - V(0.0, 1.5, 0.0), trav::probe_mask(body), ex));
+	Dictionary hit = TRAV_RAY_FROM(body, at + V(0.0, 1.5, 0.0), at - V(0.0, 1.5, 0.0));
 	if (hit.is_empty()) {
 		return false;
 	}

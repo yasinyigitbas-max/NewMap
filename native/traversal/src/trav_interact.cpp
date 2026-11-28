@@ -550,9 +550,7 @@ Dictionary TravInteract::_car(double t) {
 // ---------------------------------------------------------------------------------------------------------- cover
 
 Dictionary TravInteract::_ray(const Vector3 &from, const Vector3 &to) {
-	TypedArray<RID> ex;
-	ex.append(body->get_rid());
-	return TRAV_RAY(body, PhysicsRayQueryParameters3D::create(from, to, trav::probe_mask(body), ex));
+	return TRAV_RAY_FROM(body, from, to);
 }
 
 double TravInteract::_cover_wall(const Vector3 &at, const Vector3 &n) {

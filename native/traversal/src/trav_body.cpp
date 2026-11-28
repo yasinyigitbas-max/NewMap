@@ -150,9 +150,7 @@ void TravBody::_set_rot_y(double y) {
 }
 
 Dictionary TravBody::_ray(const Vector3 &from, const Vector3 &to) {
-	TypedArray<RID> ex;
-	ex.push_back(get_rid());
-	return TRAV_RAY(this, PhysicsRayQueryParameters3D::create(from, to, trav::probe_mask(this), ex));
+	return TRAV_RAY_FROM(this, from, to);
 }
 
 void TravBody::_ready() {

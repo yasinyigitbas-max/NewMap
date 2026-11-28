@@ -12,7 +12,9 @@
 #include "trav_mirror.h"
 #include "trav_probe.h"
 #include "ped_crowd.h"
+#include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/character_body3d.hpp>
+#include <godot_cpp/classes/viewport.hpp>
 #include <godot_cpp/classes/class_db_singleton.hpp>
 #include <godot_cpp/classes/mesh_instance3d.hpp>
 #include <godot_cpp/classes/skeleton3d.hpp>
@@ -130,6 +132,8 @@ void CityCrowd::trav_people_update() {
 	// people are also old npcs") with the new people on, an old figure is never drawn: a body not made, not set down or
 	// whose pose cannot be copied leaves its walker unseen (set_drawn(false) below), as the far crowd is (CityCrowd::draw)
 	trav_benches();
+	Camera3D *cam3 = get_viewport() ? get_viewport()->get_camera_3d() : nullptr;
+	const Vector3 cam = cam3 ? cam3->get_global_position() : Vector3(0, -1e9f, 0);
 	const int n = (int)near_pool.size();
 	for (int k = 0; k < n; k++) {
 		Near &nb = near_pool[(size_t)k];
@@ -140,6 +144,7 @@ void CityCrowd::trav_people_update() {
 		if (shown) trav_make(k);
 		TravNb *t = k < (int)trav_pool.size() ? &trav_pool[(size_t)k] : nullptr;
 		if (!t || !t->body) { nb.ped->set_drawn(false); continue; }
+		if (cam3) trav_lod(*t, cam);
 		if (!shown) {
 			if (t->mir.on) t->mir.set(t->body, nb.ped, nb.ped->skeleton(), false), t->on = false;
 			if (t->sit && trav_seat_busy == k) trav_seat_busy = -1;
@@ -265,5 +270,38 @@ void CityCrowd::trav_people_update() {
 		static const int ITEM_OF[3] = { 2, 3, 1 };
 		s["item"] = (!on_phone && carries(i)) ? ITEM_OF[std::min(std::max(carry_kind(i), 0), 2)] : 0;
 	}
+}
+
+// The far detail (28 Nov night, Yasin: "much more performant ... WITHOUT REDUCING THE VISUAL FIDELITY"). A new body's
+// feet and hands are fitted to the ground and to what he holds by eight bone modifiers (foot placing with two rays a foot,
+// the leg and arm IK, the foot's turn, the hand's place and hold, the finger grip): measured on the Redmi, 3-8 ms a frame
+// for the crowd. Beyond LOD_OFF m from the camera (a person there is under ~60 px tall on the phone) they are switched off:
+// his feet and hands move as the clip moves them. Within LOD_ON m they are on again (the foot placing starts afresh after
+// the gap: TravFootPlace). The body's own movement, the clip and the body fit (his legs' length) are never switched off.
+static const float LOD_OFF = 22.0f, LOD_ON = 18.0f;
+static void lod_find(Node *n, const char *const *names, int nn, SkeletonModifier3D **out, int &k) {
+	for (int c = 0; c < n->get_child_count(); c++) {
+		Node *ch = n->get_child(c);
+		if (SkeletonModifier3D *m = Object::cast_to<SkeletonModifier3D>(ch)) {
+			const String nm = m->get_name();
+			for (int j = 0; j < nn; j++) if (nm == names[j] && k < 8) { out[k++] = m; break; }
+		} else lod_find(ch, names, nn, out, k);
+	}
+}
+void CityCrowd::trav_lod(TravNb &t, const Vector3 &cam) {
+	if (t.lod_n < 0) {
+		Node *ch = t.body->get_node_or_null("Character");
+		if (!ch || ch->get_child_count() == 0) return;          // (not built yet: next frame)
+		static const char *const NAMES[8] = { "FootPlace", "LegIK", "FootOrient", "HandPlace", "LeftArmIK", "RightArmIK", "HandHold", "FingerGrip" };
+		int k = 0;
+		lod_find(ch, NAMES, 8, t.lod_mods, k);
+		if (k == 0) return;
+		t.lod_n = k;
+	}
+	const float d = t.body->get_global_position().distance_to(cam);
+	const bool far = t.lod_far ? d > LOD_ON : d > LOD_OFF;
+	if (far == t.lod_far) return;
+	t.lod_far = far;
+	for (int j = 0; j < t.lod_n; j++) t.lod_mods[j]->set_active(!far);
 }
 #endif

@@ -130,7 +130,11 @@ private:
 		int sit = 0; float sit_t = 0.0f; class Node3D *seat = nullptr;
 		// his walker's own motion, as drawn (28 Nov night: followed by its velocity, not by stop-and-go on the gap)
 		Vector3 prev_at, wv; double prev_t = 0.0; bool prev_set = false;
-		TravMirror mir; };      // the pose copy (an act the new bodies have no take for): trav_mirror.h
+		TravMirror mir;
+		// the far detail (28 Nov night, CityCrowd::trav_lod): his feet's and hands' fitting, off beyond LOD_OFF m from the
+		// camera, on again within LOD_ON m
+		class SkeletonModifier3D *lod_mods[8] = {}; int lod_n = -1; bool lod_far = false; };
+	void trav_lod(TravNb &t, const Vector3 &cam);      // the pose copy (an act the new bodies have no take for): trav_mirror.h
 	std::vector<TravNb> trav_pool;
 	std::vector<String> trav_ids;
 	bool trav_people = false;
