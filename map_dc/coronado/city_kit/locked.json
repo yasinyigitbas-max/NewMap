@@ -3325,6 +3325,11 @@
    "sha256": "ed30f80ef72e6ce3bbd3e036e093ac973183beda7e4a1ddcabd27f7a59eb48de",
    "by": "Yasin",
    "date": "2026-11-28"
+  },
+  "fx_holes": {
+   "sha256": "f9bee39464b7c2e55bf21a412302ded45f8bfc2b8b4cd6247e61119210a6a953",
+   "by": "Yasin",
+   "date": "2026-11-28"
   }
  },
  "files": {

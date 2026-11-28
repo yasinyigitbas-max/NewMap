@@ -12513,6 +12513,16 @@
    ],
    "yaw": 0.0,
    "from": "hero ferry landing 21 Nov: the landing's hand-placed trees (zoning/trees/ferry_landing.json, sc.py trees)"
+  },
+  {
+   "piece": "fx_holes",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "holes"
   }
  ],
  "coverage": {
