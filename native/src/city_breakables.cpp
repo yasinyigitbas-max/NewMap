@@ -27,7 +27,10 @@ static float kind_mass(const String &k) {   // the old game's masses
 	if (k.contains("bollard")) return 30.0f;
 	if (k.contains("mailbox")) return 25.0f;
 	if (k.contains("meter")) return 25.0f;
-	if (k.contains("bin") || k.contains("newsbox")) return 14.0f;
+	if (k.contains("bin") || k.contains("newsbox") || k.contains("receptacle") || k.contains("newspaper")) return 14.0f;
+	if (k.contains("hydrant")) return 60.0f;      // (28 Nov: hydrants, benches, the blue mail boxes breakable too)
+	if (k.contains("bench")) return 45.0f;
+	if (k.contains("usps")) return 40.0f;
 	return 9.0f;   // signs
 }
 
@@ -249,7 +252,7 @@ void CityBreakables::knock(int i, const Vector3 &p_vel) {
 	it.broken = true; it.down_t = 0.0f; broken_n++;
 	{   // its sound (el_sfx.h): a bin, a fence, or anything else rings like a pole
 		const String kind = (mmi->has_meta("brk_kind") ? String(mmi->get_meta("brk_kind")) : String(mmi->get_name())).to_lower();
-		const char *set = kind.contains("bin") || kind.contains("newsbox") || kind.contains("trash") ? "hit_bin_" : (kind.contains("fence") || kind.contains("rail") || kind.contains("barrier") ? "hit_fence_" : "hit_pole_");
+		const char *set = kind.contains("bin") || kind.contains("newsbox") || kind.contains("trash") || kind.contains("receptacle") || kind.contains("newspaper") || kind.contains("usps") ? "hit_bin_" : (kind.contains("fence") || kind.contains("rail") || kind.contains("barrier") ? "hit_fence_" : "hit_pole_");
 		elsfx::play(this, String("res://audio/sfx/car/") + String(set), std::min(-8.0f + p_vel.length() * 0.5f, 0.0f), 0.06f, to_local(it.at + Vector3(0, 0.6f, 0)), 50.0f);
 	}
 	set_instance(it, false);
