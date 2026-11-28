@@ -1,0 +1,45 @@
+{
+"_doc": "Look uplift (28 Nov; Yasin: 'go for both 15 and 16'). Hand-placed, one line per thing with its reason, built into the overlay piece x_look_life (tools/city/pilot/pieces/x_look_life.gd); no locked piece changes. JUNCTIONS: the junction piece j_apt is used at 7 crossings, each with the same manhole and the same tyre smudge: here each crossing gets its own wear where its own traffic makes it (a trench patch where a service line was laid across one lane, oil where cars queue behind a stop bar, a pale utility cut, a second utility cover on another arm). The road's frame at a j_apt crossing: roads +-8 m wide each side of the centre lines, the crossing box +-8 m, crosswalks 18-22 m out, stop bars ~24 m out; right-hand traffic (northbound on the east lane, x > centre). y = the road at the crossing (layout row). LOTS: the park lawn at 373,-690 (two tennis courts, one grill on a dirt pad, one bench, a shade sail, two chairs) gets what people who use it bring and need; y = the lawn, 6.15 m (height map; rig ground rays 6.2). The back yards at 100,-40 rise towards the houses (rays 7.0 to 13.8 m, some on roofs and tree crowns): only the sprinkler on the flat middle (7.0 m) is placed; the rest waits for a measured ground. Decal tiles (kit_lib Decals atlas, wear_lib's notes): 2/3 dark sealed trench patch, 4/5 pale concrete patch, 6/7 oil.",
+"items": [
+{"kind": "decal", "tile": 2, "pos": [253.5, 6.0, -614.0], "yaw": 0, "w": 4.0, "l": 1.5, "alpha": 0.75, "why": "250,-600 north arm: a service trench patched across the northbound lane"},
+{"kind": "decal", "tile": 6, "pos": [253.5, 6.0, -573.0], "yaw": 0, "w": 1.6, "l": 1.2, "alpha": 0.7, "why": "250,-600 south approach: oil where northbound cars wait behind the stop bar"},
+{"kind": "decal", "tile": 4, "pos": [245.0, 6.0, -595.0], "yaw": 20, "w": 2.2, "l": 1.6, "alpha": 0.6, "why": "250,-600 in the crossing: a pale cut where a valve was dug up"},
+{"kind": "prop", "model": "street/prop_manhole_cover_worn", "pos": [220.0, 6.0, -603.5], "yaw": 0, "why": "250,-600 west arm, westbound lane: the sewer line's next cover along the street"},
+
+{"kind": "decal", "tile": 3, "pos": [-186.0, 6.0, -596.5], "yaw": 90, "w": 4.0, "l": 1.4, "alpha": 0.75, "why": "civic crossing -200,-600 east arm: a trench patch across the eastbound lane"},
+{"kind": "decal", "tile": 7, "pos": [-203.5, 6.0, -627.0], "yaw": 0, "w": 1.6, "l": 1.2, "alpha": 0.7, "why": "civic crossing north approach: oil where southbound cars queue"},
+{"kind": "decal", "tile": 5, "pos": [-195.0, 6.0, -606.0], "yaw": -15, "w": 2.0, "l": 1.4, "alpha": 0.6, "why": "civic crossing: a pale utility cut by the corner"},
+{"kind": "prop", "model": "street/prop_manhole_cover_rusty", "pos": [-196.5, 6.0, -570.0], "yaw": 0, "why": "civic crossing south arm, northbound lane: a storm sewer cover"},
+
+{"kind": "decal", "tile": 2, "pos": [-603.5, 6.0, -986.0], "yaw": 0, "w": 4.0, "l": 1.6, "alpha": 0.8, "why": "gritty crossing -600,-1000 south arm: an old trench patch, darker (the gritty edge is less kept)"},
+{"kind": "decal", "tile": 6, "pos": [-573.0, 6.0, -1003.5], "yaw": 90, "w": 1.6, "l": 1.2, "alpha": 0.8, "why": "gritty crossing east approach: oil where westbound cars and trucks wait"},
+{"kind": "decal", "tile": 3, "pos": [-612.0, 6.0, -1004.0], "yaw": 35, "w": 2.6, "l": 1.2, "alpha": 0.7, "why": "gritty crossing: a second, patched pothole in the box"},
+{"kind": "prop", "model": "street/prop_manhole_cover_rusty", "pos": [-603.5, 6.0, -1030.0], "yaw": 0, "why": "gritty crossing north arm, southbound lane: a cover"},
+
+{"kind": "decal", "tile": 3, "pos": [-414.0, 6.0, -1003.5], "yaw": 90, "w": 4.0, "l": 1.5, "alpha": 0.75, "why": "-400,-1000 west arm: a trench patch across the westbound lane"},
+{"kind": "decal", "tile": 7, "pos": [-396.5, 6.0, -973.0], "yaw": 0, "w": 1.6, "l": 1.2, "alpha": 0.7, "why": "-400,-1000 south approach: oil where northbound cars queue"},
+{"kind": "decal", "tile": 4, "pos": [-405.0, 6.0, -994.0], "yaw": 50, "w": 2.0, "l": 1.5, "alpha": 0.6, "why": "-400,-1000: a pale utility cut"},
+
+{"kind": "decal", "tile": 2, "pos": [-396.5, 6.0, -814.0], "yaw": 0, "w": 4.0, "l": 1.4, "alpha": 0.75, "why": "-400,-800 north arm: a trench patch across the northbound lane"},
+{"kind": "decal", "tile": 6, "pos": [-427.0, 6.0, -796.5], "yaw": 90, "w": 1.6, "l": 1.2, "alpha": 0.7, "why": "-400,-800 west approach: oil where eastbound cars queue"},
+{"kind": "prop", "model": "street/prop_manhole_cover_worn", "pos": [-370.0, 6.0, -796.5], "yaw": 0, "why": "-400,-800 east arm, eastbound lane: a cover"},
+
+{"kind": "decal", "tile": 3, "pos": [-196.5, 6.0, -786.0], "yaw": 0, "w": 4.0, "l": 1.6, "alpha": 0.75, "why": "-200,-800 south arm: a trench patch across the northbound lane"},
+{"kind": "decal", "tile": 7, "pos": [-203.5, 6.0, -827.0], "yaw": 0, "w": 1.6, "l": 1.2, "alpha": 0.7, "why": "-200,-800 north approach: oil where southbound cars queue"},
+{"kind": "decal", "tile": 5, "pos": [-194.0, 6.0, -806.0], "yaw": 70, "w": 2.2, "l": 1.4, "alpha": 0.6, "why": "-200,-800: a pale utility cut"},
+{"kind": "prop", "model": "street/prop_manhole_cover_clean", "pos": [-230.0, 6.0, -803.5], "yaw": 0, "why": "-200,-800 west arm, westbound lane: a newer cover (the street was redone)"},
+
+{"kind": "decal", "tile": 2, "pos": [584.0, 1.36, 203.5], "yaw": 90, "w": 4.0, "l": 1.4, "alpha": 0.7, "why": "waterfront crossing 570,200 east arm: a trench patch (the shore's drains)"},
+{"kind": "decal", "tile": 6, "pos": [573.5, 1.36, 227.0], "yaw": 0, "w": 1.6, "l": 1.2, "alpha": 0.65, "why": "waterfront crossing south approach: oil where northbound cars queue"},
+
+{"kind": "prop", "model": "park/prop_picnic_table_worn", "pos": [380.5, 6.15, -687.0], "yaw": 90, "why": "park lawn: a picnic table under the shade sail, where the grill's food is eaten"},
+{"kind": "prop", "model": "park/prop_picnic_table_dirty", "pos": [381.8, 6.15, -698.6], "yaw": 0, "why": "park lawn: a second table on the grass beside the grill's dirt pad"},
+{"kind": "prop", "model": "park/prop_park_bench_worn", "pos": [360.0, 6.15, -705.3], "yaw": 180, "why": "park lawn: a bench by the tennis courts' fence, facing the games"},
+{"kind": "prop", "model": "park/prop_park_bench_rusty", "pos": [390.0, 6.15, -705.3], "yaw": 180, "why": "park lawn: a second bench by the court fence, at the other court"},
+{"kind": "prop", "model": "park/prop_drinking_fountain_worn", "pos": [355.5, 6.15, -705.6], "yaw": 180, "why": "park lawn: water for the players, at the west end of the courts"},
+{"kind": "prop", "model": "yard/prop_trash_cart_green_dirty", "pos": [369.8, 6.15, -700.8], "yaw": 90, "why": "park lawn: the grill's rubbish bin, at the dirt pad's west end"},
+{"kind": "prop", "model": "yard/prop_adirondack_wood_worn", "pos": [357.5, 6.15, -668.5], "yaw": 200, "why": "park lawn: a chair in the big tree's shade, looking over the lawn"},
+{"kind": "prop", "model": "yard/prop_adirondack_wood_dirty", "pos": [360.5, 6.15, -667.8], "yaw": 160, "why": "park lawn: its pair, two people talking in the shade"},
+{"kind": "prop", "model": "yard/prop_sprinkler_impact_worn", "pos": [90.0, 7.0, -40.0], "yaw": 0, "why": "back yard at 100,-40: the lawn's sprinkler, in the middle of the grass it waters"}
+]
+}

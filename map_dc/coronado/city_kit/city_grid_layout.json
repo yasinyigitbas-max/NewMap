@@ -7364,6 +7364,16 @@
    "yaw": 0.0,
    "from": "grid frame"
   },
+{
+   "piece": "x_look_life",
+   "pos": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "from": "look uplift 28 Nov: hand-placed junction wear and park life (zoning/look_life.json)"
+  },
   {
    "piece": "t_10th_e",
    "pos": [
