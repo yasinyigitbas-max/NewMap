@@ -141,7 +141,10 @@ private:
 		TravMirror mir;
 		// the far detail (28 Nov night, CityCrowd::trav_lod): his feet's and hands' fitting, off beyond LOD_OFF m from the
 		// camera, on again within LOD_ON m
-		class SkeletonModifier3D *lod_mods[8] = {}; int lod_n = -1; bool lod_far = false; };
+		class SkeletonModifier3D *lod_mods[8] = {}; int lod_n = -1; bool lod_far = false;
+		// a seat for the pose copy's sitting (28 Nov, Yasin: sitting people "either disabled looking or sinking in the
+		// furniture"): looked at once per walker: is there a seat where the old figure sits, and how far off its height is
+		int seat_chk = -1; bool seat_ok = true; float seat_dy = 0.0f; };
 	void trav_lod(TravNb &t, const Vector3 &cam);      // the pose copy (an act the new bodies have no take for): trav_mirror.h
 	std::vector<TravNb> trav_pool;
 	std::vector<String> trav_ids;
