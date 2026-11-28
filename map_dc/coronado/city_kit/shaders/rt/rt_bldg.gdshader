@@ -41,6 +41,7 @@ global uniform float ck_night;
 // the tier window (19 Nov, rt_tier.gdshaderinc): this mesh draws while its building's pivot (world) is within
 // [ck_win.x, ck_win.y) of the camera; the bake sets near 0-60 m, mid 60-220 m, and node ranges a little wider
 #include "rt_tier.gdshaderinc"
+#include "res://map_dc/coronado/city_kit/shaders/rt/rt_city_light.gdshaderinc"
 instance uniform vec3 ck_pivot = vec3(0.0);
 instance uniform vec2 ck_win = vec2(0.0, 1.0e6);
 #ifdef CK_TIERS
@@ -144,6 +145,12 @@ void fragment() {
 	METALLIC = orm.b * (1.0 - amount);
 	AO = orm.r;
 	AO_LIGHT_AFFECT = contact_light * ck_look_contact;      // the kit's occlusion (recesses, under eaves and sills) also in sunlight
+	vec3 ck_bounce = vec3(0.0);
+	if (ck_city_light > 0.0 && outdoor > 0.5) {      // the city's sky, far shadow and bounce (rt_city_light)
+		vec3 cl = ck_city_light_at(v_wp, v_wn, CAMERA_POSITION_WORLD);
+		AO *= cl.x; ALBEDO *= ck_city_shade(cl.y, v_wn);
+		ck_bounce = ALBEDO * ck_city_bounce_at(v_wn, cl.z) * cl.x;
+	}
 	if (has_normal) NORMAL_MAP = texture(normal_tex, UV).rgb;
 	vec3 emi = vec3(0.0);
 	if (ck_look_glass > 0.5 && (has_orm || lod_glass)) {
@@ -214,6 +221,6 @@ void fragment() {
 			emi += alb.rgb * (letter * 1.0 + 0.1) * sign_glow * flick * smoothstep(0.2, 0.6, ck_night);
 		}
 	}
-	EMISSION = emi;
+	EMISSION = emi + ck_bounce;
 #endif
 }

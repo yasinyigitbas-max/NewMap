@@ -48,6 +48,9 @@ do_bake() {
   "$GODOT" --path . --render-thread safe --rendering-method mobile --resolution 640x360 -s res://tools/city/bake/bake_runtime.gd -- --all > "$OUT/bake.log" 2>&1
   grep -a "^BAKE_DONE\|^BAKE check\|SCRIPT ERROR" "$OUT/bake.log" | cut -c1-200
   grep -aq "^BAKE_DONE" "$OUT/bake.log" || die "the bake did not finish: see OUT/bake.log"
+  echo "PHONE_RIG city light (the sky and far-shadow maps, ~2 minutes)"
+  GODOT="$GODOT" bash tools/city/look/city_light.sh > "$OUT/city_light.log" 2>&1 || echo "PHONE_RIG city light FAILED (see OUT/city_light.log): the game runs without it"
+  grep -a "^CITYLIGHT" "$OUT/city_light.log" | tail -3
 }
 
 do_export() {

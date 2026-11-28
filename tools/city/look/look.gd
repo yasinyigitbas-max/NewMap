@@ -134,6 +134,8 @@ static var PRESETS := {
 @export var hour := 7.0                             ## the clock of the running day
 @export var cycle_step := 0.5                       ## seconds between two updates of the sky (and its reflection maps)
 @export_range(0.0, 1.0) var grade := 1.0           ## strength of the colour grade (the lookup table); 0 = none
+@export_range(0.0, 1.0) var city_light := 1.0      ## look uplift (28 Nov): the baked sky / far-shadow maps (rt_city_light); 0 = off
+const CITY_LIGHT_DIR := "res://map_dc/coronado/city_kit/runtime/far/"
 
 var env: Environment
 var sun: DirectionalLight3D
@@ -199,6 +201,7 @@ func _ready() -> void:
 		car_map.render_target_update_mode = SubViewport.UPDATE_ONCE
 		var cr := ColorRect.new(); cr.size = Vector2(128, 128); var cm := ShaderMaterial.new(); cm.shader = load("res://tools/city/look/car_env.gdshader")
 		cr.material = cm; car_map.add_child(cr); add_child(car_map)
+	_load_city_light()
 	sun = DirectionalLight3D.new(); sun.rotation_degrees = sun_angles
 	sun.shadow_enabled = OS.get_environment("NOSHADOW") != "1"; sun.directional_shadow_max_distance = shadow_distance; add_child(sun)
 	if shadow_tune:      # the 50 m stay; what changes is how the shadow ends
@@ -357,6 +360,21 @@ func set_preset(name: String) -> void:
 	_apply(PRESETS[preset])
 
 ## how far the city's night is on for the current setting (the streamer's ck_night)
+## The city light (look uplift, 28 Nov): the island's sky map and height map, baked after the runtime bake
+## (tools/city/look/city_light.sh). Missing (an older bake) or city_light 0: the shaders read nothing.
+func _load_city_light() -> void:
+	if not ProjectSettings.has_setting("shader_globals/ck_city_light"): return
+	var on := city_light > 0.0 and ResourceLoader.exists(CITY_LIGHT_DIR + "city_ao.res") and ResourceLoader.exists(CITY_LIGHT_DIR + "city_hg.res") and FileAccess.file_exists(CITY_LIGHT_DIR + "city_light.json")
+	if on:
+		var meta: Variant = JSON.parse_string(FileAccess.get_file_as_string(CITY_LIGHT_DIR + "city_light.json"))
+		var r: Array = (meta as Dictionary).get("rect", []) if meta is Dictionary else []
+		if r.size() == 4:
+			RenderingServer.global_shader_parameter_set(&"ck_city_ao", load(CITY_LIGHT_DIR + "city_ao.res"))
+			RenderingServer.global_shader_parameter_set(&"ck_city_hg", load(CITY_LIGHT_DIR + "city_hg.res"))
+			RenderingServer.global_shader_parameter_set(&"ck_city_rect", Vector4(r[0], r[1], r[2], r[3]))
+		else: on = false
+	RenderingServer.global_shader_parameter_set(&"ck_city_light", city_light if on else 0.0)
+
 func lights() -> float:
 	return night      # (_apply keeps it: the time of day's, raised by a gloomy weather)
 
@@ -404,6 +422,12 @@ func _apply(t0: Dictionary) -> void:
 		RenderingServer.global_shader_parameter_set(&"ck_look_sky_top", t.zenith.lerp(t.middle, 0.4))
 		RenderingServer.global_shader_parameter_set(&"ck_look_sky_horizon", t.haze)
 	RenderingServer.global_shader_parameter_set(&"ck_wet", wet)
+	if ProjectSettings.has_setting("shader_globals/ck_city_sun"):      # the city light's far shadow: towards the light, weaker with a weak sun, none at night
+		var fs := clampf(sun.light_energy / 1.55, 0.0, 1.0) * (1.0 - clampf(float(t.get("lights", night)), 0.0, 1.0)) * sun.shadow_opacity
+		RenderingServer.global_shader_parameter_set(&"ck_city_sun", Vector4(light_v.x, light_v.y, light_v.z, fs))
+		# the bounce: the sun on the street (asphalt and pavement, ~0.22 of it thrown back) lights the walls from below
+		var bc := sun.light_color * sun.light_energy * maxf(light_v.y, 0.0) * 0.6 * (1.0 - clampf(float(t.get("lights", night)), 0.0, 1.0))
+		RenderingServer.global_shader_parameter_set(&"ck_city_bounce", Vector3(bc.r, bc.g, bc.b))
 	var sm: ShaderMaterial = ClassDB.class_call_static(&"CitySea", &"get_sea_material")      # the sea's own light (it is unshaded): ambient + the sun on a flat surface
 	sm.set_shader_parameter(&"light", Vector3(env.ambient_light_color.r, env.ambient_light_color.g, env.ambient_light_color.b) * env.ambient_light_energy + Vector3(sun.light_color.r, sun.light_color.g, sun.light_color.b) * sun.light_energy * maxf(light_v.y, 0.0) * 0.55)
 	sm.set_shader_parameter(&"sun_dir", sun_v if mo < 0.5 else moon_v)

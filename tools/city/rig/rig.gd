@@ -128,7 +128,7 @@ var game: Node = null           # the game's shell (CityGame) when it started th
 var _shot_cam: Camera3D
 var people: Node             # the C++ crowd (--people=N); null without it
 var all_args: PackedStringArray = []      # the user args and the args file together (_ready)
-var opt := {"car": "", "walk": "", "walkshot": "", "walkcrowd": 0, "water": 0.0, "at": "", "people": 0, "hour": 12.5, "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": -1, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0, "rooms": 1, "maxfps": 0, "near": 100.0}
+var opt := {"car": "", "walk": "", "walkshot": "", "walkcrowd": 0, "water": 0.0, "at": "", "people": 0, "hour": 12.5, "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": -1, "sharp": 0.2, "glow": 1, "blobs": 0, "citylight": 1.0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0, "rooms": 1, "maxfps": 0, "near": 100.0}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
 
@@ -173,10 +173,10 @@ func _ready() -> void:
 			var f := a.trim_prefix("--drive=").split("/")
 			if f.size() == 5: own_drives.append([f[0], f[1], float(f[2]) / 3.6, float(f[3]), float(f[4])])
 			else: push_warning("RIG: --drive needs NAME/ROUTE/SPEED_KMH/SECONDS/NIGHT, got: " + a)
-		for k: String in ["car", "walk", "walkshot", "walkcrowd", "water", "at", "people", "hour", "traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost", "rooms", "maxfps", "near"]:
+		for k: String in ["car", "walk", "walkshot", "walkcrowd", "water", "at", "people", "hour", "traffic", "parked", "density", "carshadows", "carbodies", "plan", "scale", "lead", "maxcells", "loading", "bodies", "lights", "coltris", "loader", "gpureserve", "colms", "band", "arrive", "look", "cycle", "clock", "celestial", "sea", "weather", "air", "cars", "carenv", "shadowtune", "bloom", "glow", "blobs", "citylight", "wet", "upscale", "sharp", "reflect", "shots", "census", "views", "censussecs", "colrange", "boost", "rooms", "maxfps", "near"]:
 			if a.begins_with("--%s=" % k):
 				var v := a.trim_prefix("--%s=" % k)
-				opt[k] = v if k in ["car", "walk", "walkshot", "at", "plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["water", "density", "scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs", "colrange", "boost", "near"] else int(v))
+				opt[k] = v if k in ["car", "walk", "walkshot", "at", "plan", "shots", "look", "weather", "census", "views"] else (float(v) if k in ["water", "citylight", "density", "scale", "lead", "colms", "band", "arrive", "sharp", "wet", "cycle", "clock", "censussecs", "colrange", "boost", "near"] else int(v))
 	if from_file and not ("--loop" in args): opt.quit = true
 	# STARTED BY THE GAME'S SHELL (C++ CityGame, game/boot.tscn: New game / Continue): on foot in the city with the people,
 	# the traffic and the parked cars, where the shell says (the city centre for a new game, the saved place otherwise);
@@ -202,7 +202,7 @@ func _ready() -> void:
 	if int(opt.upscale) == 1:      # look job 2: the engine's FSR 1 mode, which Yasin's engine (patch c) runs as SGSR 1 in the Mobile renderer
 		vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_FSR; vp.fsr_sharpness = float(opt.sharp)
 	if String(opt.look) != "0":      # the look pack: sky, haze, light colours, colour treatment
-		look = Look.new(); look.bloom = int(opt.bloom) == 1; look.glow = int(opt.glow) == 1; look.blobs = int(opt.blobs) == 1; look.wet = float(opt.wet); look.cycle = float(opt.cycle); look.celestial = int(opt.celestial) == 1; look.sea = int(opt.sea) == 1; look.weather = String(opt.weather); look.air = int(opt.air) == 1; look.cars = int(opt.cars) == 1; look.car_env = int(opt.carenv) == 1; look.shadow_tune = int(opt.shadowtune) == 1; look.hour = float(opt.clock); add_child(look); env = look.env; sun = look.sun
+		look = Look.new(); look.bloom = int(opt.bloom) == 1; look.glow = int(opt.glow) == 1; look.blobs = int(opt.blobs) == 1; look.wet = float(opt.wet); look.cycle = float(opt.cycle); look.celestial = int(opt.celestial) == 1; look.sea = int(opt.sea) == 1; look.weather = String(opt.weather); look.air = int(opt.air) == 1; look.cars = int(opt.cars) == 1; look.car_env = int(opt.carenv) == 1; look.shadow_tune = int(opt.shadowtune) == 1; look.city_light = float(opt.citylight); look.hour = float(opt.clock); add_child(look); env = look.env; sun = look.sun
 		if String(opt.look) != "1": look.set_preset(String(opt.look))
 	else:                       # the old plain setup, kept to compare against
 		env = Environment.new()

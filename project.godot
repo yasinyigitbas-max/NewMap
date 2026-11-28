@@ -112,6 +112,32 @@ ck_look_signs={
 "type": "float",
 "value": 1.0
 }
+; city light (look uplift, 28 Nov; shaders/rt/rt_city_light.gdshaderinc): the island's baked sky / height maps.
+; look.gd loads them from runtime/far and turns ck_city_light on; 0 = off (nothing read)
+ck_city_light={
+"type": "float",
+"value": 0.0
+}
+ck_city_ao={
+"type": "sampler2D",
+"value": ""
+}
+ck_city_hg={
+"type": "sampler2D",
+"value": ""
+}
+ck_city_rect={
+"type": "vec4",
+"value": Vector4(0, 0, 0, 0)
+}
+ck_city_sun={
+"type": "vec4",
+"value": Vector4(0, 1, 0, 0)
+}
+ck_city_bounce={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
 ck_cells_loaded={
 "type": "sampler2D",
 "value": ""

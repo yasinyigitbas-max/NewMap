@@ -8,6 +8,7 @@
 // for every plant of a batch. Per plant: page, wind amount (0 = stiff: fences), normal map or not.
 //   RT_MERGED: CUSTOM0 (half floats) = xyz the foot, w = page * 16 + (wind + 2 * normal map) * 2;   MultiMesh: INSTANCE_CUSTOM = (page, wind, normal map, -)
 #include "res://map_dc/coronado/city_kit/shaders/rt/rt_tier.gdshaderinc"
+#include "res://map_dc/coronado/city_kit/shaders/rt/rt_city_light.gdshaderinc"
 uniform sampler2DArray albedo_arr : source_color, filter_linear_mipmap, repeat_disable;
 uniform sampler2DArray normal_arr : hint_normal, filter_linear_mipmap, repeat_disable;
 varying flat float v_page;
@@ -63,6 +64,11 @@ void fragment() {
 	vec4 t = texture(albedo_arr, uvw);
 	ALBEDO = t.rgb;
 	ROUGHNESS = roughness;
+	if (ck_city_light > 0.0) {      // the city's sky and far shadow (rt_city_light)
+		vec3 cwn = normalize((INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
+		vec3 cl = ck_city_light_at((INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz, cwn, CAMERA_POSITION_WORLD);
+		AO = cl.x; ALBEDO *= ck_city_shade(cl.y, cwn);
+	}
 #ifndef CK_CHEAP
 	vec3 nm = vec3(0.5, 0.5, 1.0);
 	if (v_hasn > 0.5) nm = texture(normal_arr, uvw).rgb;

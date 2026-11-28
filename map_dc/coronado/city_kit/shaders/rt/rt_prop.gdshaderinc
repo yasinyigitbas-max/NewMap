@@ -8,6 +8,7 @@
 // The kit's prop atlas pages are layers of one texture array (runtime_tex/arr_prop_*.png), so every prop of a batch
 // shares this material whatever page it is on. Per prop: page, and whether its kit material had a normal / ORM map.
 #include "res://map_dc/coronado/city_kit/shaders/rt/rt_tier.gdshaderinc"
+#include "res://map_dc/coronado/city_kit/shaders/rt/rt_city_light.gdshaderinc"
 uniform sampler2DArray albedo_arr : source_color, filter_linear_mipmap, repeat_disable;
 uniform sampler2DArray normal_arr : hint_normal, filter_linear_mipmap, repeat_disable;
 uniform sampler2DArray orm_arr : filter_linear_mipmap, repeat_disable;
@@ -115,6 +116,11 @@ void fragment() {
 	ROUGHNESS = clamp(mix(rough, max(rough, 0.78), amount * 0.7), 0.04, 1.0);
 	METALLIC = metal * (1.0 - amount * 0.85);
 	AO = ao;
+	if (ck_city_light > 0.0) {      // the city's sky and far shadow (rt_city_light)
+		vec3 cl = ck_city_light_at(v_world_pos, v_world_n, CAMERA_POSITION_WORLD);
+		AO *= cl.x; ALBEDO *= ck_city_shade(cl.y, v_world_n);
+		EMISSION += ALBEDO * ck_city_bounce_at(v_world_n, cl.z) * cl.x;
+	}
 	AO_LIGHT_AFFECT = 1.0;
 	vec3 nm = vec3(0.5, 0.5, 1.0);
 	if (has_normal) nm = texture(normal_arr, uvw).rgb;

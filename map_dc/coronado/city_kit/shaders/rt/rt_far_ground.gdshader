@@ -10,6 +10,7 @@ render_mode cull_back;
 uniform sampler2D ground_top : source_color, filter_linear_mipmap_anisotropic, repeat_disable;
 uniform float roughness = 0.9;
 global uniform sampler2D ck_cells_loaded;
+#include "res://map_dc/coronado/city_kit/shaders/rt/rt_city_light.gdshaderinc"
 void vertex() {
 	float code = floor(UV2.y + 0.5);
 	float cell_in = texelFetch(ck_cells_loaded, ivec2(int(mod(code, 64.0)), int(floor(code / 64.0))), 0).r;
@@ -18,4 +19,8 @@ void vertex() {
 void fragment() {
 	ALBEDO = texture(ground_top, UV).rgb;
 	ROUGHNESS = roughness;
+	if (ck_city_light > 0.0) {      // the city's sky and far shadow (rt_city_light)
+		vec3 cl = ck_city_light_at((INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz, vec3(0.0, 1.0, 0.0), CAMERA_POSITION_WORLD);
+		AO = cl.x; ALBEDO *= ck_city_shade(cl.y, vec3(0.0, 1.0, 0.0));
+	}
 }

@@ -22,6 +22,7 @@ uniform float far_wear = 1.0;      // (0.92 on the bld_lod page) the near / mid'
 #endif
 uniform float scissor = 0.5;
 #include "res://map_dc/coronado/city_kit/shaders/rt/rt_tier.gdshaderinc"
+#include "res://map_dc/coronado/city_kit/shaders/rt/rt_city_light.gdshaderinc"
 varying float v_flat;
 varying flat float v_page;
 #ifdef CK_TIERS
@@ -66,6 +67,12 @@ void fragment() {
 #endif
 	ROUGHNESS = 0.9;
 	SPECULAR = 0.3;
+	if (ck_city_light > 0.0) {      // the city's sky and far shadow (rt_city_light)
+		vec3 cwn = normalize((INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
+		vec3 cl = ck_city_light_at((INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz, cwn, CAMERA_POSITION_WORLD);
+		AO = cl.x; ALBEDO *= ck_city_shade(cl.y, cwn);
+		EMISSION += ALBEDO * ck_city_bounce_at(cwn, cl.z) * cl.x;
+	}
 #ifdef RT_CUT
 	ALPHA = t.a;
 	ALPHA_SCISSOR_THRESHOLD = scissor;
