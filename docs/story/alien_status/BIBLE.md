@@ -275,7 +275,7 @@ Names are as written in the map data (some signs say Crownado, some Coronado: bo
 | In the story | On the new map | Missions |
 |---|---|---|
 | The camp and the interrogation room | Stage sets off the map, as in the old game (`camp_set.gd`, `interrogation_office.gd`) | P2, P3 |
-| The base gate | Alameda Blvd at 4th St, on the base fence. Needs the kit's unused `lmk_navy_gatehouse` placed there. | P4, 4.3 |
+| The base gate | Alameda Blvd at 4th St, on the base fence. Needs the kit's unused `lmk_navy_gatehouse` placed there. | P4 |
 | The ride into town | 4th St east from the gate, over Crown Hill (the "postcard drive"), down Amber Ave to 10th St | P4 |
 | **Home** | The brick house on the hilltop, north side of 10th St (`player_home.json`: `tudor_brick_player`, lot n1 of `n_hs_b6_tenth`). Rooms as built: hall, living room, snug, dining room, kitchen, office, bath; upstairs the attic bedroom (yours), attic bath and the **attic studio (locked)**. Garage on the alley behind. Address in the story: 15 Tenth Street. | from 1.1 |
 | The bus | The two loop lines and their stops; Island Transit Center | 1.2, 2.2 |
@@ -292,9 +292,10 @@ Names are as written in the map data (some signs say Crownado, some Coronado: bo
 | Ivan | Big Al's Tires, the car pound, the vacant lot, Payday Loans 4U, all gritty edge | 3.3 |
 | Grace's class | Christ Church Community Center | 3.4 |
 | Rhodes's table | Overlook Cafe, Glorietta Ring Park | 3.7 |
-| Where the ship hides | Under the water of Glorietta Bay, off the marina's fuel dock | 4.1, 4.4 |
+| The field trips | Amber Ave down to Amber Beach Plaza and its lookout tower; the stadium's fan plazas and Stadium Walk | 3.1, 3.6 |
+| Where the ship hides | Under the water of Glorietta Bay, off the marina's fuel dock | 4.1, 4.3 |
 | Where they hold Goo | Coronado University: the Science Building, the Quad, the campus garage | 4.2 |
-| The last flight | The marina, the bay, **under the bridge**, round the island ring | 4.4 |
+| The last flight | The marina, the bay, **under the bridge**, round the island ring | 4.3 |
 | The hearing | Coronado County Courthouse; Island Legal Aid next door | 4.5 |
 
 The island opens with the story. Prologue and chapter 1: the hill, the high street, your work. Chapter 2: the
@@ -363,7 +364,7 @@ carried, by play.
 | 3.3 | the car pound | fifty words used well: *wait, go, up, over, behind, quiet* |
 | 3.4 | Grace's class | inviting; *want to*; days and times |
 | 3.5 | the kitchen | food, amounts, *how many / how much*; *first, then* |
-| 3.6 | the stake-out | hearing a time, a place, a number |
+| 3.6 | the stadium crowd | hearing a time, a place, a number; *want to* |
 | 3.7 | check-in, the offer | *have to*; saying no |
 | 4.x | everything, fast | review under pressure; *because*; *should* as a real choice; telling your story |
 
