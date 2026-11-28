@@ -119,6 +119,10 @@ void CityRooms::finish(int i) {
 		Node3D *w = Object::cast_to<Node3D>(wv[k]);
 		if (!w || !w->get_node_or_null(NodePath("pane"))) continue;
 		w->set_script(Variant());      // (22 Nov) as the doors: no GDScript per window in the game, C++ cracks/breaks it (shards + sound)
+		// (28 Nov: pale flat cards and thin pale lines in the sky, at random, seen with no people and no traffic; Yasin's "white
+		// squares and lines in the air") the glass burst's 24 unshaded quads are a particle system drawn whether or not it
+		// burst: hidden until a window breaks (break_window shows it for its burst)
+		if (CPUParticles3D *sh = Object::cast_to<CPUParticles3D>(w->get_node_or_null(NodePath("shards")))) { sh->set_emitting(false); sh->set_visible(false); }
 		Win wi; wi.node = (uint64_t)w->get_instance_id(); wi.bid = bid_of(w, rm.scn); wi.hp = WINDOW_HP;
 		if (breakables.has(wi.bid)) {
 			const Dictionary st = breakables[wi.bid];
@@ -401,7 +405,7 @@ void CityRooms::win_broken(Node3D *p_win, const Vector2 &p_uv, bool p_burst) {
 	const Vector2 sz = p_win->has_meta("size") ? (Vector2)p_win->get_meta("size") : Vector2(1, 1);
 	const Vector3 hit_local(p_uv.x * sz.x, (1.0f - p_uv.y) * sz.y, 0.0f);
 	if (CPUParticles3D *sh = Object::cast_to<CPUParticles3D>(p_win->get_node_or_null(NodePath("shards")))) {
-		sh->set_position(hit_local); sh->restart(); sh->set_emitting(true);
+		sh->set_visible(true); sh->set_position(hit_local); sh->restart(); sh->set_emitting(true);
 	}
 	const Vector3 at = get_global_transform().affine_inverse().xform(p_win->get_global_transform().xform(hit_local));
 	elsfx::play(this, "res://audio/sfx/car/glass_shatter_", -3.0f, 0.06f, at, 35.0f);

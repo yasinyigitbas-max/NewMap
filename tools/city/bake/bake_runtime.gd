@@ -85,7 +85,10 @@ var kept_trees := {}         # the hand-placed trees (t_* pieces), world: Vector
 ## copies are not merged but kept as instances in nodes named brk_<kind> (one per kind and cell), and their colliders are
 ## taken out of the cell's bodies and stored on that node (meta "brk_cols": [[points, world transform], ...]); the C++
 ## CityBreakables draws them whole, gives the ones near the player colliders, and knocks one over when a car hits it.
-const BRK_KINDS := ["prop_bus_stop_sign", "prop_beach_sign", "prop_cone_", "prop_mailbox_post", "prop_bollard_steel", "prop_bollard_iron", "prop_trash_bin", "prop_newsbox", "prop_parking_meter"]
+## (28 Nov, Yasin: "non of the props break still. benches, hydrants, road signs, nothing break") "prop_trash_bin" and
+## "prop_newsbox" were never the kit's names (prop_trash_receptacle, prop_newspaper_box): bins and newsboxes never broke.
+## Added: the road signs, hydrants, benches, the recycling bins, the blue mail boxes.
+const BRK_KINDS := ["prop_bus_stop_sign", "prop_beach_sign", "prop_cone_", "prop_mailbox_post", "prop_bollard_steel", "prop_bollard_iron", "prop_trash_receptacle", "prop_recycling_receptacle", "prop_newspaper_box", "prop_parking_meter", "prop_sign_", "prop_hydrant_", "prop_park_bench", "prop_bench_bus_stop", "prop_usps_collection_box"]
 var brk_on := true           # --nobreak: bake as before
 var cur_brk: Array = []      # this piece's breakables, world: [position, claimed] (each claims ONE collider, the nearest)
 ## (28 Nov night, Yasin: "remove collision from small plants, we are climbing onto flowers") the small plants that had a
