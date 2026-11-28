@@ -1044,6 +1044,16 @@ func _bay_building(rec: Dictionary, piece: String, model: String, rows: Array) -
 				for quad: Array in [[0, 1, 2, 3], [4, 7, 6, 5], [0, 4, 5, 1], [1, 5, 6, 2], [2, 6, 7, 3], [3, 7, 4, 0]]:
 					faces.append(tq[quad[0]]); faces.append(tq[quad[1]]); faces.append(tq[quad[2]])
 					faces.append(tq[quad[0]]); faces.append(tq[quad[2]]); faces.append(tq[quad[3]])
+		# (28 Nov, Yasin: "Our feet sinks in the floor in indoors") the room's collision was its furniture's boxes only: he
+		# stood on what is under the building (the ground) while the shell's floor is drawn at the bay's floor_y, higher
+		# where the ground floor is raised. The floor rectangle at that height goes into the collision too.
+		var rfy := float(room.get_meta(&"floor_y", 0.02))
+		for fr: Array in (room.get_meta(&"floors", []) as Array):
+			if fr.size() < 4: continue
+			var a0 := Vector3(float(fr[0]), rfy, float(fr[1])); var a1 := Vector3(float(fr[2]), rfy, float(fr[1]))
+			var a2 := Vector3(float(fr[2]), rfy, float(fr[3])); var a3 := Vector3(float(fr[0]), rfy, float(fr[3]))
+			faces.append(a0); faces.append(a2); faces.append(a1); faces.append(a0); faces.append(a3); faces.append(a2)
+			stat["rooms_floor_cols"] = int(stat.get("rooms_floor_cols", 0)) + 1
 		var cd: Resource = ColData.new(); cd.kind = 0; cd.data = faces; cd.backface = true
 		ResourceSaver.save(cd, out + "rooms/" + nm + "_col.res", ResourceSaver.FLAG_COMPRESS)
 		BL.merge_props(room, (int(builtin_rank.get(p2.id, 0)) + absi(String(p2.kind).hash())) % BL.PALETTES.size())      # (1-3 draws of props; the palette dealt by rank within the kind, offset per kind; saved again, merged)

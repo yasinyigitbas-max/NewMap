@@ -435,6 +435,7 @@ static func fill_bay(model: String, i: int, kind: String, t: String, mirror: boo
 	room.set_meta(&"builtin", true); room.set_meta(&"kind", kind); room.set_meta(&"model", model); room.set_meta(&"bay", i)
 	room.set_meta(&"template", t); room.set_meta(&"mirror", mirror); room.set_meta(&"decor_shift", shift)
 	room.set_meta(&"floors", it.get_meta(&"floors", [])); room.set_meta(&"entrances", it.get_meta(&"entrances", []))
+	room.set_meta(&"floor_y", float(it.get_meta(&"floor_y", 0.02)))      # (the shell's floor height: the bake's collision floor, 28 Nov)
 	room.set_meta(&"cut", []); room.set_meta(&"openings", [])
 	it.free()
 	return room
