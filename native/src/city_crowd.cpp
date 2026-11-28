@@ -563,7 +563,8 @@ bool CityCrowd::use_new_far() {
 	Ref<FileAccess> f = FileAccess::open_compressed(far_new_dir + String("far_poses.bin"), FileAccess::READ, FileAccess::COMPRESSION_ZSTD);
 	if (f.is_null() || f->get_32() != 0x32525046u) return false;
 	const int tw = (int)f->get_32(), th = (int)f->get_32(), ch = (int)f->get_32();
-	const int poses = (int)f->get_32(), n = (int)f->get_32(), cmax = (int)f->get_32();
+	const int poses = (int)f->get_32(), n = (int)f->get_32(), cmax0 = (int)f->get_32();
+	const int cmax = cmax0 - cmax0 % 3;      // (the table gives rows x width; the mesh needs whole triangles)
 	float g2[2][6];
 	for (int g = 0; g < 2; g++) for (int q = 0; q < 6; q++) g2[g][q] = f->get_float();
 	if (poses != POSES || n <= 0 || n > 48 || tw <= 0 || th <= 0) { UtilityFunctions::push_error("CityCrowd: ", far_new_dir, "far_poses.bin is of another make"); return false; }
