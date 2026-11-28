@@ -1,5 +1,6 @@
 // See trav_mods.h. Each function is its script's function, line for line.
 #include "trav_mods.h"
+#include "trav_probe.h"
 
 #include "trav_math.h"
 
@@ -78,6 +79,7 @@ void TravArmOpen::_bind(Skeleton3D *sk) {
 }
 
 void TravArmOpen::_process_modification_with_delta(double p_delta) {
+	TRAV_PM(TRAV_MODS);
 	Skeleton3D *sk = get_skeleton();
 	if (sk == nullptr || open_deg == 0.0) {
 		return;
@@ -141,6 +143,7 @@ SETD(head_deg) SETD(turn_deg)
 GETSET_END
 
 void TravTrunkTurn::_process_modification_with_delta(double p_delta) {
+	TRAV_PM(TRAV_MODS);
 	Skeleton3D *sk = get_skeleton();
 	if (sk == nullptr || (turn_deg == 0.0 && head_deg == 0.0)) {
 		return;
@@ -187,6 +190,7 @@ SETV(place)
 GETSET_END
 
 void TravHandHold::_process_modification_with_delta(double p_delta) {
+	TRAV_PM(TRAV_MODS);
 	Skeleton3D *sk = get_skeleton();
 	Object *pl = place;
 	if (sk == nullptr || pl == nullptr) {
@@ -233,6 +237,7 @@ SETV(place) SETV(feet)
 GETSET_END
 
 void TravFootOrient::_process_modification_with_delta(double p_delta) {
+	TRAV_PM(TRAV_MODS);
 	Skeleton3D *sk = get_skeleton();
 	Object *pl = place;
 	if (sk == nullptr || pl == nullptr) {
@@ -323,6 +328,7 @@ Array TravFingerGrip::hand_frame(Skeleton3D *sk, int f) {
 }
 
 void TravFingerGrip::_process_modification_with_delta(double p_delta) {
+	TRAV_PM(TRAV_MODS);
 	Skeleton3D *sk = get_skeleton();
 	if (sk == nullptr) {
 		return;

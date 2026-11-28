@@ -222,6 +222,7 @@ double TravTraverse::_at(const PackedFloat32Array &table, double t) {
 }
 
 void TravTraverse::_physics_process(double _dt) {
+	TRAV_PM(TRAV_TRAVERSE);
 	if (body == nullptr || !enabled || (bool)body->call("in_move")) {
 		return;
 	}

@@ -7,9 +7,13 @@
 namespace pm {
 
 enum Id { ROOMS, BREAKABLES, CROWD, CROWD_PHYS, TRAFFIC, TRAFFIC_PHYS, AMBIENCE, CAR, PLAYER, PLAYER_PHYS, PED_PHYS, BIKE,
-	HUD, TALK, STEPS, ENGINE, GAME, BRK_POOL, BRK_HITS, BRK_CELL, ROOM_GET, ROOM_INST, ROOM_ADD, N };
+	HUD, TALK, STEPS, ENGINE, GAME, BRK_POOL, BRK_HITS, BRK_CELL, ROOM_GET, ROOM_INST, ROOM_ADD,
+	TRAV_BODY, TRAV_CHAR, TRAV_TRAVERSE, TRAV_INTERACT, TRAV_HOLD, TRAV_MODS,
+	TB_NARROW, TB_SQUEEZE, TB_STAIRS, TB_MOVE, TB_GROUND, TB_SAMPLE, N };
 inline const char *NAME[N] = { "rooms", "breakables", "crowd", "crowd_phys", "traffic", "traffic_phys", "ambience", "car",
-	"player", "player_phys", "ped_phys", "bike", "hud", "talk", "steps", "engine", "game", "brk_pool", "brk_hits", "brk_cell", "room_get", "room_inst", "room_add" };
+	"player", "player_phys", "ped_phys", "bike", "hud", "talk", "steps", "engine", "game", "brk_pool", "brk_hits", "brk_cell", "room_get", "room_inst", "room_add",
+	"trav_body", "trav_char", "trav_traverse", "trav_interact", "trav_hold", "trav_mods",
+	"tb_narrow", "tb_squeeze", "tb_stairs", "tb_move", "tb_ground", "tb_sample" };
 inline double acc_ms[N] = {};
 
 struct Scope {

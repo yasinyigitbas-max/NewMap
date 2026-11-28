@@ -127,6 +127,7 @@ var _shot_place := -1          # --walkshot: the place the picture is of
 var game: Node = null           # the game's shell (CityGame) when it started this world
 var _shot_cam: Camera3D
 var people: Node             # the C++ crowd (--people=N); null without it
+var all_args: PackedStringArray = []      # the user args and the args file together (_ready)
 var opt := {"car": "", "walk": "", "walkshot": "", "walkcrowd": 0, "water": 0.0, "at": "", "people": 0, "hour": 12.5, "traffic": 0, "parked": 1, "density": 1.0, "carshadows": 1, "carbodies": 1, "look": "1", "cycle": 0.0, "clock": 7.0, "celestial": 1, "sea": 1, "weather": "", "air": 0, "cars": 0, "carenv": 1, "shadowtune": 1, "bloom": 0, "upscale": 0, "sharp": 0.2, "glow": 1, "blobs": 0, "wet": 0.0, "reflect": 1, "shots": "", "plan": "default", "scale": 0.0, "quit": false, "lead": 2.0, "maxcells": 30, "loading": 2, "bodies": 6, "coltris": 1200, "colms": 2.0, "loader": 0, "gpureserve": 192, "lights": 20, "nowarm": false, "nocol": false, "hide": false, "probe": false, "tiers": false, "band": 8.0, "arrive": 0.5, "nofarground": false, "census": "both", "views": "", "censussecs": 2.0, "warmnight": true, "colrange": 100.0, "boost": 4.0, "rooms": 1, "maxfps": 0, "near": 100.0}
 var out_lines: PackedStringArray = []
 var own_drives: Array = []      # from --drive=...: used instead of the plan
@@ -142,6 +143,7 @@ func _ready() -> void:
 	# (Yasin, 28 Nov, the downloaded build: "goes straight into test laps instead of letting me roam") on a phone with no
 	# rig_args.txt the app is the GAME: a measuring run always writes that file (phone_rig.sh run), a downloaded build has none
 	elif OS.has_feature("android") and OS.get_cmdline_user_args().is_empty(): args.append("--game")
+	all_args = args      # (28 Nov night: --oldplayer / --oldpeople are read from here, so a phone run's args file takes them too)
 	# --game (Yasin, 20 Nov: "cant you just inject skipping the rig?"): the rig app opens the game's menu instead of a measuring
 	# run (game/boot.tscn; the game then loads this scene as its world, with its own Game node at the root)
 	# --autoplay (28 Nov night): the game played by itself for a phone test (tools/city/rig/autoplay.gd): it lives on the root
@@ -218,7 +220,7 @@ func _ready() -> void:
 	# (Yasin, 28 Nov: the old people "out of the game entirely") with the new character and people (the default, see below),
 	# no old figure is drawn: the crowd shows only its near new bodies, 18 of them (the pool's most; it was 12), and the
 	# traffic has no cyclists (their riders are old figures). `-- --oldpeople` or `-- --oldplayer` keep the old ones.
-	var new_people := not ("--oldplayer" in OS.get_cmdline_user_args()) and not ("--oldpeople" in OS.get_cmdline_user_args()) and ResourceLoader.exists("res://traversal/character/library.res")
+	var new_people := not ("--oldplayer" in all_args) and not ("--oldpeople" in all_args) and ResourceLoader.exists("res://traversal/character/library.res")
 	if int(opt.traffic) > 0:      # the traffic: one C++ node; this script sets its numbers and asks for a line at the end of a drive
 		if ClassDB.class_exists(&"CityTraffic"):
 			traffic = ClassDB.instantiate(&"CityTraffic")
@@ -457,10 +459,10 @@ func _free_walk(start: Vector3, yaw: float) -> void:
 	# (28 Nov, Yasin: "i need to see the new npcs and the character in the game"): it is the DEFAULT now, on the phone too
 	# (no arguments there); `-- --oldplayer` gives the old player back. Without res://traversal/ (sync_to_game.sh) he stays
 	# as he was.
-	if not ("--oldplayer" in OS.get_cmdline_user_args()) and ResourceLoader.exists("res://traversal/character/library.res"):
+	if not ("--oldplayer" in all_args) and ResourceLoader.exists("res://traversal/character/library.res"):
 		pl.call(&"set_traversal", true)
 		# the crowd's near figures are drawn as the new bodies, on the traversal system (CityCrowd::set_trav_people)
-		if people and people.has_method(&"set_trav_people") and not ("--oldpeople" in OS.get_cmdline_user_args()):
+		if people and people.has_method(&"set_trav_people") and not ("--oldpeople" in all_args):
 			people.call(&"set_trav_people", true)
 		_say("the player is on the traversal body: %s" % str(pl.call(&"get_traversal")))
 	if game:      # the shell sets him down (a new game: the pavement nearest the centre, with his bicycle and a car; or where he was saved)

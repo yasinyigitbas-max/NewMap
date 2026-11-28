@@ -132,6 +132,7 @@ private:
 	std::vector<TravNb> trav_pool;
 	std::vector<String> trav_ids;
 	bool trav_people = false;
+	bool trav_due = false;      // a frame was drawn since the last trav_people_update (set in _process)
 	void trav_make(int k);
 	int trav_seat_busy = -1;
 	// the benches near the player as seats his own sitting take can use (the lab's group "tl_seat"): the nearest four

@@ -48,11 +48,11 @@ var dbg_t := 0.0
 var walk_check := Vector3()
 var turns := 0
 var walk_from := Vector3()
-var shot_done := ""
+var shot_done := {}
 
 func _shot(tag: String) -> void:      # one picture a phase, in its middle: user://autoplay/<tag>.jpg (phone: run-as ... files/autoplay)
-	if shot_done == tag: return
-	shot_done = tag
+	if shot_done.has(tag): return      # (once each: a readback stalls the frame)
+	shot_done[tag] = true
 	DirAccess.make_dir_recursive_absolute("user://autoplay")
 	get_viewport().get_texture().get_image().save_jpg("user://autoplay/%s.jpg" % tag, 0.8)
 
@@ -73,7 +73,7 @@ func _phase(name: String) -> void:
 		var f := float(ph_frames)
 		var top: Array = ph_sys.keys(); top.sort_custom(func(a, b) -> bool: return float(ph_sys[a]) > float(ph_sys[b]))
 		var parts: PackedStringArray = []
-		for k in top.slice(0, 8): parts.append("%s %.2f" % [k, float(ph_sys[k]) / f])
+		for k in top.slice(0, 14): parts.append("%s %.2f" % [k, float(ph_sys[k]) / f])
 		_say("cost %s (ms a frame): process %.1f, physics %.1f, gpu %.1f, draw calls %.0f | systems: %s" % [ph, ph_proc / f, ph_phys / f, ph_gpu / f, ph_draws / f, ", ".join(parts)])
 	ph = name; ph_frames = 0; ph_over33 = 0; ph_over50 = 0; ph_worst = 0.0; ph_sum = 0.0
 	ph_sys = {}; ph_proc = 0.0; ph_phys = 0.0; ph_gpu = 0.0; ph_draws = 0.0
@@ -116,7 +116,9 @@ func _process(delta: float) -> void:
 		if ms > 50.0: ph_over50 += 1
 		ph_proc += Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0
 		ph_phys += Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS) * 1000.0
-		ph_gpu += RenderingServer.viewport_get_measured_render_time_gpu(get_viewport().get_viewport_rid())
+		# (the GPU time is read on one frame in 30: each read makes the render thread catch up, which costs a frame itself)
+		if ph_frames % 30 == 1:
+			ph_gpu += RenderingServer.viewport_get_measured_render_time_gpu(get_viewport().get_viewport_rid()) * 30.0
 		ph_draws += Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)
 		if st and st.has_method(&"perf_take"):
 			var d: Dictionary = st.call(&"perf_take")

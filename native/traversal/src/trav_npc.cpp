@@ -1,5 +1,6 @@
 // See trav_npc.h. Translated from traversal_lab/traversal/npc/body_fit.gd and npc_character.gd, line for line.
 #include "trav_npc.h"
+#include "trav_probe.h"
 
 #include <cmath>
 
@@ -84,6 +85,7 @@ void TravBodyFit::bind(Skeleton3D *sk) {
 }
 
 void TravBodyFit::_process_modification_with_delta(double p_delta) {
+	TRAV_PM(TRAV_MODS);
 	Skeleton3D *sk = get_skeleton();
 	if (sk == nullptr || _hips < 0) {
 		return;

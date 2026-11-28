@@ -103,6 +103,7 @@ double TravInteract::_at(const PackedFloat32Array &table, double t) {
 }
 
 void TravInteract::_physics_process(double _dt) {
+	TRAV_PM(TRAV_INTERACT);
 	if (body == nullptr || !enabled || (bool)body->call("in_move")) {
 		return;
 	}

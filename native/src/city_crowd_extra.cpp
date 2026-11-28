@@ -225,7 +225,9 @@ void CityCrowd::_physics_process(double p_delta) {
 	// the new bodies (city_crowd_trav.cpp): here, not after near_update in the drawn frame: they ask the ground where a body is
 	// set down, and on the phone the world's collision answers only in the physics step (28 Nov: asked in the frame, no new
 	// body was ever shown there)
-	if (ready) trav_people_update();
+	// once a drawn frame, on the first physics step after it (a slow frame is followed by several steps: run on each, its
+	// cost grew with the slowness, 28 Nov night)
+	if (ready && trav_due) { trav_due = false; trav_people_update(); }
 #endif
 	if (!extras || !ready) return;
 	cap_steps++;

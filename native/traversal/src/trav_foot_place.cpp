@@ -110,6 +110,7 @@ Dictionary TravFootPlace::_ground(CharacterBody3D *bd, const Vector3 &at, double
 }
 
 void TravFootPlace::_process_modification_with_delta(double dt) {
+	TRAV_PM(TRAV_MODS);
 	Skeleton3D *sk = get_skeleton();
 	CharacterBody3D *bd = Object::cast_to<CharacterBody3D>((Object *)body);
 	if (sk == nullptr || bd == nullptr || _hips < 0 || target.size() < 2) {

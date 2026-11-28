@@ -5,6 +5,8 @@
 // (Yasin, 27 Nov 2026: "make all the code c plus plus and make god damn sure nothing ever breaks".)
 #pragma once
 
+#include <godot_cpp/classes/box_shape3d.hpp>
+#include <godot_cpp/classes/physics_shape_query_parameters3d.hpp>
 #include <godot_cpp/classes/capsule_shape3d.hpp>
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/collision_shape3d.hpp>
@@ -168,6 +170,9 @@ public:
 	Vector3 squeeze_mid;
 	Vector3 squeeze_across = Vector3(1, 0, 0);
 	Vector3 _gap_mid;
+	// (28 Nov night, the phone) one box over all the squeeze rays' reach: empty, the rays are not cast (_find_squeeze)
+	Ref<BoxShape3D> _clear_box;
+	Ref<PhysicsShapeQueryParameters3D> _clear_q;
 	Vector3 _gap_n = Vector3(1, 0, 0);
 	double radius = RADIUS;
 	Vector3 stick_dir;

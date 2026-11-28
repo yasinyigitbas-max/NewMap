@@ -7,6 +7,7 @@
 #include "trav_math.h"
 
 #include <godot_cpp/classes/box_mesh.hpp>
+#include <godot_cpp/classes/box_shape3d.hpp>
 #include <godot_cpp/classes/capsule_mesh.hpp>
 #include <godot_cpp/classes/cylinder_mesh.hpp>
 #include <godot_cpp/classes/cylinder_shape3d.hpp>
@@ -402,6 +403,7 @@ Dictionary TravBody::_ledge_at(const Vector3 &at, const Vector3 &across) {
 }
 
 void TravBody::_find_squeeze() {
+	TRAV_PM(TB_SQUEEZE);
 	PhysicsDirectSpaceState3D *space = TRAV_SPACE(this);
 	if (!space) {
 		return;
@@ -413,6 +415,29 @@ void TravBody::_find_squeeze() {
 		fwd = _wish.normalized();
 	}
 	Vector3 across = fwd.cross(UP).normalized();
+	// (28 Nov night: on the phone this was ~70 % of a body's tick, 6 to 20 rays a tick for every person) in the usual
+	// state (not squeezing, full radius) one box first: it covers every ray below (0.5 to 1.5 m up, 0.6 m to each side
+	// and round each point looked at, from 0.6 m behind to 0.6 m past the farthest point ahead). Nothing in it: no ray
+	// can hit, so the result is the one the rays would give (no gap, no ledge), without casting them.
+	if (squeeze == 0 && radius >= RADIUS - 0.0005) {
+		const bool moving = D(_wish.length()) > 0.05 && state == GROUND;
+		const double reach = !moving ? 0.0 : maxf(SQUEEZE_AHEAD, D(hvel.length()) > WALK + 0.1 ? D(hvel.length()) * SQUEEZE_SLOW_TIME : 0.0);
+		if (_clear_box.is_null()) { _clear_box.instantiate(); _clear_q.instantiate(); _clear_q->set_shape(_clear_box); }
+		_clear_box->set_size(V(2.0 * 0.66, 1.0 + 0.12, reach + 2.0 * 0.66));
+		Basis b = Basis::looking_at(-fwd, UP);      // (-z of the box along fwd)
+		_clear_q->set_transform(Transform3D(b, gp + mul(UP, 1.0) + mul(fwd, reach * 0.5)));
+		TypedArray<RID> exc;
+		exc.push_back(get_rid());
+		_clear_q->set_exclude(exc);
+		_clear_q->set_collision_mask(trav::probe_mask(this));
+		if (space->intersect_shape(_clear_q, 1).is_empty()) {
+			squeeze = 0;
+			squeeze_w = INFINITY;
+			squeeze_mid = _gap_mid;
+			squeeze_across = _gap_n;
+			return;
+		}
+	}
 	double w = _gap_at(gp, across);
 	Vector3 mid = _gap_mid;
 	Vector3 mid_n = _gap_n;
@@ -534,6 +559,7 @@ void TravBody::_set_radius(double r) {
 }
 
 int TravBody::_narrow_now() {
+	TRAV_PM(TB_NARROW);
 	if (state != GROUND) {
 		return 0;
 	}
@@ -599,12 +625,14 @@ void TravBody::_run_move(double dt) {
 }
 
 void TravBody::_physics_process(double dt) {
+	TRAV_PM(TRAV_BODY);
 	if (Engine::get_singleton()->is_editor_hint()) {
 		return;
 	}
 	Dictionary s;
 	Object *tape_o = tape;
 	if (tape_o) {
+		TRAV_PM(TB_SAMPLE);
 		s = tape_o->call("sample");
 	}
 	last_sample = s;
@@ -863,6 +891,7 @@ Dictionary TravBody::_ray_down(const Vector3 &at) {
 }
 
 void TravBody::_find_stairs(double dt) {
+	TRAV_PM(TB_STAIRS);
 	Vector3 gp = get_global_position();
 	double speed = D(hvel.length());
 	Vector3 dir = speed > 0.2 ? div(hvel, speed) : (D(_wish.length()) > 0.05 ? _wish.normalized() : ZERO);
@@ -975,6 +1004,7 @@ double TravBody::stop_distance() {
 }
 
 void TravBody::_move(Vector3 motion, bool flat) {
+	TRAV_PM(TB_MOVE);
 	_touched = false;
 	for (int i = 0; i < 4; i++) {
 		if (D(motion.length()) < 0.00001) {
@@ -1033,6 +1063,7 @@ void TravBody::_slow_for_rising_ground() {
 }
 
 void TravBody::_update_ground(double dt) {
+	TRAV_PM(TB_GROUND);
 	Vector3 feet = get_global_position();
 	if (state == GROUND || state == STEEP) {
 		Dictionary g = probe(feet);

@@ -828,6 +828,7 @@ double TravCharacter::_clip_length(const String &input) {
 }
 
 void TravCharacter::_physics_process(double dt) {
+	TRAV_PM(TRAV_CHAR);
 	if (body == nullptr) {
 		return;
 	}

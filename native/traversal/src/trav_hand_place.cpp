@@ -89,6 +89,7 @@ void TravHandPlace::bind(Skeleton3D *sk) {
 }
 
 void TravHandPlace::_process_modification_with_delta(double dt) {
+	TRAV_PM(TRAV_MODS);
 	Skeleton3D *sk = get_skeleton();
 	CharacterBody3D *bd = Object::cast_to<CharacterBody3D>((Object *)body);
 	if (sk == nullptr || bd == nullptr || target.size() < 2 || ik.size() < 2 || _hand[0] < 0) {

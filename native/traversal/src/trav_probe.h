@@ -38,3 +38,11 @@ inline godot::Dictionary ray_at(godot::Node3D *n, const godot::Ref<godot::Physic
 } // namespace trav
 #define TRAV_SPACE(n) trav::space_at((n), __FILE__, __LINE__)
 #define TRAV_RAY(n, q) trav::ray_at((n), (q), __FILE__, __LINE__)
+// the game's per-system frame timers (native/src/perf_marks.h; 28 Nov night: what the new bodies cost on the phone);
+// nothing in the lab's own build
+#ifdef TRAV_IN_GAME
+#include "perf_marks.h"
+#define TRAV_PM(id) pm::Scope _trav_pm(pm::id)
+#else
+#define TRAV_PM(id)
+#endif

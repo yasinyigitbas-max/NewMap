@@ -1,5 +1,6 @@
 // The things he holds, and his fists. See trav_hold.h.
 #include "trav_hold.h"
+#include "trav_probe.h"
 
 #include "trav_math.h"
 
@@ -184,6 +185,7 @@ void TravHold::_begin(const String &key, const String &clip, double from, double
 }
 
 void TravHold::_physics_process(double dt) {
+	TRAV_PM(TRAV_HOLD);
 	if (body == nullptr || _chr == nullptr) {
 		return;
 	}
