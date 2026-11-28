@@ -69,6 +69,10 @@ do_export() {
   # the native module (traffic and people in C++, docs/TRAFFIC_PEOPLE_PORT.md) is built here, not kept in git: a
   # few seconds when nothing changed. If it cannot be built the app is exported without it and says so at start.
   if [ -f native/build.sh ]; then bash native/build.sh | grep -a "NATIVE_BUILD" || true; [ -f native/bin/libcoronado_city.android.arm64.so ] || echo "PHONE_RIG the native module did not build: exporting without it"; fi
+  # (28 Nov night) a kit texture re-imported with Godot's defaults loses its mipmaps and its compression: bricks seen at a
+  # distance turned to streaks on the phone (bld_color.png.import, rewritten by a headless import). No export like that.
+  BAD=$(grep -l "^mipmaps/generate=false" assets/coronado_kit/textures/*.png.import assets/coronado_kit/atlases/*.png.import 2>/dev/null)
+  [ -z "$BAD" ] || die "kit textures without mipmaps (restore them: git checkout HEAD -- <file>, then --import): $BAD"
   touch android/build/.gdignore      # the editor must not read the template folder as project files (the stock template ships this file)
   # No gradle daemon: on Windows it stays alive after the build, holds the log open, and the export never returns.
   export GRADLE_OPTS="${GRADLE_OPTS:-} -Dorg.gradle.daemon=false"
