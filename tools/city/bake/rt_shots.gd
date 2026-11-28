@@ -68,6 +68,14 @@ func _run() -> void:
 	var st: Node3D = ClassDB.instantiate(STREAM_CLASS); st.runtime_dir = rt; st.name = "City"; root.add_child(st)
 	st.set_night(night); st.lead_seconds = lead_s
 	var cam := Camera3D.new(); cam.fov = 60.0; cam.far = 2000.0; root.add_child(cam); cam.current = true
+	for a2 in OS.get_cmdline_user_args():      # --fov=deg (28 Nov, far LOD views: the game's 74)
+		if a2.begins_with("--fov="): cam.fov = float(a2.trim_prefix("--fov="))
+		if a2.begins_with("--camfar="): cam.far = float(a2.trim_prefix("--camfar="))      # (the game's camera: 900)
+		if a2 == "--gameshadow":      # the game's sun shadow (tools/city/look/look.gd, shadow_tune): 50 m, 2 blended splits, fade 30-50 m
+			sun.directional_shadow_max_distance = 50.0; sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
+			sun.directional_shadow_split_1 = 0.25; sun.directional_shadow_blend_splits = true; sun.directional_shadow_fade_start = 0.6
+		if a2.begins_with("--sun="):      # --sun=pitch,yaw (degrees; default -48,-35)
+			var sa := a2.trim_prefix("--sun=").split_floats(","); sun.rotation_degrees = Vector3(sa[0], sa[1], 0)
 	if "--nofar" in OS.get_cmdline_user_args() and st.far_world: st.far_world.visible = false
 	var lights: Node3D = null
 	if nlights > 0:
@@ -96,7 +104,10 @@ func _run() -> void:
 			await RenderingServer.frame_post_draw
 			root.get_viewport().get_texture().get_image().save_png(out.path_join("%s%s.png" % [c[0], "" if frames == 1 else "_%03d" % fi]))
 			if fi < frames - 1: await process_frame
-		print("SHOT %s draws=%d prims=%d cells=%d" % [c[0], RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME), RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME), st.loaded_count()])
+		var vpr := root.get_viewport().get_viewport_rid(); var VR := RenderingServer
+		print("SHOT %s draws=%d prims=%d cells=%d | visible draws=%d prims=%d | shadow draws=%d prims=%d" % [c[0], RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME), RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_PRIMITIVES_IN_FRAME), st.loaded_count(),
+			VR.viewport_get_render_info(vpr, VR.VIEWPORT_RENDER_INFO_TYPE_VISIBLE, VR.VIEWPORT_RENDER_INFO_DRAW_CALLS_IN_FRAME), VR.viewport_get_render_info(vpr, VR.VIEWPORT_RENDER_INFO_TYPE_VISIBLE, VR.VIEWPORT_RENDER_INFO_PRIMITIVES_IN_FRAME),
+			VR.viewport_get_render_info(vpr, VR.VIEWPORT_RENDER_INFO_TYPE_SHADOW, VR.VIEWPORT_RENDER_INFO_DRAW_CALLS_IN_FRAME), VR.viewport_get_render_info(vpr, VR.VIEWPORT_RENDER_INFO_TYPE_SHADOW, VR.VIEWPORT_RENDER_INFO_PRIMITIVES_IN_FRAME)])
 	if probe:
 		cam.fov = 70.0; cam.far = 2600.0; gp.visible = false; sun.shadow_enabled = false; env.background_mode = Environment.BG_COLOR
 		var res: Array = []

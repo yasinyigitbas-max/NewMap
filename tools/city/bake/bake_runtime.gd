@@ -68,6 +68,21 @@ var layers := {}             # arrays.json: set name -> [texture path per layer]
 var fg_src: Array = []       # every piece ground of the island (whatever --area says): [mesh, world transform, cell]
 var fg_node: Node3D = null   # the far ground, made before the far world (it goes into far_world.scn)
 var fg_on := true            # --nofarground: bake without it
+## FAR LOD (28 Nov; Yasin: "how long would it take?", "cant the far world be done on a cloud session?"). The far world
+## was 24 meshes of 1 km: nearly all of it was drawn every frame (no culling behind the camera, no reduction with
+## distance). Now it is cut into FAR_TILE tiles (the engine culls the tiles outside the view) and each tile carries
+## LOD index arrays (Godot's own selection: the coarsest level whose error is under mesh_lod_threshold, 1 px, at the
+## tile's nearest point). Each far object is simplified ON ITS OWN (ImporterMesh.generate_lods, meshoptimizer: borders
+## locked, seams kept, every vertex an original vertex), so no triangle ever joins two objects: each vertex keeps its
+## object's pivot / far end / cell (CUSTOM0, UV2) and the far shaders collapse it exactly as before. Shaders unchanged.
+## --nofarlod: the old far world (1 km chunks, no LOD)   --fartile=M: another tile size
+const FAR_TILE := 400.0
+const FAR_LOD_STEPS := [0.03, 0.06, 0.12, 0.25, 0.5, 1.0, 2.0, 4.0, 8.0]   ## a tile's LOD levels: the largest error (m) in each
+var far_lod := true
+var far_tile := FAR_TILE
+var far_lod_fence := false   # --farlodfence: simplify the far fences too (a few single pixels of posts change)
+var far_mix := {}           # far LOD: category -> [objects, triangles, coarsest]
+var far_tpl := {}            # far object template key -> [arrays (indexed, its own space), [[error, indices], ...]]
 ## TREES OUT (19 Nov, Yasin: "we can turn off the trees entirely from the current builders and place your hand placed
 ## trees instead"; "can that same bake fill every tree well once they are gone too? with the same material as around
 ## the well"). --notrees: every tree_* / palm_* batch of every piece is left out of the bake (all tiers, and the trunk's
@@ -1437,7 +1452,11 @@ func _props(mmi: MultiMeshInstance3D) -> void:
 
 ## one far object: its far mesh into the chunk's bucket for that material
 func _far_add(where: Vector3, matkey: String, mesh: Mesh, xf: Transform3D, pivot: Vector3, end: float, flat: bool, two: bool, atlas: Texture2D, page: float, tint := Color.WHITE) -> void:
-	var key := [Vector2i(floori(where.x / CHUNK_FAR), floori(where.z / CHUNK_FAR)), matkey]
+	# far LOD: the fences (81 % of the far world's triangles, 28 Nov) get tiles of their own that end where they end
+	# (500 m); props share the buildings' tiles; plants (2 % of it) stay in 1 km chunks: each tile is a draw
+	var ts := CHUNK_FAR if (not far_lod or matkey == "far_cut") else far_tile
+	var key := [Vector2i(floori(where.x / ts), floori(where.z / ts)), matkey]
+	if far_lod: key.append(end if end == 500.0 else 1.0e9)
 	if not far.has(key): far[key] = []
 	far[key].append([mesh, xf, pivot, end, flat, two, atlas, page, tint])
 
@@ -1723,11 +1742,61 @@ func _tint_for(name: String, kit: String) -> Array:
 	var col: Color = pal[h % pal.size()]
 	return [col, float((h / 97) % 100) / 100.0 * 0.3 - 0.12]
 
+## FAR LOD (28 Nov): one far object's mesh in its own space, indexed, with exactly the corners the old far world made
+## for it (two-sided: the back copy with the normal turned; a far prop: one flat colour per triangle from its atlas),
+## and its LOD levels [[error in its own units, indices], ...] from Godot's simplifier (meshoptimizer). Made once per
+## mesh: every copy of a kit building shares it.
+func _far_template(e: Array) -> Array:
+	var mesh: Mesh = e[0]; var flat: bool = e[4]; var two: bool = e[5]
+	var colored: bool = flat and e[6] != null
+	var tk := [mesh.get_instance_id(), flat, two, (e[6] as Texture2D).get_instance_id() if colored else 0]
+	if far_tpl.has(tk): return far_tpl[tk]
+	var a := _arrays(mesh)
+	var v: PackedVector3Array = a[Mesh.ARRAY_VERTEX]
+	var nn: PackedVector3Array = a[Mesh.ARRAY_NORMAL] if a[Mesh.ARRAY_NORMAL] != null else _fill_v3(Vector3.UP, v.size())
+	var uv: PackedVector2Array = a[Mesh.ARRAY_TEX_UV] if a[Mesh.ARRAY_TEX_UV] != null else _fill_v2(v.size())
+	var col: Variant = a[Mesh.ARRAY_COLOR]
+	var idx: PackedInt32Array = a[Mesh.ARRAY_INDEX] if a[Mesh.ARRAY_INDEX] != null else PackedInt32Array(range(v.size()))
+	var order: Array = [[0, 1, 2]] if not two else [[0, 1, 2], [0, 2, 1]]
+	var V := PackedVector3Array(); var N := PackedVector3Array(); var UV := PackedVector2Array(); var C := PackedColorArray(); var I := PackedInt32Array()
+	var seen := {}
+	for t in range(0, idx.size(), 3):
+		var fc := Color.WHITE      # (not colored: the entry's tint is written for every vertex when it is placed)
+		if colored:      # (as the old far world: one flat colour per triangle, read from its atlas)
+			var cuv := (uv[idx[t]] + uv[idx[t + 1]] + uv[idx[t + 2]]) / 3.0
+			fc = _linear_texel(e[6], cuv) * 0.9
+			if col != null:
+				var vc: Color = (col as PackedColorArray)[idx[t]]; var mc := maxf(maxf(vc.r, vc.g), maxf(vc.b, 0.04)); var k := lerpf(1.0, mc, 0.5) / mc
+				fc = Color(fc.r * vc.r * k, fc.g * vc.g * k, fc.b * vc.b * k)
+		for o: Array in order:
+			for j: int in o:
+				var ix := idx[t + j]
+				var nv: Vector3 = nn[ix] if o[1] == 1 else -nn[ix]
+				var ck := [v[ix], nv, uv[ix], fc]
+				var vi: int = seen.get(ck, -1)
+				if vi < 0:
+					vi = V.size(); seen[ck] = vi
+					V.append(v[ix]); N.append(nv); UV.append(uv[ix]); C.append(fc)
+				I.append(vi)
+	var arr := []; arr.resize(Mesh.ARRAY_MAX)
+	arr[Mesh.ARRAY_VERTEX] = V; arr[Mesh.ARRAY_NORMAL] = N; arr[Mesh.ARRAY_TEX_UV] = UV; arr[Mesh.ARRAY_INDEX] = I
+	if colored: arr[Mesh.ARRAY_COLOR] = C      # (the simplifier weighs the flat colours: a colour edge is a seam it keeps)
+	var lods := []
+	if I.size() > 24:
+		var im := ImporterMesh.new(); im.add_surface(Mesh.PRIMITIVE_TRIANGLES, arr)
+		im.generate_lods(2.0, 0.0, [])      # (2 degrees: only equal normals weld; a hard edge stays a seam)
+		for li in im.get_surface_lod_count(0): lods.append([im.get_surface_lod_size(0, li), im.get_surface_lod_indices(0, li)])
+		lods.sort_custom(func(x: Array, y: Array) -> bool: return float(x[0]) < float(y[0]))
+	var r := [V, N, UV, C, I, lods]
+	far_tpl[tk] = r
+	return r
+
 func _build_far() -> Dictionary:
+	if far_lod: return _build_far_lod()
 	var root := Node3D.new(); root.name = "FarWorld"
 	var n := 0; var tris := 0
 	for key: Array in far:
-		var ch: Vector2i = key[0]; var cc := Vector3((ch.x + 0.5) * CHUNK_FAR, 0, (ch.y + 0.5) * CHUNK_FAR)
+		var ch: Vector2i = key[0]; var cc := Vector3((ch.x + 0.5) * far_tile, 0, (ch.y + 0.5) * far_tile)
 		var V := PackedVector3Array(); var N := PackedVector3Array(); var UV := PackedVector2Array(); var UV2 := PackedVector2Array(); var C := PackedColorArray(); var CU := PackedFloat32Array()
 		for e: Array in far[key]:
 			var a := _arrays(e[0]); var xf: Transform3D = e[1]; var flat: bool = e[4]; var two: bool = e[5]
@@ -1769,6 +1838,85 @@ func _build_far() -> Dictionary:
 	ResourceSaver.save(ps, out + "far/far_world.scn", ResourceSaver.FLAG_COMPRESS)
 	root.free()
 	return {"meshes": n, "tris": tris}
+
+## FAR LOD (28 Nov): the far world in FAR_TILE tiles, one mesh per tile and material, indexed, with LOD levels. A tile's
+## level k holds each object's coarsest own level whose error (times the object's scale) is under FAR_LOD_STEPS[k];
+## the level's error is the largest one used, so the engine switches only where every object's error is under a pixel.
+## Every vertex carries the same data as before (CUSTOM0 pivot + far end, UV2 flat / page / cell, COLOR).
+func _build_far_lod() -> Dictionary:
+	var root := Node3D.new(); root.name = "FarWorld"
+	var n := 0; var tris := 0; var tris_low := 0; var tiles := []
+	var keys := far.keys()
+	keys.sort_custom(func(x: Array, y: Array) -> bool: return str(x) < str(y))
+	for key: Array in keys:
+		var ch: Vector2i = key[0]; var ts := CHUNK_FAR if String(key[1]) == "far_cut" else far_tile; var cc := Vector3((ch.x + 0.5) * ts, 0, (ch.y + 0.5) * ts)
+		var V := PackedVector3Array(); var N := PackedVector3Array(); var UV := PackedVector2Array(); var UV2 := PackedVector2Array(); var C := PackedColorArray(); var CU := PackedFloat32Array()
+		var I := PackedInt32Array(); var LI: Array = []; var LE: Array = []
+		for k in FAR_LOD_STEPS.size(): LI.append(PackedInt32Array()); LE.append(0.0)
+		for e: Array in far[key]:
+			var tp := _far_template(e); var xf: Transform3D = e[1]; var flat: bool = e[4]
+			var tv: PackedVector3Array = tp[0]; var tn: PackedVector3Array = tp[1]; var tc: PackedColorArray = tp[3]; var ti: PackedInt32Array = tp[4]; var tl: Array = tp[5]
+			if float(e[3]) == 500.0 and not far_lod_fence: tl = []      # fences keep every triangle: their posts are thinner than a pixel, and a simplified post lands on other pixels (28 Nov: the one difference the before / after pictures showed)
+			var colored: bool = flat and e[6] != null
+			var off := V.size()
+			V.append_array(Transform3D(xf.basis, xf.origin - cc) * tv)
+			N.append_array(Transform3D(xf.basis.orthonormalized(), Vector3.ZERO) * tn)
+			UV.append_array(tp[2])
+			var pv: Vector3 = (e[2] as Vector3) - cc
+			var hc := _cell_of(e[2]); var code := float((hc.x + 32) + (hc.y + 32) * 64)      # its cell, for rt_far's "is my cell in?"
+			var u2 := Vector2((1.0 if flat else 0.0) + 2.0 * float(e[7]), code)
+			var fc: Color = e[8]
+			for i in tv.size():
+				UV2.append(u2); C.append(tc[i] if colored else fc)
+				CU.append(pv.x); CU.append(pv.y); CU.append(pv.z); CU.append(float(e[3]))
+			var s := xf.basis.get_scale().abs(); var sm := maxf(s.x, maxf(s.y, s.z))
+			for i in ti.size(): I.append(ti[i] + off)
+			for k in FAR_LOD_STEPS.size():
+				var use: PackedInt32Array = ti; var err := 0.0
+				for l: Array in tl:
+					if float(l[0]) * sm <= float(FAR_LOD_STEPS[k]): use = l[1]; err = float(l[0]) * sm
+					else: break
+				var dst: PackedInt32Array = LI[k]
+				for i in use.size(): dst.append(use[i] + off)
+				LI[k] = dst; LE[k] = maxf(float(LE[k]), err)
+		var lods := {}; var last := I.size(); var lastkey := 0.0; var lrow := []
+		for k in FAR_LOD_STEPS.size():
+			var li: PackedInt32Array = LI[k]
+			if li.size() >= 3 and li.size() < int(last * 0.95):      # (a level only when it saves at least 5 %)
+				var lk := maxf(float(LE[k]), lastkey + 0.0001)
+				lods[lk] = li; last = li.size(); lastkey = lk; lrow.append([snappedf(lk, 0.001), li.size() / 3])
+		var arr := []; arr.resize(Mesh.ARRAY_MAX)
+		arr[Mesh.ARRAY_VERTEX] = V; arr[Mesh.ARRAY_NORMAL] = N; arr[Mesh.ARRAY_TEX_UV] = UV; arr[Mesh.ARRAY_TEX_UV2] = UV2; arr[Mesh.ARRAY_COLOR] = C; arr[Mesh.ARRAY_CUSTOM0] = CU; arr[Mesh.ARRAY_INDEX] = I
+		var am := ArrayMesh.new(); am.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr, [], lods, Mesh.ARRAY_CUSTOM_RGBA_FLOAT << Mesh.ARRAY_FORMAT_CUSTOM0_SHIFT)
+		var fend: float = key[2]
+		var mi := MeshInstance3D.new(); mi.name = "far_%d_%d_%s%s" % [ch.x, ch.y, String(key[1]).trim_prefix("far_"), "" if fend > 1.0e8 else "_e%d" % int(fend)]; mi.mesh = am; mi.position = cc
+		mi.material_override = mats[key[1]]; mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		if fend < 1.0e8:      # every object here collapses from its far end on (rt_far): the tile goes when even its nearest pivot is past it
+			var ctr := am.get_aabb().get_center(); var rmax := 0.0      # (the engine measures a range from the box's centre)
+			for e2: Array in far[key]: rmax = maxf(rmax, ((e2[2] as Vector3) - cc).distance_to(ctr))
+			mi.visibility_range_end = fend + rmax + 1.0; mi.visibility_range_end_margin = 0.0
+			mi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_DISABLED
+		root.add_child(mi); n += 1; tris += I.size() / 3; tris_low += last / 3
+		for e3: Array in far[key]:      # what the far world is made of (printed at the end)
+			var ftp := _far_template(e3); var oend: float = e3[3]; var fcat := "building" if oend > 1.0e8 else ("plant" if String(key[1]) == "far_cut" or oend == 1200.0 else ("fence" if oend == 500.0 else "prop"))
+			if not far_mix.has(fcat): far_mix[fcat] = [0, 0, 0]
+			var ftl: Array = ftp[5]
+			far_mix[fcat][0] += 1; far_mix[fcat][1] += (ftp[4] as PackedInt32Array).size() / 3; far_mix[fcat][2] += ((ftl[ftl.size() - 1][1] as PackedInt32Array).size() if not ftl.is_empty() else (ftp[4] as PackedInt32Array).size()) / 3
+		tiles.append([String(mi.name), far[key].size(), I.size() / 3, V.size(), lrow])
+		print("BAKE far tile %s: %d objects, %d triangles, %d vertices, LOD [error m, triangles]: %s" % [mi.name, far[key].size(), I.size() / 3, V.size(), str(lrow)])
+		if not warm.has(String(key[1])) and V.size() >= 3:
+			var fa := []; fa.resize(Mesh.ARRAY_MAX); fa[Mesh.ARRAY_VERTEX] = PackedVector3Array([Vector3(0, 0, 0), Vector3(0.2, 0, 0), Vector3(0, 0.2, 0)]); fa[Mesh.ARRAY_NORMAL] = N.slice(0, 3); fa[Mesh.ARRAY_TEX_UV] = UV.slice(0, 3)
+			fa[Mesh.ARRAY_TEX_UV2] = PackedVector2Array([Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]); fa[Mesh.ARRAY_COLOR] = C.slice(0, 3); fa[Mesh.ARRAY_CUSTOM0] = PackedFloat32Array([0, 0, 0, 1e9, 0, 0, 0, 1e9, 0, 0, 0, 1e9])
+			var fam := ArrayMesh.new(); fam.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, fa, [], {}, Mesh.ARRAY_CUSTOM_RGBA_FLOAT << Mesh.ARRAY_FORMAT_CUSTOM0_SHIFT)
+			var fn := MeshInstance3D.new(); fn.mesh = fam; fn.material_override = mats[key[1]]; warm[String(key[1])] = fn
+	if fg_node: root.add_child(fg_node); n += 1; tris += int(fg_node.get_meta(&"tris", 0)); tris_low += int(fg_node.get_meta(&"tris", 0))
+	_own(root, root)
+	var ps := PackedScene.new(); ps.pack(root)
+	ResourceSaver.save(ps, out + "far/far_world.scn", ResourceSaver.FLAG_COMPRESS)
+	root.free()
+	print("BAKE far LOD: %d far object meshes simplified, tiles of %d m" % [far_tpl.size(), int(far_tile)])
+	print("BAKE far LOD mix [objects, triangles, triangles at the coarsest own level]: %s" % str(far_mix))
+	return {"meshes": n, "tris": tris, "tris_coarsest": tris_low, "tile_m": far_tile, "tiles": tiles, "mix": far_mix}
 
 ## FAR GROUND (19 Nov). The ground of every cell as one mesh of the far world: per cell a 200 m patch on a FG_GRID grid
 ## that follows the real ground's heights (sampled from its triangles on one grid for the whole island, so neighbouring
@@ -1931,6 +2079,9 @@ func _run() -> void:
 		if a == "--check": check = true
 		if a == "--tint": tint_on = true
 		if a == "--nofarground": fg_on = false
+		if a == "--nofarlod": far_lod = false; far_tile = CHUNK_FAR      # the far world exactly as before 28 Nov (1 km chunks, no LOD)
+		if a == "--farlodfence": far_lod_fence = true
+		if a.begins_with("--fartile="): far_tile = float(a.trim_prefix("--fartile="))
 		if a == "--notrees": no_trees = true
 		if a == "--keepwells": well_fill = false
 		if a == "--nogapcol": gap_col = false
