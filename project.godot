@@ -10,6 +10,11 @@ config/name="Coronado City Kit"
 run/main_scene="res://tools/city/rig/rig.tscn"
 
 [rendering]
+; (28 Nov, Yasin: occlusion culling first) what stands fully behind buildings is not drawn: the bake puts every
+; building's collision walls in an OccluderInstance3D per cell (bake_runtime.gd occ_on). OFF for now: measured on the PC over 24
+; views it drew only 3% fewer triangles (the far world is 24 island-wide meshes, props are merged per cell: a chunk is
+; rarely hidden whole); to be switched on and measured on the phone when the far world is tiled (claude/far-world-lod)
+occlusion_culling/use_occlusion_culling=false
 renderer/rendering_method="mobile"
 ; B28 (Yasin, 20 Nov: "moving draws into its own thread? it won big in the old build"): the separate render thread
 driver/threads/thread_model=2

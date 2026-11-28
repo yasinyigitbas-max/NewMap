@@ -90,6 +90,12 @@ var kept_trees := {}         # the hand-placed trees (t_* pieces), world: Vector
 ## Added: the road signs, hydrants, benches, the recycling bins, the blue mail boxes.
 const BRK_KINDS := ["prop_bus_stop_sign", "prop_beach_sign", "prop_cone_", "prop_mailbox_post", "prop_bollard_steel", "prop_bollard_iron", "prop_trash_receptacle", "prop_recycling_receptacle", "prop_newspaper_box", "prop_parking_meter", "prop_sign_", "prop_hydrant_", "prop_park_bench", "prop_bench_bus_stop", "prop_usps_collection_box"]
 var brk_on := true           # --nobreak: bake as before
+## (28 Nov, Yasin: "yes go ahead with that order" - occlusion culling first) per cell one OccluderInstance3D: every
+## building's collision shell (the kit's _col walls: never bigger than the building) as occluder triangles, so what stands
+## fully behind buildings is not drawn (project.godot rendering/occlusion_culling). A building with walk-in rooms
+## occludes only from OCC_ROOM_Y up: its shop windows and doors are seen into. --noocc: none.
+var occ_on := true
+const OCC_ROOM_Y := 3.5
 var cur_brk: Array = []      # this piece's breakables, world: [position, claimed] (each claims ONE collider, the nearest)
 ## (28 Nov night, Yasin: "remove collision from small plants, we are climbing onto flowers") the small plants that had a
 ## collider: low agaves, the bird of paradise, the potted plants. Nobody bumps into them or climbs onto them now; hedges,
@@ -1540,6 +1546,24 @@ func _build_cell(c: Vector2i) -> Dictionary:
 	# known ground textures keeps its own mesh as built.
 	var gn := Node3D.new(); gn.name = "Ground"; root.add_child(gn)
 	var gc := Vector3((c.x + 0.5) * CELL, 0, (c.y + 0.5) * CELL)
+	if occ_on:      # the buildings' walls as occluders (see occ_on)
+		var OV := PackedVector3Array(); var OI := PackedInt32Array()
+		for bb: Dictionary in rec.bld:
+			var rooms_in := bb.has("rooms") and not (bb.rooms as Array).is_empty()
+			var bx: Transform3D = bb.xf
+			for cpart: Array in bb.col:
+				if not (cpart[0] is ConcavePolygonShape3D): continue
+				var fc: PackedVector3Array = (cpart[0] as ConcavePolygonShape3D).get_faces()
+				var tx: Transform3D = bx * (cpart[1] as Transform3D)
+				for k in range(0, fc.size() - 2, 3):
+					var p0 := tx * fc[k]; var p1 := tx * fc[k + 1]; var p2 := tx * fc[k + 2]
+					if rooms_in and minf(p0.y, minf(p1.y, p2.y)) < bx.origin.y + OCC_ROOM_Y: continue
+					var ob := OV.size(); OV.append(p0 - gc); OV.append(p1 - gc); OV.append(p2 - gc)
+					OI.append(ob); OI.append(ob + 1); OI.append(ob + 2)
+		if not OI.is_empty():
+			var occ := ArrayOccluder3D.new(); occ.set_arrays(OV, OI)
+			var oin := OccluderInstance3D.new(); oin.name = "Occluders"; oin.occluder = occ; oin.position = gc; root.add_child(oin)
+			stat["occ_tris"] = int(stat.get("occ_tris", 0)) + OI.size() / 3; stat["occ_cells"] = int(stat.get("occ_cells", 0)) + 1
 	var GV := PackedVector3Array(); var GN := PackedVector3Array(); var GUV := PackedVector2Array(); var GU2 := PackedVector2Array(); var GC := PackedColorArray(); var GI := PackedInt32Array()
 	for g: Array in rec.ground:
 		var gm: Mesh = g[0]; var gx: Transform3D = g[1]; var joined := _lib_ground(gm)
@@ -1936,6 +1960,7 @@ func _run() -> void:
 		if a == "--nogapcol": gap_col = false
 		if a == "--norooms": rooms_on = false
 		if a == "--nobreak": brk_on = false
+		if a == "--noocc": occ_on = false
 		if a.begins_with("--out="): out = a.trim_prefix("--out=")
 		if a.begins_with("--area="):
 			var f := a.trim_prefix("--area=").split_floats(","); area = [f[0], f[1], f[2]]
