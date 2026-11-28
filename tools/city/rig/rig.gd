@@ -500,6 +500,12 @@ func _free_walk(start: Vector3, yaw: float) -> void:
 	while game != null or not Input.is_key_pressed(KEY_ESCAPE):
 		await get_tree().process_frame
 		if Time.get_ticks_msec() - t_start > 2000: frame_ms.append(get_process_delta_time() * 1000.0)      # (after two seconds of settling)
+		# (look uplift, 28 Nov) on foot and in the game the night reached neither the traffic (its lamps stayed dark) nor the
+		# street lamps' real lights (only the drives updated them): twice a second, from the look's own night
+		if look and Engine.get_process_frames() % 30 == 0:
+			var lit_w: float = look.lights()
+			if traffic: traffic.set(&"night", lit_w)
+			lights.update_lights(cam.global_position if cam.current else pl.global_position, lit_w)
 		if _shot_place >= 0:      # (--walkshot: people are sent to the place once the crowd is there; the picture after 16 s)
 			pl.call(&"set_move", Vector2.ZERO, false)
 			var el := Time.get_ticks_msec() - t_start

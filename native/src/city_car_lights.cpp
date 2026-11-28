@@ -38,11 +38,11 @@ void CityCarLights::_process(double p_delta) {
 	const Vector3 c = cam->get_global_position();
 	const Vector3 look = -cam->get_global_transform().basis.get_column(2);
 	const Array cars = trf->call("cars_near", c, 90.0);
-	// the moving cars, nearest first; one the camera looks towards counts as nearer (its beam is what is seen)
+	// the traffic's cars, nearest first; one the camera looks towards counts as nearer (its beam is what is seen)
 	std::vector<std::pair<float, int>> order;
 	for (int i = 0; i < cars.size(); i++) {
 		const Dictionary d = cars[i];
-		if ((bool)d.get("bike", false) || std::fabs((float)(double)d.get("speed", 0.0)) < 0.3f) continue;
+		if ((bool)d.get("bike", false)) continue;      // (a car stopped at a light keeps its lights on)
 		const Vector3 at = d.get("at", Vector3());
 		const Vector3 to = at - c;
 		const float dist = to.length();
