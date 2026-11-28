@@ -40,7 +40,11 @@ private:
 	double hips_down = 0.0;
 	Array reach;
 	double bend_deg = 0.0;
+	// (C++ only, no script line: set by TravHold, 28 Nov) his trunk turned about the vertical (degrees, over his three
+	// spine joints; his neck turned back by as much, so his head keeps facing where it did). 0 = untouched.
+	double twist_deg = 0.0;
 	int _spine = -1;
+	int _twist_bone[4] = { -1, -1, -1, -1 };     // Spine, Spine1, Spine2, Neck
 	int _upper[2] = { -1, -1 };
 	int _fore[2] = { -1, -1 };
 	int _hand[2] = { -1, -1 };
