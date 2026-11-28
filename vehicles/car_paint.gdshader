@@ -70,7 +70,9 @@ vec3 env_at(vec3 dw, float lod) {
 	float v = clamp(acos(clamp(dw.y, -1.0, 1.0)) * 0.31830989, 0.004, 0.996) * 0.5;   // each panorama = one half
 	vec3 d = textureLod(env_pano, vec2(u, v), lod).rgb;
 	d = mix(d, vec3(dot(d, vec3(0.3, 0.59, 0.11))) * 0.8, clamp(refl_env.y, 0.0, 1.0));      // overcast: grey, flatter
-	vec3 n = textureLod(env_pano, vec2(u, v + 0.5), lod).rgb * 0.45;   // night: lamp-lit street, dimmer
+	// night: lamp-lit street, dimmer and soft (look uplift, 28 Nov: read sharp, its white walls against the black sky
+	// came out as black and white blocks on the clear coat once refl_env.x followed the night; 3 mips softer = glows)
+	vec3 n = textureLod(env_pano, vec2(u, v + 0.5), lod + 3.0).rgb * 0.3;
 	return mix(n, d, clamp(refl_env.x, 0.0, 1.0));
 }
 // THE CABIN BEHIND THE GLASS (Yasin, 27 Nov: "we don't have a real cabin ... make it look like it exists with some parallax
