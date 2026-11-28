@@ -961,7 +961,11 @@ void CityPlayer::tb_layout(const Vector2 &p_size) {
 		const int col = k % 2, row = k / 2;
 		tb_rect[k] = Rect2(p_size.x - gap - (float)(2 - col) * (bw + gap) + gap, p_size.y * 0.36f + (float)row * (bh + gap), bw, bh);   // (0.36: clear of the HUD's Use box above, 28 Nov night)
 		if (tb_box[k]) { tb_box[k]->set_position(tb_rect[k].position); tb_box[k]->set_size(tb_rect[k].size); }
-		if (tb_label[k]) { tb_label[k]->set_position(tb_rect[k].position); tb_label[k]->set_size(tb_rect[k].size); }
+		if (tb_label[k]) {
+			tb_label[k]->set_position(tb_rect[k].position); tb_label[k]->set_size(tb_rect[k].size);
+			// (28 Nov night) the words in proportion to the box: a fixed 22 px overflowed "RELOAD" with the phones' UI scale
+			tb_label[k]->add_theme_font_size_override("font_size", std::max(10, (int)std::lround(bw * 0.19f)));
+		}
 	}
 }
 
@@ -1169,8 +1173,11 @@ void CityPlayer::_process(double p_delta) {
 		// (Yasin, 21 Nov: "camera is fighting the use now ... make it look for better angle only when blocked", "no just make it seek
 		// a new angle whenever its blocked, not a timed camera"): it moves only when its view is blocked (under 45 % clear):
 		// to the other shoulder if that one is clear, up over him if both are blocked; otherwise it stays where it is
-		if (pc_fresh && here < 0.45f && other > 0.9f) { side_sign = -side_sign; pc_fresh = false; }   // (then a fresh look from the new side first: the old one would swap it straight back)
-		const float lift_want = (here < 0.45f && other < 0.45f) ? 0.55f : 0.0f;
+		// (28 Nov night, Yasin: the camera behind the car "trying to adapt ... every half second") at the wheel it never
+		// swaps sides or rises: lamp posts, trees and corners passing between it and the car swapped and lifted it again
+		// and again. On foot as before.
+		if (!driving && pc_fresh && here < 0.45f && other > 0.9f) { side_sign = -side_sign; pc_fresh = false; }   // (then a fresh look from the new side first: the old one would swap it straight back)
+		const float lift_want = (!driving && here < 0.45f && other < 0.45f) ? 0.55f : 0.0f;
 		cam_lift += (lift_want - cam_lift) * (1.0f - std::exp(-dt * 3.0f));
 	}
 	pr_pivot = cam_pivot; pr_right = right; pr_back = back; pr_d = cam_d; pr_here_side = want_side * side_sign; pr_want_side = want_side; pr_skip = skip;
@@ -1182,7 +1189,12 @@ void CityPlayer::_process(double p_delta) {
 		const float sl = cam_pivot.distance_to(shoulder);
 		const Vector3 sh = sl > 0.01f ? cam_pivot + (shoulder - cam_pivot) * (std::max(std::min(pc_s0, sl) - 0.2f, 0.0f) / sl) : cam_pivot;
 		const float L = sh.distance_to(want);
-		const float c = std::min(pc_c, L);
+		float c = std::min(pc_c, L);
+		if (driving) {   // (driving: in fast when something is in the way, back out slowly: no springing as posts pass)
+			if (drive_clear > 1.0e8f) drive_clear = c;
+			drive_clear += (c - drive_clear) * (1.0f - std::exp(-dt * (c < drive_clear ? 10.0f : 1.2f)));
+			c = drive_clear;
+		} else drive_clear = 1.0e9f;
 		if (L > 0.01f) want = sh + (want - sh) * (std::max(c - 0.25f, std::min(0.3f, L)) / L);
 	}
 	if (!cam_set) { cam_pos = want; cam_set = true; }

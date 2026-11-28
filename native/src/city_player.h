@@ -102,6 +102,7 @@ private:
 	Vector3 cam_pivot;                    // what the camera turns round, eased
 	float cam_d = 1.7f, cam_side = 0.72f, cam_fov = 56.0f, look_idle = 9.0f;
 	float side_sign = 1.0f, side_cd = 0.0f, cam_lift = 0.0f;
+	float drive_clear = 1.0e9f;      // (driving: the clear length behind the vehicle, eased: in fast, out slow)
 	// the camera's rays, cast in the physics step (cam_probe) from the last frame's framing (pr_*) and read in _process (pc_*)
 	Vector3 pr_pivot, pr_right, pr_back, pr_shoulder, pr_want; float pr_d = 0.0f, pr_here_side = 0.0f, pr_want_side = 0.0f; bool pr_set = false; RID pr_skip;
 	float pc_here = 1.0f, pc_right = 1.0f, pc_other = 1.0f, pc_s0 = 1e9f, pc_c = 1e9f; bool pc_ok = false, pc_fresh = false;   // (fresh: cast since the last shoulder swap)

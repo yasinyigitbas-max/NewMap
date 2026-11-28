@@ -59,3 +59,27 @@ times and the cost of every system (`perf_marks.h`, now including the traversal'
   committed places.bin / streets.bin (21 Nov) were kept. Worth a look before the next places run.
 - The traversal's bone fitting (feet, hands: `trav_mods`) costs 3-8 ms a frame on the phone; not touched.
 - The phone frame time while walking is ~21 ms (about 47 fps), driving ~30 ms: better than before but not 60.
+
+## Round 2 (Yasin's phone pictures, 28 Nov morning)
+| You saw | Cause | Fix |
+|---|---|---|
+| bricks / floors turning to straight lines | a headless import rewrote `bld_color.png.import` with Godot's defaults: no mipmaps, no compression; the 2048 atlas sampled at full size at every distance aliases into streaks | restored (committed settings); the new props_g / props_k atlases given mipmaps and compression too; anisotropic building normals; `phone_rig.sh export` refuses a kit texture without mipmaps |
+| white squares and lines in the air | damage marks laid where a hit was asked when the rays met nothing (a car's jolt on a bump); the mark shader's multiply came out flat pale on the phone | marks only on a surface met; the shader blends normally |
+| people climbing over shop doors, onto tables and stools | the player's traversal moves (step-up, vault, grab) ran for people; doors opened only for the player | no climbing moves for people; shop doors open for them too |
+| people sitting on tables | the lab's bench sit (stand in front, sit back) used for shop and cafe seats: "in front" was the table | shop seats by the pose copy (the old figure's own seat) |
+| walk 3-4 steps, stop, walk | on/off following at a pace faster than the walker | they follow the walker's own velocity and stop only when it stops |
+| the wrist broken when aiming | the pistol 0.50 m from the face folded the arms up; the grip turned the hand 41 degrees down | 0.55 m and 20 degrees (side views compared) |
+| menus too small on phones | fixed-pixel menus on a 1080 px screen | the 2D layer scaled to a 480 px short side (2.25x on the Redmi); the HUD keeps its size |
+| "0.0 m/s" under the money box | the rig's own debug line | hidden in the game |
+
+## Holes in the ground (found, NOT filled)
+A scan of every piece's ground on a 0.5 m grid (`scratchpad/holes.py`, from the superchecker dumps) found 179 places
+on the island with no ground, 4,488 m2 in all. Filling them means new ground in locked, hand-made pieces: Yasin's call.
+The biggest:
+- a whole empty block, 40 x 40 m at x 353..393, z -740..-700, between n_apt_b1_7th and n_apt_b1_be
+- strips 1-5 m wide where the fl_*_1 fill pieces meet the s_rg_se streets (z 355-364, x -580..328), and along z 0..100
+  (x 579..1420: f_se, fl_2_0 .. fl_7_0)
+- 192 m2 at (-270, -642) by v_nw; 40 m2 at (-222, -622)
+- the west edge seams at x ~ -985 (z -1275, -983..-900, 9..155, and z 190 x -980..-809)
+- seams round s_civ and the stadium (x -100..-50, x ~ -305, z -591..-500); 62 m2 at z ~ -209.5 (j_am_9th, n_w_c9/c11)
+- two 53 m2 holes at the ferry landing (334 and 366, -1616.5)
