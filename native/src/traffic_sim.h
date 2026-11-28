@@ -91,7 +91,7 @@ struct Config {
 	float hour_factor = 1.0f;       // share of max_cars wanted right now (0..1)
 	float spawn_r_in = 70.0f;       // no spawn closer than this (any direction)
 	float spawn_r_out = 340.0f;
-	float view_safe_r = 160.0f;     // no spawn inside the view cone closer than this
+	float view_safe_r = 120.0f;     // no spawn inside the view cone closer than this (look uplift, 28 Nov: 160 -> 120, in the haze: the street ahead fills sooner)
 	float despawn_r = 430.0f;
 	float behind_despawn_r = 220.0f;   // outside the view cone: despawn beyond this
 	float cone_margin_deg = 6.0f;      // the cone used for spawn / despawn is this much wider than the camera fov

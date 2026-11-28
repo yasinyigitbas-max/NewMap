@@ -186,7 +186,7 @@ func _ready() -> void:
 		# (Yasin, 20 Nov: "game just runs laps instead of showing the menu or releasing us into the world": a phone keeps the
 		# last measuring run's user://rig_args.txt; started by the game, none of a measuring run's choices may apply)
 		opt.plan = "default"; opt.shots = ""; opt.car = ""; own_drives.clear(); opt.census = "both"
-		opt.walk = "1"; opt.people = 400; opt.pdensity = 3.5; opt.maxfps = 30; opt.traffic = 40; opt.parked = 1; opt.quit = false
+		opt.walk = "1"; opt.people = 400; opt.pdensity = 3.5; opt.maxfps = 30; opt.traffic = 100; opt.density = 1.5; opt.parked = 1; opt.quit = false      # (look uplift, 28 Nov; Yasin: "add more traffic too": moving cars 40 -> 100 at 1.5 x the streets' load; the parked stay as they are)
 		var ws: Vector3 = game.call(&"world_start")
 		opt.at = "%f,%f" % [ws.x, ws.z]
 	else: game = null
@@ -506,6 +506,15 @@ func _free_walk(start: Vector3, yaw: float) -> void:
 		if Time.get_ticks_msec() - t_start > 2000: frame_ms.append(get_process_delta_time() * 1000.0)      # (after two seconds of settling)
 		# (look uplift, 28 Nov) on foot and in the game the night reached neither the traffic (its lamps stayed dark) nor the
 		# street lamps' real lights (only the drives updated them): twice a second, from the look's own night
+		# (look uplift, 28 Nov; Yasin: "fix all of them") the game's own clock (CityGame: one game hour = ten real minutes)
+		# drove nothing: the game was always the look's day. Every 2 s its hour sets the look's time of day (the sky, the
+		# light, the lamps and the windows follow it), the crowd's and the traffic's hour
+		if game and look and Engine.get_process_frames() % 120 == 0 and game.has_method(&"get_hour"):
+			var gh := float(game.call(&"get_hour"))
+			if absf(gh - look.hour) > 0.02 or look.preset != "":
+				look.cycle = 0.0; look.preset = ""; look.set_hour(gh); st.set_night(look.lights())
+				if people: people.set(&"hour", gh)
+				if traffic and traffic.has_method(&"set_hour"): traffic.call(&"set_hour", gh)
 		if look and Engine.get_process_frames() % 30 == 0:
 			var lit_w: float = look.lights()
 			if traffic: traffic.set(&"night", lit_w)
