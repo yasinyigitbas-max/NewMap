@@ -30,6 +30,7 @@
 #include "city_stream.h"
 #include "city_breakables.h"
 #include "city_sea.h"
+#include "city_car_lights.h"
 #include "city_skyline.h"
 #include "city_rooms.h"
 #include "city_damage.h"
@@ -68,6 +69,7 @@ void initialize_coronado_city(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(CityCrowd);     // the people of the map: who walks where and what they do, and how they are drawn
 	GDREGISTER_CLASS(CityRooms);     // the shops' rooms woken by distance, their doors swung (B14)
 	GDREGISTER_CLASS(CitySkyline);   // the San Diego ring round the horizon (port of tools/city/look/skyline.gd)
+	GDREGISTER_CLASS(CityCarLights);  // real spot lights on the nearest moving cars at night (look uplift, 28 Nov)
 	GDREGISTER_CLASS(CitySea);       // the sea, drawn after the city (port of tools/city/look/sea.gd)
 	GDREGISTER_CLASS(CityDamage);       // the one damage node: hit / strike / surface_at, marks, particles (docs/damage)
 	GDREGISTER_CLASS(CityBreakables);   // small street props that cars knock over (B9)

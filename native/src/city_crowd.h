@@ -90,6 +90,14 @@ private:
 	Ref<ImageTexture> pose_tex;
 	Ref<ShaderMaterial> mat_far, mat_near;
 	Ref<Mesh> far_mesh;
+	// (look uplift, 28 Nov) the far figures from the NEW bodies (tools/city/traffic/make_people_new.gd): with the new people
+	// on, the far crowd is drawn from this table instead of none; each walker's body maps to a new body of his kind
+	String far_new_dir = "res://characters/meshy_far/";
+	bool far_new = false;
+	std::vector<int> far_map;
+	Ref<ImageTexture> pose_tex_new;
+	Ref<Mesh> far_mesh_new;
+	bool use_new_far();
 	RID mm, inst;
 	PackedFloat32Array buf;
 	int shown = -1;

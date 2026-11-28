@@ -38,6 +38,7 @@ void CityCrowd::set_trav_people(bool p_on) {
 	ClassDBSingleton *db = ClassDBSingleton::get_singleton();
 	if (p_on && !(db->class_exists("TravBody") && db->class_exists("TravNpcCharacter"))) return;
 	trav_people = p_on;
+	if (p_on) use_new_far();      // (look uplift: the far crowd from the new bodies, if their table is there)
 	if (!p_on) {
 		for (TravNb &t : trav_pool) { if (t.body) t.body->queue_free(); if (t.tape) t.tape->queue_free(); if (t.seat) t.seat->queue_free(); }
 		trav_seat_busy = -1;

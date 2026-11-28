@@ -236,6 +236,8 @@ func _ready() -> void:
 			traffic.set(&"shadows", int(opt.carshadows) == 1); traffic.set(&"bodies", int(opt.carbodies) == 1)
 			if new_people: traffic.call(&"set_cyclists", 0)
 			traffic.call(&"attach", st); add_child(traffic)
+			if ClassDB.class_exists(&"CityCarLights"):      # look uplift (28 Nov): the nearest moving cars' headlights light the road at night
+				var cl: Node = ClassDB.instantiate(&"CityCarLights"); cl.call(&"set_traffic", traffic); add_child(cl)
 		else: push_error("RIG ERROR --traffic needs the native module (bash native/build.sh): no traffic in this run")
 	if int(opt.people) > 0:       # the people: one C++ node (CityCrowd); it follows the streamer's cells and is joined to the traffic
 		if ClassDB.class_exists(&"CityCrowd"):

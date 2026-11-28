@@ -485,13 +485,16 @@ void CityCrowd::draw(double p_alpha) {
 	for (int i = 0; i < crowd->hi && n < pc::MAX_PEDS; i++) {
 		if (!crowd->alive[i] || (crowd->flags[i] & pc::F_HIDDEN)) continue;
 #ifdef TRAV_IN_GAME
-		if (trav_people) break;   // (28 Nov, Yasin: the old people "out of the game entirely": no far figure; the near ones are new bodies)
+		if (trav_people && !far_new) break;   // (28 Nov, Yasin: the old people "out of the game entirely": no OLD far figure; the near ones are new bodies; look uplift: the far ones too, from the new table)
 #endif
 		const float a = std::min(std::max(((float)(crowd->tick - crowd->tu[i]) + alpha) / (float)std::max((int)crowd->span[i], 1), 0.0f), 1.0f);
 		const float x = crowd->px[i] + (crowd->x[i] - crowd->px[i]) * a, y = crowd->py[i] + (crowd->y[i] - crowd->py[i]) * a, z = crowd->pz[i] + (crowd->z[i] - crowd->pz[i]) * a;
 		const float yaw = lerp_angle(crowd->pyaw[i], crowd->yaw[i], a);
 		float pr[4]; int body; float sc;
 		person_of(i, pr, body, sc);
+#ifdef TRAV_IN_GAME
+		if (far_new && body >= 0 && body < (int)far_map.size()) { pr[1] = std::fmod(pr[1], 64.0f) + 64.0f * (float)far_map[(size_t)body]; body = far_map[(size_t)body]; }
+#endif
 		const float cy = std::cos(yaw) * sc, sy = std::sin(yaw) * sc;
 		float *r = w + (size_t)n * ROW;
 		r[0] = cy; r[1] = 0.0f; r[2] = sy; r[3] = x;
@@ -549,6 +552,64 @@ void CityCrowd::draw(double p_alpha) {
 	if (n > 0) rs->multimesh_set_buffer(mm, buf);
 	if (n != shown) { rs->multimesh_set_visible_instances(mm, n); rs->instance_set_visible(inst, n > 0); shown = n; }
 	cnt.people += n; cnt.most = std::max(cnt.most, n);
+}
+
+// (look uplift, 28 Nov) The far figures from the new bodies: the table make_people_new.gd writes (the same make as
+// PeopleBake's), put on the far crowd's material and mesh in the place of the old figures'. Each old body (the walkers'
+// looks pick those) maps to a new body of the same kind, so a walker keeps one look. False: the table is not there.
+bool CityCrowd::use_new_far() {
+	if (far_new) return true;
+	if (!gfx || mat_far.is_null()) return false;
+	Ref<FileAccess> f = FileAccess::open_compressed(far_new_dir + String("far_poses.bin"), FileAccess::READ, FileAccess::COMPRESSION_ZSTD);
+	if (f.is_null() || f->get_32() != 0x32525046u) return false;
+	const int tw = (int)f->get_32(), th = (int)f->get_32(), ch = (int)f->get_32();
+	const int poses = (int)f->get_32(), n = (int)f->get_32(), cmax = (int)f->get_32();
+	float g2[2][6];
+	for (int g = 0; g < 2; g++) for (int q = 0; q < 6; q++) g2[g][q] = f->get_float();
+	if (poses != POSES || n <= 0 || n > 48 || tw <= 0 || th <= 0) { UtilityFunctions::push_error("CityCrowd: ", far_new_dir, "far_poses.bin is of another make"); return false; }
+	std::vector<int> by_kind[2];
+	for (int k = 0; k < n; k++) {
+		f->get_pascal_string(); f->get_32(); const int fem = (int)f->get_32(); f->get_32(); f->get_float();
+		by_kind[fem ? 1 : 0].push_back(k);
+	}
+	const PackedByteArray px = f->get_buffer((int64_t)tw * th * 8);
+	if (px.size() != (int64_t)tw * th * 8) { UtilityFunctions::push_error("CityCrowd: ", far_new_dir, "far_poses.bin is cut short"); return false; }
+	ResourceLoader *rl = ResourceLoader::get_singleton();
+	Ref<Resource> alb = rl->load(far_new_dir + String("tex/rb_npc_albedo.png")), msk = rl->load(far_new_dir + String("tex/rb_npc_mask.png"));
+	if (alb.is_null() || msk.is_null() || !Object::cast_to<TextureLayered>(alb.ptr())) { UtilityFunctions::push_error("CityCrowd: the new far figures' pictures are missing or not imported (", far_new_dir, "tex)"); return false; }
+	if (by_kind[0].empty()) by_kind[0] = by_kind[1];
+	if (by_kind[1].empty()) by_kind[1] = by_kind[0];
+	far_map.assign(bodies.size(), 0);
+	int seen[2] = { 0, 0 };
+	for (size_t b = 0; b < bodies.size(); b++) {
+		const int k = bodies[b].female ? 1 : 0;
+		far_map[b] = by_kind[k][(size_t)(seen[k]++ % (int)by_kind[k].size())];
+	}
+	pose_tex_new = ImageTexture::create_from_image(Image::create_from_data(tw, th, false, Image::FORMAT_RGBAH, px));
+	// the new bodies wear their own clothes and skin: nothing is re-dyed (their mask is black; these keep the shader out of it)
+	PackedFloat32Array zero; zero.resize(48); zero.fill(0.0f);
+	PackedFloat32Array lm; lm.resize(48); lm.fill(0.45f);
+	mat_far->set_shader_parameter("pose_tex", pose_tex_new);
+	mat_far->set_shader_parameter("block_rows", (2 * POSES + 1) * ch); mat_far->set_shader_parameter("corner_h", ch);
+	mat_far->set_shader_parameter("albedo_arr", alb); mat_far->set_shader_parameter("mask_arr", msk);
+	for (const char *nm : { "packs", "dye", "face", "skin_body", "skin_head", "hair_lm", "top_lum", "bot_lum" }) mat_far->set_shader_parameter(nm, zero);
+	mat_far->set_shader_parameter("lms", lm);
+	{   // the one mesh: as many corners as the largest new body has
+		PackedVector3Array v, nn; PackedVector2Array uv;
+		v.resize(cmax); nn.resize(cmax); uv.resize(cmax);
+		for (int k = 0; k < cmax; k++) { v[k] = Vector3(); nn[k] = Vector3(0, 1, 0); uv[k] = Vector2(); }
+		Array arr; arr.resize(Mesh::ARRAY_MAX);
+		arr[Mesh::ARRAY_VERTEX] = v; arr[Mesh::ARRAY_NORMAL] = nn; arr[Mesh::ARRAY_TEX_UV] = uv;
+		Ref<ArrayMesh> am; am.instantiate();
+		am->add_surface_from_arrays(Mesh::PRIMITIVE_TRIANGLES, arr);
+		am->set_custom_aabb(AABB(Vector3(-1.2f, -0.2f, -1.2f), Vector3(2.4f, 2.4f, 2.4f)));
+		far_mesh_new = am;
+		RenderingServer::get_singleton()->multimesh_set_mesh(mm, far_mesh_new->get_rid());
+	}
+	stride[0] = g2[0][0]; stride[1] = g2[1][0];
+	far_new = true;
+	UtilityFunctions::print("CityCrowd: the far crowd drawn from the new bodies (", n, " in ", far_new_dir, ")");
+	return true;
 }
 
 // The near bodies: a pool of animated figures made once (three men to two women), every body's near mesh held.
