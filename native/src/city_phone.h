@@ -41,6 +41,7 @@ public:
 	Color col;
 	int glyph = 0;
 	bool waiting = false;          // its system is not in yet: drawn dimmer
+	Vector2 press_at;              // (where the finger went down: a scroll is not a tap)
 	void _draw() override;
 	void _gui_input(const Ref<InputEvent> &p_event) override;
 	class CityPhone *phone = nullptr;

@@ -1,5 +1,7 @@
 // CityBike and BikeReach: see city_bike.h.
 #include "perf_marks.h"
+#include "city_hud.h"
+#include "city_game.h"
 #include "city_bike.h"
 #include "el_sfx.h"
 
@@ -306,6 +308,12 @@ void CityBike::set_controls(double p_pedal, double p_brake, double p_steer, doub
 // sprint); the top right corner gets on or off. Many fingers at once.
 void CityBike::_input(const Ref<InputEvent> &p_event) {
 	if (!player) return;
+	// (28 Nov night) a HUD panel open (the map, the phone): its touches are the panel's, not the wheel's or the pedals'
+	// (panning the map steered the car); a finger lifting is still taken, so nothing stays held
+	if (CityGame *g = CityGame::get()) if (CityHud *h = Object::cast_to<CityHud>(g->get_hud())) if (h->get_open() >= 0) {
+		const InputEventScreenTouch *tt = Object::cast_to<InputEventScreenTouch>(p_event.ptr());
+		if (!tt || tt->is_pressed()) return;
+	}
 	Viewport *vp = get_viewport();
 	if (!vp) return;
 	const Vector2 sz = vp->get_visible_rect().size;

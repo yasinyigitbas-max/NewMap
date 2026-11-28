@@ -240,6 +240,9 @@ void HudMap::_gui_input(const Ref<InputEvent> &p_event) {
 		if (d->get_position().distance_to(press_at) > 12.0f) press_moved = true;
 		queue_redraw(); accept_event(); return;
 	}
+	// (28 Nov night) a touch also makes mouse events of its own (Godot's mouse from touch, device -1): the touch is already
+	// handled above; read again, a tap on the map fired twice and its second undid the first (toggle_target)
+	if (const InputEventMouse *me = Object::cast_to<InputEventMouse>(p_event.ptr())) { if (me->get_device() == -1) return; }
 	if (const InputEventMouseMotion *mm = Object::cast_to<InputEventMouseMotion>(p_event.ptr())) {
 		if (mm->get_button_mask().has_flag(MOUSE_BUTTON_MASK_LEFT) && touches == 0) { centre -= mm->get_relative() * mpp; follow = false; if (mm->get_position().distance_to(press_at) > 12.0f) press_moved = true; queue_redraw(); accept_event(); }
 		return;

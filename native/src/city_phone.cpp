@@ -74,8 +74,14 @@ void PhoneTile::_draw() {
 void PhoneTile::_gui_input(const Ref<InputEvent> &p_event) {
 	Ref<InputEventMouseButton> mb = p_event;
 	Ref<InputEventScreenTouch> st = p_event;
-	const bool up = (mb.is_valid() && mb->get_button_index() == MOUSE_BUTTON_LEFT && !mb->is_pressed()) || (st.is_valid() && !st->is_pressed());
-	if (up && phone) { phone->tap_feedback(); phone->open_app(app); accept_event(); }
+	// (28 Nov night) one touch is also an emulated click (device -1): only one of the two opens the app; and a finger that
+	// scrolled the grid opens nothing where it lifts (more than 12 px from where it went down)
+	if (mb.is_valid() && mb->get_device() == -1) return;
+	Vector2 at; bool down = false, up = false;
+	if (mb.is_valid() && mb->get_button_index() == MOUSE_BUTTON_LEFT) { at = mb->get_position(); down = mb->is_pressed(); up = !down; }
+	else if (st.is_valid()) { at = st->get_position(); down = st->is_pressed(); up = !down; }
+	if (down) { press_at = at; return; }
+	if (up && phone && at.distance_to(press_at) <= 12.0f) { phone->tap_feedback(); phone->open_app(app); accept_event(); }
 }
 
 // ---------------------------------------------------------------- the phone

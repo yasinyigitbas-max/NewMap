@@ -110,6 +110,8 @@ private:
 	// an invisible floating stick (full at 80 px), the right half looks (0.25 deg a pixel x 1.2), a double tap (0.32 s,
 	// 110 px) on the left crouches, on the right jumps
 	Vector2 move_start[16]; bool move_on[16] = {}; Vector2 touch_mv;
+	bool btn_on[16] = {};      // (28 Nov night) a finger that went down on a HUD box: its drag turns nothing
+	void touch_reset();        // every finger let go: frozen, riding, paused (their releases never reach _input)
 	double tap_t[2] = { -9, -9 }; Vector2 tap_p[2];
 	bool crouch = false, jump_want = false, space_was = false, c_was = false, airborne = false;
 	float land_t = 0.0f;
@@ -200,13 +202,14 @@ public:
 	void _ready() override;
 	void _exit_tree() override;
 	void _input(const Ref<InputEvent> &p_event) override;
+	void _notification(int p_what);
 	void _physics_process(double p_delta) override;
 	void _process(double p_delta) override;
 
 	// (tests) walk this way instead of by the keys: x = to its right, y = ahead, seen from the camera
 	void set_move(const Vector2 &p_dir, bool p_run);
 	// he stands and takes no keys (while a line is typed to somebody)
-	void set_frozen(bool p_on) { frozen = p_on; }
+	void set_frozen(bool p_on) { frozen = p_on; touch_reset(); }
 	// AN ACT (Yasin, 20 Nov: "add us and npcs giving money receiving things animations"): a clip played once where he stands,
 	// turned to p_yaw, his feet still while it lasts (paying at a counter, taking what he bought)
 	void act(const StringName &p_clip, double p_seconds, double p_yaw);

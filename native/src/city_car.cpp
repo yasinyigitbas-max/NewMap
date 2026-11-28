@@ -1,5 +1,7 @@
 // CityCar: see city_car.h.
 #include "perf_marks.h"
+#include "city_hud.h"
+#include "city_game.h"
 #include "city_car.h"
 #include "city_damage.h"
 #include <godot_cpp/classes/box_mesh.hpp>
@@ -639,6 +641,16 @@ void CityCar::_ready() {
 	if (Engine::get_singleton()->is_editor_hint()) return;
 	make();
 	set_process(true);
+	set_physics_process(true);
+}
+
+// (28 Nov night) the impacts found by _integrate_forces go to the damage system HERE, in the physics step: CityDamage::hit
+// asks the world with a ray what was hit, and on the phone (Jolt on its own thread) the world answers only in the physics
+// step. From _process every car impact fell back to plain concrete: no scrape on the real wall or tree, wrong sparks and sound.
+void CityCar::_physics_process(double p_delta) {
+	if (!made || hits_due.empty()) return;
+	const std::vector<Vector3> hd = hits_due; hits_due.clear();
+	for (const Vector3 &dv : hd) hit(dv);
 }
 
 // Touch driving: the old game's scheme (docs/OLD_CONTROLS_SPEC.md; Yasin: "copy it as it was"): the left half of the screen is
@@ -646,6 +658,12 @@ void CityCar::_ready() {
 // phone button's corner (BRAKE held at a standstill reverses). Many fingers at once.
 void CityCar::_input(const Ref<InputEvent> &p_event) {
 	if (!player) return;
+	// (28 Nov night) a HUD panel open (the map, the phone): its touches are the panel's, not the wheel's or the pedals'
+	// (panning the map steered the car); a finger lifting is still taken, so nothing stays held
+	if (CityGame *g = CityGame::get()) if (CityHud *h = Object::cast_to<CityHud>(g->get_hud())) if (h->get_open() >= 0) {
+		const InputEventScreenTouch *tt = Object::cast_to<InputEventScreenTouch>(p_event.ptr());
+		if (!tt || tt->is_pressed()) return;
+	}
 	Viewport *vp = get_viewport();
 	if (!vp) return;
 	const Vector2 sz = vp->get_visible_rect().size;
@@ -783,7 +801,6 @@ void CityCar::_process(double p_delta) {
 	clock_t += p_delta;
 	door_update(p_delta);
 	drive_sounds(p_delta);
-	if (!hits_due.empty()) { const std::vector<Vector3> hd = hits_due; hits_due.clear(); for (const Vector3 &dv : hd) hit(dv); }
 	if (!has_node("Engine")) { EngineSound *es = memnew(EngineSound); es->set_name("Engine"); add_child(es); es->set_car(this); }   // running engine (recorded loops, or the old synth if they are missing)
 	if (player) {   // the old pedals and the speed plate, while the player drives
 		if (!hud) make_hud();

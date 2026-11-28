@@ -127,15 +127,17 @@ void CityPlayer::_input(const Ref<InputEvent> &p_event) {
 			}
 		}
 		if (t->is_pressed()) {
-			if (on_button(p)) return;
+			if (on_button(p)) { btn_on[id] = true; move_on[id] = false; return; }
+			btn_on[id] = false;
 			const int half = p.x < sz.x * 0.5f ? 0 : 1;
 			if (clock_s - tap_t[half] < 0.32 && p.distance_to(tap_p[half]) < 110.0f) {   // a double tap: crouch (left) / jump (right)
 				if (half == 0) crouch = !crouch; else jump_want = true;
 				tap_t[half] = -9.0;
 			} else { tap_t[half] = clock_s; tap_p[half] = p; }
-			if (half == 0) { move_on[id] = true; move_start[id] = p; }
+			move_on[id] = half == 0;
+			if (half == 0) move_start[id] = p;
 		} else {
-			move_on[id] = false;
+			move_on[id] = false; btn_on[id] = false;
 			bool any = false;
 			for (int k = 0; k < 16; k++) any = any || move_on[k];
 			if (!any) touch_mv = Vector2();
@@ -145,6 +147,7 @@ void CityPlayer::_input(const Ref<InputEvent> &p_event) {
 	if (const InputEventScreenDrag *d = Object::cast_to<InputEventScreenDrag>(p_event.ptr())) {
 		const int id = d->get_index();
 		for (int k = 0; k < TB_N; k++) if (tb_touch[k] == id) return;      // (a thumb sliding on a button does not turn the view)
+		if (id >= 0 && id < 16 && btn_on[id]) return;      // (nor one that went down on a HUD box: the map's pan, the phone's scroll)
 		if (id >= 0 && id < 16 && move_on[id]) { touch_mv = ((d->get_position() - move_start[id]) / 80.0f).limit_length(1.0f); return; }
 		Vector2 rel = d->get_relative() * 1.2f * sens();   // the look: 0.25 deg a pixel, x1.2 for a thumb
 		if (inv()) rel.y = -rel.y;
@@ -956,7 +959,7 @@ void CityPlayer::tb_layout(const Vector2 &p_size) {
 	const float bw = p_size.y * 0.17f, bh = p_size.y * 0.115f, gap = p_size.y * 0.018f;
 	for (int k = 0; k < TB_N; k++) {
 		const int col = k % 2, row = k / 2;
-		tb_rect[k] = Rect2(p_size.x - gap - (float)(2 - col) * (bw + gap) + gap, p_size.y * 0.30f + (float)row * (bh + gap), bw, bh);
+		tb_rect[k] = Rect2(p_size.x - gap - (float)(2 - col) * (bw + gap) + gap, p_size.y * 0.36f + (float)row * (bh + gap), bw, bh);   // (0.36: clear of the HUD's Use box above, 28 Nov night)
 		if (tb_box[k]) { tb_box[k]->set_position(tb_rect[k].position); tb_box[k]->set_size(tb_rect[k].size); }
 		if (tb_label[k]) { tb_label[k]->set_position(tb_rect[k].position); tb_label[k]->set_size(tb_rect[k].size); }
 	}
@@ -1032,7 +1035,18 @@ void CityPlayer::ride_pose() {
 }
 #endif
 
+void CityPlayer::touch_reset() {
+	for (int k = 0; k < 16; k++) { move_on[k] = false; btn_on[k] = false; }
+	for (int k = 0; k < TB_N; k++) tb_touch[k] = -1;
+	touch_mv = Vector2();
+}
+
+void CityPlayer::_notification(int p_what) {
+	if (p_what == NOTIFICATION_PAUSED || p_what == NOTIFICATION_UNPAUSED) touch_reset();   // (releases made while paused never come)
+}
+
 void CityPlayer::set_riding(bool p_on) {
+	touch_reset();      // (28 Nov night: the finger that pressed USE to get in is never seen lifting while he rides: it stayed held)
 	if (trav) {     // (in a car or on the bicycle the traversal body is put away, and brought back by stand_at)
 #ifdef TRAV_IN_GAME
 		if (!p_on) {

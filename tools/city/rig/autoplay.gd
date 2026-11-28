@@ -26,6 +26,11 @@ var ph_over33 := 0
 var ph_over50 := 0
 var ph_worst := 0.0
 var ph_sum := 0.0
+var ph_sys := {}          # per system (the streamer's perf_take marks): ms summed over the phase
+var ph_proc := 0.0        # the engine's own: process, physics (ms), the GPU (ms), draw calls, summed over the phase
+var ph_phys := 0.0
+var ph_gpu := 0.0
+var ph_draws := 0.0
 # people
 var old_most := 0
 var old_where := ""
@@ -38,6 +43,18 @@ var drive_out := 0
 var drive_frames := 0
 var focus_worst := 0.0
 var start_pos := Vector3()
+var t_press := 0.0
+var dbg_t := 0.0
+var walk_check := Vector3()
+var turns := 0
+var walk_from := Vector3()
+var shot_done := ""
+
+func _shot(tag: String) -> void:      # one picture a phase, in its middle: user://autoplay/<tag>.jpg (phone: run-as ... files/autoplay)
+	if shot_done == tag: return
+	shot_done = tag
+	DirAccess.make_dir_recursive_absolute("user://autoplay")
+	get_viewport().get_texture().get_image().save_jpg("user://autoplay/%s.jpg" % tag, 0.8)
 
 func _say(s: String) -> void:
 	print("RIG auto " + s)
@@ -53,7 +70,13 @@ func _key(k: Key, down: bool) -> void:
 func _phase(name: String) -> void:
 	if ph != "" and ph_frames > 0:
 		_say("frames %s: %d frames, mean %.1f ms, worst %.0f ms, over 33 ms %d, over 50 ms %d" % [ph, ph_frames, ph_sum / ph_frames, ph_worst, ph_over33, ph_over50])
+		var f := float(ph_frames)
+		var top: Array = ph_sys.keys(); top.sort_custom(func(a, b) -> bool: return float(ph_sys[a]) > float(ph_sys[b]))
+		var parts: PackedStringArray = []
+		for k in top.slice(0, 8): parts.append("%s %.2f" % [k, float(ph_sys[k]) / f])
+		_say("cost %s (ms a frame): process %.1f, physics %.1f, gpu %.1f, draw calls %.0f | systems: %s" % [ph, ph_proc / f, ph_phys / f, ph_gpu / f, ph_draws / f, ", ".join(parts)])
 	ph = name; ph_frames = 0; ph_over33 = 0; ph_over50 = 0; ph_worst = 0.0; ph_sum = 0.0
+	ph_sys = {}; ph_proc = 0.0; ph_phys = 0.0; ph_gpu = 0.0; ph_draws = 0.0
 
 func _people() -> void:
 	far_most = maxi(far_most, int((crowd.call(&"stats") as Dictionary).get("drawn", 0))) if crowd else far_most
@@ -91,12 +114,27 @@ func _process(delta: float) -> void:
 		ph_frames += 1; ph_sum += ms; ph_worst = maxf(ph_worst, ms)
 		if ms > 33.4: ph_over33 += 1
 		if ms > 50.0: ph_over50 += 1
+		ph_proc += Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0
+		ph_phys += Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS) * 1000.0
+		ph_gpu += RenderingServer.viewport_get_measured_render_time_gpu(get_viewport().get_viewport_rid())
+		ph_draws += Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)
+		if st and st.has_method(&"perf_take"):
+			var d: Dictionary = st.call(&"perf_take")
+			for k in d: ph_sys[k] = float(ph_sys.get(k, 0.0)) + float(d[k])
 	match step:
 		0:
 			game = get_tree().root.find_child("Game", true, false)
 			if game == null or t < 3.0: return
-			game.call(&"press", "menu.new_game"); step = 1; t0 = t
+			# its own empty saves (with saves, New game opens the slot picker first; and the player's own saves stay untouched)
+			game.set(&"saves_dir", "user://autoplay_saves/")
+			DirAccess.make_dir_recursive_absolute("user://autoplay_saves")
+			for f in DirAccess.get_files_at("user://autoplay_saves/"): DirAccess.remove_absolute("user://autoplay_saves/" + f)
+			game.call(&"press", "menu.new_game"); step = 1; t0 = t; t_press = t
 		1:
+			# (the menu may not take a press yet: pressed again every 4 s until the city starts to come, seen as the rig's world)
+			if get_tree().root.find_child("Rig", true, false) == null and t - t_press > 4.0 and t - t0 < 60.0:
+				var ok = game.call(&"press", "menu.new_game"); t_press = t
+				_say("New game pressed again: %s; screen %s; scene %s" % [str(ok), str(game.call(&"current_screen")), str(get_tree().current_scene.name if get_tree().current_scene else "none")])
 			if (game.call(&"get_start_info") as Dictionary).is_empty() and t - t0 < 240.0: return
 			var scene := get_tree().current_scene
 			for c in scene.get_children():
@@ -112,20 +150,38 @@ func _process(delta: float) -> void:
 			_phase("settle"); step = 2; t0 = t
 		2:
 			if t - t0 < 8.0: return
+			# (the start puts his bicycle just ahead of him: turned away from it, he walks on the pavement, not into it)
+			var bike: Node3D = get_tree().current_scene.get_node_or_null(^"StartBike")
+			if bike and pl.has_method(&"set_view"):
+				var away := pl.global_position - bike.global_position; away.y = 0.0
+				if away.length() > 0.1:
+					var yaw := atan2(away.x, away.z)
+					pl.call(&"set_view", yaw, yaw, 0.0)
+			walk_from = pl.global_position
 			_phase("walk"); _key(KEY_W, true); step = 3; t0 = t
 		3:
 			if t >= next_sample: _people(); next_sample = t + 0.5
+			if t - t0 > 12.0: _shot("walk")
+			if t >= dbg_t:      # stuck against something (a post, a wall): turned a quarter to the right, as a player steers round
+				dbg_t = t + 3.0
+				if pl.global_position.distance_to(walk_check) < 1.0 and pl.has_method(&"set_view"):
+					var v: Array = pl.call(&"get_view")
+					pl.call(&"set_view", float(v[0]) - PI * 0.5, float(v[1]) - PI * 0.5, 0.0); turns += 1
+				walk_check = pl.global_position
 			if t - t0 < 25.0: return
 			_key(KEY_W, false)
 			_check(old_most == 0, "no old figure seen while walking (most %d at once%s)" % [old_most, (", first: " + old_where) if old_where != "" else ""])
 			_check(far_most == 0, "the far crowd draws nobody (most %d)" % far_most)
 			_check(new_most > 0, "new people seen near him (most %d at once)" % new_most)
+			_check(pl.global_position.distance_to(walk_from) > 10.0, "he walked (%.0f m in 25 s, %d turns where he was stuck)" % [pl.global_position.distance_to(walk_from), turns])
 			_phase("to_car"); step = 4; t0 = t
 		4:
 			if t - t0 < 2.0: return
 			# (the car may be far behind after the walk: he walks back to it, as a player would)
 			_check(bool(car.call(&"enter", pl)), "he goes to get into the start car (%.0f m away)" % car.global_position.distance_to(pl.global_position)); step = 5; t0 = t
 		5:
+			if t - t0 > 2.0: _shot("to_car_a")
+			if t - t0 > 6.0: _shot("to_car_b")
 			if not bool(car.call(&"is_seated")) and t - t0 < 40.0: return
 			_check(bool(car.call(&"is_seated")), "seated in the car (%.0f s)" % (t - t0))
 			start_pos = car.global_position
@@ -133,6 +189,7 @@ func _process(delta: float) -> void:
 			_phase("drive"); _key(KEY_W, true); step = 6; t0 = t
 		6:
 			if st: focus_worst = maxf(focus_worst, (st.call(&"get_focus") as Vector3).distance_to(car.global_position))
+			if t - t0 > 10.0: _shot("drive")
 			if t - t0 < 20.0: return
 			_key(KEY_W, false); _key(KEY_S, true)
 			RenderingServer.frame_pre_draw.disconnect(_drawn)

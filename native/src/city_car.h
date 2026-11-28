@@ -117,7 +117,7 @@ class CityCar : public RigidBody3D {
 	std::vector<Dent> dents;
 	float health = 1.0f, base_torque = -1.0f;
 	Vector3 jolt_acc;
-	std::vector<Vector3> hits_due;   // (found in the physics step, applied in _process)
+	std::vector<Vector3> hits_due;   // (found in _integrate_forces, applied in _physics_process)
 	int hits = 0;
 	double snd_t = -9.0, clock_t = 0.0;
 	// the recorded car sounds (el_sfx.h): the door's open / shut, the horn key, the tyres, a crash's after-sounds
@@ -154,6 +154,7 @@ public:
 	void _input(const Ref<InputEvent> &p_event) override;
 	void _integrate_forces(PhysicsDirectBodyState3D *p_state) override;
 	void _process(double p_delta) override;
+	void _physics_process(double p_delta) override;
 
 	void set_model(int p_model) { model = p_model; }
 	int get_model() const { return model; }

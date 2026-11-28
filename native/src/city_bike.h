@@ -164,7 +164,7 @@ public:
 	void _process(double p_delta) override;
 	void _physics_process(double p_delta) override;
 
-	void set_player(bool p_on) { player = p_on; }
+	void set_player(bool p_on) { player = p_on; for (int i = 0; i < 16; i++) t_zone[i] = 0; t_steer_id = -1; t_steer = 0.0f; t_sprint = false; }   // (28 Nov night: the fingers let go, as the car does: a pedal held while getting off stayed held)
 	bool get_player() const { return player; }
 	void set_chase_camera(bool p_on) { chase_camera = p_on; }
 	bool get_chase_camera() const { return chase_camera; }

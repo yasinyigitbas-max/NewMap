@@ -240,6 +240,7 @@ private:
 		int landed = 0, missed = 0, attacks = 0, hits_on_player = 0, dodges = 0, npc_beaten = 0, player_beaten = 0, locks = 0;
 	} pf;
 	void player_fight(double p_delta);
+	bool strike_due = false; Vector3 strike_a, strike_b; uint64_t strike_by = 0;   // (a blow for the damage system, made in the physics step)
 	// ROAD RAGE: the drivers who got out of hit cars (CityTraffic::take_rage). Each gets out (Sitting_Exit), yells and
 	// waves his arms (Counter_Angry), then goes for whoever hit him: the player (put into combat, locked on him, the
 	// moment the player is on foot and sees him: Yasin "whenever there is an aggressor in the screen, we should get into

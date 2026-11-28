@@ -4,6 +4,7 @@
 #include "perf_marks.h"
 #include "city_crowd.h"
 
+#include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/file_access.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
@@ -206,6 +207,11 @@ void CityCrowd::extras_update(double p_alpha) {
 // The capsules stand on the people nearest the player (within 8 m): he bumps into them.
 void CityCrowd::_physics_process(double p_delta) {
 	pm::Scope _pm(pm::CROWD_PHYS);   // (the slow-frame marks, perf_marks.h)
+	if (strike_due) {      // the player's blow (player_fight): the damage system's sweep, where the world can be asked
+		strike_due = false;
+		Object *by = strike_by ? ObjectDB::get_instance(ObjectID(strike_by)) : nullptr;
+		if (by && is_inside_tree()) if (Object *dmg = get_tree()->get_first_node_in_group("city_damage")) dmg->call("strike", strike_a, strike_b, 0.1, 10.0, 1, by);
+	}
 	if (crowd) for (Actor &a : actors) {   // the actors' ground (actors_update): here, where the world's collision can be asked
 		a.ground_t -= (float)p_delta;
 		if (a.ground_t > 0.0f || a.seated) continue;

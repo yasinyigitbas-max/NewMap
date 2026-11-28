@@ -1636,7 +1636,8 @@ void CityCrowd::player_fight(double p_delta) {
 			const float fy = pl->get_global_rotation().y;
 			const Vector3 face(std::sin(fy), 0.0f, std::cos(fy));
 			const bool in_reach = dist < 1.35f && (pfig ? true : face.dot(dir) > 0.6f) && pf.st != 2;
-			if (Object *dmg = ((Object *)pl->call("get_tree"))->call("get_first_node_in_group", "city_damage")) dmg->call("strike", pp + Vector3(0, 1.35f, 0), pp + Vector3(0, 1.35f, 0) + face * 0.85f, 0.1, 10.0, 1, pl);   // TEMP(damage B, 25 Nov): melee test until the traversal lab's strike() arrives - remove then (WORLD_CONTRACT.md 6)
+			// (28 Nov night: made in the next physics step, CityCrowd::_physics_process: the damage system's sweep needs the world)
+			strike_due = true; strike_a = pp + Vector3(0, 1.35f, 0); strike_b = strike_a + face * 0.85f; strike_by = pl->get_instance_id();   // TEMP(damage B, 25 Nov): melee test until the traversal lab's strike() arrives - remove then (WORLD_CONTRACT.md 6)
 			if (in_reach) {
 				pf.landed++; pf.hp--;
 				if (!pf.angry) { pf.angry = true; pf.ai_t = 0.5f; pf.st = 0; }   // (from the first blow he fights)
