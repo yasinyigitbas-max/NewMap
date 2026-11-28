@@ -484,6 +484,9 @@ void CityCrowd::draw(double p_alpha) {
 	const float alpha = (float)p_alpha;
 	for (int i = 0; i < crowd->hi && n < pc::MAX_PEDS; i++) {
 		if (!crowd->alive[i] || (crowd->flags[i] & pc::F_HIDDEN)) continue;
+#ifdef TRAV_IN_GAME
+		if (trav_people) break;   // (28 Nov, Yasin: the old people "out of the game entirely": no far figure; the near ones are new bodies)
+#endif
 		const float a = std::min(std::max(((float)(crowd->tick - crowd->tu[i]) + alpha) / (float)std::max((int)crowd->span[i], 1), 0.0f), 1.0f);
 		const float x = crowd->px[i] + (crowd->x[i] - crowd->px[i]) * a, y = crowd->py[i] + (crowd->y[i] - crowd->py[i]) * a, z = crowd->pz[i] + (crowd->z[i] - crowd->pz[i]) * a;
 		const float yaw = lerp_angle(crowd->pyaw[i], crowd->yaw[i], a);
@@ -509,6 +512,9 @@ void CityCrowd::draw(double p_alpha) {
 	// the crank has turned), on the traffic's bicycle, leaning with it. Who he is comes from the bicycle's id.
 	CityTraffic *trf = traffic_id ? Object::cast_to<CityTraffic>(ObjectDB::get_instance(ObjectID(traffic_id))) : nullptr;
 	riders_drawn = 0;
+#ifdef TRAV_IN_GAME
+	if (trav_people) trf = nullptr;   // (their riders are old figures: with the new people the game has no traffic cyclists, rig.gd)
+#endif
 	if (trf && trf->is_inside_tree()) {
 		const std::vector<float> &bk = trf->bikes_drawn();
 		if (gfx) {   // the nearest ones as real riders (city_crowd_riders.cpp); they are left out here
@@ -834,6 +840,9 @@ void CityCrowd::near_update(double p_delta, double p_alpha) {
 		nb.look->set_shader_parameter("person", Vector4(pr[0], pr[1] - (float)(body * 64), pr[2], pr[3]));
 		nb.ped->become(bodies[body].id, bodies[body].near_mesh, nb.look, sc > 0.9f);
 		nb.ped->set_visible(true);
+#ifdef TRAV_IN_GAME
+		if (trav_people) nb.ped->set_drawn(false);   // (the new body takes his place at the next physics step: city_crowd_trav.cpp)
+#endif
 	};
 	// a cyclist who came off gets a body before anybody: a free one of his kind, else the farthest that is only walking
 	for (size_t q = 0; q < thrown.size();) {

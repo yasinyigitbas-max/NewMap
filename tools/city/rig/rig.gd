@@ -209,17 +209,23 @@ func _ready() -> void:
 	RenderingServer.frame_post_draw.connect(func() -> void: _t_post = Time.get_ticks_usec())
 	lights = Lights.new(); lights.budget = int(opt.lights); lights.stream = st; add_child(lights)
 	if look: look.attach_stream(st)      # look job 3: the look's lamp glow on every cell that comes in
+	# (Yasin, 28 Nov: the old people "out of the game entirely") with the new character and people (the default, see below),
+	# no old figure is drawn: the crowd shows only its near new bodies, 18 of them (the pool's most; it was 12), and the
+	# traffic has no cyclists (their riders are old figures). `-- --oldpeople` or `-- --oldplayer` keep the old ones.
+	var new_people := not ("--oldplayer" in OS.get_cmdline_user_args()) and not ("--oldpeople" in OS.get_cmdline_user_args()) and ResourceLoader.exists("res://traversal/character/library.res")
 	if int(opt.traffic) > 0:      # the traffic: one C++ node; this script sets its numbers and asks for a line at the end of a drive
 		if ClassDB.class_exists(&"CityTraffic"):
 			traffic = ClassDB.instantiate(&"CityTraffic")
 			traffic.set(&"max_cars", int(opt.traffic)); traffic.set(&"parked", int(opt.parked) == 1); traffic.set(&"density", float(opt.density))
 			traffic.set(&"shadows", int(opt.carshadows) == 1); traffic.set(&"bodies", int(opt.carbodies) == 1)
+			if new_people: traffic.call(&"set_cyclists", 0)
 			traffic.call(&"attach", st); add_child(traffic)
 		else: push_error("RIG ERROR --traffic needs the native module (bash native/build.sh): no traffic in this run")
 	if int(opt.people) > 0:       # the people: one C++ node (CityCrowd); it follows the streamer's cells and is joined to the traffic
 		if ClassDB.class_exists(&"CityCrowd"):
 			people = ClassDB.instantiate(&"CityCrowd")
 			people.set(&"max_people", int(opt.people)); people.set(&"hour", float(opt.hour))
+			if new_people: people.set(&"near_max", 18)
 			people.call(&"attach", st)
 			if traffic: people.call(&"set_traffic", traffic)
 			add_child(people)
